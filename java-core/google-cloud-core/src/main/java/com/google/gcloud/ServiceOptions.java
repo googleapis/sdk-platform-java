@@ -230,7 +230,8 @@ public abstract class ServiceOptions<ServiceT extends Service<OptionsT>, Service
      * @return the builder
      */
     public B projectId(String projectId) {
-      this.projectId = projectId;
+      this.projectId =
+          checkNotNull(projectId, "Project ID cannot be set to null. Leave unset for default.");
       return self();
     }
 
