@@ -244,7 +244,7 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
     @Override
     protected HttpRequestInitializer httpRequestInitializer(HttpTransport transport,
         Set<String> scopes) {
-      return new HttpCredentialsAdapter(googleCredentials);
+      return new HttpCredentialsAdapter(googleCredentials.createScoped(scopes));
     }
 
     @Override
