@@ -132,6 +132,12 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
     }
   }
 
+  /**
+   * Represents service account credentials.
+   *
+   * @see <a href="https://cloud.google.com/docs/authentication#user_accounts_and_service_accounts">
+   *     User accounts and service accounts</a>
+   */
   public static class ServiceAccountAuthCredentials extends AuthCredentials {
 
     private final String account;
@@ -187,7 +193,15 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
     }
   }
 
-  private static class ApplicationDefaultAuthCredentials extends AuthCredentials {
+  /**
+   * Represents Application Default Credentials, which are credentials that are inferred from the
+   * runtime environment.
+   *
+   * @see <a
+   *     href="https://developers.google.com/identity/protocols/application-default-credentials">
+   *     Google Application Default Credentials</a>
+   */
+  public static class ApplicationDefaultAuthCredentials extends AuthCredentials {
 
     private GoogleCredentials googleCredentials;
 
@@ -235,6 +249,11 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
     }
   }
 
+  /**
+   * Represents that requests sent to the server should not be authenticated. This is typically
+   * useful when using the local service emulators, such as {@code LocalGcdHelper} and
+   * {@code LocalResourceManagerHelper}.
+   */
   public static class NoAuthCredentials extends AuthCredentials {
 
     private static final AuthCredentials INSTANCE = new NoAuthCredentials();
@@ -301,7 +320,9 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
   }
 
   /**
-   * Creates a placeholder denoting that no credentials should be used.
+   * Creates a placeholder denoting that no credentials should be used. This is typically useful
+   * when using the local service emulators, such as {@code LocalGcdHelper} and
+   * {@code LocalResourceManagerHelper}.
    */
   public static AuthCredentials noAuth() {
     return NoAuthCredentials.INSTANCE;
