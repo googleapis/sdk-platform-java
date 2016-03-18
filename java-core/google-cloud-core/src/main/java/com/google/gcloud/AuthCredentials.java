@@ -280,6 +280,8 @@ public abstract class AuthCredentials implements Restorable<AuthCredentials> {
       }
     }
 
+    private NoAuthCredentials() {}
+
     @Override
     public GoogleCredentials credentials() {
       return null;
