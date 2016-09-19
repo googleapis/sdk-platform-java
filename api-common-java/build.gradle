@@ -1,0 +1,267 @@
+import groovy.io.FileType
+
+buildscript {
+  repositories {
+    mavenLocal()
+    maven {
+      url 'https://plugins.gradle.org/m2/'
+    }
+    mavenCentral()
+    jcenter()
+  }
+  dependencies {
+    classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.2"
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'jacoco'
+apply plugin: 'signing'
+apply plugin: 'com.github.sherter.google-java-format'
+
+group = "com.google.api"
+archivesBaseName = "path-template"
+version = "0.0.1"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+// Dependencies
+// ------------
+
+ext {
+
+  // Shortcuts for libraries we are using
+  libraries = [
+      guava: 'com.google.guava:guava:18.0',
+      jsr305: 'com.google.code.findbugs:jsr305:3.0.0',
+      autovalue: 'com.google.auto.value:auto-value:1.1',
+      guice: 'com.google.inject:guice:4.0',
+      joda: 'joda-time:joda-time:2.8.2',
+
+      // Testing
+      junit: 'junit:junit:4.11',
+      mockito: 'org.mockito:mockito-core:1.10.19',
+      truth: 'com.google.truth:truth:0.27',
+      commons: 'org.apache.commons:commons-lang3:3.4',
+
+      // Formatter
+      javaFomatter: 'com.google.googlejavaformat:google-java-format:0.1-alpha'
+  ]
+}
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies {
+  compile libraries.guava,
+    libraries.guice,
+    libraries.jsr305,
+    libraries.autovalue,
+    libraries.joda
+
+  testCompile libraries.junit,
+    libraries.mockito,
+    libraries.truth,
+    libraries.commons
+}
+
+jacocoTestReport {
+  reports {
+    xml.enabled true
+    html.enabled true
+  }
+}
+
+check.dependsOn jacocoTestReport
+
+// Source jar
+// ----------
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+// JavaDoc
+// -------
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+javadoc.options {
+  encoding = 'UTF-8'
+  links 'https://docs.oracle.com/javase/7/docs/api/'
+}
+
+// Test Logging
+// ------------
+
+test {
+  testLogging {
+    events "passed", "skipped", "failed", "standardOut", "standardError"
+    exceptionFormat = 'full'
+  }
+}
+
+
+// Eclipse Annotation Processing
+// -----------------------------
+
+ext {
+  eclipseAptFolder = '.apt_generated'
+  eclipseSettingsDir = file('.settings')
+}
+
+configurations {
+  codeGeneration
+}
+
+dependencies {
+  codeGeneration libraries.autovalue, libraries.jsr305
+  compile libraries.autovalue, libraries.jsr305
+}
+
+compileJava.classpath += configurations.codeGeneration
+
+eclipse {
+  jdt.file.withProperties {
+    it['org.eclipse.jdt.core.compiler.processAnnotations'] = 'enabled'
+  }
+}
+
+tasks.eclipseJdt {
+  doFirst {
+    def aptPrefs =
+        file("${eclipseSettingsDir}/org.eclipse.jdt.apt.core.prefs")
+    aptPrefs.parentFile.mkdirs()
+
+    aptPrefs.text = """\
+        eclipse.preferences.version=1
+        org.eclipse.jdt.apt.aptEnabled=true
+        org.eclipse.jdt.apt.genSrcDir=${eclipseAptFolder}
+        org.eclipse.jdt.apt.reconcileEnabled=true
+        """.stripIndent()
+
+    file('.factorypath').withWriter {
+      new groovy.xml.MarkupBuilder(it).'factorypath' {
+        project.configurations.codeGeneration.each { dep->
+          factorypathentry(
+            kind:'EXTJAR',
+            id:dep.absolutePath,
+            enabled:true,
+            runInBatchMode:false)
+        }
+      }
+    }
+  }
+}
+
+tasks.cleanEclipseJdt {
+  doFirst {
+    delete file("${eclipseSettingsDir}/org.eclipse.jdt.apt.core.prefs"),
+      file('.factorypath')
+  }
+}
+
+// Publishing
+// ----------
+
+artifacts {
+  archives javadocJar, sourcesJar
+}
+
+signing {
+  required { gradle.taskGraph.hasTask("uploadArchives") }
+  sign configurations.archives
+}
+
+if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
+  uploadArchives {
+    repositories {
+      mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+          authentication(userName: ossrhUsername, password: ossrhPassword)
+        }
+
+        pom.project {
+          name 'Path Template'
+          packaging 'jar'
+          artifactId 'path-template'
+          description 'Path template utility for Java'
+          url 'https://github.com/googleapis'
+
+          scm {
+            url 'https://github.com/googleapis/path-template-java'
+            connection 'scm:git:https://github.com/googleapis/path-template-java.git'
+          }
+
+          licenses {
+            license {
+              name 'BSD'
+              url 'https://github.com/googleapis/path-template-java/blob/master/LICENSE'
+            }
+          }
+
+          developers {
+            developer {
+              id 'GoogleAPIs'
+              name 'GoogleAPIs'
+              email 'googleapis@googlegroups.com'
+              url 'https://github.com/googleapis'
+              organization 'Google, Inc.'
+              organizationUrl 'https://www.google.com'
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Formatting tasks
+// ================
+
+task verifyLicense << {
+  def licenseText = new File(rootProject.rootDir, 'license-header-javadoc.txt').text
+  def srcFiles = []
+  sourceSets
+      .collectMany{it.allJava.getSrcDirs()}
+      .each{it.eachFileRecurse(FileType.FILES, {srcFiles << it})}
+  srcFiles = srcFiles
+      .findAll{!it.path.contains("/generated/") && it.path.endsWith(".java")}
+      .findAll{!it.text.startsWith(licenseText)}
+  if (srcFiles.asList().size() > 0) {
+    srcFiles.each({println 'missing license: ' + it})
+    throw new IllegalStateException("Above files do not have licenses")
+  }
+}
+test.dependsOn verifyLicense
+
+googleJavaFormat {
+  toolVersion '1.0'
+}
+tasks.googleJavaFormat {
+  exclude '.apt_generated/**'
+  exclude 'bin/**'
+  exclude 'build/**'
+}
+tasks.verifyGoogleJavaFormat {
+  exclude '.apt_generated/**'
+  exclude 'bin/**'
+  exclude 'build/**'
+}
+test.dependsOn verifyGoogleJavaFormat
