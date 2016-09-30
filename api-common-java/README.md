@@ -1,8 +1,9 @@
-Path Template for Java
+API Common for Java
 ==============================
 
-Path Template for Java is a library for manipulating strings that are formatted
-as Google API resource names.
+API Common for Java is a library for frequently used tools relating to Google
+APIs. It currently contains the Path Template library for manipulating strings
+that are formatted as Google API resource names.
 
 Java Versions
 -------------
