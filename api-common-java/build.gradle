@@ -23,7 +23,7 @@ apply plugin: 'signing'
 apply plugin: 'com.github.sherter.google-java-format'
 
 group = "com.google.api"
-archivesBaseName = "path-template"
+archivesBaseName = "api-common"
 version = "0.0.1"
 
 sourceCompatibility = 1.7
@@ -198,21 +198,21 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
         }
 
         pom.project {
-          name 'Path Template'
+          name 'API Common'
           packaging 'jar'
-          artifactId 'path-template'
-          description 'Path template utility for Java'
+          artifactId 'api-common'
+          description 'Common utilities for Google APIs in Java'
           url 'https://github.com/googleapis'
 
           scm {
-            url 'https://github.com/googleapis/path-template-java'
-            connection 'scm:git:https://github.com/googleapis/path-template-java.git'
+            url 'https://github.com/googleapis/api-common-java'
+            connection 'scm:git:https://github.com/googleapis/api-common-java.git'
           }
 
           licenses {
             license {
               name 'BSD'
-              url 'https://github.com/googleapis/path-template-java/blob/master/LICENSE'
+              url 'https://github.com/googleapis/api-common-java/blob/master/LICENSE'
             }
           }
 
