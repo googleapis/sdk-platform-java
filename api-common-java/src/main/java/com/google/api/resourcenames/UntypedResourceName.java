@@ -29,28 +29,59 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.google.api.pathtemplate;
+package com.google.api.resourcenames;
 
-import com.google.common.truth.Truth;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import com.google.common.base.Preconditions;
 
 /**
- * Tests for {@link ResourceName}. As resource names are mostly a wrapper around path
- * templates, not much needs to be done here.
+ * A class to represent a {@link ResourceName} with an unknown format. This class in intended to
+ * support the case of a resource name string in an unexpected format - generated resource name
+ * classes with known formats should be preferred where possible.
  */
-@RunWith(JUnit4.class)
-public class ResourceNameTest {
+public class UntypedResourceName implements ResourceName {
 
-  @Test
-  public void resourceNameMethods() {
-    PathTemplate template = PathTemplate.create("buckets/*/objects/**");
-    ResourceName name = ResourceName.create(template, "buckets/b/objects/1/2");
-    Truth.assertThat(name.toString()).isEqualTo("buckets/b/objects/1/2");
-    Truth.assertThat(name.get("$1")).isEqualTo("1/2");
-    Truth.assertThat(name.get("$0")).isEqualTo("b");
-    Truth.assertThat(name.parentName().toString()).isEqualTo("buckets/b/objects");
+  private final String rawValue;
+
+  private UntypedResourceName(String rawValue) {
+    this.rawValue = Preconditions.checkNotNull(rawValue);
+  }
+
+  public static UntypedResourceName from(ResourceName resourceName) {
+    return new UntypedResourceName(resourceName.toString());
+  }
+
+  public static UntypedResourceName parse(String formattedString) {
+    return new UntypedResourceName(formattedString);
+  }
+
+  public static boolean isParsableFrom(String formattedString) {
+    return true;
+  }
+
+  @Override
+  public ResourceNameType getType() {
+    return UntypedResourceNameType.instance();
+  }
+
+  @Override
+  public String toString() {
+    return rawValue;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (o instanceof UntypedResourceName) {
+      UntypedResourceName that = (UntypedResourceName) o;
+      return this.rawValue.equals(that.rawValue);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return rawValue.hashCode();
   }
 }

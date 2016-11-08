@@ -106,7 +106,7 @@ import javax.annotation.Nullable;
  *                  .equals(ImmutableMap.of("$0", "s1"));
  * </pre>
  *
- * For the representation of a <em>resource name</em> see {@link ResourceName}, which is based
+ * For the representation of a <em>resource name</em> see {@link TemplatedResourceName}, which is based
  * on path templates.
  */
 public class PathTemplate {
@@ -363,8 +363,8 @@ public class PathTemplate {
    *
    * @throws ValidationException if the path does not match the template.
    */
-  public ResourceName parse(String path) {
-    return ResourceName.create(this, path);
+  public TemplatedResourceName parse(String path) {
+    return TemplatedResourceName.create(this, path);
   }
 
   /**

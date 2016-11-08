@@ -35,38 +35,35 @@ import com.google.common.annotations.Beta;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
 import javax.annotation.Nullable;
 
 /**
  * Class for representing and working with resource names.
  *
- * <p>A resource name is represented by {@link PathTemplate}, an assignment to variables in
- * the template, and an optional endpoint. The {@code ResourceName} class implements
- * the map interface (unmodifiable) to work with the variable assignments, and has methods
- * to reproduce the string representation of the name, to construct new names, and to dereference
- * names into resources.
+ * <p>A resource name is represented by {@link PathTemplate}, an assignment to variables in the
+ * template, and an optional endpoint. The {@code ResourceName} class implements the map interface
+ * (unmodifiable) to work with the variable assignments, and has methods to reproduce the string
+ * representation of the name, to construct new names, and to dereference names into resources.
  *
- * <p>As a resource name essentially represents a match of a path template against a string, it
- * can be also used for other purposes than naming resources. However, not all provided methods
- * may make sense in all applications.
+ * <p>As a resource name essentially represents a match of a path template against a string, it can
+ * be also used for other purposes than naming resources. However, not all provided methods may make
+ * sense in all applications.
  *
  * <p>Usage examples:
  *
  * <pre>
  *   PathTemplate template = PathTemplate.create("shelves/*&#47;books/*");
- *   ResourceName resourceName = ResourceName.create(template, "shelves/s1/books/b1");
+ *   TemplatedResourceName resourceName = TemplatedResourceName.create(template, "shelves/s1/books/b1");
  *   assert resourceName.get("$1").equals("b1");
  *   assert resourceName.parentName().toString().equals("shelves/s1/books");
  * </pre>
  */
 @Beta
-public class ResourceName implements Map<String, String> {
+public class TemplatedResourceName implements Map<String, String> {
 
   // ResourceName Resolver
   // =====================
@@ -78,7 +75,7 @@ public class ResourceName implements Map<String, String> {
     /**
      * Resolves the resource name into a resource by calling the underlying API.
      */
-    <T> T resolve(Class<T> resourceType, ResourceName name, @Nullable String version);
+    <T> T resolve(Class<T> resourceType, TemplatedResourceName name, @Nullable String version);
   }
 
   // The registered resource name resolver.
@@ -87,7 +84,7 @@ public class ResourceName implements Map<String, String> {
   private static volatile Resolver resourceNameResolver =
       new Resolver() {
         @Override
-        public <T> T resolve(Class<T> resourceType, ResourceName name, String version) {
+        public <T> T resolve(Class<T> resourceType, TemplatedResourceName name, String version) {
           throw new IllegalStateException(
               "No resource name resolver is registered in ResourceName class.");
         }
@@ -110,12 +107,12 @@ public class ResourceName implements Map<String, String> {
    *
    * @throws ValidationException if the path does not match the template.
    */
-  public static ResourceName create(PathTemplate template, String path) {
+  public static TemplatedResourceName create(PathTemplate template, String path) {
     ImmutableMap<String, String> values = template.match(path);
     if (values == null) {
       throw new ValidationException("path '%s' does not match template '%s'", path, template);
     }
-    return new ResourceName(template, values, null);
+    return new TemplatedResourceName(template, values, null);
   }
 
   /**
@@ -123,13 +120,13 @@ public class ResourceName implements Map<String, String> {
    *
    * @throws ValidationException if not all variables in the template are bound.
    */
-  public static ResourceName create(PathTemplate template, Map<String, String> values) {
+  public static TemplatedResourceName create(PathTemplate template, Map<String, String> values) {
     if (!values.keySet().containsAll(template.vars())) {
       Set<String> unbound = Sets.newLinkedHashSet(template.vars());
       unbound.removeAll(values.keySet());
       throw new ValidationException("unbound variables: %s", unbound);
     }
-    return new ResourceName(template, values, null);
+    return new TemplatedResourceName(template, values, null);
   }
 
   /**
@@ -137,12 +134,12 @@ public class ResourceName implements Map<String, String> {
    * endpoint. If the path does not match, null is returned.
    */
   @Nullable
-  public static ResourceName createFromFullName(PathTemplate template, String path) {
+  public static TemplatedResourceName createFromFullName(PathTemplate template, String path) {
     ImmutableMap<String, String> values = template.matchFromFullName(path);
     if (values == null) {
       return null;
     }
-    return new ResourceName(template, values, null);
+    return new TemplatedResourceName(template, values, null);
   }
 
   private final PathTemplate template;
@@ -151,7 +148,7 @@ public class ResourceName implements Map<String, String> {
 
   private volatile String stringRepr;
 
-  private ResourceName(PathTemplate template, Map<String, String> values, String endpoint) {
+  private TemplatedResourceName(PathTemplate template, Map<String, String> values, String endpoint) {
     this.template = template;
     this.values = ImmutableMap.copyOf(values);
     this.endpoint = endpoint;
@@ -167,10 +164,10 @@ public class ResourceName implements Map<String, String> {
 
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof ResourceName)) {
+    if (!(obj instanceof TemplatedResourceName)) {
       return false;
     }
-    ResourceName other = (ResourceName) obj;
+    TemplatedResourceName other = (TemplatedResourceName) obj;
     return Objects.equals(template, other.template)
         && Objects.equals(endpoint, other.endpoint)
         && Objects.equals(values, other.values);
@@ -206,24 +203,24 @@ public class ResourceName implements Map<String, String> {
   /**
    * Returns a resource name with specified endpoint.
    */
-  public ResourceName withEndpoint(String endpoint) {
-    return new ResourceName(template, values, Preconditions.checkNotNull(endpoint));
+  public TemplatedResourceName withEndpoint(String endpoint) {
+    return new TemplatedResourceName(template, values, Preconditions.checkNotNull(endpoint));
   }
 
   /**
    * Returns the parent resource name. For example, if the name is {@code shelves/s1/books/b1}, the
    * parent is {@code shelves/s1/books}.
    */
-  public ResourceName parentName() {
+  public TemplatedResourceName parentName() {
     PathTemplate parentTemplate = template.parentTemplate();
-    return new ResourceName(parentTemplate, values, endpoint);
+    return new TemplatedResourceName(parentTemplate, values, endpoint);
   }
 
   /**
    * Returns true of the resource name starts with the parent resource name, i.e. is a child
    * of the parent.
    */
-  public boolean startsWith(ResourceName parentName) {
+  public boolean startsWith(TemplatedResourceName parentName) {
     // TODO: more efficient implementation.
     return toString().startsWith(parentName.toString());
   }
