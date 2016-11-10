@@ -148,7 +148,8 @@ public class TemplatedResourceName implements Map<String, String> {
 
   private volatile String stringRepr;
 
-  private TemplatedResourceName(PathTemplate template, Map<String, String> values, String endpoint) {
+  private TemplatedResourceName(
+      PathTemplate template, Map<String, String> values, String endpoint) {
     this.template = template;
     this.values = ImmutableMap.copyOf(values);
     this.endpoint = endpoint;

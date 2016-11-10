@@ -33,7 +33,7 @@ package com.google.api.resourcenames;
 
 /** An interface that generated resource name types must implement. */
 public interface ResourceName {
-  
+
   /** The ResourceNameType of the resource name object. */
   public ResourceNameType getType();
 }
