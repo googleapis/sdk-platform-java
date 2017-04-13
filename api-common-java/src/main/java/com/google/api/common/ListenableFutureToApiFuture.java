@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.google.api.common;
+
+import com.google.common.util.concurrent.ForwardingListenableFuture.SimpleForwardingListenableFuture;
+import com.google.common.util.concurrent.ListenableFuture;
+
+/**
+ * INTERNAL USE ONLY. Adapter from Guava ListenableFuture to GAX ApiFuture.
+ */
+@InternalApi
+public class ListenableFutureToApiFuture<V> extends SimpleForwardingListenableFuture<V>
+    implements ApiFuture<V> {
+  public ListenableFutureToApiFuture(ListenableFuture<V> delegate) {
+    super(delegate);
+  }
+}

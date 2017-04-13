@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+package com.google.api.common;
+
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Implementation of the {@link ApiClock} interface, which uses {@link System#currentTimeMillis()}
+ * as time source.
+ */
+@BetaApi
+public final class CurrentMillisClock implements ApiClock, Serializable {
+
+  private static final long serialVersionUID = -6019259882852183285L;
+  private static final ApiClock DEFAULT_CLOCK = new CurrentMillisClock();
+
+  public static ApiClock getDefaultClock() {
+    return DEFAULT_CLOCK;
+  }
+
+  private CurrentMillisClock() {}
+
+  @Override
+  public long nanoTime() {
+    return TimeUnit.NANOSECONDS.convert(millisTime(), TimeUnit.MILLISECONDS);
+  }
+
+  @Override
+  public long millisTime() {
+    return System.currentTimeMillis();
+  }
+
+  private Object readResolve() throws ObjectStreamException {
+    return DEFAULT_CLOCK;
+  }
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.google.api.common;
+
+/**
+ * An {@link ApiFuture} whose result can be set. Similar to Guava's {@code SettableFuture}, but
+ * redeclared so that Guava could be shaded.
+ */
+@BetaApi
+public final class SettableApiFuture<V> extends AbstractApiFuture<V> {
+
+  private SettableApiFuture() {}
+
+  public static <V> SettableApiFuture<V> create() {
+    return new SettableApiFuture<>();
+  }
+}

@@ -31,7 +31,7 @@
 
 package com.google.api.pathtemplate;
 
-import com.google.common.annotations.Beta;
+import com.google.api.common.BetaApi;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
@@ -62,7 +62,7 @@ import javax.annotation.Nullable;
  *   assert resourceName.parentName().toString().equals("shelves/s1/books");
  * </pre>
  */
-@Beta
+@BetaApi
 public class TemplatedResourceName implements Map<String, String> {
 
   // ResourceName Resolver
@@ -108,7 +108,7 @@ public class TemplatedResourceName implements Map<String, String> {
    * @throws ValidationException if the path does not match the template.
    */
   public static TemplatedResourceName create(PathTemplate template, String path) {
-    ImmutableMap<String, String> values = template.match(path);
+    Map<String, String> values = template.match(path);
     if (values == null) {
       throw new ValidationException("path '%s' does not match template '%s'", path, template);
     }
@@ -135,7 +135,7 @@ public class TemplatedResourceName implements Map<String, String> {
    */
   @Nullable
   public static TemplatedResourceName createFromFullName(PathTemplate template, String path) {
-    ImmutableMap<String, String> values = template.matchFromFullName(path);
+    Map<String, String> values = template.matchFromFullName(path);
     if (values == null) {
       return null;
     }

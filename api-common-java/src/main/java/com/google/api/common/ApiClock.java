@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2016, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,25 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.google.api.common;
+
+/**
+ * An interface for getting the current value of a high-resolution time source, in nanoseconds.
+ *
+ * Clocks other than {@link NanoClock} are typically used only for testing.
+ *
+ * This interface is required in addition to Java 8's Clock, because nanoTime is required to compare
+ * values with io.grpc.CallOptions.getDeadlineNanoTime().
+ */
+public interface ApiClock {
+
+  /**
+   * Returns the current value of this clock's high-resolution time source, in nanoseconds.
+   */
+  long nanoTime();
+
+  /**
+   * Returns the current value of this clock's high-resolution time source, in milliseconds.
+   */
+  long millisTime();
+}

@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.google.api.common;
+
+import com.google.common.util.concurrent.ListenableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+/**
+ * INTERNAL USE ONLY. Adapter from GAX ApiFuture to Guava ListenableFuture.
+ */
+@InternalApi
+public class ApiFutureToListenableFuture<V> implements ListenableFuture<V> {
+  private final ApiFuture<V> apiFuture;
+
+  public ApiFutureToListenableFuture(ApiFuture<V> apiFuture) {
+    this.apiFuture = apiFuture;
+  }
+
+  @Override
+  public void addListener(Runnable listener, Executor executor) {
+    apiFuture.addListener(listener, executor);
+  }
+
+  @Override
+  public boolean cancel(boolean b) {
+    return apiFuture.cancel(b);
+  }
+
+  @Override
+  public boolean isCancelled() {
+    return apiFuture.isCancelled();
+  }
+
+  @Override
+  public boolean isDone() {
+    return apiFuture.isDone();
+  }
+
+  @Override
+  public V get() throws InterruptedException, ExecutionException {
+    return apiFuture.get();
+  }
+
+  @Override
+  public V get(long l, TimeUnit timeUnit)
+      throws InterruptedException, ExecutionException, TimeoutException {
+    return apiFuture.get(l, timeUnit);
+  }
+}

@@ -146,7 +146,7 @@ public class PathTemplateTest {
     String templateString = "buckets/*/objects/{object_id}";
     String pathString = "buckets/bucket/objects/object";
     PathTemplate template = PathTemplate.create(templateString);
-    ImmutableMap<String, String> matchMap = template.validatedMatch(pathString, "");
+    Map<String, String> matchMap = template.validatedMatch(pathString, "");
     Truth.assertThat(matchMap.get("$0")).isEqualTo("bucket");
     Truth.assertThat(matchMap.get("object_id")).isEqualTo("object");
   }

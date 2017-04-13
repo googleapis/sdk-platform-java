@@ -9,3 +9,9 @@ build
 .factorypath
 .project
 .settings
+
+# Intellij
+.idea
+*.iml
+*.iws
+*.ipr

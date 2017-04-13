@@ -1,5 +1,5 @@
 /*
- * Copyright 20xx, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,3 +28,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package com.google.api.common;
+
+import com.google.common.truth.Truth;
+import com.google.common.util.concurrent.SettableFuture;
+import org.junit.Test;
+
+public class ListenableFutureToApiFutureTest {
+
+  @Test
+  public void testGet() throws Exception {
+    SettableFuture<Integer> future = SettableFuture.create();
+    ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
+    future.set(3);
+    Truth.assertThat(apiFuture.get()).isEqualTo(3);
+  }
+}
