@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,33 +28,37 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+
+package com.google.api.core;
 
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-/** Default implementation of the ApiClock interface, using call to System.nanoTime(). */
+/**
+ * Implementation of the {@link ApiClock} interface, which uses {@link System#currentTimeMillis()}
+ * as time source.
+ */
 @BetaApi
-public final class NanoClock implements ApiClock, Serializable {
+public final class CurrentMillisClock implements ApiClock, Serializable {
 
-  private static final ApiClock DEFAULT_CLOCK = new NanoClock();
-  private static final long serialVersionUID = 5541462688633944865L;
+  private static final long serialVersionUID = -6019259882852183285L;
+  private static final ApiClock DEFAULT_CLOCK = new CurrentMillisClock();
 
   public static ApiClock getDefaultClock() {
     return DEFAULT_CLOCK;
   }
 
-  private NanoClock() {}
+  private CurrentMillisClock() {}
 
   @Override
-  public final long nanoTime() {
-    return System.nanoTime();
+  public long nanoTime() {
+    return TimeUnit.NANOSECONDS.convert(millisTime(), TimeUnit.MILLISECONDS);
   }
 
   @Override
-  public final long millisTime() {
-    return TimeUnit.MILLISECONDS.convert(nanoTime(), TimeUnit.NANOSECONDS);
+  public long millisTime() {
+    return System.currentTimeMillis();
   }
 
   private Object readResolve() throws ObjectStreamException {

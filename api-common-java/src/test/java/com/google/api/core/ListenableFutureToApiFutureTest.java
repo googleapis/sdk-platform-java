@@ -28,18 +28,19 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
-/**
- * An {@link ApiFuture} whose result can be set. Similar to Guava's {@code SettableFuture}, but
- * redeclared so that Guava could be shaded.
- */
-@BetaApi
-public final class SettableApiFuture<V> extends AbstractApiFuture<V> {
+import com.google.common.truth.Truth;
+import com.google.common.util.concurrent.SettableFuture;
+import org.junit.Test;
 
-  private SettableApiFuture() {}
+public class ListenableFutureToApiFutureTest {
 
-  public static <V> SettableApiFuture<V> create() {
-    return new SettableApiFuture<>();
+  @Test
+  public void testGet() throws Exception {
+    SettableFuture<Integer> future = SettableFuture.create();
+    ListenableFutureToApiFuture<Integer> apiFuture = new ListenableFutureToApiFuture<>(future);
+    future.set(3);
+    Truth.assertThat(apiFuture.get()).isEqualTo(3);
   }
 }

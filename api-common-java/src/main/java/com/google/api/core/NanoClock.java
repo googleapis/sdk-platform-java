@@ -28,16 +28,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
-/**
- * A callback for accepting the results of an {@link ApiFuture}.
- *
- * <p>
- * It is similar to Guava's {@code FutureCallback}, redeclared so that Guava can be shaded.
- */
-public interface ApiFutureCallback<V> {
-  void onFailure(Throwable t);
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
-  void onSuccess(V result);
+/** Default implementation of the ApiClock interface, using call to System.nanoTime(). */
+@BetaApi
+public final class NanoClock implements ApiClock, Serializable {
+
+  private static final ApiClock DEFAULT_CLOCK = new NanoClock();
+  private static final long serialVersionUID = 5541462688633944865L;
+
+  public static ApiClock getDefaultClock() {
+    return DEFAULT_CLOCK;
+  }
+
+  private NanoClock() {}
+
+  @Override
+  public final long nanoTime() {
+    return System.nanoTime();
+  }
+
+  @Override
+  public final long millisTime() {
+    return TimeUnit.MILLISECONDS.convert(nanoTime(), TimeUnit.NANOSECONDS);
+  }
+
+  private Object readResolve() throws ObjectStreamException {
+    return DEFAULT_CLOCK;
+  }
 }

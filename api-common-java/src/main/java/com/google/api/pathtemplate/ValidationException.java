@@ -31,7 +31,7 @@
 
 package com.google.api.pathtemplate;
 
-import com.google.api.common.BetaApi;
+import com.google.api.core.BetaApi;
 
 import java.util.Stack;
 

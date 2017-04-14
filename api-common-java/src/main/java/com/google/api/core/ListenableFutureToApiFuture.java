@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,16 +28,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.Future;
+import com.google.common.util.concurrent.ForwardingListenableFuture.SimpleForwardingListenableFuture;
+import com.google.common.util.concurrent.ListenableFuture;
 
 /**
- * A Future that can have a listener added.
- *
- * Similar to Guava's {@code ListenableFuture}, but redeclared so that Guava could be shaded.
+ * INTERNAL USE ONLY. Adapter from Guava ListenableFuture to GAX ApiFuture.
  */
-public interface ApiFuture<V> extends Future<V> {
-  void addListener(Runnable listener, Executor executor);
+@InternalApi
+public class ListenableFutureToApiFuture<V> extends SimpleForwardingListenableFuture<V>
+    implements ApiFuture<V> {
+  public ListenableFutureToApiFuture(ListenableFuture<V> delegate) {
+    super(delegate);
+  }
 }

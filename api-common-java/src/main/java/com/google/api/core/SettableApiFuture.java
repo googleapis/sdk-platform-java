@@ -28,27 +28,18 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
-
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package com.google.api.core;
 
 /**
- * Annotates a program element (class, method, package etc) which is internal to GAX, not part of
- * the public API, and should not be used by users of GAX.
+ * An {@link ApiFuture} whose result can be set. Similar to Guava's {@code SettableFuture}, but
+ * redeclared so that Guava could be shaded.
  */
 @BetaApi
-@Retention(RetentionPolicy.SOURCE)
-@Target({
-  ElementType.ANNOTATION_TYPE,
-  ElementType.CONSTRUCTOR,
-  ElementType.FIELD,
-  ElementType.METHOD,
-  ElementType.PACKAGE,
-  ElementType.TYPE
-})
-@Documented
-public @interface InternalApi {}
+public final class SettableApiFuture<V> extends AbstractApiFuture<V> {
+
+  private SettableApiFuture() {}
+
+  public static <V> SettableApiFuture<V> create() {
+    return new SettableApiFuture<>();
+  }
+}

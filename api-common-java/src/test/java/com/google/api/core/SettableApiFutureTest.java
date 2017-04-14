@@ -28,53 +28,61 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
-import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.truth.Truth;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.Test;
 
-/**
- * INTERNAL USE ONLY. Adapter from GAX ApiFuture to Guava ListenableFuture.
- */
-@InternalApi
-public class ApiFutureToListenableFuture<V> implements ListenableFuture<V> {
-  private final ApiFuture<V> apiFuture;
-
-  public ApiFutureToListenableFuture(ApiFuture<V> apiFuture) {
-    this.apiFuture = apiFuture;
+public class SettableApiFutureTest {
+  @Test
+  public void testSet() throws Exception {
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    Truth.assertThat(future.isDone()).isFalse();
+    future.set(42);
+    Truth.assertThat(future.get()).isEqualTo(42);
+    Truth.assertThat(future.get(1, TimeUnit.HOURS)).isEqualTo(42);
+    Truth.assertThat(future.isDone()).isTrue();
   }
 
-  @Override
-  public void addListener(Runnable listener, Executor executor) {
-    apiFuture.addListener(listener, executor);
+  @Test
+  public void testCancel() throws Exception {
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    Truth.assertThat(future.isDone()).isFalse();
+    Truth.assertThat(future.isCancelled()).isFalse();
+    future.cancel(false);
+    Truth.assertThat(future.isDone()).isTrue();
+    Truth.assertThat(future.isCancelled()).isTrue();
   }
 
-  @Override
-  public boolean cancel(boolean b) {
-    return apiFuture.cancel(b);
+  @Test(expected = ExecutionException.class)
+  public void testException() throws Exception {
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    future.setException(new Exception());
+    future.get();
   }
 
-  @Override
-  public boolean isCancelled() {
-    return apiFuture.isCancelled();
-  }
-
-  @Override
-  public boolean isDone() {
-    return apiFuture.isDone();
-  }
-
-  @Override
-  public V get() throws InterruptedException, ExecutionException {
-    return apiFuture.get();
-  }
-
-  @Override
-  public V get(long l, TimeUnit timeUnit)
-      throws InterruptedException, ExecutionException, TimeoutException {
-    return apiFuture.get(l, timeUnit);
+  @Test
+  public void testListener() throws Exception {
+    final AtomicInteger flag = new AtomicInteger();
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    future.addListener(
+        new Runnable() {
+          @Override
+          public void run() {
+            flag.set(1);
+          }
+        },
+        new Executor() {
+          @Override
+          public void execute(Runnable r) {
+            r.run();
+          }
+        });
+    future.set(0);
+    Truth.assertThat(flag.get()).isEqualTo(1);
   }
 }

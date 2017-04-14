@@ -28,61 +28,78 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
-public class SettableApiFutureTest {
-  @Test
-  public void testSet() throws Exception {
-    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    Truth.assertThat(future.isDone()).isFalse();
-    future.set(42);
-    Truth.assertThat(future.get()).isEqualTo(42);
-    Truth.assertThat(future.get(1, TimeUnit.HOURS)).isEqualTo(42);
-    Truth.assertThat(future.isDone()).isTrue();
-  }
+public class ApiFuturesTest {
 
   @Test
-  public void testCancel() throws Exception {
-    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    Truth.assertThat(future.isDone()).isFalse();
-    Truth.assertThat(future.isCancelled()).isFalse();
-    future.cancel(false);
-    Truth.assertThat(future.isDone()).isTrue();
-    Truth.assertThat(future.isCancelled()).isTrue();
-  }
-
-  @Test(expected = ExecutionException.class)
-  public void testException() throws Exception {
-    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    future.setException(new Exception());
-    future.get();
-  }
-
-  @Test
-  public void testListener() throws Exception {
+  public void testAddCallback() throws Exception {
     final AtomicInteger flag = new AtomicInteger();
     SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
-    future.addListener(
-        new Runnable() {
+    ApiFutures.addCallback(
+        future,
+        new ApiFutureCallback<Integer>() {
           @Override
-          public void run() {
-            flag.set(1);
+          public void onSuccess(Integer i) {
+            flag.set(i + 1);
           }
-        },
-        new Executor() {
+
           @Override
-          public void execute(Runnable r) {
-            r.run();
+          public void onFailure(Throwable t) {
+            flag.set(-1);
           }
         });
     future.set(0);
     Truth.assertThat(flag.get()).isEqualTo(1);
+  }
+
+  @Test
+  public void testCatch() throws Exception {
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    ApiFuture<Integer> fallback =
+        ApiFutures.catching(
+            future,
+            Exception.class,
+            new ApiFunction<Exception, Integer>() {
+              @Override
+              public Integer apply(Exception ex) {
+                return 42;
+              }
+            });
+    future.setException(new Exception());
+    Truth.assertThat(fallback.get()).isEqualTo(42);
+  }
+
+  @Test
+  public void testTransform() throws Exception {
+    SettableApiFuture<Integer> inputFuture = SettableApiFuture.<Integer>create();
+    ApiFuture<String> transformedFuture =
+        ApiFutures.transform(
+            inputFuture,
+            new ApiFunction<Integer, String>() {
+              @Override
+              public String apply(Integer input) {
+                return input.toString();
+              }
+            });
+    inputFuture.set(6);
+    Truth.assertThat(transformedFuture.get()).isEqualTo("6");
+  }
+
+  @Test
+  public void testAllAsList() throws Exception {
+    SettableApiFuture<Integer> inputFuture1 = SettableApiFuture.<Integer>create();
+    SettableApiFuture<Integer> inputFuture2 = SettableApiFuture.<Integer>create();
+    ApiFuture<List<Integer>> listFuture =
+        ApiFutures.allAsList(ImmutableList.of(inputFuture1, inputFuture2));
+    inputFuture1.set(1);
+    inputFuture2.set(2);
+    Truth.assertThat(listFuture.get()).containsExactly(1, 2).inOrder();
   }
 }

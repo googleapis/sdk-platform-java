@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,49 +28,27 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
+/**
+ * Annotates a program element (class, method, package etc) which is internal to GAX, not part of
+ * the public API, and should not be used by users of GAX.
+ */
 @BetaApi
-public class ForwardingApiFuture<T> implements ApiFuture<T> {
-  private final ApiFuture<T> delegate;
-
-  public ForwardingApiFuture(ApiFuture<T> delegate) {
-    this.delegate = delegate;
-  }
-
-  @Override
-  public boolean cancel(boolean mayInterruptIfRunning) {
-    return delegate.cancel(mayInterruptIfRunning);
-  }
-
-  @Override
-  public T get() throws InterruptedException, ExecutionException {
-    return delegate.get();
-  }
-
-  @Override
-  public T get(long timeout, TimeUnit unit)
-      throws InterruptedException, ExecutionException, TimeoutException {
-    return delegate.get(timeout, unit);
-  }
-
-  @Override
-  public boolean isCancelled() {
-    return delegate.isCancelled();
-  }
-
-  @Override
-  public boolean isDone() {
-    return delegate.isDone();
-  }
-
-  @Override
-  public void addListener(Runnable listener, Executor executor) {
-    delegate.addListener(listener, executor);
-  }
-}
+@Retention(RetentionPolicy.SOURCE)
+@Target({
+  ElementType.ANNOTATION_TYPE,
+  ElementType.CONSTRUCTOR,
+  ElementType.FIELD,
+  ElementType.METHOD,
+  ElementType.PACKAGE,
+  ElementType.TYPE
+})
+@Documented
+public @interface InternalApi {}

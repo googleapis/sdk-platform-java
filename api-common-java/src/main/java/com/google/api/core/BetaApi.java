@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2017, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,25 +28,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.common;
+package com.google.api.core;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * An interface for getting the current value of a high-resolution time source, in nanoseconds.
+ * Indicates a public API that can change at any time, and has no guarantee of API stability and
+ * backward-compatibility.
  *
- * Clocks other than {@link NanoClock} are typically used only for testing.
- *
- * This interface is required in addition to Java 8's Clock, because nanoTime is required to compare
- * values with io.grpc.CallOptions.getDeadlineNanoTime().
+ * <p>
+ * Usage guidelines:
+ * <ol>
+ * <li>This annotation is used only on public APIs. Internal interfaces should not use it.</li>
+ * <li>This annotation should only be added to new APIs. Adding it to an existing API is considered
+ * API-breaking.</li>
+ * <li>Removing this annotation from an API gives it stable status.</li>
+ * </ol>
  */
-public interface ApiClock {
-
+@Retention(RetentionPolicy.SOURCE)
+@Target({
+  ElementType.ANNOTATION_TYPE,
+  ElementType.CONSTRUCTOR,
+  ElementType.FIELD,
+  ElementType.METHOD,
+  ElementType.PACKAGE,
+  ElementType.TYPE
+})
+@Documented
+public @interface BetaApi {
   /**
-   * Returns the current value of this clock's high-resolution time source, in nanoseconds.
+   * Context information such as links to discussion thread, tracking issue etc.
    */
-  long nanoTime();
-
-  /**
-   * Returns the current value of this clock's high-resolution time source, in milliseconds.
-   */
-  long millisTime();
+  String value() default "";
 }
