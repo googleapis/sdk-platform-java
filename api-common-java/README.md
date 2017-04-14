@@ -1,9 +1,19 @@
 API Common for Java
 ==============================
 
+[![Build Status](https://travis-ci.org/googleapis/api-common-java.svg?branch=master)](https://travis-ci.org/googleapis/api-common-java)
+
+[![Code Coverage](https://img.shields.io/codecov/c/github/googleapis/api-common-java.svg)](https://codecov.io/github/googleapis/api-common-java)
+
+- [Documentation](http://googleapis.github.io/api-common-java/apidocs)
+
 API Common for Java is a library for frequently used tools relating to Google
-APIs. It currently contains the Path Template library for manipulating strings
-that are formatted as Google API resource names.
+APIs. It currently contains the following packages:
+- core: Core library containing API stability annotations and wrappers around
+  Guava types
+- pathtemplate: Path Template library for manipulating strings that are
+  formatted as Google API resource names.
+- resourcenames: Resource Name library used by generated resource name types
 
 Java Versions
 -------------
