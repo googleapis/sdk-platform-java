@@ -43,7 +43,8 @@ import java.lang.annotation.Target;
  * <p>
  * Usage guidelines:
  * <ol>
- * <li>This annotation is used only on public APIs. Internal interfaces should not use it.</li>
+ * <li>This annotation is used only on APIs with public visibility. Internal interfaces should
+ * not use it.</li>
  * <li>This annotation should only be added to new APIs. Adding it to an existing API is considered
  * API-breaking.</li>
  * <li>Removing this annotation from an API gives it stable status.</li>
