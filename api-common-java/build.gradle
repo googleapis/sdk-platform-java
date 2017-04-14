@@ -24,7 +24,8 @@ apply plugin: 'com.github.sherter.google-java-format'
 
 group = "com.google.api"
 archivesBaseName = "api-common"
-version = "0.1.0"
+
+project.version = new File("version.txt").text.trim()
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -67,6 +68,10 @@ dependencies {
     libraries.mockito,
     libraries.truth,
     libraries.commons
+}
+
+clean.doFirst {
+  delete 'tmp_gh-pages/'
 }
 
 jacocoTestReport {
@@ -264,3 +269,47 @@ tasks.verifyGoogleJavaFormat {
   exclude 'build/**'
 }
 test.dependsOn verifyGoogleJavaFormat
+
+// Release
+// =======
+
+task checkOutGhPages {
+  if (!new File('tmp_gh-pages').exists()) {
+    exec {
+      commandLine 'git', 'clone', '--branch', 'gh-pages',
+          '--single-branch', 'https://github.com/googleapis/api-common-java/', 'tmp_gh-pages'
+    }
+  }
+}
+
+task copyFilesToGhPages {
+  dependsOn 'checkOutGhPages'
+  dependsOn 'javadoc'
+  doLast {
+    def newSiteDirPath = 'tmp_gh-pages/' + project.version + '/apidocs/'
+    new File(newSiteDirPath).mkdirs()
+    copy {
+      from 'build/docs/javadoc'
+      into newSiteDirPath
+    }
+    copy {
+      from 'README.md'
+      into 'tmp_gh-pages'
+      rename { filename -> filename.replace 'README', 'index' }
+    }
+  }
+}
+
+task createApiDocsRedirect {
+  dependsOn 'copyFilesToGhPages'
+  doLast {
+    def template = new File('templates/apidocs_index.html.template').text
+    def outputContent = template.replace('{{siteVersion}}', project.version)
+    new File('tmp_gh-pages/apidocs/index.html').write(outputContent)
+  }
+}
+
+// Regenerates the gh-pages branch under tmp_gh-pages, which must be committed separately
+task updateDocsWithCurrentVersion {
+  dependsOn 'createApiDocsRedirect'
+}
