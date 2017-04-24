@@ -41,12 +41,12 @@ import java.lang.annotation.Target;
  * containing library, not part of the public API, and should not be used by users of
  * the library.
  *
- * This annotation should be used only on APIs with public visibility. Its existence
+ * This annotation only makes sense on APIs that are not private. Its existence
  * is necessary because Java does not have a visibility level for code within a
  * compilation unit.
  */
 @BetaApi
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target({
   ElementType.ANNOTATION_TYPE,
   ElementType.CONSTRUCTOR,
@@ -56,4 +56,9 @@ import java.lang.annotation.Target;
   ElementType.TYPE
 })
 @Documented
-public @interface InternalApi {}
+public @interface InternalApi {
+  /**
+   * Context information such as "internal to library", "for testing", etc.
+   */
+  String value() default "";
+}

@@ -50,7 +50,8 @@ import java.lang.annotation.Target;
  * <li>Removing this annotation from an API gives it stable status.</li>
  * </ol>
  */
-@Retention(RetentionPolicy.SOURCE)
+@BetaApi
+@Retention(RetentionPolicy.RUNTIME)
 @Target({
   ElementType.ANNOTATION_TYPE,
   ElementType.CONSTRUCTOR,
@@ -62,7 +63,7 @@ import java.lang.annotation.Target;
 @Documented
 public @interface BetaApi {
   /**
-   * Context information such as links to discussion thread, tracking issue etc.
+   * Context information such as links to a discussion thread, tracking issue, etc.
    */
   String value() default "";
 }
