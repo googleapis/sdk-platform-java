@@ -31,6 +31,7 @@
 
 package com.google.api.resourcenames;
 
+import com.google.api.core.BetaApi;
 import com.google.common.base.Preconditions;
 
 /**
@@ -38,6 +39,7 @@ import com.google.common.base.Preconditions;
  * support the case of a resource name string in an unexpected format - generated resource name
  * classes with known formats should be preferred where possible.
  */
+@BetaApi
 public class UntypedResourceName implements ResourceName {
 
   private final String rawValue;

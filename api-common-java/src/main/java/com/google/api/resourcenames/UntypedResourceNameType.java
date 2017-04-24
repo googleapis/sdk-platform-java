@@ -31,7 +31,10 @@
 
 package com.google.api.resourcenames;
 
+import com.google.api.core.BetaApi;
+
 /** The ResourceNameType for {@link UntypedResourceName}. */
+@BetaApi
 public class UntypedResourceNameType implements ResourceNameType {
 
   private static UntypedResourceNameType instance = new UntypedResourceNameType();

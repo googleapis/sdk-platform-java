@@ -31,6 +31,7 @@
 
 package com.google.api.pathtemplate;
 
+import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
@@ -117,6 +118,7 @@ import javax.annotation.Nullable;
  * For the representation of a <em>resource name</em> see {@link TemplatedResourceName}, which is based
  * on path templates.
  */
+@BetaApi
 public class PathTemplate {
 
   /**
