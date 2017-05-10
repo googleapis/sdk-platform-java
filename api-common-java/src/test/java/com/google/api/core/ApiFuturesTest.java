@@ -102,4 +102,19 @@ public class ApiFuturesTest {
     inputFuture2.set(2);
     Truth.assertThat(listFuture.get()).containsExactly(1, 2).inOrder();
   }
+
+  @Test
+  public void testTransformAsync() throws Exception {
+    ApiFuture<Integer> inputFuture = ApiFutures.immediateFuture(0);
+    ApiFuture<Integer> outputFuture =
+        ApiFutures.transformAsync(
+            inputFuture,
+            new ApiAsyncFunction<Integer, Integer>() {
+              @Override
+              public ApiFuture<Integer> apply(Integer input) {
+                return ApiFutures.immediateFuture(input + 1);
+              }
+            });
+    Truth.assertThat(outputFuture.get()).isEqualTo(1);
+  }
 }

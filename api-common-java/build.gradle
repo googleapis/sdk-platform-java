@@ -235,6 +235,12 @@ if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')
   }
 }
 
+gradle.projectsEvaluated {
+  tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+  }
+}
+
 // Formatting tasks
 // ================
 

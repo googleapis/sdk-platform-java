@@ -32,6 +32,7 @@ package com.google.api.core;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
+import com.google.common.util.concurrent.AsyncFunction;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -97,6 +98,21 @@ public final class ApiFutures {
                     return listenableFutureForApiFuture(apiFuture);
                   }
                 })));
+  }
+
+  public static <I, O> ApiFuture<O> transformAsync(
+      ApiFuture<I> input, final ApiAsyncFunction<I, O> function) {
+    ListenableFuture<I> listenableInput = listenableFutureForApiFuture(input);
+    ListenableFuture<O> listenableOutput =
+        Futures.transformAsync(
+            listenableInput,
+            new AsyncFunction<I, O>() {
+              @Override
+              public ListenableFuture<O> apply(I input) throws Exception {
+                return listenableFutureForApiFuture(function.apply(input));
+              }
+            });
+    return new ListenableFutureToApiFuture<>(listenableOutput);
   }
 
   private static <V> ListenableFuture<V> listenableFutureForApiFuture(ApiFuture<V> apiFuture) {
