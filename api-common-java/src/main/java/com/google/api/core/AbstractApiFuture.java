@@ -70,11 +70,11 @@ public abstract class AbstractApiFuture<V> implements ApiFuture<V> {
     return impl.isDone();
   }
 
-  public boolean set(V value) {
+  protected boolean set(V value) {
     return impl.set(value);
   }
 
-  public boolean setException(Throwable throwable) {
+  protected boolean setException(Throwable throwable) {
     return impl.setException(throwable);
   }
 
@@ -87,12 +87,12 @@ public abstract class AbstractApiFuture<V> implements ApiFuture<V> {
 
   private class InternalSettableFuture extends AbstractFuture<V> {
     @Override
-    public boolean set(@Nullable V value) {
+    protected boolean set(@Nullable V value) {
       return super.set(value);
     }
 
     @Override
-    public boolean setException(Throwable throwable) {
+    protected boolean setException(Throwable throwable) {
       return super.setException(throwable);
     }
 

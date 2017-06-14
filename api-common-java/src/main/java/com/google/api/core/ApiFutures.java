@@ -30,6 +30,8 @@
  */
 package com.google.api.core;
 
+import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.AsyncFunction;
@@ -37,6 +39,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import java.util.List;
+import java.util.concurrent.Executor;
 import javax.annotation.Nullable;
 
 /** Static utility methods for the {@link ApiFuture} interface. */
@@ -45,6 +48,11 @@ public final class ApiFutures {
 
   public static <V> void addCallback(
       final ApiFuture<V> future, final ApiFutureCallback<? super V> callback) {
+    addCallback(future, callback, directExecutor());
+  }
+
+  public static <V> void addCallback(
+      final ApiFuture<V> future, final ApiFutureCallback<? super V> callback, Executor executor) {
     Futures.addCallback(
         listenableFutureForApiFuture(future),
         new FutureCallback<V>() {
@@ -57,7 +65,8 @@ public final class ApiFutures {
           public void onSuccess(V v) {
             callback.onSuccess(v);
           }
-        });
+        },
+        executor);
   }
 
   public static <V, X extends Throwable> ApiFuture<V> catching(
@@ -78,6 +87,10 @@ public final class ApiFutures {
 
   public static <V> ApiFuture<V> immediateFailedFuture(Throwable throwable) {
     return new ListenableFutureToApiFuture<V>(Futures.<V>immediateFailedFuture(throwable));
+  }
+
+  public static <V> ApiFuture<V> immediateCancelledFuture() {
+    return new ListenableFutureToApiFuture<V>(Futures.<V>immediateCancelledFuture());
   }
 
   public static <V, X> ApiFuture<X> transform(

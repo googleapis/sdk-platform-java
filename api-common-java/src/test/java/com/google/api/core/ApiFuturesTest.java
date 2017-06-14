@@ -30,9 +30,12 @@
  */
 package com.google.api.core;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.common.collect.ImmutableList;
-import com.google.common.truth.Truth;
 import java.util.List;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
@@ -56,7 +59,7 @@ public class ApiFuturesTest {
           }
         });
     future.set(0);
-    Truth.assertThat(flag.get()).isEqualTo(1);
+    assertThat(flag.get()).isEqualTo(1);
   }
 
   @Test
@@ -73,7 +76,7 @@ public class ApiFuturesTest {
               }
             });
     future.setException(new Exception());
-    Truth.assertThat(fallback.get()).isEqualTo(42);
+    assertThat(fallback.get()).isEqualTo(42);
   }
 
   @Test
@@ -89,7 +92,7 @@ public class ApiFuturesTest {
               }
             });
     inputFuture.set(6);
-    Truth.assertThat(transformedFuture.get()).isEqualTo("6");
+    assertThat(transformedFuture.get()).isEqualTo("6");
   }
 
   @Test
@@ -100,7 +103,7 @@ public class ApiFuturesTest {
         ApiFutures.allAsList(ImmutableList.of(inputFuture1, inputFuture2));
     inputFuture1.set(1);
     inputFuture2.set(2);
-    Truth.assertThat(listFuture.get()).containsExactly(1, 2).inOrder();
+    assertThat(listFuture.get()).containsExactly(1, 2).inOrder();
   }
 
   @Test
@@ -115,6 +118,32 @@ public class ApiFuturesTest {
                 return ApiFutures.immediateFuture(input + 1);
               }
             });
-    Truth.assertThat(outputFuture.get()).isEqualTo(1);
+    assertThat(outputFuture.get()).isEqualTo(1);
+  }
+
+  @Test
+  public void testImmediateFailedFuture() throws InterruptedException {
+    ApiFuture<String> future =
+        ApiFutures.immediateFailedFuture(new IllegalArgumentException("The message"));
+    IllegalArgumentException exception = null;
+    try {
+      future.get();
+    } catch (ExecutionException e) {
+      exception = (IllegalArgumentException) e.getCause();
+    }
+    assertThat(exception).isNotNull();
+    assertThat(exception.getMessage()).isEqualTo("The message");
+  }
+
+  @Test
+  public void testImmediateCancelledFuture() throws InterruptedException, ExecutionException {
+    ApiFuture<String> future = ApiFutures.immediateCancelledFuture();
+    CancellationException exception = null;
+    try {
+      future.get();
+    } catch (CancellationException e) {
+      exception = e;
+    }
+    assertThat(exception).isNotNull();
   }
 }
