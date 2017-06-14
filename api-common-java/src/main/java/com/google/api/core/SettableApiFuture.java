@@ -44,12 +44,12 @@ public final class SettableApiFuture<V> extends AbstractApiFuture<V> {
   }
 
   @Override
-  protected boolean set(V value) {
+  public boolean set(V value) {
     return super.set(value);
   }
 
   @Override
-  protected boolean setException(Throwable throwable) {
+  public boolean setException(Throwable throwable) {
     return super.setException(throwable);
   }
 }
