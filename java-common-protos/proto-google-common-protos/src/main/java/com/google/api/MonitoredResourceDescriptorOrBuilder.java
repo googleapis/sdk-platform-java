@@ -17,7 +17,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * resource name format `"monitoredResourceDescriptors/{type}"`.
    * </pre>
    *
-   * <code>optional string name = 5;</code>
+   * <code>string name = 5;</code>
    */
   java.lang.String getName();
   /**
@@ -30,7 +30,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * resource name format `"monitoredResourceDescriptors/{type}"`.
    * </pre>
    *
-   * <code>optional string name = 5;</code>
+   * <code>string name = 5;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -42,7 +42,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * The maximum length of this value is 256 characters.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   java.lang.String getType();
   /**
@@ -52,7 +52,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * The maximum length of this value is 256 characters.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   com.google.protobuf.ByteString
       getTypeBytes();
@@ -65,7 +65,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * `"Google Cloud SQL Database"`.
    * </pre>
    *
-   * <code>optional string display_name = 2;</code>
+   * <code>string display_name = 2;</code>
    */
   java.lang.String getDisplayName();
   /**
@@ -76,7 +76,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * `"Google Cloud SQL Database"`.
    * </pre>
    *
-   * <code>optional string display_name = 2;</code>
+   * <code>string display_name = 2;</code>
    */
   com.google.protobuf.ByteString
       getDisplayNameBytes();
@@ -87,7 +87,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   java.lang.String getDescription();
   /**
@@ -96,7 +96,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    * be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();

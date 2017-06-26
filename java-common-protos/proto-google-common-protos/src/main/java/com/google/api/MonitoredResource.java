@@ -71,9 +71,10 @@ public  final class MonitoredResource extends
               mutable_bitField0_ |= 0x00000002;
             }
             com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-            labels = input.readMessage(
+            labels__ = input.readMessage(
                 LabelsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-            labels_.getMutableMap().put(labels.getKey(), labels.getValue());
+            labels_.getMutableMap().put(
+                labels__.getKey(), labels__.getValue());
             break;
           }
         }
@@ -120,7 +121,7 @@ public  final class MonitoredResource extends
    * example, the type of a Cloud SQL database is `"cloudsql_database"`.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   public java.lang.String getType() {
     java.lang.Object ref = type_;
@@ -141,7 +142,7 @@ public  final class MonitoredResource extends
    * example, the type of a Cloud SQL database is `"cloudsql_database"`.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
@@ -272,15 +273,12 @@ public  final class MonitoredResource extends
     if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
     }
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
-         : internalGetLabels().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-      labels = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
-          .setKey(entry.getKey())
-          .setValue(entry.getValue())
-          .build();
-      output.writeMessage(2, labels);
-    }
+    com.google.protobuf.GeneratedMessageV3
+      .serializeStringMapTo(
+        output,
+        internalGetLabels(),
+        LabelsDefaultEntryHolder.defaultEntry,
+        2);
   }
 
   public int getSerializedSize() {
@@ -294,12 +292,12 @@ public  final class MonitoredResource extends
     for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
          : internalGetLabels().getMap().entrySet()) {
       com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-      labels = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
+      labels__ = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
           .setKey(entry.getKey())
           .setValue(entry.getValue())
           .build();
       size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, labels);
+          .computeMessageSize(2, labels__);
     }
     memoizedSize = size;
     return size;
@@ -330,7 +328,7 @@ public  final class MonitoredResource extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + getType().hashCode();
     if (!internalGetLabels().getMap().isEmpty()) {
@@ -342,6 +340,17 @@ public  final class MonitoredResource extends
     return hash;
   }
 
+  public static com.google.api.MonitoredResource parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.MonitoredResource parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.MonitoredResource parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -605,7 +614,7 @@ public  final class MonitoredResource extends
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -626,7 +635,7 @@ public  final class MonitoredResource extends
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -648,7 +657,7 @@ public  final class MonitoredResource extends
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder setType(
         java.lang.String value) {
@@ -667,7 +676,7 @@ public  final class MonitoredResource extends
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder clearType() {
       
@@ -682,7 +691,7 @@ public  final class MonitoredResource extends
      * example, the type of a Cloud SQL database is `"cloudsql_database"`.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder setTypeBytes(
         com.google.protobuf.ByteString value) {
@@ -797,7 +806,8 @@ public  final class MonitoredResource extends
     }
 
     public Builder clearLabels() {
-      getMutableLabels().clear();
+      internalGetMutableLabels().getMutableMap()
+          .clear();
       return this;
     }
     /**
@@ -813,7 +823,8 @@ public  final class MonitoredResource extends
     public Builder removeLabels(
         java.lang.String key) {
       if (key == null) { throw new java.lang.NullPointerException(); }
-      getMutableLabels().remove(key);
+      internalGetMutableLabels().getMutableMap()
+          .remove(key);
       return this;
     }
     /**
@@ -838,7 +849,8 @@ public  final class MonitoredResource extends
         java.lang.String value) {
       if (key == null) { throw new java.lang.NullPointerException(); }
       if (value == null) { throw new java.lang.NullPointerException(); }
-      getMutableLabels().put(key, value);
+      internalGetMutableLabels().getMutableMap()
+          .put(key, value);
       return this;
     }
     /**
@@ -853,7 +865,8 @@ public  final class MonitoredResource extends
 
     public Builder putAllLabels(
         java.util.Map<java.lang.String, java.lang.String> values) {
-      getMutableLabels().putAll(values);
+      internalGetMutableLabels().getMutableMap()
+          .putAll(values);
       return this;
     }
     public final Builder setUnknownFields(

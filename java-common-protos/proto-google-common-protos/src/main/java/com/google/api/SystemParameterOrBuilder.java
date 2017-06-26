@@ -12,7 +12,7 @@ public interface SystemParameterOrBuilder extends
    * Define the name of the parameter, such as "api_key" . It is case sensitive.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -20,7 +20,7 @@ public interface SystemParameterOrBuilder extends
    * Define the name of the parameter, such as "api_key" . It is case sensitive.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -31,7 +31,7 @@ public interface SystemParameterOrBuilder extends
    * insensitive.
    * </pre>
    *
-   * <code>optional string http_header = 2;</code>
+   * <code>string http_header = 2;</code>
    */
   java.lang.String getHttpHeader();
   /**
@@ -40,7 +40,7 @@ public interface SystemParameterOrBuilder extends
    * insensitive.
    * </pre>
    *
-   * <code>optional string http_header = 2;</code>
+   * <code>string http_header = 2;</code>
    */
   com.google.protobuf.ByteString
       getHttpHeaderBytes();
@@ -51,7 +51,7 @@ public interface SystemParameterOrBuilder extends
    * sensitive.
    * </pre>
    *
-   * <code>optional string url_query_parameter = 3;</code>
+   * <code>string url_query_parameter = 3;</code>
    */
   java.lang.String getUrlQueryParameter();
   /**
@@ -60,7 +60,7 @@ public interface SystemParameterOrBuilder extends
    * sensitive.
    * </pre>
    *
-   * <code>optional string url_query_parameter = 3;</code>
+   * <code>string url_query_parameter = 3;</code>
    */
   com.google.protobuf.ByteString
       getUrlQueryParameterBytes();

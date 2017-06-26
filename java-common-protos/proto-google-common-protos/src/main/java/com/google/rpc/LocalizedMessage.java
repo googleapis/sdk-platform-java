@@ -93,7 +93,7 @@ public  final class LocalizedMessage extends
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
-   * <code>optional string locale = 1;</code>
+   * <code>string locale = 1;</code>
    */
   public java.lang.String getLocale() {
     java.lang.Object ref = locale_;
@@ -114,7 +114,7 @@ public  final class LocalizedMessage extends
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
-   * <code>optional string locale = 1;</code>
+   * <code>string locale = 1;</code>
    */
   public com.google.protobuf.ByteString
       getLocaleBytes() {
@@ -137,7 +137,7 @@ public  final class LocalizedMessage extends
    * The localized error message in the above locale.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   public java.lang.String getMessage() {
     java.lang.Object ref = message_;
@@ -156,7 +156,7 @@ public  final class LocalizedMessage extends
    * The localized error message in the above locale.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   public com.google.protobuf.ByteString
       getMessageBytes() {
@@ -232,7 +232,7 @@ public  final class LocalizedMessage extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + LOCALE_FIELD_NUMBER;
     hash = (53 * hash) + getLocale().hashCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
@@ -242,6 +242,17 @@ public  final class LocalizedMessage extends
     return hash;
   }
 
+  public static com.google.rpc.LocalizedMessage parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.rpc.LocalizedMessage parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.rpc.LocalizedMessage parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -471,7 +482,7 @@ public  final class LocalizedMessage extends
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
-     * <code>optional string locale = 1;</code>
+     * <code>string locale = 1;</code>
      */
     public java.lang.String getLocale() {
       java.lang.Object ref = locale_;
@@ -492,7 +503,7 @@ public  final class LocalizedMessage extends
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
-     * <code>optional string locale = 1;</code>
+     * <code>string locale = 1;</code>
      */
     public com.google.protobuf.ByteString
         getLocaleBytes() {
@@ -514,7 +525,7 @@ public  final class LocalizedMessage extends
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
-     * <code>optional string locale = 1;</code>
+     * <code>string locale = 1;</code>
      */
     public Builder setLocale(
         java.lang.String value) {
@@ -533,7 +544,7 @@ public  final class LocalizedMessage extends
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
-     * <code>optional string locale = 1;</code>
+     * <code>string locale = 1;</code>
      */
     public Builder clearLocale() {
       
@@ -548,7 +559,7 @@ public  final class LocalizedMessage extends
      * Examples are: "en-US", "fr-CH", "es-MX"
      * </pre>
      *
-     * <code>optional string locale = 1;</code>
+     * <code>string locale = 1;</code>
      */
     public Builder setLocaleBytes(
         com.google.protobuf.ByteString value) {
@@ -568,7 +579,7 @@ public  final class LocalizedMessage extends
      * The localized error message in the above locale.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -587,7 +598,7 @@ public  final class LocalizedMessage extends
      * The localized error message in the above locale.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -607,7 +618,7 @@ public  final class LocalizedMessage extends
      * The localized error message in the above locale.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessage(
         java.lang.String value) {
@@ -624,7 +635,7 @@ public  final class LocalizedMessage extends
      * The localized error message in the above locale.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder clearMessage() {
       
@@ -637,7 +648,7 @@ public  final class LocalizedMessage extends
      * The localized error message in the above locale.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {

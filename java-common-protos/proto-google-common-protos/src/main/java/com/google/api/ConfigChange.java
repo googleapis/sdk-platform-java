@@ -130,7 +130,7 @@ public  final class ConfigChange extends
    * - logging.producer_destinations[0]
    * </pre>
    *
-   * <code>optional string element = 1;</code>
+   * <code>string element = 1;</code>
    */
   public java.lang.String getElement() {
     java.lang.Object ref = element_;
@@ -157,7 +157,7 @@ public  final class ConfigChange extends
    * - logging.producer_destinations[0]
    * </pre>
    *
-   * <code>optional string element = 1;</code>
+   * <code>string element = 1;</code>
    */
   public com.google.protobuf.ByteString
       getElementBytes() {
@@ -181,7 +181,7 @@ public  final class ConfigChange extends
    * in JSON format. This field will not be populated if ChangeType == ADDED.
    * </pre>
    *
-   * <code>optional string old_value = 2;</code>
+   * <code>string old_value = 2;</code>
    */
   public java.lang.String getOldValue() {
     java.lang.Object ref = oldValue_;
@@ -201,7 +201,7 @@ public  final class ConfigChange extends
    * in JSON format. This field will not be populated if ChangeType == ADDED.
    * </pre>
    *
-   * <code>optional string old_value = 2;</code>
+   * <code>string old_value = 2;</code>
    */
   public com.google.protobuf.ByteString
       getOldValueBytes() {
@@ -225,7 +225,7 @@ public  final class ConfigChange extends
    * in JSON format. This field will not be populated if ChangeType == REMOVED.
    * </pre>
    *
-   * <code>optional string new_value = 3;</code>
+   * <code>string new_value = 3;</code>
    */
   public java.lang.String getNewValue() {
     java.lang.Object ref = newValue_;
@@ -245,7 +245,7 @@ public  final class ConfigChange extends
    * in JSON format. This field will not be populated if ChangeType == REMOVED.
    * </pre>
    *
-   * <code>optional string new_value = 3;</code>
+   * <code>string new_value = 3;</code>
    */
   public com.google.protobuf.ByteString
       getNewValueBytes() {
@@ -268,7 +268,7 @@ public  final class ConfigChange extends
    * The type for this change, either ADDED, REMOVED, or MODIFIED.
    * </pre>
    *
-   * <code>optional .google.api.ChangeType change_type = 4;</code>
+   * <code>.google.api.ChangeType change_type = 4;</code>
    */
   public int getChangeTypeValue() {
     return changeType_;
@@ -278,7 +278,7 @@ public  final class ConfigChange extends
    * The type for this change, either ADDED, REMOVED, or MODIFIED.
    * </pre>
    *
-   * <code>optional .google.api.ChangeType change_type = 4;</code>
+   * <code>.google.api.ChangeType change_type = 4;</code>
    */
   public com.google.api.ChangeType getChangeType() {
     com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);
@@ -430,7 +430,7 @@ public  final class ConfigChange extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ELEMENT_FIELD_NUMBER;
     hash = (53 * hash) + getElement().hashCode();
     hash = (37 * hash) + OLD_VALUE_FIELD_NUMBER;
@@ -448,6 +448,17 @@ public  final class ConfigChange extends
     return hash;
   }
 
+  public static com.google.api.ConfigChange parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.ConfigChange parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.ConfigChange parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -745,7 +756,7 @@ public  final class ConfigChange extends
      * - logging.producer_destinations[0]
      * </pre>
      *
-     * <code>optional string element = 1;</code>
+     * <code>string element = 1;</code>
      */
     public java.lang.String getElement() {
       java.lang.Object ref = element_;
@@ -772,7 +783,7 @@ public  final class ConfigChange extends
      * - logging.producer_destinations[0]
      * </pre>
      *
-     * <code>optional string element = 1;</code>
+     * <code>string element = 1;</code>
      */
     public com.google.protobuf.ByteString
         getElementBytes() {
@@ -800,7 +811,7 @@ public  final class ConfigChange extends
      * - logging.producer_destinations[0]
      * </pre>
      *
-     * <code>optional string element = 1;</code>
+     * <code>string element = 1;</code>
      */
     public Builder setElement(
         java.lang.String value) {
@@ -825,7 +836,7 @@ public  final class ConfigChange extends
      * - logging.producer_destinations[0]
      * </pre>
      *
-     * <code>optional string element = 1;</code>
+     * <code>string element = 1;</code>
      */
     public Builder clearElement() {
       
@@ -846,7 +857,7 @@ public  final class ConfigChange extends
      * - logging.producer_destinations[0]
      * </pre>
      *
-     * <code>optional string element = 1;</code>
+     * <code>string element = 1;</code>
      */
     public Builder setElementBytes(
         com.google.protobuf.ByteString value) {
@@ -867,7 +878,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == ADDED.
      * </pre>
      *
-     * <code>optional string old_value = 2;</code>
+     * <code>string old_value = 2;</code>
      */
     public java.lang.String getOldValue() {
       java.lang.Object ref = oldValue_;
@@ -887,7 +898,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == ADDED.
      * </pre>
      *
-     * <code>optional string old_value = 2;</code>
+     * <code>string old_value = 2;</code>
      */
     public com.google.protobuf.ByteString
         getOldValueBytes() {
@@ -908,7 +919,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == ADDED.
      * </pre>
      *
-     * <code>optional string old_value = 2;</code>
+     * <code>string old_value = 2;</code>
      */
     public Builder setOldValue(
         java.lang.String value) {
@@ -926,7 +937,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == ADDED.
      * </pre>
      *
-     * <code>optional string old_value = 2;</code>
+     * <code>string old_value = 2;</code>
      */
     public Builder clearOldValue() {
       
@@ -940,7 +951,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == ADDED.
      * </pre>
      *
-     * <code>optional string old_value = 2;</code>
+     * <code>string old_value = 2;</code>
      */
     public Builder setOldValueBytes(
         com.google.protobuf.ByteString value) {
@@ -961,7 +972,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
      * </pre>
      *
-     * <code>optional string new_value = 3;</code>
+     * <code>string new_value = 3;</code>
      */
     public java.lang.String getNewValue() {
       java.lang.Object ref = newValue_;
@@ -981,7 +992,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
      * </pre>
      *
-     * <code>optional string new_value = 3;</code>
+     * <code>string new_value = 3;</code>
      */
     public com.google.protobuf.ByteString
         getNewValueBytes() {
@@ -1002,7 +1013,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
      * </pre>
      *
-     * <code>optional string new_value = 3;</code>
+     * <code>string new_value = 3;</code>
      */
     public Builder setNewValue(
         java.lang.String value) {
@@ -1020,7 +1031,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
      * </pre>
      *
-     * <code>optional string new_value = 3;</code>
+     * <code>string new_value = 3;</code>
      */
     public Builder clearNewValue() {
       
@@ -1034,7 +1045,7 @@ public  final class ConfigChange extends
      * in JSON format. This field will not be populated if ChangeType == REMOVED.
      * </pre>
      *
-     * <code>optional string new_value = 3;</code>
+     * <code>string new_value = 3;</code>
      */
     public Builder setNewValueBytes(
         com.google.protobuf.ByteString value) {
@@ -1054,7 +1065,7 @@ public  final class ConfigChange extends
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
      * </pre>
      *
-     * <code>optional .google.api.ChangeType change_type = 4;</code>
+     * <code>.google.api.ChangeType change_type = 4;</code>
      */
     public int getChangeTypeValue() {
       return changeType_;
@@ -1064,7 +1075,7 @@ public  final class ConfigChange extends
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
      * </pre>
      *
-     * <code>optional .google.api.ChangeType change_type = 4;</code>
+     * <code>.google.api.ChangeType change_type = 4;</code>
      */
     public Builder setChangeTypeValue(int value) {
       changeType_ = value;
@@ -1076,7 +1087,7 @@ public  final class ConfigChange extends
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
      * </pre>
      *
-     * <code>optional .google.api.ChangeType change_type = 4;</code>
+     * <code>.google.api.ChangeType change_type = 4;</code>
      */
     public com.google.api.ChangeType getChangeType() {
       com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);
@@ -1087,7 +1098,7 @@ public  final class ConfigChange extends
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
      * </pre>
      *
-     * <code>optional .google.api.ChangeType change_type = 4;</code>
+     * <code>.google.api.ChangeType change_type = 4;</code>
      */
     public Builder setChangeType(com.google.api.ChangeType value) {
       if (value == null) {
@@ -1103,7 +1114,7 @@ public  final class ConfigChange extends
      * The type for this change, either ADDED, REMOVED, or MODIFIED.
      * </pre>
      *
-     * <code>optional .google.api.ChangeType change_type = 4;</code>
+     * <code>.google.api.ChangeType change_type = 4;</code>
      */
     public Builder clearChangeType() {
       

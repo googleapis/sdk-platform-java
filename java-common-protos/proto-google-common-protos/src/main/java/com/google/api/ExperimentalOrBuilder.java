@@ -12,7 +12,7 @@ public interface ExperimentalOrBuilder extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   boolean hasAuthorization();
   /**
@@ -20,7 +20,7 @@ public interface ExperimentalOrBuilder extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   com.google.api.AuthorizationConfig getAuthorization();
   /**
@@ -28,7 +28,7 @@ public interface ExperimentalOrBuilder extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   com.google.api.AuthorizationConfigOrBuilder getAuthorizationOrBuilder();
 }

@@ -85,7 +85,7 @@ public  final class Advice extends
    * be taken to mitigate any implied risks.
    * </pre>
    *
-   * <code>optional string description = 2;</code>
+   * <code>string description = 2;</code>
    */
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
@@ -105,7 +105,7 @@ public  final class Advice extends
    * be taken to mitigate any implied risks.
    * </pre>
    *
-   * <code>optional string description = 2;</code>
+   * <code>string description = 2;</code>
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
@@ -173,7 +173,7 @@ public  final class Advice extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
     hash = (53 * hash) + getDescription().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -181,6 +181,17 @@ public  final class Advice extends
     return hash;
   }
 
+  public static com.google.api.Advice parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Advice parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Advice parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -402,7 +413,7 @@ public  final class Advice extends
      * be taken to mitigate any implied risks.
      * </pre>
      *
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -422,7 +433,7 @@ public  final class Advice extends
      * be taken to mitigate any implied risks.
      * </pre>
      *
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
@@ -443,7 +454,7 @@ public  final class Advice extends
      * be taken to mitigate any implied risks.
      * </pre>
      *
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public Builder setDescription(
         java.lang.String value) {
@@ -461,7 +472,7 @@ public  final class Advice extends
      * be taken to mitigate any implied risks.
      * </pre>
      *
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public Builder clearDescription() {
       
@@ -475,7 +486,7 @@ public  final class Advice extends
      * be taken to mitigate any implied risks.
      * </pre>
      *
-     * <code>optional string description = 2;</code>
+     * <code>string description = 2;</code>
      */
     public Builder setDescriptionBytes(
         com.google.protobuf.ByteString value) {

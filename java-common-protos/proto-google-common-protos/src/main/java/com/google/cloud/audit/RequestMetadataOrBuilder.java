@@ -12,7 +12,7 @@ public interface RequestMetadataOrBuilder extends
    * The IP address of the caller.
    * </pre>
    *
-   * <code>optional string caller_ip = 1;</code>
+   * <code>string caller_ip = 1;</code>
    */
   java.lang.String getCallerIp();
   /**
@@ -20,7 +20,7 @@ public interface RequestMetadataOrBuilder extends
    * The IP address of the caller.
    * </pre>
    *
-   * <code>optional string caller_ip = 1;</code>
+   * <code>string caller_ip = 1;</code>
    */
   com.google.protobuf.ByteString
       getCallerIpBytes();
@@ -38,7 +38,7 @@ public interface RequestMetadataOrBuilder extends
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *
-   * <code>optional string caller_supplied_user_agent = 2;</code>
+   * <code>string caller_supplied_user_agent = 2;</code>
    */
   java.lang.String getCallerSuppliedUserAgent();
   /**
@@ -54,7 +54,7 @@ public interface RequestMetadataOrBuilder extends
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *
-   * <code>optional string caller_supplied_user_agent = 2;</code>
+   * <code>string caller_supplied_user_agent = 2;</code>
    */
   com.google.protobuf.ByteString
       getCallerSuppliedUserAgentBytes();

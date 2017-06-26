@@ -14,7 +14,7 @@ public interface UsageRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   java.lang.String getSelector();
   /**
@@ -24,7 +24,7 @@ public interface UsageRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   com.google.protobuf.ByteString
       getSelectorBytes();
@@ -34,7 +34,17 @@ public interface UsageRuleOrBuilder extends
    * True, if the method allows unregistered calls; false otherwise.
    * </pre>
    *
-   * <code>optional bool allow_unregistered_calls = 2;</code>
+   * <code>bool allow_unregistered_calls = 2;</code>
    */
   boolean getAllowUnregisteredCalls();
+
+  /**
+   * <pre>
+   * True, if the method should skip service control. If so, no control plane
+   * feature (like quota and billing) will be enabled.
+   * </pre>
+   *
+   * <code>bool skip_service_control = 3;</code>
+   */
+  boolean getSkipServiceControl();
 }

@@ -12,7 +12,7 @@ public interface HttpRequestOrBuilder extends
    * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
    * </pre>
    *
-   * <code>optional string request_method = 1;</code>
+   * <code>string request_method = 1;</code>
    */
   java.lang.String getRequestMethod();
   /**
@@ -20,7 +20,7 @@ public interface HttpRequestOrBuilder extends
    * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
    * </pre>
    *
-   * <code>optional string request_method = 1;</code>
+   * <code>string request_method = 1;</code>
    */
   com.google.protobuf.ByteString
       getRequestMethodBytes();
@@ -32,7 +32,7 @@ public interface HttpRequestOrBuilder extends
    * Example: `"http://example.com/some/info?color=red"`.
    * </pre>
    *
-   * <code>optional string request_url = 2;</code>
+   * <code>string request_url = 2;</code>
    */
   java.lang.String getRequestUrl();
   /**
@@ -42,7 +42,7 @@ public interface HttpRequestOrBuilder extends
    * Example: `"http://example.com/some/info?color=red"`.
    * </pre>
    *
-   * <code>optional string request_url = 2;</code>
+   * <code>string request_url = 2;</code>
    */
   com.google.protobuf.ByteString
       getRequestUrlBytes();
@@ -53,7 +53,7 @@ public interface HttpRequestOrBuilder extends
    * headers and the request body.
    * </pre>
    *
-   * <code>optional int64 request_size = 3;</code>
+   * <code>int64 request_size = 3;</code>
    */
   long getRequestSize();
 
@@ -63,7 +63,7 @@ public interface HttpRequestOrBuilder extends
    * Examples: 200, 404.
    * </pre>
    *
-   * <code>optional int32 status = 4;</code>
+   * <code>int32 status = 4;</code>
    */
   int getStatus();
 
@@ -73,7 +73,7 @@ public interface HttpRequestOrBuilder extends
    * including the response headers and the response body.
    * </pre>
    *
-   * <code>optional int64 response_size = 5;</code>
+   * <code>int64 response_size = 5;</code>
    */
   long getResponseSize();
 
@@ -83,7 +83,7 @@ public interface HttpRequestOrBuilder extends
    * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
    * </pre>
    *
-   * <code>optional string user_agent = 6;</code>
+   * <code>string user_agent = 6;</code>
    */
   java.lang.String getUserAgent();
   /**
@@ -92,7 +92,7 @@ public interface HttpRequestOrBuilder extends
    * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
    * </pre>
    *
-   * <code>optional string user_agent = 6;</code>
+   * <code>string user_agent = 6;</code>
    */
   com.google.protobuf.ByteString
       getUserAgentBytes();
@@ -103,7 +103,7 @@ public interface HttpRequestOrBuilder extends
    * request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
-   * <code>optional string remote_ip = 7;</code>
+   * <code>string remote_ip = 7;</code>
    */
   java.lang.String getRemoteIp();
   /**
@@ -112,7 +112,7 @@ public interface HttpRequestOrBuilder extends
    * request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
-   * <code>optional string remote_ip = 7;</code>
+   * <code>string remote_ip = 7;</code>
    */
   com.google.protobuf.ByteString
       getRemoteIpBytes();
@@ -123,7 +123,7 @@ public interface HttpRequestOrBuilder extends
    * sent to.
    * </pre>
    *
-   * <code>optional string server_ip = 13;</code>
+   * <code>string server_ip = 13;</code>
    */
   java.lang.String getServerIp();
   /**
@@ -132,7 +132,7 @@ public interface HttpRequestOrBuilder extends
    * sent to.
    * </pre>
    *
-   * <code>optional string server_ip = 13;</code>
+   * <code>string server_ip = 13;</code>
    */
   com.google.protobuf.ByteString
       getServerIpBytes();
@@ -143,7 +143,7 @@ public interface HttpRequestOrBuilder extends
    * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
-   * <code>optional string referer = 8;</code>
+   * <code>string referer = 8;</code>
    */
   java.lang.String getReferer();
   /**
@@ -152,7 +152,7 @@ public interface HttpRequestOrBuilder extends
    * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
-   * <code>optional string referer = 8;</code>
+   * <code>string referer = 8;</code>
    */
   com.google.protobuf.ByteString
       getRefererBytes();
@@ -163,7 +163,7 @@ public interface HttpRequestOrBuilder extends
    * received until the response was sent.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration latency = 14;</code>
+   * <code>.google.protobuf.Duration latency = 14;</code>
    */
   boolean hasLatency();
   /**
@@ -172,7 +172,7 @@ public interface HttpRequestOrBuilder extends
    * received until the response was sent.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration latency = 14;</code>
+   * <code>.google.protobuf.Duration latency = 14;</code>
    */
   com.google.protobuf.Duration getLatency();
   /**
@@ -181,7 +181,7 @@ public interface HttpRequestOrBuilder extends
    * received until the response was sent.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration latency = 14;</code>
+   * <code>.google.protobuf.Duration latency = 14;</code>
    */
   com.google.protobuf.DurationOrBuilder getLatencyOrBuilder();
 
@@ -190,7 +190,7 @@ public interface HttpRequestOrBuilder extends
    * Whether or not a cache lookup was attempted.
    * </pre>
    *
-   * <code>optional bool cache_lookup = 11;</code>
+   * <code>bool cache_lookup = 11;</code>
    */
   boolean getCacheLookup();
 
@@ -200,7 +200,7 @@ public interface HttpRequestOrBuilder extends
    * (with or without validation).
    * </pre>
    *
-   * <code>optional bool cache_hit = 9;</code>
+   * <code>bool cache_hit = 9;</code>
    */
   boolean getCacheHit();
 
@@ -211,7 +211,7 @@ public interface HttpRequestOrBuilder extends
    * True.
    * </pre>
    *
-   * <code>optional bool cache_validated_with_origin_server = 10;</code>
+   * <code>bool cache_validated_with_origin_server = 10;</code>
    */
   boolean getCacheValidatedWithOriginServer();
 
@@ -221,7 +221,7 @@ public interface HttpRequestOrBuilder extends
    * cache fill was attempted.
    * </pre>
    *
-   * <code>optional int64 cache_fill_bytes = 12;</code>
+   * <code>int64 cache_fill_bytes = 12;</code>
    */
   long getCacheFillBytes();
 }

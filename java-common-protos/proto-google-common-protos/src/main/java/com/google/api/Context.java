@@ -207,7 +207,7 @@ public  final class Context extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     if (getRulesCount() > 0) {
       hash = (37 * hash) + RULES_FIELD_NUMBER;
       hash = (53 * hash) + getRulesList().hashCode();
@@ -217,6 +217,17 @@ public  final class Context extends
     return hash;
   }
 
+  public static com.google.api.Context parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Context parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Context parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {

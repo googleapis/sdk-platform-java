@@ -14,7 +14,7 @@ public interface AuthRequirementOrBuilder extends
    *     provider_id: bookstore_auth
    * </pre>
    *
-   * <code>optional string provider_id = 1;</code>
+   * <code>string provider_id = 1;</code>
    */
   java.lang.String getProviderId();
   /**
@@ -24,7 +24,7 @@ public interface AuthRequirementOrBuilder extends
    *     provider_id: bookstore_auth
    * </pre>
    *
-   * <code>optional string provider_id = 1;</code>
+   * <code>string provider_id = 1;</code>
    */
   com.google.protobuf.ByteString
       getProviderIdBytes();
@@ -46,7 +46,7 @@ public interface AuthRequirementOrBuilder extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 2;</code>
+   * <code>string audiences = 2;</code>
    */
   java.lang.String getAudiences();
   /**
@@ -66,7 +66,7 @@ public interface AuthRequirementOrBuilder extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 2;</code>
+   * <code>string audiences = 2;</code>
    */
   com.google.protobuf.ByteString
       getAudiencesBytes();

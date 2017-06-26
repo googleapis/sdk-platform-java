@@ -47,7 +47,7 @@ public interface DebugInfoOrBuilder extends
    * Additional debugging information provided by the server.
    * </pre>
    *
-   * <code>optional string detail = 2;</code>
+   * <code>string detail = 2;</code>
    */
   java.lang.String getDetail();
   /**
@@ -55,7 +55,7 @@ public interface DebugInfoOrBuilder extends
    * Additional debugging information provided by the server.
    * </pre>
    *
-   * <code>optional string detail = 2;</code>
+   * <code>string detail = 2;</code>
    */
   com.google.protobuf.ByteString
       getDetailBytes();

@@ -12,7 +12,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The name of the operation collection.
    * </pre>
    *
-   * <code>optional string name = 4;</code>
+   * <code>string name = 4;</code>
    */
   java.lang.String getName();
   /**
@@ -20,7 +20,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The name of the operation collection.
    * </pre>
    *
-   * <code>optional string name = 4;</code>
+   * <code>string name = 4;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -30,7 +30,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The standard list filter.
    * </pre>
    *
-   * <code>optional string filter = 1;</code>
+   * <code>string filter = 1;</code>
    */
   java.lang.String getFilter();
   /**
@@ -38,7 +38,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The standard list filter.
    * </pre>
    *
-   * <code>optional string filter = 1;</code>
+   * <code>string filter = 1;</code>
    */
   com.google.protobuf.ByteString
       getFilterBytes();
@@ -48,7 +48,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The standard list page size.
    * </pre>
    *
-   * <code>optional int32 page_size = 2;</code>
+   * <code>int32 page_size = 2;</code>
    */
   int getPageSize();
 
@@ -57,7 +57,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The standard list page token.
    * </pre>
    *
-   * <code>optional string page_token = 3;</code>
+   * <code>string page_token = 3;</code>
    */
   java.lang.String getPageToken();
   /**
@@ -65,7 +65,7 @@ public interface ListOperationsRequestOrBuilder extends
    * The standard list page token.
    * </pre>
    *
-   * <code>optional string page_token = 3;</code>
+   * <code>string page_token = 3;</code>
    */
   com.google.protobuf.ByteString
       getPageTokenBytes();

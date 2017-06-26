@@ -12,7 +12,7 @@ public interface RetryInfoOrBuilder extends
    * Clients should wait at least this long between retrying the same request.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration retry_delay = 1;</code>
+   * <code>.google.protobuf.Duration retry_delay = 1;</code>
    */
   boolean hasRetryDelay();
   /**
@@ -20,7 +20,7 @@ public interface RetryInfoOrBuilder extends
    * Clients should wait at least this long between retrying the same request.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration retry_delay = 1;</code>
+   * <code>.google.protobuf.Duration retry_delay = 1;</code>
    */
   com.google.protobuf.Duration getRetryDelay();
   /**
@@ -28,7 +28,7 @@ public interface RetryInfoOrBuilder extends
    * Clients should wait at least this long between retrying the same request.
    * </pre>
    *
-   * <code>optional .google.protobuf.Duration retry_delay = 1;</code>
+   * <code>.google.protobuf.Duration retry_delay = 1;</code>
    */
   com.google.protobuf.DurationOrBuilder getRetryDelayOrBuilder();
 }

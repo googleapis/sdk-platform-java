@@ -177,7 +177,7 @@ public  final class Documentation extends
    * plain text.
    * </pre>
    *
-   * <code>optional string summary = 1;</code>
+   * <code>string summary = 1;</code>
    */
   public java.lang.String getSummary() {
     java.lang.Object ref = summary_;
@@ -197,7 +197,7 @@ public  final class Documentation extends
    * plain text.
    * </pre>
    *
-   * <code>optional string summary = 1;</code>
+   * <code>string summary = 1;</code>
    */
   public com.google.protobuf.ByteString
       getSummaryBytes() {
@@ -335,7 +335,7 @@ public  final class Documentation extends
    * The URL to the root of documentation.
    * </pre>
    *
-   * <code>optional string documentation_root_url = 4;</code>
+   * <code>string documentation_root_url = 4;</code>
    */
   public java.lang.String getDocumentationRootUrl() {
     java.lang.Object ref = documentationRootUrl_;
@@ -354,7 +354,7 @@ public  final class Documentation extends
    * The URL to the root of documentation.
    * </pre>
    *
-   * <code>optional string documentation_root_url = 4;</code>
+   * <code>string documentation_root_url = 4;</code>
    */
   public com.google.protobuf.ByteString
       getDocumentationRootUrlBytes() {
@@ -389,7 +389,7 @@ public  final class Documentation extends
    * Note: you cannot specify both `overview` field and `pages` field.
    * </pre>
    *
-   * <code>optional string overview = 2;</code>
+   * <code>string overview = 2;</code>
    */
   public java.lang.String getOverview() {
     java.lang.Object ref = overview_;
@@ -420,7 +420,7 @@ public  final class Documentation extends
    * Note: you cannot specify both `overview` field and `pages` field.
    * </pre>
    *
-   * <code>optional string overview = 2;</code>
+   * <code>string overview = 2;</code>
    */
   public com.google.protobuf.ByteString
       getOverviewBytes() {
@@ -522,7 +522,7 @@ public  final class Documentation extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + SUMMARY_FIELD_NUMBER;
     hash = (53 * hash) + getSummary().hashCode();
     if (getPagesCount() > 0) {
@@ -542,6 +542,17 @@ public  final class Documentation extends
     return hash;
   }
 
+  public static com.google.api.Documentation parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Documentation parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Documentation parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -916,7 +927,7 @@ public  final class Documentation extends
      * plain text.
      * </pre>
      *
-     * <code>optional string summary = 1;</code>
+     * <code>string summary = 1;</code>
      */
     public java.lang.String getSummary() {
       java.lang.Object ref = summary_;
@@ -936,7 +947,7 @@ public  final class Documentation extends
      * plain text.
      * </pre>
      *
-     * <code>optional string summary = 1;</code>
+     * <code>string summary = 1;</code>
      */
     public com.google.protobuf.ByteString
         getSummaryBytes() {
@@ -957,7 +968,7 @@ public  final class Documentation extends
      * plain text.
      * </pre>
      *
-     * <code>optional string summary = 1;</code>
+     * <code>string summary = 1;</code>
      */
     public Builder setSummary(
         java.lang.String value) {
@@ -975,7 +986,7 @@ public  final class Documentation extends
      * plain text.
      * </pre>
      *
-     * <code>optional string summary = 1;</code>
+     * <code>string summary = 1;</code>
      */
     public Builder clearSummary() {
       
@@ -989,7 +1000,7 @@ public  final class Documentation extends
      * plain text.
      * </pre>
      *
-     * <code>optional string summary = 1;</code>
+     * <code>string summary = 1;</code>
      */
     public Builder setSummaryBytes(
         com.google.protobuf.ByteString value) {
@@ -1651,7 +1662,7 @@ public  final class Documentation extends
      * The URL to the root of documentation.
      * </pre>
      *
-     * <code>optional string documentation_root_url = 4;</code>
+     * <code>string documentation_root_url = 4;</code>
      */
     public java.lang.String getDocumentationRootUrl() {
       java.lang.Object ref = documentationRootUrl_;
@@ -1670,7 +1681,7 @@ public  final class Documentation extends
      * The URL to the root of documentation.
      * </pre>
      *
-     * <code>optional string documentation_root_url = 4;</code>
+     * <code>string documentation_root_url = 4;</code>
      */
     public com.google.protobuf.ByteString
         getDocumentationRootUrlBytes() {
@@ -1690,7 +1701,7 @@ public  final class Documentation extends
      * The URL to the root of documentation.
      * </pre>
      *
-     * <code>optional string documentation_root_url = 4;</code>
+     * <code>string documentation_root_url = 4;</code>
      */
     public Builder setDocumentationRootUrl(
         java.lang.String value) {
@@ -1707,7 +1718,7 @@ public  final class Documentation extends
      * The URL to the root of documentation.
      * </pre>
      *
-     * <code>optional string documentation_root_url = 4;</code>
+     * <code>string documentation_root_url = 4;</code>
      */
     public Builder clearDocumentationRootUrl() {
       
@@ -1720,7 +1731,7 @@ public  final class Documentation extends
      * The URL to the root of documentation.
      * </pre>
      *
-     * <code>optional string documentation_root_url = 4;</code>
+     * <code>string documentation_root_url = 4;</code>
      */
     public Builder setDocumentationRootUrlBytes(
         com.google.protobuf.ByteString value) {
@@ -1752,7 +1763,7 @@ public  final class Documentation extends
      * Note: you cannot specify both `overview` field and `pages` field.
      * </pre>
      *
-     * <code>optional string overview = 2;</code>
+     * <code>string overview = 2;</code>
      */
     public java.lang.String getOverview() {
       java.lang.Object ref = overview_;
@@ -1783,7 +1794,7 @@ public  final class Documentation extends
      * Note: you cannot specify both `overview` field and `pages` field.
      * </pre>
      *
-     * <code>optional string overview = 2;</code>
+     * <code>string overview = 2;</code>
      */
     public com.google.protobuf.ByteString
         getOverviewBytes() {
@@ -1815,7 +1826,7 @@ public  final class Documentation extends
      * Note: you cannot specify both `overview` field and `pages` field.
      * </pre>
      *
-     * <code>optional string overview = 2;</code>
+     * <code>string overview = 2;</code>
      */
     public Builder setOverview(
         java.lang.String value) {
@@ -1844,7 +1855,7 @@ public  final class Documentation extends
      * Note: you cannot specify both `overview` field and `pages` field.
      * </pre>
      *
-     * <code>optional string overview = 2;</code>
+     * <code>string overview = 2;</code>
      */
     public Builder clearOverview() {
       
@@ -1869,7 +1880,7 @@ public  final class Documentation extends
      * Note: you cannot specify both `overview` field and `pages` field.
      * </pre>
      *
-     * <code>optional string overview = 2;</code>
+     * <code>string overview = 2;</code>
      */
     public Builder setOverviewBytes(
         com.google.protobuf.ByteString value) {

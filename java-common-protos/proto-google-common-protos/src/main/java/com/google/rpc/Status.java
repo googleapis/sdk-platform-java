@@ -141,7 +141,7 @@ public  final class Status extends
    * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
    * </pre>
    *
-   * <code>optional int32 code = 1;</code>
+   * <code>int32 code = 1;</code>
    */
   public int getCode() {
     return code_;
@@ -156,7 +156,7 @@ public  final class Status extends
    * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   public java.lang.String getMessage() {
     java.lang.Object ref = message_;
@@ -177,7 +177,7 @@ public  final class Status extends
    * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   public com.google.protobuf.ByteString
       getMessageBytes() {
@@ -323,7 +323,7 @@ public  final class Status extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + CODE_FIELD_NUMBER;
     hash = (53 * hash) + getCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
@@ -337,6 +337,17 @@ public  final class Status extends
     return hash;
   }
 
+  public static com.google.rpc.Status parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.rpc.Status parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.rpc.Status parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -646,7 +657,7 @@ public  final class Status extends
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
-     * <code>optional int32 code = 1;</code>
+     * <code>int32 code = 1;</code>
      */
     public int getCode() {
       return code_;
@@ -656,7 +667,7 @@ public  final class Status extends
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
-     * <code>optional int32 code = 1;</code>
+     * <code>int32 code = 1;</code>
      */
     public Builder setCode(int value) {
       
@@ -669,7 +680,7 @@ public  final class Status extends
      * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
-     * <code>optional int32 code = 1;</code>
+     * <code>int32 code = 1;</code>
      */
     public Builder clearCode() {
       
@@ -686,7 +697,7 @@ public  final class Status extends
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public java.lang.String getMessage() {
       java.lang.Object ref = message_;
@@ -707,7 +718,7 @@ public  final class Status extends
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
@@ -729,7 +740,7 @@ public  final class Status extends
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessage(
         java.lang.String value) {
@@ -748,7 +759,7 @@ public  final class Status extends
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder clearMessage() {
       
@@ -763,7 +774,7 @@ public  final class Status extends
      * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
      * </pre>
      *
-     * <code>optional string message = 2;</code>
+     * <code>string message = 2;</code>
      */
     public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {

@@ -136,8 +136,7 @@ public enum ChangeType
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return com.google.api.ConfigChangeProto.getDescriptor()
-        .getEnumTypes().get(0);
+    return com.google.api.ConfigChangeProto.getDescriptor().getEnumTypes().get(0);
   }
 
   private static final ChangeType[] VALUES = values();

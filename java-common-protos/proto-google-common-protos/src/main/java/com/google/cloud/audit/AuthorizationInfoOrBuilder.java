@@ -13,7 +13,7 @@ public interface AuthorizationInfoOrBuilder extends
    *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
-   * <code>optional string resource = 1;</code>
+   * <code>string resource = 1;</code>
    */
   java.lang.String getResource();
   /**
@@ -22,7 +22,7 @@ public interface AuthorizationInfoOrBuilder extends
    *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
-   * <code>optional string resource = 1;</code>
+   * <code>string resource = 1;</code>
    */
   com.google.protobuf.ByteString
       getResourceBytes();
@@ -32,7 +32,7 @@ public interface AuthorizationInfoOrBuilder extends
    * The required IAM permission.
    * </pre>
    *
-   * <code>optional string permission = 2;</code>
+   * <code>string permission = 2;</code>
    */
   java.lang.String getPermission();
   /**
@@ -40,7 +40,7 @@ public interface AuthorizationInfoOrBuilder extends
    * The required IAM permission.
    * </pre>
    *
-   * <code>optional string permission = 2;</code>
+   * <code>string permission = 2;</code>
    */
   com.google.protobuf.ByteString
       getPermissionBytes();
@@ -51,7 +51,7 @@ public interface AuthorizationInfoOrBuilder extends
    * was granted.
    * </pre>
    *
-   * <code>optional bool granted = 3;</code>
+   * <code>bool granted = 3;</code>
    */
   boolean getGranted();
 }

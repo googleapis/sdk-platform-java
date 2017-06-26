@@ -38,6 +38,7 @@ public  final class UsageRule extends
   private UsageRule() {
     selector_ = "";
     allowUnregisteredCalls_ = false;
+    skipServiceControl_ = false;
   }
 
   @java.lang.Override
@@ -76,6 +77,11 @@ public  final class UsageRule extends
             allowUnregisteredCalls_ = input.readBool();
             break;
           }
+          case 24: {
+
+            skipServiceControl_ = input.readBool();
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -108,7 +114,7 @@ public  final class UsageRule extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
@@ -129,7 +135,7 @@ public  final class UsageRule extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
@@ -152,10 +158,24 @@ public  final class UsageRule extends
    * True, if the method allows unregistered calls; false otherwise.
    * </pre>
    *
-   * <code>optional bool allow_unregistered_calls = 2;</code>
+   * <code>bool allow_unregistered_calls = 2;</code>
    */
   public boolean getAllowUnregisteredCalls() {
     return allowUnregisteredCalls_;
+  }
+
+  public static final int SKIP_SERVICE_CONTROL_FIELD_NUMBER = 3;
+  private boolean skipServiceControl_;
+  /**
+   * <pre>
+   * True, if the method should skip service control. If so, no control plane
+   * feature (like quota and billing) will be enabled.
+   * </pre>
+   *
+   * <code>bool skip_service_control = 3;</code>
+   */
+  public boolean getSkipServiceControl() {
+    return skipServiceControl_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -176,6 +196,9 @@ public  final class UsageRule extends
     if (allowUnregisteredCalls_ != false) {
       output.writeBool(2, allowUnregisteredCalls_);
     }
+    if (skipServiceControl_ != false) {
+      output.writeBool(3, skipServiceControl_);
+    }
   }
 
   public int getSerializedSize() {
@@ -189,6 +212,10 @@ public  final class UsageRule extends
     if (allowUnregisteredCalls_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(2, allowUnregisteredCalls_);
+    }
+    if (skipServiceControl_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(3, skipServiceControl_);
     }
     memoizedSize = size;
     return size;
@@ -210,6 +237,8 @@ public  final class UsageRule extends
         .equals(other.getSelector());
     result = result && (getAllowUnregisteredCalls()
         == other.getAllowUnregisteredCalls());
+    result = result && (getSkipServiceControl()
+        == other.getSkipServiceControl());
     return result;
   }
 
@@ -219,17 +248,31 @@ public  final class UsageRule extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + SELECTOR_FIELD_NUMBER;
     hash = (53 * hash) + getSelector().hashCode();
     hash = (37 * hash) + ALLOW_UNREGISTERED_CALLS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getAllowUnregisteredCalls());
+    hash = (37 * hash) + SKIP_SERVICE_CONTROL_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getSkipServiceControl());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
+  public static com.google.api.UsageRule parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.UsageRule parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.UsageRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -368,6 +411,8 @@ public  final class UsageRule extends
 
       allowUnregisteredCalls_ = false;
 
+      skipServiceControl_ = false;
+
       return this;
     }
 
@@ -392,6 +437,7 @@ public  final class UsageRule extends
       com.google.api.UsageRule result = new com.google.api.UsageRule(this);
       result.selector_ = selector_;
       result.allowUnregisteredCalls_ = allowUnregisteredCalls_;
+      result.skipServiceControl_ = skipServiceControl_;
       onBuilt();
       return result;
     }
@@ -440,6 +486,9 @@ public  final class UsageRule extends
       if (other.getAllowUnregisteredCalls() != false) {
         setAllowUnregisteredCalls(other.getAllowUnregisteredCalls());
       }
+      if (other.getSkipServiceControl() != false) {
+        setSkipServiceControl(other.getSkipServiceControl());
+      }
       onChanged();
       return this;
     }
@@ -474,7 +523,7 @@ public  final class UsageRule extends
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
-     * <code>optional string selector = 1;</code>
+     * <code>string selector = 1;</code>
      */
     public java.lang.String getSelector() {
       java.lang.Object ref = selector_;
@@ -495,7 +544,7 @@ public  final class UsageRule extends
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
-     * <code>optional string selector = 1;</code>
+     * <code>string selector = 1;</code>
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
@@ -517,7 +566,7 @@ public  final class UsageRule extends
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
-     * <code>optional string selector = 1;</code>
+     * <code>string selector = 1;</code>
      */
     public Builder setSelector(
         java.lang.String value) {
@@ -536,7 +585,7 @@ public  final class UsageRule extends
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
-     * <code>optional string selector = 1;</code>
+     * <code>string selector = 1;</code>
      */
     public Builder clearSelector() {
       
@@ -551,7 +600,7 @@ public  final class UsageRule extends
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
      * </pre>
      *
-     * <code>optional string selector = 1;</code>
+     * <code>string selector = 1;</code>
      */
     public Builder setSelectorBytes(
         com.google.protobuf.ByteString value) {
@@ -571,7 +620,7 @@ public  final class UsageRule extends
      * True, if the method allows unregistered calls; false otherwise.
      * </pre>
      *
-     * <code>optional bool allow_unregistered_calls = 2;</code>
+     * <code>bool allow_unregistered_calls = 2;</code>
      */
     public boolean getAllowUnregisteredCalls() {
       return allowUnregisteredCalls_;
@@ -581,7 +630,7 @@ public  final class UsageRule extends
      * True, if the method allows unregistered calls; false otherwise.
      * </pre>
      *
-     * <code>optional bool allow_unregistered_calls = 2;</code>
+     * <code>bool allow_unregistered_calls = 2;</code>
      */
     public Builder setAllowUnregisteredCalls(boolean value) {
       
@@ -594,11 +643,52 @@ public  final class UsageRule extends
      * True, if the method allows unregistered calls; false otherwise.
      * </pre>
      *
-     * <code>optional bool allow_unregistered_calls = 2;</code>
+     * <code>bool allow_unregistered_calls = 2;</code>
      */
     public Builder clearAllowUnregisteredCalls() {
       
       allowUnregisteredCalls_ = false;
+      onChanged();
+      return this;
+    }
+
+    private boolean skipServiceControl_ ;
+    /**
+     * <pre>
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     * </pre>
+     *
+     * <code>bool skip_service_control = 3;</code>
+     */
+    public boolean getSkipServiceControl() {
+      return skipServiceControl_;
+    }
+    /**
+     * <pre>
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     * </pre>
+     *
+     * <code>bool skip_service_control = 3;</code>
+     */
+    public Builder setSkipServiceControl(boolean value) {
+      
+      skipServiceControl_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * True, if the method should skip service control. If so, no control plane
+     * feature (like quota and billing) will be enabled.
+     * </pre>
+     *
+     * <code>bool skip_service_control = 3;</code>
+     */
+    public Builder clearSkipServiceControl() {
+      
+      skipServiceControl_ = false;
       onChanged();
       return this;
     }

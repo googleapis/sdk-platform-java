@@ -14,7 +14,7 @@ public interface ResourceInfoOrBuilder extends
    * of the resource: e.g. "type.googleapis.com/google.pubsub.v1.Topic".
    * </pre>
    *
-   * <code>optional string resource_type = 1;</code>
+   * <code>string resource_type = 1;</code>
    */
   java.lang.String getResourceType();
   /**
@@ -24,7 +24,7 @@ public interface ResourceInfoOrBuilder extends
    * of the resource: e.g. "type.googleapis.com/google.pubsub.v1.Topic".
    * </pre>
    *
-   * <code>optional string resource_type = 1;</code>
+   * <code>string resource_type = 1;</code>
    */
   com.google.protobuf.ByteString
       getResourceTypeBytes();
@@ -36,7 +36,7 @@ public interface ResourceInfoOrBuilder extends
    * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
-   * <code>optional string resource_name = 2;</code>
+   * <code>string resource_name = 2;</code>
    */
   java.lang.String getResourceName();
   /**
@@ -46,7 +46,7 @@ public interface ResourceInfoOrBuilder extends
    * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
-   * <code>optional string resource_name = 2;</code>
+   * <code>string resource_name = 2;</code>
    */
   com.google.protobuf.ByteString
       getResourceNameBytes();
@@ -58,7 +58,7 @@ public interface ResourceInfoOrBuilder extends
    * id&gt;".
    * </pre>
    *
-   * <code>optional string owner = 3;</code>
+   * <code>string owner = 3;</code>
    */
   java.lang.String getOwner();
   /**
@@ -68,7 +68,7 @@ public interface ResourceInfoOrBuilder extends
    * id&gt;".
    * </pre>
    *
-   * <code>optional string owner = 3;</code>
+   * <code>string owner = 3;</code>
    */
   com.google.protobuf.ByteString
       getOwnerBytes();
@@ -80,7 +80,7 @@ public interface ResourceInfoOrBuilder extends
    * on the developer console project.
    * </pre>
    *
-   * <code>optional string description = 4;</code>
+   * <code>string description = 4;</code>
    */
   java.lang.String getDescription();
   /**
@@ -90,7 +90,7 @@ public interface ResourceInfoOrBuilder extends
    * on the developer console project.
    * </pre>
    *
-   * <code>optional string description = 4;</code>
+   * <code>string description = 4;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();

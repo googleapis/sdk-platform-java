@@ -14,7 +14,7 @@ public interface LocalizedMessageOrBuilder extends
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
-   * <code>optional string locale = 1;</code>
+   * <code>string locale = 1;</code>
    */
   java.lang.String getLocale();
   /**
@@ -24,7 +24,7 @@ public interface LocalizedMessageOrBuilder extends
    * Examples are: "en-US", "fr-CH", "es-MX"
    * </pre>
    *
-   * <code>optional string locale = 1;</code>
+   * <code>string locale = 1;</code>
    */
   com.google.protobuf.ByteString
       getLocaleBytes();
@@ -34,7 +34,7 @@ public interface LocalizedMessageOrBuilder extends
    * The localized error message in the above locale.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   java.lang.String getMessage();
   /**
@@ -42,7 +42,7 @@ public interface LocalizedMessageOrBuilder extends
    * The localized error message in the above locale.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   com.google.protobuf.ByteString
       getMessageBytes();

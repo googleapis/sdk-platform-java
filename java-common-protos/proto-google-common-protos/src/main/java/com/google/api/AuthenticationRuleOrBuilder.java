@@ -13,7 +13,7 @@ public interface AuthenticationRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   java.lang.String getSelector();
   /**
@@ -22,7 +22,7 @@ public interface AuthenticationRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   com.google.protobuf.ByteString
       getSelectorBytes();
@@ -32,7 +32,7 @@ public interface AuthenticationRuleOrBuilder extends
    * The requirements for OAuth credentials.
    * </pre>
    *
-   * <code>optional .google.api.OAuthRequirements oauth = 2;</code>
+   * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
   boolean hasOauth();
   /**
@@ -40,7 +40,7 @@ public interface AuthenticationRuleOrBuilder extends
    * The requirements for OAuth credentials.
    * </pre>
    *
-   * <code>optional .google.api.OAuthRequirements oauth = 2;</code>
+   * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
   com.google.api.OAuthRequirements getOauth();
   /**
@@ -48,7 +48,7 @@ public interface AuthenticationRuleOrBuilder extends
    * The requirements for OAuth credentials.
    * </pre>
    *
-   * <code>optional .google.api.OAuthRequirements oauth = 2;</code>
+   * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
   com.google.api.OAuthRequirementsOrBuilder getOauthOrBuilder();
 
@@ -62,7 +62,7 @@ public interface AuthenticationRuleOrBuilder extends
    * project.
    * </pre>
    *
-   * <code>optional bool allow_without_credential = 5;</code>
+   * <code>bool allow_without_credential = 5;</code>
    */
   boolean getAllowWithoutCredential();
 

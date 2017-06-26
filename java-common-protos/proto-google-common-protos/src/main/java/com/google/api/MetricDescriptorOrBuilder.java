@@ -18,7 +18,7 @@ public interface MetricDescriptorOrBuilder extends
    *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -32,7 +32,7 @@ public interface MetricDescriptorOrBuilder extends
    *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -47,7 +47,7 @@ public interface MetricDescriptorOrBuilder extends
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
-   * <code>optional string type = 8;</code>
+   * <code>string type = 8;</code>
    */
   java.lang.String getType();
   /**
@@ -60,7 +60,7 @@ public interface MetricDescriptorOrBuilder extends
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
-   * <code>optional string type = 8;</code>
+   * <code>string type = 8;</code>
    */
   com.google.protobuf.ByteString
       getTypeBytes();
@@ -140,7 +140,7 @@ public interface MetricDescriptorOrBuilder extends
    * Some combinations of `metric_kind` and `value_type` might not be supported.
    * </pre>
    *
-   * <code>optional .google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+   * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
    */
   int getMetricKindValue();
   /**
@@ -149,7 +149,7 @@ public interface MetricDescriptorOrBuilder extends
    * Some combinations of `metric_kind` and `value_type` might not be supported.
    * </pre>
    *
-   * <code>optional .google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
+   * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
    */
   com.google.api.MetricDescriptor.MetricKind getMetricKind();
 
@@ -159,7 +159,7 @@ public interface MetricDescriptorOrBuilder extends
    * Some combinations of `metric_kind` and `value_type` might not be supported.
    * </pre>
    *
-   * <code>optional .google.api.MetricDescriptor.ValueType value_type = 4;</code>
+   * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
    */
   int getValueTypeValue();
   /**
@@ -168,7 +168,7 @@ public interface MetricDescriptorOrBuilder extends
    * Some combinations of `metric_kind` and `value_type` might not be supported.
    * </pre>
    *
-   * <code>optional .google.api.MetricDescriptor.ValueType value_type = 4;</code>
+   * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
    */
   com.google.api.MetricDescriptor.ValueType getValueType();
 
@@ -226,7 +226,7 @@ public interface MetricDescriptorOrBuilder extends
    *    containing '{' or '}'.
    * </pre>
    *
-   * <code>optional string unit = 5;</code>
+   * <code>string unit = 5;</code>
    */
   java.lang.String getUnit();
   /**
@@ -283,7 +283,7 @@ public interface MetricDescriptorOrBuilder extends
    *    containing '{' or '}'.
    * </pre>
    *
-   * <code>optional string unit = 5;</code>
+   * <code>string unit = 5;</code>
    */
   com.google.protobuf.ByteString
       getUnitBytes();
@@ -293,7 +293,7 @@ public interface MetricDescriptorOrBuilder extends
    * A detailed description of the metric, which can be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 6;</code>
+   * <code>string description = 6;</code>
    */
   java.lang.String getDescription();
   /**
@@ -301,7 +301,7 @@ public interface MetricDescriptorOrBuilder extends
    * A detailed description of the metric, which can be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 6;</code>
+   * <code>string description = 6;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();
@@ -312,7 +312,7 @@ public interface MetricDescriptorOrBuilder extends
    * Use sentence case without an ending period, for example "Request count".
    * </pre>
    *
-   * <code>optional string display_name = 7;</code>
+   * <code>string display_name = 7;</code>
    */
   java.lang.String getDisplayName();
   /**
@@ -321,7 +321,7 @@ public interface MetricDescriptorOrBuilder extends
    * Use sentence case without an ending period, for example "Request count".
    * </pre>
    *
-   * <code>optional string display_name = 7;</code>
+   * <code>string display_name = 7;</code>
    */
   com.google.protobuf.ByteString
       getDisplayNameBytes();

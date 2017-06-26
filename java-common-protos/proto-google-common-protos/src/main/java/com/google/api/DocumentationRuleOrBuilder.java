@@ -17,7 +17,7 @@ public interface DocumentationRuleOrBuilder extends
    * is used.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   java.lang.String getSelector();
   /**
@@ -30,7 +30,7 @@ public interface DocumentationRuleOrBuilder extends
    * is used.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   com.google.protobuf.ByteString
       getSelectorBytes();
@@ -40,7 +40,7 @@ public interface DocumentationRuleOrBuilder extends
    * Description of the selected API(s).
    * </pre>
    *
-   * <code>optional string description = 2;</code>
+   * <code>string description = 2;</code>
    */
   java.lang.String getDescription();
   /**
@@ -48,7 +48,7 @@ public interface DocumentationRuleOrBuilder extends
    * Description of the selected API(s).
    * </pre>
    *
-   * <code>optional string description = 2;</code>
+   * <code>string description = 2;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();
@@ -59,7 +59,7 @@ public interface DocumentationRuleOrBuilder extends
    * element is marked as `deprecated`.
    * </pre>
    *
-   * <code>optional string deprecation_description = 3;</code>
+   * <code>string deprecation_description = 3;</code>
    */
   java.lang.String getDeprecationDescription();
   /**
@@ -68,7 +68,7 @@ public interface DocumentationRuleOrBuilder extends
    * element is marked as `deprecated`.
    * </pre>
    *
-   * <code>optional string deprecation_description = 3;</code>
+   * <code>string deprecation_description = 3;</code>
    */
   com.google.protobuf.ByteString
       getDeprecationDescriptionBytes();

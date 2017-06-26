@@ -90,7 +90,7 @@ public  final class CustomHttpPattern extends
    * The name of this custom HTTP verb.
    * </pre>
    *
-   * <code>optional string kind = 1;</code>
+   * <code>string kind = 1;</code>
    */
   public java.lang.String getKind() {
     java.lang.Object ref = kind_;
@@ -109,7 +109,7 @@ public  final class CustomHttpPattern extends
    * The name of this custom HTTP verb.
    * </pre>
    *
-   * <code>optional string kind = 1;</code>
+   * <code>string kind = 1;</code>
    */
   public com.google.protobuf.ByteString
       getKindBytes() {
@@ -132,7 +132,7 @@ public  final class CustomHttpPattern extends
    * The path matched by this custom verb.
    * </pre>
    *
-   * <code>optional string path = 2;</code>
+   * <code>string path = 2;</code>
    */
   public java.lang.String getPath() {
     java.lang.Object ref = path_;
@@ -151,7 +151,7 @@ public  final class CustomHttpPattern extends
    * The path matched by this custom verb.
    * </pre>
    *
-   * <code>optional string path = 2;</code>
+   * <code>string path = 2;</code>
    */
   public com.google.protobuf.ByteString
       getPathBytes() {
@@ -227,7 +227,7 @@ public  final class CustomHttpPattern extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + KIND_FIELD_NUMBER;
     hash = (53 * hash) + getKind().hashCode();
     hash = (37 * hash) + PATH_FIELD_NUMBER;
@@ -237,6 +237,17 @@ public  final class CustomHttpPattern extends
     return hash;
   }
 
+  public static com.google.api.CustomHttpPattern parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.CustomHttpPattern parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.CustomHttpPattern parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -463,7 +474,7 @@ public  final class CustomHttpPattern extends
      * The name of this custom HTTP verb.
      * </pre>
      *
-     * <code>optional string kind = 1;</code>
+     * <code>string kind = 1;</code>
      */
     public java.lang.String getKind() {
       java.lang.Object ref = kind_;
@@ -482,7 +493,7 @@ public  final class CustomHttpPattern extends
      * The name of this custom HTTP verb.
      * </pre>
      *
-     * <code>optional string kind = 1;</code>
+     * <code>string kind = 1;</code>
      */
     public com.google.protobuf.ByteString
         getKindBytes() {
@@ -502,7 +513,7 @@ public  final class CustomHttpPattern extends
      * The name of this custom HTTP verb.
      * </pre>
      *
-     * <code>optional string kind = 1;</code>
+     * <code>string kind = 1;</code>
      */
     public Builder setKind(
         java.lang.String value) {
@@ -519,7 +530,7 @@ public  final class CustomHttpPattern extends
      * The name of this custom HTTP verb.
      * </pre>
      *
-     * <code>optional string kind = 1;</code>
+     * <code>string kind = 1;</code>
      */
     public Builder clearKind() {
       
@@ -532,7 +543,7 @@ public  final class CustomHttpPattern extends
      * The name of this custom HTTP verb.
      * </pre>
      *
-     * <code>optional string kind = 1;</code>
+     * <code>string kind = 1;</code>
      */
     public Builder setKindBytes(
         com.google.protobuf.ByteString value) {
@@ -552,7 +563,7 @@ public  final class CustomHttpPattern extends
      * The path matched by this custom verb.
      * </pre>
      *
-     * <code>optional string path = 2;</code>
+     * <code>string path = 2;</code>
      */
     public java.lang.String getPath() {
       java.lang.Object ref = path_;
@@ -571,7 +582,7 @@ public  final class CustomHttpPattern extends
      * The path matched by this custom verb.
      * </pre>
      *
-     * <code>optional string path = 2;</code>
+     * <code>string path = 2;</code>
      */
     public com.google.protobuf.ByteString
         getPathBytes() {
@@ -591,7 +602,7 @@ public  final class CustomHttpPattern extends
      * The path matched by this custom verb.
      * </pre>
      *
-     * <code>optional string path = 2;</code>
+     * <code>string path = 2;</code>
      */
     public Builder setPath(
         java.lang.String value) {
@@ -608,7 +619,7 @@ public  final class CustomHttpPattern extends
      * The path matched by this custom verb.
      * </pre>
      *
-     * <code>optional string path = 2;</code>
+     * <code>string path = 2;</code>
      */
     public Builder clearPath() {
       
@@ -621,7 +632,7 @@ public  final class CustomHttpPattern extends
      * The path matched by this custom verb.
      * </pre>
      *
-     * <code>optional string path = 2;</code>
+     * <code>string path = 2;</code>
      */
     public Builder setPathBytes(
         com.google.protobuf.ByteString value) {

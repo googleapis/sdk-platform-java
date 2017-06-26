@@ -13,7 +13,7 @@ public interface RequestInfoOrBuilder extends
    * it. For example, it can be used to identify requests in the service's logs.
    * </pre>
    *
-   * <code>optional string request_id = 1;</code>
+   * <code>string request_id = 1;</code>
    */
   java.lang.String getRequestId();
   /**
@@ -22,7 +22,7 @@ public interface RequestInfoOrBuilder extends
    * it. For example, it can be used to identify requests in the service's logs.
    * </pre>
    *
-   * <code>optional string request_id = 1;</code>
+   * <code>string request_id = 1;</code>
    */
   com.google.protobuf.ByteString
       getRequestIdBytes();
@@ -33,7 +33,7 @@ public interface RequestInfoOrBuilder extends
    * stack trace that can be sent back to the service provider for debugging.
    * </pre>
    *
-   * <code>optional string serving_data = 2;</code>
+   * <code>string serving_data = 2;</code>
    */
   java.lang.String getServingData();
   /**
@@ -42,7 +42,7 @@ public interface RequestInfoOrBuilder extends
    * stack trace that can be sent back to the service provider for debugging.
    * </pre>
    *
-   * <code>optional string serving_data = 2;</code>
+   * <code>string serving_data = 2;</code>
    */
   com.google.protobuf.ByteString
       getServingDataBytes();

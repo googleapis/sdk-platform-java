@@ -25,7 +25,7 @@ public interface PageOrBuilder extends
    * `[Java][Tutorial.Java]`.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -46,7 +46,7 @@ public interface PageOrBuilder extends
    * `[Java][Tutorial.Java]`.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -57,7 +57,7 @@ public interface PageOrBuilder extends
    * to include content from a Markdown file.
    * </pre>
    *
-   * <code>optional string content = 2;</code>
+   * <code>string content = 2;</code>
    */
   java.lang.String getContent();
   /**
@@ -66,7 +66,7 @@ public interface PageOrBuilder extends
    * to include content from a Markdown file.
    * </pre>
    *
-   * <code>optional string content = 2;</code>
+   * <code>string content = 2;</code>
    */
   com.google.protobuf.ByteString
       getContentBytes();

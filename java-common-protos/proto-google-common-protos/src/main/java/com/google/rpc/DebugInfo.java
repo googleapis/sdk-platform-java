@@ -142,7 +142,7 @@ public  final class DebugInfo extends
    * Additional debugging information provided by the server.
    * </pre>
    *
-   * <code>optional string detail = 2;</code>
+   * <code>string detail = 2;</code>
    */
   public java.lang.String getDetail() {
     java.lang.Object ref = detail_;
@@ -161,7 +161,7 @@ public  final class DebugInfo extends
    * Additional debugging information provided by the server.
    * </pre>
    *
-   * <code>optional string detail = 2;</code>
+   * <code>string detail = 2;</code>
    */
   public com.google.protobuf.ByteString
       getDetailBytes() {
@@ -242,7 +242,7 @@ public  final class DebugInfo extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     if (getStackEntriesCount() > 0) {
       hash = (37 * hash) + STACK_ENTRIES_FIELD_NUMBER;
       hash = (53 * hash) + getStackEntriesList().hashCode();
@@ -254,6 +254,17 @@ public  final class DebugInfo extends
     return hash;
   }
 
+  public static com.google.rpc.DebugInfo parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.rpc.DebugInfo parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.rpc.DebugInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -624,7 +635,7 @@ public  final class DebugInfo extends
      * Additional debugging information provided by the server.
      * </pre>
      *
-     * <code>optional string detail = 2;</code>
+     * <code>string detail = 2;</code>
      */
     public java.lang.String getDetail() {
       java.lang.Object ref = detail_;
@@ -643,7 +654,7 @@ public  final class DebugInfo extends
      * Additional debugging information provided by the server.
      * </pre>
      *
-     * <code>optional string detail = 2;</code>
+     * <code>string detail = 2;</code>
      */
     public com.google.protobuf.ByteString
         getDetailBytes() {
@@ -663,7 +674,7 @@ public  final class DebugInfo extends
      * Additional debugging information provided by the server.
      * </pre>
      *
-     * <code>optional string detail = 2;</code>
+     * <code>string detail = 2;</code>
      */
     public Builder setDetail(
         java.lang.String value) {
@@ -680,7 +691,7 @@ public  final class DebugInfo extends
      * Additional debugging information provided by the server.
      * </pre>
      *
-     * <code>optional string detail = 2;</code>
+     * <code>string detail = 2;</code>
      */
     public Builder clearDetail() {
       
@@ -693,7 +704,7 @@ public  final class DebugInfo extends
      * Additional debugging information provided by the server.
      * </pre>
      *
-     * <code>optional string detail = 2;</code>
+     * <code>string detail = 2;</code>
      */
     public Builder setDetailBytes(
         com.google.protobuf.ByteString value) {

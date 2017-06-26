@@ -20,7 +20,7 @@ public interface ConfigChangeOrBuilder extends
    * - logging.producer_destinations[0]
    * </pre>
    *
-   * <code>optional string element = 1;</code>
+   * <code>string element = 1;</code>
    */
   java.lang.String getElement();
   /**
@@ -36,7 +36,7 @@ public interface ConfigChangeOrBuilder extends
    * - logging.producer_destinations[0]
    * </pre>
    *
-   * <code>optional string element = 1;</code>
+   * <code>string element = 1;</code>
    */
   com.google.protobuf.ByteString
       getElementBytes();
@@ -47,7 +47,7 @@ public interface ConfigChangeOrBuilder extends
    * in JSON format. This field will not be populated if ChangeType == ADDED.
    * </pre>
    *
-   * <code>optional string old_value = 2;</code>
+   * <code>string old_value = 2;</code>
    */
   java.lang.String getOldValue();
   /**
@@ -56,7 +56,7 @@ public interface ConfigChangeOrBuilder extends
    * in JSON format. This field will not be populated if ChangeType == ADDED.
    * </pre>
    *
-   * <code>optional string old_value = 2;</code>
+   * <code>string old_value = 2;</code>
    */
   com.google.protobuf.ByteString
       getOldValueBytes();
@@ -67,7 +67,7 @@ public interface ConfigChangeOrBuilder extends
    * in JSON format. This field will not be populated if ChangeType == REMOVED.
    * </pre>
    *
-   * <code>optional string new_value = 3;</code>
+   * <code>string new_value = 3;</code>
    */
   java.lang.String getNewValue();
   /**
@@ -76,7 +76,7 @@ public interface ConfigChangeOrBuilder extends
    * in JSON format. This field will not be populated if ChangeType == REMOVED.
    * </pre>
    *
-   * <code>optional string new_value = 3;</code>
+   * <code>string new_value = 3;</code>
    */
   com.google.protobuf.ByteString
       getNewValueBytes();
@@ -86,7 +86,7 @@ public interface ConfigChangeOrBuilder extends
    * The type for this change, either ADDED, REMOVED, or MODIFIED.
    * </pre>
    *
-   * <code>optional .google.api.ChangeType change_type = 4;</code>
+   * <code>.google.api.ChangeType change_type = 4;</code>
    */
   int getChangeTypeValue();
   /**
@@ -94,7 +94,7 @@ public interface ConfigChangeOrBuilder extends
    * The type for this change, either ADDED, REMOVED, or MODIFIED.
    * </pre>
    *
-   * <code>optional .google.api.ChangeType change_type = 4;</code>
+   * <code>.google.api.ChangeType change_type = 4;</code>
    */
   com.google.api.ChangeType getChangeType();
 

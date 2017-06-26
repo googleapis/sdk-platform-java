@@ -179,7 +179,7 @@ public  final class PostalAddress extends
    * All new revisions **must** be backward compatible with old revisions.
    * </pre>
    *
-   * <code>optional int32 revision = 1;</code>
+   * <code>int32 revision = 1;</code>
    */
   public int getRevision() {
     return revision_;
@@ -196,7 +196,7 @@ public  final class PostalAddress extends
    * for details. Example: "CH" for Switzerland.
    * </pre>
    *
-   * <code>optional string region_code = 2;</code>
+   * <code>string region_code = 2;</code>
    */
   public java.lang.String getRegionCode() {
     java.lang.Object ref = regionCode_;
@@ -219,7 +219,7 @@ public  final class PostalAddress extends
    * for details. Example: "CH" for Switzerland.
    * </pre>
    *
-   * <code>optional string region_code = 2;</code>
+   * <code>string region_code = 2;</code>
    */
   public com.google.protobuf.ByteString
       getRegionCodeBytes() {
@@ -251,7 +251,7 @@ public  final class PostalAddress extends
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
-   * <code>optional string language_code = 3;</code>
+   * <code>string language_code = 3;</code>
    */
   public java.lang.String getLanguageCode() {
     java.lang.Object ref = languageCode_;
@@ -279,7 +279,7 @@ public  final class PostalAddress extends
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
-   * <code>optional string language_code = 3;</code>
+   * <code>string language_code = 3;</code>
    */
   public com.google.protobuf.ByteString
       getLanguageCodeBytes() {
@@ -305,7 +305,7 @@ public  final class PostalAddress extends
    * validation in the U.S.A.).
    * </pre>
    *
-   * <code>optional string postal_code = 4;</code>
+   * <code>string postal_code = 4;</code>
    */
   public java.lang.String getPostalCode() {
     java.lang.Object ref = postalCode_;
@@ -327,7 +327,7 @@ public  final class PostalAddress extends
    * validation in the U.S.A.).
    * </pre>
    *
-   * <code>optional string postal_code = 4;</code>
+   * <code>string postal_code = 4;</code>
    */
   public com.google.protobuf.ByteString
       getPostalCodeBytes() {
@@ -354,7 +354,7 @@ public  final class PostalAddress extends
    * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
    * </pre>
    *
-   * <code>optional string sorting_code = 5;</code>
+   * <code>string sorting_code = 5;</code>
    */
   public java.lang.String getSortingCode() {
     java.lang.Object ref = sortingCode_;
@@ -377,7 +377,7 @@ public  final class PostalAddress extends
    * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
    * </pre>
    *
-   * <code>optional string sorting_code = 5;</code>
+   * <code>string sorting_code = 5;</code>
    */
   public com.google.protobuf.ByteString
       getSortingCodeBytes() {
@@ -406,7 +406,7 @@ public  final class PostalAddress extends
    * in Switzerland this should be left unpopulated.
    * </pre>
    *
-   * <code>optional string administrative_area = 6;</code>
+   * <code>string administrative_area = 6;</code>
    */
   public java.lang.String getAdministrativeArea() {
     java.lang.Object ref = administrativeArea_;
@@ -431,7 +431,7 @@ public  final class PostalAddress extends
    * in Switzerland this should be left unpopulated.
    * </pre>
    *
-   * <code>optional string administrative_area = 6;</code>
+   * <code>string administrative_area = 6;</code>
    */
   public com.google.protobuf.ByteString
       getAdministrativeAreaBytes() {
@@ -457,7 +457,7 @@ public  final class PostalAddress extends
    * into this structure well, leave locality empty and use address_lines.
    * </pre>
    *
-   * <code>optional string locality = 7;</code>
+   * <code>string locality = 7;</code>
    */
   public java.lang.String getLocality() {
     java.lang.Object ref = locality_;
@@ -479,7 +479,7 @@ public  final class PostalAddress extends
    * into this structure well, leave locality empty and use address_lines.
    * </pre>
    *
-   * <code>optional string locality = 7;</code>
+   * <code>string locality = 7;</code>
    */
   public com.google.protobuf.ByteString
       getLocalityBytes() {
@@ -503,7 +503,7 @@ public  final class PostalAddress extends
    * For example, this can be neighborhoods, boroughs, districts.
    * </pre>
    *
-   * <code>optional string sublocality = 8;</code>
+   * <code>string sublocality = 8;</code>
    */
   public java.lang.String getSublocality() {
     java.lang.Object ref = sublocality_;
@@ -523,7 +523,7 @@ public  final class PostalAddress extends
    * For example, this can be neighborhoods, boroughs, districts.
    * </pre>
    *
-   * <code>optional string sublocality = 8;</code>
+   * <code>string sublocality = 8;</code>
    */
   public com.google.protobuf.ByteString
       getSublocalityBytes() {
@@ -716,7 +716,7 @@ public  final class PostalAddress extends
    * Optional. The name of the organization at the address.
    * </pre>
    *
-   * <code>optional string organization = 11;</code>
+   * <code>string organization = 11;</code>
    */
   public java.lang.String getOrganization() {
     java.lang.Object ref = organization_;
@@ -735,7 +735,7 @@ public  final class PostalAddress extends
    * Optional. The name of the organization at the address.
    * </pre>
    *
-   * <code>optional string organization = 11;</code>
+   * <code>string organization = 11;</code>
    */
   public com.google.protobuf.ByteString
       getOrganizationBytes() {
@@ -894,7 +894,7 @@ public  final class PostalAddress extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + REVISION_FIELD_NUMBER;
     hash = (53 * hash) + getRevision();
     hash = (37 * hash) + REGION_CODE_FIELD_NUMBER;
@@ -926,6 +926,17 @@ public  final class PostalAddress extends
     return hash;
   }
 
+  public static com.google.type.PostalAddress parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.type.PostalAddress parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.type.PostalAddress parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1252,7 +1263,7 @@ public  final class PostalAddress extends
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
-     * <code>optional int32 revision = 1;</code>
+     * <code>int32 revision = 1;</code>
      */
     public int getRevision() {
       return revision_;
@@ -1263,7 +1274,7 @@ public  final class PostalAddress extends
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
-     * <code>optional int32 revision = 1;</code>
+     * <code>int32 revision = 1;</code>
      */
     public Builder setRevision(int value) {
       
@@ -1277,7 +1288,7 @@ public  final class PostalAddress extends
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
-     * <code>optional int32 revision = 1;</code>
+     * <code>int32 revision = 1;</code>
      */
     public Builder clearRevision() {
       
@@ -1296,7 +1307,7 @@ public  final class PostalAddress extends
      * for details. Example: "CH" for Switzerland.
      * </pre>
      *
-     * <code>optional string region_code = 2;</code>
+     * <code>string region_code = 2;</code>
      */
     public java.lang.String getRegionCode() {
       java.lang.Object ref = regionCode_;
@@ -1319,7 +1330,7 @@ public  final class PostalAddress extends
      * for details. Example: "CH" for Switzerland.
      * </pre>
      *
-     * <code>optional string region_code = 2;</code>
+     * <code>string region_code = 2;</code>
      */
     public com.google.protobuf.ByteString
         getRegionCodeBytes() {
@@ -1343,7 +1354,7 @@ public  final class PostalAddress extends
      * for details. Example: "CH" for Switzerland.
      * </pre>
      *
-     * <code>optional string region_code = 2;</code>
+     * <code>string region_code = 2;</code>
      */
     public Builder setRegionCode(
         java.lang.String value) {
@@ -1364,7 +1375,7 @@ public  final class PostalAddress extends
      * for details. Example: "CH" for Switzerland.
      * </pre>
      *
-     * <code>optional string region_code = 2;</code>
+     * <code>string region_code = 2;</code>
      */
     public Builder clearRegionCode() {
       
@@ -1381,7 +1392,7 @@ public  final class PostalAddress extends
      * for details. Example: "CH" for Switzerland.
      * </pre>
      *
-     * <code>optional string region_code = 2;</code>
+     * <code>string region_code = 2;</code>
      */
     public Builder setRegionCodeBytes(
         com.google.protobuf.ByteString value) {
@@ -1410,7 +1421,7 @@ public  final class PostalAddress extends
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
-     * <code>optional string language_code = 3;</code>
+     * <code>string language_code = 3;</code>
      */
     public java.lang.String getLanguageCode() {
       java.lang.Object ref = languageCode_;
@@ -1438,7 +1449,7 @@ public  final class PostalAddress extends
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
-     * <code>optional string language_code = 3;</code>
+     * <code>string language_code = 3;</code>
      */
     public com.google.protobuf.ByteString
         getLanguageCodeBytes() {
@@ -1467,7 +1478,7 @@ public  final class PostalAddress extends
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
-     * <code>optional string language_code = 3;</code>
+     * <code>string language_code = 3;</code>
      */
     public Builder setLanguageCode(
         java.lang.String value) {
@@ -1493,7 +1504,7 @@ public  final class PostalAddress extends
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
-     * <code>optional string language_code = 3;</code>
+     * <code>string language_code = 3;</code>
      */
     public Builder clearLanguageCode() {
       
@@ -1515,7 +1526,7 @@ public  final class PostalAddress extends
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
-     * <code>optional string language_code = 3;</code>
+     * <code>string language_code = 3;</code>
      */
     public Builder setLanguageCodeBytes(
         com.google.protobuf.ByteString value) {
@@ -1538,7 +1549,7 @@ public  final class PostalAddress extends
      * validation in the U.S.A.).
      * </pre>
      *
-     * <code>optional string postal_code = 4;</code>
+     * <code>string postal_code = 4;</code>
      */
     public java.lang.String getPostalCode() {
       java.lang.Object ref = postalCode_;
@@ -1560,7 +1571,7 @@ public  final class PostalAddress extends
      * validation in the U.S.A.).
      * </pre>
      *
-     * <code>optional string postal_code = 4;</code>
+     * <code>string postal_code = 4;</code>
      */
     public com.google.protobuf.ByteString
         getPostalCodeBytes() {
@@ -1583,7 +1594,7 @@ public  final class PostalAddress extends
      * validation in the U.S.A.).
      * </pre>
      *
-     * <code>optional string postal_code = 4;</code>
+     * <code>string postal_code = 4;</code>
      */
     public Builder setPostalCode(
         java.lang.String value) {
@@ -1603,7 +1614,7 @@ public  final class PostalAddress extends
      * validation in the U.S.A.).
      * </pre>
      *
-     * <code>optional string postal_code = 4;</code>
+     * <code>string postal_code = 4;</code>
      */
     public Builder clearPostalCode() {
       
@@ -1619,7 +1630,7 @@ public  final class PostalAddress extends
      * validation in the U.S.A.).
      * </pre>
      *
-     * <code>optional string postal_code = 4;</code>
+     * <code>string postal_code = 4;</code>
      */
     public Builder setPostalCodeBytes(
         com.google.protobuf.ByteString value) {
@@ -1643,7 +1654,7 @@ public  final class PostalAddress extends
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
      * </pre>
      *
-     * <code>optional string sorting_code = 5;</code>
+     * <code>string sorting_code = 5;</code>
      */
     public java.lang.String getSortingCode() {
       java.lang.Object ref = sortingCode_;
@@ -1666,7 +1677,7 @@ public  final class PostalAddress extends
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
      * </pre>
      *
-     * <code>optional string sorting_code = 5;</code>
+     * <code>string sorting_code = 5;</code>
      */
     public com.google.protobuf.ByteString
         getSortingCodeBytes() {
@@ -1690,7 +1701,7 @@ public  final class PostalAddress extends
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
      * </pre>
      *
-     * <code>optional string sorting_code = 5;</code>
+     * <code>string sorting_code = 5;</code>
      */
     public Builder setSortingCode(
         java.lang.String value) {
@@ -1711,7 +1722,7 @@ public  final class PostalAddress extends
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
      * </pre>
      *
-     * <code>optional string sorting_code = 5;</code>
+     * <code>string sorting_code = 5;</code>
      */
     public Builder clearSortingCode() {
       
@@ -1728,7 +1739,7 @@ public  final class PostalAddress extends
      * (Malawi) or "post office indicator" (e.g. Côte d'Ivoire).
      * </pre>
      *
-     * <code>optional string sorting_code = 5;</code>
+     * <code>string sorting_code = 5;</code>
      */
     public Builder setSortingCodeBytes(
         com.google.protobuf.ByteString value) {
@@ -1754,7 +1765,7 @@ public  final class PostalAddress extends
      * in Switzerland this should be left unpopulated.
      * </pre>
      *
-     * <code>optional string administrative_area = 6;</code>
+     * <code>string administrative_area = 6;</code>
      */
     public java.lang.String getAdministrativeArea() {
       java.lang.Object ref = administrativeArea_;
@@ -1779,7 +1790,7 @@ public  final class PostalAddress extends
      * in Switzerland this should be left unpopulated.
      * </pre>
      *
-     * <code>optional string administrative_area = 6;</code>
+     * <code>string administrative_area = 6;</code>
      */
     public com.google.protobuf.ByteString
         getAdministrativeAreaBytes() {
@@ -1805,7 +1816,7 @@ public  final class PostalAddress extends
      * in Switzerland this should be left unpopulated.
      * </pre>
      *
-     * <code>optional string administrative_area = 6;</code>
+     * <code>string administrative_area = 6;</code>
      */
     public Builder setAdministrativeArea(
         java.lang.String value) {
@@ -1828,7 +1839,7 @@ public  final class PostalAddress extends
      * in Switzerland this should be left unpopulated.
      * </pre>
      *
-     * <code>optional string administrative_area = 6;</code>
+     * <code>string administrative_area = 6;</code>
      */
     public Builder clearAdministrativeArea() {
       
@@ -1847,7 +1858,7 @@ public  final class PostalAddress extends
      * in Switzerland this should be left unpopulated.
      * </pre>
      *
-     * <code>optional string administrative_area = 6;</code>
+     * <code>string administrative_area = 6;</code>
      */
     public Builder setAdministrativeAreaBytes(
         com.google.protobuf.ByteString value) {
@@ -1870,7 +1881,7 @@ public  final class PostalAddress extends
      * into this structure well, leave locality empty and use address_lines.
      * </pre>
      *
-     * <code>optional string locality = 7;</code>
+     * <code>string locality = 7;</code>
      */
     public java.lang.String getLocality() {
       java.lang.Object ref = locality_;
@@ -1892,7 +1903,7 @@ public  final class PostalAddress extends
      * into this structure well, leave locality empty and use address_lines.
      * </pre>
      *
-     * <code>optional string locality = 7;</code>
+     * <code>string locality = 7;</code>
      */
     public com.google.protobuf.ByteString
         getLocalityBytes() {
@@ -1915,7 +1926,7 @@ public  final class PostalAddress extends
      * into this structure well, leave locality empty and use address_lines.
      * </pre>
      *
-     * <code>optional string locality = 7;</code>
+     * <code>string locality = 7;</code>
      */
     public Builder setLocality(
         java.lang.String value) {
@@ -1935,7 +1946,7 @@ public  final class PostalAddress extends
      * into this structure well, leave locality empty and use address_lines.
      * </pre>
      *
-     * <code>optional string locality = 7;</code>
+     * <code>string locality = 7;</code>
      */
     public Builder clearLocality() {
       
@@ -1951,7 +1962,7 @@ public  final class PostalAddress extends
      * into this structure well, leave locality empty and use address_lines.
      * </pre>
      *
-     * <code>optional string locality = 7;</code>
+     * <code>string locality = 7;</code>
      */
     public Builder setLocalityBytes(
         com.google.protobuf.ByteString value) {
@@ -1972,7 +1983,7 @@ public  final class PostalAddress extends
      * For example, this can be neighborhoods, boroughs, districts.
      * </pre>
      *
-     * <code>optional string sublocality = 8;</code>
+     * <code>string sublocality = 8;</code>
      */
     public java.lang.String getSublocality() {
       java.lang.Object ref = sublocality_;
@@ -1992,7 +2003,7 @@ public  final class PostalAddress extends
      * For example, this can be neighborhoods, boroughs, districts.
      * </pre>
      *
-     * <code>optional string sublocality = 8;</code>
+     * <code>string sublocality = 8;</code>
      */
     public com.google.protobuf.ByteString
         getSublocalityBytes() {
@@ -2013,7 +2024,7 @@ public  final class PostalAddress extends
      * For example, this can be neighborhoods, boroughs, districts.
      * </pre>
      *
-     * <code>optional string sublocality = 8;</code>
+     * <code>string sublocality = 8;</code>
      */
     public Builder setSublocality(
         java.lang.String value) {
@@ -2031,7 +2042,7 @@ public  final class PostalAddress extends
      * For example, this can be neighborhoods, boroughs, districts.
      * </pre>
      *
-     * <code>optional string sublocality = 8;</code>
+     * <code>string sublocality = 8;</code>
      */
     public Builder clearSublocality() {
       
@@ -2045,7 +2056,7 @@ public  final class PostalAddress extends
      * For example, this can be neighborhoods, boroughs, districts.
      * </pre>
      *
-     * <code>optional string sublocality = 8;</code>
+     * <code>string sublocality = 8;</code>
      */
     public Builder setSublocalityBytes(
         com.google.protobuf.ByteString value) {
@@ -2505,7 +2516,7 @@ public  final class PostalAddress extends
      * Optional. The name of the organization at the address.
      * </pre>
      *
-     * <code>optional string organization = 11;</code>
+     * <code>string organization = 11;</code>
      */
     public java.lang.String getOrganization() {
       java.lang.Object ref = organization_;
@@ -2524,7 +2535,7 @@ public  final class PostalAddress extends
      * Optional. The name of the organization at the address.
      * </pre>
      *
-     * <code>optional string organization = 11;</code>
+     * <code>string organization = 11;</code>
      */
     public com.google.protobuf.ByteString
         getOrganizationBytes() {
@@ -2544,7 +2555,7 @@ public  final class PostalAddress extends
      * Optional. The name of the organization at the address.
      * </pre>
      *
-     * <code>optional string organization = 11;</code>
+     * <code>string organization = 11;</code>
      */
     public Builder setOrganization(
         java.lang.String value) {
@@ -2561,7 +2572,7 @@ public  final class PostalAddress extends
      * Optional. The name of the organization at the address.
      * </pre>
      *
-     * <code>optional string organization = 11;</code>
+     * <code>string organization = 11;</code>
      */
     public Builder clearOrganization() {
       
@@ -2574,7 +2585,7 @@ public  final class PostalAddress extends
      * Optional. The name of the organization at the address.
      * </pre>
      *
-     * <code>optional string organization = 11;</code>
+     * <code>string organization = 11;</code>
      */
     public Builder setOrganizationBytes(
         com.google.protobuf.ByteString value) {

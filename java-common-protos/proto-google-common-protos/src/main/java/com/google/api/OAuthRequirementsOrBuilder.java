@@ -16,7 +16,7 @@ public interface OAuthRequirementsOrBuilder extends
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
    *
-   * <code>optional string canonical_scopes = 1;</code>
+   * <code>string canonical_scopes = 1;</code>
    */
   java.lang.String getCanonicalScopes();
   /**
@@ -28,7 +28,7 @@ public interface OAuthRequirementsOrBuilder extends
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
    *
-   * <code>optional string canonical_scopes = 1;</code>
+   * <code>string canonical_scopes = 1;</code>
    */
   com.google.protobuf.ByteString
       getCanonicalScopesBytes();

@@ -13,7 +13,7 @@ public interface TimeOfDayOrBuilder extends
    * to allow the value "24:00:00" for scenarios like business closing time.
    * </pre>
    *
-   * <code>optional int32 hours = 1;</code>
+   * <code>int32 hours = 1;</code>
    */
   int getHours();
 
@@ -22,7 +22,7 @@ public interface TimeOfDayOrBuilder extends
    * Minutes of hour of day. Must be from 0 to 59.
    * </pre>
    *
-   * <code>optional int32 minutes = 2;</code>
+   * <code>int32 minutes = 2;</code>
    */
   int getMinutes();
 
@@ -32,7 +32,7 @@ public interface TimeOfDayOrBuilder extends
    * allow the value 60 if it allows leap-seconds.
    * </pre>
    *
-   * <code>optional int32 seconds = 3;</code>
+   * <code>int32 seconds = 3;</code>
    */
   int getSeconds();
 
@@ -41,7 +41,7 @@ public interface TimeOfDayOrBuilder extends
    * Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
    * </pre>
    *
-   * <code>optional int32 nanos = 4;</code>
+   * <code>int32 nanos = 4;</code>
    */
   int getNanos();
 }

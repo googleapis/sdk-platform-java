@@ -93,7 +93,7 @@ public  final class AuthRequirement extends
    *     provider_id: bookstore_auth
    * </pre>
    *
-   * <code>optional string provider_id = 1;</code>
+   * <code>string provider_id = 1;</code>
    */
   public java.lang.String getProviderId() {
     java.lang.Object ref = providerId_;
@@ -114,7 +114,7 @@ public  final class AuthRequirement extends
    *     provider_id: bookstore_auth
    * </pre>
    *
-   * <code>optional string provider_id = 1;</code>
+   * <code>string provider_id = 1;</code>
    */
   public com.google.protobuf.ByteString
       getProviderIdBytes() {
@@ -149,7 +149,7 @@ public  final class AuthRequirement extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 2;</code>
+   * <code>string audiences = 2;</code>
    */
   public java.lang.String getAudiences() {
     java.lang.Object ref = audiences_;
@@ -180,7 +180,7 @@ public  final class AuthRequirement extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 2;</code>
+   * <code>string audiences = 2;</code>
    */
   public com.google.protobuf.ByteString
       getAudiencesBytes() {
@@ -256,7 +256,7 @@ public  final class AuthRequirement extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PROVIDER_ID_FIELD_NUMBER;
     hash = (53 * hash) + getProviderId().hashCode();
     hash = (37 * hash) + AUDIENCES_FIELD_NUMBER;
@@ -266,6 +266,17 @@ public  final class AuthRequirement extends
     return hash;
   }
 
+  public static com.google.api.AuthRequirement parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.AuthRequirement parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.AuthRequirement parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -495,7 +506,7 @@ public  final class AuthRequirement extends
      *     provider_id: bookstore_auth
      * </pre>
      *
-     * <code>optional string provider_id = 1;</code>
+     * <code>string provider_id = 1;</code>
      */
     public java.lang.String getProviderId() {
       java.lang.Object ref = providerId_;
@@ -516,7 +527,7 @@ public  final class AuthRequirement extends
      *     provider_id: bookstore_auth
      * </pre>
      *
-     * <code>optional string provider_id = 1;</code>
+     * <code>string provider_id = 1;</code>
      */
     public com.google.protobuf.ByteString
         getProviderIdBytes() {
@@ -538,7 +549,7 @@ public  final class AuthRequirement extends
      *     provider_id: bookstore_auth
      * </pre>
      *
-     * <code>optional string provider_id = 1;</code>
+     * <code>string provider_id = 1;</code>
      */
     public Builder setProviderId(
         java.lang.String value) {
@@ -557,7 +568,7 @@ public  final class AuthRequirement extends
      *     provider_id: bookstore_auth
      * </pre>
      *
-     * <code>optional string provider_id = 1;</code>
+     * <code>string provider_id = 1;</code>
      */
     public Builder clearProviderId() {
       
@@ -572,7 +583,7 @@ public  final class AuthRequirement extends
      *     provider_id: bookstore_auth
      * </pre>
      *
-     * <code>optional string provider_id = 1;</code>
+     * <code>string provider_id = 1;</code>
      */
     public Builder setProviderIdBytes(
         com.google.protobuf.ByteString value) {
@@ -604,7 +615,7 @@ public  final class AuthRequirement extends
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
      *
-     * <code>optional string audiences = 2;</code>
+     * <code>string audiences = 2;</code>
      */
     public java.lang.String getAudiences() {
       java.lang.Object ref = audiences_;
@@ -635,7 +646,7 @@ public  final class AuthRequirement extends
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
      *
-     * <code>optional string audiences = 2;</code>
+     * <code>string audiences = 2;</code>
      */
     public com.google.protobuf.ByteString
         getAudiencesBytes() {
@@ -667,7 +678,7 @@ public  final class AuthRequirement extends
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
      *
-     * <code>optional string audiences = 2;</code>
+     * <code>string audiences = 2;</code>
      */
     public Builder setAudiences(
         java.lang.String value) {
@@ -696,7 +707,7 @@ public  final class AuthRequirement extends
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
      *
-     * <code>optional string audiences = 2;</code>
+     * <code>string audiences = 2;</code>
      */
     public Builder clearAudiences() {
       
@@ -721,7 +732,7 @@ public  final class AuthRequirement extends
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
      *
-     * <code>optional string audiences = 2;</code>
+     * <code>string audiences = 2;</code>
      */
     public Builder setAudiencesBytes(
         com.google.protobuf.ByteString value) {

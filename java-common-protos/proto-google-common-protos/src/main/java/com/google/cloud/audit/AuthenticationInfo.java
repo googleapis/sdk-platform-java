@@ -83,7 +83,7 @@ public  final class AuthenticationInfo extends
    * The email address of the authenticated user making the request.
    * </pre>
    *
-   * <code>optional string principal_email = 1;</code>
+   * <code>string principal_email = 1;</code>
    */
   public java.lang.String getPrincipalEmail() {
     java.lang.Object ref = principalEmail_;
@@ -102,7 +102,7 @@ public  final class AuthenticationInfo extends
    * The email address of the authenticated user making the request.
    * </pre>
    *
-   * <code>optional string principal_email = 1;</code>
+   * <code>string principal_email = 1;</code>
    */
   public com.google.protobuf.ByteString
       getPrincipalEmailBytes() {
@@ -170,7 +170,7 @@ public  final class AuthenticationInfo extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PRINCIPAL_EMAIL_FIELD_NUMBER;
     hash = (53 * hash) + getPrincipalEmail().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -178,6 +178,17 @@ public  final class AuthenticationInfo extends
     return hash;
   }
 
+  public static com.google.cloud.audit.AuthenticationInfo parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.cloud.audit.AuthenticationInfo parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.cloud.audit.AuthenticationInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -397,7 +408,7 @@ public  final class AuthenticationInfo extends
      * The email address of the authenticated user making the request.
      * </pre>
      *
-     * <code>optional string principal_email = 1;</code>
+     * <code>string principal_email = 1;</code>
      */
     public java.lang.String getPrincipalEmail() {
       java.lang.Object ref = principalEmail_;
@@ -416,7 +427,7 @@ public  final class AuthenticationInfo extends
      * The email address of the authenticated user making the request.
      * </pre>
      *
-     * <code>optional string principal_email = 1;</code>
+     * <code>string principal_email = 1;</code>
      */
     public com.google.protobuf.ByteString
         getPrincipalEmailBytes() {
@@ -436,7 +447,7 @@ public  final class AuthenticationInfo extends
      * The email address of the authenticated user making the request.
      * </pre>
      *
-     * <code>optional string principal_email = 1;</code>
+     * <code>string principal_email = 1;</code>
      */
     public Builder setPrincipalEmail(
         java.lang.String value) {
@@ -453,7 +464,7 @@ public  final class AuthenticationInfo extends
      * The email address of the authenticated user making the request.
      * </pre>
      *
-     * <code>optional string principal_email = 1;</code>
+     * <code>string principal_email = 1;</code>
      */
     public Builder clearPrincipalEmail() {
       
@@ -466,7 +477,7 @@ public  final class AuthenticationInfo extends
      * The email address of the authenticated user making the request.
      * </pre>
      *
-     * <code>optional string principal_email = 1;</code>
+     * <code>string principal_email = 1;</code>
      */
     public Builder setPrincipalEmailBytes(
         com.google.protobuf.ByteString value) {

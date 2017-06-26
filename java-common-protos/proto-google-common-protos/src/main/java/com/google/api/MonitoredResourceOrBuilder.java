@@ -14,7 +14,7 @@ public interface MonitoredResourceOrBuilder extends
    * example, the type of a Cloud SQL database is `"cloudsql_database"`.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   java.lang.String getType();
   /**
@@ -24,7 +24,7 @@ public interface MonitoredResourceOrBuilder extends
    * example, the type of a Cloud SQL database is `"cloudsql_database"`.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   com.google.protobuf.ByteString
       getTypeBytes();

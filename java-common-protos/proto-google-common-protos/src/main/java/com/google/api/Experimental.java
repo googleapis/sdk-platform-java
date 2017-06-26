@@ -90,7 +90,7 @@ public  final class Experimental extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   public boolean hasAuthorization() {
     return authorization_ != null;
@@ -100,7 +100,7 @@ public  final class Experimental extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   public com.google.api.AuthorizationConfig getAuthorization() {
     return authorization_ == null ? com.google.api.AuthorizationConfig.getDefaultInstance() : authorization_;
@@ -110,7 +110,7 @@ public  final class Experimental extends
    * Authorization configuration.
    * </pre>
    *
-   * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+   * <code>.google.api.AuthorizationConfig authorization = 8;</code>
    */
   public com.google.api.AuthorizationConfigOrBuilder getAuthorizationOrBuilder() {
     return getAuthorization();
@@ -172,7 +172,7 @@ public  final class Experimental extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     if (hasAuthorization()) {
       hash = (37 * hash) + AUTHORIZATION_FIELD_NUMBER;
       hash = (53 * hash) + getAuthorization().hashCode();
@@ -182,6 +182,17 @@ public  final class Experimental extends
     return hash;
   }
 
+  public static com.google.api.Experimental parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Experimental parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Experimental parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -411,7 +422,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public boolean hasAuthorization() {
       return authorizationBuilder_ != null || authorization_ != null;
@@ -421,7 +432,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public com.google.api.AuthorizationConfig getAuthorization() {
       if (authorizationBuilder_ == null) {
@@ -435,7 +446,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public Builder setAuthorization(com.google.api.AuthorizationConfig value) {
       if (authorizationBuilder_ == null) {
@@ -455,7 +466,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public Builder setAuthorization(
         com.google.api.AuthorizationConfig.Builder builderForValue) {
@@ -473,7 +484,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public Builder mergeAuthorization(com.google.api.AuthorizationConfig value) {
       if (authorizationBuilder_ == null) {
@@ -495,7 +506,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public Builder clearAuthorization() {
       if (authorizationBuilder_ == null) {
@@ -513,7 +524,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public com.google.api.AuthorizationConfig.Builder getAuthorizationBuilder() {
       
@@ -525,7 +536,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     public com.google.api.AuthorizationConfigOrBuilder getAuthorizationOrBuilder() {
       if (authorizationBuilder_ != null) {
@@ -540,7 +551,7 @@ public  final class Experimental extends
      * Authorization configuration.
      * </pre>
      *
-     * <code>optional .google.api.AuthorizationConfig authorization = 8;</code>
+     * <code>.google.api.AuthorizationConfig authorization = 8;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
         com.google.api.AuthorizationConfig, com.google.api.AuthorizationConfig.Builder, com.google.api.AuthorizationConfigOrBuilder> 

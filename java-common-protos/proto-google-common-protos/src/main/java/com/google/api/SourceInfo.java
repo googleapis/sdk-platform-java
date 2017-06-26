@@ -190,7 +190,7 @@ public  final class SourceInfo extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     if (getSourceFilesCount() > 0) {
       hash = (37 * hash) + SOURCE_FILES_FIELD_NUMBER;
       hash = (53 * hash) + getSourceFilesList().hashCode();
@@ -200,6 +200,17 @@ public  final class SourceInfo extends
     return hash;
   }
 
+  public static com.google.api.SourceInfo parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.SourceInfo parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.SourceInfo parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {

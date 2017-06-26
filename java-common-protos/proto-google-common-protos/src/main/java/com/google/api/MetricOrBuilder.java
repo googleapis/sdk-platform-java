@@ -13,7 +13,7 @@ public interface MetricOrBuilder extends
    * For example, `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
-   * <code>optional string type = 3;</code>
+   * <code>string type = 3;</code>
    */
   java.lang.String getType();
   /**
@@ -22,7 +22,7 @@ public interface MetricOrBuilder extends
    * For example, `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
-   * <code>optional string type = 3;</code>
+   * <code>string type = 3;</code>
    */
   com.google.protobuf.ByteString
       getTypeBytes();

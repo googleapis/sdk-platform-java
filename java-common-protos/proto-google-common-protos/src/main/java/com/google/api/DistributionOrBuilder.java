@@ -12,7 +12,7 @@ public interface DistributionOrBuilder extends
    * The number of values in the population. Must be non-negative.
    * </pre>
    *
-   * <code>optional int64 count = 1;</code>
+   * <code>int64 count = 1;</code>
    */
   long getCount();
 
@@ -22,7 +22,7 @@ public interface DistributionOrBuilder extends
    * then this field must be zero.
    * </pre>
    *
-   * <code>optional double mean = 2;</code>
+   * <code>double mean = 2;</code>
    */
   double getMean();
 
@@ -36,7 +36,7 @@ public interface DistributionOrBuilder extends
    * If `count` is zero then this field must be zero.
    * </pre>
    *
-   * <code>optional double sum_of_squared_deviation = 3;</code>
+   * <code>double sum_of_squared_deviation = 3;</code>
    */
   double getSumOfSquaredDeviation();
 
@@ -46,7 +46,7 @@ public interface DistributionOrBuilder extends
    * must not be present if the `count` is zero.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.Range range = 4;</code>
+   * <code>.google.api.Distribution.Range range = 4;</code>
    */
   boolean hasRange();
   /**
@@ -55,7 +55,7 @@ public interface DistributionOrBuilder extends
    * must not be present if the `count` is zero.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.Range range = 4;</code>
+   * <code>.google.api.Distribution.Range range = 4;</code>
    */
   com.google.api.Distribution.Range getRange();
   /**
@@ -64,7 +64,7 @@ public interface DistributionOrBuilder extends
    * must not be present if the `count` is zero.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.Range range = 4;</code>
+   * <code>.google.api.Distribution.Range range = 4;</code>
    */
   com.google.api.Distribution.RangeOrBuilder getRangeOrBuilder();
 
@@ -73,7 +73,7 @@ public interface DistributionOrBuilder extends
    * Defines the histogram bucket boundaries.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.BucketOptions bucket_options = 6;</code>
+   * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
   boolean hasBucketOptions();
   /**
@@ -81,7 +81,7 @@ public interface DistributionOrBuilder extends
    * Defines the histogram bucket boundaries.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.BucketOptions bucket_options = 6;</code>
+   * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
   com.google.api.Distribution.BucketOptions getBucketOptions();
   /**
@@ -89,7 +89,7 @@ public interface DistributionOrBuilder extends
    * Defines the histogram bucket boundaries.
    * </pre>
    *
-   * <code>optional .google.api.Distribution.BucketOptions bucket_options = 6;</code>
+   * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
   com.google.api.Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder();
 

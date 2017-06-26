@@ -197,8 +197,7 @@ public enum DayOfWeek
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return com.google.type.DayOfWeekProto.getDescriptor()
-        .getEnumTypes().get(0);
+    return com.google.type.DayOfWeekProto.getDescriptor().getEnumTypes().get(0);
   }
 
   private static final DayOfWeek[] VALUES = values();

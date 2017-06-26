@@ -12,7 +12,7 @@ public interface PropertyOrBuilder extends
    * The name of the property (a.k.a key).
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -20,7 +20,7 @@ public interface PropertyOrBuilder extends
    * The name of the property (a.k.a key).
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -30,7 +30,7 @@ public interface PropertyOrBuilder extends
    * The type of this property.
    * </pre>
    *
-   * <code>optional .google.api.Property.PropertyType type = 2;</code>
+   * <code>.google.api.Property.PropertyType type = 2;</code>
    */
   int getTypeValue();
   /**
@@ -38,7 +38,7 @@ public interface PropertyOrBuilder extends
    * The type of this property.
    * </pre>
    *
-   * <code>optional .google.api.Property.PropertyType type = 2;</code>
+   * <code>.google.api.Property.PropertyType type = 2;</code>
    */
   com.google.api.Property.PropertyType getType();
 
@@ -47,7 +47,7 @@ public interface PropertyOrBuilder extends
    * The description of the property
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   java.lang.String getDescription();
   /**
@@ -55,7 +55,7 @@ public interface PropertyOrBuilder extends
    * The description of the property
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();

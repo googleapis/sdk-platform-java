@@ -13,7 +13,7 @@ public interface ContextRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   java.lang.String getSelector();
   /**
@@ -22,7 +22,7 @@ public interface ContextRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   com.google.protobuf.ByteString
       getSelectorBytes();

@@ -13,7 +13,7 @@ public interface ControlOrBuilder extends
    * feature (like quota and billing) will be enabled.
    * </pre>
    *
-   * <code>optional string environment = 1;</code>
+   * <code>string environment = 1;</code>
    */
   java.lang.String getEnvironment();
   /**
@@ -22,7 +22,7 @@ public interface ControlOrBuilder extends
    * feature (like quota and billing) will be enabled.
    * </pre>
    *
-   * <code>optional string environment = 1;</code>
+   * <code>string environment = 1;</code>
    */
   com.google.protobuf.ByteString
       getEnvironmentBytes();

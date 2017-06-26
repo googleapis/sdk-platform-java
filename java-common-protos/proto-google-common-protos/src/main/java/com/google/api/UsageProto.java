@@ -37,11 +37,12 @@ public final class UsageProto {
       "ogle/api/annotations.proto\"j\n\005Usage\022\024\n\014r" +
       "equirements\030\001 \003(\t\022$\n\005rules\030\006 \003(\0132\025.googl" +
       "e.api.UsageRule\022%\n\035producer_notification" +
-      "_channel\030\007 \001(\t\"?\n\tUsageRule\022\020\n\010selector\030" +
-      "\001 \001(\t\022 \n\030allow_unregistered_calls\030\002 \001(\010B" +
-      "l\n\016com.google.apiB\nUsageProtoP\001ZEgoogle." +
-      "golang.org/genproto/googleapis/api/servi" +
-      "ceconfig;serviceconfig\242\002\004GAPIb\006proto3"
+      "_channel\030\007 \001(\t\"]\n\tUsageRule\022\020\n\010selector\030" +
+      "\001 \001(\t\022 \n\030allow_unregistered_calls\030\002 \001(\010\022" +
+      "\034\n\024skip_service_control\030\003 \001(\010Bl\n\016com.goo" +
+      "gle.apiB\nUsageProtoP\001ZEgoogle.golang.org" +
+      "/genproto/googleapis/api/serviceconfig;s" +
+      "erviceconfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -67,7 +68,7 @@ public final class UsageProto {
     internal_static_google_api_UsageRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_UsageRule_descriptor,
-        new java.lang.String[] { "Selector", "AllowUnregisteredCalls", });
+        new java.lang.String[] { "Selector", "AllowUnregisteredCalls", "SkipServiceControl", });
     com.google.api.AnnotationsProto.getDescriptor();
   }
 

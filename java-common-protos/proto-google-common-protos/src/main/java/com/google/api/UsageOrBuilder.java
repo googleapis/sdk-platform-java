@@ -110,7 +110,7 @@ public interface UsageOrBuilder extends
    * documented in https://cloud.google.com/pubsub/docs/overview.
    * </pre>
    *
-   * <code>optional string producer_notification_channel = 7;</code>
+   * <code>string producer_notification_channel = 7;</code>
    */
   java.lang.String getProducerNotificationChannel();
   /**
@@ -124,7 +124,7 @@ public interface UsageOrBuilder extends
    * documented in https://cloud.google.com/pubsub/docs/overview.
    * </pre>
    *
-   * <code>optional string producer_notification_channel = 7;</code>
+   * <code>string producer_notification_channel = 7;</code>
    */
   com.google.protobuf.ByteString
       getProducerNotificationChannelBytes();

@@ -12,7 +12,7 @@ public interface LabelDescriptorOrBuilder extends
    * The label key.
    * </pre>
    *
-   * <code>optional string key = 1;</code>
+   * <code>string key = 1;</code>
    */
   java.lang.String getKey();
   /**
@@ -20,7 +20,7 @@ public interface LabelDescriptorOrBuilder extends
    * The label key.
    * </pre>
    *
-   * <code>optional string key = 1;</code>
+   * <code>string key = 1;</code>
    */
   com.google.protobuf.ByteString
       getKeyBytes();
@@ -30,7 +30,7 @@ public interface LabelDescriptorOrBuilder extends
    * The type of data that can be assigned to the label.
    * </pre>
    *
-   * <code>optional .google.api.LabelDescriptor.ValueType value_type = 2;</code>
+   * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
    */
   int getValueTypeValue();
   /**
@@ -38,7 +38,7 @@ public interface LabelDescriptorOrBuilder extends
    * The type of data that can be assigned to the label.
    * </pre>
    *
-   * <code>optional .google.api.LabelDescriptor.ValueType value_type = 2;</code>
+   * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
    */
   com.google.api.LabelDescriptor.ValueType getValueType();
 
@@ -47,7 +47,7 @@ public interface LabelDescriptorOrBuilder extends
    * A human-readable description for the label.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   java.lang.String getDescription();
   /**
@@ -55,7 +55,7 @@ public interface LabelDescriptorOrBuilder extends
    * A human-readable description for the label.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();

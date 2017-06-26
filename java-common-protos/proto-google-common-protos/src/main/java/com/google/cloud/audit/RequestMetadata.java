@@ -90,7 +90,7 @@ public  final class RequestMetadata extends
    * The IP address of the caller.
    * </pre>
    *
-   * <code>optional string caller_ip = 1;</code>
+   * <code>string caller_ip = 1;</code>
    */
   public java.lang.String getCallerIp() {
     java.lang.Object ref = callerIp_;
@@ -109,7 +109,7 @@ public  final class RequestMetadata extends
    * The IP address of the caller.
    * </pre>
    *
-   * <code>optional string caller_ip = 1;</code>
+   * <code>string caller_ip = 1;</code>
    */
   public com.google.protobuf.ByteString
       getCallerIpBytes() {
@@ -140,7 +140,7 @@ public  final class RequestMetadata extends
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *
-   * <code>optional string caller_supplied_user_agent = 2;</code>
+   * <code>string caller_supplied_user_agent = 2;</code>
    */
   public java.lang.String getCallerSuppliedUserAgent() {
     java.lang.Object ref = callerSuppliedUserAgent_;
@@ -167,7 +167,7 @@ public  final class RequestMetadata extends
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *
-   * <code>optional string caller_supplied_user_agent = 2;</code>
+   * <code>string caller_supplied_user_agent = 2;</code>
    */
   public com.google.protobuf.ByteString
       getCallerSuppliedUserAgentBytes() {
@@ -243,7 +243,7 @@ public  final class RequestMetadata extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + CALLER_IP_FIELD_NUMBER;
     hash = (53 * hash) + getCallerIp().hashCode();
     hash = (37 * hash) + CALLER_SUPPLIED_USER_AGENT_FIELD_NUMBER;
@@ -253,6 +253,17 @@ public  final class RequestMetadata extends
     return hash;
   }
 
+  public static com.google.cloud.audit.RequestMetadata parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.cloud.audit.RequestMetadata parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.cloud.audit.RequestMetadata parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -479,7 +490,7 @@ public  final class RequestMetadata extends
      * The IP address of the caller.
      * </pre>
      *
-     * <code>optional string caller_ip = 1;</code>
+     * <code>string caller_ip = 1;</code>
      */
     public java.lang.String getCallerIp() {
       java.lang.Object ref = callerIp_;
@@ -498,7 +509,7 @@ public  final class RequestMetadata extends
      * The IP address of the caller.
      * </pre>
      *
-     * <code>optional string caller_ip = 1;</code>
+     * <code>string caller_ip = 1;</code>
      */
     public com.google.protobuf.ByteString
         getCallerIpBytes() {
@@ -518,7 +529,7 @@ public  final class RequestMetadata extends
      * The IP address of the caller.
      * </pre>
      *
-     * <code>optional string caller_ip = 1;</code>
+     * <code>string caller_ip = 1;</code>
      */
     public Builder setCallerIp(
         java.lang.String value) {
@@ -535,7 +546,7 @@ public  final class RequestMetadata extends
      * The IP address of the caller.
      * </pre>
      *
-     * <code>optional string caller_ip = 1;</code>
+     * <code>string caller_ip = 1;</code>
      */
     public Builder clearCallerIp() {
       
@@ -548,7 +559,7 @@ public  final class RequestMetadata extends
      * The IP address of the caller.
      * </pre>
      *
-     * <code>optional string caller_ip = 1;</code>
+     * <code>string caller_ip = 1;</code>
      */
     public Builder setCallerIpBytes(
         com.google.protobuf.ByteString value) {
@@ -576,7 +587,7 @@ public  final class RequestMetadata extends
      *     The request was made from the `my-project` App Engine app.
      * </pre>
      *
-     * <code>optional string caller_supplied_user_agent = 2;</code>
+     * <code>string caller_supplied_user_agent = 2;</code>
      */
     public java.lang.String getCallerSuppliedUserAgent() {
       java.lang.Object ref = callerSuppliedUserAgent_;
@@ -603,7 +614,7 @@ public  final class RequestMetadata extends
      *     The request was made from the `my-project` App Engine app.
      * </pre>
      *
-     * <code>optional string caller_supplied_user_agent = 2;</code>
+     * <code>string caller_supplied_user_agent = 2;</code>
      */
     public com.google.protobuf.ByteString
         getCallerSuppliedUserAgentBytes() {
@@ -631,7 +642,7 @@ public  final class RequestMetadata extends
      *     The request was made from the `my-project` App Engine app.
      * </pre>
      *
-     * <code>optional string caller_supplied_user_agent = 2;</code>
+     * <code>string caller_supplied_user_agent = 2;</code>
      */
     public Builder setCallerSuppliedUserAgent(
         java.lang.String value) {
@@ -656,7 +667,7 @@ public  final class RequestMetadata extends
      *     The request was made from the `my-project` App Engine app.
      * </pre>
      *
-     * <code>optional string caller_supplied_user_agent = 2;</code>
+     * <code>string caller_supplied_user_agent = 2;</code>
      */
     public Builder clearCallerSuppliedUserAgent() {
       
@@ -677,7 +688,7 @@ public  final class RequestMetadata extends
      *     The request was made from the `my-project` App Engine app.
      * </pre>
      *
-     * <code>optional string caller_supplied_user_agent = 2;</code>
+     * <code>string caller_supplied_user_agent = 2;</code>
      */
     public Builder setCallerSuppliedUserAgentBytes(
         com.google.protobuf.ByteString value) {

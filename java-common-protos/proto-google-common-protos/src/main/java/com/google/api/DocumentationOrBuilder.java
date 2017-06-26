@@ -13,7 +13,7 @@ public interface DocumentationOrBuilder extends
    * plain text.
    * </pre>
    *
-   * <code>optional string summary = 1;</code>
+   * <code>string summary = 1;</code>
    */
   java.lang.String getSummary();
   /**
@@ -22,7 +22,7 @@ public interface DocumentationOrBuilder extends
    * plain text.
    * </pre>
    *
-   * <code>optional string summary = 1;</code>
+   * <code>string summary = 1;</code>
    */
   com.google.protobuf.ByteString
       getSummaryBytes();
@@ -125,7 +125,7 @@ public interface DocumentationOrBuilder extends
    * The URL to the root of documentation.
    * </pre>
    *
-   * <code>optional string documentation_root_url = 4;</code>
+   * <code>string documentation_root_url = 4;</code>
    */
   java.lang.String getDocumentationRootUrl();
   /**
@@ -133,7 +133,7 @@ public interface DocumentationOrBuilder extends
    * The URL to the root of documentation.
    * </pre>
    *
-   * <code>optional string documentation_root_url = 4;</code>
+   * <code>string documentation_root_url = 4;</code>
    */
   com.google.protobuf.ByteString
       getDocumentationRootUrlBytes();
@@ -155,7 +155,7 @@ public interface DocumentationOrBuilder extends
    * Note: you cannot specify both `overview` field and `pages` field.
    * </pre>
    *
-   * <code>optional string overview = 2;</code>
+   * <code>string overview = 2;</code>
    */
   java.lang.String getOverview();
   /**
@@ -175,7 +175,7 @@ public interface DocumentationOrBuilder extends
    * Note: you cannot specify both `overview` field and `pages` field.
    * </pre>
    *
-   * <code>optional string overview = 2;</code>
+   * <code>string overview = 2;</code>
    */
   com.google.protobuf.ByteString
       getOverviewBytes();

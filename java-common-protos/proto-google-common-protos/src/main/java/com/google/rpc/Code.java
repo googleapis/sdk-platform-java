@@ -502,8 +502,7 @@ public enum Code
   }
   public static final com.google.protobuf.Descriptors.EnumDescriptor
       getDescriptor() {
-    return com.google.rpc.CodeProto.getDescriptor()
-        .getEnumTypes().get(0);
+    return com.google.rpc.CodeProto.getDescriptor().getEnumTypes().get(0);
   }
 
   private static final Code[] VALUES = values();

@@ -12,7 +12,7 @@ public interface LatLngOrBuilder extends
    * The latitude in degrees. It must be in the range [-90.0, +90.0].
    * </pre>
    *
-   * <code>optional double latitude = 1;</code>
+   * <code>double latitude = 1;</code>
    */
   double getLatitude();
 
@@ -21,7 +21,7 @@ public interface LatLngOrBuilder extends
    * The longitude in degrees. It must be in the range [-180.0, +180.0].
    * </pre>
    *
-   * <code>optional double longitude = 2;</code>
+   * <code>double longitude = 2;</code>
    */
   double getLongitude();
 }

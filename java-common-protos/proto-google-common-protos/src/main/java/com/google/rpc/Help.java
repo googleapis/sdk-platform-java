@@ -94,7 +94,7 @@ public  final class Help extends
      * Describes what the link offers.
      * </pre>
      *
-     * <code>optional string description = 1;</code>
+     * <code>string description = 1;</code>
      */
     java.lang.String getDescription();
     /**
@@ -102,7 +102,7 @@ public  final class Help extends
      * Describes what the link offers.
      * </pre>
      *
-     * <code>optional string description = 1;</code>
+     * <code>string description = 1;</code>
      */
     com.google.protobuf.ByteString
         getDescriptionBytes();
@@ -112,7 +112,7 @@ public  final class Help extends
      * The URL of the link.
      * </pre>
      *
-     * <code>optional string url = 2;</code>
+     * <code>string url = 2;</code>
      */
     java.lang.String getUrl();
     /**
@@ -120,7 +120,7 @@ public  final class Help extends
      * The URL of the link.
      * </pre>
      *
-     * <code>optional string url = 2;</code>
+     * <code>string url = 2;</code>
      */
     com.google.protobuf.ByteString
         getUrlBytes();
@@ -212,7 +212,7 @@ public  final class Help extends
      * Describes what the link offers.
      * </pre>
      *
-     * <code>optional string description = 1;</code>
+     * <code>string description = 1;</code>
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -231,7 +231,7 @@ public  final class Help extends
      * Describes what the link offers.
      * </pre>
      *
-     * <code>optional string description = 1;</code>
+     * <code>string description = 1;</code>
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
@@ -254,7 +254,7 @@ public  final class Help extends
      * The URL of the link.
      * </pre>
      *
-     * <code>optional string url = 2;</code>
+     * <code>string url = 2;</code>
      */
     public java.lang.String getUrl() {
       java.lang.Object ref = url_;
@@ -273,7 +273,7 @@ public  final class Help extends
      * The URL of the link.
      * </pre>
      *
-     * <code>optional string url = 2;</code>
+     * <code>string url = 2;</code>
      */
     public com.google.protobuf.ByteString
         getUrlBytes() {
@@ -349,7 +349,7 @@ public  final class Help extends
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + DESCRIPTION_FIELD_NUMBER;
       hash = (53 * hash) + getDescription().hashCode();
       hash = (37 * hash) + URL_FIELD_NUMBER;
@@ -359,6 +359,17 @@ public  final class Help extends
       return hash;
     }
 
+    public static com.google.rpc.Help.Link parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.rpc.Help.Link parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
     public static com.google.rpc.Help.Link parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -585,7 +596,7 @@ public  final class Help extends
        * Describes what the link offers.
        * </pre>
        *
-       * <code>optional string description = 1;</code>
+       * <code>string description = 1;</code>
        */
       public java.lang.String getDescription() {
         java.lang.Object ref = description_;
@@ -604,7 +615,7 @@ public  final class Help extends
        * Describes what the link offers.
        * </pre>
        *
-       * <code>optional string description = 1;</code>
+       * <code>string description = 1;</code>
        */
       public com.google.protobuf.ByteString
           getDescriptionBytes() {
@@ -624,7 +635,7 @@ public  final class Help extends
        * Describes what the link offers.
        * </pre>
        *
-       * <code>optional string description = 1;</code>
+       * <code>string description = 1;</code>
        */
       public Builder setDescription(
           java.lang.String value) {
@@ -641,7 +652,7 @@ public  final class Help extends
        * Describes what the link offers.
        * </pre>
        *
-       * <code>optional string description = 1;</code>
+       * <code>string description = 1;</code>
        */
       public Builder clearDescription() {
         
@@ -654,7 +665,7 @@ public  final class Help extends
        * Describes what the link offers.
        * </pre>
        *
-       * <code>optional string description = 1;</code>
+       * <code>string description = 1;</code>
        */
       public Builder setDescriptionBytes(
           com.google.protobuf.ByteString value) {
@@ -674,7 +685,7 @@ public  final class Help extends
        * The URL of the link.
        * </pre>
        *
-       * <code>optional string url = 2;</code>
+       * <code>string url = 2;</code>
        */
       public java.lang.String getUrl() {
         java.lang.Object ref = url_;
@@ -693,7 +704,7 @@ public  final class Help extends
        * The URL of the link.
        * </pre>
        *
-       * <code>optional string url = 2;</code>
+       * <code>string url = 2;</code>
        */
       public com.google.protobuf.ByteString
           getUrlBytes() {
@@ -713,7 +724,7 @@ public  final class Help extends
        * The URL of the link.
        * </pre>
        *
-       * <code>optional string url = 2;</code>
+       * <code>string url = 2;</code>
        */
       public Builder setUrl(
           java.lang.String value) {
@@ -730,7 +741,7 @@ public  final class Help extends
        * The URL of the link.
        * </pre>
        *
-       * <code>optional string url = 2;</code>
+       * <code>string url = 2;</code>
        */
       public Builder clearUrl() {
         
@@ -743,7 +754,7 @@ public  final class Help extends
        * The URL of the link.
        * </pre>
        *
-       * <code>optional string url = 2;</code>
+       * <code>string url = 2;</code>
        */
       public Builder setUrlBytes(
           com.google.protobuf.ByteString value) {
@@ -913,7 +924,7 @@ public  final class Help extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     if (getLinksCount() > 0) {
       hash = (37 * hash) + LINKS_FIELD_NUMBER;
       hash = (53 * hash) + getLinksList().hashCode();
@@ -923,6 +934,17 @@ public  final class Help extends
     return hash;
   }
 
+  public static com.google.rpc.Help parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.rpc.Help parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.rpc.Help parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {

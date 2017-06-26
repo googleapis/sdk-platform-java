@@ -90,7 +90,7 @@ public  final class AuthorizationConfig extends
    * firebaserules.googleapis.com.
    * </pre>
    *
-   * <code>optional string provider = 1;</code>
+   * <code>string provider = 1;</code>
    */
   public java.lang.String getProvider() {
     java.lang.Object ref = provider_;
@@ -110,7 +110,7 @@ public  final class AuthorizationConfig extends
    * firebaserules.googleapis.com.
    * </pre>
    *
-   * <code>optional string provider = 1;</code>
+   * <code>string provider = 1;</code>
    */
   public com.google.protobuf.ByteString
       getProviderBytes() {
@@ -178,7 +178,7 @@ public  final class AuthorizationConfig extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PROVIDER_FIELD_NUMBER;
     hash = (53 * hash) + getProvider().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -186,6 +186,17 @@ public  final class AuthorizationConfig extends
     return hash;
   }
 
+  public static com.google.api.AuthorizationConfig parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.AuthorizationConfig parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.AuthorizationConfig parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -412,7 +423,7 @@ public  final class AuthorizationConfig extends
      * firebaserules.googleapis.com.
      * </pre>
      *
-     * <code>optional string provider = 1;</code>
+     * <code>string provider = 1;</code>
      */
     public java.lang.String getProvider() {
       java.lang.Object ref = provider_;
@@ -432,7 +443,7 @@ public  final class AuthorizationConfig extends
      * firebaserules.googleapis.com.
      * </pre>
      *
-     * <code>optional string provider = 1;</code>
+     * <code>string provider = 1;</code>
      */
     public com.google.protobuf.ByteString
         getProviderBytes() {
@@ -453,7 +464,7 @@ public  final class AuthorizationConfig extends
      * firebaserules.googleapis.com.
      * </pre>
      *
-     * <code>optional string provider = 1;</code>
+     * <code>string provider = 1;</code>
      */
     public Builder setProvider(
         java.lang.String value) {
@@ -471,7 +482,7 @@ public  final class AuthorizationConfig extends
      * firebaserules.googleapis.com.
      * </pre>
      *
-     * <code>optional string provider = 1;</code>
+     * <code>string provider = 1;</code>
      */
     public Builder clearProvider() {
       
@@ -485,7 +496,7 @@ public  final class AuthorizationConfig extends
      * firebaserules.googleapis.com.
      * </pre>
      *
-     * <code>optional string provider = 1;</code>
+     * <code>string provider = 1;</code>
      */
     public Builder setProviderBytes(
         com.google.protobuf.ByteString value) {

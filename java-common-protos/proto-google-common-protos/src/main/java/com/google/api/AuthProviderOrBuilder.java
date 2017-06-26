@@ -14,7 +14,7 @@ public interface AuthProviderOrBuilder extends
    * Example: "bookstore_auth".
    * </pre>
    *
-   * <code>optional string id = 1;</code>
+   * <code>string id = 1;</code>
    */
   java.lang.String getId();
   /**
@@ -24,7 +24,7 @@ public interface AuthProviderOrBuilder extends
    * Example: "bookstore_auth".
    * </pre>
    *
-   * <code>optional string id = 1;</code>
+   * <code>string id = 1;</code>
    */
   com.google.protobuf.ByteString
       getIdBytes();
@@ -38,7 +38,7 @@ public interface AuthProviderOrBuilder extends
    * Example: 1234567-compute&#64;developer.gserviceaccount.com
    * </pre>
    *
-   * <code>optional string issuer = 2;</code>
+   * <code>string issuer = 2;</code>
    */
   java.lang.String getIssuer();
   /**
@@ -50,7 +50,7 @@ public interface AuthProviderOrBuilder extends
    * Example: 1234567-compute&#64;developer.gserviceaccount.com
    * </pre>
    *
-   * <code>optional string issuer = 2;</code>
+   * <code>string issuer = 2;</code>
    */
   com.google.protobuf.ByteString
       getIssuerBytes();
@@ -67,7 +67,7 @@ public interface AuthProviderOrBuilder extends
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
-   * <code>optional string jwks_uri = 3;</code>
+   * <code>string jwks_uri = 3;</code>
    */
   java.lang.String getJwksUri();
   /**
@@ -82,7 +82,7 @@ public interface AuthProviderOrBuilder extends
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
-   * <code>optional string jwks_uri = 3;</code>
+   * <code>string jwks_uri = 3;</code>
    */
   com.google.protobuf.ByteString
       getJwksUriBytes();
@@ -102,7 +102,7 @@ public interface AuthProviderOrBuilder extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 4;</code>
+   * <code>string audiences = 4;</code>
    */
   java.lang.String getAudiences();
   /**
@@ -120,7 +120,7 @@ public interface AuthProviderOrBuilder extends
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
    *
-   * <code>optional string audiences = 4;</code>
+   * <code>string audiences = 4;</code>
    */
   com.google.protobuf.ByteString
       getAudiencesBytes();

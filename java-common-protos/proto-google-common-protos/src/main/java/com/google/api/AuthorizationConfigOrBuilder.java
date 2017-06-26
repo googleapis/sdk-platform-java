@@ -13,7 +13,7 @@ public interface AuthorizationConfigOrBuilder extends
    * firebaserules.googleapis.com.
    * </pre>
    *
-   * <code>optional string provider = 1;</code>
+   * <code>string provider = 1;</code>
    */
   java.lang.String getProvider();
   /**
@@ -22,7 +22,7 @@ public interface AuthorizationConfigOrBuilder extends
    * firebaserules.googleapis.com.
    * </pre>
    *
-   * <code>optional string provider = 1;</code>
+   * <code>string provider = 1;</code>
    */
   com.google.protobuf.ByteString
       getProviderBytes();

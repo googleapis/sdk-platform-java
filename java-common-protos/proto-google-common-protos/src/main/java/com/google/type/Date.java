@@ -101,7 +101,7 @@ public  final class Date extends
    * a year.
    * </pre>
    *
-   * <code>optional int32 year = 1;</code>
+   * <code>int32 year = 1;</code>
    */
   public int getYear() {
     return year_;
@@ -114,7 +114,7 @@ public  final class Date extends
    * Month of year. Must be from 1 to 12.
    * </pre>
    *
-   * <code>optional int32 month = 2;</code>
+   * <code>int32 month = 2;</code>
    */
   public int getMonth() {
     return month_;
@@ -128,7 +128,7 @@ public  final class Date extends
    * if specifying a year/month where the day is not significant.
    * </pre>
    *
-   * <code>optional int32 day = 3;</code>
+   * <code>int32 day = 3;</code>
    */
   public int getDay() {
     return day_;
@@ -205,7 +205,7 @@ public  final class Date extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + YEAR_FIELD_NUMBER;
     hash = (53 * hash) + getYear();
     hash = (37 * hash) + MONTH_FIELD_NUMBER;
@@ -217,6 +217,17 @@ public  final class Date extends
     return hash;
   }
 
+  public static com.google.type.Date parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.type.Date parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.type.Date parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -454,7 +465,7 @@ public  final class Date extends
      * a year.
      * </pre>
      *
-     * <code>optional int32 year = 1;</code>
+     * <code>int32 year = 1;</code>
      */
     public int getYear() {
       return year_;
@@ -465,7 +476,7 @@ public  final class Date extends
      * a year.
      * </pre>
      *
-     * <code>optional int32 year = 1;</code>
+     * <code>int32 year = 1;</code>
      */
     public Builder setYear(int value) {
       
@@ -479,7 +490,7 @@ public  final class Date extends
      * a year.
      * </pre>
      *
-     * <code>optional int32 year = 1;</code>
+     * <code>int32 year = 1;</code>
      */
     public Builder clearYear() {
       
@@ -494,7 +505,7 @@ public  final class Date extends
      * Month of year. Must be from 1 to 12.
      * </pre>
      *
-     * <code>optional int32 month = 2;</code>
+     * <code>int32 month = 2;</code>
      */
     public int getMonth() {
       return month_;
@@ -504,7 +515,7 @@ public  final class Date extends
      * Month of year. Must be from 1 to 12.
      * </pre>
      *
-     * <code>optional int32 month = 2;</code>
+     * <code>int32 month = 2;</code>
      */
     public Builder setMonth(int value) {
       
@@ -517,7 +528,7 @@ public  final class Date extends
      * Month of year. Must be from 1 to 12.
      * </pre>
      *
-     * <code>optional int32 month = 2;</code>
+     * <code>int32 month = 2;</code>
      */
     public Builder clearMonth() {
       
@@ -533,7 +544,7 @@ public  final class Date extends
      * if specifying a year/month where the day is not significant.
      * </pre>
      *
-     * <code>optional int32 day = 3;</code>
+     * <code>int32 day = 3;</code>
      */
     public int getDay() {
       return day_;
@@ -544,7 +555,7 @@ public  final class Date extends
      * if specifying a year/month where the day is not significant.
      * </pre>
      *
-     * <code>optional int32 day = 3;</code>
+     * <code>int32 day = 3;</code>
      */
     public Builder setDay(int value) {
       
@@ -558,7 +569,7 @@ public  final class Date extends
      * if specifying a year/month where the day is not significant.
      * </pre>
      *
-     * <code>optional int32 day = 3;</code>
+     * <code>int32 day = 3;</code>
      */
     public Builder clearDay() {
       

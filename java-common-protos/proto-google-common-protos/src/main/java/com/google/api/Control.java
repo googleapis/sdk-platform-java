@@ -86,7 +86,7 @@ public  final class Control extends
    * feature (like quota and billing) will be enabled.
    * </pre>
    *
-   * <code>optional string environment = 1;</code>
+   * <code>string environment = 1;</code>
    */
   public java.lang.String getEnvironment() {
     java.lang.Object ref = environment_;
@@ -106,7 +106,7 @@ public  final class Control extends
    * feature (like quota and billing) will be enabled.
    * </pre>
    *
-   * <code>optional string environment = 1;</code>
+   * <code>string environment = 1;</code>
    */
   public com.google.protobuf.ByteString
       getEnvironmentBytes() {
@@ -174,7 +174,7 @@ public  final class Control extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ENVIRONMENT_FIELD_NUMBER;
     hash = (53 * hash) + getEnvironment().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -182,6 +182,17 @@ public  final class Control extends
     return hash;
   }
 
+  public static com.google.api.Control parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Control parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Control parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -404,7 +415,7 @@ public  final class Control extends
      * feature (like quota and billing) will be enabled.
      * </pre>
      *
-     * <code>optional string environment = 1;</code>
+     * <code>string environment = 1;</code>
      */
     public java.lang.String getEnvironment() {
       java.lang.Object ref = environment_;
@@ -424,7 +435,7 @@ public  final class Control extends
      * feature (like quota and billing) will be enabled.
      * </pre>
      *
-     * <code>optional string environment = 1;</code>
+     * <code>string environment = 1;</code>
      */
     public com.google.protobuf.ByteString
         getEnvironmentBytes() {
@@ -445,7 +456,7 @@ public  final class Control extends
      * feature (like quota and billing) will be enabled.
      * </pre>
      *
-     * <code>optional string environment = 1;</code>
+     * <code>string environment = 1;</code>
      */
     public Builder setEnvironment(
         java.lang.String value) {
@@ -463,7 +474,7 @@ public  final class Control extends
      * feature (like quota and billing) will be enabled.
      * </pre>
      *
-     * <code>optional string environment = 1;</code>
+     * <code>string environment = 1;</code>
      */
     public Builder clearEnvironment() {
       
@@ -477,7 +488,7 @@ public  final class Control extends
      * feature (like quota and billing) will be enabled.
      * </pre>
      *
-     * <code>optional string environment = 1;</code>
+     * <code>string environment = 1;</code>
      */
     public Builder setEnvironmentBytes(
         com.google.protobuf.ByteString value) {

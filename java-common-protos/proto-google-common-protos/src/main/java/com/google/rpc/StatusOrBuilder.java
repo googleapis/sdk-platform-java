@@ -12,7 +12,7 @@ public interface StatusOrBuilder extends
    * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
    * </pre>
    *
-   * <code>optional int32 code = 1;</code>
+   * <code>int32 code = 1;</code>
    */
   int getCode();
 
@@ -23,7 +23,7 @@ public interface StatusOrBuilder extends
    * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   java.lang.String getMessage();
   /**
@@ -33,7 +33,7 @@ public interface StatusOrBuilder extends
    * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
    * </pre>
    *
-   * <code>optional string message = 2;</code>
+   * <code>string message = 2;</code>
    */
   com.google.protobuf.ByteString
       getMessageBytes();

@@ -100,7 +100,7 @@ public  final class OAuthRequirements extends
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
    *
-   * <code>optional string canonical_scopes = 1;</code>
+   * <code>string canonical_scopes = 1;</code>
    */
   public java.lang.String getCanonicalScopes() {
     java.lang.Object ref = canonicalScopes_;
@@ -123,7 +123,7 @@ public  final class OAuthRequirements extends
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
    *
-   * <code>optional string canonical_scopes = 1;</code>
+   * <code>string canonical_scopes = 1;</code>
    */
   public com.google.protobuf.ByteString
       getCanonicalScopesBytes() {
@@ -191,7 +191,7 @@ public  final class OAuthRequirements extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + CANONICAL_SCOPES_FIELD_NUMBER;
     hash = (53 * hash) + getCanonicalScopes().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -199,6 +199,17 @@ public  final class OAuthRequirements extends
     return hash;
   }
 
+  public static com.google.api.OAuthRequirements parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.OAuthRequirements parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.OAuthRequirements parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -435,7 +446,7 @@ public  final class OAuthRequirements extends
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
      *
-     * <code>optional string canonical_scopes = 1;</code>
+     * <code>string canonical_scopes = 1;</code>
      */
     public java.lang.String getCanonicalScopes() {
       java.lang.Object ref = canonicalScopes_;
@@ -458,7 +469,7 @@ public  final class OAuthRequirements extends
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
      *
-     * <code>optional string canonical_scopes = 1;</code>
+     * <code>string canonical_scopes = 1;</code>
      */
     public com.google.protobuf.ByteString
         getCanonicalScopesBytes() {
@@ -482,7 +493,7 @@ public  final class OAuthRequirements extends
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
      *
-     * <code>optional string canonical_scopes = 1;</code>
+     * <code>string canonical_scopes = 1;</code>
      */
     public Builder setCanonicalScopes(
         java.lang.String value) {
@@ -503,7 +514,7 @@ public  final class OAuthRequirements extends
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
      *
-     * <code>optional string canonical_scopes = 1;</code>
+     * <code>string canonical_scopes = 1;</code>
      */
     public Builder clearCanonicalScopes() {
       
@@ -520,7 +531,7 @@ public  final class OAuthRequirements extends
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
      *
-     * <code>optional string canonical_scopes = 1;</code>
+     * <code>string canonical_scopes = 1;</code>
      */
     public Builder setCanonicalScopesBytes(
         com.google.protobuf.ByteString value) {

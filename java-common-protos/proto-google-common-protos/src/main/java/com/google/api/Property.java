@@ -273,7 +273,7 @@ public  final class Property extends
    * The name of the property (a.k.a key).
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   public java.lang.String getName() {
     java.lang.Object ref = name_;
@@ -292,7 +292,7 @@ public  final class Property extends
    * The name of the property (a.k.a key).
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
@@ -315,7 +315,7 @@ public  final class Property extends
    * The type of this property.
    * </pre>
    *
-   * <code>optional .google.api.Property.PropertyType type = 2;</code>
+   * <code>.google.api.Property.PropertyType type = 2;</code>
    */
   public int getTypeValue() {
     return type_;
@@ -325,7 +325,7 @@ public  final class Property extends
    * The type of this property.
    * </pre>
    *
-   * <code>optional .google.api.Property.PropertyType type = 2;</code>
+   * <code>.google.api.Property.PropertyType type = 2;</code>
    */
   public com.google.api.Property.PropertyType getType() {
     com.google.api.Property.PropertyType result = com.google.api.Property.PropertyType.valueOf(type_);
@@ -339,7 +339,7 @@ public  final class Property extends
    * The description of the property
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
@@ -358,7 +358,7 @@ public  final class Property extends
    * The description of the property
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
@@ -442,7 +442,7 @@ public  final class Property extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
@@ -454,6 +454,17 @@ public  final class Property extends
     return hash;
   }
 
+  public static com.google.api.Property parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Property parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Property parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -693,7 +704,7 @@ public  final class Property extends
      * The name of the property (a.k.a key).
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -712,7 +723,7 @@ public  final class Property extends
      * The name of the property (a.k.a key).
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -732,7 +743,7 @@ public  final class Property extends
      * The name of the property (a.k.a key).
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder setName(
         java.lang.String value) {
@@ -749,7 +760,7 @@ public  final class Property extends
      * The name of the property (a.k.a key).
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder clearName() {
       
@@ -762,7 +773,7 @@ public  final class Property extends
      * The name of the property (a.k.a key).
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -782,7 +793,7 @@ public  final class Property extends
      * The type of this property.
      * </pre>
      *
-     * <code>optional .google.api.Property.PropertyType type = 2;</code>
+     * <code>.google.api.Property.PropertyType type = 2;</code>
      */
     public int getTypeValue() {
       return type_;
@@ -792,7 +803,7 @@ public  final class Property extends
      * The type of this property.
      * </pre>
      *
-     * <code>optional .google.api.Property.PropertyType type = 2;</code>
+     * <code>.google.api.Property.PropertyType type = 2;</code>
      */
     public Builder setTypeValue(int value) {
       type_ = value;
@@ -804,7 +815,7 @@ public  final class Property extends
      * The type of this property.
      * </pre>
      *
-     * <code>optional .google.api.Property.PropertyType type = 2;</code>
+     * <code>.google.api.Property.PropertyType type = 2;</code>
      */
     public com.google.api.Property.PropertyType getType() {
       com.google.api.Property.PropertyType result = com.google.api.Property.PropertyType.valueOf(type_);
@@ -815,7 +826,7 @@ public  final class Property extends
      * The type of this property.
      * </pre>
      *
-     * <code>optional .google.api.Property.PropertyType type = 2;</code>
+     * <code>.google.api.Property.PropertyType type = 2;</code>
      */
     public Builder setType(com.google.api.Property.PropertyType value) {
       if (value == null) {
@@ -831,7 +842,7 @@ public  final class Property extends
      * The type of this property.
      * </pre>
      *
-     * <code>optional .google.api.Property.PropertyType type = 2;</code>
+     * <code>.google.api.Property.PropertyType type = 2;</code>
      */
     public Builder clearType() {
       
@@ -846,7 +857,7 @@ public  final class Property extends
      * The description of the property
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -865,7 +876,7 @@ public  final class Property extends
      * The description of the property
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
@@ -885,7 +896,7 @@ public  final class Property extends
      * The description of the property
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder setDescription(
         java.lang.String value) {
@@ -902,7 +913,7 @@ public  final class Property extends
      * The description of the property
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder clearDescription() {
       
@@ -915,7 +926,7 @@ public  final class Property extends
      * The description of the property
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder setDescriptionBytes(
         com.google.protobuf.ByteString value) {

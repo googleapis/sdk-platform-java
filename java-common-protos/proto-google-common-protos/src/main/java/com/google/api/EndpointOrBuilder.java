@@ -12,7 +12,7 @@ public interface EndpointOrBuilder extends
    * The canonical name of this endpoint.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -20,7 +20,7 @@ public interface EndpointOrBuilder extends
    * The canonical name of this endpoint.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -150,7 +150,7 @@ public interface EndpointOrBuilder extends
    * For example, "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
-   * <code>optional string target = 101;</code>
+   * <code>string target = 101;</code>
    */
   java.lang.String getTarget();
   /**
@@ -161,7 +161,7 @@ public interface EndpointOrBuilder extends
    * For example, "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
-   * <code>optional string target = 101;</code>
+   * <code>string target = 101;</code>
    */
   com.google.protobuf.ByteString
       getTargetBytes();
@@ -176,7 +176,7 @@ public interface EndpointOrBuilder extends
    * allowed to proceed.
    * </pre>
    *
-   * <code>optional bool allow_cors = 5;</code>
+   * <code>bool allow_cors = 5;</code>
    */
   boolean getAllowCors();
 }

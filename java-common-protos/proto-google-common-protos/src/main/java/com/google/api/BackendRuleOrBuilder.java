@@ -13,7 +13,7 @@ public interface BackendRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   java.lang.String getSelector();
   /**
@@ -22,7 +22,7 @@ public interface BackendRuleOrBuilder extends
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
-   * <code>optional string selector = 1;</code>
+   * <code>string selector = 1;</code>
    */
   com.google.protobuf.ByteString
       getSelectorBytes();
@@ -32,7 +32,7 @@ public interface BackendRuleOrBuilder extends
    * The address of the API backend.
    * </pre>
    *
-   * <code>optional string address = 2;</code>
+   * <code>string address = 2;</code>
    */
   java.lang.String getAddress();
   /**
@@ -40,7 +40,7 @@ public interface BackendRuleOrBuilder extends
    * The address of the API backend.
    * </pre>
    *
-   * <code>optional string address = 2;</code>
+   * <code>string address = 2;</code>
    */
   com.google.protobuf.ByteString
       getAddressBytes();
@@ -51,7 +51,7 @@ public interface BackendRuleOrBuilder extends
    * default depends on the deployment context.
    * </pre>
    *
-   * <code>optional double deadline = 3;</code>
+   * <code>double deadline = 3;</code>
    */
   double getDeadline();
 }

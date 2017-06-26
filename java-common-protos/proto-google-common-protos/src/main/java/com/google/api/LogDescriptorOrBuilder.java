@@ -15,7 +15,7 @@ public interface LogDescriptorOrBuilder extends
    * slash, underscore, hyphen, period [/_-.].
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   java.lang.String getName();
   /**
@@ -26,7 +26,7 @@ public interface LogDescriptorOrBuilder extends
    * slash, underscore, hyphen, period [/_-.].
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
       getNameBytes();
@@ -91,7 +91,7 @@ public interface LogDescriptorOrBuilder extends
    * the documentation and can contain details.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   java.lang.String getDescription();
   /**
@@ -100,7 +100,7 @@ public interface LogDescriptorOrBuilder extends
    * the documentation and can contain details.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   com.google.protobuf.ByteString
       getDescriptionBytes();
@@ -111,7 +111,7 @@ public interface LogDescriptorOrBuilder extends
    * the user interface and should be concise.
    * </pre>
    *
-   * <code>optional string display_name = 4;</code>
+   * <code>string display_name = 4;</code>
    */
   java.lang.String getDisplayName();
   /**
@@ -120,7 +120,7 @@ public interface LogDescriptorOrBuilder extends
    * the user interface and should be concise.
    * </pre>
    *
-   * <code>optional string display_name = 4;</code>
+   * <code>string display_name = 4;</code>
    */
   com.google.protobuf.ByteString
       getDisplayNameBytes();

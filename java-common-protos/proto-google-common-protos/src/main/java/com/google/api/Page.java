@@ -118,7 +118,7 @@ public  final class Page extends
    * `[Java][Tutorial.Java]`.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   public java.lang.String getName() {
     java.lang.Object ref = name_;
@@ -150,7 +150,7 @@ public  final class Page extends
    * `[Java][Tutorial.Java]`.
    * </pre>
    *
-   * <code>optional string name = 1;</code>
+   * <code>string name = 1;</code>
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
@@ -174,7 +174,7 @@ public  final class Page extends
    * to include content from a Markdown file.
    * </pre>
    *
-   * <code>optional string content = 2;</code>
+   * <code>string content = 2;</code>
    */
   public java.lang.String getContent() {
     java.lang.Object ref = content_;
@@ -194,7 +194,7 @@ public  final class Page extends
    * to include content from a Markdown file.
    * </pre>
    *
-   * <code>optional string content = 2;</code>
+   * <code>string content = 2;</code>
    */
   public com.google.protobuf.ByteString
       getContentBytes() {
@@ -339,7 +339,7 @@ public  final class Page extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
     hash = (37 * hash) + CONTENT_FIELD_NUMBER;
@@ -353,6 +353,17 @@ public  final class Page extends
     return hash;
   }
 
+  public static com.google.api.Page parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Page parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Page parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -639,7 +650,7 @@ public  final class Page extends
      * `[Java][Tutorial.Java]`.
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -671,7 +682,7 @@ public  final class Page extends
      * `[Java][Tutorial.Java]`.
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -704,7 +715,7 @@ public  final class Page extends
      * `[Java][Tutorial.Java]`.
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder setName(
         java.lang.String value) {
@@ -734,7 +745,7 @@ public  final class Page extends
      * `[Java][Tutorial.Java]`.
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder clearName() {
       
@@ -760,7 +771,7 @@ public  final class Page extends
      * `[Java][Tutorial.Java]`.
      * </pre>
      *
-     * <code>optional string name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -781,7 +792,7 @@ public  final class Page extends
      * to include content from a Markdown file.
      * </pre>
      *
-     * <code>optional string content = 2;</code>
+     * <code>string content = 2;</code>
      */
     public java.lang.String getContent() {
       java.lang.Object ref = content_;
@@ -801,7 +812,7 @@ public  final class Page extends
      * to include content from a Markdown file.
      * </pre>
      *
-     * <code>optional string content = 2;</code>
+     * <code>string content = 2;</code>
      */
     public com.google.protobuf.ByteString
         getContentBytes() {
@@ -822,7 +833,7 @@ public  final class Page extends
      * to include content from a Markdown file.
      * </pre>
      *
-     * <code>optional string content = 2;</code>
+     * <code>string content = 2;</code>
      */
     public Builder setContent(
         java.lang.String value) {
@@ -840,7 +851,7 @@ public  final class Page extends
      * to include content from a Markdown file.
      * </pre>
      *
-     * <code>optional string content = 2;</code>
+     * <code>string content = 2;</code>
      */
     public Builder clearContent() {
       
@@ -854,7 +865,7 @@ public  final class Page extends
      * to include content from a Markdown file.
      * </pre>
      *
-     * <code>optional string content = 2;</code>
+     * <code>string content = 2;</code>
      */
     public Builder setContentBytes(
         com.google.protobuf.ByteString value) {

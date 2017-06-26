@@ -12,7 +12,7 @@ public interface AuthenticationInfoOrBuilder extends
    * The email address of the authenticated user making the request.
    * </pre>
    *
-   * <code>optional string principal_email = 1;</code>
+   * <code>string principal_email = 1;</code>
    */
   java.lang.String getPrincipalEmail();
   /**
@@ -20,7 +20,7 @@ public interface AuthenticationInfoOrBuilder extends
    * The email address of the authenticated user making the request.
    * </pre>
    *
-   * <code>optional string principal_email = 1;</code>
+   * <code>string principal_email = 1;</code>
    */
   com.google.protobuf.ByteString
       getPrincipalEmailBytes();

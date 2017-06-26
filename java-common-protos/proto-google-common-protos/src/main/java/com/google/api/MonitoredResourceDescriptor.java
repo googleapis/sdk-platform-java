@@ -130,7 +130,7 @@ public  final class MonitoredResourceDescriptor extends
    * resource name format `"monitoredResourceDescriptors/{type}"`.
    * </pre>
    *
-   * <code>optional string name = 5;</code>
+   * <code>string name = 5;</code>
    */
   public java.lang.String getName() {
     java.lang.Object ref = name_;
@@ -154,7 +154,7 @@ public  final class MonitoredResourceDescriptor extends
    * resource name format `"monitoredResourceDescriptors/{type}"`.
    * </pre>
    *
-   * <code>optional string name = 5;</code>
+   * <code>string name = 5;</code>
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
@@ -179,7 +179,7 @@ public  final class MonitoredResourceDescriptor extends
    * The maximum length of this value is 256 characters.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   public java.lang.String getType() {
     java.lang.Object ref = type_;
@@ -200,7 +200,7 @@ public  final class MonitoredResourceDescriptor extends
    * The maximum length of this value is 256 characters.
    * </pre>
    *
-   * <code>optional string type = 1;</code>
+   * <code>string type = 1;</code>
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
@@ -226,7 +226,7 @@ public  final class MonitoredResourceDescriptor extends
    * `"Google Cloud SQL Database"`.
    * </pre>
    *
-   * <code>optional string display_name = 2;</code>
+   * <code>string display_name = 2;</code>
    */
   public java.lang.String getDisplayName() {
     java.lang.Object ref = displayName_;
@@ -248,7 +248,7 @@ public  final class MonitoredResourceDescriptor extends
    * `"Google Cloud SQL Database"`.
    * </pre>
    *
-   * <code>optional string display_name = 2;</code>
+   * <code>string display_name = 2;</code>
    */
   public com.google.protobuf.ByteString
       getDisplayNameBytes() {
@@ -272,7 +272,7 @@ public  final class MonitoredResourceDescriptor extends
    * be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
@@ -292,7 +292,7 @@ public  final class MonitoredResourceDescriptor extends
    * be used in documentation.
    * </pre>
    *
-   * <code>optional string description = 3;</code>
+   * <code>string description = 3;</code>
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
@@ -458,7 +458,7 @@ public  final class MonitoredResourceDescriptor extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + NAME_FIELD_NUMBER;
     hash = (53 * hash) + getName().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
@@ -476,6 +476,17 @@ public  final class MonitoredResourceDescriptor extends
     return hash;
   }
 
+  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -774,7 +785,7 @@ public  final class MonitoredResourceDescriptor extends
      * resource name format `"monitoredResourceDescriptors/{type}"`.
      * </pre>
      *
-     * <code>optional string name = 5;</code>
+     * <code>string name = 5;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -798,7 +809,7 @@ public  final class MonitoredResourceDescriptor extends
      * resource name format `"monitoredResourceDescriptors/{type}"`.
      * </pre>
      *
-     * <code>optional string name = 5;</code>
+     * <code>string name = 5;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -823,7 +834,7 @@ public  final class MonitoredResourceDescriptor extends
      * resource name format `"monitoredResourceDescriptors/{type}"`.
      * </pre>
      *
-     * <code>optional string name = 5;</code>
+     * <code>string name = 5;</code>
      */
     public Builder setName(
         java.lang.String value) {
@@ -845,7 +856,7 @@ public  final class MonitoredResourceDescriptor extends
      * resource name format `"monitoredResourceDescriptors/{type}"`.
      * </pre>
      *
-     * <code>optional string name = 5;</code>
+     * <code>string name = 5;</code>
      */
     public Builder clearName() {
       
@@ -863,7 +874,7 @@ public  final class MonitoredResourceDescriptor extends
      * resource name format `"monitoredResourceDescriptors/{type}"`.
      * </pre>
      *
-     * <code>optional string name = 5;</code>
+     * <code>string name = 5;</code>
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
@@ -885,7 +896,7 @@ public  final class MonitoredResourceDescriptor extends
      * The maximum length of this value is 256 characters.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -906,7 +917,7 @@ public  final class MonitoredResourceDescriptor extends
      * The maximum length of this value is 256 characters.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -928,7 +939,7 @@ public  final class MonitoredResourceDescriptor extends
      * The maximum length of this value is 256 characters.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder setType(
         java.lang.String value) {
@@ -947,7 +958,7 @@ public  final class MonitoredResourceDescriptor extends
      * The maximum length of this value is 256 characters.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder clearType() {
       
@@ -962,7 +973,7 @@ public  final class MonitoredResourceDescriptor extends
      * The maximum length of this value is 256 characters.
      * </pre>
      *
-     * <code>optional string type = 1;</code>
+     * <code>string type = 1;</code>
      */
     public Builder setTypeBytes(
         com.google.protobuf.ByteString value) {
@@ -985,7 +996,7 @@ public  final class MonitoredResourceDescriptor extends
      * `"Google Cloud SQL Database"`.
      * </pre>
      *
-     * <code>optional string display_name = 2;</code>
+     * <code>string display_name = 2;</code>
      */
     public java.lang.String getDisplayName() {
       java.lang.Object ref = displayName_;
@@ -1007,7 +1018,7 @@ public  final class MonitoredResourceDescriptor extends
      * `"Google Cloud SQL Database"`.
      * </pre>
      *
-     * <code>optional string display_name = 2;</code>
+     * <code>string display_name = 2;</code>
      */
     public com.google.protobuf.ByteString
         getDisplayNameBytes() {
@@ -1030,7 +1041,7 @@ public  final class MonitoredResourceDescriptor extends
      * `"Google Cloud SQL Database"`.
      * </pre>
      *
-     * <code>optional string display_name = 2;</code>
+     * <code>string display_name = 2;</code>
      */
     public Builder setDisplayName(
         java.lang.String value) {
@@ -1050,7 +1061,7 @@ public  final class MonitoredResourceDescriptor extends
      * `"Google Cloud SQL Database"`.
      * </pre>
      *
-     * <code>optional string display_name = 2;</code>
+     * <code>string display_name = 2;</code>
      */
     public Builder clearDisplayName() {
       
@@ -1066,7 +1077,7 @@ public  final class MonitoredResourceDescriptor extends
      * `"Google Cloud SQL Database"`.
      * </pre>
      *
-     * <code>optional string display_name = 2;</code>
+     * <code>string display_name = 2;</code>
      */
     public Builder setDisplayNameBytes(
         com.google.protobuf.ByteString value) {
@@ -1087,7 +1098,7 @@ public  final class MonitoredResourceDescriptor extends
      * be used in documentation.
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
@@ -1107,7 +1118,7 @@ public  final class MonitoredResourceDescriptor extends
      * be used in documentation.
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
@@ -1128,7 +1139,7 @@ public  final class MonitoredResourceDescriptor extends
      * be used in documentation.
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder setDescription(
         java.lang.String value) {
@@ -1146,7 +1157,7 @@ public  final class MonitoredResourceDescriptor extends
      * be used in documentation.
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder clearDescription() {
       
@@ -1160,7 +1171,7 @@ public  final class MonitoredResourceDescriptor extends
      * be used in documentation.
      * </pre>
      *
-     * <code>optional string description = 3;</code>
+     * <code>string description = 3;</code>
      */
     public Builder setDescriptionBytes(
         com.google.protobuf.ByteString value) {

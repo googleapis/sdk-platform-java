@@ -13,7 +13,7 @@ public interface DateOrBuilder extends
    * a year.
    * </pre>
    *
-   * <code>optional int32 year = 1;</code>
+   * <code>int32 year = 1;</code>
    */
   int getYear();
 
@@ -22,7 +22,7 @@ public interface DateOrBuilder extends
    * Month of year. Must be from 1 to 12.
    * </pre>
    *
-   * <code>optional int32 month = 2;</code>
+   * <code>int32 month = 2;</code>
    */
   int getMonth();
 
@@ -32,7 +32,7 @@ public interface DateOrBuilder extends
    * if specifying a year/month where the day is not significant.
    * </pre>
    *
-   * <code>optional int32 day = 3;</code>
+   * <code>int32 day = 3;</code>
    */
   int getDay();
 }

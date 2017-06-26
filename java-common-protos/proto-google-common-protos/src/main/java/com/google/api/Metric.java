@@ -55,9 +55,10 @@ public  final class Metric extends
               mutable_bitField0_ |= 0x00000002;
             }
             com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-            labels = input.readMessage(
+            labels__ = input.readMessage(
                 LabelsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-            labels_.getMutableMap().put(labels.getKey(), labels.getValue());
+            labels_.getMutableMap().put(
+                labels__.getKey(), labels__.getValue());
             break;
           }
           case 26: {
@@ -109,7 +110,7 @@ public  final class Metric extends
    * For example, `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
-   * <code>optional string type = 3;</code>
+   * <code>string type = 3;</code>
    */
   public java.lang.String getType() {
     java.lang.Object ref = type_;
@@ -129,7 +130,7 @@ public  final class Metric extends
    * For example, `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
-   * <code>optional string type = 3;</code>
+   * <code>string type = 3;</code>
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
@@ -253,15 +254,12 @@ public  final class Metric extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
-         : internalGetLabels().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-      labels = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
-          .setKey(entry.getKey())
-          .setValue(entry.getValue())
-          .build();
-      output.writeMessage(2, labels);
-    }
+    com.google.protobuf.GeneratedMessageV3
+      .serializeStringMapTo(
+        output,
+        internalGetLabels(),
+        LabelsDefaultEntryHolder.defaultEntry,
+        2);
     if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, type_);
     }
@@ -275,12 +273,12 @@ public  final class Metric extends
     for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
          : internalGetLabels().getMap().entrySet()) {
       com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-      labels = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
+      labels__ = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
           .setKey(entry.getKey())
           .setValue(entry.getValue())
           .build();
       size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, labels);
+          .computeMessageSize(2, labels__);
     }
     if (!getTypeBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, type_);
@@ -314,7 +312,7 @@ public  final class Metric extends
       return memoizedHashCode;
     }
     int hash = 41;
-    hash = (19 * hash) + getDescriptorForType().hashCode();
+    hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + TYPE_FIELD_NUMBER;
     hash = (53 * hash) + getType().hashCode();
     if (!internalGetLabels().getMap().isEmpty()) {
@@ -326,6 +324,17 @@ public  final class Metric extends
     return hash;
   }
 
+  public static com.google.api.Metric parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static com.google.api.Metric parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
   public static com.google.api.Metric parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -578,7 +587,7 @@ public  final class Metric extends
      * For example, `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
-     * <code>optional string type = 3;</code>
+     * <code>string type = 3;</code>
      */
     public java.lang.String getType() {
       java.lang.Object ref = type_;
@@ -598,7 +607,7 @@ public  final class Metric extends
      * For example, `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
-     * <code>optional string type = 3;</code>
+     * <code>string type = 3;</code>
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
@@ -619,7 +628,7 @@ public  final class Metric extends
      * For example, `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
-     * <code>optional string type = 3;</code>
+     * <code>string type = 3;</code>
      */
     public Builder setType(
         java.lang.String value) {
@@ -637,7 +646,7 @@ public  final class Metric extends
      * For example, `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
-     * <code>optional string type = 3;</code>
+     * <code>string type = 3;</code>
      */
     public Builder clearType() {
       
@@ -651,7 +660,7 @@ public  final class Metric extends
      * For example, `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
-     * <code>optional string type = 3;</code>
+     * <code>string type = 3;</code>
      */
     public Builder setTypeBytes(
         com.google.protobuf.ByteString value) {
@@ -762,7 +771,8 @@ public  final class Metric extends
     }
 
     public Builder clearLabels() {
-      getMutableLabels().clear();
+      internalGetMutableLabels().getMutableMap()
+          .clear();
       return this;
     }
     /**
@@ -777,7 +787,8 @@ public  final class Metric extends
     public Builder removeLabels(
         java.lang.String key) {
       if (key == null) { throw new java.lang.NullPointerException(); }
-      getMutableLabels().remove(key);
+      internalGetMutableLabels().getMutableMap()
+          .remove(key);
       return this;
     }
     /**
@@ -801,7 +812,8 @@ public  final class Metric extends
         java.lang.String value) {
       if (key == null) { throw new java.lang.NullPointerException(); }
       if (value == null) { throw new java.lang.NullPointerException(); }
-      getMutableLabels().put(key, value);
+      internalGetMutableLabels().getMutableMap()
+          .put(key, value);
       return this;
     }
     /**
@@ -815,7 +827,8 @@ public  final class Metric extends
 
     public Builder putAllLabels(
         java.util.Map<java.lang.String, java.lang.String> values) {
-      getMutableLabels().putAll(values);
+      internalGetMutableLabels().getMutableMap()
+          .putAll(values);
       return this;
     }
     public final Builder setUnknownFields(
