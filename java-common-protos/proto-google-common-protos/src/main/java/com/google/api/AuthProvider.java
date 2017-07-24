@@ -24,6 +24,7 @@ public  final class AuthProvider extends
     issuer_ = "";
     jwksUri_ = "";
     audiences_ = "";
+    authorizationUrl_ = "";
   }
 
   @java.lang.Override
@@ -73,6 +74,12 @@ public  final class AuthProvider extends
             java.lang.String s = input.readStringRequireUtf8();
 
             audiences_ = s;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            authorizationUrl_ = s;
             break;
           }
         }
@@ -312,6 +319,50 @@ public  final class AuthProvider extends
     }
   }
 
+  public static final int AUTHORIZATION_URL_FIELD_NUMBER = 5;
+  private volatile java.lang.Object authorizationUrl_;
+  /**
+   * <pre>
+   * Redirect URL if JWT token is required but no present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   */
+  public java.lang.String getAuthorizationUrl() {
+    java.lang.Object ref = authorizationUrl_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      authorizationUrl_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Redirect URL if JWT token is required but no present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAuthorizationUrlBytes() {
+    java.lang.Object ref = authorizationUrl_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      authorizationUrl_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -336,6 +387,9 @@ public  final class AuthProvider extends
     if (!getAudiencesBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, audiences_);
     }
+    if (!getAuthorizationUrlBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, authorizationUrl_);
+    }
   }
 
   public int getSerializedSize() {
@@ -354,6 +408,9 @@ public  final class AuthProvider extends
     }
     if (!getAudiencesBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, audiences_);
+    }
+    if (!getAuthorizationUrlBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, authorizationUrl_);
     }
     memoizedSize = size;
     return size;
@@ -379,6 +436,8 @@ public  final class AuthProvider extends
         .equals(other.getJwksUri());
     result = result && getAudiences()
         .equals(other.getAudiences());
+    result = result && getAuthorizationUrl()
+        .equals(other.getAuthorizationUrl());
     return result;
   }
 
@@ -397,6 +456,8 @@ public  final class AuthProvider extends
     hash = (53 * hash) + getJwksUri().hashCode();
     hash = (37 * hash) + AUDIENCES_FIELD_NUMBER;
     hash = (53 * hash) + getAudiences().hashCode();
+    hash = (37 * hash) + AUTHORIZATION_URL_FIELD_NUMBER;
+    hash = (53 * hash) + getAuthorizationUrl().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -539,6 +600,8 @@ public  final class AuthProvider extends
 
       audiences_ = "";
 
+      authorizationUrl_ = "";
+
       return this;
     }
 
@@ -565,6 +628,7 @@ public  final class AuthProvider extends
       result.issuer_ = issuer_;
       result.jwksUri_ = jwksUri_;
       result.audiences_ = audiences_;
+      result.authorizationUrl_ = authorizationUrl_;
       onBuilt();
       return result;
     }
@@ -620,6 +684,10 @@ public  final class AuthProvider extends
       }
       if (!other.getAudiences().isEmpty()) {
         audiences_ = other.audiences_;
+        onChanged();
+      }
+      if (!other.getAuthorizationUrl().isEmpty()) {
+        authorizationUrl_ = other.authorizationUrl_;
         onChanged();
       }
       onChanged();
@@ -1115,6 +1183,100 @@ public  final class AuthProvider extends
   checkByteStringIsUtf8(value);
       
       audiences_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object authorizationUrl_ = "";
+    /**
+     * <pre>
+     * Redirect URL if JWT token is required but no present or is expired.
+     * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+     * </pre>
+     *
+     * <code>string authorization_url = 5;</code>
+     */
+    public java.lang.String getAuthorizationUrl() {
+      java.lang.Object ref = authorizationUrl_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        authorizationUrl_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Redirect URL if JWT token is required but no present or is expired.
+     * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+     * </pre>
+     *
+     * <code>string authorization_url = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAuthorizationUrlBytes() {
+      java.lang.Object ref = authorizationUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        authorizationUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Redirect URL if JWT token is required but no present or is expired.
+     * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+     * </pre>
+     *
+     * <code>string authorization_url = 5;</code>
+     */
+    public Builder setAuthorizationUrl(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      authorizationUrl_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Redirect URL if JWT token is required but no present or is expired.
+     * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+     * </pre>
+     *
+     * <code>string authorization_url = 5;</code>
+     */
+    public Builder clearAuthorizationUrl() {
+      
+      authorizationUrl_ = getDefaultInstance().getAuthorizationUrl();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Redirect URL if JWT token is required but no present or is expired.
+     * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+     * </pre>
+     *
+     * <code>string authorization_url = 5;</code>
+     */
+    public Builder setAuthorizationUrlBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      authorizationUrl_ = value;
       onChanged();
       return this;
     }

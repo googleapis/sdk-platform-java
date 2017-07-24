@@ -56,15 +56,15 @@ public final class AuthProto {
       "\n\010selector\030\001 \001(\t\022,\n\005oauth\030\002 \001(\0132\035.google" +
       ".api.OAuthRequirements\022 \n\030allow_without_" +
       "credential\030\005 \001(\010\0221\n\014requirements\030\007 \003(\0132\033" +
-      ".google.api.AuthRequirement\"O\n\014AuthProvi" +
+      ".google.api.AuthRequirement\"j\n\014AuthProvi" +
       "der\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(\t\022\020\n\010jwks_",
-      "uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\"-\n\021OAuthReq" +
-      "uirements\022\030\n\020canonical_scopes\030\001 \001(\t\"9\n\017A" +
-      "uthRequirement\022\023\n\013provider_id\030\001 \001(\t\022\021\n\ta" +
-      "udiences\030\002 \001(\tBk\n\016com.google.apiB\tAuthPr" +
-      "otoP\001ZEgoogle.golang.org/genproto/google" +
-      "apis/api/serviceconfig;serviceconfig\242\002\004G" +
-      "APIb\006proto3"
+      "uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\022\031\n\021authoriz" +
+      "ation_url\030\005 \001(\t\"-\n\021OAuthRequirements\022\030\n\020" +
+      "canonical_scopes\030\001 \001(\t\"9\n\017AuthRequiremen" +
+      "t\022\023\n\013provider_id\030\001 \001(\t\022\021\n\taudiences\030\002 \001(" +
+      "\tBk\n\016com.google.apiB\tAuthProtoP\001ZEgoogle" +
+      ".golang.org/genproto/googleapis/api/serv" +
+      "iceconfig;serviceconfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -96,7 +96,7 @@ public final class AuthProto {
     internal_static_google_api_AuthProvider_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_AuthProvider_descriptor,
-        new java.lang.String[] { "Id", "Issuer", "JwksUri", "Audiences", });
+        new java.lang.String[] { "Id", "Issuer", "JwksUri", "Audiences", "AuthorizationUrl", });
     internal_static_google_api_OAuthRequirements_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_google_api_OAuthRequirements_fieldAccessorTable = new

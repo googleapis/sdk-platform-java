@@ -124,4 +124,24 @@ public interface AuthProviderOrBuilder extends
    */
   com.google.protobuf.ByteString
       getAudiencesBytes();
+
+  /**
+   * <pre>
+   * Redirect URL if JWT token is required but no present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   */
+  java.lang.String getAuthorizationUrl();
+  /**
+   * <pre>
+   * Redirect URL if JWT token is required but no present or is expired.
+   * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
+   * </pre>
+   *
+   * <code>string authorization_url = 5;</code>
+   */
+  com.google.protobuf.ByteString
+      getAuthorizationUrlBytes();
 }
