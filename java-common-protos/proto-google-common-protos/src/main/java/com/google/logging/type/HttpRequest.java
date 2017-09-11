@@ -34,6 +34,7 @@ public  final class HttpRequest extends
     cacheHit_ = false;
     cacheValidatedWithOriginServer_ = false;
     cacheFillBytes_ = 0L;
+    protocol_ = "";
   }
 
   @java.lang.Override
@@ -143,6 +144,12 @@ public  final class HttpRequest extends
               latency_ = subBuilder.buildPartial();
             }
 
+            break;
+          }
+          case 122: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            protocol_ = s;
             break;
           }
         }
@@ -566,6 +573,48 @@ public  final class HttpRequest extends
     return cacheFillBytes_;
   }
 
+  public static final int PROTOCOL_FIELD_NUMBER = 15;
+  private volatile java.lang.Object protocol_;
+  /**
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   */
+  public java.lang.String getProtocol() {
+    java.lang.Object ref = protocol_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      protocol_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   */
+  public com.google.protobuf.ByteString
+      getProtocolBytes() {
+    java.lang.Object ref = protocol_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      protocol_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -619,6 +668,9 @@ public  final class HttpRequest extends
     }
     if (latency_ != null) {
       output.writeMessage(14, getLatency());
+    }
+    if (!getProtocolBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 15, protocol_);
     }
   }
 
@@ -677,6 +729,9 @@ public  final class HttpRequest extends
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(14, getLatency());
     }
+    if (!getProtocolBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(15, protocol_);
+    }
     memoizedSize = size;
     return size;
   }
@@ -724,6 +779,8 @@ public  final class HttpRequest extends
         == other.getCacheValidatedWithOriginServer());
     result = result && (getCacheFillBytes()
         == other.getCacheFillBytes());
+    result = result && getProtocol()
+        .equals(other.getProtocol());
     return result;
   }
 
@@ -770,6 +827,8 @@ public  final class HttpRequest extends
     hash = (37 * hash) + CACHE_FILL_BYTES_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         getCacheFillBytes());
+    hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
+    hash = (53 * hash) + getProtocol().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -937,6 +996,8 @@ public  final class HttpRequest extends
 
       cacheFillBytes_ = 0L;
 
+      protocol_ = "";
+
       return this;
     }
 
@@ -977,6 +1038,7 @@ public  final class HttpRequest extends
       result.cacheHit_ = cacheHit_;
       result.cacheValidatedWithOriginServer_ = cacheValidatedWithOriginServer_;
       result.cacheFillBytes_ = cacheFillBytes_;
+      result.protocol_ = protocol_;
       onBuilt();
       return result;
     }
@@ -1065,6 +1127,10 @@ public  final class HttpRequest extends
       }
       if (other.getCacheFillBytes() != 0L) {
         setCacheFillBytes(other.getCacheFillBytes());
+      }
+      if (!other.getProtocol().isEmpty()) {
+        protocol_ = other.protocol_;
+        onChanged();
       }
       onChanged();
       return this;
@@ -2101,6 +2167,95 @@ public  final class HttpRequest extends
     public Builder clearCacheFillBytes() {
       
       cacheFillBytes_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object protocol_ = "";
+    /**
+     * <pre>
+     * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+     * </pre>
+     *
+     * <code>string protocol = 15;</code>
+     */
+    public java.lang.String getProtocol() {
+      java.lang.Object ref = protocol_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        protocol_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+     * </pre>
+     *
+     * <code>string protocol = 15;</code>
+     */
+    public com.google.protobuf.ByteString
+        getProtocolBytes() {
+      java.lang.Object ref = protocol_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        protocol_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+     * </pre>
+     *
+     * <code>string protocol = 15;</code>
+     */
+    public Builder setProtocol(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      protocol_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+     * </pre>
+     *
+     * <code>string protocol = 15;</code>
+     */
+    public Builder clearProtocol() {
+      
+      protocol_ = getDefaultInstance().getProtocol();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+     * </pre>
+     *
+     * <code>string protocol = 15;</code>
+     */
+    public Builder setProtocolBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      protocol_ = value;
       onChanged();
       return this;
     }

@@ -35,6 +35,16 @@ public final class ErrorDetailsProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_rpc_PreconditionFailure_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_rpc_PreconditionFailure_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_google_rpc_BadRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -85,21 +95,25 @@ public final class ErrorDetailsProto {
       "entries\030\001 \003(\t\022\016\n\006detail\030\002 \001(\t\"y\n\014QuotaFa" +
       "ilure\0226\n\nviolations\030\001 \003(\0132\".google.rpc.Q" +
       "uotaFailure.Violation\0321\n\tViolation\022\017\n\007su" +
-      "bject\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\"\203\001\n\nBad" +
-      "Request\022?\n\020field_violations\030\001 \003(\0132%.goog" +
-      "le.rpc.BadRequest.FieldViolation\0324\n\016Fiel",
-      "dViolation\022\r\n\005field\030\001 \001(\t\022\023\n\013description" +
-      "\030\002 \001(\t\"7\n\013RequestInfo\022\022\n\nrequest_id\030\001 \001(" +
-      "\t\022\024\n\014serving_data\030\002 \001(\t\"`\n\014ResourceInfo\022" +
-      "\025\n\rresource_type\030\001 \001(\t\022\025\n\rresource_name\030" +
-      "\002 \001(\t\022\r\n\005owner\030\003 \001(\t\022\023\n\013description\030\004 \001(" +
-      "\t\"V\n\004Help\022$\n\005links\030\001 \003(\0132\025.google.rpc.He" +
-      "lp.Link\032(\n\004Link\022\023\n\013description\030\001 \001(\t\022\013\n\003" +
-      "url\030\002 \001(\t\"3\n\020LocalizedMessage\022\016\n\006locale\030" +
-      "\001 \001(\t\022\017\n\007message\030\002 \001(\tBl\n\016com.google.rpc" +
-      "B\021ErrorDetailsProtoP\001Z?google.golang.org",
-      "/genproto/googleapis/rpc/errdetails;errd" +
-      "etails\242\002\003RPCb\006proto3"
+      "bject\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\"\225\001\n\023Pre" +
+      "conditionFailure\022=\n\nviolations\030\001 \003(\0132).g" +
+      "oogle.rpc.PreconditionFailure.Violation\032",
+      "?\n\tViolation\022\014\n\004type\030\001 \001(\t\022\017\n\007subject\030\002 " +
+      "\001(\t\022\023\n\013description\030\003 \001(\t\"\203\001\n\nBadRequest\022" +
+      "?\n\020field_violations\030\001 \003(\0132%.google.rpc.B" +
+      "adRequest.FieldViolation\0324\n\016FieldViolati" +
+      "on\022\r\n\005field\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\"7" +
+      "\n\013RequestInfo\022\022\n\nrequest_id\030\001 \001(\t\022\024\n\014ser" +
+      "ving_data\030\002 \001(\t\"`\n\014ResourceInfo\022\025\n\rresou" +
+      "rce_type\030\001 \001(\t\022\025\n\rresource_name\030\002 \001(\t\022\r\n" +
+      "\005owner\030\003 \001(\t\022\023\n\013description\030\004 \001(\t\"V\n\004Hel" +
+      "p\022$\n\005links\030\001 \003(\0132\025.google.rpc.Help.Link\032",
+      "(\n\004Link\022\023\n\013description\030\001 \001(\t\022\013\n\003url\030\002 \001(" +
+      "\t\"3\n\020LocalizedMessage\022\016\n\006locale\030\001 \001(\t\022\017\n" +
+      "\007message\030\002 \001(\tBl\n\016com.google.rpcB\021ErrorD" +
+      "etailsProtoP\001Z?google.golang.org/genprot" +
+      "o/googleapis/rpc/errdetails;errdetails\242\002" +
+      "\003RPCb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -138,8 +152,20 @@ public final class ErrorDetailsProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_QuotaFailure_Violation_descriptor,
         new java.lang.String[] { "Subject", "Description", });
-    internal_static_google_rpc_BadRequest_descriptor =
+    internal_static_google_rpc_PreconditionFailure_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_google_rpc_PreconditionFailure_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_rpc_PreconditionFailure_descriptor,
+        new java.lang.String[] { "Violations", });
+    internal_static_google_rpc_PreconditionFailure_Violation_descriptor =
+      internal_static_google_rpc_PreconditionFailure_descriptor.getNestedTypes().get(0);
+    internal_static_google_rpc_PreconditionFailure_Violation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_rpc_PreconditionFailure_Violation_descriptor,
+        new java.lang.String[] { "Type", "Subject", "Description", });
+    internal_static_google_rpc_BadRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_google_rpc_BadRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_BadRequest_descriptor,
@@ -151,19 +177,19 @@ public final class ErrorDetailsProto {
         internal_static_google_rpc_BadRequest_FieldViolation_descriptor,
         new java.lang.String[] { "Field", "Description", });
     internal_static_google_rpc_RequestInfo_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_google_rpc_RequestInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_RequestInfo_descriptor,
         new java.lang.String[] { "RequestId", "ServingData", });
     internal_static_google_rpc_ResourceInfo_descriptor =
-      getDescriptor().getMessageTypes().get(5);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_google_rpc_ResourceInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_ResourceInfo_descriptor,
         new java.lang.String[] { "ResourceType", "ResourceName", "Owner", "Description", });
     internal_static_google_rpc_Help_descriptor =
-      getDescriptor().getMessageTypes().get(6);
+      getDescriptor().getMessageTypes().get(7);
     internal_static_google_rpc_Help_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_Help_descriptor,
@@ -175,7 +201,7 @@ public final class ErrorDetailsProto {
         internal_static_google_rpc_Help_Link_descriptor,
         new java.lang.String[] { "Description", "Url", });
     internal_static_google_rpc_LocalizedMessage_descriptor =
-      getDescriptor().getMessageTypes().get(7);
+      getDescriptor().getMessageTypes().get(8);
     internal_static_google_rpc_LocalizedMessage_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_LocalizedMessage_descriptor,

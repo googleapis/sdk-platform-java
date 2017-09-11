@@ -40,8 +40,8 @@ public interface StatusOrBuilder extends
 
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -50,8 +50,8 @@ public interface StatusOrBuilder extends
       getDetailsList();
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -59,8 +59,8 @@ public interface StatusOrBuilder extends
   com.google.protobuf.Any getDetails(int index);
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -68,8 +68,8 @@ public interface StatusOrBuilder extends
   int getDetailsCount();
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -78,8 +78,8 @@ public interface StatusOrBuilder extends
       getDetailsOrBuilderList();
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>

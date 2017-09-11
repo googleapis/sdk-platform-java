@@ -19,7 +19,7 @@ package com.google.rpc;
  * error message is needed, put the localized message in the error details or
  * localize it in the client. The optional error details may contain arbitrary
  * information about the error. There is a predefined set of error detail types
- * in the package `google.rpc` which can be used for common error conditions.
+ * in the package `google.rpc` that can be used for common error conditions.
  * # Language mapping
  * The `Status` message is the logical representation of the error model, but it
  * is not necessarily the actual wire format. When the `Status` message is
@@ -35,7 +35,7 @@ package com.google.rpc;
  *     it may embed the `Status` in the normal response to indicate the partial
  *     errors.
  * - Workflow errors. A typical workflow has multiple steps. Each step may
- *     have a `Status` message for error reporting purpose.
+ *     have a `Status` message for error reporting.
  * - Batch operations. If a client uses batch request and batch response, the
  *     `Status` message should be used directly inside batch response, one for
  *     each error sub-response.
@@ -197,8 +197,8 @@ public  final class Status extends
   private java.util.List<com.google.protobuf.Any> details_;
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -208,8 +208,8 @@ public  final class Status extends
   }
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -220,8 +220,8 @@ public  final class Status extends
   }
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -231,8 +231,8 @@ public  final class Status extends
   }
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -242,8 +242,8 @@ public  final class Status extends
   }
   /**
    * <pre>
-   * A list of messages that carry the error details.  There will be a
-   * common set of message types for APIs to use.
+   * A list of messages that carry the error details.  There is a common set of
+   * message types for APIs to use.
    * </pre>
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -441,7 +441,7 @@ public  final class Status extends
    * error message is needed, put the localized message in the error details or
    * localize it in the client. The optional error details may contain arbitrary
    * information about the error. There is a predefined set of error detail types
-   * in the package `google.rpc` which can be used for common error conditions.
+   * in the package `google.rpc` that can be used for common error conditions.
    * # Language mapping
    * The `Status` message is the logical representation of the error model, but it
    * is not necessarily the actual wire format. When the `Status` message is
@@ -457,7 +457,7 @@ public  final class Status extends
    *     it may embed the `Status` in the normal response to indicate the partial
    *     errors.
    * - Workflow errors. A typical workflow has multiple steps. Each step may
-   *     have a `Status` message for error reporting purpose.
+   *     have a `Status` message for error reporting.
    * - Batch operations. If a client uses batch request and batch response, the
    *     `Status` message should be used directly inside batch response, one for
    *     each error sub-response.
@@ -802,8 +802,8 @@ public  final class Status extends
 
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -817,8 +817,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -832,8 +832,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -847,8 +847,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -869,8 +869,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -888,8 +888,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -909,8 +909,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -931,8 +931,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -950,8 +950,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -969,8 +969,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -989,8 +989,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1007,8 +1007,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1025,8 +1025,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1037,8 +1037,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1052,8 +1052,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1068,8 +1068,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1080,8 +1080,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>
@@ -1093,8 +1093,8 @@ public  final class Status extends
     }
     /**
      * <pre>
-     * A list of messages that carry the error details.  There will be a
-     * common set of message types for APIs to use.
+     * A list of messages that carry the error details.  There is a common set of
+     * message types for APIs to use.
      * </pre>
      *
      * <code>repeated .google.protobuf.Any details = 3;</code>

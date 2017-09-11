@@ -224,4 +224,22 @@ public interface HttpRequestOrBuilder extends
    * <code>int64 cache_fill_bytes = 12;</code>
    */
   long getCacheFillBytes();
+
+  /**
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   */
+  java.lang.String getProtocol();
+  /**
+   * <pre>
+   * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+   * </pre>
+   *
+   * <code>string protocol = 15;</code>
+   */
+  com.google.protobuf.ByteString
+      getProtocolBytes();
 }

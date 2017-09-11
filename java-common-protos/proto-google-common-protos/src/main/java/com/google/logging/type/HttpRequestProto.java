@@ -31,7 +31,7 @@ public final class HttpRequestProto {
       "\n&google/logging/type/http_request.proto" +
       "\022\023google.logging.type\032\034google/api/annota" +
       "tions.proto\032\036google/protobuf/duration.pr" +
-      "oto\"\335\002\n\013HttpRequest\022\026\n\016request_method\030\001 " +
+      "oto\"\357\002\n\013HttpRequest\022\026\n\016request_method\030\001 " +
       "\001(\t\022\023\n\013request_url\030\002 \001(\t\022\024\n\014request_size" +
       "\030\003 \001(\003\022\016\n\006status\030\004 \001(\005\022\025\n\rresponse_size\030" +
       "\005 \001(\003\022\022\n\nuser_agent\030\006 \001(\t\022\021\n\tremote_ip\030\007" +
@@ -39,11 +39,11 @@ public final class HttpRequestProto {
       "\022*\n\007latency\030\016 \001(\0132\031.google.protobuf.Dura" +
       "tion\022\024\n\014cache_lookup\030\013 \001(\010\022\021\n\tcache_hit\030",
       "\t \001(\010\022*\n\"cache_validated_with_origin_ser" +
-      "ver\030\n \001(\010\022\030\n\020cache_fill_bytes\030\014 \001(\003B\203\001\n\027" +
-      "com.google.logging.typeB\020HttpRequestProt" +
-      "oP\001Z8google.golang.org/genproto/googleap" +
-      "is/logging/type;ltype\252\002\031Google.Cloud.Log" +
-      "ging.Typeb\006proto3"
+      "ver\030\n \001(\010\022\030\n\020cache_fill_bytes\030\014 \001(\003\022\020\n\010p" +
+      "rotocol\030\017 \001(\tB\203\001\n\027com.google.logging.typ" +
+      "eB\020HttpRequestProtoP\001Z8google.golang.org" +
+      "/genproto/googleapis/logging/type;ltype\252" +
+      "\002\031Google.Cloud.Logging.Typeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,7 +64,7 @@ public final class HttpRequestProto {
     internal_static_google_logging_type_HttpRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_logging_type_HttpRequest_descriptor,
-        new java.lang.String[] { "RequestMethod", "RequestUrl", "RequestSize", "Status", "ResponseSize", "UserAgent", "RemoteIp", "ServerIp", "Referer", "Latency", "CacheLookup", "CacheHit", "CacheValidatedWithOriginServer", "CacheFillBytes", });
+        new java.lang.String[] { "RequestMethod", "RequestUrl", "RequestSize", "Status", "ResponseSize", "UserAgent", "RemoteIp", "ServerIp", "Referer", "Latency", "CacheLookup", "CacheHit", "CacheValidatedWithOriginServer", "CacheFillBytes", "Protocol", });
     com.google.api.AnnotationsProto.getDescriptor();
     com.google.protobuf.DurationProto.getDescriptor();
   }
