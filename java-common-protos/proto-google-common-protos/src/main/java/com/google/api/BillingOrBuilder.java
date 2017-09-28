@@ -9,84 +9,60 @@ public interface BillingOrBuilder extends
 
   /**
    * <pre>
-   * Names of the metrics to report to billing. Each name must
-   * be defined in [Service.metrics][google.api.Service.metrics] section.
+   * Billing configurations for sending metrics to the consumer project.
+   * There can be multiple consumer destinations per service, each one must have
+   * a different monitored resource type. A metric can be used in at most
+   * one consumer destination.
    * </pre>
    *
-   * <code>repeated string metrics = 1;</code>
+   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  java.util.List<java.lang.String>
-      getMetricsList();
+  java.util.List<com.google.api.Billing.BillingDestination> 
+      getConsumerDestinationsList();
   /**
    * <pre>
-   * Names of the metrics to report to billing. Each name must
-   * be defined in [Service.metrics][google.api.Service.metrics] section.
+   * Billing configurations for sending metrics to the consumer project.
+   * There can be multiple consumer destinations per service, each one must have
+   * a different monitored resource type. A metric can be used in at most
+   * one consumer destination.
    * </pre>
    *
-   * <code>repeated string metrics = 1;</code>
+   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  int getMetricsCount();
+  com.google.api.Billing.BillingDestination getConsumerDestinations(int index);
   /**
    * <pre>
-   * Names of the metrics to report to billing. Each name must
-   * be defined in [Service.metrics][google.api.Service.metrics] section.
+   * Billing configurations for sending metrics to the consumer project.
+   * There can be multiple consumer destinations per service, each one must have
+   * a different monitored resource type. A metric can be used in at most
+   * one consumer destination.
    * </pre>
    *
-   * <code>repeated string metrics = 1;</code>
+   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  java.lang.String getMetrics(int index);
+  int getConsumerDestinationsCount();
   /**
    * <pre>
-   * Names of the metrics to report to billing. Each name must
-   * be defined in [Service.metrics][google.api.Service.metrics] section.
+   * Billing configurations for sending metrics to the consumer project.
+   * There can be multiple consumer destinations per service, each one must have
+   * a different monitored resource type. A metric can be used in at most
+   * one consumer destination.
    * </pre>
    *
-   * <code>repeated string metrics = 1;</code>
+   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  com.google.protobuf.ByteString
-      getMetricsBytes(int index);
-
+  java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder> 
+      getConsumerDestinationsOrBuilderList();
   /**
    * <pre>
-   * A list of billing status rules for configuring billing status check.
+   * Billing configurations for sending metrics to the consumer project.
+   * There can be multiple consumer destinations per service, each one must have
+   * a different monitored resource type. A metric can be used in at most
+   * one consumer destination.
    * </pre>
    *
-   * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
+   * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  java.util.List<com.google.api.BillingStatusRule> 
-      getRulesList();
-  /**
-   * <pre>
-   * A list of billing status rules for configuring billing status check.
-   * </pre>
-   *
-   * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
-   */
-  com.google.api.BillingStatusRule getRules(int index);
-  /**
-   * <pre>
-   * A list of billing status rules for configuring billing status check.
-   * </pre>
-   *
-   * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
-   */
-  int getRulesCount();
-  /**
-   * <pre>
-   * A list of billing status rules for configuring billing status check.
-   * </pre>
-   *
-   * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
-   */
-  java.util.List<? extends com.google.api.BillingStatusRuleOrBuilder> 
-      getRulesOrBuilderList();
-  /**
-   * <pre>
-   * A list of billing status rules for configuring billing status check.
-   * </pre>
-   *
-   * <code>repeated .google.api.BillingStatusRule rules = 5;</code>
-   */
-  com.google.api.BillingStatusRuleOrBuilder getRulesOrBuilder(
+  com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index);
 }

@@ -275,6 +275,19 @@ public  final class Service extends
                 input.readMessage(com.google.api.MonitoredResourceDescriptor.parser(), extensionRegistry));
             break;
           }
+          case 210: {
+            com.google.api.Billing.Builder subBuilder = null;
+            if (billing_ != null) {
+              subBuilder = billing_.toBuilder();
+            }
+            billing_ = input.readMessage(com.google.api.Billing.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(billing_);
+              billing_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
           case 218: {
             com.google.api.Logging.Builder subBuilder = null;
             if (logging_ != null) {
@@ -395,10 +408,10 @@ public  final class Service extends
   private com.google.protobuf.UInt32Value configVersion_;
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -408,10 +421,10 @@ public  final class Service extends
   }
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -421,10 +434,10 @@ public  final class Service extends
   }
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -527,7 +540,7 @@ public  final class Service extends
   private volatile java.lang.Object title_;
   /**
    * <pre>
-   * The product title associated with this service.
+   * The product title for this service.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -546,7 +559,7 @@ public  final class Service extends
   }
   /**
    * <pre>
-   * The product title associated with this service.
+   * The product title for this service.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -569,9 +582,7 @@ public  final class Service extends
   private volatile java.lang.Object producerProjectId_;
   /**
    * <pre>
-   * The id of the Google developer project that owns the service.
-   * Members of this project can manage the service configuration,
-   * manage consumption of the service, etc.
+   * The Google project that owns this service.
    * </pre>
    *
    * <code>string producer_project_id = 22;</code>
@@ -590,9 +601,7 @@ public  final class Service extends
   }
   /**
    * <pre>
-   * The id of the Google developer project that owns the service.
-   * Members of this project can manage the service configuration,
-   * manage consumption of the service, etc.
+   * The Google project that owns this service.
    * </pre>
    *
    * <code>string producer_project_id = 22;</code>
@@ -1350,6 +1359,39 @@ public  final class Service extends
     return monitoredResources_.get(index);
   }
 
+  public static final int BILLING_FIELD_NUMBER = 26;
+  private com.google.api.Billing billing_;
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  public boolean hasBilling() {
+    return billing_ != null;
+  }
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  public com.google.api.Billing getBilling() {
+    return billing_ == null ? com.google.api.Billing.getDefaultInstance() : billing_;
+  }
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  public com.google.api.BillingOrBuilder getBillingOrBuilder() {
+    return getBilling();
+  }
+
   public static final int LOGGING_FIELD_NUMBER = 27;
   private com.google.api.Logging logging_;
   /**
@@ -1584,6 +1626,9 @@ public  final class Service extends
     for (int i = 0; i < monitoredResources_.size(); i++) {
       output.writeMessage(25, monitoredResources_.get(i));
     }
+    if (billing_ != null) {
+      output.writeMessage(26, getBilling());
+    }
     if (logging_ != null) {
       output.writeMessage(27, getLogging());
     }
@@ -1681,6 +1726,10 @@ public  final class Service extends
     for (int i = 0; i < monitoredResources_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(25, monitoredResources_.get(i));
+    }
+    if (billing_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(26, getBilling());
     }
     if (logging_ != null) {
       size += com.google.protobuf.CodedOutputStream
@@ -1788,6 +1837,11 @@ public  final class Service extends
         .equals(other.getMetricsList());
     result = result && getMonitoredResourcesList()
         .equals(other.getMonitoredResourcesList());
+    result = result && (hasBilling() == other.hasBilling());
+    if (hasBilling()) {
+      result = result && getBilling()
+          .equals(other.getBilling());
+    }
     result = result && (hasLogging() == other.hasLogging());
     if (hasLogging()) {
       result = result && getLogging()
@@ -1894,6 +1948,10 @@ public  final class Service extends
     if (getMonitoredResourcesCount() > 0) {
       hash = (37 * hash) + MONITORED_RESOURCES_FIELD_NUMBER;
       hash = (53 * hash) + getMonitoredResourcesList().hashCode();
+    }
+    if (hasBilling()) {
+      hash = (37 * hash) + BILLING_FIELD_NUMBER;
+      hash = (53 * hash) + getBilling().hashCode();
     }
     if (hasLogging()) {
       hash = (37 * hash) + LOGGING_FIELD_NUMBER;
@@ -2179,6 +2237,12 @@ public  final class Service extends
       } else {
         monitoredResourcesBuilder_.clear();
       }
+      if (billingBuilder_ == null) {
+        billing_ = null;
+      } else {
+        billing_ = null;
+        billingBuilder_ = null;
+      }
       if (loggingBuilder_ == null) {
         logging_ = null;
       } else {
@@ -2344,6 +2408,11 @@ public  final class Service extends
         result.monitoredResources_ = monitoredResources_;
       } else {
         result.monitoredResources_ = monitoredResourcesBuilder_.build();
+      }
+      if (billingBuilder_ == null) {
+        result.billing_ = billing_;
+      } else {
+        result.billing_ = billingBuilder_.build();
       }
       if (loggingBuilder_ == null) {
         result.logging_ = logging_;
@@ -2637,6 +2706,9 @@ public  final class Service extends
           }
         }
       }
+      if (other.hasBilling()) {
+        mergeBilling(other.getBilling());
+      }
       if (other.hasLogging()) {
         mergeLogging(other.getLogging());
       }
@@ -2684,10 +2756,10 @@ public  final class Service extends
         com.google.protobuf.UInt32Value, com.google.protobuf.UInt32Value.Builder, com.google.protobuf.UInt32ValueOrBuilder> configVersionBuilder_;
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2697,10 +2769,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2714,10 +2786,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2737,10 +2809,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2758,10 +2830,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2783,10 +2855,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2804,10 +2876,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2819,10 +2891,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -2837,10 +2909,10 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The version of the service configuration. The config version may
-     * influence interpretation of the configuration, for example, to
-     * determine defaults. This is documented together with applicable
-     * options. The current default for the config version itself is `3`.
+     * The semantic version of the service configuration. The config version
+     * affects the interpretation of the service configuration. For example,
+     * certain features are enabled by default for certain config versions.
+     * The latest config version is `3`.
      * </pre>
      *
      * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -3055,7 +3127,7 @@ public  final class Service extends
     private java.lang.Object title_ = "";
     /**
      * <pre>
-     * The product title associated with this service.
+     * The product title for this service.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3074,7 +3146,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The product title associated with this service.
+     * The product title for this service.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3094,7 +3166,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The product title associated with this service.
+     * The product title for this service.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3111,7 +3183,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The product title associated with this service.
+     * The product title for this service.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3124,7 +3196,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The product title associated with this service.
+     * The product title for this service.
      * </pre>
      *
      * <code>string title = 2;</code>
@@ -3144,9 +3216,7 @@ public  final class Service extends
     private java.lang.Object producerProjectId_ = "";
     /**
      * <pre>
-     * The id of the Google developer project that owns the service.
-     * Members of this project can manage the service configuration,
-     * manage consumption of the service, etc.
+     * The Google project that owns this service.
      * </pre>
      *
      * <code>string producer_project_id = 22;</code>
@@ -3165,9 +3235,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The id of the Google developer project that owns the service.
-     * Members of this project can manage the service configuration,
-     * manage consumption of the service, etc.
+     * The Google project that owns this service.
      * </pre>
      *
      * <code>string producer_project_id = 22;</code>
@@ -3187,9 +3255,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The id of the Google developer project that owns the service.
-     * Members of this project can manage the service configuration,
-     * manage consumption of the service, etc.
+     * The Google project that owns this service.
      * </pre>
      *
      * <code>string producer_project_id = 22;</code>
@@ -3206,9 +3272,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The id of the Google developer project that owns the service.
-     * Members of this project can manage the service configuration,
-     * manage consumption of the service, etc.
+     * The Google project that owns this service.
      * </pre>
      *
      * <code>string producer_project_id = 22;</code>
@@ -3221,9 +3285,7 @@ public  final class Service extends
     }
     /**
      * <pre>
-     * The id of the Google developer project that owns the service.
-     * Members of this project can manage the service configuration,
-     * manage consumption of the service, etc.
+     * The Google project that owns this service.
      * </pre>
      *
      * <code>string producer_project_id = 22;</code>
@@ -6970,6 +7032,159 @@ public  final class Service extends
         monitoredResources_ = null;
       }
       return monitoredResourcesBuilder_;
+    }
+
+    private com.google.api.Billing billing_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.Billing, com.google.api.Billing.Builder, com.google.api.BillingOrBuilder> billingBuilder_;
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public boolean hasBilling() {
+      return billingBuilder_ != null || billing_ != null;
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public com.google.api.Billing getBilling() {
+      if (billingBuilder_ == null) {
+        return billing_ == null ? com.google.api.Billing.getDefaultInstance() : billing_;
+      } else {
+        return billingBuilder_.getMessage();
+      }
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public Builder setBilling(com.google.api.Billing value) {
+      if (billingBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        billing_ = value;
+        onChanged();
+      } else {
+        billingBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public Builder setBilling(
+        com.google.api.Billing.Builder builderForValue) {
+      if (billingBuilder_ == null) {
+        billing_ = builderForValue.build();
+        onChanged();
+      } else {
+        billingBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public Builder mergeBilling(com.google.api.Billing value) {
+      if (billingBuilder_ == null) {
+        if (billing_ != null) {
+          billing_ =
+            com.google.api.Billing.newBuilder(billing_).mergeFrom(value).buildPartial();
+        } else {
+          billing_ = value;
+        }
+        onChanged();
+      } else {
+        billingBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public Builder clearBilling() {
+      if (billingBuilder_ == null) {
+        billing_ = null;
+        onChanged();
+      } else {
+        billing_ = null;
+        billingBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public com.google.api.Billing.Builder getBillingBuilder() {
+      
+      onChanged();
+      return getBillingFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    public com.google.api.BillingOrBuilder getBillingOrBuilder() {
+      if (billingBuilder_ != null) {
+        return billingBuilder_.getMessageOrBuilder();
+      } else {
+        return billing_ == null ?
+            com.google.api.Billing.getDefaultInstance() : billing_;
+      }
+    }
+    /**
+     * <pre>
+     * Billing configuration.
+     * </pre>
+     *
+     * <code>.google.api.Billing billing = 26;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.Billing, com.google.api.Billing.Builder, com.google.api.BillingOrBuilder> 
+        getBillingFieldBuilder() {
+      if (billingBuilder_ == null) {
+        billingBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.api.Billing, com.google.api.Billing.Builder, com.google.api.BillingOrBuilder>(
+                getBilling(),
+                getParentForChildren(),
+                isClean());
+        billing_ = null;
+      }
+      return billingBuilder_;
     }
 
     private com.google.api.Logging logging_ = null;

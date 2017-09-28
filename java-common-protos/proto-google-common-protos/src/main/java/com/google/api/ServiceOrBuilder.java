@@ -9,10 +9,10 @@ public interface ServiceOrBuilder extends
 
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -20,10 +20,10 @@ public interface ServiceOrBuilder extends
   boolean hasConfigVersion();
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -31,10 +31,10 @@ public interface ServiceOrBuilder extends
   com.google.protobuf.UInt32Value getConfigVersion();
   /**
    * <pre>
-   * The version of the service configuration. The config version may
-   * influence interpretation of the configuration, for example, to
-   * determine defaults. This is documented together with applicable
-   * options. The current default for the config version itself is `3`.
+   * The semantic version of the service configuration. The config version
+   * affects the interpretation of the service configuration. For example,
+   * certain features are enabled by default for certain config versions.
+   * The latest config version is `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -85,7 +85,7 @@ public interface ServiceOrBuilder extends
 
   /**
    * <pre>
-   * The product title associated with this service.
+   * The product title for this service.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -93,7 +93,7 @@ public interface ServiceOrBuilder extends
   java.lang.String getTitle();
   /**
    * <pre>
-   * The product title associated with this service.
+   * The product title for this service.
    * </pre>
    *
    * <code>string title = 2;</code>
@@ -103,9 +103,7 @@ public interface ServiceOrBuilder extends
 
   /**
    * <pre>
-   * The id of the Google developer project that owns the service.
-   * Members of this project can manage the service configuration,
-   * manage consumption of the service, etc.
+   * The Google project that owns this service.
    * </pre>
    *
    * <code>string producer_project_id = 22;</code>
@@ -113,9 +111,7 @@ public interface ServiceOrBuilder extends
   java.lang.String getProducerProjectId();
   /**
    * <pre>
-   * The id of the Google developer project that owns the service.
-   * Members of this project can manage the service configuration,
-   * manage consumption of the service, etc.
+   * The Google project that owns this service.
    * </pre>
    *
    * <code>string producer_project_id = 22;</code>
@@ -720,6 +716,31 @@ public interface ServiceOrBuilder extends
    */
   com.google.api.MonitoredResourceDescriptorOrBuilder getMonitoredResourcesOrBuilder(
       int index);
+
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  boolean hasBilling();
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  com.google.api.Billing getBilling();
+  /**
+   * <pre>
+   * Billing configuration.
+   * </pre>
+   *
+   * <code>.google.api.Billing billing = 26;</code>
+   */
+  com.google.api.BillingOrBuilder getBillingOrBuilder();
 
   /**
    * <pre>
