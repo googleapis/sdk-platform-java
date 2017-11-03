@@ -33,14 +33,16 @@ package com.google.api.core;
 /**
  * Transforms a value, possibly asynchronously.
  *
- * <p>It is similar to Guava's {@code AsyncFunction}, redeclared so that Guava can be shaded.
+ * <p>
+ * It is similar to Guava's {@code AsyncFunction}, redeclared so that Guava can be shaded.
  */
 public interface ApiAsyncFunction<I, O> {
   /**
    * Returns an output Future to use in place of the given input. The output Future need not be
    * done, making AsyncFunction suitable for asynchronous derivations.
    *
-   * <p>Throwing an exception from this method is equivalent to returning a failing Future.
+   * <p>
+   * Throwing an exception from this method is equivalent to returning a failing Future.
    */
   ApiFuture<O> apply(I input) throws Exception;
 }

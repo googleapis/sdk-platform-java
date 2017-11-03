@@ -10,7 +10,7 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.2"
+    classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.6"
   }
 }
 
@@ -244,19 +244,21 @@ gradle.projectsEvaluated {
 // Formatting tasks
 // ================
 
-task verifyLicense << {
-  def licenseText = new File(rootProject.rootDir, 'license-header-javadoc.txt').text
-  def srcFiles = []
-  sourceSets
-      .collectMany{it.allJava.getSrcDirs()}
-      .each{it.eachFileRecurse(FileType.FILES, {srcFiles << new Tuple(it, it.text)})}
-  srcFiles = srcFiles
-      .findAll{it.get(0).path.endsWith(".java")}
-      .collect{new Tuple(it.get(0), it.get(1).replaceAll("Copyright 20[0-9]{2}", "Copyright 20xx"))}
-      .findAll{!it.get(1).startsWith(licenseText)}
-  if (srcFiles.asList().size() > 0) {
-    srcFiles.each({println 'missing license: ' + it.get(0)})
-    throw new IllegalStateException("Above files do not have licenses")
+task verifyLicense {
+  doLast {
+    def licenseText = new File(rootProject.rootDir, 'license-header-javadoc.txt').text
+    def srcFiles = []
+    sourceSets
+        .collectMany{it.allJava.getSrcDirs()}
+        .each{it.eachFileRecurse(FileType.FILES, {srcFiles << new Tuple(it, it.text)})}
+    srcFiles = srcFiles
+        .findAll{it.get(0).path.endsWith(".java")}
+        .collect{new Tuple(it.get(0), it.get(1).replaceAll("Copyright 20[0-9]{2}", "Copyright 20xx"))}
+        .findAll{!it.get(1).startsWith(licenseText)}
+    if (srcFiles.asList().size() > 0) {
+      srcFiles.each({println 'missing license: ' + it.get(0)})
+      throw new IllegalStateException("Above files do not have licenses")
+    }
   }
 }
 test.dependsOn verifyLicense
@@ -280,10 +282,12 @@ test.dependsOn verifyGoogleJavaFormat
 // =======
 
 task checkOutGhPages {
-  if (!new File('tmp_gh-pages').exists()) {
-    exec {
-      commandLine 'git', 'clone', '--branch', 'gh-pages',
-          '--single-branch', 'https://github.com/googleapis/api-common-java/', 'tmp_gh-pages'
+  doLast {
+    if (!new File('tmp_gh-pages').exists()) {
+      exec {
+        commandLine 'git', 'clone', '--branch', 'gh-pages',
+            '--single-branch', 'https://github.com/googleapis/api-common-java/', 'tmp_gh-pages'
+      }
     }
   }
 }

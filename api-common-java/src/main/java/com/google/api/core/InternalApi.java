@@ -37,13 +37,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotates a program element (class, method, package etc) which is internal to its
- * containing library, not part of the public API, and should not be used by users of
- * the library.
+ * Annotates a program element (class, method, package etc) which is internal to its containing
+ * library, not part of the public API, and should not be used by users of the library.
  *
- * This annotation only makes sense on APIs that are not private. Its existence
- * is necessary because Java does not have a visibility level for code within a
- * compilation unit.
+ * This annotation only makes sense on APIs that are not private. Its existence is necessary because
+ * Java does not have a visibility level for code within a compilation unit.
  */
 @BetaApi
 @Retention(RetentionPolicy.RUNTIME)

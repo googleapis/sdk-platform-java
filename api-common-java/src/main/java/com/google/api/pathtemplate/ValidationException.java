@@ -32,13 +32,12 @@
 package com.google.api.pathtemplate;
 
 import com.google.api.core.BetaApi;
-
 import java.util.Stack;
 
 /**
  * Exception thrown if there is a validation problem with a path template, http config, or related
- * framework methods. Comes as an illegal argument exception subclass. Allows to globally
- * set a thread-local validation context description which each exception inherits.
+ * framework methods. Comes as an illegal argument exception subclass. Allows to globally set a
+ * thread-local validation context description which each exception inherits.
  */
 @BetaApi
 public class ValidationException extends IllegalArgumentException {
@@ -50,8 +49,8 @@ public class ValidationException extends IllegalArgumentException {
   private static ThreadLocal<Stack<Supplier<String>>> contextLocal = new ThreadLocal<>();
 
   /**
-   * Sets the validation context description. Each thread has its own description, so
-   * this is thread safe.
+   * Sets the validation context description. Each thread has its own description, so this is thread
+   * safe.
    */
   public static void pushCurrentThreadValidationContext(Supplier<String> supplier) {
     Stack<Supplier<String>> stack = contextLocal.get();
