@@ -37,12 +37,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotates a program element (class, method, package etc) which is internal to its containing
- * library, not part of the public API, and should not be used by users of the library.
+ * Indicates a public API that is stable for callers to use, but has no guarantee of stability for
+ * extension. Consequently, the API should only be extended within the package containing the API.
  *
  * <p>
- * This annotation only makes sense on APIs that are not private. Its existence is necessary because
- * Java does not have a visibility level for code within a compilation unit.
+ * For example:
+ * <ul>
+ * <li>An interface marked with this annotation can have new methods added to it.</li>
+ * <li>A non-final class with this annotation can be marked final.</li>
+ * <li>A class with this annotation can have new abstract methods added.</li>
+ * <li>a non-final method with this annotation can be marked final.</li>
+ * </ul>
+ *
+ * <p>
+ * The list above is just for illustration purposes and is not exhaustive.
  *
  * <p>
  * Adding this annotation to an API is considered API-breaking.
@@ -58,9 +66,9 @@ import java.lang.annotation.Target;
   ElementType.TYPE
 })
 @Documented
-public @interface InternalApi {
+public @interface InternalExtensionOnly {
   /**
-   * Context information such as "internal to library", "for testing", etc.
+   * Context information on why the interface/class is annotated with InternalExtensionOnly.
    */
   String value() default "";
 }

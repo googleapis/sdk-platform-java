@@ -105,9 +105,9 @@ public final class ApiFutures {
     return new ListenableFutureToApiFuture<>(
         Futures.allAsList(
             Iterables.transform(
-                (Iterable<ApiFuture<V>>) futures,
-                new Function<ApiFuture<V>, ListenableFuture<V>>() {
-                  public ListenableFuture<V> apply(ApiFuture<V> apiFuture) {
+                futures,
+                new Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>() {
+                  public ListenableFuture<? extends V> apply(ApiFuture<? extends V> apiFuture) {
                     return listenableFutureForApiFuture(apiFuture);
                   }
                 })));

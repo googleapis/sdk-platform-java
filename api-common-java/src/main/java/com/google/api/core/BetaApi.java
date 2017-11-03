@@ -47,7 +47,9 @@ import java.lang.annotation.Target;
  * use it.</li>
  * <li>This annotation should only be added to new APIs. Adding it to an existing API is considered
  * API-breaking.</li>
- * <li>Removing this annotation from an API gives it stable status.</li>
+ * <li>Removing this annotation from an API gives it stable status, assuming the API doesn't have
+ * other annotations denoting instability (such as {@link InternalApi} or
+ * {@link InternalExtensionOnly}).</li>
  * </ol>
  */
 @BetaApi
