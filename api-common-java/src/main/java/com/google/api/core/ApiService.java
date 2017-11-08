@@ -65,7 +65,6 @@ import java.util.concurrent.TimeoutException;
  * <p>
  * Similar to Guava's {@code Service}, but redeclared so that Guava could be shaded.
  */
-@BetaApi
 public interface ApiService {
   /**
    * Registers a {@link Listener} to be {@linkplain Executor#execute executed} on the given

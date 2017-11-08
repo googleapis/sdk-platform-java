@@ -41,7 +41,6 @@ import java.util.concurrent.TimeoutException;
  * Base class for {@link ApiService}. Similar to Guava's {@code AbstractService} but redeclared to
  * that Guava can be shaded.
  */
-@BetaApi
 public abstract class AbstractApiService implements ApiService {
   private static final ImmutableMap<Service.State, ApiService.State> guavaToGaxState =
       ImmutableMap.<Service.State, ApiService.State>builder()

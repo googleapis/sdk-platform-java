@@ -41,7 +41,6 @@ import javax.annotation.Nullable;
 /**
  * Abstract implementation of ApiFuture that mirrors {@code AbstractFuture} in Guava.
  */
-@BetaApi
 public abstract class AbstractApiFuture<V> implements ApiFuture<V> {
   private final InternalSettableFuture impl = new InternalSettableFuture();
 

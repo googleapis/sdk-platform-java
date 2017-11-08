@@ -39,7 +39,6 @@ import java.util.concurrent.TimeUnit;
  * Implementation of the {@link ApiClock} interface, which uses {@link System#currentTimeMillis()}
  * as time source.
  */
-@BetaApi
 public final class CurrentMillisClock implements ApiClock, Serializable {
 
   private static final long serialVersionUID = -6019259882852183285L;

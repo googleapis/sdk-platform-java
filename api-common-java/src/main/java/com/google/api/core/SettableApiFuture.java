@@ -34,7 +34,6 @@ package com.google.api.core;
  * An {@link ApiFuture} whose result can be set. Similar to Guava's {@code SettableFuture}, but
  * redeclared so that Guava could be shaded.
  */
-@BetaApi
 public final class SettableApiFuture<V> extends AbstractApiFuture<V> {
 
   private SettableApiFuture() {}

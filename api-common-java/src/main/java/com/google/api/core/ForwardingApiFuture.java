@@ -35,7 +35,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-@BetaApi
 public class ForwardingApiFuture<T> implements ApiFuture<T> {
   private final ApiFuture<T> delegate;
 

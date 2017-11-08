@@ -35,7 +35,6 @@ import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /** Default implementation of the ApiClock interface, using call to System.nanoTime(). */
-@BetaApi
 public final class NanoClock implements ApiClock, Serializable {
 
   private static final ApiClock DEFAULT_CLOCK = new NanoClock();
