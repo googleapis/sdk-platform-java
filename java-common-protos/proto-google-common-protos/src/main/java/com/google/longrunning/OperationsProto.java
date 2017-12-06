@@ -82,10 +82,11 @@ public final class OperationsProto {
       "ons/**}\022\201\001\n\017CancelOperation\022*.google.lon" +
       "grunning.CancelOperationRequest\032\026.google" +
       ".protobuf.Empty\"*\202\323\344\223\002$\"\037/v1/{name=opera" +
-      "tions/**}:cancel:\001*B\177\n\026com.google.longru",
-      "nningB\017OperationsProtoP\001Z=google.golang." +
-      "org/genproto/googleapis/longrunning;long" +
-      "running\252\002\022Google.LongRunningb\006proto3"
+      "tions/**}:cancel:\001*B\224\001\n\026com.google.longr",
+      "unningB\017OperationsProtoP\001Z=google.golang" +
+      ".org/genproto/googleapis/longrunning;lon" +
+      "grunning\252\002\022Google.LongRunning\312\002\022Google\\L" +
+      "ongRunningb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

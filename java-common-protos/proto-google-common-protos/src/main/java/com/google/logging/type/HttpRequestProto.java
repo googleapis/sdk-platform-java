@@ -40,10 +40,11 @@ public final class HttpRequestProto {
       "tion\022\024\n\014cache_lookup\030\013 \001(\010\022\021\n\tcache_hit\030",
       "\t \001(\010\022*\n\"cache_validated_with_origin_ser" +
       "ver\030\n \001(\010\022\030\n\020cache_fill_bytes\030\014 \001(\003\022\020\n\010p" +
-      "rotocol\030\017 \001(\tB\203\001\n\027com.google.logging.typ" +
+      "rotocol\030\017 \001(\tB\237\001\n\027com.google.logging.typ" +
       "eB\020HttpRequestProtoP\001Z8google.golang.org" +
       "/genproto/googleapis/logging/type;ltype\252" +
-      "\002\031Google.Cloud.Logging.Typeb\006proto3"
+      "\002\031Google.Cloud.Logging.Type\312\002\031Google\\Clo" +
+      "ud\\Logging\\Typeb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.google.protobuf:protobuf-java:3.3.0"
+  compile "com.google.protobuf:protobuf-java:3.4.0"
 }
 
 ext {
