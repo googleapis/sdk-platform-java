@@ -81,6 +81,14 @@ public interface OperationOrBuilder extends
    *
    * <code>.google.rpc.Status error = 4;</code>
    */
+  boolean hasError();
+  /**
+   * <pre>
+   * The error result of the operation in case of failure or cancellation.
+   * </pre>
+   *
+   * <code>.google.rpc.Status error = 4;</code>
+   */
   com.google.rpc.Status getError();
   /**
    * <pre>
@@ -91,6 +99,21 @@ public interface OperationOrBuilder extends
    */
   com.google.rpc.StatusOrBuilder getErrorOrBuilder();
 
+  /**
+   * <pre>
+   * The normal response of the operation in case of success.  If the original
+   * method returns no data on success, such as `Delete`, the response is
+   * `google.protobuf.Empty`.  If the original method is standard
+   * `Get`/`Create`/`Update`, the response should be the resource.  For other
+   * methods, the response should have the type `XxxResponse`, where `Xxx`
+   * is the original method name.  For example, if the original method name
+   * is `TakeSnapshot()`, the inferred response type is
+   * `TakeSnapshotResponse`.
+   * </pre>
+   *
+   * <code>.google.protobuf.Any response = 5;</code>
+   */
+  boolean hasResponse();
   /**
    * <pre>
    * The normal response of the operation in case of success.  If the original
