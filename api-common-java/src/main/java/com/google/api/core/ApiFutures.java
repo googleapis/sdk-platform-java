@@ -100,6 +100,17 @@ public final class ApiFutures {
             listenableFutureForApiFuture(input), new GaxFunctionToGuavaFunction<V, X>(function)));
   }
 
+  public static <V, X> ApiFuture<X> transform(
+      ApiFuture<? extends V> input,
+      final ApiFunction<? super V, ? extends X> function,
+      Executor executor) {
+    return new ListenableFutureToApiFuture<>(
+        Futures.transform(
+            listenableFutureForApiFuture(input),
+            new GaxFunctionToGuavaFunction<V, X>(function),
+            executor));
+  }
+
   public static <V> ApiFuture<List<V>> allAsList(
       Iterable<? extends ApiFuture<? extends V>> futures) {
     return new ListenableFutureToApiFuture<>(
@@ -125,6 +136,22 @@ public final class ApiFutures {
                 return listenableFutureForApiFuture(function.apply(input));
               }
             });
+    return new ListenableFutureToApiFuture<>(listenableOutput);
+  }
+
+  public static <I, O> ApiFuture<O> transformAsync(
+      ApiFuture<I> input, final ApiAsyncFunction<I, O> function, Executor executor) {
+    ListenableFuture<I> listenableInput = listenableFutureForApiFuture(input);
+    ListenableFuture<O> listenableOutput =
+        Futures.transformAsync(
+            listenableInput,
+            new AsyncFunction<I, O>() {
+              @Override
+              public ListenableFuture<O> apply(I input) throws Exception {
+                return listenableFutureForApiFuture(function.apply(input));
+              }
+            },
+            executor);
     return new ListenableFutureToApiFuture<>(listenableOutput);
   }
 

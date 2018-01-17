@@ -36,6 +36,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Test;
 
@@ -96,6 +97,31 @@ public class ApiFuturesTest {
   }
 
   @Test
+  public void testTransformWithExecutor() throws Exception {
+    SettableApiFuture<Integer> inputFuture = SettableApiFuture.<Integer>create();
+    final AtomicInteger counter = new AtomicInteger(0);
+    ApiFuture<String> transformedFuture =
+        ApiFutures.transform(
+            inputFuture,
+            new ApiFunction<Integer, String>() {
+              @Override
+              public String apply(Integer input) {
+                return input.toString();
+              }
+            },
+            new Executor() {
+              @Override
+              public void execute(Runnable command) {
+                counter.incrementAndGet();
+                command.run();
+              }
+            });
+    inputFuture.set(6);
+    assertThat(transformedFuture.get()).isEqualTo("6");
+    assertThat(counter.get()).isEqualTo(1);
+  }
+
+  @Test
   public void testAllAsList() throws Exception {
     SettableApiFuture<Integer> inputFuture1 = SettableApiFuture.<Integer>create();
     SettableApiFuture<Integer> inputFuture2 = SettableApiFuture.<Integer>create();
@@ -119,6 +145,30 @@ public class ApiFuturesTest {
               }
             });
     assertThat(outputFuture.get()).isEqualTo(1);
+  }
+
+  @Test
+  public void testTransformAsyncWithExecutor() throws Exception {
+    ApiFuture<Integer> inputFuture = ApiFutures.immediateFuture(0);
+    final AtomicInteger counter = new AtomicInteger(0);
+    ApiFuture<Integer> outputFuture =
+        ApiFutures.transformAsync(
+            inputFuture,
+            new ApiAsyncFunction<Integer, Integer>() {
+              @Override
+              public ApiFuture<Integer> apply(Integer input) {
+                return ApiFutures.immediateFuture(input + 1);
+              }
+            },
+            new Executor() {
+              @Override
+              public void execute(Runnable command) {
+                counter.incrementAndGet();
+                command.run();
+              }
+            });
+    assertThat(outputFuture.get()).isEqualTo(1);
+    assertThat(counter.get()).isEqualTo(1);
   }
 
   @Test
