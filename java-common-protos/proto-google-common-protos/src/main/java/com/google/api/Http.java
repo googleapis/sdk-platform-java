@@ -5,7 +5,7 @@ package com.google.api;
 
 /**
  * <pre>
- * Defines the HTTP configuration for a service. It contains a list of
+ * Defines the HTTP configuration for an API service. It contains a list of
  * [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
  * to one or more HTTP REST API methods.
  * </pre>
@@ -23,6 +23,7 @@ private static final long serialVersionUID = 0L;
   }
   private Http() {
     rules_ = java.util.Collections.emptyList();
+    fullyDecodeReservedExpansion_ = false;
   }
 
   @java.lang.Override
@@ -62,6 +63,11 @@ private static final long serialVersionUID = 0L;
                 input.readMessage(com.google.api.HttpRule.parser(), extensionRegistry));
             break;
           }
+          case 16: {
+
+            fullyDecodeReservedExpansion_ = input.readBool();
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -89,6 +95,7 @@ private static final long serialVersionUID = 0L;
             com.google.api.Http.class, com.google.api.Http.Builder.class);
   }
 
+  private int bitField0_;
   public static final int RULES_FIELD_NUMBER = 1;
   private java.util.List<com.google.api.HttpRule> rules_;
   /**
@@ -149,6 +156,23 @@ private static final long serialVersionUID = 0L;
     return rules_.get(index);
   }
 
+  public static final int FULLY_DECODE_RESERVED_EXPANSION_FIELD_NUMBER = 2;
+  private boolean fullyDecodeReservedExpansion_;
+  /**
+   * <pre>
+   * When set to true, URL path parmeters will be fully URI-decoded except in
+   * cases of single segment matches in reserved expansion, where "%2F" will be
+   * left encoded.
+   * The default behavior is to not decode RFC 6570 reserved characters in multi
+   * segment matches.
+   * </pre>
+   *
+   * <code>bool fully_decode_reserved_expansion = 2;</code>
+   */
+  public boolean getFullyDecodeReservedExpansion() {
+    return fullyDecodeReservedExpansion_;
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -164,6 +188,9 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < rules_.size(); i++) {
       output.writeMessage(1, rules_.get(i));
     }
+    if (fullyDecodeReservedExpansion_ != false) {
+      output.writeBool(2, fullyDecodeReservedExpansion_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -175,6 +202,10 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < rules_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, rules_.get(i));
+    }
+    if (fullyDecodeReservedExpansion_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(2, fullyDecodeReservedExpansion_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -194,6 +225,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getRulesList()
         .equals(other.getRulesList());
+    result = result && (getFullyDecodeReservedExpansion()
+        == other.getFullyDecodeReservedExpansion());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -209,6 +242,9 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + RULES_FIELD_NUMBER;
       hash = (53 * hash) + getRulesList().hashCode();
     }
+    hash = (37 * hash) + FULLY_DECODE_RESERVED_EXPANSION_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getFullyDecodeReservedExpansion());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -304,7 +340,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Defines the HTTP configuration for a service. It contains a list of
+   * Defines the HTTP configuration for an API service. It contains a list of
    * [HttpRule][google.api.HttpRule], each specifying the mapping of an RPC method
    * to one or more HTTP REST API methods.
    * </pre>
@@ -351,6 +387,8 @@ private static final long serialVersionUID = 0L;
       } else {
         rulesBuilder_.clear();
       }
+      fullyDecodeReservedExpansion_ = false;
+
       return this;
     }
 
@@ -374,6 +412,7 @@ private static final long serialVersionUID = 0L;
     public com.google.api.Http buildPartial() {
       com.google.api.Http result = new com.google.api.Http(this);
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) == 0x00000001)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -383,6 +422,8 @@ private static final long serialVersionUID = 0L;
       } else {
         result.rules_ = rulesBuilder_.build();
       }
+      result.fullyDecodeReservedExpansion_ = fullyDecodeReservedExpansion_;
+      result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
@@ -449,6 +490,9 @@ private static final long serialVersionUID = 0L;
             rulesBuilder_.addAllMessages(other.rules_);
           }
         }
+      }
+      if (other.getFullyDecodeReservedExpansion() != false) {
+        setFullyDecodeReservedExpansion(other.getFullyDecodeReservedExpansion());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -806,6 +850,56 @@ private static final long serialVersionUID = 0L;
         rules_ = null;
       }
       return rulesBuilder_;
+    }
+
+    private boolean fullyDecodeReservedExpansion_ ;
+    /**
+     * <pre>
+     * When set to true, URL path parmeters will be fully URI-decoded except in
+     * cases of single segment matches in reserved expansion, where "%2F" will be
+     * left encoded.
+     * The default behavior is to not decode RFC 6570 reserved characters in multi
+     * segment matches.
+     * </pre>
+     *
+     * <code>bool fully_decode_reserved_expansion = 2;</code>
+     */
+    public boolean getFullyDecodeReservedExpansion() {
+      return fullyDecodeReservedExpansion_;
+    }
+    /**
+     * <pre>
+     * When set to true, URL path parmeters will be fully URI-decoded except in
+     * cases of single segment matches in reserved expansion, where "%2F" will be
+     * left encoded.
+     * The default behavior is to not decode RFC 6570 reserved characters in multi
+     * segment matches.
+     * </pre>
+     *
+     * <code>bool fully_decode_reserved_expansion = 2;</code>
+     */
+    public Builder setFullyDecodeReservedExpansion(boolean value) {
+      
+      fullyDecodeReservedExpansion_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * When set to true, URL path parmeters will be fully URI-decoded except in
+     * cases of single segment matches in reserved expansion, where "%2F" will be
+     * left encoded.
+     * The default behavior is to not decode RFC 6570 reserved characters in multi
+     * segment matches.
+     * </pre>
+     *
+     * <code>bool fully_decode_reserved_expansion = 2;</code>
+     */
+    public Builder clearFullyDecodeReservedExpansion() {
+      
+      fullyDecodeReservedExpansion_ = false;
+      onChanged();
+      return this;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {

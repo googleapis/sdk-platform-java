@@ -119,7 +119,10 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Custom pattern is used for defining custom verbs.
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
@@ -127,7 +130,10 @@ public interface HttpRuleOrBuilder extends
   boolean hasCustom();
   /**
    * <pre>
-   * Custom pattern is used for defining custom verbs.
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
@@ -135,7 +141,10 @@ public interface HttpRuleOrBuilder extends
   com.google.api.CustomHttpPattern getCustom();
   /**
    * <pre>
-   * Custom pattern is used for defining custom verbs.
+   * The custom pattern is used for specifying an HTTP method that is not
+   * included in the `pattern` field, such as HEAD, or "*" to leave the
+   * HTTP method unspecified for this rule. The wild-card rule is useful
+   * for services that provide content to Web (HTML) clients.
    * </pre>
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>

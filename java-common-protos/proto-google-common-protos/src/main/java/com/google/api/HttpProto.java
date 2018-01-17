@@ -38,19 +38,20 @@ public final class HttpProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025google/api/http.proto\022\ngoogle.api\"+\n\004H" +
+      "\n\025google/api/http.proto\022\ngoogle.api\"T\n\004H" +
       "ttp\022#\n\005rules\030\001 \003(\0132\024.google.api.HttpRule" +
-      "\"\352\001\n\010HttpRule\022\020\n\010selector\030\001 \001(\t\022\r\n\003get\030\002" +
-      " \001(\tH\000\022\r\n\003put\030\003 \001(\tH\000\022\016\n\004post\030\004 \001(\tH\000\022\020\n" +
-      "\006delete\030\005 \001(\tH\000\022\017\n\005patch\030\006 \001(\tH\000\022/\n\006cust" +
-      "om\030\010 \001(\0132\035.google.api.CustomHttpPatternH" +
-      "\000\022\014\n\004body\030\007 \001(\t\0221\n\023additional_bindings\030\013" +
-      " \003(\0132\024.google.api.HttpRuleB\t\n\007pattern\"/\n" +
-      "\021CustomHttpPattern\022\014\n\004kind\030\001 \001(\t\022\014\n\004path" +
-      "\030\002 \001(\tBj\n\016com.google.apiB\tHttpProtoP\001ZAg",
-      "oogle.golang.org/genproto/googleapis/api" +
-      "/annotations;annotations\370\001\001\242\002\004GAPIb\006prot" +
-      "o3"
+      "\022\'\n\037fully_decode_reserved_expansion\030\002 \001(" +
+      "\010\"\352\001\n\010HttpRule\022\020\n\010selector\030\001 \001(\t\022\r\n\003get\030" +
+      "\002 \001(\tH\000\022\r\n\003put\030\003 \001(\tH\000\022\016\n\004post\030\004 \001(\tH\000\022\020" +
+      "\n\006delete\030\005 \001(\tH\000\022\017\n\005patch\030\006 \001(\tH\000\022/\n\006cus" +
+      "tom\030\010 \001(\0132\035.google.api.CustomHttpPattern" +
+      "H\000\022\014\n\004body\030\007 \001(\t\0221\n\023additional_bindings\030" +
+      "\013 \003(\0132\024.google.api.HttpRuleB\t\n\007pattern\"/" +
+      "\n\021CustomHttpPattern\022\014\n\004kind\030\001 \001(\t\022\014\n\004pat",
+      "h\030\002 \001(\tBj\n\016com.google.apiB\tHttpProtoP\001ZA" +
+      "google.golang.org/genproto/googleapis/ap" +
+      "i/annotations;annotations\370\001\001\242\002\004GAPIb\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -69,7 +70,7 @@ public final class HttpProto {
     internal_static_google_api_Http_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Http_descriptor,
-        new java.lang.String[] { "Rules", });
+        new java.lang.String[] { "Rules", "FullyDecodeReservedExpansion", });
     internal_static_google_api_HttpRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_HttpRule_fieldAccessorTable = new
