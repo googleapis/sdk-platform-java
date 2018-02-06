@@ -37,6 +37,11 @@ import com.google.api.core.BetaApi;
 @BetaApi
 public interface ResourceName {
 
-  /** The ResourceNameType of the resource name object. */
+  /**
+   * The ResourceNameType of the resource name object.
+   *
+   * @deprecated With Oneof types being converted to use inheritance, this is no longer necessary.
+   */
+  @Deprecated
   public ResourceNameType getType();
 }

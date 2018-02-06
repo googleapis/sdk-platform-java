@@ -33,8 +33,13 @@ package com.google.api.resourcenames;
 
 import com.google.api.core.BetaApi;
 
-/** The ResourceNameType for {@link UntypedResourceName}. */
+/**
+ * The ResourceNameType for {@link UntypedResourceName}.
+ *
+ * @deprecated With Oneof types being converted to use inheritance, this is no longer necessary.
+ */
 @BetaApi
+@Deprecated
 public class UntypedResourceNameType implements ResourceNameType {
 
   private static UntypedResourceNameType instance = new UntypedResourceNameType();
