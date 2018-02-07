@@ -319,7 +319,46 @@ task createApiDocsRedirect {
   }
 }
 
-// Regenerates the gh-pages branch under tmp_gh-pages, which must be committed separately
-task updateDocsWithCurrentVersion {
+task publishDocs {
+  dependsOn 'closeAndReleaseRepository'
+  doLast {
+    exec {
+      workingDir './tmp_gh-pages'
+      commandLine 'git', 'add', '.'
+    }
+    exec {
+      workingDir './tmp_gh-pages'
+      commandLine 'git', 'commit', '-m', 'Release docs for ' + project.version
+    }
+    exec {
+      workingDir './tmp_gh-pages'
+      commandLine 'git', 'push'
+    }
+  }
+}
+
+// 1. Regenerates the gh-pages branch under tmp_gh-pages
+// 2. Stages the artifact on Sonatype
+task stageRelease {
   dependsOn 'createApiDocsRedirect'
+  doLast {
+    exec {
+      // We need to spawn a new gradle build process in order to upload appropriately
+      // More details: http://stackoverflow.com/questions/31614735/gradle-uploadarchives-artificats-namespace-when-depending-on-a-plugin
+      commandLine './gradlew', 'uploadArchives'
+    }
+  }
+}
+
+// 1. Closes and releases the artifact on Sonatype
+// 2. Commits and pushes the new docs
+// 3. Removes tmp_gh-pages
+// Note: This task assumes that the 'stageRelease' task has been completed.
+task finalizeRelease {
+  dependsOn 'publishDocs'
+  doLast {
+    exec {
+      commandLine 'rm', '-r', 'tmp_gh-pages'
+    }
+  }
 }
