@@ -10,7 +10,8 @@ buildscript {
     jcenter()
   }
   dependencies {
-    classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.6"
+    classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.6",
+      "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.8.0"
   }
 }
 
@@ -21,6 +22,7 @@ apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'signing'
 apply plugin: 'com.github.sherter.google-java-format'
+apply plugin: 'io.codearte.nexus-staging'
 
 group = "com.google.api"
 archivesBaseName = "api-common"
