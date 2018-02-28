@@ -34,8 +34,8 @@ package com.google.api.resourcenames;
 import com.google.api.core.BetaApi;
 
 /**
- * An interface that resource name types must implement. A ResourceNameType class is required for
- * any class that implements {@link ResourceName}.
+ * An interface that resource name types used to have to implement. A ResourceNameType class was
+ * required for any class that implements {@link ResourceName}.
  *
  * @deprecated With Oneof types being converted to use inheritance, this is no longer necessary.
  */
