@@ -1,5 +1,5 @@
 /*
- * Copyright 2016, Google Inc.
+ * Copyright 2018, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,24 +28,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.resourcenames;
 
 import com.google.api.core.BetaApi;
-import java.util.Map;
 
-/** An interface that generated resource name types must implement. */
 @BetaApi
-public interface ResourceName {
+public interface ResourceNameFactory<T extends ResourceName> {
 
-  /**
-   * Return the map of each field name to its value.
-   */
-  Map<String, String> getFieldValuesMap();
-
-  /**
-   * Return the String value of the field with name fieldName. Returns null if the fieldName was not
-   * found.
-   */
-  String getFieldValue(String fieldName);
+  /* Create a new ResourceName from a formatted String representing a ResourceName. */
+  T parse(String formattedString);
 }

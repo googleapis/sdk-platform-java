@@ -33,6 +33,8 @@ package com.google.api.resourcenames;
 
 import com.google.api.core.BetaApi;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
 
 /**
  * A class to represent a {@link ResourceName} with an unknown format. This class in intended to
@@ -43,6 +45,8 @@ import com.google.common.base.Preconditions;
 public class UntypedResourceName implements ResourceName {
 
   private final String rawValue;
+
+  private volatile Map<String, String> fieldValuesMap;
 
   private UntypedResourceName(String rawValue) {
     this.rawValue = Preconditions.checkNotNull(rawValue);
@@ -57,7 +61,26 @@ public class UntypedResourceName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return true;
+    return formattedString != null;
+  }
+
+  /* Returns a map with an empty String "" as the sole key, which maps to the raw value of this ResourceName. */
+  @Override
+  public Map<String, String> getFieldValuesMap() {
+    if (fieldValuesMap == null) {
+      synchronized (this) {
+        if (fieldValuesMap == null) {
+          fieldValuesMap = ImmutableMap.of("", rawValue);
+        }
+      }
+    }
+    return fieldValuesMap;
+  }
+
+  /* Returns the raw value of this ResourceName iff fieldName.equals(""), else returns null. */
+  @Override
+  public String getFieldValue(String fieldName) {
+    return getFieldValuesMap().get("");
   }
 
   @Override
