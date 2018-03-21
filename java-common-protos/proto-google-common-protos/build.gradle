@@ -8,7 +8,7 @@ apply plugin: 'java'
 
 description = 'PROTO library for proto-google-common-protos'
 group = "com.google.api.grpc"
-version = "1.4.0"
+version = "1.5.0"
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
