@@ -47,7 +47,7 @@ public final class DocumentationProto {
       "r\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\022\037\n\027deprecat" +
       "ion_description\030\003 \001(\t\"I\n\004Page\022\014\n\004name\030\001 " +
       "\001(\t\022\017\n\007content\030\002 \001(\t\022\"\n\010subpages\030\003 \003(\0132\020" +
-      ".google.api.PageBt\n\016com.google.apiB\022Docu",
+      ".google.api.PageBt\n\016com.google.apiB\022Docu" +
       "mentationProtoP\001ZEgoogle.golang.org/genp" +
       "roto/googleapis/api/serviceconfig;servic" +
       "econfig\242\002\004GAPIb\006proto3"

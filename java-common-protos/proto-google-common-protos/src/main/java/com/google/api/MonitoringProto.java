@@ -42,7 +42,7 @@ public final class MonitoringProto {
       "\032D\n\025MonitoringDestination\022\032\n\022monitored_r" +
       "esource\030\001 \001(\t\022\017\n\007metrics\030\002 \003(\tBq\n\016com.go" +
       "ogle.apiB\017MonitoringProtoP\001ZEgoogle.gola" +
-      "ng.org/genproto/googleapis/api/serviceco",
+      "ng.org/genproto/googleapis/api/serviceco" +
       "nfig;serviceconfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

@@ -42,7 +42,7 @@ public final class ConfigChangeProto {
       "ype\022\033\n\027CHANGE_TYPE_UNSPECIFIED\020\000\022\t\n\005ADDE" +
       "D\020\001\022\013\n\007REMOVED\020\002\022\014\n\010MODIFIED\020\003Bq\n\016com.go" +
       "ogle.apiB\021ConfigChangeProtoP\001ZCgoogle.go" +
-      "lang.org/genproto/googleapis/api/configc",
+      "lang.org/genproto/googleapis/api/configc" +
       "hange;configchange\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

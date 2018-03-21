@@ -47,7 +47,7 @@ public final class HttpProto {
       "tom\030\010 \001(\0132\035.google.api.CustomHttpPattern" +
       "H\000\022\014\n\004body\030\007 \001(\t\0221\n\023additional_bindings\030" +
       "\013 \003(\0132\024.google.api.HttpRuleB\t\n\007pattern\"/" +
-      "\n\021CustomHttpPattern\022\014\n\004kind\030\001 \001(\t\022\014\n\004pat",
+      "\n\021CustomHttpPattern\022\014\n\004kind\030\001 \001(\t\022\014\n\004pat" +
       "h\030\002 \001(\tBj\n\016com.google.apiB\tHttpProtoP\001ZA" +
       "google.golang.org/genproto/googleapis/ap" +
       "i/annotations;annotations\370\001\001\242\002\004GAPIb\006pro" +

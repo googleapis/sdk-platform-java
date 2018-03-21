@@ -47,7 +47,7 @@ public final class SystemParameterProto {
       "\n\013http_header\030\002 \001(\t\022\033\n\023url_query_paramet" +
       "er\030\003 \001(\tBv\n\016com.google.apiB\024SystemParame" +
       "terProtoP\001ZEgoogle.golang.org/genproto/g" +
-      "oogleapis/api/serviceconfig;serviceconfi",
+      "oogleapis/api/serviceconfig;serviceconfi" +
       "g\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

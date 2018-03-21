@@ -47,7 +47,7 @@ public final class MonitoredResourceProto {
       "rce\022\014\n\004type\030\001 \001(\t\0229\n\006labels\030\002 \003(\0132).goog" +
       "le.api.MonitoredResource.LabelsEntry\032-\n\013" +
       "LabelsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:" +
-      "\0028\001By\n\016com.google.apiB\026MonitoredResource",
+      "\0028\001By\n\016com.google.apiB\026MonitoredResource" +
       "ProtoP\001ZCgoogle.golang.org/genproto/goog" +
       "leapis/api/monitoredres;monitoredres\370\001\001\242" +
       "\002\004GAPIb\006proto3"

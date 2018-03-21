@@ -52,7 +52,7 @@ public final class AuditLogProto {
       "e\030\013 \001(\t\022\032\n\022num_response_items\030\014 \001(\003\022\"\n\006s" +
       "tatus\030\002 \001(\0132\022.google.rpc.Status\022C\n\023authe" +
       "ntication_info\030\003 \001(\0132&.google.cloud.audi" +
-      "t.AuthenticationInfo\022A\n\022authorization_in",
+      "t.AuthenticationInfo\022A\n\022authorization_in" +
       "fo\030\t \003(\0132%.google.cloud.audit.Authorizat" +
       "ionInfo\022=\n\020request_metadata\030\004 \001(\0132#.goog" +
       "le.cloud.audit.RequestMetadata\022(\n\007reques" +
@@ -62,7 +62,7 @@ public final class AuditLogProto {
       "-\n\022AuthenticationInfo\022\027\n\017principal_email" +
       "\030\001 \001(\t\"J\n\021AuthorizationInfo\022\020\n\010resource\030" +
       "\001 \001(\t\022\022\n\npermission\030\002 \001(\t\022\017\n\007granted\030\003 \001" +
-      "(\010\"H\n\017RequestMetadata\022\021\n\tcaller_ip\030\001 \001(\t",
+      "(\010\"H\n\017RequestMetadata\022\021\n\tcaller_ip\030\001 \001(\t" +
       "\022\"\n\032caller_supplied_user_agent\030\002 \001(\tBb\n\026" +
       "com.google.cloud.auditB\rAuditLogProtoP\001Z" +
       "7google.golang.org/genproto/googleapis/c" +

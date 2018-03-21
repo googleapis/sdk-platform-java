@@ -37,7 +37,7 @@ public final class PostalAddressProto {
       "\n\raddress_lines\030\t \003(\t\022\022\n\nrecipients\030\n \003(" +
       "\t\022\024\n\014organization\030\013 \001(\tBu\n\017com.google.ty" +
       "peB\022PostalAddressProtoP\001ZFgoogle.golang." +
-      "org/genproto/googleapis/type/postaladdre",
+      "org/genproto/googleapis/type/postaladdre" +
       "ss;postaladdress\242\002\003GTPb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

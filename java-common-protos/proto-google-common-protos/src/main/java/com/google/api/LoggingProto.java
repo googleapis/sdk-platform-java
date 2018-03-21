@@ -42,7 +42,7 @@ public final class LoggingProto {
       "tion\022\032\n\022monitored_resource\030\003 \001(\t\022\014\n\004logs" +
       "\030\001 \003(\tBn\n\016com.google.apiB\014LoggingProtoP\001" +
       "ZEgoogle.golang.org/genproto/googleapis/" +
-      "api/serviceconfig;serviceconfig\242\002\004GAPIb\006",
+      "api/serviceconfig;serviceconfig\242\002\004GAPIb\006" +
       "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

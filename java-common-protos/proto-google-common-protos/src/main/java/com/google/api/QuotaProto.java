@@ -57,7 +57,7 @@ public final class QuotaProto {
       ".MetricCostsEntry\0322\n\020MetricCostsEntry\022\013\n" +
       "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\003:\0028\001\"\225\002\n\nQuotaL" +
       "imit\022\014\n\004name\030\006 \001(\t\022\023\n\013description\030\002 \001(\t\022" +
-      "\025\n\rdefault_limit\030\003 \001(\003\022\021\n\tmax_limit\030\004 \001(",
+      "\025\n\rdefault_limit\030\003 \001(\003\022\021\n\tmax_limit\030\004 \001(" +
       "\003\022\021\n\tfree_tier\030\007 \001(\003\022\020\n\010duration\030\005 \001(\t\022\016" +
       "\n\006metric\030\010 \001(\t\022\014\n\004unit\030\t \001(\t\0222\n\006values\030\n" +
       " \003(\0132\".google.api.QuotaLimit.ValuesEntry" +

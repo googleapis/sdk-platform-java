@@ -32,7 +32,7 @@ public final class CodeProto {
       "RECONDITION\020\t\022\013\n\007ABORTED\020\n\022\020\n\014OUT_OF_RAN" +
       "GE\020\013\022\021\n\rUNIMPLEMENTED\020\014\022\014\n\010INTERNAL\020\r\022\017\n" +
       "\013UNAVAILABLE\020\016\022\r\n\tDATA_LOSS\020\017BX\n\016com.goo" +
-      "gle.rpcB\tCodeProtoP\001Z3google.golang.org/",
+      "gle.rpcB\tCodeProtoP\001Z3google.golang.org/" +
       "genproto/googleapis/rpc/code;code\242\002\003RPCb" +
       "\006proto3"
     };

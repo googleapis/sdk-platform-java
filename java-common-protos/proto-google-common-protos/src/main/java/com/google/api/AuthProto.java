@@ -57,7 +57,7 @@ public final class AuthProto {
       ".api.OAuthRequirements\022 \n\030allow_without_" +
       "credential\030\005 \001(\010\0221\n\014requirements\030\007 \003(\0132\033" +
       ".google.api.AuthRequirement\"j\n\014AuthProvi" +
-      "der\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(\t\022\020\n\010jwks_",
+      "der\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(\t\022\020\n\010jwks_" +
       "uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\022\031\n\021authoriz" +
       "ation_url\030\005 \001(\t\"-\n\021OAuthRequirements\022\030\n\020" +
       "canonical_scopes\030\001 \001(\t\"9\n\017AuthRequiremen" +

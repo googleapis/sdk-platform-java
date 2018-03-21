@@ -47,7 +47,7 @@ public final class MetricProto {
       "google.api.MetricDescriptor.ValueType\022\014\n" +
       "\004unit\030\005 \001(\t\022\023\n\013description\030\006 \001(\t\022\024\n\014disp" +
       "lay_name\030\007 \001(\t\"O\n\nMetricKind\022\033\n\027METRIC_K" +
-      "IND_UNSPECIFIED\020\000\022\t\n\005GAUGE\020\001\022\t\n\005DELTA\020\002\022",
+      "IND_UNSPECIFIED\020\000\022\t\n\005GAUGE\020\001\022\t\n\005DELTA\020\002\022" +
       "\016\n\nCUMULATIVE\020\003\"q\n\tValueType\022\032\n\026VALUE_TY" +
       "PE_UNSPECIFIED\020\000\022\010\n\004BOOL\020\001\022\t\n\005INT64\020\002\022\n\n" +
       "\006DOUBLE\020\003\022\n\n\006STRING\020\004\022\020\n\014DISTRIBUTION\020\005\022" +

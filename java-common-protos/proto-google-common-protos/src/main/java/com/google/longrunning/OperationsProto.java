@@ -62,7 +62,7 @@ public final class OperationsProto {
       "done\030\003 \001(\010\022#\n\005error\030\004 \001(\0132\022.google.rpc.S" +
       "tatusH\000\022(\n\010response\030\005 \001(\0132\024.google.proto" +
       "buf.AnyH\000B\010\n\006result\"#\n\023GetOperationReque" +
-      "st\022\014\n\004name\030\001 \001(\t\"\\\n\025ListOperationsReques",
+      "st\022\014\n\004name\030\001 \001(\t\"\\\n\025ListOperationsReques" +
       "t\022\014\n\004name\030\004 \001(\t\022\016\n\006filter\030\001 \001(\t\022\021\n\tpage_" +
       "size\030\002 \001(\005\022\022\n\npage_token\030\003 \001(\t\"d\n\026ListOp" +
       "erationsResponse\0221\n\noperations\030\001 \003(\0132\035.g" +
@@ -72,7 +72,7 @@ public final class OperationsProto {
       "\n\004name\030\001 \001(\t2\214\004\n\nOperations\022\206\001\n\016ListOper" +
       "ations\022).google.longrunning.ListOperatio" +
       "nsRequest\032*.google.longrunning.ListOpera" +
-      "tionsResponse\"\035\202\323\344\223\002\027\022\025/v1/{name=operati",
+      "tionsResponse\"\035\202\323\344\223\002\027\022\025/v1/{name=operati" +
       "ons}\022x\n\014GetOperation\022\'.google.longrunnin" +
       "g.GetOperationRequest\032\035.google.longrunni" +
       "ng.Operation\" \202\323\344\223\002\032\022\030/v1/{name=operatio" +
@@ -82,7 +82,7 @@ public final class OperationsProto {
       "ons/**}\022\201\001\n\017CancelOperation\022*.google.lon" +
       "grunning.CancelOperationRequest\032\026.google" +
       ".protobuf.Empty\"*\202\323\344\223\002$\"\037/v1/{name=opera" +
-      "tions/**}:cancel:\001*B\224\001\n\026com.google.longr",
+      "tions/**}:cancel:\001*B\224\001\n\026com.google.longr" +
       "unningB\017OperationsProtoP\001Z=google.golang" +
       ".org/genproto/googleapis/longrunning;lon" +
       "grunning\252\002\022Google.LongRunning\312\002\022Google\\L" +

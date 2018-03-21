@@ -62,7 +62,7 @@ public final class DistributionProto {
       "i.Distribution.Range\022>\n\016bucket_options\030\006" +
       " \001(\0132&.google.api.Distribution.BucketOpt" +
       "ions\022\025\n\rbucket_counts\030\007 \003(\003\032!\n\005Range\022\013\n\003" +
-      "min\030\001 \001(\001\022\013\n\003max\030\002 \001(\001\032\265\003\n\rBucketOptions",
+      "min\030\001 \001(\001\022\013\n\003max\030\002 \001(\001\032\265\003\n\rBucketOptions" +
       "\022G\n\016linear_buckets\030\001 \001(\0132-.google.api.Di" +
       "stribution.BucketOptions.LinearH\000\022Q\n\023exp" +
       "onential_buckets\030\002 \001(\01322.google.api.Dist" +
@@ -72,7 +72,7 @@ public final class DistributionProto {
       "ear\022\032\n\022num_finite_buckets\030\001 \001(\005\022\r\n\005width" +
       "\030\002 \001(\001\022\016\n\006offset\030\003 \001(\001\032O\n\013Exponential\022\032\n" +
       "\022num_finite_buckets\030\001 \001(\005\022\025\n\rgrowth_fact" +
-      "or\030\002 \001(\001\022\r\n\005scale\030\003 \001(\001\032\032\n\010Explicit\022\016\n\006b",
+      "or\030\002 \001(\001\022\r\n\005scale\030\003 \001(\001\032\032\n\010Explicit\022\016\n\006b" +
       "ounds\030\001 \003(\001B\t\n\007optionsBj\n\016com.google.api" +
       "B\021DistributionProtoP\001ZCgoogle.golang.org" +
       "/genproto/googleapis/api/distribution;di" +
