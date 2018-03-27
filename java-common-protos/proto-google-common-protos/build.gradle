@@ -7,7 +7,7 @@ buildscript {
 apply plugin: 'java'
 
 description = 'PROTO library for proto-google-common-protos'
-group = "com.google.api.grpc"
+group = 'com.google.api.grpc'
 version = "1.6.0"
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.google.protobuf:protobuf-java:3.4.0"
+  compile 'com.google.protobuf:protobuf-java:3.4.0'
 }
 
 sourceSets {
@@ -46,4 +46,5 @@ artifacts {
   archives javadocJar, sourcesJar
 }
 
-compileJava.options.encoding = "UTF-8"
+compileJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'
