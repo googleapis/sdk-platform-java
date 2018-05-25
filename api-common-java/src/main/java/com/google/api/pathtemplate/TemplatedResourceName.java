@@ -65,7 +65,6 @@ import javax.annotation.Nullable;
  *   assert resourceName.parentName().toString().equals("shelves/s1/books");
  * </pre>
  */
-@BetaApi
 public class TemplatedResourceName implements Map<String, String> {
 
   // ResourceName Resolver

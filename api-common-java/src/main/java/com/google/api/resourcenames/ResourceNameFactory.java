@@ -30,9 +30,6 @@
  */
 package com.google.api.resourcenames;
 
-import com.google.api.core.BetaApi;
-
-@BetaApi
 public interface ResourceNameFactory<T extends ResourceName> {
 
   /* Create a new ResourceName from a formatted String representing a ResourceName. */

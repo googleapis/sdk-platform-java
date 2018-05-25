@@ -31,11 +31,9 @@
 
 package com.google.api.resourcenames;
 
-import com.google.api.core.BetaApi;
 import java.util.Map;
 
 /** An interface that generated resource name types must implement. */
-@BetaApi
 public interface ResourceName {
 
   /**
