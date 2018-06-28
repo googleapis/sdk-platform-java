@@ -35,7 +35,6 @@ private static final long serialVersionUID = 0L;
   private Endpoint() {
     name_ = "";
     aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    apis_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     target_ = "";
     allowCors_ = false;
@@ -87,20 +86,11 @@ private static final long serialVersionUID = 0L;
             aliases_.add(s);
             break;
           }
-          case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-              apis_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000004;
-            }
-            apis_.add(s);
-            break;
-          }
           case 34: {
             java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
               features_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000008;
+              mutable_bitField0_ |= 0x00000004;
             }
             features_.add(s);
             break;
@@ -128,9 +118,6 @@ private static final long serialVersionUID = 0L;
         aliases_ = aliases_.getUnmodifiableView();
       }
       if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-        apis_ = apis_.getUnmodifiableView();
-      }
-      if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
         features_ = features_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
@@ -197,8 +184,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -211,8 +198,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -224,8 +211,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -237,8 +224,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -247,51 +234,6 @@ private static final long serialVersionUID = 0L;
   public com.google.protobuf.ByteString
       getAliasesBytes(int index) {
     return aliases_.getByteString(index);
-  }
-
-  public static final int APIS_FIELD_NUMBER = 3;
-  private com.google.protobuf.LazyStringList apis_;
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  public com.google.protobuf.ProtocolStringList
-      getApisList() {
-    return apis_;
-  }
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  public int getApisCount() {
-    return apis_.size();
-  }
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  public java.lang.String getApis(int index) {
-    return apis_.get(index);
-  }
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  public com.google.protobuf.ByteString
-      getApisBytes(int index) {
-    return apis_.getByteString(index);
   }
 
   public static final int FEATURES_FIELD_NUMBER = 4;
@@ -423,9 +365,6 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < aliases_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, aliases_.getRaw(i));
     }
-    for (int i = 0; i < apis_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, apis_.getRaw(i));
-    }
     for (int i = 0; i < features_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, features_.getRaw(i));
     }
@@ -453,14 +392,6 @@ private static final long serialVersionUID = 0L;
       }
       size += dataSize;
       size += 1 * getAliasesList().size();
-    }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < apis_.size(); i++) {
-        dataSize += computeStringSizeNoTag(apis_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getApisList().size();
     }
     {
       int dataSize = 0;
@@ -497,8 +428,6 @@ private static final long serialVersionUID = 0L;
         .equals(other.getName());
     result = result && getAliasesList()
         .equals(other.getAliasesList());
-    result = result && getApisList()
-        .equals(other.getApisList());
     result = result && getFeaturesList()
         .equals(other.getFeaturesList());
     result = result && getTarget()
@@ -521,10 +450,6 @@ private static final long serialVersionUID = 0L;
     if (getAliasesCount() > 0) {
       hash = (37 * hash) + ALIASES_FIELD_NUMBER;
       hash = (53 * hash) + getAliasesList().hashCode();
-    }
-    if (getApisCount() > 0) {
-      hash = (37 * hash) + APIS_FIELD_NUMBER;
-      hash = (53 * hash) + getApisList().hashCode();
     }
     if (getFeaturesCount() > 0) {
       hash = (37 * hash) + FEATURES_FIELD_NUMBER;
@@ -685,10 +610,8 @@ private static final long serialVersionUID = 0L;
 
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
-      apis_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000004);
       features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000004);
       target_ = "";
 
       allowCors_ = false;
@@ -724,13 +647,8 @@ private static final long serialVersionUID = 0L;
       }
       result.aliases_ = aliases_;
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        apis_ = apis_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000004);
-      }
-      result.apis_ = apis_;
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         features_ = features_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
       }
       result.features_ = features_;
       result.target_ = target_;
@@ -791,20 +709,10 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       }
-      if (!other.apis_.isEmpty()) {
-        if (apis_.isEmpty()) {
-          apis_ = other.apis_;
-          bitField0_ = (bitField0_ & ~0x00000004);
-        } else {
-          ensureApisIsMutable();
-          apis_.addAll(other.apis_);
-        }
-        onChanged();
-      }
       if (!other.features_.isEmpty()) {
         if (features_.isEmpty()) {
           features_ = other.features_;
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           ensureFeaturesIsMutable();
           features_.addAll(other.features_);
@@ -945,8 +853,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -959,8 +867,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -972,8 +880,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -985,8 +893,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -999,8 +907,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1019,8 +927,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1039,8 +947,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1057,8 +965,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1073,8 +981,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
-     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-     * alias.
+     * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+     * aliases.
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1092,141 +1000,11 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.LazyStringList apis_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    private void ensureApisIsMutable() {
-      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-        apis_ = new com.google.protobuf.LazyStringArrayList(apis_);
-        bitField0_ |= 0x00000004;
-       }
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getApisList() {
-      return apis_.getUnmodifiableView();
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public int getApisCount() {
-      return apis_.size();
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public java.lang.String getApis(int index) {
-      return apis_.get(index);
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getApisBytes(int index) {
-      return apis_.getByteString(index);
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public Builder setApis(
-        int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureApisIsMutable();
-      apis_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public Builder addApis(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureApisIsMutable();
-      apis_.add(value);
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public Builder addAllApis(
-        java.lang.Iterable<java.lang.String> values) {
-      ensureApisIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(
-          values, apis_);
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public Builder clearApis() {
-      apis_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000004);
-      onChanged();
-      return this;
-    }
-    /**
-     * <pre>
-     * The list of APIs served by this endpoint.
-     * </pre>
-     *
-     * <code>repeated string apis = 3;</code>
-     */
-    public Builder addApisBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      ensureApisIsMutable();
-      apis_.add(value);
-      onChanged();
-      return this;
-    }
-
     private com.google.protobuf.LazyStringList features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureFeaturesIsMutable() {
-      if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
         features_ = new com.google.protobuf.LazyStringArrayList(features_);
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
        }
     }
     /**
@@ -1329,7 +1107,7 @@ private static final long serialVersionUID = 0L;
      */
     public Builder clearFeatures() {
       features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }

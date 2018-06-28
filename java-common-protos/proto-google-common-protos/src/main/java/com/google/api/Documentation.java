@@ -44,9 +44,6 @@ package com.google.api;
  * &lt;pre&gt;&lt;code&gt;&amp;#91;display text]&amp;#91;fully.qualified.proto.name]&lt;/code&gt;&lt;/pre&gt;
  * Text can be excluded from doc using the following notation:
  * &lt;pre&gt;&lt;code&gt;&amp;#40;-- internal comment --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
- * Comments can be made conditional using a visibility label. The below
- * text will be only rendered if the `BETA` label is available:
- * &lt;pre&gt;&lt;code&gt;&amp;#40;--BETA: comment for BETA users --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
  * A few directives are available in documentation. Note that
  * directives must appear on a single line to be properly
  * identified. The `include` directive includes a markdown file from
@@ -681,9 +678,6 @@ private static final long serialVersionUID = 0L;
    * &lt;pre&gt;&lt;code&gt;&amp;#91;display text]&amp;#91;fully.qualified.proto.name]&lt;/code&gt;&lt;/pre&gt;
    * Text can be excluded from doc using the following notation:
    * &lt;pre&gt;&lt;code&gt;&amp;#40;-- internal comment --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
-   * Comments can be made conditional using a visibility label. The below
-   * text will be only rendered if the `BETA` label is available:
-   * &lt;pre&gt;&lt;code&gt;&amp;#40;--BETA: comment for BETA users --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
    * A few directives are available in documentation. Note that
    * directives must appear on a single line to be properly
    * identified. The `include` directive includes a markdown file from

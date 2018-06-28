@@ -163,7 +163,8 @@ private static final long serialVersionUID = 0L;
   private boolean allowUnregisteredCalls_;
   /**
    * <pre>
-   * True, if the method allows unregistered calls; false otherwise.
+   * If true, the selected method allows unregistered calls, e.g. calls
+   * that don't identify any user or application.
    * </pre>
    *
    * <code>bool allow_unregistered_calls = 2;</code>
@@ -176,8 +177,10 @@ private static final long serialVersionUID = 0L;
   private boolean skipServiceControl_;
   /**
    * <pre>
-   * True, if the method should skip service control. If so, no control plane
-   * feature (like quota and billing) will be enabled.
+   * If true, the selected method should skip service control and the control
+   * plane features, such as quota and billing, will not be available.
+   * This flag is used by Google Cloud Endpoints to bypass checks for internal
+   * methods, such as service health check methods.
    * </pre>
    *
    * <code>bool skip_service_control = 3;</code>
@@ -628,7 +631,8 @@ private static final long serialVersionUID = 0L;
     private boolean allowUnregisteredCalls_ ;
     /**
      * <pre>
-     * True, if the method allows unregistered calls; false otherwise.
+     * If true, the selected method allows unregistered calls, e.g. calls
+     * that don't identify any user or application.
      * </pre>
      *
      * <code>bool allow_unregistered_calls = 2;</code>
@@ -638,7 +642,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * True, if the method allows unregistered calls; false otherwise.
+     * If true, the selected method allows unregistered calls, e.g. calls
+     * that don't identify any user or application.
      * </pre>
      *
      * <code>bool allow_unregistered_calls = 2;</code>
@@ -651,7 +656,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * True, if the method allows unregistered calls; false otherwise.
+     * If true, the selected method allows unregistered calls, e.g. calls
+     * that don't identify any user or application.
      * </pre>
      *
      * <code>bool allow_unregistered_calls = 2;</code>
@@ -666,8 +672,10 @@ private static final long serialVersionUID = 0L;
     private boolean skipServiceControl_ ;
     /**
      * <pre>
-     * True, if the method should skip service control. If so, no control plane
-     * feature (like quota and billing) will be enabled.
+     * If true, the selected method should skip service control and the control
+     * plane features, such as quota and billing, will not be available.
+     * This flag is used by Google Cloud Endpoints to bypass checks for internal
+     * methods, such as service health check methods.
      * </pre>
      *
      * <code>bool skip_service_control = 3;</code>
@@ -677,8 +685,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * True, if the method should skip service control. If so, no control plane
-     * feature (like quota and billing) will be enabled.
+     * If true, the selected method should skip service control and the control
+     * plane features, such as quota and billing, will not be available.
+     * This flag is used by Google Cloud Endpoints to bypass checks for internal
+     * methods, such as service health check methods.
      * </pre>
      *
      * <code>bool skip_service_control = 3;</code>
@@ -691,8 +701,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * True, if the method should skip service control. If so, no control plane
-     * feature (like quota and billing) will be enabled.
+     * If true, the selected method should skip service control and the control
+     * plane features, such as quota and billing, will not be available.
+     * This flag is used by Google Cloud Endpoints to bypass checks for internal
+     * methods, such as service health check methods.
      * </pre>
      *
      * <code>bool skip_service_control = 3;</code>

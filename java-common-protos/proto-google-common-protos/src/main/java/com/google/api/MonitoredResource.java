@@ -126,7 +126,7 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * Required. The monitored resource type. This field must match
    * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-   * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+   * example, the type of a Compute Engine VM instance is `gce_instance`.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -147,7 +147,7 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * Required. The monitored resource type. This field must match
    * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-   * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+   * example, the type of a Compute Engine VM instance is `gce_instance`.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -195,8 +195,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. Values for all of the labels listed in the associated monitored
-   * resource descriptor. For example, Cloud SQL databases use the labels
-   * `"database_id"` and `"zone"`.
+   * resource descriptor. For example, Compute Engine VM instances use the
+   * labels `"project_id"`, `"instance_id"`, and `"zone"`.
    * </pre>
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -217,8 +217,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. Values for all of the labels listed in the associated monitored
-   * resource descriptor. For example, Cloud SQL databases use the labels
-   * `"database_id"` and `"zone"`.
+   * resource descriptor. For example, Compute Engine VM instances use the
+   * labels `"project_id"`, `"instance_id"`, and `"zone"`.
    * </pre>
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -230,8 +230,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. Values for all of the labels listed in the associated monitored
-   * resource descriptor. For example, Cloud SQL databases use the labels
-   * `"database_id"` and `"zone"`.
+   * resource descriptor. For example, Compute Engine VM instances use the
+   * labels `"project_id"`, `"instance_id"`, and `"zone"`.
    * </pre>
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -248,8 +248,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. Values for all of the labels listed in the associated monitored
-   * resource descriptor. For example, Cloud SQL databases use the labels
-   * `"database_id"` and `"zone"`.
+   * resource descriptor. For example, Compute Engine VM instances use the
+   * labels `"project_id"`, `"instance_id"`, and `"zone"`.
    * </pre>
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -622,7 +622,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-     * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+     * example, the type of a Compute Engine VM instance is `gce_instance`.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -643,7 +643,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-     * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+     * example, the type of a Compute Engine VM instance is `gce_instance`.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -665,7 +665,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-     * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+     * example, the type of a Compute Engine VM instance is `gce_instance`.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -684,7 +684,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-     * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+     * example, the type of a Compute Engine VM instance is `gce_instance`.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -699,7 +699,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * Required. The monitored resource type. This field must match
      * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-     * example, the type of a Cloud SQL database is `"cloudsql_database"`.
+     * example, the type of a Compute Engine VM instance is `gce_instance`.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -745,8 +745,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -767,8 +767,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -780,8 +780,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -798,8 +798,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -824,8 +824,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -849,8 +849,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
@@ -867,8 +867,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. Values for all of the labels listed in the associated monitored
-     * resource descriptor. For example, Cloud SQL databases use the labels
-     * `"database_id"` and `"zone"`.
+     * resource descriptor. For example, Compute Engine VM instances use the
+     * labels `"project_id"`, `"instance_id"`, and `"zone"`.
      * </pre>
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>

@@ -28,11 +28,13 @@ public final class HttpBodyProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\031google/api/httpbody.proto\022\ngoogle.api\"" +
-      ".\n\010HttpBody\022\024\n\014content_type\030\001 \001(\t\022\014\n\004dat" +
-      "a\030\002 \001(\014Be\n\016com.google.apiB\rHttpBodyProto" +
-      "P\001Z;google.golang.org/genproto/googleapi" +
-      "s/api/httpbody;httpbody\242\002\004GAPIb\006proto3"
+      "\n\031google/api/httpbody.proto\022\ngoogle.api\032" +
+      "\031google/protobuf/any.proto\"X\n\010HttpBody\022\024" +
+      "\n\014content_type\030\001 \001(\t\022\014\n\004data\030\002 \001(\014\022(\n\nex" +
+      "tensions\030\003 \003(\0132\024.google.protobuf.AnyBe\n\016" +
+      "com.google.apiB\rHttpBodyProtoP\001Z;google." +
+      "golang.org/genproto/googleapis/api/httpb" +
+      "ody;httpbody\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -45,13 +47,15 @@ public final class HttpBodyProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.protobuf.AnyProto.getDescriptor(),
         }, assigner);
     internal_static_google_api_HttpBody_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_HttpBody_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_HttpBody_descriptor,
-        new java.lang.String[] { "ContentType", "Data", });
+        new java.lang.String[] { "ContentType", "Data", "Extensions", });
+    com.google.protobuf.AnyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -35,11 +35,12 @@ public final class BackendProto {
     java.lang.String[] descriptorData = {
       "\n\030google/api/backend.proto\022\ngoogle.api\"1" +
       "\n\007Backend\022&\n\005rules\030\001 \003(\0132\027.google.api.Ba" +
-      "ckendRule\"B\n\013BackendRule\022\020\n\010selector\030\001 \001" +
-      "(\t\022\017\n\007address\030\002 \001(\t\022\020\n\010deadline\030\003 \001(\001Bn\n" +
-      "\016com.google.apiB\014BackendProtoP\001ZEgoogle." +
-      "golang.org/genproto/googleapis/api/servi" +
-      "ceconfig;serviceconfig\242\002\004GAPIb\006proto3"
+      "ckendRule\"X\n\013BackendRule\022\020\n\010selector\030\001 \001" +
+      "(\t\022\017\n\007address\030\002 \001(\t\022\020\n\010deadline\030\003 \001(\001\022\024\n" +
+      "\014min_deadline\030\004 \001(\001Bn\n\016com.google.apiB\014B" +
+      "ackendProtoP\001ZEgoogle.golang.org/genprot" +
+      "o/googleapis/api/serviceconfig;serviceco" +
+      "nfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,7 +65,7 @@ public final class BackendProto {
     internal_static_google_api_BackendRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_BackendRule_descriptor,
-        new java.lang.String[] { "Selector", "Address", "Deadline", });
+        new java.lang.String[] { "Selector", "Address", "Deadline", "MinDeadline", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

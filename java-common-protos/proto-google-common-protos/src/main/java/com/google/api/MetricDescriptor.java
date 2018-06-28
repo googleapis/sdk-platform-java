@@ -513,13 +513,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object name_;
   /**
    * <pre>
-   * The resource name of the metric descriptor. Depending on the
-   * implementation, the name typically includes: (1) the parent resource name
-   * that defines the scope of the metric type or of its data; and (2) the
-   * metric's URL-encoded type, which also appears in the `type` field of this
-   * descriptor. For example, following is the resource name of a custom
-   * metric within the GCP project `my-project-id`:
-   *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+   * The resource name of the metric descriptor.
    * </pre>
    *
    * <code>string name = 1;</code>
@@ -538,13 +532,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The resource name of the metric descriptor. Depending on the
-   * implementation, the name typically includes: (1) the parent resource name
-   * that defines the scope of the metric type or of its data; and (2) the
-   * metric's URL-encoded type, which also appears in the `type` field of this
-   * descriptor. For example, following is the resource name of a custom
-   * metric within the GCP project `my-project-id`:
-   *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+   * The resource name of the metric descriptor.
    * </pre>
    *
    * <code>string name = 1;</code>
@@ -784,13 +772,12 @@ private static final long serialVersionUID = 0L;
    * * `Gi`    gibi    (2**30)
    * * `Ti`    tebi    (2**40)
    * **Grammar**
-   * The grammar includes the dimensionless unit `1`, such as `1/s`.
    * The grammar also includes these connectors:
    * * `/`    division (as an infix operator, e.g. `1/s`).
    * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
    * The grammar for a unit is as follows:
    *     Expression = Component { "." Component } { "/" Component } ;
-   *     Component = [ PREFIX ] UNIT [ Annotation ]
+   *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
@@ -801,6 +788,9 @@ private static final long serialVersionUID = 0L;
    *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
    * * `NAME` is a sequence of non-blank printable ASCII characters not
    *    containing '{' or '}'.
+   * * `1` represents dimensionless value 1, such as in `1/s`.
+   * * `%` represents dimensionless value 1/100, and annotates values giving
+   *    a percentage.
    * </pre>
    *
    * <code>string unit = 5;</code>
@@ -852,13 +842,12 @@ private static final long serialVersionUID = 0L;
    * * `Gi`    gibi    (2**30)
    * * `Ti`    tebi    (2**40)
    * **Grammar**
-   * The grammar includes the dimensionless unit `1`, such as `1/s`.
    * The grammar also includes these connectors:
    * * `/`    division (as an infix operator, e.g. `1/s`).
    * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
    * The grammar for a unit is as follows:
    *     Expression = Component { "." Component } { "/" Component } ;
-   *     Component = [ PREFIX ] UNIT [ Annotation ]
+   *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
@@ -869,6 +858,9 @@ private static final long serialVersionUID = 0L;
    *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
    * * `NAME` is a sequence of non-blank printable ASCII characters not
    *    containing '{' or '}'.
+   * * `1` represents dimensionless value 1, such as in `1/s`.
+   * * `%` represents dimensionless value 1/100, and annotates values giving
+   *    a percentage.
    * </pre>
    *
    * <code>string unit = 5;</code>
@@ -935,6 +927,8 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * A concise name for the metric, which can be displayed in user interfaces.
    * Use sentence case without an ending period, for example "Request count".
+   * This field is optional but it is recommended to be set for any metrics
+   * associated with user-visible concepts, such as Quota.
    * </pre>
    *
    * <code>string display_name = 7;</code>
@@ -955,6 +949,8 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * A concise name for the metric, which can be displayed in user interfaces.
    * Use sentence case without an ending period, for example "Request count".
+   * This field is optional but it is recommended to be set for any metrics
+   * associated with user-visible concepts, such as Quota.
    * </pre>
    *
    * <code>string display_name = 7;</code>
@@ -1424,13 +1420,7 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object name_ = "";
     /**
      * <pre>
-     * The resource name of the metric descriptor. Depending on the
-     * implementation, the name typically includes: (1) the parent resource name
-     * that defines the scope of the metric type or of its data; and (2) the
-     * metric's URL-encoded type, which also appears in the `type` field of this
-     * descriptor. For example, following is the resource name of a custom
-     * metric within the GCP project `my-project-id`:
-     *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+     * The resource name of the metric descriptor.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -1449,13 +1439,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The resource name of the metric descriptor. Depending on the
-     * implementation, the name typically includes: (1) the parent resource name
-     * that defines the scope of the metric type or of its data; and (2) the
-     * metric's URL-encoded type, which also appears in the `type` field of this
-     * descriptor. For example, following is the resource name of a custom
-     * metric within the GCP project `my-project-id`:
-     *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+     * The resource name of the metric descriptor.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -1475,13 +1459,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The resource name of the metric descriptor. Depending on the
-     * implementation, the name typically includes: (1) the parent resource name
-     * that defines the scope of the metric type or of its data; and (2) the
-     * metric's URL-encoded type, which also appears in the `type` field of this
-     * descriptor. For example, following is the resource name of a custom
-     * metric within the GCP project `my-project-id`:
-     *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+     * The resource name of the metric descriptor.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -1498,13 +1476,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The resource name of the metric descriptor. Depending on the
-     * implementation, the name typically includes: (1) the parent resource name
-     * that defines the scope of the metric type or of its data; and (2) the
-     * metric's URL-encoded type, which also appears in the `type` field of this
-     * descriptor. For example, following is the resource name of a custom
-     * metric within the GCP project `my-project-id`:
-     *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+     * The resource name of the metric descriptor.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -1517,13 +1489,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The resource name of the metric descriptor. Depending on the
-     * implementation, the name typically includes: (1) the parent resource name
-     * that defines the scope of the metric type or of its data; and (2) the
-     * metric's URL-encoded type, which also appears in the `type` field of this
-     * descriptor. For example, following is the resource name of a custom
-     * metric within the GCP project `my-project-id`:
-     *     "projects/my-project-id/metricDescriptors/custom.googleapis.com%2Finvoice%2Fpaid%2Famount"
+     * The resource name of the metric descriptor.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2230,13 +2196,12 @@ private static final long serialVersionUID = 0L;
      * * `Gi`    gibi    (2**30)
      * * `Ti`    tebi    (2**40)
      * **Grammar**
-     * The grammar includes the dimensionless unit `1`, such as `1/s`.
      * The grammar also includes these connectors:
      * * `/`    division (as an infix operator, e.g. `1/s`).
      * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
      * The grammar for a unit is as follows:
      *     Expression = Component { "." Component } { "/" Component } ;
-     *     Component = [ PREFIX ] UNIT [ Annotation ]
+     *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
@@ -2247,6 +2212,9 @@ private static final long serialVersionUID = 0L;
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
+     * * `1` represents dimensionless value 1, such as in `1/s`.
+     * * `%` represents dimensionless value 1/100, and annotates values giving
+     *    a percentage.
      * </pre>
      *
      * <code>string unit = 5;</code>
@@ -2298,13 +2266,12 @@ private static final long serialVersionUID = 0L;
      * * `Gi`    gibi    (2**30)
      * * `Ti`    tebi    (2**40)
      * **Grammar**
-     * The grammar includes the dimensionless unit `1`, such as `1/s`.
      * The grammar also includes these connectors:
      * * `/`    division (as an infix operator, e.g. `1/s`).
      * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
      * The grammar for a unit is as follows:
      *     Expression = Component { "." Component } { "/" Component } ;
-     *     Component = [ PREFIX ] UNIT [ Annotation ]
+     *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
@@ -2315,6 +2282,9 @@ private static final long serialVersionUID = 0L;
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
+     * * `1` represents dimensionless value 1, such as in `1/s`.
+     * * `%` represents dimensionless value 1/100, and annotates values giving
+     *    a percentage.
      * </pre>
      *
      * <code>string unit = 5;</code>
@@ -2367,13 +2337,12 @@ private static final long serialVersionUID = 0L;
      * * `Gi`    gibi    (2**30)
      * * `Ti`    tebi    (2**40)
      * **Grammar**
-     * The grammar includes the dimensionless unit `1`, such as `1/s`.
      * The grammar also includes these connectors:
      * * `/`    division (as an infix operator, e.g. `1/s`).
      * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
      * The grammar for a unit is as follows:
      *     Expression = Component { "." Component } { "/" Component } ;
-     *     Component = [ PREFIX ] UNIT [ Annotation ]
+     *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
@@ -2384,6 +2353,9 @@ private static final long serialVersionUID = 0L;
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
+     * * `1` represents dimensionless value 1, such as in `1/s`.
+     * * `%` represents dimensionless value 1/100, and annotates values giving
+     *    a percentage.
      * </pre>
      *
      * <code>string unit = 5;</code>
@@ -2433,13 +2405,12 @@ private static final long serialVersionUID = 0L;
      * * `Gi`    gibi    (2**30)
      * * `Ti`    tebi    (2**40)
      * **Grammar**
-     * The grammar includes the dimensionless unit `1`, such as `1/s`.
      * The grammar also includes these connectors:
      * * `/`    division (as an infix operator, e.g. `1/s`).
      * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
      * The grammar for a unit is as follows:
      *     Expression = Component { "." Component } { "/" Component } ;
-     *     Component = [ PREFIX ] UNIT [ Annotation ]
+     *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
@@ -2450,6 +2421,9 @@ private static final long serialVersionUID = 0L;
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
+     * * `1` represents dimensionless value 1, such as in `1/s`.
+     * * `%` represents dimensionless value 1/100, and annotates values giving
+     *    a percentage.
      * </pre>
      *
      * <code>string unit = 5;</code>
@@ -2495,13 +2469,12 @@ private static final long serialVersionUID = 0L;
      * * `Gi`    gibi    (2**30)
      * * `Ti`    tebi    (2**40)
      * **Grammar**
-     * The grammar includes the dimensionless unit `1`, such as `1/s`.
      * The grammar also includes these connectors:
      * * `/`    division (as an infix operator, e.g. `1/s`).
      * * `.`    multiplication (as an infix operator, e.g. `GBy.d`)
      * The grammar for a unit is as follows:
      *     Expression = Component { "." Component } { "/" Component } ;
-     *     Component = [ PREFIX ] UNIT [ Annotation ]
+     *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
@@ -2512,6 +2485,9 @@ private static final long serialVersionUID = 0L;
      *    `{requests}/s == 1/s`, `By{transmitted}/s == By/s`.
      * * `NAME` is a sequence of non-blank printable ASCII characters not
      *    containing '{' or '}'.
+     * * `1` represents dimensionless value 1, such as in `1/s`.
+     * * `%` represents dimensionless value 1/100, and annotates values giving
+     *    a percentage.
      * </pre>
      *
      * <code>string unit = 5;</code>
@@ -2622,6 +2598,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
+     * This field is optional but it is recommended to be set for any metrics
+     * associated with user-visible concepts, such as Quota.
      * </pre>
      *
      * <code>string display_name = 7;</code>
@@ -2642,6 +2620,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
+     * This field is optional but it is recommended to be set for any metrics
+     * associated with user-visible concepts, such as Quota.
      * </pre>
      *
      * <code>string display_name = 7;</code>
@@ -2663,6 +2643,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
+     * This field is optional but it is recommended to be set for any metrics
+     * associated with user-visible concepts, such as Quota.
      * </pre>
      *
      * <code>string display_name = 7;</code>
@@ -2681,6 +2663,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
+     * This field is optional but it is recommended to be set for any metrics
+     * associated with user-visible concepts, such as Quota.
      * </pre>
      *
      * <code>string display_name = 7;</code>
@@ -2695,6 +2679,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
      * Use sentence case without an ending period, for example "Request count".
+     * This field is optional but it is recommended to be set for any metrics
+     * associated with user-visible concepts, such as Quota.
      * </pre>
      *
      * <code>string display_name = 7;</code>

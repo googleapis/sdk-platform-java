@@ -29,13 +29,13 @@ public final class EndpointProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\031google/api/endpoint.proto\022\ngoogle.api\032" +
-      "\034google/api/annotations.proto\"m\n\010Endpoin" +
-      "t\022\014\n\004name\030\001 \001(\t\022\017\n\007aliases\030\002 \003(\t\022\014\n\004apis" +
-      "\030\003 \003(\t\022\020\n\010features\030\004 \003(\t\022\016\n\006target\030e \001(\t" +
-      "\022\022\n\nallow_cors\030\005 \001(\010Bo\n\016com.google.apiB\r" +
-      "EndpointProtoP\001ZEgoogle.golang.org/genpr" +
-      "oto/googleapis/api/serviceconfig;service" +
-      "config\242\002\004GAPIb\006proto3"
+      "\034google/api/annotations.proto\"_\n\010Endpoin" +
+      "t\022\014\n\004name\030\001 \001(\t\022\017\n\007aliases\030\002 \003(\t\022\020\n\010feat" +
+      "ures\030\004 \003(\t\022\016\n\006target\030e \001(\t\022\022\n\nallow_cors" +
+      "\030\005 \001(\010Bo\n\016com.google.apiB\rEndpointProtoP" +
+      "\001ZEgoogle.golang.org/genproto/googleapis" +
+      "/api/serviceconfig;serviceconfig\242\002\004GAPIb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -55,7 +55,7 @@ public final class EndpointProto {
     internal_static_google_api_Endpoint_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Endpoint_descriptor,
-        new java.lang.String[] { "Name", "Aliases", "Apis", "Features", "Target", "AllowCors", });
+        new java.lang.String[] { "Name", "Aliases", "Features", "Target", "AllowCors", });
     com.google.api.AnnotationsProto.getDescriptor();
   }
 

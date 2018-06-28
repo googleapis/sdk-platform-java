@@ -33,4 +33,53 @@ public interface HttpBodyOrBuilder extends
    * <code>bytes data = 2;</code>
    */
   com.google.protobuf.ByteString getData();
+
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  java.util.List<com.google.protobuf.Any> 
+      getExtensionsList();
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  com.google.protobuf.Any getExtensions(int index);
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  int getExtensionsCount();
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+      getExtensionsOrBuilderList();
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(
+      int index);
 }

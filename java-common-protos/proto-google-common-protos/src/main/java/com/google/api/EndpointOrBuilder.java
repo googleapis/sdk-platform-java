@@ -28,8 +28,8 @@ public interface EndpointOrBuilder extends
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -40,8 +40,8 @@ public interface EndpointOrBuilder extends
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -51,8 +51,8 @@ public interface EndpointOrBuilder extends
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -62,8 +62,8 @@ public interface EndpointOrBuilder extends
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
-   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intented
-   * alias.
+   * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each of the intended
+   * aliases.
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -71,41 +71,6 @@ public interface EndpointOrBuilder extends
    */
   com.google.protobuf.ByteString
       getAliasesBytes(int index);
-
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  java.util.List<java.lang.String>
-      getApisList();
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  int getApisCount();
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  java.lang.String getApis(int index);
-  /**
-   * <pre>
-   * The list of APIs served by this endpoint.
-   * </pre>
-   *
-   * <code>repeated string apis = 3;</code>
-   */
-  com.google.protobuf.ByteString
-      getApisBytes(int index);
 
   /**
    * <pre>

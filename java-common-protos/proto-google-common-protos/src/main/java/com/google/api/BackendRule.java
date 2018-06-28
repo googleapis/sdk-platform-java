@@ -23,6 +23,7 @@ private static final long serialVersionUID = 0L;
     selector_ = "";
     address_ = "";
     deadline_ = 0D;
+    minDeadline_ = 0D;
   }
 
   @java.lang.Override
@@ -71,6 +72,11 @@ private static final long serialVersionUID = 0L;
           case 25: {
 
             deadline_ = input.readDouble();
+            break;
+          }
+          case 33: {
+
+            minDeadline_ = input.readDouble();
             break;
           }
         }
@@ -187,14 +193,28 @@ private static final long serialVersionUID = 0L;
   private double deadline_;
   /**
    * <pre>
-   * The number of seconds to wait for a response from a request.  The
-   * default depends on the deployment context.
+   * The number of seconds to wait for a response from a request.  The default
+   * deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
    * </pre>
    *
    * <code>double deadline = 3;</code>
    */
   public double getDeadline() {
     return deadline_;
+  }
+
+  public static final int MIN_DEADLINE_FIELD_NUMBER = 4;
+  private double minDeadline_;
+  /**
+   * <pre>
+   * Minimum deadline in seconds needed for this method. Calls having deadline
+   * value lower than this will be rejected.
+   * </pre>
+   *
+   * <code>double min_deadline = 4;</code>
+   */
+  public double getMinDeadline() {
+    return minDeadline_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -218,6 +238,9 @@ private static final long serialVersionUID = 0L;
     if (deadline_ != 0D) {
       output.writeDouble(3, deadline_);
     }
+    if (minDeadline_ != 0D) {
+      output.writeDouble(4, minDeadline_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -235,6 +258,10 @@ private static final long serialVersionUID = 0L;
     if (deadline_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(3, deadline_);
+    }
+    if (minDeadline_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(4, minDeadline_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -260,6 +287,10 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getDeadline())
         == java.lang.Double.doubleToLongBits(
             other.getDeadline()));
+    result = result && (
+        java.lang.Double.doubleToLongBits(getMinDeadline())
+        == java.lang.Double.doubleToLongBits(
+            other.getMinDeadline()));
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -278,6 +309,9 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + DEADLINE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getDeadline()));
+    hash = (37 * hash) + MIN_DEADLINE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getMinDeadline()));
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -417,6 +451,8 @@ private static final long serialVersionUID = 0L;
 
       deadline_ = 0D;
 
+      minDeadline_ = 0D;
+
       return this;
     }
 
@@ -442,6 +478,7 @@ private static final long serialVersionUID = 0L;
       result.selector_ = selector_;
       result.address_ = address_;
       result.deadline_ = deadline_;
+      result.minDeadline_ = minDeadline_;
       onBuilt();
       return result;
     }
@@ -493,6 +530,9 @@ private static final long serialVersionUID = 0L;
       }
       if (other.getDeadline() != 0D) {
         setDeadline(other.getDeadline());
+      }
+      if (other.getMinDeadline() != 0D) {
+        setMinDeadline(other.getMinDeadline());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -707,8 +747,8 @@ private static final long serialVersionUID = 0L;
     private double deadline_ ;
     /**
      * <pre>
-     * The number of seconds to wait for a response from a request.  The
-     * default depends on the deployment context.
+     * The number of seconds to wait for a response from a request.  The default
+     * deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
      * </pre>
      *
      * <code>double deadline = 3;</code>
@@ -718,8 +758,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The number of seconds to wait for a response from a request.  The
-     * default depends on the deployment context.
+     * The number of seconds to wait for a response from a request.  The default
+     * deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
      * </pre>
      *
      * <code>double deadline = 3;</code>
@@ -732,8 +772,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The number of seconds to wait for a response from a request.  The
-     * default depends on the deployment context.
+     * The number of seconds to wait for a response from a request.  The default
+     * deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
      * </pre>
      *
      * <code>double deadline = 3;</code>
@@ -741,6 +781,47 @@ private static final long serialVersionUID = 0L;
     public Builder clearDeadline() {
       
       deadline_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private double minDeadline_ ;
+    /**
+     * <pre>
+     * Minimum deadline in seconds needed for this method. Calls having deadline
+     * value lower than this will be rejected.
+     * </pre>
+     *
+     * <code>double min_deadline = 4;</code>
+     */
+    public double getMinDeadline() {
+      return minDeadline_;
+    }
+    /**
+     * <pre>
+     * Minimum deadline in seconds needed for this method. Calls having deadline
+     * value lower than this will be rejected.
+     * </pre>
+     *
+     * <code>double min_deadline = 4;</code>
+     */
+    public Builder setMinDeadline(double value) {
+      
+      minDeadline_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Minimum deadline in seconds needed for this method. Calls having deadline
+     * value lower than this will be rejected.
+     * </pre>
+     *
+     * <code>double min_deadline = 4;</code>
+     */
+    public Builder clearMinDeadline() {
+      
+      minDeadline_ = 0D;
       onChanged();
       return this;
     }

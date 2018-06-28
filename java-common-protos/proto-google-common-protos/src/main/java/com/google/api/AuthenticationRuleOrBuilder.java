@@ -54,12 +54,7 @@ public interface AuthenticationRuleOrBuilder extends
 
   /**
    * <pre>
-   * Whether to allow requests without a credential. The credential can be
-   * an OAuth token, Google cookies (first-party auth) or EndUserCreds.
-   * For requests without credentials, if the service control environment is
-   * specified, each incoming request **must** be associated with a service
-   * consumer. This can be done by passing an API key that belongs to a consumer
-   * project.
+   * If true, the service accepts API keys without any other credential.
    * </pre>
    *
    * <code>bool allow_without_credential = 5;</code>

@@ -47,11 +47,21 @@ public interface BackendRuleOrBuilder extends
 
   /**
    * <pre>
-   * The number of seconds to wait for a response from a request.  The
-   * default depends on the deployment context.
+   * The number of seconds to wait for a response from a request.  The default
+   * deadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.
    * </pre>
    *
    * <code>double deadline = 3;</code>
    */
   double getDeadline();
+
+  /**
+   * <pre>
+   * Minimum deadline in seconds needed for this method. Calls having deadline
+   * value lower than this will be rejected.
+   * </pre>
+   *
+   * <code>double min_deadline = 4;</code>
+   */
+  double getMinDeadline();
 }

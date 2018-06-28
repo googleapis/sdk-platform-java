@@ -49,6 +49,7 @@ private static final long serialVersionUID = 0L;
   private HttpBody() {
     contentType_ = "";
     data_ = com.google.protobuf.ByteString.EMPTY;
+    extensions_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -93,6 +94,15 @@ private static final long serialVersionUID = 0L;
             data_ = input.readBytes();
             break;
           }
+          case 26: {
+            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+              extensions_ = new java.util.ArrayList<com.google.protobuf.Any>();
+              mutable_bitField0_ |= 0x00000004;
+            }
+            extensions_.add(
+                input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry));
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -101,6 +111,9 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
+      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+        extensions_ = java.util.Collections.unmodifiableList(extensions_);
+      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -117,6 +130,7 @@ private static final long serialVersionUID = 0L;
             com.google.api.HttpBody.class, com.google.api.HttpBody.Builder.class);
   }
 
+  private int bitField0_;
   public static final int CONTENT_TYPE_FIELD_NUMBER = 1;
   private volatile java.lang.Object contentType_;
   /**
@@ -172,6 +186,66 @@ private static final long serialVersionUID = 0L;
     return data_;
   }
 
+  public static final int EXTENSIONS_FIELD_NUMBER = 3;
+  private java.util.List<com.google.protobuf.Any> extensions_;
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  public java.util.List<com.google.protobuf.Any> getExtensionsList() {
+    return extensions_;
+  }
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+      getExtensionsOrBuilderList() {
+    return extensions_;
+  }
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  public int getExtensionsCount() {
+    return extensions_.size();
+  }
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  public com.google.protobuf.Any getExtensions(int index) {
+    return extensions_.get(index);
+  }
+  /**
+   * <pre>
+   * Application specific response metadata. Must be set in the first response
+   * for streaming APIs.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 3;</code>
+   */
+  public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(
+      int index) {
+    return extensions_.get(index);
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -190,6 +264,9 @@ private static final long serialVersionUID = 0L;
     if (!data_.isEmpty()) {
       output.writeBytes(2, data_);
     }
+    for (int i = 0; i < extensions_.size(); i++) {
+      output.writeMessage(3, extensions_.get(i));
+    }
     unknownFields.writeTo(output);
   }
 
@@ -204,6 +281,10 @@ private static final long serialVersionUID = 0L;
     if (!data_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
         .computeBytesSize(2, data_);
+    }
+    for (int i = 0; i < extensions_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(3, extensions_.get(i));
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -225,6 +306,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getContentType());
     result = result && getData()
         .equals(other.getData());
+    result = result && getExtensionsList()
+        .equals(other.getExtensionsList());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -240,6 +323,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getContentType().hashCode();
     hash = (37 * hash) + DATA_FIELD_NUMBER;
     hash = (53 * hash) + getData().hashCode();
+    if (getExtensionsCount() > 0) {
+      hash = (37 * hash) + EXTENSIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getExtensionsList().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -396,6 +483,7 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
+        getExtensionsFieldBuilder();
       }
     }
     public Builder clear() {
@@ -404,6 +492,12 @@ private static final long serialVersionUID = 0L;
 
       data_ = com.google.protobuf.ByteString.EMPTY;
 
+      if (extensionsBuilder_ == null) {
+        extensions_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
+      } else {
+        extensionsBuilder_.clear();
+      }
       return this;
     }
 
@@ -426,8 +520,20 @@ private static final long serialVersionUID = 0L;
 
     public com.google.api.HttpBody buildPartial() {
       com.google.api.HttpBody result = new com.google.api.HttpBody(this);
+      int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       result.contentType_ = contentType_;
       result.data_ = data_;
+      if (extensionsBuilder_ == null) {
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          extensions_ = java.util.Collections.unmodifiableList(extensions_);
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.extensions_ = extensions_;
+      } else {
+        result.extensions_ = extensionsBuilder_.build();
+      }
+      result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
@@ -476,6 +582,32 @@ private static final long serialVersionUID = 0L;
       if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
         setData(other.getData());
       }
+      if (extensionsBuilder_ == null) {
+        if (!other.extensions_.isEmpty()) {
+          if (extensions_.isEmpty()) {
+            extensions_ = other.extensions_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureExtensionsIsMutable();
+            extensions_.addAll(other.extensions_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.extensions_.isEmpty()) {
+          if (extensionsBuilder_.isEmpty()) {
+            extensionsBuilder_.dispose();
+            extensionsBuilder_ = null;
+            extensions_ = other.extensions_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+            extensionsBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getExtensionsFieldBuilder() : null;
+          } else {
+            extensionsBuilder_.addAllMessages(other.extensions_);
+          }
+        }
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -502,6 +634,7 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int bitField0_;
 
     private java.lang.Object contentType_ = "";
     /**
@@ -631,6 +764,336 @@ private static final long serialVersionUID = 0L;
       data_ = getDefaultInstance().getData();
       onChanged();
       return this;
+    }
+
+    private java.util.List<com.google.protobuf.Any> extensions_ =
+      java.util.Collections.emptyList();
+    private void ensureExtensionsIsMutable() {
+      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+        extensions_ = new java.util.ArrayList<com.google.protobuf.Any>(extensions_);
+        bitField0_ |= 0x00000004;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> extensionsBuilder_;
+
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public java.util.List<com.google.protobuf.Any> getExtensionsList() {
+      if (extensionsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(extensions_);
+      } else {
+        return extensionsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public int getExtensionsCount() {
+      if (extensionsBuilder_ == null) {
+        return extensions_.size();
+      } else {
+        return extensionsBuilder_.getCount();
+      }
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public com.google.protobuf.Any getExtensions(int index) {
+      if (extensionsBuilder_ == null) {
+        return extensions_.get(index);
+      } else {
+        return extensionsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder setExtensions(
+        int index, com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.set(index, value);
+        onChanged();
+      } else {
+        extensionsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder setExtensions(
+        int index, com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder addExtensions(com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.add(value);
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder addExtensions(
+        int index, com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.add(index, value);
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder addExtensions(
+        com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.add(builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder addExtensions(
+        int index, com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder addAllExtensions(
+        java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, extensions_);
+        onChanged();
+      } else {
+        extensionsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder clearExtensions() {
+      if (extensionsBuilder_ == null) {
+        extensions_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+      } else {
+        extensionsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public Builder removeExtensions(int index) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.remove(index);
+        onChanged();
+      } else {
+        extensionsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public com.google.protobuf.Any.Builder getExtensionsBuilder(
+        int index) {
+      return getExtensionsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(
+        int index) {
+      if (extensionsBuilder_ == null) {
+        return extensions_.get(index);  } else {
+        return extensionsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+         getExtensionsOrBuilderList() {
+      if (extensionsBuilder_ != null) {
+        return extensionsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(extensions_);
+      }
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public com.google.protobuf.Any.Builder addExtensionsBuilder() {
+      return getExtensionsFieldBuilder().addBuilder(
+          com.google.protobuf.Any.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public com.google.protobuf.Any.Builder addExtensionsBuilder(
+        int index) {
+      return getExtensionsFieldBuilder().addBuilder(
+          index, com.google.protobuf.Any.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Application specific response metadata. Must be set in the first response
+     * for streaming APIs.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 3;</code>
+     */
+    public java.util.List<com.google.protobuf.Any.Builder> 
+         getExtensionsBuilderList() {
+      return getExtensionsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
+        getExtensionsFieldBuilder() {
+      if (extensionsBuilder_ == null) {
+        extensionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
+                extensions_,
+                ((bitField0_ & 0x00000004) == 0x00000004),
+                getParentForChildren(),
+                isClean());
+        extensions_ = null;
+      }
+      return extensionsBuilder_;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
