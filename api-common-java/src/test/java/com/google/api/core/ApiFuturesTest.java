@@ -31,6 +31,7 @@
 package com.google.api.core;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
@@ -58,7 +59,8 @@ public class ApiFuturesTest {
           public void onFailure(Throwable t) {
             flag.set(-1);
           }
-        });
+        },
+        directExecutor());
     future.set(0);
     assertThat(flag.get()).isEqualTo(1);
   }
@@ -75,7 +77,8 @@ public class ApiFuturesTest {
               public Integer apply(Exception ex) {
                 return 42;
               }
-            });
+            },
+            directExecutor());
     future.setException(new Exception());
     assertThat(fallback.get()).isEqualTo(42);
   }
@@ -91,7 +94,8 @@ public class ApiFuturesTest {
               public String apply(Integer input) {
                 return input.toString();
               }
-            });
+            },
+            directExecutor());
     inputFuture.set(6);
     assertThat(transformedFuture.get()).isEqualTo("6");
   }
@@ -143,7 +147,8 @@ public class ApiFuturesTest {
               public ApiFuture<Integer> apply(Integer input) {
                 return ApiFutures.immediateFuture(input + 1);
               }
-            });
+            },
+            directExecutor());
     assertThat(outputFuture.get()).isEqualTo(1);
   }
 
