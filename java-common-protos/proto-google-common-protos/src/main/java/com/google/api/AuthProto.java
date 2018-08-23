@@ -48,23 +48,23 @@ public final class AuthProto {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\025google/api/auth.proto\022\ngoogle.api\032\034goo" +
-      "gle/api/annotations.proto\"l\n\016Authenticat" +
-      "ion\022-\n\005rules\030\003 \003(\0132\036.google.api.Authenti" +
-      "cationRule\022+\n\tproviders\030\004 \003(\0132\030.google.a" +
-      "pi.AuthProvider\"\251\001\n\022AuthenticationRule\022\020" +
-      "\n\010selector\030\001 \001(\t\022,\n\005oauth\030\002 \001(\0132\035.google" +
-      ".api.OAuthRequirements\022 \n\030allow_without_" +
-      "credential\030\005 \001(\010\0221\n\014requirements\030\007 \003(\0132\033" +
-      ".google.api.AuthRequirement\"j\n\014AuthProvi" +
-      "der\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(\t\022\020\n\010jwks_" +
-      "uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\022\031\n\021authoriz" +
-      "ation_url\030\005 \001(\t\"-\n\021OAuthRequirements\022\030\n\020" +
-      "canonical_scopes\030\001 \001(\t\"9\n\017AuthRequiremen" +
-      "t\022\023\n\013provider_id\030\001 \001(\t\022\021\n\taudiences\030\002 \001(" +
-      "\tBk\n\016com.google.apiB\tAuthProtoP\001ZEgoogle" +
-      ".golang.org/genproto/googleapis/api/serv" +
-      "iceconfig;serviceconfig\242\002\004GAPIb\006proto3"
+      "\n\025google/api/auth.proto\022\ngoogle.api\"l\n\016A" +
+      "uthentication\022-\n\005rules\030\003 \003(\0132\036.google.ap" +
+      "i.AuthenticationRule\022+\n\tproviders\030\004 \003(\0132" +
+      "\030.google.api.AuthProvider\"\251\001\n\022Authentica" +
+      "tionRule\022\020\n\010selector\030\001 \001(\t\022,\n\005oauth\030\002 \001(" +
+      "\0132\035.google.api.OAuthRequirements\022 \n\030allo" +
+      "w_without_credential\030\005 \001(\010\0221\n\014requiremen" +
+      "ts\030\007 \003(\0132\033.google.api.AuthRequirement\"j\n" +
+      "\014AuthProvider\022\n\n\002id\030\001 \001(\t\022\016\n\006issuer\030\002 \001(" +
+      "\t\022\020\n\010jwks_uri\030\003 \001(\t\022\021\n\taudiences\030\004 \001(\t\022\031" +
+      "\n\021authorization_url\030\005 \001(\t\"-\n\021OAuthRequir" +
+      "ements\022\030\n\020canonical_scopes\030\001 \001(\t\"9\n\017Auth" +
+      "Requirement\022\023\n\013provider_id\030\001 \001(\t\022\021\n\taudi" +
+      "ences\030\002 \001(\tBk\n\016com.google.apiB\tAuthProto" +
+      "P\001ZEgoogle.golang.org/genproto/googleapi" +
+      "s/api/serviceconfig;serviceconfig\242\002\004GAPI" +
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -77,7 +77,6 @@ public final class AuthProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.AnnotationsProto.getDescriptor(),
         }, assigner);
     internal_static_google_api_Authentication_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -109,7 +108,6 @@ public final class AuthProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_AuthRequirement_descriptor,
         new java.lang.String[] { "ProviderId", "Audiences", });
-    com.google.api.AnnotationsProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

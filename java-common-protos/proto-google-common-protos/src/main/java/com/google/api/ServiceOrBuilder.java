@@ -841,29 +841,4 @@ public interface ServiceOrBuilder extends
    * <code>.google.api.SourceInfo source_info = 37;</code>
    */
   com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder();
-
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  boolean hasExperimental();
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  com.google.api.Experimental getExperimental();
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder();
 }

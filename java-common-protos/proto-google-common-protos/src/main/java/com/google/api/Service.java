@@ -77,13 +77,6 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          default: {
-            if (!parseUnknownFieldProto3(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
@@ -353,17 +346,11 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
-          case 810: {
-            com.google.api.Experimental.Builder subBuilder = null;
-            if (experimental_ != null) {
-              subBuilder = experimental_.toBuilder();
+          default: {
+            if (!parseUnknownFieldProto3(
+                input, unknownFields, extensionRegistry, tag)) {
+              done = true;
             }
-            experimental_ = input.readMessage(com.google.api.Experimental.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(experimental_);
-              experimental_ = subBuilder.buildPartial();
-            }
-
             break;
           }
         }
@@ -404,6 +391,7 @@ private static final long serialVersionUID = 0L;
     return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.ServiceProto.internal_static_google_api_Service_fieldAccessorTable
@@ -1532,40 +1520,8 @@ private static final long serialVersionUID = 0L;
     return getSourceInfo();
   }
 
-  public static final int EXPERIMENTAL_FIELD_NUMBER = 101;
-  private com.google.api.Experimental experimental_;
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  public boolean hasExperimental() {
-    return experimental_ != null;
-  }
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  public com.google.api.Experimental getExperimental() {
-    return experimental_ == null ? com.google.api.Experimental.getDefaultInstance() : experimental_;
-  }
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  public com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder() {
-    return getExperimental();
-  }
-
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -1575,6 +1531,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getNameBytes().isEmpty()) {
@@ -1652,12 +1609,10 @@ private static final long serialVersionUID = 0L;
     if (sourceInfo_ != null) {
       output.writeMessage(37, getSourceInfo());
     }
-    if (experimental_ != null) {
-      output.writeMessage(101, getExperimental());
-    }
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -1758,10 +1713,6 @@ private static final long serialVersionUID = 0L;
     if (sourceInfo_ != null) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(37, getSourceInfo());
-    }
-    if (experimental_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(101, getExperimental());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1871,11 +1822,6 @@ private static final long serialVersionUID = 0L;
       result = result && getSourceInfo()
           .equals(other.getSourceInfo());
     }
-    result = result && (hasExperimental() == other.hasExperimental());
-    if (hasExperimental()) {
-      result = result && getExperimental()
-          .equals(other.getExperimental());
-    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -1979,10 +1925,6 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + SOURCE_INFO_FIELD_NUMBER;
       hash = (53 * hash) + getSourceInfo().hashCode();
     }
-    if (hasExperimental()) {
-      hash = (37 * hash) + EXPERIMENTAL_FIELD_NUMBER;
-      hash = (53 * hash) + getExperimental().hashCode();
-    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -2058,6 +2000,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -2065,6 +2008,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.api.Service prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -2112,6 +2056,7 @@ private static final long serialVersionUID = 0L;
       return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.ServiceProto.internal_static_google_api_Service_fieldAccessorTable
@@ -2141,6 +2086,7 @@ private static final long serialVersionUID = 0L;
         getMonitoredResourcesFieldBuilder();
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       if (configVersionBuilder_ == null) {
@@ -2277,24 +2223,21 @@ private static final long serialVersionUID = 0L;
         sourceInfo_ = null;
         sourceInfoBuilder_ = null;
       }
-      if (experimentalBuilder_ == null) {
-        experimental_ = null;
-      } else {
-        experimental_ = null;
-        experimentalBuilder_ = null;
-      }
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.ServiceProto.internal_static_google_api_Service_descriptor;
     }
 
+    @java.lang.Override
     public com.google.api.Service getDefaultInstanceForType() {
       return com.google.api.Service.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.api.Service build() {
       com.google.api.Service result = buildPartial();
       if (!result.isInitialized()) {
@@ -2303,6 +2246,7 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.api.Service buildPartial() {
       com.google.api.Service result = new com.google.api.Service(this);
       int from_bitField0_ = bitField0_;
@@ -2444,42 +2388,44 @@ private static final long serialVersionUID = 0L;
       } else {
         result.sourceInfo_ = sourceInfoBuilder_.build();
       }
-      if (experimentalBuilder_ == null) {
-        result.experimental_ = experimental_;
-      } else {
-        result.experimental_ = experimentalBuilder_.build();
-      }
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
       return (Builder) super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
       return (Builder) super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return (Builder) super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.Service) {
         return mergeFrom((com.google.api.Service)other);
@@ -2731,18 +2677,17 @@ private static final long serialVersionUID = 0L;
       if (other.hasSourceInfo()) {
         mergeSourceInfo(other.getSourceInfo());
       }
-      if (other.hasExperimental()) {
-        mergeExperimental(other.getExperimental());
-      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -7809,164 +7754,13 @@ private static final long serialVersionUID = 0L;
       }
       return sourceInfoBuilder_;
     }
-
-    private com.google.api.Experimental experimental_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder> experimentalBuilder_;
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public boolean hasExperimental() {
-      return experimentalBuilder_ != null || experimental_ != null;
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public com.google.api.Experimental getExperimental() {
-      if (experimentalBuilder_ == null) {
-        return experimental_ == null ? com.google.api.Experimental.getDefaultInstance() : experimental_;
-      } else {
-        return experimentalBuilder_.getMessage();
-      }
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public Builder setExperimental(com.google.api.Experimental value) {
-      if (experimentalBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        experimental_ = value;
-        onChanged();
-      } else {
-        experimentalBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public Builder setExperimental(
-        com.google.api.Experimental.Builder builderForValue) {
-      if (experimentalBuilder_ == null) {
-        experimental_ = builderForValue.build();
-        onChanged();
-      } else {
-        experimentalBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public Builder mergeExperimental(com.google.api.Experimental value) {
-      if (experimentalBuilder_ == null) {
-        if (experimental_ != null) {
-          experimental_ =
-            com.google.api.Experimental.newBuilder(experimental_).mergeFrom(value).buildPartial();
-        } else {
-          experimental_ = value;
-        }
-        onChanged();
-      } else {
-        experimentalBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public Builder clearExperimental() {
-      if (experimentalBuilder_ == null) {
-        experimental_ = null;
-        onChanged();
-      } else {
-        experimental_ = null;
-        experimentalBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public com.google.api.Experimental.Builder getExperimentalBuilder() {
-      
-      onChanged();
-      return getExperimentalFieldBuilder().getBuilder();
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    public com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder() {
-      if (experimentalBuilder_ != null) {
-        return experimentalBuilder_.getMessageOrBuilder();
-      } else {
-        return experimental_ == null ?
-            com.google.api.Experimental.getDefaultInstance() : experimental_;
-      }
-    }
-    /**
-     * <pre>
-     * Experimental configuration.
-     * </pre>
-     *
-     * <code>.google.api.Experimental experimental = 101;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder> 
-        getExperimentalFieldBuilder() {
-      if (experimentalBuilder_ == null) {
-        experimentalBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder>(
-                getExperimental(),
-                getParentForChildren(),
-                isClean());
-        experimental_ = null;
-      }
-      return experimentalBuilder_;
-    }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.setUnknownFieldsProto3(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -7988,6 +7782,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<Service>
       PARSER = new com.google.protobuf.AbstractParser<Service>() {
+    @java.lang.Override
     public Service parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -8005,6 +7800,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.api.Service getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }

@@ -34,47 +34,44 @@ public final class ServiceProto {
       "oogle/api/billing.proto\032\030google/api/cont" +
       "ext.proto\032\030google/api/control.proto\032\036goo" +
       "gle/api/documentation.proto\032\031google/api/" +
-      "endpoint.proto\032*google/api/experimental/" +
-      "experimental.proto\032\025google/api/http.prot" +
-      "o\032\026google/api/label.proto\032\024google/api/lo" +
-      "g.proto\032\030google/api/logging.proto\032\027googl" +
-      "e/api/metric.proto\032#google/api/monitored" +
-      "_resource.proto\032\033google/api/monitoring.p" +
-      "roto\032\026google/api/quota.proto\032\034google/api" +
-      "/source_info.proto\032!google/api/system_pa" +
-      "rameter.proto\032\026google/api/usage.proto\032\031g" +
-      "oogle/protobuf/any.proto\032\031google/protobu" +
-      "f/api.proto\032\032google/protobuf/type.proto\032" +
-      "\036google/protobuf/wrappers.proto\"\206\010\n\007Serv" +
-      "ice\0224\n\016config_version\030\024 \001(\0132\034.google.pro" +
-      "tobuf.UInt32Value\022\014\n\004name\030\001 \001(\t\022\n\n\002id\030! " +
-      "\001(\t\022\r\n\005title\030\002 \001(\t\022\033\n\023producer_project_i" +
-      "d\030\026 \001(\t\022\"\n\004apis\030\003 \003(\0132\024.google.protobuf." +
-      "Api\022$\n\005types\030\004 \003(\0132\025.google.protobuf.Typ" +
-      "e\022$\n\005enums\030\005 \003(\0132\025.google.protobuf.Enum\022" +
-      "0\n\rdocumentation\030\006 \001(\0132\031.google.api.Docu" +
-      "mentation\022$\n\007backend\030\010 \001(\0132\023.google.api." +
-      "Backend\022\036\n\004http\030\t \001(\0132\020.google.api.Http\022" +
-      " \n\005quota\030\n \001(\0132\021.google.api.Quota\0222\n\016aut" +
-      "hentication\030\013 \001(\0132\032.google.api.Authentic" +
-      "ation\022$\n\007context\030\014 \001(\0132\023.google.api.Cont" +
-      "ext\022 \n\005usage\030\017 \001(\0132\021.google.api.Usage\022\'\n" +
-      "\tendpoints\030\022 \003(\0132\024.google.api.Endpoint\022$" +
-      "\n\007control\030\025 \001(\0132\023.google.api.Control\022\'\n\004" +
-      "logs\030\027 \003(\0132\031.google.api.LogDescriptor\022-\n" +
-      "\007metrics\030\030 \003(\0132\034.google.api.MetricDescri" +
-      "ptor\022D\n\023monitored_resources\030\031 \003(\0132\'.goog" +
-      "le.api.MonitoredResourceDescriptor\022$\n\007bi" +
-      "lling\030\032 \001(\0132\023.google.api.Billing\022$\n\007logg" +
-      "ing\030\033 \001(\0132\023.google.api.Logging\022*\n\nmonito" +
-      "ring\030\034 \001(\0132\026.google.api.Monitoring\0227\n\021sy" +
-      "stem_parameters\030\035 \001(\0132\034.google.api.Syste" +
-      "mParameters\022+\n\013source_info\030% \001(\0132\026.googl" +
-      "e.api.SourceInfo\022.\n\014experimental\030e \001(\0132\030" +
-      ".google.api.ExperimentalBn\n\016com.google.a" +
-      "piB\014ServiceProtoP\001ZEgoogle.golang.org/ge" +
-      "nproto/googleapis/api/serviceconfig;serv" +
-      "iceconfig\242\002\004GAPIb\006proto3"
+      "endpoint.proto\032\025google/api/http.proto\032\024g" +
+      "oogle/api/log.proto\032\030google/api/logging." +
+      "proto\032\027google/api/metric.proto\032#google/a" +
+      "pi/monitored_resource.proto\032\033google/api/" +
+      "monitoring.proto\032\026google/api/quota.proto" +
+      "\032\034google/api/source_info.proto\032!google/a" +
+      "pi/system_parameter.proto\032\026google/api/us" +
+      "age.proto\032\031google/protobuf/api.proto\032\032go" +
+      "ogle/protobuf/type.proto\032\036google/protobu" +
+      "f/wrappers.proto\"\334\007\n\007Service\0224\n\016config_v" +
+      "ersion\030\024 \001(\0132\034.google.protobuf.UInt32Val" +
+      "ue\022\014\n\004name\030\001 \001(\t\022\n\n\002id\030! \001(\t\022\r\n\005title\030\002 " +
+      "\001(\t\022\033\n\023producer_project_id\030\026 \001(\t\022\"\n\004apis" +
+      "\030\003 \003(\0132\024.google.protobuf.Api\022$\n\005types\030\004 " +
+      "\003(\0132\025.google.protobuf.Type\022$\n\005enums\030\005 \003(" +
+      "\0132\025.google.protobuf.Enum\0220\n\rdocumentatio" +
+      "n\030\006 \001(\0132\031.google.api.Documentation\022$\n\007ba" +
+      "ckend\030\010 \001(\0132\023.google.api.Backend\022\036\n\004http" +
+      "\030\t \001(\0132\020.google.api.Http\022 \n\005quota\030\n \001(\0132" +
+      "\021.google.api.Quota\0222\n\016authentication\030\013 \001" +
+      "(\0132\032.google.api.Authentication\022$\n\007contex" +
+      "t\030\014 \001(\0132\023.google.api.Context\022 \n\005usage\030\017 " +
+      "\001(\0132\021.google.api.Usage\022\'\n\tendpoints\030\022 \003(" +
+      "\0132\024.google.api.Endpoint\022$\n\007control\030\025 \001(\013" +
+      "2\023.google.api.Control\022\'\n\004logs\030\027 \003(\0132\031.go" +
+      "ogle.api.LogDescriptor\022-\n\007metrics\030\030 \003(\0132" +
+      "\034.google.api.MetricDescriptor\022D\n\023monitor" +
+      "ed_resources\030\031 \003(\0132\'.google.api.Monitore" +
+      "dResourceDescriptor\022$\n\007billing\030\032 \001(\0132\023.g" +
+      "oogle.api.Billing\022$\n\007logging\030\033 \001(\0132\023.goo" +
+      "gle.api.Logging\022*\n\nmonitoring\030\034 \001(\0132\026.go" +
+      "ogle.api.Monitoring\0227\n\021system_parameters" +
+      "\030\035 \001(\0132\034.google.api.SystemParameters\022+\n\013" +
+      "source_info\030% \001(\0132\026.google.api.SourceInf" +
+      "oJ\004\010e\020fBn\n\016com.google.apiB\014ServiceProtoP" +
+      "\001ZEgoogle.golang.org/genproto/googleapis" +
+      "/api/serviceconfig;serviceconfig\242\002\004GAPIb" +
+      "\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -95,9 +92,7 @@ public final class ServiceProto {
           com.google.api.ControlProto.getDescriptor(),
           com.google.api.DocumentationProto.getDescriptor(),
           com.google.api.EndpointProto.getDescriptor(),
-          com.google.api.ExperimentalProto.getDescriptor(),
           com.google.api.HttpProto.getDescriptor(),
-          com.google.api.LabelProto.getDescriptor(),
           com.google.api.LogProto.getDescriptor(),
           com.google.api.LoggingProto.getDescriptor(),
           com.google.api.MetricProto.getDescriptor(),
@@ -107,7 +102,6 @@ public final class ServiceProto {
           com.google.api.SourceInfoProto.getDescriptor(),
           com.google.api.SystemParameterProto.getDescriptor(),
           com.google.api.UsageProto.getDescriptor(),
-          com.google.protobuf.AnyProto.getDescriptor(),
           com.google.protobuf.ApiProto.getDescriptor(),
           com.google.protobuf.TypeProto.getDescriptor(),
           com.google.protobuf.WrappersProto.getDescriptor(),
@@ -117,7 +111,7 @@ public final class ServiceProto {
     internal_static_google_api_Service_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Service_descriptor,
-        new java.lang.String[] { "ConfigVersion", "Name", "Id", "Title", "ProducerProjectId", "Apis", "Types", "Enums", "Documentation", "Backend", "Http", "Quota", "Authentication", "Context", "Usage", "Endpoints", "Control", "Logs", "Metrics", "MonitoredResources", "Billing", "Logging", "Monitoring", "SystemParameters", "SourceInfo", "Experimental", });
+        new java.lang.String[] { "ConfigVersion", "Name", "Id", "Title", "ProducerProjectId", "Apis", "Types", "Enums", "Documentation", "Backend", "Http", "Quota", "Authentication", "Context", "Usage", "Endpoints", "Control", "Logs", "Metrics", "MonitoredResources", "Billing", "Logging", "Monitoring", "SystemParameters", "SourceInfo", });
     com.google.api.AnnotationsProto.getDescriptor();
     com.google.api.AuthProto.getDescriptor();
     com.google.api.BackendProto.getDescriptor();
@@ -126,9 +120,7 @@ public final class ServiceProto {
     com.google.api.ControlProto.getDescriptor();
     com.google.api.DocumentationProto.getDescriptor();
     com.google.api.EndpointProto.getDescriptor();
-    com.google.api.ExperimentalProto.getDescriptor();
     com.google.api.HttpProto.getDescriptor();
-    com.google.api.LabelProto.getDescriptor();
     com.google.api.LogProto.getDescriptor();
     com.google.api.LoggingProto.getDescriptor();
     com.google.api.MetricProto.getDescriptor();
@@ -138,7 +130,6 @@ public final class ServiceProto {
     com.google.api.SourceInfoProto.getDescriptor();
     com.google.api.SystemParameterProto.getDescriptor();
     com.google.api.UsageProto.getDescriptor();
-    com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.ApiProto.getDescriptor();
     com.google.protobuf.TypeProto.getDescriptor();
     com.google.protobuf.WrappersProto.getDescriptor();

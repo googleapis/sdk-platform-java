@@ -61,13 +61,6 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          default: {
-            if (!parseUnknownFieldProto3(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
           case 8: {
 
             count_ = input.readInt64();
@@ -130,6 +123,13 @@ private static final long serialVersionUID = 0L;
             input.popLimit(limit);
             break;
           }
+          default: {
+            if (!parseUnknownFieldProto3(
+                input, unknownFields, extensionRegistry, tag)) {
+              done = true;
+            }
+            break;
+          }
         }
       }
     } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -150,6 +150,7 @@ private static final long serialVersionUID = 0L;
     return com.google.api.DistributionProto.internal_static_google_api_Distribution_descriptor;
   }
 
+  @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.DistributionProto.internal_static_google_api_Distribution_fieldAccessorTable
@@ -224,13 +225,6 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 9: {
 
               min_ = input.readDouble();
@@ -239,6 +233,13 @@ private static final long serialVersionUID = 0L;
             case 17: {
 
               max_ = input.readDouble();
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
               break;
             }
           }
@@ -258,6 +259,7 @@ private static final long serialVersionUID = 0L;
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_Range_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_Range_fieldAccessorTable
@@ -292,6 +294,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -301,6 +304,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (min_ != 0D) {
@@ -312,6 +316,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -441,6 +446,7 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -448,6 +454,7 @@ private static final long serialVersionUID = 0L;
     public static Builder newBuilder(com.google.api.Distribution.Range prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -475,6 +482,7 @@ private static final long serialVersionUID = 0L;
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_Range_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_Range_fieldAccessorTable
@@ -497,6 +505,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         min_ = 0D;
@@ -506,15 +515,18 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_Range_descriptor;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.Range getDefaultInstanceForType() {
         return com.google.api.Distribution.Range.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.Range build() {
         com.google.api.Distribution.Range result = buildPartial();
         if (!result.isInitialized()) {
@@ -523,6 +535,7 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.Range buildPartial() {
         com.google.api.Distribution.Range result = new com.google.api.Distribution.Range(this);
         result.min_ = min_;
@@ -531,32 +544,39 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.api.Distribution.Range) {
           return mergeFrom((com.google.api.Distribution.Range)other);
@@ -579,10 +599,12 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -676,11 +698,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -702,6 +726,7 @@ private static final long serialVersionUID = 0L;
 
     private static final com.google.protobuf.Parser<Range>
         PARSER = new com.google.protobuf.AbstractParser<Range>() {
+      @java.lang.Override
       public Range parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -719,6 +744,7 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
+    @java.lang.Override
     public com.google.api.Distribution.Range getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -867,13 +893,6 @@ private static final long serialVersionUID = 0L;
             case 0:
               done = true;
               break;
-            default: {
-              if (!parseUnknownFieldProto3(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
             case 10: {
               com.google.api.Distribution.BucketOptions.Linear.Builder subBuilder = null;
               if (optionsCase_ == 1) {
@@ -916,6 +935,13 @@ private static final long serialVersionUID = 0L;
               optionsCase_ = 3;
               break;
             }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -933,6 +959,7 @@ private static final long serialVersionUID = 0L;
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_fieldAccessorTable
@@ -1023,13 +1050,6 @@ private static final long serialVersionUID = 0L;
               case 0:
                 done = true;
                 break;
-              default: {
-                if (!parseUnknownFieldProto3(
-                    input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
-              }
               case 8: {
 
                 numFiniteBuckets_ = input.readInt32();
@@ -1043,6 +1063,13 @@ private static final long serialVersionUID = 0L;
               case 25: {
 
                 offset_ = input.readDouble();
+                break;
+              }
+              default: {
+                if (!parseUnknownFieldProto3(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
                 break;
               }
             }
@@ -1062,6 +1089,7 @@ private static final long serialVersionUID = 0L;
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Linear_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Linear_fieldAccessorTable
@@ -1109,6 +1137,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private byte memoizedIsInitialized = -1;
+      @java.lang.Override
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -1118,6 +1147,7 @@ private static final long serialVersionUID = 0L;
         return true;
       }
 
+      @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         if (numFiniteBuckets_ != 0) {
@@ -1132,6 +1162,7 @@ private static final long serialVersionUID = 0L;
         unknownFields.writeTo(output);
       }
 
+      @java.lang.Override
       public int getSerializedSize() {
         int size = memoizedSize;
         if (size != -1) return size;
@@ -1269,6 +1300,7 @@ private static final long serialVersionUID = 0L;
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
+      @java.lang.Override
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
@@ -1276,6 +1308,7 @@ private static final long serialVersionUID = 0L;
       public static Builder newBuilder(com.google.api.Distribution.BucketOptions.Linear prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
+      @java.lang.Override
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
             ? new Builder() : new Builder().mergeFrom(this);
@@ -1309,6 +1342,7 @@ private static final long serialVersionUID = 0L;
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Linear_descriptor;
         }
 
+        @java.lang.Override
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Linear_fieldAccessorTable
@@ -1331,6 +1365,7 @@ private static final long serialVersionUID = 0L;
                   .alwaysUseFieldBuilders) {
           }
         }
+        @java.lang.Override
         public Builder clear() {
           super.clear();
           numFiniteBuckets_ = 0;
@@ -1342,15 +1377,18 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Linear_descriptor;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Linear getDefaultInstanceForType() {
           return com.google.api.Distribution.BucketOptions.Linear.getDefaultInstance();
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Linear build() {
           com.google.api.Distribution.BucketOptions.Linear result = buildPartial();
           if (!result.isInitialized()) {
@@ -1359,6 +1397,7 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Linear buildPartial() {
           com.google.api.Distribution.BucketOptions.Linear result = new com.google.api.Distribution.BucketOptions.Linear(this);
           result.numFiniteBuckets_ = numFiniteBuckets_;
@@ -1368,32 +1407,39 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public Builder clone() {
           return (Builder) super.clone();
         }
+        @java.lang.Override
         public Builder setField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.setField(field, value);
         }
+        @java.lang.Override
         public Builder clearField(
             com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
+        @java.lang.Override
         public Builder clearOneof(
             com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
+        @java.lang.Override
         public Builder setRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             int index, java.lang.Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
+        @java.lang.Override
         public Builder addRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
+        @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof com.google.api.Distribution.BucketOptions.Linear) {
             return mergeFrom((com.google.api.Distribution.BucketOptions.Linear)other);
@@ -1419,10 +1465,12 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public final boolean isInitialized() {
           return true;
         }
 
+        @java.lang.Override
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1554,11 +1602,13 @@ private static final long serialVersionUID = 0L;
           onChanged();
           return this;
         }
+        @java.lang.Override
         public final Builder setUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.setUnknownFieldsProto3(unknownFields);
         }
 
+        @java.lang.Override
         public final Builder mergeUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.mergeUnknownFields(unknownFields);
@@ -1580,6 +1630,7 @@ private static final long serialVersionUID = 0L;
 
       private static final com.google.protobuf.Parser<Linear>
           PARSER = new com.google.protobuf.AbstractParser<Linear>() {
+        @java.lang.Override
         public Linear parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1597,6 +1648,7 @@ private static final long serialVersionUID = 0L;
         return PARSER;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Linear getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
@@ -1686,13 +1738,6 @@ private static final long serialVersionUID = 0L;
               case 0:
                 done = true;
                 break;
-              default: {
-                if (!parseUnknownFieldProto3(
-                    input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
-              }
               case 8: {
 
                 numFiniteBuckets_ = input.readInt32();
@@ -1706,6 +1751,13 @@ private static final long serialVersionUID = 0L;
               case 25: {
 
                 scale_ = input.readDouble();
+                break;
+              }
+              default: {
+                if (!parseUnknownFieldProto3(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
                 break;
               }
             }
@@ -1725,6 +1777,7 @@ private static final long serialVersionUID = 0L;
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Exponential_fieldAccessorTable
@@ -1772,6 +1825,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private byte memoizedIsInitialized = -1;
+      @java.lang.Override
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -1781,6 +1835,7 @@ private static final long serialVersionUID = 0L;
         return true;
       }
 
+      @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         if (numFiniteBuckets_ != 0) {
@@ -1795,6 +1850,7 @@ private static final long serialVersionUID = 0L;
         unknownFields.writeTo(output);
       }
 
+      @java.lang.Override
       public int getSerializedSize() {
         int size = memoizedSize;
         if (size != -1) return size;
@@ -1932,6 +1988,7 @@ private static final long serialVersionUID = 0L;
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
+      @java.lang.Override
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
@@ -1939,6 +1996,7 @@ private static final long serialVersionUID = 0L;
       public static Builder newBuilder(com.google.api.Distribution.BucketOptions.Exponential prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
+      @java.lang.Override
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
             ? new Builder() : new Builder().mergeFrom(this);
@@ -1972,6 +2030,7 @@ private static final long serialVersionUID = 0L;
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor;
         }
 
+        @java.lang.Override
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Exponential_fieldAccessorTable
@@ -1994,6 +2053,7 @@ private static final long serialVersionUID = 0L;
                   .alwaysUseFieldBuilders) {
           }
         }
+        @java.lang.Override
         public Builder clear() {
           super.clear();
           numFiniteBuckets_ = 0;
@@ -2005,15 +2065,18 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Exponential getDefaultInstanceForType() {
           return com.google.api.Distribution.BucketOptions.Exponential.getDefaultInstance();
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Exponential build() {
           com.google.api.Distribution.BucketOptions.Exponential result = buildPartial();
           if (!result.isInitialized()) {
@@ -2022,6 +2085,7 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Exponential buildPartial() {
           com.google.api.Distribution.BucketOptions.Exponential result = new com.google.api.Distribution.BucketOptions.Exponential(this);
           result.numFiniteBuckets_ = numFiniteBuckets_;
@@ -2031,32 +2095,39 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public Builder clone() {
           return (Builder) super.clone();
         }
+        @java.lang.Override
         public Builder setField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.setField(field, value);
         }
+        @java.lang.Override
         public Builder clearField(
             com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
+        @java.lang.Override
         public Builder clearOneof(
             com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
+        @java.lang.Override
         public Builder setRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             int index, java.lang.Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
+        @java.lang.Override
         public Builder addRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
+        @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof com.google.api.Distribution.BucketOptions.Exponential) {
             return mergeFrom((com.google.api.Distribution.BucketOptions.Exponential)other);
@@ -2082,10 +2153,12 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public final boolean isInitialized() {
           return true;
         }
 
+        @java.lang.Override
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2217,11 +2290,13 @@ private static final long serialVersionUID = 0L;
           onChanged();
           return this;
         }
+        @java.lang.Override
         public final Builder setUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.setUnknownFieldsProto3(unknownFields);
         }
 
+        @java.lang.Override
         public final Builder mergeUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.mergeUnknownFields(unknownFields);
@@ -2243,6 +2318,7 @@ private static final long serialVersionUID = 0L;
 
       private static final com.google.protobuf.Parser<Exponential>
           PARSER = new com.google.protobuf.AbstractParser<Exponential>() {
+        @java.lang.Override
         public Exponential parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2260,6 +2336,7 @@ private static final long serialVersionUID = 0L;
         return PARSER;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Exponential getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
@@ -2346,13 +2423,6 @@ private static final long serialVersionUID = 0L;
               case 0:
                 done = true;
                 break;
-              default: {
-                if (!parseUnknownFieldProto3(
-                    input, unknownFields, extensionRegistry, tag)) {
-                  done = true;
-                }
-                break;
-              }
               case 9: {
                 if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                   bounds_ = new java.util.ArrayList<java.lang.Double>();
@@ -2372,6 +2442,13 @@ private static final long serialVersionUID = 0L;
                   bounds_.add(input.readDouble());
                 }
                 input.popLimit(limit);
+                break;
+              }
+              default: {
+                if (!parseUnknownFieldProto3(
+                    input, unknownFields, extensionRegistry, tag)) {
+                  done = true;
+                }
                 break;
               }
             }
@@ -2394,6 +2471,7 @@ private static final long serialVersionUID = 0L;
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Explicit_fieldAccessorTable
@@ -2437,6 +2515,7 @@ private static final long serialVersionUID = 0L;
       private int boundsMemoizedSerializedSize = -1;
 
       private byte memoizedIsInitialized = -1;
+      @java.lang.Override
       public final boolean isInitialized() {
         byte isInitialized = memoizedIsInitialized;
         if (isInitialized == 1) return true;
@@ -2446,6 +2525,7 @@ private static final long serialVersionUID = 0L;
         return true;
       }
 
+      @java.lang.Override
       public void writeTo(com.google.protobuf.CodedOutputStream output)
                           throws java.io.IOException {
         getSerializedSize();
@@ -2459,6 +2539,7 @@ private static final long serialVersionUID = 0L;
         unknownFields.writeTo(output);
       }
 
+      @java.lang.Override
       public int getSerializedSize() {
         int size = memoizedSize;
         if (size != -1) return size;
@@ -2583,6 +2664,7 @@ private static final long serialVersionUID = 0L;
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
 
+      @java.lang.Override
       public Builder newBuilderForType() { return newBuilder(); }
       public static Builder newBuilder() {
         return DEFAULT_INSTANCE.toBuilder();
@@ -2590,6 +2672,7 @@ private static final long serialVersionUID = 0L;
       public static Builder newBuilder(com.google.api.Distribution.BucketOptions.Explicit prototype) {
         return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
       }
+      @java.lang.Override
       public Builder toBuilder() {
         return this == DEFAULT_INSTANCE
             ? new Builder() : new Builder().mergeFrom(this);
@@ -2624,6 +2707,7 @@ private static final long serialVersionUID = 0L;
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor;
         }
 
+        @java.lang.Override
         protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
             internalGetFieldAccessorTable() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Explicit_fieldAccessorTable
@@ -2646,6 +2730,7 @@ private static final long serialVersionUID = 0L;
                   .alwaysUseFieldBuilders) {
           }
         }
+        @java.lang.Override
         public Builder clear() {
           super.clear();
           bounds_ = java.util.Collections.emptyList();
@@ -2653,15 +2738,18 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public com.google.protobuf.Descriptors.Descriptor
             getDescriptorForType() {
           return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Explicit getDefaultInstanceForType() {
           return com.google.api.Distribution.BucketOptions.Explicit.getDefaultInstance();
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Explicit build() {
           com.google.api.Distribution.BucketOptions.Explicit result = buildPartial();
           if (!result.isInitialized()) {
@@ -2670,6 +2758,7 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public com.google.api.Distribution.BucketOptions.Explicit buildPartial() {
           com.google.api.Distribution.BucketOptions.Explicit result = new com.google.api.Distribution.BucketOptions.Explicit(this);
           int from_bitField0_ = bitField0_;
@@ -2682,32 +2771,39 @@ private static final long serialVersionUID = 0L;
           return result;
         }
 
+        @java.lang.Override
         public Builder clone() {
           return (Builder) super.clone();
         }
+        @java.lang.Override
         public Builder setField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.setField(field, value);
         }
+        @java.lang.Override
         public Builder clearField(
             com.google.protobuf.Descriptors.FieldDescriptor field) {
           return (Builder) super.clearField(field);
         }
+        @java.lang.Override
         public Builder clearOneof(
             com.google.protobuf.Descriptors.OneofDescriptor oneof) {
           return (Builder) super.clearOneof(oneof);
         }
+        @java.lang.Override
         public Builder setRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             int index, java.lang.Object value) {
           return (Builder) super.setRepeatedField(field, index, value);
         }
+        @java.lang.Override
         public Builder addRepeatedField(
             com.google.protobuf.Descriptors.FieldDescriptor field,
             java.lang.Object value) {
           return (Builder) super.addRepeatedField(field, value);
         }
+        @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof com.google.api.Distribution.BucketOptions.Explicit) {
             return mergeFrom((com.google.api.Distribution.BucketOptions.Explicit)other);
@@ -2734,10 +2830,12 @@ private static final long serialVersionUID = 0L;
           return this;
         }
 
+        @java.lang.Override
         public final boolean isInitialized() {
           return true;
         }
 
+        @java.lang.Override
         public Builder mergeFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2850,11 +2948,13 @@ private static final long serialVersionUID = 0L;
           onChanged();
           return this;
         }
+        @java.lang.Override
         public final Builder setUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.setUnknownFieldsProto3(unknownFields);
         }
 
+        @java.lang.Override
         public final Builder mergeUnknownFields(
             final com.google.protobuf.UnknownFieldSet unknownFields) {
           return super.mergeUnknownFields(unknownFields);
@@ -2876,6 +2976,7 @@ private static final long serialVersionUID = 0L;
 
       private static final com.google.protobuf.Parser<Explicit>
           PARSER = new com.google.protobuf.AbstractParser<Explicit>() {
+        @java.lang.Override
         public Explicit parsePartialFrom(
             com.google.protobuf.CodedInputStream input,
             com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2893,6 +2994,7 @@ private static final long serialVersionUID = 0L;
         return PARSER;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Explicit getDefaultInstanceForType() {
         return DEFAULT_INSTANCE;
       }
@@ -3054,6 +3156,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -3063,6 +3166,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (optionsCase_ == 1) {
@@ -3077,6 +3181,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -3231,6 +3336,7 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
@@ -3238,6 +3344,7 @@ private static final long serialVersionUID = 0L;
     public static Builder newBuilder(com.google.api.Distribution.BucketOptions prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
@@ -3283,6 +3390,7 @@ private static final long serialVersionUID = 0L;
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_descriptor;
       }
 
+      @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_fieldAccessorTable
@@ -3305,6 +3413,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         optionsCase_ = 0;
@@ -3312,15 +3421,18 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.api.DistributionProto.internal_static_google_api_Distribution_BucketOptions_descriptor;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions getDefaultInstanceForType() {
         return com.google.api.Distribution.BucketOptions.getDefaultInstance();
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions build() {
         com.google.api.Distribution.BucketOptions result = buildPartial();
         if (!result.isInitialized()) {
@@ -3329,6 +3441,7 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions buildPartial() {
         com.google.api.Distribution.BucketOptions result = new com.google.api.Distribution.BucketOptions(this);
         if (optionsCase_ == 1) {
@@ -3357,32 +3470,39 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
+      @java.lang.Override
       public Builder clone() {
         return (Builder) super.clone();
       }
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.setField(field, value);
       }
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return (Builder) super.clearField(field);
       }
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return (Builder) super.clearOneof(oneof);
       }
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           int index, java.lang.Object value) {
         return (Builder) super.setRepeatedField(field, index, value);
       }
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
           java.lang.Object value) {
         return (Builder) super.addRepeatedField(field, value);
       }
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.api.Distribution.BucketOptions) {
           return mergeFrom((com.google.api.Distribution.BucketOptions)other);
@@ -3416,10 +3536,12 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3968,11 +4090,13 @@ private static final long serialVersionUID = 0L;
         onChanged();;
         return explicitBucketsBuilder_;
       }
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFieldsProto3(unknownFields);
       }
 
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -3994,6 +4118,7 @@ private static final long serialVersionUID = 0L;
 
     private static final com.google.protobuf.Parser<BucketOptions>
         PARSER = new com.google.protobuf.AbstractParser<BucketOptions>() {
+      @java.lang.Override
       public BucketOptions parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4011,6 +4136,7 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
@@ -4192,6 +4318,7 @@ private static final long serialVersionUID = 0L;
   private int bucketCountsMemoizedSerializedSize = -1;
 
   private byte memoizedIsInitialized = -1;
+  @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -4201,6 +4328,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
+  @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     getSerializedSize();
@@ -4229,6 +4357,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
+  @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -4413,6 +4542,7 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
+  @java.lang.Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
@@ -4420,6 +4550,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder(com.google.api.Distribution prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+  @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
@@ -4458,6 +4589,7 @@ private static final long serialVersionUID = 0L;
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_descriptor;
     }
 
+    @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_fieldAccessorTable
@@ -4480,6 +4612,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
+    @java.lang.Override
     public Builder clear() {
       super.clear();
       count_ = 0L;
@@ -4505,15 +4638,18 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.DistributionProto.internal_static_google_api_Distribution_descriptor;
     }
 
+    @java.lang.Override
     public com.google.api.Distribution getDefaultInstanceForType() {
       return com.google.api.Distribution.getDefaultInstance();
     }
 
+    @java.lang.Override
     public com.google.api.Distribution build() {
       com.google.api.Distribution result = buildPartial();
       if (!result.isInitialized()) {
@@ -4522,6 +4658,7 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public com.google.api.Distribution buildPartial() {
       com.google.api.Distribution result = new com.google.api.Distribution(this);
       int from_bitField0_ = bitField0_;
@@ -4549,32 +4686,39 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
+    @java.lang.Override
     public Builder clone() {
       return (Builder) super.clone();
     }
+    @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.setField(field, value);
     }
+    @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
       return (Builder) super.clearField(field);
     }
+    @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return (Builder) super.clearOneof(oneof);
     }
+    @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
       return (Builder) super.setRepeatedField(field, index, value);
     }
+    @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return (Builder) super.addRepeatedField(field, value);
     }
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.Distribution) {
         return mergeFrom((com.google.api.Distribution)other);
@@ -4616,10 +4760,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    @java.lang.Override
     public final boolean isInitialized() {
       return true;
     }
 
+    @java.lang.Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5235,11 +5381,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
+    @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.setUnknownFieldsProto3(unknownFields);
     }
 
+    @java.lang.Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -5261,6 +5409,7 @@ private static final long serialVersionUID = 0L;
 
   private static final com.google.protobuf.Parser<Distribution>
       PARSER = new com.google.protobuf.AbstractParser<Distribution>() {
+    @java.lang.Override
     public Distribution parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5278,6 +5427,7 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
+  @java.lang.Override
   public com.google.api.Distribution getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
