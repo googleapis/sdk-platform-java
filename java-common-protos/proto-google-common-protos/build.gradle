@@ -8,7 +8,7 @@ apply plugin: 'java'
 
 description = 'PROTO library for proto-google-common-protos (prerelease)'
 group = 'com.google.api.grpc'
-version = '1.13.0-pre1'
+version = '1.13.0-pre2'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.google.protobuf:protobuf-java:3.5.1'
+  compile 'com.google.protobuf:protobuf-java:3.6.0'
 }
 
 sourceSets {

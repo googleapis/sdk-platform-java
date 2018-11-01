@@ -13,23 +13,26 @@ public interface ResourceSetOrBuilder extends
    * If omitted, this is the name of the message.
    * </pre>
    *
-   * <code>string base_name = 1;</code>
+   * <code>string name = 1;</code>
    */
-  java.lang.String getBaseName();
+  java.lang.String getName();
   /**
    * <pre>
    * The colloquial name of the resource.
    * If omitted, this is the name of the message.
    * </pre>
    *
-   * <code>string base_name = 1;</code>
+   * <code>string name = 1;</code>
    */
   com.google.protobuf.ByteString
-      getBaseNameBytes();
+      getNameBytes();
 
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -38,7 +41,10 @@ public interface ResourceSetOrBuilder extends
       getResourcesList();
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -46,7 +52,10 @@ public interface ResourceSetOrBuilder extends
   com.google.api.Resource getResources(int index);
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -54,7 +63,10 @@ public interface ResourceSetOrBuilder extends
   int getResourcesCount();
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -63,11 +75,69 @@ public interface ResourceSetOrBuilder extends
       getResourcesOrBuilderList();
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
    */
   com.google.api.ResourceOrBuilder getResourcesOrBuilder(
       int index);
+
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  java.util.List<java.lang.String>
+      getResourceReferencesList();
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  int getResourceReferencesCount();
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  java.lang.String getResourceReferences(int index);
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getResourceReferencesBytes(int index);
 }

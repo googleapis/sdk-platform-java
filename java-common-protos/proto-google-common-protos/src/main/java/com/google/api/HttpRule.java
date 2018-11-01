@@ -195,6 +195,7 @@ private static final long serialVersionUID = 0L;
   private HttpRule() {
     selector_ = "";
     body_ = "";
+    responseBody_ = "";
     additionalBindings_ = java.util.Collections.emptyList();
   }
 
@@ -279,12 +280,18 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 90: {
-            if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+            if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
               additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>();
-              mutable_bitField0_ |= 0x00000100;
+              mutable_bitField0_ |= 0x00000200;
             }
             additionalBindings_.add(
                 input.readMessage(com.google.api.HttpRule.parser(), extensionRegistry));
+            break;
+          }
+          case 98: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            responseBody_ = s;
             break;
           }
           default: {
@@ -302,7 +309,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
         additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
       }
       this.unknownFields = unknownFields.build();
@@ -763,6 +770,52 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int RESPONSE_BODY_FIELD_NUMBER = 12;
+  private volatile java.lang.Object responseBody_;
+  /**
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * body of response. Other response fields are ignored. When
+   * not set, the response message will be used as HTTP body of response.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   */
+  public java.lang.String getResponseBody() {
+    java.lang.Object ref = responseBody_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      responseBody_ = s;
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * body of response. Other response fields are ignored. When
+   * not set, the response message will be used as HTTP body of response.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   */
+  public com.google.protobuf.ByteString
+      getResponseBodyBytes() {
+    java.lang.Object ref = responseBody_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      responseBody_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   public static final int ADDITIONAL_BINDINGS_FIELD_NUMBER = 11;
   private java.util.List<com.google.api.HttpRule> additionalBindings_;
   /**
@@ -869,6 +922,9 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < additionalBindings_.size(); i++) {
       output.writeMessage(11, additionalBindings_.get(i));
     }
+    if (!getResponseBodyBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 12, responseBody_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -907,6 +963,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(11, additionalBindings_.get(i));
     }
+    if (!getResponseBodyBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(12, responseBody_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -927,6 +986,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getSelector());
     result = result && getBody()
         .equals(other.getBody());
+    result = result && getResponseBody()
+        .equals(other.getResponseBody());
     result = result && getAdditionalBindingsList()
         .equals(other.getAdditionalBindingsList());
     result = result && getPatternCase().equals(
@@ -975,6 +1036,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getSelector().hashCode();
     hash = (37 * hash) + BODY_FIELD_NUMBER;
     hash = (53 * hash) + getBody().hashCode();
+    hash = (37 * hash) + RESPONSE_BODY_FIELD_NUMBER;
+    hash = (53 * hash) + getResponseBody().hashCode();
     if (getAdditionalBindingsCount() > 0) {
       hash = (37 * hash) + ADDITIONAL_BINDINGS_FIELD_NUMBER;
       hash = (53 * hash) + getAdditionalBindingsList().hashCode();
@@ -1322,9 +1385,11 @@ private static final long serialVersionUID = 0L;
 
       body_ = "";
 
+      responseBody_ = "";
+
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000200);
       } else {
         additionalBindingsBuilder_.clear();
       }
@@ -1382,10 +1447,11 @@ private static final long serialVersionUID = 0L;
         }
       }
       result.body_ = body_;
+      result.responseBody_ = responseBody_;
       if (additionalBindingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        if (((bitField0_ & 0x00000200) == 0x00000200)) {
           additionalBindings_ = java.util.Collections.unmodifiableList(additionalBindings_);
-          bitField0_ = (bitField0_ & ~0x00000100);
+          bitField0_ = (bitField0_ & ~0x00000200);
         }
         result.additionalBindings_ = additionalBindings_;
       } else {
@@ -1449,11 +1515,15 @@ private static final long serialVersionUID = 0L;
         body_ = other.body_;
         onChanged();
       }
+      if (!other.getResponseBody().isEmpty()) {
+        responseBody_ = other.responseBody_;
+        onChanged();
+      }
       if (additionalBindingsBuilder_ == null) {
         if (!other.additionalBindings_.isEmpty()) {
           if (additionalBindings_.isEmpty()) {
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000100);
+            bitField0_ = (bitField0_ & ~0x00000200);
           } else {
             ensureAdditionalBindingsIsMutable();
             additionalBindings_.addAll(other.additionalBindings_);
@@ -1466,7 +1536,7 @@ private static final long serialVersionUID = 0L;
             additionalBindingsBuilder_.dispose();
             additionalBindingsBuilder_ = null;
             additionalBindings_ = other.additionalBindings_;
-            bitField0_ = (bitField0_ & ~0x00000100);
+            bitField0_ = (bitField0_ & ~0x00000200);
             additionalBindingsBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                  getAdditionalBindingsFieldBuilder() : null;
@@ -2456,12 +2526,111 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object responseBody_ = "";
+    /**
+     * <pre>
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * body of response. Other response fields are ignored. When
+     * not set, the response message will be used as HTTP body of response.
+     * </pre>
+     *
+     * <code>string response_body = 12;</code>
+     */
+    public java.lang.String getResponseBody() {
+      java.lang.Object ref = responseBody_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        responseBody_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * body of response. Other response fields are ignored. When
+     * not set, the response message will be used as HTTP body of response.
+     * </pre>
+     *
+     * <code>string response_body = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResponseBodyBytes() {
+      java.lang.Object ref = responseBody_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        responseBody_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * body of response. Other response fields are ignored. When
+     * not set, the response message will be used as HTTP body of response.
+     * </pre>
+     *
+     * <code>string response_body = 12;</code>
+     */
+    public Builder setResponseBody(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      responseBody_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * body of response. Other response fields are ignored. When
+     * not set, the response message will be used as HTTP body of response.
+     * </pre>
+     *
+     * <code>string response_body = 12;</code>
+     */
+    public Builder clearResponseBody() {
+      
+      responseBody_ = getDefaultInstance().getResponseBody();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The name of the response field whose value is mapped to the HTTP
+     * body of response. Other response fields are ignored. When
+     * not set, the response message will be used as HTTP body of response.
+     * </pre>
+     *
+     * <code>string response_body = 12;</code>
+     */
+    public Builder setResponseBodyBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      responseBody_ = value;
+      onChanged();
+      return this;
+    }
+
     private java.util.List<com.google.api.HttpRule> additionalBindings_ =
       java.util.Collections.emptyList();
     private void ensureAdditionalBindingsIsMutable() {
-      if (!((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (!((bitField0_ & 0x00000200) == 0x00000200)) {
         additionalBindings_ = new java.util.ArrayList<com.google.api.HttpRule>(additionalBindings_);
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000200;
        }
     }
 
@@ -2677,7 +2846,7 @@ private static final long serialVersionUID = 0L;
     public Builder clearAdditionalBindings() {
       if (additionalBindingsBuilder_ == null) {
         additionalBindings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000100);
+        bitField0_ = (bitField0_ & ~0x00000200);
         onChanged();
       } else {
         additionalBindingsBuilder_.clear();
@@ -2796,7 +2965,7 @@ private static final long serialVersionUID = 0L;
         additionalBindingsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.api.HttpRule, com.google.api.HttpRule.Builder, com.google.api.HttpRuleOrBuilder>(
                 additionalBindings_,
-                ((bitField0_ & 0x00000100) == 0x00000100),
+                ((bitField0_ & 0x00000200) == 0x00000200),
                 getParentForChildren(),
                 isClean());
         additionalBindings_ = null;

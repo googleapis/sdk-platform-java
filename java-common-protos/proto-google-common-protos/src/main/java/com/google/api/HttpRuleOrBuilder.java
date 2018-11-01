@@ -177,6 +177,28 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * body of response. Other response fields are ignored. When
+   * not set, the response message will be used as HTTP body of response.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   */
+  java.lang.String getResponseBody();
+  /**
+   * <pre>
+   * Optional. The name of the response field whose value is mapped to the HTTP
+   * body of response. Other response fields are ignored. When
+   * not set, the response message will be used as HTTP body of response.
+   * </pre>
+   *
+   * <code>string response_body = 12;</code>
+   */
+  com.google.protobuf.ByteString
+      getResponseBodyBytes();
+
+  /**
+   * <pre>
    * Additional HTTP bindings for the selector. Nested bindings must
    * not contain an `additional_bindings` field themselves (that is,
    * the nesting may only be one level deep).

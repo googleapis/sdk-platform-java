@@ -34,13 +34,14 @@ public final class ResourcesProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\032google/api/resources.proto\022\ngoogle.api" +
-      "\032 google/protobuf/descriptor.proto\"+\n\010Re" +
-      "source\022\014\n\004path\030\001 \001(\t\022\021\n\tbase_name\030\002 \001(\t\"" +
-      "I\n\013ResourceSet\022\021\n\tbase_name\030\001 \001(\t\022\'\n\tres" +
-      "ources\030\002 \003(\0132\024.google.api.ResourceBe\n\016co" +
-      "m.google.apiB\016ResourcesProtoP\001ZAgoogle.g" +
-      "olang.org/genproto/googleapis/api/annota" +
-      "tions;annotationsb\006proto3"
+      "\032 google/protobuf/descriptor.proto\"&\n\010Re" +
+      "source\022\014\n\004path\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\"a\n\013Re" +
+      "sourceSet\022\014\n\004name\030\001 \001(\t\022\'\n\tresources\030\002 \003" +
+      "(\0132\024.google.api.Resource\022\033\n\023resource_ref" +
+      "erences\030\003 \003(\tBe\n\016com.google.apiB\016Resourc" +
+      "esProtoP\001ZAgoogle.golang.org/genproto/go" +
+      "ogleapis/api/annotations;annotationsb\006pr" +
+      "oto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -60,13 +61,13 @@ public final class ResourcesProto {
     internal_static_google_api_Resource_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Resource_descriptor,
-        new java.lang.String[] { "Path", "BaseName", });
+        new java.lang.String[] { "Path", "Name", });
     internal_static_google_api_ResourceSet_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_ResourceSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_ResourceSet_descriptor,
-        new java.lang.String[] { "BaseName", "Resources", });
+        new java.lang.String[] { "Name", "Resources", "ResourceReferences", });
     com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 

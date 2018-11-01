@@ -8,7 +8,7 @@ apply plugin: 'java'
 
 description = 'GRPC library for grpc-google-common-protos (prerelease)'
 group = 'com.google.api.grpc'
-version = '1.13.0-pre1'
+version = '1.13.0-pre2'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 

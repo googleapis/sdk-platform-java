@@ -21,8 +21,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ResourceSet() {
-    baseName_ = "";
+    name_ = "";
     resources_ = java.util.Collections.emptyList();
+    resourceReferences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
@@ -52,7 +53,7 @@ private static final long serialVersionUID = 0L;
           case 10: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            baseName_ = s;
+            name_ = s;
             break;
           }
           case 18: {
@@ -62,6 +63,15 @@ private static final long serialVersionUID = 0L;
             }
             resources_.add(
                 input.readMessage(com.google.api.Resource.parser(), extensionRegistry));
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+              resourceReferences_ = new com.google.protobuf.LazyStringArrayList();
+              mutable_bitField0_ |= 0x00000004;
+            }
+            resourceReferences_.add(s);
             break;
           }
           default: {
@@ -82,6 +92,9 @@ private static final long serialVersionUID = 0L;
       if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
         resources_ = java.util.Collections.unmodifiableList(resources_);
       }
+      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+        resourceReferences_ = resourceReferences_.getUnmodifiableView();
+      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -100,25 +113,25 @@ private static final long serialVersionUID = 0L;
   }
 
   private int bitField0_;
-  public static final int BASE_NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object baseName_;
+  public static final int NAME_FIELD_NUMBER = 1;
+  private volatile java.lang.Object name_;
   /**
    * <pre>
    * The colloquial name of the resource.
    * If omitted, this is the name of the message.
    * </pre>
    *
-   * <code>string base_name = 1;</code>
+   * <code>string name = 1;</code>
    */
-  public java.lang.String getBaseName() {
-    java.lang.Object ref = baseName_;
+  public java.lang.String getName() {
+    java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      baseName_ = s;
+      name_ = s;
       return s;
     }
   }
@@ -128,16 +141,16 @@ private static final long serialVersionUID = 0L;
    * If omitted, this is the name of the message.
    * </pre>
    *
-   * <code>string base_name = 1;</code>
+   * <code>string name = 1;</code>
    */
   public com.google.protobuf.ByteString
-      getBaseNameBytes() {
-    java.lang.Object ref = baseName_;
+      getNameBytes() {
+    java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      baseName_ = b;
+      name_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -148,7 +161,10 @@ private static final long serialVersionUID = 0L;
   private java.util.List<com.google.api.Resource> resources_;
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -158,7 +174,10 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -169,7 +188,10 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -179,7 +201,10 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -189,7 +214,10 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The distinct resources that make up the set.
+   * Component resources that are part of the set.
+   * Resources declared within a resource set must have `name` set.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
    * </pre>
    *
    * <code>repeated .google.api.Resource resources = 2;</code>
@@ -197,6 +225,71 @@ private static final long serialVersionUID = 0L;
   public com.google.api.ResourceOrBuilder getResourcesOrBuilder(
       int index) {
     return resources_.get(index);
+  }
+
+  public static final int RESOURCE_REFERENCES_FIELD_NUMBER = 3;
+  private com.google.protobuf.LazyStringList resourceReferences_;
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  public com.google.protobuf.ProtocolStringList
+      getResourceReferencesList() {
+    return resourceReferences_;
+  }
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  public int getResourceReferencesCount() {
+    return resourceReferences_.size();
+  }
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  public java.lang.String getResourceReferences(int index) {
+    return resourceReferences_.get(index);
+  }
+  /**
+   * <pre>
+   * References to existing resources (messages of resource definitions)
+   * that are part of the set.
+   * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+   * or just the resource/proto name if it is defined within the same package.
+   * The final set of resources in the resource set is the union of
+   * `resources` and `resource_references`.
+   * </pre>
+   *
+   * <code>repeated string resource_references = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getResourceReferencesBytes(int index) {
+    return resourceReferences_.getByteString(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -213,11 +306,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getBaseNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, baseName_);
+    if (!getNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
     for (int i = 0; i < resources_.size(); i++) {
       output.writeMessage(2, resources_.get(i));
+    }
+    for (int i = 0; i < resourceReferences_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, resourceReferences_.getRaw(i));
     }
     unknownFields.writeTo(output);
   }
@@ -228,12 +324,20 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getBaseNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, baseName_);
+    if (!getNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, name_);
     }
     for (int i = 0; i < resources_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(2, resources_.get(i));
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < resourceReferences_.size(); i++) {
+        dataSize += computeStringSizeNoTag(resourceReferences_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getResourceReferencesList().size();
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -251,10 +355,12 @@ private static final long serialVersionUID = 0L;
     com.google.api.ResourceSet other = (com.google.api.ResourceSet) obj;
 
     boolean result = true;
-    result = result && getBaseName()
-        .equals(other.getBaseName());
+    result = result && getName()
+        .equals(other.getName());
     result = result && getResourcesList()
         .equals(other.getResourcesList());
+    result = result && getResourceReferencesList()
+        .equals(other.getResourceReferencesList());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -266,11 +372,15 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + BASE_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getBaseName().hashCode();
+    hash = (37 * hash) + NAME_FIELD_NUMBER;
+    hash = (53 * hash) + getName().hashCode();
     if (getResourcesCount() > 0) {
       hash = (37 * hash) + RESOURCES_FIELD_NUMBER;
       hash = (53 * hash) + getResourcesList().hashCode();
+    }
+    if (getResourceReferencesCount() > 0) {
+      hash = (37 * hash) + RESOURCE_REFERENCES_FIELD_NUMBER;
+      hash = (53 * hash) + getResourceReferencesList().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -411,7 +521,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      baseName_ = "";
+      name_ = "";
 
       if (resourcesBuilder_ == null) {
         resources_ = java.util.Collections.emptyList();
@@ -419,6 +529,8 @@ private static final long serialVersionUID = 0L;
       } else {
         resourcesBuilder_.clear();
       }
+      resourceReferences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
     }
 
@@ -447,7 +559,7 @@ private static final long serialVersionUID = 0L;
       com.google.api.ResourceSet result = new com.google.api.ResourceSet(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
-      result.baseName_ = baseName_;
+      result.name_ = name_;
       if (resourcesBuilder_ == null) {
         if (((bitField0_ & 0x00000002) == 0x00000002)) {
           resources_ = java.util.Collections.unmodifiableList(resources_);
@@ -457,6 +569,11 @@ private static final long serialVersionUID = 0L;
       } else {
         result.resources_ = resourcesBuilder_.build();
       }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        resourceReferences_ = resourceReferences_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000004);
+      }
+      result.resourceReferences_ = resourceReferences_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -506,8 +623,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.google.api.ResourceSet other) {
       if (other == com.google.api.ResourceSet.getDefaultInstance()) return this;
-      if (!other.getBaseName().isEmpty()) {
-        baseName_ = other.baseName_;
+      if (!other.getName().isEmpty()) {
+        name_ = other.name_;
         onChanged();
       }
       if (resourcesBuilder_ == null) {
@@ -535,6 +652,16 @@ private static final long serialVersionUID = 0L;
             resourcesBuilder_.addAllMessages(other.resources_);
           }
         }
+      }
+      if (!other.resourceReferences_.isEmpty()) {
+        if (resourceReferences_.isEmpty()) {
+          resourceReferences_ = other.resourceReferences_;
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          ensureResourceReferencesIsMutable();
+          resourceReferences_.addAll(other.resourceReferences_);
+        }
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -566,22 +693,22 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object baseName_ = "";
+    private java.lang.Object name_ = "";
     /**
      * <pre>
      * The colloquial name of the resource.
      * If omitted, this is the name of the message.
      * </pre>
      *
-     * <code>string base_name = 1;</code>
+     * <code>string name = 1;</code>
      */
-    public java.lang.String getBaseName() {
-      java.lang.Object ref = baseName_;
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        baseName_ = s;
+        name_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
@@ -593,16 +720,16 @@ private static final long serialVersionUID = 0L;
      * If omitted, this is the name of the message.
      * </pre>
      *
-     * <code>string base_name = 1;</code>
+     * <code>string name = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getBaseNameBytes() {
-      java.lang.Object ref = baseName_;
+        getNameBytes() {
+      java.lang.Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        baseName_ = b;
+        name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -614,15 +741,15 @@ private static final long serialVersionUID = 0L;
      * If omitted, this is the name of the message.
      * </pre>
      *
-     * <code>string base_name = 1;</code>
+     * <code>string name = 1;</code>
      */
-    public Builder setBaseName(
+    public Builder setName(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      baseName_ = value;
+      name_ = value;
       onChanged();
       return this;
     }
@@ -632,11 +759,11 @@ private static final long serialVersionUID = 0L;
      * If omitted, this is the name of the message.
      * </pre>
      *
-     * <code>string base_name = 1;</code>
+     * <code>string name = 1;</code>
      */
-    public Builder clearBaseName() {
+    public Builder clearName() {
       
-      baseName_ = getDefaultInstance().getBaseName();
+      name_ = getDefaultInstance().getName();
       onChanged();
       return this;
     }
@@ -646,16 +773,16 @@ private static final long serialVersionUID = 0L;
      * If omitted, this is the name of the message.
      * </pre>
      *
-     * <code>string base_name = 1;</code>
+     * <code>string name = 1;</code>
      */
-    public Builder setBaseNameBytes(
+    public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      baseName_ = value;
+      name_ = value;
       onChanged();
       return this;
     }
@@ -674,7 +801,10 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -688,7 +818,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -702,7 +835,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -716,7 +852,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -737,7 +876,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -755,7 +897,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -775,7 +920,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -796,7 +944,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -814,7 +965,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -832,7 +986,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -851,7 +1008,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -868,7 +1028,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -885,7 +1048,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -896,7 +1062,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -910,7 +1079,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -925,7 +1097,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -936,7 +1111,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -948,7 +1126,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The distinct resources that make up the set.
+     * Component resources that are part of the set.
+     * Resources declared within a resource set must have `name` set.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
      * </pre>
      *
      * <code>repeated .google.api.Resource resources = 2;</code>
@@ -970,6 +1151,181 @@ private static final long serialVersionUID = 0L;
         resources_ = null;
       }
       return resourcesBuilder_;
+    }
+
+    private com.google.protobuf.LazyStringList resourceReferences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private void ensureResourceReferencesIsMutable() {
+      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+        resourceReferences_ = new com.google.protobuf.LazyStringArrayList(resourceReferences_);
+        bitField0_ |= 0x00000004;
+       }
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getResourceReferencesList() {
+      return resourceReferences_.getUnmodifiableView();
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public int getResourceReferencesCount() {
+      return resourceReferences_.size();
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public java.lang.String getResourceReferences(int index) {
+      return resourceReferences_.get(index);
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getResourceReferencesBytes(int index) {
+      return resourceReferences_.getByteString(index);
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public Builder setResourceReferences(
+        int index, java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureResourceReferencesIsMutable();
+      resourceReferences_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public Builder addResourceReferences(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureResourceReferencesIsMutable();
+      resourceReferences_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public Builder addAllResourceReferences(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureResourceReferencesIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, resourceReferences_);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public Builder clearResourceReferences() {
+      resourceReferences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * References to existing resources (messages of resource definitions)
+     * that are part of the set.
+     * These may be specified as fully-qualified (e.g. "google.pubsub.v1.Topic")
+     * or just the resource/proto name if it is defined within the same package.
+     * The final set of resources in the resource set is the union of
+     * `resources` and `resource_references`.
+     * </pre>
+     *
+     * <code>repeated string resource_references = 3;</code>
+     */
+    public Builder addResourceReferencesBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      ensureResourceReferencesIsMutable();
+      resourceReferences_.add(value);
+      onChanged();
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

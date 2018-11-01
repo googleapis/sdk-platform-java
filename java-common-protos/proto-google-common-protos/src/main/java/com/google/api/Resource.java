@@ -22,7 +22,7 @@ private static final long serialVersionUID = 0L;
   }
   private Resource() {
     path_ = "";
-    baseName_ = "";
+    name_ = "";
   }
 
   @java.lang.Override
@@ -58,7 +58,7 @@ private static final long serialVersionUID = 0L;
           case 18: {
             java.lang.String s = input.readStringRequireUtf8();
 
-            baseName_ = s;
+            name_ = s;
             break;
           }
           default: {
@@ -98,7 +98,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. The resource's path. This is usually in a form such as:
-   *   projects/&#42;&#47;things/&#42;
+   *   projects/{project_id}/things/{thing_id}
    * </pre>
    *
    * <code>string path = 1;</code>
@@ -118,7 +118,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Required. The resource's path. This is usually in a form such as:
-   *   projects/&#42;&#47;things/&#42;
+   *   projects/{project_id}/things/{thing_id}
    * </pre>
    *
    * <code>string path = 1;</code>
@@ -137,8 +137,8 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int BASE_NAME_FIELD_NUMBER = 2;
-  private volatile java.lang.Object baseName_;
+  public static final int NAME_FIELD_NUMBER = 2;
+  private volatile java.lang.Object name_;
   /**
    * <pre>
    * The colloquial name of the resource.
@@ -146,17 +146,17 @@ private static final long serialVersionUID = 0L;
    * This is required if the resource is within a ResourceSet (see below).
    * </pre>
    *
-   * <code>string base_name = 2;</code>
+   * <code>string name = 2;</code>
    */
-  public java.lang.String getBaseName() {
-    java.lang.Object ref = baseName_;
+  public java.lang.String getName() {
+    java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      baseName_ = s;
+      name_ = s;
       return s;
     }
   }
@@ -167,16 +167,16 @@ private static final long serialVersionUID = 0L;
    * This is required if the resource is within a ResourceSet (see below).
    * </pre>
    *
-   * <code>string base_name = 2;</code>
+   * <code>string name = 2;</code>
    */
   public com.google.protobuf.ByteString
-      getBaseNameBytes() {
-    java.lang.Object ref = baseName_;
+      getNameBytes() {
+    java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      baseName_ = b;
+      name_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -200,8 +200,8 @@ private static final long serialVersionUID = 0L;
     if (!getPathBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, path_);
     }
-    if (!getBaseNameBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, baseName_);
+    if (!getNameBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, name_);
     }
     unknownFields.writeTo(output);
   }
@@ -215,8 +215,8 @@ private static final long serialVersionUID = 0L;
     if (!getPathBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, path_);
     }
-    if (!getBaseNameBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, baseName_);
+    if (!getNameBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, name_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -236,8 +236,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getPath()
         .equals(other.getPath());
-    result = result && getBaseName()
-        .equals(other.getBaseName());
+    result = result && getName()
+        .equals(other.getName());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -251,8 +251,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PATH_FIELD_NUMBER;
     hash = (53 * hash) + getPath().hashCode();
-    hash = (37 * hash) + BASE_NAME_FIELD_NUMBER;
-    hash = (53 * hash) + getBaseName().hashCode();
+    hash = (37 * hash) + NAME_FIELD_NUMBER;
+    hash = (53 * hash) + getName().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -393,7 +393,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       path_ = "";
 
-      baseName_ = "";
+      name_ = "";
 
       return this;
     }
@@ -422,7 +422,7 @@ private static final long serialVersionUID = 0L;
     public com.google.api.Resource buildPartial() {
       com.google.api.Resource result = new com.google.api.Resource(this);
       result.path_ = path_;
-      result.baseName_ = baseName_;
+      result.name_ = name_;
       onBuilt();
       return result;
     }
@@ -475,8 +475,8 @@ private static final long serialVersionUID = 0L;
         path_ = other.path_;
         onChanged();
       }
-      if (!other.getBaseName().isEmpty()) {
-        baseName_ = other.baseName_;
+      if (!other.getName().isEmpty()) {
+        name_ = other.name_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -512,7 +512,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. The resource's path. This is usually in a form such as:
-     *   projects/&#42;&#47;things/&#42;
+     *   projects/{project_id}/things/{thing_id}
      * </pre>
      *
      * <code>string path = 1;</code>
@@ -532,7 +532,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. The resource's path. This is usually in a form such as:
-     *   projects/&#42;&#47;things/&#42;
+     *   projects/{project_id}/things/{thing_id}
      * </pre>
      *
      * <code>string path = 1;</code>
@@ -553,7 +553,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. The resource's path. This is usually in a form such as:
-     *   projects/&#42;&#47;things/&#42;
+     *   projects/{project_id}/things/{thing_id}
      * </pre>
      *
      * <code>string path = 1;</code>
@@ -571,7 +571,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. The resource's path. This is usually in a form such as:
-     *   projects/&#42;&#47;things/&#42;
+     *   projects/{project_id}/things/{thing_id}
      * </pre>
      *
      * <code>string path = 1;</code>
@@ -585,7 +585,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Required. The resource's path. This is usually in a form such as:
-     *   projects/&#42;&#47;things/&#42;
+     *   projects/{project_id}/things/{thing_id}
      * </pre>
      *
      * <code>string path = 1;</code>
@@ -602,7 +602,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object baseName_ = "";
+    private java.lang.Object name_ = "";
     /**
      * <pre>
      * The colloquial name of the resource.
@@ -610,15 +610,15 @@ private static final long serialVersionUID = 0L;
      * This is required if the resource is within a ResourceSet (see below).
      * </pre>
      *
-     * <code>string base_name = 2;</code>
+     * <code>string name = 2;</code>
      */
-    public java.lang.String getBaseName() {
-      java.lang.Object ref = baseName_;
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        baseName_ = s;
+        name_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
@@ -631,16 +631,16 @@ private static final long serialVersionUID = 0L;
      * This is required if the resource is within a ResourceSet (see below).
      * </pre>
      *
-     * <code>string base_name = 2;</code>
+     * <code>string name = 2;</code>
      */
     public com.google.protobuf.ByteString
-        getBaseNameBytes() {
-      java.lang.Object ref = baseName_;
+        getNameBytes() {
+      java.lang.Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        baseName_ = b;
+        name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -653,15 +653,15 @@ private static final long serialVersionUID = 0L;
      * This is required if the resource is within a ResourceSet (see below).
      * </pre>
      *
-     * <code>string base_name = 2;</code>
+     * <code>string name = 2;</code>
      */
-    public Builder setBaseName(
+    public Builder setName(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
   }
   
-      baseName_ = value;
+      name_ = value;
       onChanged();
       return this;
     }
@@ -672,11 +672,11 @@ private static final long serialVersionUID = 0L;
      * This is required if the resource is within a ResourceSet (see below).
      * </pre>
      *
-     * <code>string base_name = 2;</code>
+     * <code>string name = 2;</code>
      */
-    public Builder clearBaseName() {
+    public Builder clearName() {
       
-      baseName_ = getDefaultInstance().getBaseName();
+      name_ = getDefaultInstance().getName();
       onChanged();
       return this;
     }
@@ -687,16 +687,16 @@ private static final long serialVersionUID = 0L;
      * This is required if the resource is within a ResourceSet (see below).
      * </pre>
      *
-     * <code>string base_name = 2;</code>
+     * <code>string name = 2;</code>
      */
-    public Builder setBaseNameBytes(
+    public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
       
-      baseName_ = value;
+      name_ = value;
       onChanged();
       return this;
     }

@@ -10,7 +10,7 @@ public interface ResourceOrBuilder extends
   /**
    * <pre>
    * Required. The resource's path. This is usually in a form such as:
-   *   projects/&#42;&#47;things/&#42;
+   *   projects/{project_id}/things/{thing_id}
    * </pre>
    *
    * <code>string path = 1;</code>
@@ -19,7 +19,7 @@ public interface ResourceOrBuilder extends
   /**
    * <pre>
    * Required. The resource's path. This is usually in a form such as:
-   *   projects/&#42;&#47;things/&#42;
+   *   projects/{project_id}/things/{thing_id}
    * </pre>
    *
    * <code>string path = 1;</code>
@@ -34,9 +34,9 @@ public interface ResourceOrBuilder extends
    * This is required if the resource is within a ResourceSet (see below).
    * </pre>
    *
-   * <code>string base_name = 2;</code>
+   * <code>string name = 2;</code>
    */
-  java.lang.String getBaseName();
+  java.lang.String getName();
   /**
    * <pre>
    * The colloquial name of the resource.
@@ -44,8 +44,8 @@ public interface ResourceOrBuilder extends
    * This is required if the resource is within a ResourceSet (see below).
    * </pre>
    *
-   * <code>string base_name = 2;</code>
+   * <code>string name = 2;</code>
    */
   com.google.protobuf.ByteString
-      getBaseNameBytes();
+      getNameBytes();
 }
