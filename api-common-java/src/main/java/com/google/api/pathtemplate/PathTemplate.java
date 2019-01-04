@@ -125,12 +125,16 @@ public class PathTemplate {
 
   /**
    * A constant identifying the special variable used for endpoint bindings in the result of
-   * {@link #matchFromFullName(String)}.
+   * {@link #matchFromFullName(String)}. It may also contain protocol string, if its provided in the
+   * input.
    */
   public static final String HOSTNAME_VAR = "$hostname";
 
   // A regexp to match a custom verb at the end of a path.
   private static final Pattern CUSTOM_VERB_PATTERN = Pattern.compile(":([^/*}{=]+)$");
+
+  // A regex to match a hostname with or without protocol.
+  private static final Pattern HOSTNAME_PATTERN = Pattern.compile("^(\\w+:)?//");
 
   // A splitter on slash.
   private static final Splitter SLASH_SPLITTER = Splitter.on('/').trimResults();
@@ -533,10 +537,10 @@ public class PathTemplate {
       path = path.substring(0, matcher.start(0));
     }
 
-    // Do full match.
-    boolean withHostName = path.startsWith("//");
+    Matcher matcher = HOSTNAME_PATTERN.matcher(path);
+    boolean withHostName = matcher.find();
     if (withHostName) {
-      path = path.substring(2);
+      path = matcher.replaceFirst("");
     }
     List<String> input = SLASH_SPLITTER.splitToList(path);
     int inPos = 0;
@@ -548,14 +552,40 @@ public class PathTemplate {
       String hostName = input.get(inPos++);
       if (withHostName) {
         // Put the // back, so we can distinguish this case from forceHostName.
-        hostName = "//" + hostName;
+        hostName = matcher.group(0) + hostName;
       }
       values.put(HOSTNAME_VAR, hostName);
+    }
+    if (withHostName) {
+      inPos = alignInputToAlignableSegment(input, inPos, segments.get(0));
     }
     if (!match(input, inPos, segments, 0, values)) {
       return null;
     }
     return ImmutableMap.copyOf(values);
+  }
+
+  // Aligns input to start of literal value of literal or binding segment if input contains hostname.
+  private int alignInputToAlignableSegment(List<String> input, int inPos, Segment segment) {
+    switch (segment.kind()) {
+      case BINDING:
+        inPos = alignInputPositionToLiteral(input, inPos, segment.value() + "s");
+        return inPos + 1;
+      case LITERAL:
+        return alignInputPositionToLiteral(input, inPos, segment.value());
+    }
+    return inPos;
+  }
+
+  // Aligns input to start of literal value if input contains hostname.
+  private int alignInputPositionToLiteral(
+      List<String> input, int inPos, String literalSegmentValue) {
+    for (; inPos < input.size(); inPos++) {
+      if (literalSegmentValue.equals(input.get(inPos))) {
+        return inPos;
+      }
+    }
+    return inPos;
   }
 
   // Tries to match the input based on the segments at given positions. Returns a boolean

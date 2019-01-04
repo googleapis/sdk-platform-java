@@ -84,6 +84,30 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void matchWithHostNameAndProtocol() {
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone}");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone")).isEqualTo("europe-west3-c");
+  }
+
+  @Test
+  public void matchWithHostNameAndProtocolWithTemplateStartWithBinding() {
+    PathTemplate template = PathTemplate.create("{project}/zones/{zone}");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone")).isEqualTo("europe-west3-c");
+  }
+
+  @Test
   public void matchWithCustomMethod() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*:custom");
     Map<String, String> match = template.match("buckets/b/objects/o:custom");
