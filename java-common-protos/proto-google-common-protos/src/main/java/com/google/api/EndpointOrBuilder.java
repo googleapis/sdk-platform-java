@@ -33,9 +33,9 @@ public interface EndpointOrBuilder extends
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  java.util.List<java.lang.String>
+  @java.lang.Deprecated java.util.List<java.lang.String>
       getAliasesList();
   /**
    * <pre>
@@ -45,9 +45,9 @@ public interface EndpointOrBuilder extends
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  int getAliasesCount();
+  @java.lang.Deprecated int getAliasesCount();
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
@@ -56,9 +56,9 @@ public interface EndpointOrBuilder extends
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  java.lang.String getAliases(int index);
+  @java.lang.Deprecated java.lang.String getAliases(int index);
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
@@ -67,9 +67,9 @@ public interface EndpointOrBuilder extends
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  com.google.protobuf.ByteString
+  @java.lang.Deprecated com.google.protobuf.ByteString
       getAliasesBytes(int index);
 
   /**

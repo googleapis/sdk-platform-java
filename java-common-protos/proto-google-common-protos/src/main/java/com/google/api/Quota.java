@@ -148,7 +148,6 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -159,7 +158,6 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -171,7 +169,6 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -182,7 +179,6 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -193,7 +189,6 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -209,7 +204,6 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one
    * or more metrics.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -221,7 +215,6 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one
    * or more metrics.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -234,7 +227,6 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one
    * or more metrics.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -246,7 +238,6 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one
    * or more metrics.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -258,7 +249,6 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one
    * or more metrics.
-   * Used by metric-based quotas only.
    * </pre>
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -724,7 +714,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -739,7 +728,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -754,7 +742,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -769,7 +756,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -791,7 +777,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -810,7 +795,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -831,7 +815,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -853,7 +836,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -872,7 +854,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -891,7 +872,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -911,7 +891,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -929,7 +908,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -947,7 +925,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -959,7 +936,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -974,7 +950,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -990,7 +965,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1002,7 +976,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1015,7 +988,6 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * List of `QuotaLimit` definitions for the service.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
@@ -1055,7 +1027,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1071,7 +1042,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1087,7 +1057,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1103,7 +1072,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1126,7 +1094,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1146,7 +1113,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1168,7 +1134,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1191,7 +1156,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1211,7 +1175,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1231,7 +1194,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1252,7 +1214,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1271,7 +1232,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1290,7 +1250,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1303,7 +1262,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1319,7 +1277,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1336,7 +1293,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1349,7 +1305,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
@@ -1363,7 +1318,6 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * List of `MetricRule` definitions, each one mapping a selected method to one
      * or more metrics.
-     * Used by metric-based quotas only.
      * </pre>
      *
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>

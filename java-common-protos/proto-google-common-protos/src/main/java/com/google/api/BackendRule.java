@@ -24,6 +24,8 @@ private static final long serialVersionUID = 0L;
     address_ = "";
     deadline_ = 0D;
     minDeadline_ = 0D;
+    operationDeadline_ = 0D;
+    pathTranslation_ = 0;
   }
 
   @java.lang.Override
@@ -72,6 +74,23 @@ private static final long serialVersionUID = 0L;
             minDeadline_ = input.readDouble();
             break;
           }
+          case 41: {
+
+            operationDeadline_ = input.readDouble();
+            break;
+          }
+          case 48: {
+            int rawValue = input.readEnum();
+
+            pathTranslation_ = rawValue;
+            break;
+          }
+          case 58: {
+            java.lang.String s = input.readStringRequireUtf8();
+            authenticationCase_ = 7;
+            authentication_ = s;
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -102,6 +121,222 @@ private static final long serialVersionUID = 0L;
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             com.google.api.BackendRule.class, com.google.api.BackendRule.Builder.class);
+  }
+
+  /**
+   * <pre>
+   * Path Translation specifies how to combine the backend address with the
+   * request path in order to produce the appropriate forwarding URL for the
+   * request.
+   * Path Translation is applicable only to HTTP-based backends. Backends which
+   * do not accept requests over HTTP/HTTPS should leave `path_translation`
+   * unspecified.
+   * </pre>
+   *
+   * Protobuf enum {@code google.api.BackendRule.PathTranslation}
+   */
+  public enum PathTranslation
+      implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     * <code>PATH_TRANSLATION_UNSPECIFIED = 0;</code>
+     */
+    PATH_TRANSLATION_UNSPECIFIED(0),
+    /**
+     * <pre>
+     * Use the backend address as-is, with no modification to the path. If the
+     * URL pattern contains variables, the variable names and values will be
+     * appended to the query string. If a query string parameter and a URL
+     * pattern variable have the same name, this may result in duplicate keys in
+     * the query string.
+     * # Examples
+     * Given the following operation config:
+     *     Method path:        /api/company/{cid}/user/{uid}
+     *     Backend address:    https://example.cloudfunctions.net/getUser
+     * Requests to the following request paths will call the backend at the
+     * translated path:
+     *     Request path: /api/company/widgetworks/user/johndoe
+     *     Translated:   https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:   https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
+     * </pre>
+     *
+     * <code>CONSTANT_ADDRESS = 1;</code>
+     */
+    CONSTANT_ADDRESS(1),
+    /**
+     * <pre>
+     * The request path will be appended to the backend address.
+     * # Examples
+     * Given the following operation config:
+     *     Method path:        /api/company/{cid}/user/{uid}
+     *     Backend address:    https://example.appspot.com
+     * Requests to the following request paths will call the backend at the
+     * translated path:
+     *     Request path: /api/company/widgetworks/user/johndoe
+     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
+     * </pre>
+     *
+     * <code>APPEND_PATH_TO_ADDRESS = 2;</code>
+     */
+    APPEND_PATH_TO_ADDRESS(2),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     * <code>PATH_TRANSLATION_UNSPECIFIED = 0;</code>
+     */
+    public static final int PATH_TRANSLATION_UNSPECIFIED_VALUE = 0;
+    /**
+     * <pre>
+     * Use the backend address as-is, with no modification to the path. If the
+     * URL pattern contains variables, the variable names and values will be
+     * appended to the query string. If a query string parameter and a URL
+     * pattern variable have the same name, this may result in duplicate keys in
+     * the query string.
+     * # Examples
+     * Given the following operation config:
+     *     Method path:        /api/company/{cid}/user/{uid}
+     *     Backend address:    https://example.cloudfunctions.net/getUser
+     * Requests to the following request paths will call the backend at the
+     * translated path:
+     *     Request path: /api/company/widgetworks/user/johndoe
+     *     Translated:   https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:   https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
+     * </pre>
+     *
+     * <code>CONSTANT_ADDRESS = 1;</code>
+     */
+    public static final int CONSTANT_ADDRESS_VALUE = 1;
+    /**
+     * <pre>
+     * The request path will be appended to the backend address.
+     * # Examples
+     * Given the following operation config:
+     *     Method path:        /api/company/{cid}/user/{uid}
+     *     Backend address:    https://example.appspot.com
+     * Requests to the following request paths will call the backend at the
+     * translated path:
+     *     Request path: /api/company/widgetworks/user/johndoe
+     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
+     * </pre>
+     *
+     * <code>APPEND_PATH_TO_ADDRESS = 2;</code>
+     */
+    public static final int APPEND_PATH_TO_ADDRESS_VALUE = 2;
+
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static PathTranslation valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static PathTranslation forNumber(int value) {
+      switch (value) {
+        case 0: return PATH_TRANSLATION_UNSPECIFIED;
+        case 1: return CONSTANT_ADDRESS;
+        case 2: return APPEND_PATH_TO_ADDRESS;
+        default: return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<PathTranslation>
+        internalGetValueMap() {
+      return internalValueMap;
+    }
+    private static final com.google.protobuf.Internal.EnumLiteMap<
+        PathTranslation> internalValueMap =
+          new com.google.protobuf.Internal.EnumLiteMap<PathTranslation>() {
+            public PathTranslation findValueByNumber(int number) {
+              return PathTranslation.forNumber(number);
+            }
+          };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor
+        getValueDescriptor() {
+      return getDescriptor().getValues().get(ordinal());
+    }
+    public final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptorForType() {
+      return getDescriptor();
+    }
+    public static final com.google.protobuf.Descriptors.EnumDescriptor
+        getDescriptor() {
+      return com.google.api.BackendRule.getDescriptor().getEnumTypes().get(0);
+    }
+
+    private static final PathTranslation[] VALUES = values();
+
+    public static PathTranslation valueOf(
+        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException(
+          "EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private PathTranslation(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.api.BackendRule.PathTranslation)
+  }
+
+  private int authenticationCase_ = 0;
+  private java.lang.Object authentication_;
+  public enum AuthenticationCase
+      implements com.google.protobuf.Internal.EnumLite {
+    JWT_AUDIENCE(7),
+    AUTHENTICATION_NOT_SET(0);
+    private final int value;
+    private AuthenticationCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static AuthenticationCase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static AuthenticationCase forNumber(int value) {
+      switch (value) {
+        case 7: return JWT_AUDIENCE;
+        case 0: return AUTHENTICATION_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public AuthenticationCase
+  getAuthenticationCase() {
+    return AuthenticationCase.forNumber(
+        authenticationCase_);
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
@@ -218,6 +453,88 @@ private static final long serialVersionUID = 0L;
     return minDeadline_;
   }
 
+  public static final int OPERATION_DEADLINE_FIELD_NUMBER = 5;
+  private double operationDeadline_;
+  /**
+   * <pre>
+   * The number of seconds to wait for the completion of a long running
+   * operation. The default is no deadline.
+   * </pre>
+   *
+   * <code>double operation_deadline = 5;</code>
+   */
+  public double getOperationDeadline() {
+    return operationDeadline_;
+  }
+
+  public static final int PATH_TRANSLATION_FIELD_NUMBER = 6;
+  private int pathTranslation_;
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   */
+  public int getPathTranslationValue() {
+    return pathTranslation_;
+  }
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   */
+  public com.google.api.BackendRule.PathTranslation getPathTranslation() {
+    @SuppressWarnings("deprecation")
+    com.google.api.BackendRule.PathTranslation result = com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
+    return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
+  }
+
+  public static final int JWT_AUDIENCE_FIELD_NUMBER = 7;
+  /**
+   * <pre>
+   * The JWT audience is used when generating a JWT id token for the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   */
+  public java.lang.String getJwtAudience() {
+    java.lang.Object ref = "";
+    if (authenticationCase_ == 7) {
+      ref = authentication_;
+    }
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      if (authenticationCase_ == 7) {
+        authentication_ = s;
+      }
+      return s;
+    }
+  }
+  /**
+   * <pre>
+   * The JWT audience is used when generating a JWT id token for the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   */
+  public com.google.protobuf.ByteString
+      getJwtAudienceBytes() {
+    java.lang.Object ref = "";
+    if (authenticationCase_ == 7) {
+      ref = authentication_;
+    }
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      if (authenticationCase_ == 7) {
+        authentication_ = b;
+      }
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -244,6 +561,15 @@ private static final long serialVersionUID = 0L;
     if (minDeadline_ != 0D) {
       output.writeDouble(4, minDeadline_);
     }
+    if (operationDeadline_ != 0D) {
+      output.writeDouble(5, operationDeadline_);
+    }
+    if (pathTranslation_ != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
+      output.writeEnum(6, pathTranslation_);
+    }
+    if (authenticationCase_ == 7) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 7, authentication_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -266,6 +592,17 @@ private static final long serialVersionUID = 0L;
     if (minDeadline_ != 0D) {
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(4, minDeadline_);
+    }
+    if (operationDeadline_ != 0D) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeDoubleSize(5, operationDeadline_);
+    }
+    if (pathTranslation_ != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(6, pathTranslation_);
+    }
+    if (authenticationCase_ == 7) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, authentication_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -295,6 +632,22 @@ private static final long serialVersionUID = 0L;
         java.lang.Double.doubleToLongBits(getMinDeadline())
         == java.lang.Double.doubleToLongBits(
             other.getMinDeadline()));
+    result = result && (
+        java.lang.Double.doubleToLongBits(getOperationDeadline())
+        == java.lang.Double.doubleToLongBits(
+            other.getOperationDeadline()));
+    result = result && pathTranslation_ == other.pathTranslation_;
+    result = result && getAuthenticationCase().equals(
+        other.getAuthenticationCase());
+    if (!result) return false;
+    switch (authenticationCase_) {
+      case 7:
+        result = result && getJwtAudience()
+            .equals(other.getJwtAudience());
+        break;
+      case 0:
+      default:
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -316,6 +669,19 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + MIN_DEADLINE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
         java.lang.Double.doubleToLongBits(getMinDeadline()));
+    hash = (37 * hash) + OPERATION_DEADLINE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        java.lang.Double.doubleToLongBits(getOperationDeadline()));
+    hash = (37 * hash) + PATH_TRANSLATION_FIELD_NUMBER;
+    hash = (53 * hash) + pathTranslation_;
+    switch (authenticationCase_) {
+      case 7:
+        hash = (37 * hash) + JWT_AUDIENCE_FIELD_NUMBER;
+        hash = (53 * hash) + getJwtAudience().hashCode();
+        break;
+      case 0:
+      default:
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -461,6 +827,12 @@ private static final long serialVersionUID = 0L;
 
       minDeadline_ = 0D;
 
+      operationDeadline_ = 0D;
+
+      pathTranslation_ = 0;
+
+      authenticationCase_ = 0;
+      authentication_ = null;
       return this;
     }
 
@@ -491,6 +863,12 @@ private static final long serialVersionUID = 0L;
       result.address_ = address_;
       result.deadline_ = deadline_;
       result.minDeadline_ = minDeadline_;
+      result.operationDeadline_ = operationDeadline_;
+      result.pathTranslation_ = pathTranslation_;
+      if (authenticationCase_ == 7) {
+        result.authentication_ = authentication_;
+      }
+      result.authenticationCase_ = authenticationCase_;
       onBuilt();
       return result;
     }
@@ -553,6 +931,23 @@ private static final long serialVersionUID = 0L;
       if (other.getMinDeadline() != 0D) {
         setMinDeadline(other.getMinDeadline());
       }
+      if (other.getOperationDeadline() != 0D) {
+        setOperationDeadline(other.getOperationDeadline());
+      }
+      if (other.pathTranslation_ != 0) {
+        setPathTranslationValue(other.getPathTranslationValue());
+      }
+      switch (other.getAuthenticationCase()) {
+        case JWT_AUDIENCE: {
+          authenticationCase_ = 7;
+          authentication_ = other.authentication_;
+          onChanged();
+          break;
+        }
+        case AUTHENTICATION_NOT_SET: {
+          break;
+        }
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -581,6 +976,21 @@ private static final long serialVersionUID = 0L;
       }
       return this;
     }
+    private int authenticationCase_ = 0;
+    private java.lang.Object authentication_;
+    public AuthenticationCase
+        getAuthenticationCase() {
+      return AuthenticationCase.forNumber(
+          authenticationCase_);
+    }
+
+    public Builder clearAuthentication() {
+      authenticationCase_ = 0;
+      authentication_ = null;
+      onChanged();
+      return this;
+    }
+
 
     private java.lang.Object selector_ = "";
     /**
@@ -843,6 +1253,192 @@ private static final long serialVersionUID = 0L;
     public Builder clearMinDeadline() {
       
       minDeadline_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private double operationDeadline_ ;
+    /**
+     * <pre>
+     * The number of seconds to wait for the completion of a long running
+     * operation. The default is no deadline.
+     * </pre>
+     *
+     * <code>double operation_deadline = 5;</code>
+     */
+    public double getOperationDeadline() {
+      return operationDeadline_;
+    }
+    /**
+     * <pre>
+     * The number of seconds to wait for the completion of a long running
+     * operation. The default is no deadline.
+     * </pre>
+     *
+     * <code>double operation_deadline = 5;</code>
+     */
+    public Builder setOperationDeadline(double value) {
+      
+      operationDeadline_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * The number of seconds to wait for the completion of a long running
+     * operation. The default is no deadline.
+     * </pre>
+     *
+     * <code>double operation_deadline = 5;</code>
+     */
+    public Builder clearOperationDeadline() {
+      
+      operationDeadline_ = 0D;
+      onChanged();
+      return this;
+    }
+
+    private int pathTranslation_ = 0;
+    /**
+     * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+     */
+    public int getPathTranslationValue() {
+      return pathTranslation_;
+    }
+    /**
+     * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+     */
+    public Builder setPathTranslationValue(int value) {
+      pathTranslation_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+     */
+    public com.google.api.BackendRule.PathTranslation getPathTranslation() {
+      @SuppressWarnings("deprecation")
+      com.google.api.BackendRule.PathTranslation result = com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
+      return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
+    }
+    /**
+     * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+     */
+    public Builder setPathTranslation(com.google.api.BackendRule.PathTranslation value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      pathTranslation_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+     */
+    public Builder clearPathTranslation() {
+      
+      pathTranslation_ = 0;
+      onChanged();
+      return this;
+    }
+
+    /**
+     * <pre>
+     * The JWT audience is used when generating a JWT id token for the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     */
+    public java.lang.String getJwtAudience() {
+      java.lang.Object ref = "";
+      if (authenticationCase_ == 7) {
+        ref = authentication_;
+      }
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (authenticationCase_ == 7) {
+          authentication_ = s;
+        }
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <pre>
+     * The JWT audience is used when generating a JWT id token for the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getJwtAudienceBytes() {
+      java.lang.Object ref = "";
+      if (authenticationCase_ == 7) {
+        ref = authentication_;
+      }
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        if (authenticationCase_ == 7) {
+          authentication_ = b;
+        }
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <pre>
+     * The JWT audience is used when generating a JWT id token for the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     */
+    public Builder setJwtAudience(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  authenticationCase_ = 7;
+      authentication_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * The JWT audience is used when generating a JWT id token for the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     */
+    public Builder clearJwtAudience() {
+      if (authenticationCase_ == 7) {
+        authenticationCase_ = 0;
+        authentication_ = null;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * The JWT audience is used when generating a JWT id token for the backend.
+     * </pre>
+     *
+     * <code>string jwt_audience = 7;</code>
+     */
+    public Builder setJwtAudienceBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      authenticationCase_ = 7;
+      authentication_ = value;
       onChanged();
       return this;
     }

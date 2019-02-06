@@ -64,4 +64,43 @@ public interface BackendRuleOrBuilder extends
    * <code>double min_deadline = 4;</code>
    */
   double getMinDeadline();
+
+  /**
+   * <pre>
+   * The number of seconds to wait for the completion of a long running
+   * operation. The default is no deadline.
+   * </pre>
+   *
+   * <code>double operation_deadline = 5;</code>
+   */
+  double getOperationDeadline();
+
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   */
+  int getPathTranslationValue();
+  /**
+   * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
+   */
+  com.google.api.BackendRule.PathTranslation getPathTranslation();
+
+  /**
+   * <pre>
+   * The JWT audience is used when generating a JWT id token for the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   */
+  java.lang.String getJwtAudience();
+  /**
+   * <pre>
+   * The JWT audience is used when generating a JWT id token for the backend.
+   * </pre>
+   *
+   * <code>string jwt_audience = 7;</code>
+   */
+  com.google.protobuf.ByteString
+      getJwtAudienceBytes();
+
+  public com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
 }

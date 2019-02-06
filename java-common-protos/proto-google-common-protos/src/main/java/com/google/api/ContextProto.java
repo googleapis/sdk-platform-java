@@ -35,11 +35,13 @@ public final class ContextProto {
     java.lang.String[] descriptorData = {
       "\n\030google/api/context.proto\022\ngoogle.api\"1" +
       "\n\007Context\022&\n\005rules\030\001 \003(\0132\027.google.api.Co" +
-      "ntextRule\"D\n\013ContextRule\022\020\n\010selector\030\001 \001" +
-      "(\t\022\021\n\trequested\030\002 \003(\t\022\020\n\010provided\030\003 \003(\tB" +
-      "n\n\016com.google.apiB\014ContextProtoP\001ZEgoogl" +
-      "e.golang.org/genproto/googleapis/api/ser" +
-      "viceconfig;serviceconfig\242\002\004GAPIb\006proto3"
+      "ntextRule\"\215\001\n\013ContextRule\022\020\n\010selector\030\001 " +
+      "\001(\t\022\021\n\trequested\030\002 \003(\t\022\020\n\010provided\030\003 \003(\t" +
+      "\022\"\n\032allowed_request_extensions\030\004 \003(\t\022#\n\033" +
+      "allowed_response_extensions\030\005 \003(\tBn\n\016com" +
+      ".google.apiB\014ContextProtoP\001ZEgoogle.gola" +
+      "ng.org/genproto/googleapis/api/serviceco" +
+      "nfig;serviceconfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -64,7 +66,7 @@ public final class ContextProto {
     internal_static_google_api_ContextRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_ContextRule_descriptor,
-        new java.lang.String[] { "Selector", "Requested", "Provided", });
+        new java.lang.String[] { "Selector", "Requested", "Provided", "AllowedRequestExtensions", "AllowedResponseExtensions", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -11,10 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
 syntax = "proto3";
 
 package google.api;
+
+import "google/api/annotations.proto";
 
 option go_package = "google.golang.org/genproto/googleapis/api/serviceconfig;serviceconfig";
 option java_multiple_files = true;
@@ -115,7 +118,7 @@ message AuthProvider {
   //                bookstore_web.apps.googleusercontent.com
   string audiences = 4;
 
-  // Redirect URL if JWT token is required but no present or is expired.
+  // Redirect URL if JWT token is required but not present or is expired.
   // Implement authorizationUrl of securityDefinitions in OpenAPI spec.
   string authorization_url = 5;
 }

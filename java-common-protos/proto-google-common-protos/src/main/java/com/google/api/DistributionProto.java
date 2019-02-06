@@ -44,6 +44,11 @@ public final class DistributionProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_api_Distribution_BucketOptions_Explicit_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_api_Distribution_Exemplar_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_Distribution_Exemplar_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -54,27 +59,33 @@ public final class DistributionProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\035google/api/distribution.proto\022\ngoogle." +
-      "api\032\034google/api/annotations.proto\"\256\005\n\014Di" +
-      "stribution\022\r\n\005count\030\001 \001(\003\022\014\n\004mean\030\002 \001(\001\022" +
-      " \n\030sum_of_squared_deviation\030\003 \001(\001\022-\n\005ran" +
-      "ge\030\004 \001(\0132\036.google.api.Distribution.Range" +
-      "\022>\n\016bucket_options\030\006 \001(\0132&.google.api.Di" +
-      "stribution.BucketOptions\022\025\n\rbucket_count" +
-      "s\030\007 \003(\003\032!\n\005Range\022\013\n\003min\030\001 \001(\001\022\013\n\003max\030\002 \001" +
-      "(\001\032\265\003\n\rBucketOptions\022G\n\016linear_buckets\030\001" +
-      " \001(\0132-.google.api.Distribution.BucketOpt" +
-      "ions.LinearH\000\022Q\n\023exponential_buckets\030\002 \001" +
-      "(\01322.google.api.Distribution.BucketOptio" +
-      "ns.ExponentialH\000\022K\n\020explicit_buckets\030\003 \001" +
-      "(\0132/.google.api.Distribution.BucketOptio" +
-      "ns.ExplicitH\000\032C\n\006Linear\022\032\n\022num_finite_bu" +
-      "ckets\030\001 \001(\005\022\r\n\005width\030\002 \001(\001\022\016\n\006offset\030\003 \001" +
-      "(\001\032O\n\013Exponential\022\032\n\022num_finite_buckets\030" +
-      "\001 \001(\005\022\025\n\rgrowth_factor\030\002 \001(\001\022\r\n\005scale\030\003 " +
-      "\001(\001\032\032\n\010Explicit\022\016\n\006bounds\030\001 \003(\001B\t\n\007optio" +
-      "nsBj\n\016com.google.apiB\021DistributionProtoP" +
-      "\001ZCgoogle.golang.org/genproto/googleapis" +
-      "/api/distribution;distributionb\006proto3"
+      "api\032\031google/protobuf/any.proto\032\037google/p" +
+      "rotobuf/timestamp.proto\"\331\006\n\014Distribution" +
+      "\022\r\n\005count\030\001 \001(\003\022\014\n\004mean\030\002 \001(\001\022 \n\030sum_of_" +
+      "squared_deviation\030\003 \001(\001\022-\n\005range\030\004 \001(\0132\036" +
+      ".google.api.Distribution.Range\022>\n\016bucket" +
+      "_options\030\006 \001(\0132&.google.api.Distribution" +
+      ".BucketOptions\022\025\n\rbucket_counts\030\007 \003(\003\0224\n" +
+      "\texemplars\030\n \003(\0132!.google.api.Distributi" +
+      "on.Exemplar\032!\n\005Range\022\013\n\003min\030\001 \001(\001\022\013\n\003max" +
+      "\030\002 \001(\001\032\265\003\n\rBucketOptions\022G\n\016linear_bucke" +
+      "ts\030\001 \001(\0132-.google.api.Distribution.Bucke" +
+      "tOptions.LinearH\000\022Q\n\023exponential_buckets" +
+      "\030\002 \001(\01322.google.api.Distribution.BucketO" +
+      "ptions.ExponentialH\000\022K\n\020explicit_buckets" +
+      "\030\003 \001(\0132/.google.api.Distribution.BucketO" +
+      "ptions.ExplicitH\000\032C\n\006Linear\022\032\n\022num_finit" +
+      "e_buckets\030\001 \001(\005\022\r\n\005width\030\002 \001(\001\022\016\n\006offset" +
+      "\030\003 \001(\001\032O\n\013Exponential\022\032\n\022num_finite_buck" +
+      "ets\030\001 \001(\005\022\025\n\rgrowth_factor\030\002 \001(\001\022\r\n\005scal" +
+      "e\030\003 \001(\001\032\032\n\010Explicit\022\016\n\006bounds\030\001 \003(\001B\t\n\007o" +
+      "ptions\032s\n\010Exemplar\022\r\n\005value\030\001 \001(\001\022-\n\ttim" +
+      "estamp\030\002 \001(\0132\032.google.protobuf.Timestamp" +
+      "\022)\n\013attachments\030\003 \003(\0132\024.google.protobuf." +
+      "AnyBq\n\016com.google.apiB\021DistributionProto" +
+      "P\001ZCgoogle.golang.org/genproto/googleapi" +
+      "s/api/distribution;distribution\242\002\004GAPIb\006" +
+      "proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -87,14 +98,15 @@ public final class DistributionProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.AnnotationsProto.getDescriptor(),
+          com.google.protobuf.AnyProto.getDescriptor(),
+          com.google.protobuf.TimestampProto.getDescriptor(),
         }, assigner);
     internal_static_google_api_Distribution_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_Distribution_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_descriptor,
-        new java.lang.String[] { "Count", "Mean", "SumOfSquaredDeviation", "Range", "BucketOptions", "BucketCounts", });
+        new java.lang.String[] { "Count", "Mean", "SumOfSquaredDeviation", "Range", "BucketOptions", "BucketCounts", "Exemplars", });
     internal_static_google_api_Distribution_Range_descriptor =
       internal_static_google_api_Distribution_descriptor.getNestedTypes().get(0);
     internal_static_google_api_Distribution_Range_fieldAccessorTable = new
@@ -125,7 +137,14 @@ public final class DistributionProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor,
         new java.lang.String[] { "Bounds", });
-    com.google.api.AnnotationsProto.getDescriptor();
+    internal_static_google_api_Distribution_Exemplar_descriptor =
+      internal_static_google_api_Distribution_descriptor.getNestedTypes().get(2);
+    internal_static_google_api_Distribution_Exemplar_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_api_Distribution_Exemplar_descriptor,
+        new java.lang.String[] { "Value", "Timestamp", "Attachments", });
+    com.google.protobuf.AnyProto.getDescriptor();
+    com.google.protobuf.TimestampProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

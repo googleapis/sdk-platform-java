@@ -24,6 +24,8 @@ private static final long serialVersionUID = 0L;
     selector_ = "";
     requested_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
@@ -74,6 +76,24 @@ private static final long serialVersionUID = 0L;
             provided_.add(s);
             break;
           }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              allowedRequestExtensions_ = new com.google.protobuf.LazyStringArrayList();
+              mutable_bitField0_ |= 0x00000008;
+            }
+            allowedRequestExtensions_.add(s);
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+              allowedResponseExtensions_ = new com.google.protobuf.LazyStringArrayList();
+              mutable_bitField0_ |= 0x00000010;
+            }
+            allowedResponseExtensions_.add(s);
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -94,6 +114,12 @@ private static final long serialVersionUID = 0L;
       }
       if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
         provided_ = provided_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        allowedRequestExtensions_ = allowedRequestExtensions_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+        allowedResponseExtensions_ = allowedResponseExtensions_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -247,6 +273,104 @@ private static final long serialVersionUID = 0L;
     return provided_.getByteString(index);
   }
 
+  public static final int ALLOWED_REQUEST_EXTENSIONS_FIELD_NUMBER = 4;
+  private com.google.protobuf.LazyStringList allowedRequestExtensions_;
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  public com.google.protobuf.ProtocolStringList
+      getAllowedRequestExtensionsList() {
+    return allowedRequestExtensions_;
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  public int getAllowedRequestExtensionsCount() {
+    return allowedRequestExtensions_.size();
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  public java.lang.String getAllowedRequestExtensions(int index) {
+    return allowedRequestExtensions_.get(index);
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAllowedRequestExtensionsBytes(int index) {
+    return allowedRequestExtensions_.getByteString(index);
+  }
+
+  public static final int ALLOWED_RESPONSE_EXTENSIONS_FIELD_NUMBER = 5;
+  private com.google.protobuf.LazyStringList allowedResponseExtensions_;
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  public com.google.protobuf.ProtocolStringList
+      getAllowedResponseExtensionsList() {
+    return allowedResponseExtensions_;
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  public int getAllowedResponseExtensionsCount() {
+    return allowedResponseExtensions_.size();
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  public java.lang.String getAllowedResponseExtensions(int index) {
+    return allowedResponseExtensions_.get(index);
+  }
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  public com.google.protobuf.ByteString
+      getAllowedResponseExtensionsBytes(int index) {
+    return allowedResponseExtensions_.getByteString(index);
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -269,6 +393,12 @@ private static final long serialVersionUID = 0L;
     }
     for (int i = 0; i < provided_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, provided_.getRaw(i));
+    }
+    for (int i = 0; i < allowedRequestExtensions_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, allowedRequestExtensions_.getRaw(i));
+    }
+    for (int i = 0; i < allowedResponseExtensions_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, allowedResponseExtensions_.getRaw(i));
     }
     unknownFields.writeTo(output);
   }
@@ -298,6 +428,22 @@ private static final long serialVersionUID = 0L;
       size += dataSize;
       size += 1 * getProvidedList().size();
     }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < allowedRequestExtensions_.size(); i++) {
+        dataSize += computeStringSizeNoTag(allowedRequestExtensions_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getAllowedRequestExtensionsList().size();
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < allowedResponseExtensions_.size(); i++) {
+        dataSize += computeStringSizeNoTag(allowedResponseExtensions_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getAllowedResponseExtensionsList().size();
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -320,6 +466,10 @@ private static final long serialVersionUID = 0L;
         .equals(other.getRequestedList());
     result = result && getProvidedList()
         .equals(other.getProvidedList());
+    result = result && getAllowedRequestExtensionsList()
+        .equals(other.getAllowedRequestExtensionsList());
+    result = result && getAllowedResponseExtensionsList()
+        .equals(other.getAllowedResponseExtensionsList());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -340,6 +490,14 @@ private static final long serialVersionUID = 0L;
     if (getProvidedCount() > 0) {
       hash = (37 * hash) + PROVIDED_FIELD_NUMBER;
       hash = (53 * hash) + getProvidedList().hashCode();
+    }
+    if (getAllowedRequestExtensionsCount() > 0) {
+      hash = (37 * hash) + ALLOWED_REQUEST_EXTENSIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getAllowedRequestExtensionsList().hashCode();
+    }
+    if (getAllowedResponseExtensionsCount() > 0) {
+      hash = (37 * hash) + ALLOWED_RESPONSE_EXTENSIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getAllowedResponseExtensionsList().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -485,6 +643,10 @@ private static final long serialVersionUID = 0L;
       bitField0_ = (bitField0_ & ~0x00000002);
       provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000004);
+      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000010);
       return this;
     }
 
@@ -524,6 +686,16 @@ private static final long serialVersionUID = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
       }
       result.provided_ = provided_;
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        allowedRequestExtensions_ = allowedRequestExtensions_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000008);
+      }
+      result.allowedRequestExtensions_ = allowedRequestExtensions_;
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        allowedResponseExtensions_ = allowedResponseExtensions_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000010);
+      }
+      result.allowedResponseExtensions_ = allowedResponseExtensions_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -594,6 +766,26 @@ private static final long serialVersionUID = 0L;
         } else {
           ensureProvidedIsMutable();
           provided_.addAll(other.provided_);
+        }
+        onChanged();
+      }
+      if (!other.allowedRequestExtensions_.isEmpty()) {
+        if (allowedRequestExtensions_.isEmpty()) {
+          allowedRequestExtensions_ = other.allowedRequestExtensions_;
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          ensureAllowedRequestExtensionsIsMutable();
+          allowedRequestExtensions_.addAll(other.allowedRequestExtensions_);
+        }
+        onChanged();
+      }
+      if (!other.allowedResponseExtensions_.isEmpty()) {
+        if (allowedResponseExtensions_.isEmpty()) {
+          allowedResponseExtensions_ = other.allowedResponseExtensions_;
+          bitField0_ = (bitField0_ & ~0x00000010);
+        } else {
+          ensureAllowedResponseExtensionsIsMutable();
+          allowedResponseExtensions_.addAll(other.allowedResponseExtensions_);
         }
         onChanged();
       }
@@ -977,6 +1169,284 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       ensureProvidedIsMutable();
       provided_.add(value);
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private void ensureAllowedRequestExtensionsIsMutable() {
+      if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        allowedRequestExtensions_ = new com.google.protobuf.LazyStringArrayList(allowedRequestExtensions_);
+        bitField0_ |= 0x00000008;
+       }
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getAllowedRequestExtensionsList() {
+      return allowedRequestExtensions_.getUnmodifiableView();
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public int getAllowedRequestExtensionsCount() {
+      return allowedRequestExtensions_.size();
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public java.lang.String getAllowedRequestExtensions(int index) {
+      return allowedRequestExtensions_.get(index);
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAllowedRequestExtensionsBytes(int index) {
+      return allowedRequestExtensions_.getByteString(index);
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public Builder setAllowedRequestExtensions(
+        int index, java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAllowedRequestExtensionsIsMutable();
+      allowedRequestExtensions_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public Builder addAllowedRequestExtensions(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAllowedRequestExtensionsIsMutable();
+      allowedRequestExtensions_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public Builder addAllAllowedRequestExtensions(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureAllowedRequestExtensionsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, allowedRequestExtensions_);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public Builder clearAllowedRequestExtensions() {
+      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from client to backend.
+     * </pre>
+     *
+     * <code>repeated string allowed_request_extensions = 4;</code>
+     */
+    public Builder addAllowedRequestExtensionsBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      ensureAllowedRequestExtensionsIsMutable();
+      allowedRequestExtensions_.add(value);
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private void ensureAllowedResponseExtensionsIsMutable() {
+      if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+        allowedResponseExtensions_ = new com.google.protobuf.LazyStringArrayList(allowedResponseExtensions_);
+        bitField0_ |= 0x00000010;
+       }
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getAllowedResponseExtensionsList() {
+      return allowedResponseExtensions_.getUnmodifiableView();
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public int getAllowedResponseExtensionsCount() {
+      return allowedResponseExtensions_.size();
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public java.lang.String getAllowedResponseExtensions(int index) {
+      return allowedResponseExtensions_.get(index);
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAllowedResponseExtensionsBytes(int index) {
+      return allowedResponseExtensions_.getByteString(index);
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public Builder setAllowedResponseExtensions(
+        int index, java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAllowedResponseExtensionsIsMutable();
+      allowedResponseExtensions_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public Builder addAllowedResponseExtensions(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureAllowedResponseExtensionsIsMutable();
+      allowedResponseExtensions_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public Builder addAllAllowedResponseExtensions(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureAllowedResponseExtensionsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, allowedResponseExtensions_);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public Builder clearAllowedResponseExtensions() {
+      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * A list of full type names or extension IDs of extensions allowed in grpc
+     * side channel from backend to client.
+     * </pre>
+     *
+     * <code>repeated string allowed_response_extensions = 5;</code>
+     */
+    public Builder addAllowedResponseExtensionsBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      ensureAllowedResponseExtensionsIsMutable();
+      allowedResponseExtensions_.add(value);
       onChanged();
       return this;
     }

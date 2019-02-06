@@ -9,7 +9,9 @@ public interface DistributionOrBuilder extends
 
   /**
    * <pre>
-   * The number of values in the population. Must be non-negative.
+   * The number of values in the population. Must be non-negative. This value
+   * must equal the sum of the values in `bucket_counts` if a histogram is
+   * provided.
    * </pre>
    *
    * <code>int64 count = 1;</code>
@@ -29,7 +31,7 @@ public interface DistributionOrBuilder extends
   /**
    * <pre>
    * The sum of squared deviations from the mean of the values in the
-   * population.  For values x_i this is:
+   * population. For values x_i this is:
    *     Sum[i=1..n]((x_i - mean)^2)
    * Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
    * describes Welford's method for accumulating this sum in one pass.
@@ -70,7 +72,8 @@ public interface DistributionOrBuilder extends
 
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -78,7 +81,8 @@ public interface DistributionOrBuilder extends
   boolean hasBucketOptions();
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -86,7 +90,8 @@ public interface DistributionOrBuilder extends
   com.google.api.Distribution.BucketOptions getBucketOptions();
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -95,15 +100,19 @@ public interface DistributionOrBuilder extends
 
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
@@ -111,15 +120,19 @@ public interface DistributionOrBuilder extends
   java.util.List<java.lang.Long> getBucketCountsList();
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
@@ -127,18 +140,66 @@ public interface DistributionOrBuilder extends
   int getBucketCountsCount();
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
    */
   long getBucketCounts(int index);
+
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  java.util.List<com.google.api.Distribution.Exemplar> 
+      getExemplarsList();
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  com.google.api.Distribution.Exemplar getExemplars(int index);
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  int getExemplarsCount();
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder> 
+      getExemplarsOrBuilderList();
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(
+      int index);
 }

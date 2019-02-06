@@ -28,10 +28,11 @@ public interface MetricDescriptorOrBuilder extends
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined custom metric types have the DNS name
-   * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-   * grouping. For example:
+   * URL-encoded.  All user-defined metric types have the DNS name
+   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+   * use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
+   *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
@@ -41,10 +42,11 @@ public interface MetricDescriptorOrBuilder extends
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined custom metric types have the DNS name
-   * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-   * grouping. For example:
+   * URL-encoded.  All user-defined metric types have the DNS name
+   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+   * use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
+   *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
@@ -321,4 +323,29 @@ public interface MetricDescriptorOrBuilder extends
    */
   com.google.protobuf.ByteString
       getDisplayNameBytes();
+
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  boolean hasMetadata();
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata();
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder();
 }

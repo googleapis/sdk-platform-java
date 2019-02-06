@@ -18,6 +18,21 @@ package com.google.api;
  * `google.rpc.context.OriginContext`.
  * Available context types are defined in package
  * `google.rpc.context`.
+ * This also provides mechanism to whitelist any protobuf message extension that
+ * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
+ * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
+ * specific protobuf types that can appear in grpc metadata as follows in your
+ * yaml file:
+ * Example:
+ *     context:
+ *       rules:
+ *        - selector: "google.example.library.v1.LibraryService.CreateBook"
+ *          allowed_request_extensions:
+ *          - google.foo.v1.NewExtension
+ *          allowed_response_extensions:
+ *          - google.foo.v1.NewExtension
+ * You can also specify extension ID instead of fully qualified extension name
+ * here.
  * </pre>
  *
  * Protobuf type {@code google.api.Context}
@@ -336,6 +351,21 @@ private static final long serialVersionUID = 0L;
    * `google.rpc.context.OriginContext`.
    * Available context types are defined in package
    * `google.rpc.context`.
+   * This also provides mechanism to whitelist any protobuf message extension that
+   * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
+   * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
+   * specific protobuf types that can appear in grpc metadata as follows in your
+   * yaml file:
+   * Example:
+   *     context:
+   *       rules:
+   *        - selector: "google.example.library.v1.LibraryService.CreateBook"
+   *          allowed_request_extensions:
+   *          - google.foo.v1.NewExtension
+   *          allowed_response_extensions:
+   *          - google.foo.v1.NewExtension
+   * You can also specify extension ID instead of fully qualified extension name
+   * here.
    * </pre>
    *
    * Protobuf type {@code google.api.Context}

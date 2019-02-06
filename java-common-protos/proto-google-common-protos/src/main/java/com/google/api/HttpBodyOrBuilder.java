@@ -9,7 +9,7 @@ public interface HttpBodyOrBuilder extends
 
   /**
    * <pre>
-   * The HTTP Content-Type string representing the content type of the body.
+   * The HTTP Content-Type header value specifying the content type of the body.
    * </pre>
    *
    * <code>string content_type = 1;</code>
@@ -17,7 +17,7 @@ public interface HttpBodyOrBuilder extends
   java.lang.String getContentType();
   /**
    * <pre>
-   * The HTTP Content-Type string representing the content type of the body.
+   * The HTTP Content-Type header value specifying the content type of the body.
    * </pre>
    *
    * <code>string content_type = 1;</code>
@@ -27,7 +27,7 @@ public interface HttpBodyOrBuilder extends
 
   /**
    * <pre>
-   * HTTP body binary data.
+   * The HTTP request/response body as raw binary.
    * </pre>
    *
    * <code>bytes data = 2;</code>

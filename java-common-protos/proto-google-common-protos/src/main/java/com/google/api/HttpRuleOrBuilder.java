@@ -9,7 +9,7 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Selects methods to which this rule applies.
+   * Selects a method to which this rule applies.
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
@@ -18,7 +18,7 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getSelector();
   /**
    * <pre>
-   * Selects methods to which this rule applies.
+   * Selects a method to which this rule applies.
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
    * </pre>
    *
@@ -29,7 +29,8 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Used for listing and getting information about resources.
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
    * </pre>
    *
    * <code>string get = 2;</code>
@@ -37,7 +38,8 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getGet();
   /**
    * <pre>
-   * Used for listing and getting information about resources.
+   * Maps to HTTP GET. Used for listing and getting information about
+   * resources.
    * </pre>
    *
    * <code>string get = 2;</code>
@@ -47,7 +49,7 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PUT. Used for replacing a resource.
    * </pre>
    *
    * <code>string put = 3;</code>
@@ -55,7 +57,7 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getPut();
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PUT. Used for replacing a resource.
    * </pre>
    *
    * <code>string put = 3;</code>
@@ -65,7 +67,7 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Used for creating a resource.
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
    * </pre>
    *
    * <code>string post = 4;</code>
@@ -73,7 +75,7 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getPost();
   /**
    * <pre>
-   * Used for creating a resource.
+   * Maps to HTTP POST. Used for creating a resource or performing an action.
    * </pre>
    *
    * <code>string post = 4;</code>
@@ -83,7 +85,7 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Used for deleting a resource.
+   * Maps to HTTP DELETE. Used for deleting a resource.
    * </pre>
    *
    * <code>string delete = 5;</code>
@@ -91,7 +93,7 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getDelete();
   /**
    * <pre>
-   * Used for deleting a resource.
+   * Maps to HTTP DELETE. Used for deleting a resource.
    * </pre>
    *
    * <code>string delete = 5;</code>
@@ -101,7 +103,7 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PATCH. Used for updating a resource.
    * </pre>
    *
    * <code>string patch = 6;</code>
@@ -109,7 +111,7 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getPatch();
   /**
    * <pre>
-   * Used for updating a resource.
+   * Maps to HTTP PATCH. Used for updating a resource.
    * </pre>
    *
    * <code>string patch = 6;</code>
@@ -153,10 +155,11 @@ public interface HttpRuleOrBuilder extends
 
   /**
    * <pre>
-   * The name of the request field whose value is mapped to the HTTP body, or
-   * `*` for mapping all fields not captured by the path pattern to the HTTP
-   * body. NOTE: the referred field must not be a repeated field and must be
-   * present at the top-level of request message type.
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
    * </pre>
    *
    * <code>string body = 7;</code>
@@ -164,10 +167,11 @@ public interface HttpRuleOrBuilder extends
   java.lang.String getBody();
   /**
    * <pre>
-   * The name of the request field whose value is mapped to the HTTP body, or
-   * `*` for mapping all fields not captured by the path pattern to the HTTP
-   * body. NOTE: the referred field must not be a repeated field and must be
-   * present at the top-level of request message type.
+   * The name of the request field whose value is mapped to the HTTP request
+   * body, or `*` for mapping all request fields not captured by the path
+   * pattern to the HTTP body, or omitted for not having any HTTP request body.
+   * NOTE: the referred field must be present at the top-level of the request
+   * message type.
    * </pre>
    *
    * <code>string body = 7;</code>
@@ -178,8 +182,10 @@ public interface HttpRuleOrBuilder extends
   /**
    * <pre>
    * Optional. The name of the response field whose value is mapped to the HTTP
-   * body of response. Other response fields are ignored. When
-   * not set, the response message will be used as HTTP body of response.
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
    * </pre>
    *
    * <code>string response_body = 12;</code>
@@ -188,8 +194,10 @@ public interface HttpRuleOrBuilder extends
   /**
    * <pre>
    * Optional. The name of the response field whose value is mapped to the HTTP
-   * body of response. Other response fields are ignored. When
-   * not set, the response message will be used as HTTP body of response.
+   * response body. When omitted, the entire response message will be used
+   * as the HTTP response body.
+   * NOTE: The referred field must be present at the top-level of the response
+   * message type.
    * </pre>
    *
    * <code>string response_body = 12;</code>

@@ -346,6 +346,19 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
+          case 810: {
+            com.google.api.Experimental.Builder subBuilder = null;
+            if (experimental_ != null) {
+              subBuilder = experimental_.toBuilder();
+            }
+            experimental_ = input.readMessage(com.google.api.Experimental.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(experimental_);
+              experimental_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -446,8 +459,10 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object name_;
   /**
    * <pre>
-   * The DNS address at which this service is available,
-   * e.g. `calendar.googleapis.com`.
+   * The service name, which is a DNS-like logical identifier for the
+   * service, such as `calendar.googleapis.com`. The service name
+   * typically goes through DNS verification to make sure the owner
+   * of the service also owns the DNS name.
    * </pre>
    *
    * <code>string name = 1;</code>
@@ -466,8 +481,10 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * The DNS address at which this service is available,
-   * e.g. `calendar.googleapis.com`.
+   * The service name, which is a DNS-like logical identifier for the
+   * service, such as `calendar.googleapis.com`. The service name
+   * typically goes through DNS verification to make sure the owner
+   * of the service also owns the DNS name.
    * </pre>
    *
    * <code>string name = 1;</code>
@@ -492,7 +509,7 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * A unique ID for a specific instance of this message, typically assigned
    * by the client for tracking purpose. If empty, the server may choose to
-   * generate one instead.
+   * generate one instead. Must be no longer than 60 characters.
    * </pre>
    *
    * <code>string id = 33;</code>
@@ -513,7 +530,7 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * A unique ID for a specific instance of this message, typically assigned
    * by the client for tracking purpose. If empty, the server may choose to
-   * generate one instead.
+   * generate one instead. Must be no longer than 60 characters.
    * </pre>
    *
    * <code>string id = 33;</code>
@@ -1520,6 +1537,39 @@ private static final long serialVersionUID = 0L;
     return getSourceInfo();
   }
 
+  public static final int EXPERIMENTAL_FIELD_NUMBER = 101;
+  private com.google.api.Experimental experimental_;
+  /**
+   * <pre>
+   * Experimental configuration.
+   * </pre>
+   *
+   * <code>.google.api.Experimental experimental = 101;</code>
+   */
+  public boolean hasExperimental() {
+    return experimental_ != null;
+  }
+  /**
+   * <pre>
+   * Experimental configuration.
+   * </pre>
+   *
+   * <code>.google.api.Experimental experimental = 101;</code>
+   */
+  public com.google.api.Experimental getExperimental() {
+    return experimental_ == null ? com.google.api.Experimental.getDefaultInstance() : experimental_;
+  }
+  /**
+   * <pre>
+   * Experimental configuration.
+   * </pre>
+   *
+   * <code>.google.api.Experimental experimental = 101;</code>
+   */
+  public com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder() {
+    return getExperimental();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -1608,6 +1658,9 @@ private static final long serialVersionUID = 0L;
     }
     if (sourceInfo_ != null) {
       output.writeMessage(37, getSourceInfo());
+    }
+    if (experimental_ != null) {
+      output.writeMessage(101, getExperimental());
     }
     unknownFields.writeTo(output);
   }
@@ -1713,6 +1766,10 @@ private static final long serialVersionUID = 0L;
     if (sourceInfo_ != null) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(37, getSourceInfo());
+    }
+    if (experimental_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(101, getExperimental());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -1822,6 +1879,11 @@ private static final long serialVersionUID = 0L;
       result = result && getSourceInfo()
           .equals(other.getSourceInfo());
     }
+    result = result && (hasExperimental() == other.hasExperimental());
+    if (hasExperimental()) {
+      result = result && getExperimental()
+          .equals(other.getExperimental());
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -1924,6 +1986,10 @@ private static final long serialVersionUID = 0L;
     if (hasSourceInfo()) {
       hash = (37 * hash) + SOURCE_INFO_FIELD_NUMBER;
       hash = (53 * hash) + getSourceInfo().hashCode();
+    }
+    if (hasExperimental()) {
+      hash = (37 * hash) + EXPERIMENTAL_FIELD_NUMBER;
+      hash = (53 * hash) + getExperimental().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -2223,6 +2289,12 @@ private static final long serialVersionUID = 0L;
         sourceInfo_ = null;
         sourceInfoBuilder_ = null;
       }
+      if (experimentalBuilder_ == null) {
+        experimental_ = null;
+      } else {
+        experimental_ = null;
+        experimentalBuilder_ = null;
+      }
       return this;
     }
 
@@ -2387,6 +2459,11 @@ private static final long serialVersionUID = 0L;
         result.sourceInfo_ = sourceInfo_;
       } else {
         result.sourceInfo_ = sourceInfoBuilder_.build();
+      }
+      if (experimentalBuilder_ == null) {
+        result.experimental_ = experimental_;
+      } else {
+        result.experimental_ = experimentalBuilder_.build();
       }
       result.bitField0_ = to_bitField0_;
       onBuilt();
@@ -2677,6 +2754,9 @@ private static final long serialVersionUID = 0L;
       if (other.hasSourceInfo()) {
         mergeSourceInfo(other.getSourceInfo());
       }
+      if (other.hasExperimental()) {
+        mergeExperimental(other.getExperimental());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -2890,8 +2970,10 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object name_ = "";
     /**
      * <pre>
-     * The DNS address at which this service is available,
-     * e.g. `calendar.googleapis.com`.
+     * The service name, which is a DNS-like logical identifier for the
+     * service, such as `calendar.googleapis.com`. The service name
+     * typically goes through DNS verification to make sure the owner
+     * of the service also owns the DNS name.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2910,8 +2992,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The DNS address at which this service is available,
-     * e.g. `calendar.googleapis.com`.
+     * The service name, which is a DNS-like logical identifier for the
+     * service, such as `calendar.googleapis.com`. The service name
+     * typically goes through DNS verification to make sure the owner
+     * of the service also owns the DNS name.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2931,8 +3015,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The DNS address at which this service is available,
-     * e.g. `calendar.googleapis.com`.
+     * The service name, which is a DNS-like logical identifier for the
+     * service, such as `calendar.googleapis.com`. The service name
+     * typically goes through DNS verification to make sure the owner
+     * of the service also owns the DNS name.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2949,8 +3035,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The DNS address at which this service is available,
-     * e.g. `calendar.googleapis.com`.
+     * The service name, which is a DNS-like logical identifier for the
+     * service, such as `calendar.googleapis.com`. The service name
+     * typically goes through DNS verification to make sure the owner
+     * of the service also owns the DNS name.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2963,8 +3051,10 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The DNS address at which this service is available,
-     * e.g. `calendar.googleapis.com`.
+     * The service name, which is a DNS-like logical identifier for the
+     * service, such as `calendar.googleapis.com`. The service name
+     * typically goes through DNS verification to make sure the owner
+     * of the service also owns the DNS name.
      * </pre>
      *
      * <code>string name = 1;</code>
@@ -2986,7 +3076,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
-     * generate one instead.
+     * generate one instead. Must be no longer than 60 characters.
      * </pre>
      *
      * <code>string id = 33;</code>
@@ -3007,7 +3097,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
-     * generate one instead.
+     * generate one instead. Must be no longer than 60 characters.
      * </pre>
      *
      * <code>string id = 33;</code>
@@ -3029,7 +3119,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
-     * generate one instead.
+     * generate one instead. Must be no longer than 60 characters.
      * </pre>
      *
      * <code>string id = 33;</code>
@@ -3048,7 +3138,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
-     * generate one instead.
+     * generate one instead. Must be no longer than 60 characters.
      * </pre>
      *
      * <code>string id = 33;</code>
@@ -3063,7 +3153,7 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A unique ID for a specific instance of this message, typically assigned
      * by the client for tracking purpose. If empty, the server may choose to
-     * generate one instead.
+     * generate one instead. Must be no longer than 60 characters.
      * </pre>
      *
      * <code>string id = 33;</code>
@@ -7753,6 +7843,159 @@ private static final long serialVersionUID = 0L;
         sourceInfo_ = null;
       }
       return sourceInfoBuilder_;
+    }
+
+    private com.google.api.Experimental experimental_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder> experimentalBuilder_;
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public boolean hasExperimental() {
+      return experimentalBuilder_ != null || experimental_ != null;
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public com.google.api.Experimental getExperimental() {
+      if (experimentalBuilder_ == null) {
+        return experimental_ == null ? com.google.api.Experimental.getDefaultInstance() : experimental_;
+      } else {
+        return experimentalBuilder_.getMessage();
+      }
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public Builder setExperimental(com.google.api.Experimental value) {
+      if (experimentalBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        experimental_ = value;
+        onChanged();
+      } else {
+        experimentalBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public Builder setExperimental(
+        com.google.api.Experimental.Builder builderForValue) {
+      if (experimentalBuilder_ == null) {
+        experimental_ = builderForValue.build();
+        onChanged();
+      } else {
+        experimentalBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public Builder mergeExperimental(com.google.api.Experimental value) {
+      if (experimentalBuilder_ == null) {
+        if (experimental_ != null) {
+          experimental_ =
+            com.google.api.Experimental.newBuilder(experimental_).mergeFrom(value).buildPartial();
+        } else {
+          experimental_ = value;
+        }
+        onChanged();
+      } else {
+        experimentalBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public Builder clearExperimental() {
+      if (experimentalBuilder_ == null) {
+        experimental_ = null;
+        onChanged();
+      } else {
+        experimental_ = null;
+        experimentalBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public com.google.api.Experimental.Builder getExperimentalBuilder() {
+      
+      onChanged();
+      return getExperimentalFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    public com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder() {
+      if (experimentalBuilder_ != null) {
+        return experimentalBuilder_.getMessageOrBuilder();
+      } else {
+        return experimental_ == null ?
+            com.google.api.Experimental.getDefaultInstance() : experimental_;
+      }
+    }
+    /**
+     * <pre>
+     * Experimental configuration.
+     * </pre>
+     *
+     * <code>.google.api.Experimental experimental = 101;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder> 
+        getExperimentalFieldBuilder() {
+      if (experimentalBuilder_ == null) {
+        experimentalBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.api.Experimental, com.google.api.Experimental.Builder, com.google.api.ExperimentalOrBuilder>(
+                getExperimental(),
+                getParentForChildren(),
+                isClean());
+        experimental_ = null;
+      }
+      return experimentalBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

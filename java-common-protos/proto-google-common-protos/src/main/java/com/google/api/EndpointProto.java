@@ -29,13 +29,13 @@ public final class EndpointProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\031google/api/endpoint.proto\022\ngoogle.api\032" +
-      "\034google/api/annotations.proto\"_\n\010Endpoin" +
-      "t\022\014\n\004name\030\001 \001(\t\022\017\n\007aliases\030\002 \003(\t\022\020\n\010feat" +
-      "ures\030\004 \003(\t\022\016\n\006target\030e \001(\t\022\022\n\nallow_cors" +
-      "\030\005 \001(\010Bo\n\016com.google.apiB\rEndpointProtoP" +
-      "\001ZEgoogle.golang.org/genproto/googleapis" +
-      "/api/serviceconfig;serviceconfig\242\002\004GAPIb" +
-      "\006proto3"
+      "\034google/api/annotations.proto\"c\n\010Endpoin" +
+      "t\022\014\n\004name\030\001 \001(\t\022\023\n\007aliases\030\002 \003(\tB\002\030\001\022\020\n\010" +
+      "features\030\004 \003(\t\022\016\n\006target\030e \001(\t\022\022\n\nallow_" +
+      "cors\030\005 \001(\010Bo\n\016com.google.apiB\rEndpointPr" +
+      "otoP\001ZEgoogle.golang.org/genproto/google" +
+      "apis/api/serviceconfig;serviceconfig\242\002\004G" +
+      "APIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {

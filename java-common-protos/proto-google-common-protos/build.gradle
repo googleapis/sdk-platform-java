@@ -6,9 +6,9 @@ buildscript {
 
 apply plugin: 'java'
 
-description = 'PROTO library for proto-google-common-protos (prerelease)'
+description = 'PROTO library for proto-google-common-protos'
 group = 'com.google.api.grpc'
-version = '1.13.0-pre2'
+version = '1.14.0'
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 

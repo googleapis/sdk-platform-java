@@ -5,15 +5,15 @@ package com.google.api;
 
 /**
  * <pre>
- * Distribution contains summary statistics for a population of values and,
- * optionally, a histogram representing the distribution of those values across
- * a specified set of histogram buckets.
+ * `Distribution` contains summary statistics for a population of values. It
+ * optionally contains a histogram representing the distribution of those values
+ * across a set of buckets.
  * The summary statistics are the count, mean, sum of the squared deviation from
  * the mean, the minimum, and the maximum of the set of population of values.
  * The histogram is based on a sequence of buckets and gives a count of values
- * that fall into each bucket.  The boundaries of the buckets are given either
- * explicitly or by specifying parameters for a method of computing them
- * (buckets of fixed width or buckets of exponentially increasing width).
+ * that fall into each bucket. The boundaries of the buckets are given either
+ * explicitly or by formulas for buckets of fixed or exponentially increasing
+ * widths.
  * Although it is not forbidden, it is generally a bad idea to include
  * non-finite values (infinities or NaNs) in the population of values, as this
  * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -35,6 +35,7 @@ private static final long serialVersionUID = 0L;
     mean_ = 0D;
     sumOfSquaredDeviation_ = 0D;
     bucketCounts_ = java.util.Collections.emptyList();
+    exemplars_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -123,6 +124,15 @@ private static final long serialVersionUID = 0L;
             input.popLimit(limit);
             break;
           }
+          case 82: {
+            if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+              exemplars_ = new java.util.ArrayList<com.google.api.Distribution.Exemplar>();
+              mutable_bitField0_ |= 0x00000040;
+            }
+            exemplars_.add(
+                input.readMessage(com.google.api.Distribution.Exemplar.parser(), extensionRegistry));
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -140,6 +150,9 @@ private static final long serialVersionUID = 0L;
     } finally {
       if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
         bucketCounts_ = java.util.Collections.unmodifiableList(bucketCounts_);
+      }
+      if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        exemplars_ = java.util.Collections.unmodifiableList(exemplars_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -834,25 +847,20 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * A Distribution may optionally contain a histogram of the values in the
-   * population.  The histogram is given in `bucket_counts` as counts of values
-   * that fall into one of a sequence of non-overlapping buckets.  The sequence
-   * of buckets is described by `bucket_options`.
-   * A bucket specifies an inclusive lower bound and exclusive upper bound for
-   * the values that are counted for that bucket.  The upper bound of a bucket
-   * is strictly greater than the lower bound.
-   * The sequence of N buckets for a Distribution consists of an underflow
-   * bucket (number 0), zero or more finite buckets (number 1 through N - 2) and
-   * an overflow bucket (number N - 1).  The buckets are contiguous:  the lower
-   * bound of bucket i (i &gt; 0) is the same as the upper bound of bucket i - 1.
-   * The buckets span the whole range of finite values: lower bound of the
-   * underflow bucket is -infinity and the upper bound of the overflow bucket is
-   * +infinity.  The finite buckets are so-called because both bounds are
-   * finite.
-   * `BucketOptions` describes bucket boundaries in one of three ways.  Two
-   * describe the boundaries by giving parameters for a formula to generate
-   * boundaries and one gives the bucket boundaries explicitly.
-   * If `bucket_boundaries` is not given, then no `bucket_counts` may be given.
+   * `BucketOptions` describes the bucket boundaries used to create a histogram
+   * for the distribution. The buckets can be in a linear sequence, an
+   * exponential sequence, or each bucket can be specified explicitly.
+   * `BucketOptions` does not include the number of values in each bucket.
+   * A bucket has an inclusive lower bound and exclusive upper bound for the
+   * values that are counted for that bucket. The upper bound of a bucket must
+   * be strictly greater than the lower bound. The sequence of N buckets for a
+   * distribution consists of an underflow bucket (number 0), zero or more
+   * finite buckets (number 1 through N - 2) and an overflow bucket (number N -
+   * 1). The buckets are contiguous: the lower bound of bucket i (i &gt; 0) is the
+   * same as the upper bound of bucket i - 1. The buckets span the whole range
+   * of finite values: lower bound of the underflow bucket is -infinity and the
+   * upper bound of the overflow bucket is +infinity. The finite buckets are
+   * so-called because both bounds are finite.
    * </pre>
    *
    * Protobuf type {@code google.api.Distribution.BucketOptions}
@@ -1000,11 +1008,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Specify a sequence of buckets that all have the same width (except
-     * overflow and underflow).  Each bucket represents a constant absolute
-     * uncertainty on the specific value in the bucket.
-     * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
-     * bucket `i`:
+     * Specifies a linear sequence of buckets that all have the same width
+     * (except overflow and underflow). Each bucket represents a constant
+     * absolute uncertainty on the specific value in the bucket.
+     * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
+     * following boundaries:
      *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
      *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
      * </pre>
@@ -1322,11 +1330,11 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Specify a sequence of buckets that all have the same width (except
-       * overflow and underflow).  Each bucket represents a constant absolute
-       * uncertainty on the specific value in the bucket.
-       * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
-       * bucket `i`:
+       * Specifies a linear sequence of buckets that all have the same width
+       * (except overflow and underflow). Each bucket represents a constant
+       * absolute uncertainty on the specific value in the bucket.
+       * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
+       * following boundaries:
        *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
        *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
        * </pre>
@@ -1688,11 +1696,11 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Specify a sequence of buckets that have a width that is proportional to
-     * the value of the lower bound.  Each bucket represents a constant relative
-     * uncertainty on a specific value in the bucket.
-     * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
-     * bucket i:
+     * Specifies an exponential sequence of buckets that have a width that is
+     * proportional to the value of the lower bound. Each bucket represents a
+     * constant relative uncertainty on a specific value in the bucket.
+     * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
+     * following boundaries:
      *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
      *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
      * </pre>
@@ -2010,11 +2018,11 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Specify a sequence of buckets that have a width that is proportional to
-       * the value of the lower bound.  Each bucket represents a constant relative
-       * uncertainty on a specific value in the bucket.
-       * Defines `num_finite_buckets + 2` (= N) buckets with these boundaries for
-       * bucket i:
+       * Specifies an exponential sequence of buckets that have a width that is
+       * proportional to the value of the lower bound. Each bucket represents a
+       * constant relative uncertainty on a specific value in the bucket.
+       * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
+       * following boundaries:
        *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
        *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
        * </pre>
@@ -2374,14 +2382,14 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * A set of buckets with arbitrary widths.
-     * Defines `size(bounds) + 1` (= N) buckets with these boundaries for
-     * bucket i:
+     * Specifies a set of buckets with arbitrary widths.
+     * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
+     * boundaries:
      *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
      *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
-     * There must be at least one element in `bounds`.  If `bounds` has only one
-     * element, there are no finite buckets, and that single element is the
-     * common boundary of the overflow and underflow buckets.
+     * The `bounds` field must contain at least one element. If `bounds` has
+     * only one element, then there are no finite buckets, and that single
+     * element is the common boundary of the overflow and underflow buckets.
      * </pre>
      *
      * Protobuf type {@code google.api.Distribution.BucketOptions.Explicit}
@@ -2686,14 +2694,14 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * A set of buckets with arbitrary widths.
-       * Defines `size(bounds) + 1` (= N) buckets with these boundaries for
-       * bucket i:
+       * Specifies a set of buckets with arbitrary widths.
+       * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
+       * boundaries:
        *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
        *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
-       * There must be at least one element in `bounds`.  If `bounds` has only one
-       * element, there are no finite buckets, and that single element is the
-       * common boundary of the overflow and underflow buckets.
+       * The `bounds` field must contain at least one element. If `bounds` has
+       * only one element, then there are no finite buckets, and that single
+       * element is the common boundary of the overflow and underflow buckets.
        * </pre>
        *
        * Protobuf type {@code google.api.Distribution.BucketOptions.Explicit}
@@ -3358,25 +3366,20 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * A Distribution may optionally contain a histogram of the values in the
-     * population.  The histogram is given in `bucket_counts` as counts of values
-     * that fall into one of a sequence of non-overlapping buckets.  The sequence
-     * of buckets is described by `bucket_options`.
-     * A bucket specifies an inclusive lower bound and exclusive upper bound for
-     * the values that are counted for that bucket.  The upper bound of a bucket
-     * is strictly greater than the lower bound.
-     * The sequence of N buckets for a Distribution consists of an underflow
-     * bucket (number 0), zero or more finite buckets (number 1 through N - 2) and
-     * an overflow bucket (number N - 1).  The buckets are contiguous:  the lower
-     * bound of bucket i (i &gt; 0) is the same as the upper bound of bucket i - 1.
-     * The buckets span the whole range of finite values: lower bound of the
-     * underflow bucket is -infinity and the upper bound of the overflow bucket is
-     * +infinity.  The finite buckets are so-called because both bounds are
-     * finite.
-     * `BucketOptions` describes bucket boundaries in one of three ways.  Two
-     * describe the boundaries by giving parameters for a formula to generate
-     * boundaries and one gives the bucket boundaries explicitly.
-     * If `bucket_boundaries` is not given, then no `bucket_counts` may be given.
+     * `BucketOptions` describes the bucket boundaries used to create a histogram
+     * for the distribution. The buckets can be in a linear sequence, an
+     * exponential sequence, or each bucket can be specified explicitly.
+     * `BucketOptions` does not include the number of values in each bucket.
+     * A bucket has an inclusive lower bound and exclusive upper bound for the
+     * values that are counted for that bucket. The upper bound of a bucket must
+     * be strictly greater than the lower bound. The sequence of N buckets for a
+     * distribution consists of an underflow bucket (number 0), zero or more
+     * finite buckets (number 1 through N - 2) and an overflow bucket (number N -
+     * 1). The buckets are contiguous: the lower bound of bucket i (i &gt; 0) is the
+     * same as the upper bound of bucket i - 1. The buckets span the whole range
+     * of finite values: lower bound of the underflow bucket is -infinity and the
+     * upper bound of the overflow bucket is +infinity. The finite buckets are
+     * so-called because both bounds are finite.
      * </pre>
      *
      * Protobuf type {@code google.api.Distribution.BucketOptions}
@@ -4143,12 +4146,1440 @@ private static final long serialVersionUID = 0L;
 
   }
 
+  public interface ExemplarOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:google.api.Distribution.Exemplar)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * Value of the exemplar point. This value determines to which bucket the
+     * exemplar belongs.
+     * </pre>
+     *
+     * <code>double value = 1;</code>
+     */
+    double getValue();
+
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    boolean hasTimestamp();
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    com.google.protobuf.Timestamp getTimestamp();
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder();
+
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    java.util.List<com.google.protobuf.Any> 
+        getAttachmentsList();
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    com.google.protobuf.Any getAttachments(int index);
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    int getAttachmentsCount();
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getAttachmentsOrBuilderList();
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    com.google.protobuf.AnyOrBuilder getAttachmentsOrBuilder(
+        int index);
+  }
+  /**
+   * <pre>
+   * Exemplars are example points that may be used to annotate aggregated
+   * distribution values. They are metadata that gives information about a
+   * particular value added to a Distribution bucket, such as a trace ID that
+   * was active when a value was added. They may contain further information,
+   * such as a example values and timestamps, origin, etc.
+   * </pre>
+   *
+   * Protobuf type {@code google.api.Distribution.Exemplar}
+   */
+  public  static final class Exemplar extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:google.api.Distribution.Exemplar)
+      ExemplarOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use Exemplar.newBuilder() to construct.
+    private Exemplar(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private Exemplar() {
+      value_ = 0D;
+      attachments_ = java.util.Collections.emptyList();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Exemplar(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 9: {
+
+              value_ = input.readDouble();
+              break;
+            }
+            case 18: {
+              com.google.protobuf.Timestamp.Builder subBuilder = null;
+              if (timestamp_ != null) {
+                subBuilder = timestamp_.toBuilder();
+              }
+              timestamp_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(timestamp_);
+                timestamp_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                attachments_ = new java.util.ArrayList<com.google.protobuf.Any>();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              attachments_.add(
+                  input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry));
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          attachments_ = java.util.Collections.unmodifiableList(attachments_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.google.api.DistributionProto.internal_static_google_api_Distribution_Exemplar_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.google.api.DistributionProto.internal_static_google_api_Distribution_Exemplar_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.google.api.Distribution.Exemplar.class, com.google.api.Distribution.Exemplar.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int VALUE_FIELD_NUMBER = 1;
+    private double value_;
+    /**
+     * <pre>
+     * Value of the exemplar point. This value determines to which bucket the
+     * exemplar belongs.
+     * </pre>
+     *
+     * <code>double value = 1;</code>
+     */
+    public double getValue() {
+      return value_;
+    }
+
+    public static final int TIMESTAMP_FIELD_NUMBER = 2;
+    private com.google.protobuf.Timestamp timestamp_;
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    public boolean hasTimestamp() {
+      return timestamp_ != null;
+    }
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    public com.google.protobuf.Timestamp getTimestamp() {
+      return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+    }
+    /**
+     * <pre>
+     * The observation (sampling) time of the above value.
+     * </pre>
+     *
+     * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+     */
+    public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
+      return getTimestamp();
+    }
+
+    public static final int ATTACHMENTS_FIELD_NUMBER = 3;
+    private java.util.List<com.google.protobuf.Any> attachments_;
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    public java.util.List<com.google.protobuf.Any> getAttachmentsList() {
+      return attachments_;
+    }
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+        getAttachmentsOrBuilderList() {
+      return attachments_;
+    }
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    public int getAttachmentsCount() {
+      return attachments_.size();
+    }
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    public com.google.protobuf.Any getAttachments(int index) {
+      return attachments_.get(index);
+    }
+    /**
+     * <pre>
+     * Contextual information about the example value. Examples are:
+     *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+     *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *   Labels dropped during aggregation:
+     *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     * There may be only a single attachment of any given message type in a
+     * single exemplar, and this is enforced by the system.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any attachments = 3;</code>
+     */
+    public com.google.protobuf.AnyOrBuilder getAttachmentsOrBuilder(
+        int index) {
+      return attachments_.get(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (value_ != 0D) {
+        output.writeDouble(1, value_);
+      }
+      if (timestamp_ != null) {
+        output.writeMessage(2, getTimestamp());
+      }
+      for (int i = 0; i < attachments_.size(); i++) {
+        output.writeMessage(3, attachments_.get(i));
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (value_ != 0D) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeDoubleSize(1, value_);
+      }
+      if (timestamp_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getTimestamp());
+      }
+      for (int i = 0; i < attachments_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, attachments_.get(i));
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.google.api.Distribution.Exemplar)) {
+        return super.equals(obj);
+      }
+      com.google.api.Distribution.Exemplar other = (com.google.api.Distribution.Exemplar) obj;
+
+      boolean result = true;
+      result = result && (
+          java.lang.Double.doubleToLongBits(getValue())
+          == java.lang.Double.doubleToLongBits(
+              other.getValue()));
+      result = result && (hasTimestamp() == other.hasTimestamp());
+      if (hasTimestamp()) {
+        result = result && getTimestamp()
+            .equals(other.getTimestamp());
+      }
+      result = result && getAttachmentsList()
+          .equals(other.getAttachmentsList());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + VALUE_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          java.lang.Double.doubleToLongBits(getValue()));
+      if (hasTimestamp()) {
+        hash = (37 * hash) + TIMESTAMP_FIELD_NUMBER;
+        hash = (53 * hash) + getTimestamp().hashCode();
+      }
+      if (getAttachmentsCount() > 0) {
+        hash = (37 * hash) + ATTACHMENTS_FIELD_NUMBER;
+        hash = (53 * hash) + getAttachmentsList().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.google.api.Distribution.Exemplar parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.google.api.Distribution.Exemplar parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.google.api.Distribution.Exemplar parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.google.api.Distribution.Exemplar prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Exemplars are example points that may be used to annotate aggregated
+     * distribution values. They are metadata that gives information about a
+     * particular value added to a Distribution bucket, such as a trace ID that
+     * was active when a value was added. They may contain further information,
+     * such as a example values and timestamps, origin, etc.
+     * </pre>
+     *
+     * Protobuf type {@code google.api.Distribution.Exemplar}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:google.api.Distribution.Exemplar)
+        com.google.api.Distribution.ExemplarOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.google.api.DistributionProto.internal_static_google_api_Distribution_Exemplar_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.google.api.DistributionProto.internal_static_google_api_Distribution_Exemplar_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.google.api.Distribution.Exemplar.class, com.google.api.Distribution.Exemplar.Builder.class);
+      }
+
+      // Construct using com.google.api.Distribution.Exemplar.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getAttachmentsFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        value_ = 0D;
+
+        if (timestampBuilder_ == null) {
+          timestamp_ = null;
+        } else {
+          timestamp_ = null;
+          timestampBuilder_ = null;
+        }
+        if (attachmentsBuilder_ == null) {
+          attachments_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        } else {
+          attachmentsBuilder_.clear();
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.google.api.DistributionProto.internal_static_google_api_Distribution_Exemplar_descriptor;
+      }
+
+      @java.lang.Override
+      public com.google.api.Distribution.Exemplar getDefaultInstanceForType() {
+        return com.google.api.Distribution.Exemplar.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.google.api.Distribution.Exemplar build() {
+        com.google.api.Distribution.Exemplar result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.google.api.Distribution.Exemplar buildPartial() {
+        com.google.api.Distribution.Exemplar result = new com.google.api.Distribution.Exemplar(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.value_ = value_;
+        if (timestampBuilder_ == null) {
+          result.timestamp_ = timestamp_;
+        } else {
+          result.timestamp_ = timestampBuilder_.build();
+        }
+        if (attachmentsBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
+            attachments_ = java.util.Collections.unmodifiableList(attachments_);
+            bitField0_ = (bitField0_ & ~0x00000004);
+          }
+          result.attachments_ = attachments_;
+        } else {
+          result.attachments_ = attachmentsBuilder_.build();
+        }
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.google.api.Distribution.Exemplar) {
+          return mergeFrom((com.google.api.Distribution.Exemplar)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.google.api.Distribution.Exemplar other) {
+        if (other == com.google.api.Distribution.Exemplar.getDefaultInstance()) return this;
+        if (other.getValue() != 0D) {
+          setValue(other.getValue());
+        }
+        if (other.hasTimestamp()) {
+          mergeTimestamp(other.getTimestamp());
+        }
+        if (attachmentsBuilder_ == null) {
+          if (!other.attachments_.isEmpty()) {
+            if (attachments_.isEmpty()) {
+              attachments_ = other.attachments_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+            } else {
+              ensureAttachmentsIsMutable();
+              attachments_.addAll(other.attachments_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.attachments_.isEmpty()) {
+            if (attachmentsBuilder_.isEmpty()) {
+              attachmentsBuilder_.dispose();
+              attachmentsBuilder_ = null;
+              attachments_ = other.attachments_;
+              bitField0_ = (bitField0_ & ~0x00000004);
+              attachmentsBuilder_ = 
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                   getAttachmentsFieldBuilder() : null;
+            } else {
+              attachmentsBuilder_.addAllMessages(other.attachments_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.api.Distribution.Exemplar parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.google.api.Distribution.Exemplar) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private double value_ ;
+      /**
+       * <pre>
+       * Value of the exemplar point. This value determines to which bucket the
+       * exemplar belongs.
+       * </pre>
+       *
+       * <code>double value = 1;</code>
+       */
+      public double getValue() {
+        return value_;
+      }
+      /**
+       * <pre>
+       * Value of the exemplar point. This value determines to which bucket the
+       * exemplar belongs.
+       * </pre>
+       *
+       * <code>double value = 1;</code>
+       */
+      public Builder setValue(double value) {
+        
+        value_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * Value of the exemplar point. This value determines to which bucket the
+       * exemplar belongs.
+       * </pre>
+       *
+       * <code>double value = 1;</code>
+       */
+      public Builder clearValue() {
+        
+        value_ = 0D;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.Timestamp timestamp_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> timestampBuilder_;
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public boolean hasTimestamp() {
+        return timestampBuilder_ != null || timestamp_ != null;
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public com.google.protobuf.Timestamp getTimestamp() {
+        if (timestampBuilder_ == null) {
+          return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+        } else {
+          return timestampBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public Builder setTimestamp(com.google.protobuf.Timestamp value) {
+        if (timestampBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          timestamp_ = value;
+          onChanged();
+        } else {
+          timestampBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public Builder setTimestamp(
+          com.google.protobuf.Timestamp.Builder builderForValue) {
+        if (timestampBuilder_ == null) {
+          timestamp_ = builderForValue.build();
+          onChanged();
+        } else {
+          timestampBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public Builder mergeTimestamp(com.google.protobuf.Timestamp value) {
+        if (timestampBuilder_ == null) {
+          if (timestamp_ != null) {
+            timestamp_ =
+              com.google.protobuf.Timestamp.newBuilder(timestamp_).mergeFrom(value).buildPartial();
+          } else {
+            timestamp_ = value;
+          }
+          onChanged();
+        } else {
+          timestampBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public Builder clearTimestamp() {
+        if (timestampBuilder_ == null) {
+          timestamp_ = null;
+          onChanged();
+        } else {
+          timestamp_ = null;
+          timestampBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public com.google.protobuf.Timestamp.Builder getTimestampBuilder() {
+        
+        onChanged();
+        return getTimestampFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
+        if (timestampBuilder_ != null) {
+          return timestampBuilder_.getMessageOrBuilder();
+        } else {
+          return timestamp_ == null ?
+              com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
+        }
+      }
+      /**
+       * <pre>
+       * The observation (sampling) time of the above value.
+       * </pre>
+       *
+       * <code>.google.protobuf.Timestamp timestamp = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
+          getTimestampFieldBuilder() {
+        if (timestampBuilder_ == null) {
+          timestampBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
+                  getTimestamp(),
+                  getParentForChildren(),
+                  isClean());
+          timestamp_ = null;
+        }
+        return timestampBuilder_;
+      }
+
+      private java.util.List<com.google.protobuf.Any> attachments_ =
+        java.util.Collections.emptyList();
+      private void ensureAttachmentsIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          attachments_ = new java.util.ArrayList<com.google.protobuf.Any>(attachments_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> attachmentsBuilder_;
+
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public java.util.List<com.google.protobuf.Any> getAttachmentsList() {
+        if (attachmentsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(attachments_);
+        } else {
+          return attachmentsBuilder_.getMessageList();
+        }
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public int getAttachmentsCount() {
+        if (attachmentsBuilder_ == null) {
+          return attachments_.size();
+        } else {
+          return attachmentsBuilder_.getCount();
+        }
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public com.google.protobuf.Any getAttachments(int index) {
+        if (attachmentsBuilder_ == null) {
+          return attachments_.get(index);
+        } else {
+          return attachmentsBuilder_.getMessage(index);
+        }
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder setAttachments(
+          int index, com.google.protobuf.Any value) {
+        if (attachmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAttachmentsIsMutable();
+          attachments_.set(index, value);
+          onChanged();
+        } else {
+          attachmentsBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder setAttachments(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
+        if (attachmentsBuilder_ == null) {
+          ensureAttachmentsIsMutable();
+          attachments_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          attachmentsBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder addAttachments(com.google.protobuf.Any value) {
+        if (attachmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAttachmentsIsMutable();
+          attachments_.add(value);
+          onChanged();
+        } else {
+          attachmentsBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder addAttachments(
+          int index, com.google.protobuf.Any value) {
+        if (attachmentsBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureAttachmentsIsMutable();
+          attachments_.add(index, value);
+          onChanged();
+        } else {
+          attachmentsBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder addAttachments(
+          com.google.protobuf.Any.Builder builderForValue) {
+        if (attachmentsBuilder_ == null) {
+          ensureAttachmentsIsMutable();
+          attachments_.add(builderForValue.build());
+          onChanged();
+        } else {
+          attachmentsBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder addAttachments(
+          int index, com.google.protobuf.Any.Builder builderForValue) {
+        if (attachmentsBuilder_ == null) {
+          ensureAttachmentsIsMutable();
+          attachments_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          attachmentsBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder addAllAttachments(
+          java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+        if (attachmentsBuilder_ == null) {
+          ensureAttachmentsIsMutable();
+          com.google.protobuf.AbstractMessageLite.Builder.addAll(
+              values, attachments_);
+          onChanged();
+        } else {
+          attachmentsBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder clearAttachments() {
+        if (attachmentsBuilder_ == null) {
+          attachments_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000004);
+          onChanged();
+        } else {
+          attachmentsBuilder_.clear();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public Builder removeAttachments(int index) {
+        if (attachmentsBuilder_ == null) {
+          ensureAttachmentsIsMutable();
+          attachments_.remove(index);
+          onChanged();
+        } else {
+          attachmentsBuilder_.remove(index);
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public com.google.protobuf.Any.Builder getAttachmentsBuilder(
+          int index) {
+        return getAttachmentsFieldBuilder().getBuilder(index);
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public com.google.protobuf.AnyOrBuilder getAttachmentsOrBuilder(
+          int index) {
+        if (attachmentsBuilder_ == null) {
+          return attachments_.get(index);  } else {
+          return attachmentsBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
+           getAttachmentsOrBuilderList() {
+        if (attachmentsBuilder_ != null) {
+          return attachmentsBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(attachments_);
+        }
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public com.google.protobuf.Any.Builder addAttachmentsBuilder() {
+        return getAttachmentsFieldBuilder().addBuilder(
+            com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public com.google.protobuf.Any.Builder addAttachmentsBuilder(
+          int index) {
+        return getAttachmentsFieldBuilder().addBuilder(
+            index, com.google.protobuf.Any.getDefaultInstance());
+      }
+      /**
+       * <pre>
+       * Contextual information about the example value. Examples are:
+       *   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+       *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *   Labels dropped during aggregation:
+       *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       * There may be only a single attachment of any given message type in a
+       * single exemplar, and this is enforced by the system.
+       * </pre>
+       *
+       * <code>repeated .google.protobuf.Any attachments = 3;</code>
+       */
+      public java.util.List<com.google.protobuf.Any.Builder> 
+           getAttachmentsBuilderList() {
+        return getAttachmentsFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilderV3<
+          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
+          getAttachmentsFieldBuilder() {
+        if (attachmentsBuilder_ == null) {
+          attachmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+              com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
+                  attachments_,
+                  ((bitField0_ & 0x00000004) == 0x00000004),
+                  getParentForChildren(),
+                  isClean());
+          attachments_ = null;
+        }
+        return attachmentsBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:google.api.Distribution.Exemplar)
+    }
+
+    // @@protoc_insertion_point(class_scope:google.api.Distribution.Exemplar)
+    private static final com.google.api.Distribution.Exemplar DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.google.api.Distribution.Exemplar();
+    }
+
+    public static com.google.api.Distribution.Exemplar getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Exemplar>
+        PARSER = new com.google.protobuf.AbstractParser<Exemplar>() {
+      @java.lang.Override
+      public Exemplar parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Exemplar(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<Exemplar> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Exemplar> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.api.Distribution.Exemplar getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private int bitField0_;
   public static final int COUNT_FIELD_NUMBER = 1;
   private long count_;
   /**
    * <pre>
-   * The number of values in the population. Must be non-negative.
+   * The number of values in the population. Must be non-negative. This value
+   * must equal the sum of the values in `bucket_counts` if a histogram is
+   * provided.
    * </pre>
    *
    * <code>int64 count = 1;</code>
@@ -4176,7 +5607,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The sum of squared deviations from the mean of the values in the
-   * population.  For values x_i this is:
+   * population. For values x_i this is:
    *     Sum[i=1..n]((x_i - mean)^2)
    * Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
    * describes Welford's method for accumulating this sum in one pass.
@@ -4229,7 +5660,8 @@ private static final long serialVersionUID = 0L;
   private com.google.api.Distribution.BucketOptions bucketOptions_;
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -4239,7 +5671,8 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -4249,7 +5682,8 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Defines the histogram bucket boundaries.
+   * Defines the histogram bucket boundaries. If the distribution does not
+   * contain a histogram, then omit this field.
    * </pre>
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -4262,15 +5696,19 @@ private static final long serialVersionUID = 0L;
   private java.util.List<java.lang.Long> bucketCounts_;
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
@@ -4281,15 +5719,19 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
@@ -4299,15 +5741,19 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-   * must equal the value in `count`.  If `bucket_options` is not given, no
-   * `bucket_counts` fields may be given.
-   * Bucket counts are given in order under the numbering scheme described
-   * above (the underflow bucket has number 0; the finite buckets, if any,
-   * have numbers 1 through N-2; the overflow bucket has number N-1).
-   * The size of `bucket_counts` must be no greater than N as defined in
-   * `bucket_options`.
-   * Any suffix of trailing zero bucket_count fields may be omitted.
+   * The number of values in each bucket of the histogram, as described in
+   * `bucket_options`. If the distribution does not have a histogram, then omit
+   * this field. If there is a histogram, then the sum of the values in
+   * `bucket_counts` must equal the value in the `count` field of the
+   * distribution.
+   * If present, `bucket_counts` should contain N values, where N is the number
+   * of buckets specified in `bucket_options`. If you supply fewer than N
+   * values, the remaining values are assumed to be 0.
+   * The order of the values in `bucket_counts` follows the bucket numbering
+   * schemes described for the three bucket types. The first value must be the
+   * count for the underflow bucket (number 0). The next N-2 values are the
+   * counts for the finite buckets (number 1 through N-2). The N'th value in
+   * `bucket_counts` is the count for the overflow bucket (number N-1).
    * </pre>
    *
    * <code>repeated int64 bucket_counts = 7;</code>
@@ -4316,6 +5762,61 @@ private static final long serialVersionUID = 0L;
     return bucketCounts_.get(index);
   }
   private int bucketCountsMemoizedSerializedSize = -1;
+
+  public static final int EXEMPLARS_FIELD_NUMBER = 10;
+  private java.util.List<com.google.api.Distribution.Exemplar> exemplars_;
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  public java.util.List<com.google.api.Distribution.Exemplar> getExemplarsList() {
+    return exemplars_;
+  }
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  public java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder> 
+      getExemplarsOrBuilderList() {
+    return exemplars_;
+  }
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  public int getExemplarsCount() {
+    return exemplars_.size();
+  }
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  public com.google.api.Distribution.Exemplar getExemplars(int index) {
+    return exemplars_.get(index);
+  }
+  /**
+   * <pre>
+   * Must be in increasing order of `value` field.
+   * </pre>
+   *
+   * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+   */
+  public com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(
+      int index) {
+    return exemplars_.get(index);
+  }
 
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
@@ -4353,6 +5854,9 @@ private static final long serialVersionUID = 0L;
     }
     for (int i = 0; i < bucketCounts_.size(); i++) {
       output.writeInt64NoTag(bucketCounts_.get(i));
+    }
+    for (int i = 0; i < exemplars_.size(); i++) {
+      output.writeMessage(10, exemplars_.get(i));
     }
     unknownFields.writeTo(output);
   }
@@ -4397,6 +5901,10 @@ private static final long serialVersionUID = 0L;
       }
       bucketCountsMemoizedSerializedSize = dataSize;
     }
+    for (int i = 0; i < exemplars_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(10, exemplars_.get(i));
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -4435,6 +5943,8 @@ private static final long serialVersionUID = 0L;
     }
     result = result && getBucketCountsList()
         .equals(other.getBucketCountsList());
+    result = result && getExemplarsList()
+        .equals(other.getExemplarsList());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -4466,6 +5976,10 @@ private static final long serialVersionUID = 0L;
     if (getBucketCountsCount() > 0) {
       hash = (37 * hash) + BUCKET_COUNTS_FIELD_NUMBER;
       hash = (53 * hash) + getBucketCountsList().hashCode();
+    }
+    if (getExemplarsCount() > 0) {
+      hash = (37 * hash) + EXEMPLARS_FIELD_NUMBER;
+      hash = (53 * hash) + getExemplarsList().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -4564,15 +6078,15 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Distribution contains summary statistics for a population of values and,
-   * optionally, a histogram representing the distribution of those values across
-   * a specified set of histogram buckets.
+   * `Distribution` contains summary statistics for a population of values. It
+   * optionally contains a histogram representing the distribution of those values
+   * across a set of buckets.
    * The summary statistics are the count, mean, sum of the squared deviation from
    * the mean, the minimum, and the maximum of the set of population of values.
    * The histogram is based on a sequence of buckets and gives a count of values
-   * that fall into each bucket.  The boundaries of the buckets are given either
-   * explicitly or by specifying parameters for a method of computing them
-   * (buckets of fixed width or buckets of exponentially increasing width).
+   * that fall into each bucket. The boundaries of the buckets are given either
+   * explicitly or by formulas for buckets of fixed or exponentially increasing
+   * widths.
    * Although it is not forbidden, it is generally a bad idea to include
    * non-finite values (infinities or NaNs) in the population of values, as this
    * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -4610,6 +6124,7 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
+        getExemplarsFieldBuilder();
       }
     }
     @java.lang.Override
@@ -4635,6 +6150,12 @@ private static final long serialVersionUID = 0L;
       }
       bucketCounts_ = java.util.Collections.emptyList();
       bitField0_ = (bitField0_ & ~0x00000020);
+      if (exemplarsBuilder_ == null) {
+        exemplars_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
+      } else {
+        exemplarsBuilder_.clear();
+      }
       return this;
     }
 
@@ -4681,6 +6202,15 @@ private static final long serialVersionUID = 0L;
         bitField0_ = (bitField0_ & ~0x00000020);
       }
       result.bucketCounts_ = bucketCounts_;
+      if (exemplarsBuilder_ == null) {
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          exemplars_ = java.util.Collections.unmodifiableList(exemplars_);
+          bitField0_ = (bitField0_ & ~0x00000040);
+        }
+        result.exemplars_ = exemplars_;
+      } else {
+        result.exemplars_ = exemplarsBuilder_.build();
+      }
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -4755,6 +6285,32 @@ private static final long serialVersionUID = 0L;
         }
         onChanged();
       }
+      if (exemplarsBuilder_ == null) {
+        if (!other.exemplars_.isEmpty()) {
+          if (exemplars_.isEmpty()) {
+            exemplars_ = other.exemplars_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+          } else {
+            ensureExemplarsIsMutable();
+            exemplars_.addAll(other.exemplars_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.exemplars_.isEmpty()) {
+          if (exemplarsBuilder_.isEmpty()) {
+            exemplarsBuilder_.dispose();
+            exemplarsBuilder_ = null;
+            exemplars_ = other.exemplars_;
+            bitField0_ = (bitField0_ & ~0x00000040);
+            exemplarsBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getExemplarsFieldBuilder() : null;
+          } else {
+            exemplarsBuilder_.addAllMessages(other.exemplars_);
+          }
+        }
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -4788,7 +6344,9 @@ private static final long serialVersionUID = 0L;
     private long count_ ;
     /**
      * <pre>
-     * The number of values in the population. Must be non-negative.
+     * The number of values in the population. Must be non-negative. This value
+     * must equal the sum of the values in `bucket_counts` if a histogram is
+     * provided.
      * </pre>
      *
      * <code>int64 count = 1;</code>
@@ -4798,7 +6356,9 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The number of values in the population. Must be non-negative.
+     * The number of values in the population. Must be non-negative. This value
+     * must equal the sum of the values in `bucket_counts` if a histogram is
+     * provided.
      * </pre>
      *
      * <code>int64 count = 1;</code>
@@ -4811,7 +6371,9 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The number of values in the population. Must be non-negative.
+     * The number of values in the population. Must be non-negative. This value
+     * must equal the sum of the values in `bucket_counts` if a histogram is
+     * provided.
      * </pre>
      *
      * <code>int64 count = 1;</code>
@@ -4868,7 +6430,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The sum of squared deviations from the mean of the values in the
-     * population.  For values x_i this is:
+     * population. For values x_i this is:
      *     Sum[i=1..n]((x_i - mean)^2)
      * Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
@@ -4883,7 +6445,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The sum of squared deviations from the mean of the values in the
-     * population.  For values x_i this is:
+     * population. For values x_i this is:
      *     Sum[i=1..n]((x_i - mean)^2)
      * Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
@@ -4901,7 +6463,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The sum of squared deviations from the mean of the values in the
-     * population.  For values x_i this is:
+     * population. For values x_i this is:
      *     Sum[i=1..n]((x_i - mean)^2)
      * Knuth, "The Art of Computer Programming", Vol. 2, page 323, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
@@ -5084,7 +6646,8 @@ private static final long serialVersionUID = 0L;
         com.google.api.Distribution.BucketOptions, com.google.api.Distribution.BucketOptions.Builder, com.google.api.Distribution.BucketOptionsOrBuilder> bucketOptionsBuilder_;
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5094,7 +6657,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5108,7 +6672,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5128,7 +6693,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5146,7 +6712,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5168,7 +6735,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5186,7 +6754,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5198,7 +6767,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5213,7 +6783,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Defines the histogram bucket boundaries.
+     * Defines the histogram bucket boundaries. If the distribution does not
+     * contain a histogram, then omit this field.
      * </pre>
      *
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
@@ -5241,15 +6812,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5260,15 +6835,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5278,15 +6857,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5296,15 +6879,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5318,15 +6905,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5339,15 +6930,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5362,15 +6957,19 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * If `bucket_options` is given, then the sum of the values in `bucket_counts`
-     * must equal the value in `count`.  If `bucket_options` is not given, no
-     * `bucket_counts` fields may be given.
-     * Bucket counts are given in order under the numbering scheme described
-     * above (the underflow bucket has number 0; the finite buckets, if any,
-     * have numbers 1 through N-2; the overflow bucket has number N-1).
-     * The size of `bucket_counts` must be no greater than N as defined in
-     * `bucket_options`.
-     * Any suffix of trailing zero bucket_count fields may be omitted.
+     * The number of values in each bucket of the histogram, as described in
+     * `bucket_options`. If the distribution does not have a histogram, then omit
+     * this field. If there is a histogram, then the sum of the values in
+     * `bucket_counts` must equal the value in the `count` field of the
+     * distribution.
+     * If present, `bucket_counts` should contain N values, where N is the number
+     * of buckets specified in `bucket_options`. If you supply fewer than N
+     * values, the remaining values are assumed to be 0.
+     * The order of the values in `bucket_counts` follows the bucket numbering
+     * schemes described for the three bucket types. The first value must be the
+     * count for the underflow bucket (number 0). The next N-2 values are the
+     * counts for the finite buckets (number 1 through N-2). The N'th value in
+     * `bucket_counts` is the count for the overflow bucket (number N-1).
      * </pre>
      *
      * <code>repeated int64 bucket_counts = 7;</code>
@@ -5380,6 +6979,318 @@ private static final long serialVersionUID = 0L;
       bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
+    }
+
+    private java.util.List<com.google.api.Distribution.Exemplar> exemplars_ =
+      java.util.Collections.emptyList();
+    private void ensureExemplarsIsMutable() {
+      if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        exemplars_ = new java.util.ArrayList<com.google.api.Distribution.Exemplar>(exemplars_);
+        bitField0_ |= 0x00000040;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        com.google.api.Distribution.Exemplar, com.google.api.Distribution.Exemplar.Builder, com.google.api.Distribution.ExemplarOrBuilder> exemplarsBuilder_;
+
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public java.util.List<com.google.api.Distribution.Exemplar> getExemplarsList() {
+      if (exemplarsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(exemplars_);
+      } else {
+        return exemplarsBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public int getExemplarsCount() {
+      if (exemplarsBuilder_ == null) {
+        return exemplars_.size();
+      } else {
+        return exemplarsBuilder_.getCount();
+      }
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public com.google.api.Distribution.Exemplar getExemplars(int index) {
+      if (exemplarsBuilder_ == null) {
+        return exemplars_.get(index);
+      } else {
+        return exemplarsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder setExemplars(
+        int index, com.google.api.Distribution.Exemplar value) {
+      if (exemplarsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExemplarsIsMutable();
+        exemplars_.set(index, value);
+        onChanged();
+      } else {
+        exemplarsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder setExemplars(
+        int index, com.google.api.Distribution.Exemplar.Builder builderForValue) {
+      if (exemplarsBuilder_ == null) {
+        ensureExemplarsIsMutable();
+        exemplars_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        exemplarsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder addExemplars(com.google.api.Distribution.Exemplar value) {
+      if (exemplarsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExemplarsIsMutable();
+        exemplars_.add(value);
+        onChanged();
+      } else {
+        exemplarsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder addExemplars(
+        int index, com.google.api.Distribution.Exemplar value) {
+      if (exemplarsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExemplarsIsMutable();
+        exemplars_.add(index, value);
+        onChanged();
+      } else {
+        exemplarsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder addExemplars(
+        com.google.api.Distribution.Exemplar.Builder builderForValue) {
+      if (exemplarsBuilder_ == null) {
+        ensureExemplarsIsMutable();
+        exemplars_.add(builderForValue.build());
+        onChanged();
+      } else {
+        exemplarsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder addExemplars(
+        int index, com.google.api.Distribution.Exemplar.Builder builderForValue) {
+      if (exemplarsBuilder_ == null) {
+        ensureExemplarsIsMutable();
+        exemplars_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        exemplarsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder addAllExemplars(
+        java.lang.Iterable<? extends com.google.api.Distribution.Exemplar> values) {
+      if (exemplarsBuilder_ == null) {
+        ensureExemplarsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, exemplars_);
+        onChanged();
+      } else {
+        exemplarsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder clearExemplars() {
+      if (exemplarsBuilder_ == null) {
+        exemplars_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000040);
+        onChanged();
+      } else {
+        exemplarsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public Builder removeExemplars(int index) {
+      if (exemplarsBuilder_ == null) {
+        ensureExemplarsIsMutable();
+        exemplars_.remove(index);
+        onChanged();
+      } else {
+        exemplarsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public com.google.api.Distribution.Exemplar.Builder getExemplarsBuilder(
+        int index) {
+      return getExemplarsFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(
+        int index) {
+      if (exemplarsBuilder_ == null) {
+        return exemplars_.get(index);  } else {
+        return exemplarsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder> 
+         getExemplarsOrBuilderList() {
+      if (exemplarsBuilder_ != null) {
+        return exemplarsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(exemplars_);
+      }
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public com.google.api.Distribution.Exemplar.Builder addExemplarsBuilder() {
+      return getExemplarsFieldBuilder().addBuilder(
+          com.google.api.Distribution.Exemplar.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public com.google.api.Distribution.Exemplar.Builder addExemplarsBuilder(
+        int index) {
+      return getExemplarsFieldBuilder().addBuilder(
+          index, com.google.api.Distribution.Exemplar.getDefaultInstance());
+    }
+    /**
+     * <pre>
+     * Must be in increasing order of `value` field.
+     * </pre>
+     *
+     * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
+     */
+    public java.util.List<com.google.api.Distribution.Exemplar.Builder> 
+         getExemplarsBuilderList() {
+      return getExemplarsFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        com.google.api.Distribution.Exemplar, com.google.api.Distribution.Exemplar.Builder, com.google.api.Distribution.ExemplarOrBuilder> 
+        getExemplarsFieldBuilder() {
+      if (exemplarsBuilder_ == null) {
+        exemplarsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.api.Distribution.Exemplar, com.google.api.Distribution.Exemplar.Builder, com.google.api.Distribution.ExemplarOrBuilder>(
+                exemplars_,
+                ((bitField0_ & 0x00000040) == 0x00000040),
+                getParentForChildren(),
+                isClean());
+        exemplars_ = null;
+      }
+      return exemplarsBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

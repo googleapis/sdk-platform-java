@@ -10,9 +10,8 @@ public interface MonitoredResourceMetadataOrBuilder extends
   /**
    * <pre>
    * Output only. Values for predefined system metadata labels.
-   * System labels are a kind of metadata extracted by Google Stackdriver.
-   * Stackdriver determines what system labels are useful and how to obtain
-   * their values. Some examples: "machine_image", "vpc", "subnet_id",
+   * System labels are a kind of metadata extracted by Google, including
+   * "machine_image", "vpc", "subnet_id",
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
@@ -27,9 +26,8 @@ public interface MonitoredResourceMetadataOrBuilder extends
   /**
    * <pre>
    * Output only. Values for predefined system metadata labels.
-   * System labels are a kind of metadata extracted by Google Stackdriver.
-   * Stackdriver determines what system labels are useful and how to obtain
-   * their values. Some examples: "machine_image", "vpc", "subnet_id",
+   * System labels are a kind of metadata extracted by Google, including
+   * "machine_image", "vpc", "subnet_id",
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
@@ -44,9 +42,8 @@ public interface MonitoredResourceMetadataOrBuilder extends
   /**
    * <pre>
    * Output only. Values for predefined system metadata labels.
-   * System labels are a kind of metadata extracted by Google Stackdriver.
-   * Stackdriver determines what system labels are useful and how to obtain
-   * their values. Some examples: "machine_image", "vpc", "subnet_id",
+   * System labels are a kind of metadata extracted by Google, including
+   * "machine_image", "vpc", "subnet_id",
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:

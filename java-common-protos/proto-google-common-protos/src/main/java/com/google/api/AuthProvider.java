@@ -332,7 +332,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object authorizationUrl_;
   /**
    * <pre>
-   * Redirect URL if JWT token is required but no present or is expired.
+   * Redirect URL if JWT token is required but not present or is expired.
    * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
    * </pre>
    *
@@ -352,7 +352,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * Redirect URL if JWT token is required but no present or is expired.
+   * Redirect URL if JWT token is required but not present or is expired.
    * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
    * </pre>
    *
@@ -1222,7 +1222,7 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object authorizationUrl_ = "";
     /**
      * <pre>
-     * Redirect URL if JWT token is required but no present or is expired.
+     * Redirect URL if JWT token is required but not present or is expired.
      * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
      * </pre>
      *
@@ -1242,7 +1242,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Redirect URL if JWT token is required but no present or is expired.
+     * Redirect URL if JWT token is required but not present or is expired.
      * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
      * </pre>
      *
@@ -1263,7 +1263,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Redirect URL if JWT token is required but no present or is expired.
+     * Redirect URL if JWT token is required but not present or is expired.
      * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
      * </pre>
      *
@@ -1281,7 +1281,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Redirect URL if JWT token is required but no present or is expired.
+     * Redirect URL if JWT token is required but not present or is expired.
      * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
      * </pre>
      *
@@ -1295,7 +1295,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Redirect URL if JWT token is required but no present or is expired.
+     * Redirect URL if JWT token is required but not present or is expired.
      * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
      * </pre>
      *

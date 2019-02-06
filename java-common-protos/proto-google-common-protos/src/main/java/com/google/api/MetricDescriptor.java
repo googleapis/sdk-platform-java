@@ -107,6 +107,19 @@ private static final long serialVersionUID = 0L;
             type_ = s;
             break;
           }
+          case 82: {
+            com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder subBuilder = null;
+            if (metadata_ != null) {
+              subBuilder = metadata_.toBuilder();
+            }
+            metadata_ = input.readMessage(com.google.api.MetricDescriptor.MetricDescriptorMetadata.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(metadata_);
+              metadata_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -509,6 +522,1140 @@ private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(enum_scope:google.api.MetricDescriptor.ValueType)
   }
 
+  public interface MetricDescriptorMetadataOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:google.api.MetricDescriptor.MetricDescriptorMetadata)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <pre>
+     * The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     */
+    int getLaunchStageValue();
+    /**
+     * <pre>
+     * The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     */
+    com.google.api.LaunchStage getLaunchStage();
+
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    boolean hasSamplePeriod();
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    com.google.protobuf.Duration getSamplePeriod();
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    com.google.protobuf.DurationOrBuilder getSamplePeriodOrBuilder();
+
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    boolean hasIngestDelay();
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    com.google.protobuf.Duration getIngestDelay();
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    com.google.protobuf.DurationOrBuilder getIngestDelayOrBuilder();
+  }
+  /**
+   * <pre>
+   * Additional annotations that can be used to guide the usage of a metric.
+   * </pre>
+   *
+   * Protobuf type {@code google.api.MetricDescriptor.MetricDescriptorMetadata}
+   */
+  public  static final class MetricDescriptorMetadata extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:google.api.MetricDescriptor.MetricDescriptorMetadata)
+      MetricDescriptorMetadataOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use MetricDescriptorMetadata.newBuilder() to construct.
+    private MetricDescriptorMetadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private MetricDescriptorMetadata() {
+      launchStage_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private MetricDescriptorMetadata(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+              int rawValue = input.readEnum();
+
+              launchStage_ = rawValue;
+              break;
+            }
+            case 18: {
+              com.google.protobuf.Duration.Builder subBuilder = null;
+              if (samplePeriod_ != null) {
+                subBuilder = samplePeriod_.toBuilder();
+              }
+              samplePeriod_ = input.readMessage(com.google.protobuf.Duration.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(samplePeriod_);
+                samplePeriod_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 26: {
+              com.google.protobuf.Duration.Builder subBuilder = null;
+              if (ingestDelay_ != null) {
+                subBuilder = ingestDelay_.toBuilder();
+              }
+              ingestDelay_ = input.readMessage(com.google.protobuf.Duration.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(ingestDelay_);
+                ingestDelay_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.google.api.MetricDescriptor.MetricDescriptorMetadata.class, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder.class);
+    }
+
+    public static final int LAUNCH_STAGE_FIELD_NUMBER = 1;
+    private int launchStage_;
+    /**
+     * <pre>
+     * The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     */
+    public int getLaunchStageValue() {
+      return launchStage_;
+    }
+    /**
+     * <pre>
+     * The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     */
+    public com.google.api.LaunchStage getLaunchStage() {
+      @SuppressWarnings("deprecation")
+      com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+      return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+    }
+
+    public static final int SAMPLE_PERIOD_FIELD_NUMBER = 2;
+    private com.google.protobuf.Duration samplePeriod_;
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    public boolean hasSamplePeriod() {
+      return samplePeriod_ != null;
+    }
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    public com.google.protobuf.Duration getSamplePeriod() {
+      return samplePeriod_ == null ? com.google.protobuf.Duration.getDefaultInstance() : samplePeriod_;
+    }
+    /**
+     * <pre>
+     * The sampling period of metric data points. For metrics which are written
+     * periodically, consecutive data points are stored at this time interval,
+     * excluding data loss due to errors. Metrics with a higher granularity have
+     * a smaller sampling period.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration sample_period = 2;</code>
+     */
+    public com.google.protobuf.DurationOrBuilder getSamplePeriodOrBuilder() {
+      return getSamplePeriod();
+    }
+
+    public static final int INGEST_DELAY_FIELD_NUMBER = 3;
+    private com.google.protobuf.Duration ingestDelay_;
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    public boolean hasIngestDelay() {
+      return ingestDelay_ != null;
+    }
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    public com.google.protobuf.Duration getIngestDelay() {
+      return ingestDelay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : ingestDelay_;
+    }
+    /**
+     * <pre>
+     * The delay of data points caused by ingestion. Data points older than this
+     * age are guaranteed to be ingested and available to be read, excluding
+     * data loss due to errors.
+     * </pre>
+     *
+     * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+     */
+    public com.google.protobuf.DurationOrBuilder getIngestDelayOrBuilder() {
+      return getIngestDelay();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+        output.writeEnum(1, launchStage_);
+      }
+      if (samplePeriod_ != null) {
+        output.writeMessage(2, getSamplePeriod());
+      }
+      if (ingestDelay_ != null) {
+        output.writeMessage(3, getIngestDelay());
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeEnumSize(1, launchStage_);
+      }
+      if (samplePeriod_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getSamplePeriod());
+      }
+      if (ingestDelay_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getIngestDelay());
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.google.api.MetricDescriptor.MetricDescriptorMetadata)) {
+        return super.equals(obj);
+      }
+      com.google.api.MetricDescriptor.MetricDescriptorMetadata other = (com.google.api.MetricDescriptor.MetricDescriptorMetadata) obj;
+
+      boolean result = true;
+      result = result && launchStage_ == other.launchStage_;
+      result = result && (hasSamplePeriod() == other.hasSamplePeriod());
+      if (hasSamplePeriod()) {
+        result = result && getSamplePeriod()
+            .equals(other.getSamplePeriod());
+      }
+      result = result && (hasIngestDelay() == other.hasIngestDelay());
+      if (hasIngestDelay()) {
+        result = result && getIngestDelay()
+            .equals(other.getIngestDelay());
+      }
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + LAUNCH_STAGE_FIELD_NUMBER;
+      hash = (53 * hash) + launchStage_;
+      if (hasSamplePeriod()) {
+        hash = (37 * hash) + SAMPLE_PERIOD_FIELD_NUMBER;
+        hash = (53 * hash) + getSamplePeriod().hashCode();
+      }
+      if (hasIngestDelay()) {
+        hash = (37 * hash) + INGEST_DELAY_FIELD_NUMBER;
+        hash = (53 * hash) + getIngestDelay().hashCode();
+      }
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.google.api.MetricDescriptor.MetricDescriptorMetadata prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * <pre>
+     * Additional annotations that can be used to guide the usage of a metric.
+     * </pre>
+     *
+     * Protobuf type {@code google.api.MetricDescriptor.MetricDescriptorMetadata}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:google.api.MetricDescriptor.MetricDescriptorMetadata)
+        com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.google.api.MetricDescriptor.MetricDescriptorMetadata.class, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder.class);
+      }
+
+      // Construct using com.google.api.MetricDescriptor.MetricDescriptorMetadata.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        launchStage_ = 0;
+
+        if (samplePeriodBuilder_ == null) {
+          samplePeriod_ = null;
+        } else {
+          samplePeriod_ = null;
+          samplePeriodBuilder_ = null;
+        }
+        if (ingestDelayBuilder_ == null) {
+          ingestDelay_ = null;
+        } else {
+          ingestDelay_ = null;
+          ingestDelayBuilder_ = null;
+        }
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+      }
+
+      @java.lang.Override
+      public com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstanceForType() {
+        return com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.google.api.MetricDescriptor.MetricDescriptorMetadata build() {
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.google.api.MetricDescriptor.MetricDescriptorMetadata buildPartial() {
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata result = new com.google.api.MetricDescriptor.MetricDescriptorMetadata(this);
+        result.launchStage_ = launchStage_;
+        if (samplePeriodBuilder_ == null) {
+          result.samplePeriod_ = samplePeriod_;
+        } else {
+          result.samplePeriod_ = samplePeriodBuilder_.build();
+        }
+        if (ingestDelayBuilder_ == null) {
+          result.ingestDelay_ = ingestDelay_;
+        } else {
+          result.ingestDelay_ = ingestDelayBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.google.api.MetricDescriptor.MetricDescriptorMetadata) {
+          return mergeFrom((com.google.api.MetricDescriptor.MetricDescriptorMetadata)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.google.api.MetricDescriptor.MetricDescriptorMetadata other) {
+        if (other == com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()) return this;
+        if (other.launchStage_ != 0) {
+          setLaunchStageValue(other.getLaunchStageValue());
+        }
+        if (other.hasSamplePeriod()) {
+          mergeSamplePeriod(other.getSamplePeriod());
+        }
+        if (other.hasIngestDelay()) {
+          mergeIngestDelay(other.getIngestDelay());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.google.api.MetricDescriptor.MetricDescriptorMetadata) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int launchStage_ = 0;
+      /**
+       * <pre>
+       * The launch stage of the metric definition.
+       * </pre>
+       *
+       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       */
+      public int getLaunchStageValue() {
+        return launchStage_;
+      }
+      /**
+       * <pre>
+       * The launch stage of the metric definition.
+       * </pre>
+       *
+       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       */
+      public Builder setLaunchStageValue(int value) {
+        launchStage_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The launch stage of the metric definition.
+       * </pre>
+       *
+       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       */
+      public com.google.api.LaunchStage getLaunchStage() {
+        @SuppressWarnings("deprecation")
+        com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
+        return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * The launch stage of the metric definition.
+       * </pre>
+       *
+       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       */
+      public Builder setLaunchStage(com.google.api.LaunchStage value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        
+        launchStage_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * The launch stage of the metric definition.
+       * </pre>
+       *
+       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       */
+      public Builder clearLaunchStage() {
+        
+        launchStage_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.Duration samplePeriod_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> samplePeriodBuilder_;
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public boolean hasSamplePeriod() {
+        return samplePeriodBuilder_ != null || samplePeriod_ != null;
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public com.google.protobuf.Duration getSamplePeriod() {
+        if (samplePeriodBuilder_ == null) {
+          return samplePeriod_ == null ? com.google.protobuf.Duration.getDefaultInstance() : samplePeriod_;
+        } else {
+          return samplePeriodBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public Builder setSamplePeriod(com.google.protobuf.Duration value) {
+        if (samplePeriodBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          samplePeriod_ = value;
+          onChanged();
+        } else {
+          samplePeriodBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public Builder setSamplePeriod(
+          com.google.protobuf.Duration.Builder builderForValue) {
+        if (samplePeriodBuilder_ == null) {
+          samplePeriod_ = builderForValue.build();
+          onChanged();
+        } else {
+          samplePeriodBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public Builder mergeSamplePeriod(com.google.protobuf.Duration value) {
+        if (samplePeriodBuilder_ == null) {
+          if (samplePeriod_ != null) {
+            samplePeriod_ =
+              com.google.protobuf.Duration.newBuilder(samplePeriod_).mergeFrom(value).buildPartial();
+          } else {
+            samplePeriod_ = value;
+          }
+          onChanged();
+        } else {
+          samplePeriodBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public Builder clearSamplePeriod() {
+        if (samplePeriodBuilder_ == null) {
+          samplePeriod_ = null;
+          onChanged();
+        } else {
+          samplePeriod_ = null;
+          samplePeriodBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public com.google.protobuf.Duration.Builder getSamplePeriodBuilder() {
+        
+        onChanged();
+        return getSamplePeriodFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      public com.google.protobuf.DurationOrBuilder getSamplePeriodOrBuilder() {
+        if (samplePeriodBuilder_ != null) {
+          return samplePeriodBuilder_.getMessageOrBuilder();
+        } else {
+          return samplePeriod_ == null ?
+              com.google.protobuf.Duration.getDefaultInstance() : samplePeriod_;
+        }
+      }
+      /**
+       * <pre>
+       * The sampling period of metric data points. For metrics which are written
+       * periodically, consecutive data points are stored at this time interval,
+       * excluding data loss due to errors. Metrics with a higher granularity have
+       * a smaller sampling period.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration sample_period = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> 
+          getSamplePeriodFieldBuilder() {
+        if (samplePeriodBuilder_ == null) {
+          samplePeriodBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder>(
+                  getSamplePeriod(),
+                  getParentForChildren(),
+                  isClean());
+          samplePeriod_ = null;
+        }
+        return samplePeriodBuilder_;
+      }
+
+      private com.google.protobuf.Duration ingestDelay_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> ingestDelayBuilder_;
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public boolean hasIngestDelay() {
+        return ingestDelayBuilder_ != null || ingestDelay_ != null;
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public com.google.protobuf.Duration getIngestDelay() {
+        if (ingestDelayBuilder_ == null) {
+          return ingestDelay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : ingestDelay_;
+        } else {
+          return ingestDelayBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public Builder setIngestDelay(com.google.protobuf.Duration value) {
+        if (ingestDelayBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ingestDelay_ = value;
+          onChanged();
+        } else {
+          ingestDelayBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public Builder setIngestDelay(
+          com.google.protobuf.Duration.Builder builderForValue) {
+        if (ingestDelayBuilder_ == null) {
+          ingestDelay_ = builderForValue.build();
+          onChanged();
+        } else {
+          ingestDelayBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public Builder mergeIngestDelay(com.google.protobuf.Duration value) {
+        if (ingestDelayBuilder_ == null) {
+          if (ingestDelay_ != null) {
+            ingestDelay_ =
+              com.google.protobuf.Duration.newBuilder(ingestDelay_).mergeFrom(value).buildPartial();
+          } else {
+            ingestDelay_ = value;
+          }
+          onChanged();
+        } else {
+          ingestDelayBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public Builder clearIngestDelay() {
+        if (ingestDelayBuilder_ == null) {
+          ingestDelay_ = null;
+          onChanged();
+        } else {
+          ingestDelay_ = null;
+          ingestDelayBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public com.google.protobuf.Duration.Builder getIngestDelayBuilder() {
+        
+        onChanged();
+        return getIngestDelayFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      public com.google.protobuf.DurationOrBuilder getIngestDelayOrBuilder() {
+        if (ingestDelayBuilder_ != null) {
+          return ingestDelayBuilder_.getMessageOrBuilder();
+        } else {
+          return ingestDelay_ == null ?
+              com.google.protobuf.Duration.getDefaultInstance() : ingestDelay_;
+        }
+      }
+      /**
+       * <pre>
+       * The delay of data points caused by ingestion. Data points older than this
+       * age are guaranteed to be ingested and available to be read, excluding
+       * data loss due to errors.
+       * </pre>
+       *
+       * <code>.google.protobuf.Duration ingest_delay = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> 
+          getIngestDelayFieldBuilder() {
+        if (ingestDelayBuilder_ == null) {
+          ingestDelayBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder>(
+                  getIngestDelay(),
+                  getParentForChildren(),
+                  isClean());
+          ingestDelay_ = null;
+        }
+        return ingestDelayBuilder_;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:google.api.MetricDescriptor.MetricDescriptorMetadata)
+    }
+
+    // @@protoc_insertion_point(class_scope:google.api.MetricDescriptor.MetricDescriptorMetadata)
+    private static final com.google.api.MetricDescriptor.MetricDescriptorMetadata DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.google.api.MetricDescriptor.MetricDescriptorMetadata();
+    }
+
+    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<MetricDescriptorMetadata>
+        PARSER = new com.google.protobuf.AbstractParser<MetricDescriptorMetadata>() {
+      @java.lang.Override
+      public MetricDescriptorMetadata parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MetricDescriptorMetadata(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<MetricDescriptorMetadata> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<MetricDescriptorMetadata> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
   private volatile java.lang.Object name_;
@@ -557,10 +1704,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined custom metric types have the DNS name
-   * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-   * grouping. For example:
+   * URL-encoded.  All user-defined metric types have the DNS name
+   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+   * use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
+   *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
@@ -581,10 +1729,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined custom metric types have the DNS name
-   * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-   * grouping. For example:
+   * URL-encoded.  All user-defined metric types have the DNS name
+   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+   * use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
+   *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
    * </pre>
    *
@@ -972,6 +2121,39 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int METADATA_FIELD_NUMBER = 10;
+  private com.google.api.MetricDescriptor.MetricDescriptorMetadata metadata_;
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  public boolean hasMetadata() {
+    return metadata_ != null;
+  }
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  public com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata() {
+    return metadata_ == null ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+  }
+  /**
+   * <pre>
+   * Optional. Metadata which can be used to guide usage of the metric.
+   * </pre>
+   *
+   * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+   */
+  public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
+    return getMetadata();
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -1010,6 +2192,9 @@ private static final long serialVersionUID = 0L;
     if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 8, type_);
     }
+    if (metadata_ != null) {
+      output.writeMessage(10, getMetadata());
+    }
     unknownFields.writeTo(output);
   }
 
@@ -1046,6 +2231,10 @@ private static final long serialVersionUID = 0L;
     if (!getTypeBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, type_);
     }
+    if (metadata_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(10, getMetadata());
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -1076,6 +2265,11 @@ private static final long serialVersionUID = 0L;
         .equals(other.getDescription());
     result = result && getDisplayName()
         .equals(other.getDisplayName());
+    result = result && (hasMetadata() == other.hasMetadata());
+    if (hasMetadata()) {
+      result = result && getMetadata()
+          .equals(other.getMetadata());
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -1105,6 +2299,10 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getDescription().hashCode();
     hash = (37 * hash) + DISPLAY_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getDisplayName().hashCode();
+    if (hasMetadata()) {
+      hash = (37 * hash) + METADATA_FIELD_NUMBER;
+      hash = (53 * hash) + getMetadata().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1265,6 +2463,12 @@ private static final long serialVersionUID = 0L;
 
       displayName_ = "";
 
+      if (metadataBuilder_ == null) {
+        metadata_ = null;
+      } else {
+        metadata_ = null;
+        metadataBuilder_ = null;
+      }
       return this;
     }
 
@@ -1309,6 +2513,11 @@ private static final long serialVersionUID = 0L;
       result.unit_ = unit_;
       result.description_ = description_;
       result.displayName_ = displayName_;
+      if (metadataBuilder_ == null) {
+        result.metadata_ = metadata_;
+      } else {
+        result.metadata_ = metadataBuilder_.build();
+      }
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
@@ -1409,6 +2618,9 @@ private static final long serialVersionUID = 0L;
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
         onChanged();
+      }
+      if (other.hasMetadata()) {
+        mergeMetadata(other.getMetadata());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -1533,10 +2745,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined custom metric types have the DNS name
-     * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-     * grouping. For example:
+     * URL-encoded.  All user-defined metric types have the DNS name
+     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+     * use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
+     *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
      * </pre>
      *
@@ -1557,10 +2770,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined custom metric types have the DNS name
-     * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-     * grouping. For example:
+     * URL-encoded.  All user-defined metric types have the DNS name
+     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+     * use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
+     *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
      * </pre>
      *
@@ -1582,10 +2796,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined custom metric types have the DNS name
-     * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-     * grouping. For example:
+     * URL-encoded.  All user-defined metric types have the DNS name
+     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+     * use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
+     *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
      * </pre>
      *
@@ -1604,10 +2819,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined custom metric types have the DNS name
-     * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-     * grouping. For example:
+     * URL-encoded.  All user-defined metric types have the DNS name
+     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+     * use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
+     *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
      * </pre>
      *
@@ -1622,10 +2838,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined custom metric types have the DNS name
-     * `custom.googleapis.com`.  Metric types should use a natural hierarchical
-     * grouping. For example:
+     * URL-encoded.  All user-defined metric types have the DNS name
+     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
+     * use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
+     *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
      * </pre>
      *
@@ -2720,6 +3937,159 @@ private static final long serialVersionUID = 0L;
       displayName_ = value;
       onChanged();
       return this;
+    }
+
+    private com.google.api.MetricDescriptor.MetricDescriptorMetadata metadata_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder> metadataBuilder_;
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public boolean hasMetadata() {
+      return metadataBuilder_ != null || metadata_ != null;
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata() {
+      if (metadataBuilder_ == null) {
+        return metadata_ == null ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+      } else {
+        return metadataBuilder_.getMessage();
+      }
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public Builder setMetadata(com.google.api.MetricDescriptor.MetricDescriptorMetadata value) {
+      if (metadataBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        metadata_ = value;
+        onChanged();
+      } else {
+        metadataBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public Builder setMetadata(
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder builderForValue) {
+      if (metadataBuilder_ == null) {
+        metadata_ = builderForValue.build();
+        onChanged();
+      } else {
+        metadataBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public Builder mergeMetadata(com.google.api.MetricDescriptor.MetricDescriptorMetadata value) {
+      if (metadataBuilder_ == null) {
+        if (metadata_ != null) {
+          metadata_ =
+            com.google.api.MetricDescriptor.MetricDescriptorMetadata.newBuilder(metadata_).mergeFrom(value).buildPartial();
+        } else {
+          metadata_ = value;
+        }
+        onChanged();
+      } else {
+        metadataBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public Builder clearMetadata() {
+      if (metadataBuilder_ == null) {
+        metadata_ = null;
+        onChanged();
+      } else {
+        metadata_ = null;
+        metadataBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder getMetadataBuilder() {
+      
+      onChanged();
+      return getMetadataFieldBuilder().getBuilder();
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
+      if (metadataBuilder_ != null) {
+        return metadataBuilder_.getMessageOrBuilder();
+      } else {
+        return metadata_ == null ?
+            com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+      }
+    }
+    /**
+     * <pre>
+     * Optional. Metadata which can be used to guide usage of the metric.
+     * </pre>
+     *
+     * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder> 
+        getMetadataFieldBuilder() {
+      if (metadataBuilder_ == null) {
+        metadataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder>(
+                getMetadata(),
+                getParentForChildren(),
+                isClean());
+        metadata_ = null;
+      }
+      return metadataBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

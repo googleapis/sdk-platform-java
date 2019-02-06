@@ -35,12 +35,18 @@ public final class BackendProto {
     java.lang.String[] descriptorData = {
       "\n\030google/api/backend.proto\022\ngoogle.api\"1" +
       "\n\007Backend\022&\n\005rules\030\001 \003(\0132\027.google.api.Ba" +
-      "ckendRule\"X\n\013BackendRule\022\020\n\010selector\030\001 \001" +
-      "(\t\022\017\n\007address\030\002 \001(\t\022\020\n\010deadline\030\003 \001(\001\022\024\n" +
-      "\014min_deadline\030\004 \001(\001Bn\n\016com.google.apiB\014B" +
-      "ackendProtoP\001ZEgoogle.golang.org/genprot" +
-      "o/googleapis/api/serviceconfig;serviceco" +
-      "nfig\242\002\004GAPIb\006proto3"
+      "ckendRule\"\310\002\n\013BackendRule\022\020\n\010selector\030\001 " +
+      "\001(\t\022\017\n\007address\030\002 \001(\t\022\020\n\010deadline\030\003 \001(\001\022\024" +
+      "\n\014min_deadline\030\004 \001(\001\022\032\n\022operation_deadli" +
+      "ne\030\005 \001(\001\022A\n\020path_translation\030\006 \001(\0162\'.goo" +
+      "gle.api.BackendRule.PathTranslation\022\026\n\014j" +
+      "wt_audience\030\007 \001(\tH\000\"e\n\017PathTranslation\022 " +
+      "\n\034PATH_TRANSLATION_UNSPECIFIED\020\000\022\024\n\020CONS" +
+      "TANT_ADDRESS\020\001\022\032\n\026APPEND_PATH_TO_ADDRESS" +
+      "\020\002B\020\n\016authenticationBn\n\016com.google.apiB\014" +
+      "BackendProtoP\001ZEgoogle.golang.org/genpro" +
+      "to/googleapis/api/serviceconfig;servicec" +
+      "onfig\242\002\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -65,7 +71,7 @@ public final class BackendProto {
     internal_static_google_api_BackendRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_BackendRule_descriptor,
-        new java.lang.String[] { "Selector", "Address", "Deadline", "MinDeadline", });
+        new java.lang.String[] { "Selector", "Address", "Deadline", "MinDeadline", "OperationDeadline", "PathTranslation", "JwtAudience", "Authentication", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

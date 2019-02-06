@@ -164,8 +164,8 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -174,8 +174,8 @@ private static final long serialVersionUID = 0L;
         getMetricsList();
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -183,8 +183,8 @@ private static final long serialVersionUID = 0L;
     int getMetricsCount();
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -192,8 +192,8 @@ private static final long serialVersionUID = 0L;
     java.lang.String getMetrics(int index);
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -346,8 +346,8 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.LazyStringList metrics_;
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -358,8 +358,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -369,8 +369,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -380,8 +380,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Names of the metrics to report to this monitoring destination.
-     * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Types of the metrics to report to this monitoring destination.
+     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -840,8 +840,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -852,8 +852,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -863,8 +863,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -874,8 +874,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -886,8 +886,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -904,8 +904,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -922,8 +922,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -938,8 +938,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -952,8 +952,8 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
-       * Names of the metrics to report to this monitoring destination.
-       * Each name must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Types of the metrics to report to this monitoring destination.
+       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -1027,9 +1027,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one producer destination.
+   * There can be multiple producer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1040,9 +1042,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one producer destination.
+   * There can be multiple producer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1054,9 +1058,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one producer destination.
+   * There can be multiple producer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1067,9 +1073,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one producer destination.
+   * There can be multiple producer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1080,9 +1088,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
-   * There can be multiple producer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one producer destination.
+   * There can be multiple producer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1097,9 +1107,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one consumer destination.
+   * There can be multiple consumer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1110,9 +1122,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one consumer destination.
+   * There can be multiple consumer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1124,9 +1138,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one consumer destination.
+   * There can be multiple consumer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1137,9 +1153,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one consumer destination.
+   * There can be multiple consumer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1150,9 +1168,11 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
-   * There can be multiple consumer destinations, each one must have a
-   * different monitored resource type. A metric can be used in at most
-   * one consumer destination.
+   * There can be multiple consumer destinations. A monitored resouce type may
+   * appear in multiple monitoring destinations if different aggregations are
+   * needed for different sets of metrics associated with that monitored
+   * resource type. A monitored resource and metric pair may only be used once
+   * in the Monitoring configuration.
    * </pre>
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1613,9 +1633,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1630,9 +1652,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1647,9 +1671,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1664,9 +1690,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1688,9 +1716,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1709,9 +1739,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1732,9 +1764,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1756,9 +1790,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1777,9 +1813,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1798,9 +1836,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1820,9 +1860,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1840,9 +1882,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1860,9 +1904,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1874,9 +1920,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1891,9 +1939,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1909,9 +1959,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1923,9 +1975,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1938,9 +1992,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the producer project.
-     * There can be multiple producer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one producer destination.
+     * There can be multiple producer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
@@ -1979,9 +2035,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -1996,9 +2054,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2013,9 +2073,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2030,9 +2092,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2054,9 +2118,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2075,9 +2141,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2098,9 +2166,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2122,9 +2192,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2143,9 +2215,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2164,9 +2238,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2186,9 +2262,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2206,9 +2284,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2226,9 +2306,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2240,9 +2322,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2257,9 +2341,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2275,9 +2361,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2289,9 +2377,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
@@ -2304,9 +2394,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Monitoring configurations for sending metrics to the consumer project.
-     * There can be multiple consumer destinations, each one must have a
-     * different monitored resource type. A metric can be used in at most
-     * one consumer destination.
+     * There can be multiple consumer destinations. A monitored resouce type may
+     * appear in multiple monitoring destinations if different aggregations are
+     * needed for different sets of metrics associated with that monitored
+     * resource type. A monitored resource and metric pair may only be used once
+     * in the Monitoring configuration.
      * </pre>
      *
      * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>

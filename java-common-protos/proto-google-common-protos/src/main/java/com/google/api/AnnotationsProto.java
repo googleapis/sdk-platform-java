@@ -7,17 +7,6 @@ public final class AnnotationsProto {
   private AnnotationsProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
-    registry.add(com.google.api.AnnotationsProto.metadata);
-    registry.add(com.google.api.AnnotationsProto.resourceDefinition);
-    registry.add(com.google.api.AnnotationsProto.resourceSetDefinition);
-    registry.add(com.google.api.AnnotationsProto.defaultHost);
-    registry.add(com.google.api.AnnotationsProto.oauth);
-    registry.add(com.google.api.AnnotationsProto.resource);
-    registry.add(com.google.api.AnnotationsProto.resourceSet);
-    registry.add(com.google.api.AnnotationsProto.resourceReference);
-    registry.add(com.google.api.AnnotationsProto.fieldBehavior);
-    registry.add(com.google.api.AnnotationsProto.methodSignature);
-    registry.add(com.google.api.AnnotationsProto.operation);
     registry.add(com.google.api.AnnotationsProto.http);
   }
 
@@ -26,198 +15,10 @@ public final class AnnotationsProto {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public static final int METADATA_FIELD_NUMBER = 1048;
-  /**
-   * <pre>
-   * Packaging information.
-   * See `google/api/metadata.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FileOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FileOptions,
-      com.google.api.Metadata> metadata = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.Metadata.class,
-        com.google.api.Metadata.getDefaultInstance());
-  public static final int RESOURCE_DEFINITION_FIELD_NUMBER = 1053;
-  /**
-   * <pre>
-   * A representation of a resource.
-   * At a file level, this is generally used to define information for a
-   * resource from another API, or for a resource that does not have an
-   * associated proto message..
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FileOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FileOptions,
-      java.util.List<com.google.api.Resource>> resourceDefinition = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.Resource.class,
-        com.google.api.Resource.getDefaultInstance());
-  public static final int RESOURCE_SET_DEFINITION_FIELD_NUMBER = 1054;
-  /**
-   * <pre>
-   * A representation of a set of resources.
-   * At a file level, this is generally used to define information for a
-   * resource set from another API, or for a resource that does not have an
-   * associated proto message..
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FileOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FileOptions,
-      java.util.List<com.google.api.ResourceSet>> resourceSetDefinition = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.ResourceSet.class,
-        com.google.api.ResourceSet.getDefaultInstance());
-  public static final int DEFAULT_HOST_FIELD_NUMBER = 1049;
-  /**
-   * <pre>
-   * Required. The hostname for this service (e.g. "foo.googleapis.com").
-   * This should be specified with no prefix.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.ServiceOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.ServiceOptions,
-      java.lang.String> defaultHost = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        java.lang.String.class,
-        null);
-  public static final int OAUTH_FIELD_NUMBER = 1050;
-  /**
-   * <pre>
-   * Required. OAuth information for the client.
-   * The "scopes" key is a repeated string; see `google/api/metadata.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.ServiceOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.ServiceOptions,
-      com.google.api.OAuth> oauth = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.OAuth.class,
-        com.google.api.OAuth.getDefaultInstance());
-  public static final int RESOURCE_FIELD_NUMBER = 1053;
-  /**
-   * <pre>
-   * A representation of the resource.
-   * This is generally intended to be attached to the "name" field.
-   * See `google/api/resources.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FieldOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FieldOptions,
-      com.google.api.Resource> resource = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.Resource.class,
-        com.google.api.Resource.getDefaultInstance());
-  public static final int RESOURCE_SET_FIELD_NUMBER = 1054;
-  /**
-   * <pre>
-   * A representation of a set of resources, any of which may be
-   * represented.
-   * This is generally intended to be attached to the "name" field
-   * and is mutually exclusive with `resource`.
-   * See `google/api/resources.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FieldOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FieldOptions,
-      com.google.api.ResourceSet> resourceSet = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.ResourceSet.class,
-        com.google.api.ResourceSet.getDefaultInstance());
-  public static final int RESOURCE_REFERENCE_FIELD_NUMBER = 1055;
-  /**
-   * <pre>
-   * A reference to another resource message or resource definition.
-   * See `google/api/resources.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FieldOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FieldOptions,
-      java.lang.String> resourceReference = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        java.lang.String.class,
-        null);
-  public static final int FIELD_BEHAVIOR_FIELD_NUMBER = 1052;
-  /**
-   * <pre>
-   * A designation of a specific field behavior (required, output only, etc.)
-   * in protobuf messages.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.FieldOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.FieldOptions,
-      java.util.List<com.google.api.FieldBehavior>> fieldBehavior = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.FieldBehavior.class,
-        null);
-  public static final int METHOD_SIGNATURE_FIELD_NUMBER = 1051;
-  /**
-   * <pre>
-   * The parameter lists defined for this method.
-   * See `google/api/signature.proto`.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.MethodOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.MethodOptions,
-      java.util.List<com.google.api.MethodSignature>> methodSignature = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.MethodSignature.class,
-        com.google.api.MethodSignature.getDefaultInstance());
-  public static final int OPERATION_FIELD_NUMBER = 1049;
-  /**
-   * <pre>
-   * Additional information regarding long-running operations.
-   * In particular, this specifies the types that are returned from
-   * long-running operations.
-   * Required for methods that return `google.longrunning.Operation`; invalid
-   * otherwise.
-   * </pre>
-   *
-   * <code>extend .google.protobuf.MethodOptions { ... }</code>
-   */
-  public static final
-    com.google.protobuf.GeneratedMessage.GeneratedExtension<
-      com.google.protobuf.DescriptorProtos.MethodOptions,
-      com.google.api.OperationData> operation = com.google.protobuf.GeneratedMessage
-          .newFileScopedGeneratedExtension(
-        com.google.api.OperationData.class,
-        com.google.api.OperationData.getDefaultInstance());
   public static final int HTTP_FIELD_NUMBER = 72295728;
   /**
    * <pre>
-   * The HTTP bindings for this method.
-   * See `google/api/http.proto`.
+   * See `HttpRule`.
    * </pre>
    *
    * <code>extend .google.protobuf.MethodOptions { ... }</code>
@@ -239,37 +40,13 @@ public final class AnnotationsProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\034google/api/annotations.proto\022\ngoogle.a" +
-      "pi\032\037google/api/field_behavior.proto\032\025goo" +
-      "gle/api/http.proto\032\034google/api/longrunni" +
-      "ng.proto\032\031google/api/metadata.proto\032\032goo" +
-      "gle/api/resources.proto\032\032google/api/sign" +
-      "ature.proto\032 google/protobuf/descriptor." +
-      "proto:E\n\010metadata\022\034.google.protobuf.File" +
-      "Options\030\230\010 \001(\0132\024.google.api.Metadata:P\n\023" +
-      "resource_definition\022\034.google.protobuf.Fi" +
-      "leOptions\030\235\010 \003(\0132\024.google.api.Resource:W" +
-      "\n\027resource_set_definition\022\034.google.proto" +
-      "buf.FileOptions\030\236\010 \003(\0132\027.google.api.Reso" +
-      "urceSet:6\n\014default_host\022\037.google.protobu" +
-      "f.ServiceOptions\030\231\010 \001(\t:B\n\005oauth\022\037.googl" +
-      "e.protobuf.ServiceOptions\030\232\010 \001(\0132\021.googl" +
-      "e.api.OAuth:F\n\010resource\022\035.google.protobu" +
-      "f.FieldOptions\030\235\010 \001(\0132\024.google.api.Resou" +
-      "rce:M\n\014resource_set\022\035.google.protobuf.Fi" +
-      "eldOptions\030\236\010 \001(\0132\027.google.api.ResourceS" +
-      "et::\n\022resource_reference\022\035.google.protob" +
-      "uf.FieldOptions\030\237\010 \001(\t:Q\n\016field_behavior" +
-      "\022\035.google.protobuf.FieldOptions\030\234\010 \003(\0162\031" +
-      ".google.api.FieldBehavior:V\n\020method_sign" +
-      "ature\022\036.google.protobuf.MethodOptions\030\233\010" +
-      " \003(\0132\033.google.api.MethodSignature:M\n\tope" +
-      "ration\022\036.google.protobuf.MethodOptions\030\231" +
-      "\010 \001(\0132\031.google.api.OperationData:E\n\004http" +
-      "\022\036.google.protobuf.MethodOptions\030\260\312\274\" \001(" +
-      "\0132\024.google.api.HttpRuleBn\n\016com.google.ap" +
-      "iB\020AnnotationsProtoP\001ZAgoogle.golang.org" +
-      "/genproto/googleapis/api/annotations;ann" +
-      "otations\242\002\004GAPIb\006proto3"
+      "pi\032\025google/api/http.proto\032 google/protob" +
+      "uf/descriptor.proto:E\n\004http\022\036.google.pro" +
+      "tobuf.MethodOptions\030\260\312\274\" \001(\0132\024.google.ap" +
+      "i.HttpRuleBn\n\016com.google.apiB\020Annotation" +
+      "sProtoP\001ZAgoogle.golang.org/genproto/goo" +
+      "gleapis/api/annotations;annotations\242\002\004GA" +
+      "PIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -282,32 +59,11 @@ public final class AnnotationsProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.FieldBehaviorProto.getDescriptor(),
           com.google.api.HttpProto.getDescriptor(),
-          com.google.api.LongrunningProto.getDescriptor(),
-          com.google.api.MetadataProto.getDescriptor(),
-          com.google.api.ResourcesProto.getDescriptor(),
-          com.google.api.SignatureProto.getDescriptor(),
           com.google.protobuf.DescriptorProtos.getDescriptor(),
         }, assigner);
-    metadata.internalInit(descriptor.getExtensions().get(0));
-    resourceDefinition.internalInit(descriptor.getExtensions().get(1));
-    resourceSetDefinition.internalInit(descriptor.getExtensions().get(2));
-    defaultHost.internalInit(descriptor.getExtensions().get(3));
-    oauth.internalInit(descriptor.getExtensions().get(4));
-    resource.internalInit(descriptor.getExtensions().get(5));
-    resourceSet.internalInit(descriptor.getExtensions().get(6));
-    resourceReference.internalInit(descriptor.getExtensions().get(7));
-    fieldBehavior.internalInit(descriptor.getExtensions().get(8));
-    methodSignature.internalInit(descriptor.getExtensions().get(9));
-    operation.internalInit(descriptor.getExtensions().get(10));
-    http.internalInit(descriptor.getExtensions().get(11));
-    com.google.api.FieldBehaviorProto.getDescriptor();
+    http.internalInit(descriptor.getExtensions().get(0));
     com.google.api.HttpProto.getDescriptor();
-    com.google.api.LongrunningProto.getDescriptor();
-    com.google.api.MetadataProto.getDescriptor();
-    com.google.api.ResourcesProto.getDescriptor();
-    com.google.api.SignatureProto.getDescriptor();
     com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 

@@ -127,7 +127,7 @@ public interface AuthProviderOrBuilder extends
 
   /**
    * <pre>
-   * Redirect URL if JWT token is required but no present or is expired.
+   * Redirect URL if JWT token is required but not present or is expired.
    * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
    * </pre>
    *
@@ -136,7 +136,7 @@ public interface AuthProviderOrBuilder extends
   java.lang.String getAuthorizationUrl();
   /**
    * <pre>
-   * Redirect URL if JWT token is required but no present or is expired.
+   * Redirect URL if JWT token is required but not present or is expired.
    * Implement authorizationUrl of securityDefinitions in OpenAPI spec.
    * </pre>
    *

@@ -96,4 +96,82 @@ public interface ContextRuleOrBuilder extends
    */
   com.google.protobuf.ByteString
       getProvidedBytes(int index);
+
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  java.util.List<java.lang.String>
+      getAllowedRequestExtensionsList();
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  int getAllowedRequestExtensionsCount();
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  java.lang.String getAllowedRequestExtensions(int index);
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from client to backend.
+   * </pre>
+   *
+   * <code>repeated string allowed_request_extensions = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getAllowedRequestExtensionsBytes(int index);
+
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  java.util.List<java.lang.String>
+      getAllowedResponseExtensionsList();
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  int getAllowedResponseExtensionsCount();
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  java.lang.String getAllowedResponseExtensions(int index);
+  /**
+   * <pre>
+   * A list of full type names or extension IDs of extensions allowed in grpc
+   * side channel from backend to client.
+   * </pre>
+   *
+   * <code>repeated string allowed_response_extensions = 5;</code>
+   */
+  com.google.protobuf.ByteString
+      getAllowedResponseExtensionsBytes(int index);
 }

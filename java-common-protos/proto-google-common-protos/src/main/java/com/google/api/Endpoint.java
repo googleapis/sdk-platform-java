@@ -190,9 +190,9 @@ private static final long serialVersionUID = 0L;
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  public com.google.protobuf.ProtocolStringList
+  @java.lang.Deprecated public com.google.protobuf.ProtocolStringList
       getAliasesList() {
     return aliases_;
   }
@@ -204,9 +204,9 @@ private static final long serialVersionUID = 0L;
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  public int getAliasesCount() {
+  @java.lang.Deprecated public int getAliasesCount() {
     return aliases_.size();
   }
   /**
@@ -217,9 +217,9 @@ private static final long serialVersionUID = 0L;
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  public java.lang.String getAliases(int index) {
+  @java.lang.Deprecated public java.lang.String getAliases(int index) {
     return aliases_.get(index);
   }
   /**
@@ -230,9 +230,9 @@ private static final long serialVersionUID = 0L;
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
-   * <code>repeated string aliases = 2;</code>
+   * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  public com.google.protobuf.ByteString
+  @java.lang.Deprecated public com.google.protobuf.ByteString
       getAliasesBytes(int index) {
     return aliases_.getByteString(index);
   }
@@ -879,9 +879,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public com.google.protobuf.ProtocolStringList
+    @java.lang.Deprecated public com.google.protobuf.ProtocolStringList
         getAliasesList() {
       return aliases_.getUnmodifiableView();
     }
@@ -893,9 +893,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public int getAliasesCount() {
+    @java.lang.Deprecated public int getAliasesCount() {
       return aliases_.size();
     }
     /**
@@ -906,9 +906,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public java.lang.String getAliases(int index) {
+    @java.lang.Deprecated public java.lang.String getAliases(int index) {
       return aliases_.get(index);
     }
     /**
@@ -919,9 +919,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public com.google.protobuf.ByteString
+    @java.lang.Deprecated public com.google.protobuf.ByteString
         getAliasesBytes(int index) {
       return aliases_.getByteString(index);
     }
@@ -933,9 +933,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public Builder setAliases(
+    @java.lang.Deprecated public Builder setAliases(
         int index, java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
@@ -953,9 +953,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public Builder addAliases(
+    @java.lang.Deprecated public Builder addAliases(
         java.lang.String value) {
       if (value == null) {
     throw new NullPointerException();
@@ -973,9 +973,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public Builder addAllAliases(
+    @java.lang.Deprecated public Builder addAllAliases(
         java.lang.Iterable<java.lang.String> values) {
       ensureAliasesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -991,9 +991,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public Builder clearAliases() {
+    @java.lang.Deprecated public Builder clearAliases() {
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
@@ -1007,9 +1007,9 @@ private static final long serialVersionUID = 0L;
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
-     * <code>repeated string aliases = 2;</code>
+     * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    public Builder addAliasesBytes(
+    @java.lang.Deprecated public Builder addAliasesBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
