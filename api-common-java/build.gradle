@@ -86,6 +86,13 @@ jacocoTestReport {
 
 check.dependsOn jacocoTestReport
 
+// jar with automatic module name:
+jar {
+  manifest {
+    attributes('Automatic-Module-Name': 'com.google.api.apicommon')
+  }
+}
+
 // Source jar
 // ----------
 
