@@ -44,9 +44,10 @@ additional qualifications:
    public for technical reasons, because of the limitations of Java's access
    modifiers. For the purposes of semver, they should be considered private.
 
-This library is currently in major version zero (``0.y.z``), which means that
-anything may change at any time and the public API should not be considered
-stable.
+This library is currently in major version one (``1.y.z``), which means that
+any public API not specifically marked as `@BetaApi` or `@InternalApi` can be considered
+stable. They will not change without incrementing the major version to 2.x or later,
+and probably not then.
 
 License
 -------
