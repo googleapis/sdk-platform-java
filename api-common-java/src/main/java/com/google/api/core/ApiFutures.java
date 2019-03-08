@@ -100,7 +100,7 @@ public final class ApiFutures {
             listenableFutureForApiFuture(input),
             exceptionType,
             new GaxFunctionToGuavaFunction<X, V>(callback),
-            directExecutor());
+            executor);
     return new ListenableFutureToApiFuture<V>(catchingFuture);
   }
 
