@@ -612,7 +612,8 @@ public class PathTemplate {
           // This is the final segment, and this check should have already been performed by the
           // caller. The matching value is no longer present in the input.
           break;
-        default:
+        case LITERAL:
+        case WILDCARD:
           if (inPos >= input.size()) {
             // End of input
             return false;
@@ -627,35 +628,39 @@ public class PathTemplate {
           }
           if (currentVar != null) {
             // Create or extend current match
-            String current = values.get(currentVar);
-            if (current == null) {
-              values.put(currentVar, next);
-            } else {
-              values.put(currentVar, current + "/" + next);
+            values.put(currentVar, concatCaptures(values.get(currentVar), next));
+          }
+          break;
+        case PATH_WILDCARD:
+          // Compute the number of additional input the ** can consume. This
+          // is possible because we restrict patterns to have only one **.
+          int segsToMatch = 0;
+          for (int i = segPos; i < segments.size(); i++) {
+            switch (segments.get(i).kind()) {
+              case BINDING:
+              case END_BINDING:
+                // skip
+                continue;
+              default:
+                segsToMatch++;
             }
           }
-          if (seg.kind() == SegmentKind.PATH_WILDCARD) {
-            // Compute the number of additional input the ** can consume. This
-            // is possible because we restrict patterns to have only one **.
-            int segsToMatch = 0;
-            for (int i = segPos; i < segments.size(); i++) {
-              switch (segments.get(i).kind()) {
-                case BINDING:
-                case END_BINDING:
-                  // skip
-                  continue;
-                default:
-                  segsToMatch++;
-              }
-            }
-            int available = (input.size() - inPos) - segsToMatch;
-            while (available-- > 0) {
-              values.put(currentVar, values.get(currentVar) + "/" + decodeUrl(input.get(inPos++)));
-            }
+          int available = (input.size() - inPos) - segsToMatch;
+          // If this segment is empty, make sure it is still captured.
+          if (available == 0 && !values.containsKey(currentVar)) {
+            values.put(currentVar, "");
+          }
+          while (available-- > 0) {
+            values.put(
+                currentVar, concatCaptures(values.get(currentVar), decodeUrl(input.get(inPos++))));
           }
       }
     }
     return inPos == input.size();
+  }
+
+  private static String concatCaptures(@Nullable String cur, String next) {
+    return cur == null ? next : cur + "/" + next;
   }
 
   // Template Instantiation

@@ -108,6 +108,37 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void pathWildcards_matchZeroOrMoreSegments() {
+    PathTemplate start = PathTemplate.create("{glob=**}/b");
+    PathTemplate middle = PathTemplate.create("a/{glob=**}/b");
+    PathTemplate end = PathTemplate.create("a/{glob=**}");
+
+    Truth.assertThat(start.match("b").get("glob")).isEmpty();
+    Truth.assertThat(start.match("/b").get("glob")).isEmpty();
+    Truth.assertThat(start.match("a/b").get("glob")).isEqualTo("a");
+    Truth.assertThat(start.match("a/a/a/b").get("glob")).isEqualTo("a/a/a");
+
+    Truth.assertThat(middle.match("a/b").get("glob")).isEmpty();
+    Truth.assertThat(middle.match("a//b").get("glob")).isEmpty();
+    Truth.assertThat(middle.match("a/x/b").get("glob")).isEqualTo("x");
+    Truth.assertThat(middle.match("a/x/y/z/b").get("glob")).isEqualTo("x/y/z");
+
+    Truth.assertThat(end.match("a").get("glob")).isEmpty();
+    Truth.assertThat(end.match("a/").get("glob")).isEmpty();
+    Truth.assertThat(end.match("a/b").get("glob")).isEqualTo("b");
+    Truth.assertThat(end.match("a/b/b/b").get("glob")).isEqualTo("b/b/b");
+  }
+
+  @Test
+  public void pathWildcard_canMatchTheEmptyString() {
+    PathTemplate template = PathTemplate.create("{glob=**}");
+
+    Truth.assertThat(template.match("").get("glob")).isEmpty();
+    Truth.assertThat(template.match("a").get("glob")).isEqualTo("a");
+    Truth.assertThat(template.match("a/b").get("glob")).isEqualTo("a/b");
+  }
+
+  @Test
   public void matchWithCustomMethod() {
     PathTemplate template = PathTemplate.create("buckets/*/objects/*:custom");
     Map<String, String> match = template.match("buckets/b/objects/o:custom");
