@@ -1,5 +1,5 @@
 sudo: false
-dist: precise
+dist: trusty
 language: java
 addons:
   # https://github.com/travis-ci/travis-ci/issues/5227#issuecomment-165131913
@@ -8,7 +8,6 @@ addons:
   hostname: fake-hostname-to-work-around-travis-bug
 jdk:
   - oraclejdk8
-  - oraclejdk7
   - openjdk7
 script:
   ./gradlew check --info
