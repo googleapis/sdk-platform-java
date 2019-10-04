@@ -50,7 +50,7 @@ private static final long serialVersionUID = 0L;
     consumerDestinations_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -61,7 +61,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -75,25 +75,25 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              producerDestinations_ = new java.util.ArrayList<com.google.api.Logging.LoggingDestination>();
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              producerDestinations_ = new java.util.ArrayList<LoggingDestination>();
               mutable_bitField0_ |= 0x00000001;
             }
             producerDestinations_.add(
-                input.readMessage(com.google.api.Logging.LoggingDestination.parser(), extensionRegistry));
+                input.readMessage(LoggingDestination.parser(), extensionRegistry));
             break;
           }
           case 18: {
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-              consumerDestinations_ = new java.util.ArrayList<com.google.api.Logging.LoggingDestination>();
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+              consumerDestinations_ = new java.util.ArrayList<LoggingDestination>();
               mutable_bitField0_ |= 0x00000002;
             }
             consumerDestinations_.add(
-                input.readMessage(com.google.api.Logging.LoggingDestination.parser(), extensionRegistry));
+                input.readMessage(LoggingDestination.parser(), extensionRegistry));
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -107,10 +107,10 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
       }
-      if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
         consumerDestinations_ = java.util.Collections.unmodifiableList(consumerDestinations_);
       }
       this.unknownFields = unknownFields.build();
@@ -122,12 +122,12 @@ private static final long serialVersionUID = 0L;
     return com.google.api.LoggingProto.internal_static_google_api_Logging_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.LoggingProto.internal_static_google_api_Logging_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.Logging.class, com.google.api.Logging.Builder.class);
+            Logging.class, Builder.class);
   }
 
   public interface LoggingDestinationOrBuilder extends
@@ -142,7 +142,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string monitored_resource = 3;</code>
      */
-    java.lang.String getMonitoredResource();
+    String getMonitoredResource();
     /**
      * <pre>
      * The monitored resource type. The type must be defined in the
@@ -164,7 +164,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string logs = 1;</code>
      */
-    java.util.List<java.lang.String>
+    java.util.List<String>
         getLogsList();
     /**
      * <pre>
@@ -187,7 +187,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string logs = 1;</code>
      */
-    java.lang.String getLogs(int index);
+    String getLogs(int index);
     /**
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
@@ -223,7 +223,7 @@ private static final long serialVersionUID = 0L;
       logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -234,7 +234,7 @@ private static final long serialVersionUID = 0L;
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -248,8 +248,8 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 logs_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
@@ -257,13 +257,13 @@ private static final long serialVersionUID = 0L;
               break;
             }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               monitoredResource_ = s;
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -277,7 +277,7 @@ private static final long serialVersionUID = 0L;
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           logs_ = logs_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -289,17 +289,17 @@ private static final long serialVersionUID = 0L;
       return com.google.api.LoggingProto.internal_static_google_api_Logging_LoggingDestination_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.LoggingProto.internal_static_google_api_Logging_LoggingDestination_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Logging.LoggingDestination.class, com.google.api.Logging.LoggingDestination.Builder.class);
+              LoggingDestination.class, Builder.class);
     }
 
     private int bitField0_;
     public static final int MONITORED_RESOURCE_FIELD_NUMBER = 3;
-    private volatile java.lang.Object monitoredResource_;
+    private volatile Object monitoredResource_;
     /**
      * <pre>
      * The monitored resource type. The type must be defined in the
@@ -308,14 +308,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string monitored_resource = 3;</code>
      */
-    public java.lang.String getMonitoredResource() {
-      java.lang.Object ref = monitoredResource_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getMonitoredResource() {
+      Object ref = monitoredResource_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         monitoredResource_ = s;
         return s;
       }
@@ -330,11 +330,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getMonitoredResourceBytes() {
-      java.lang.Object ref = monitoredResource_;
-      if (ref instanceof java.lang.String) {
+      Object ref = monitoredResource_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         monitoredResource_ = b;
         return b;
       } else {
@@ -381,7 +381,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string logs = 1;</code>
      */
-    public java.lang.String getLogs(int index) {
+    public String getLogs(int index) {
       return logs_.get(index);
     }
     /**
@@ -400,7 +400,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -410,7 +410,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       for (int i = 0; i < logs_.size(); i++) {
@@ -422,7 +422,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -444,26 +444,25 @@ private static final long serialVersionUID = 0L;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.google.api.Logging.LoggingDestination)) {
+      if (!(obj instanceof LoggingDestination)) {
         return super.equals(obj);
       }
-      com.google.api.Logging.LoggingDestination other = (com.google.api.Logging.LoggingDestination) obj;
+      LoggingDestination other = (LoggingDestination) obj;
 
-      boolean result = true;
-      result = result && getMonitoredResource()
-          .equals(other.getMonitoredResource());
-      result = result && getLogsList()
-          .equals(other.getLogsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getMonitoredResource()
+          .equals(other.getMonitoredResource())) return false;
+      if (!getLogsList()
+          .equals(other.getLogsList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -481,69 +480,69 @@ private static final long serialVersionUID = 0L;
       return hash;
     }
 
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(byte[] data)
+    public static LoggingDestination parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(java.io.InputStream input)
+    public static LoggingDestination parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.Logging.LoggingDestination parseDelimitedFrom(java.io.InputStream input)
+    public static LoggingDestination parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.google.api.Logging.LoggingDestination parseDelimitedFrom(
+    public static LoggingDestination parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.Logging.LoggingDestination parseFrom(
+    public static LoggingDestination parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -551,23 +550,23 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.google.api.Logging.LoggingDestination prototype) {
+    public static Builder newBuilder(LoggingDestination prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -582,18 +581,18 @@ private static final long serialVersionUID = 0L;
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:google.api.Logging.LoggingDestination)
-        com.google.api.Logging.LoggingDestinationOrBuilder {
+        LoggingDestinationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.google.api.LoggingProto.internal_static_google_api_Logging_LoggingDestination_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.LoggingProto.internal_static_google_api_Logging_LoggingDestination_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.google.api.Logging.LoggingDestination.class, com.google.api.Logging.LoggingDestination.Builder.class);
+                LoggingDestination.class, Builder.class);
       }
 
       // Construct using com.google.api.Logging.LoggingDestination.newBuilder()
@@ -602,7 +601,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -611,7 +610,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         monitoredResource_ = "";
@@ -621,33 +620,33 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.api.LoggingProto.internal_static_google_api_Logging_LoggingDestination_descriptor;
       }
 
-      @java.lang.Override
-      public com.google.api.Logging.LoggingDestination getDefaultInstanceForType() {
-        return com.google.api.Logging.LoggingDestination.getDefaultInstance();
+      @Override
+      public LoggingDestination getDefaultInstanceForType() {
+        return LoggingDestination.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.google.api.Logging.LoggingDestination build() {
-        com.google.api.Logging.LoggingDestination result = buildPartial();
+      @Override
+      public LoggingDestination build() {
+        LoggingDestination result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.google.api.Logging.LoggingDestination buildPartial() {
-        com.google.api.Logging.LoggingDestination result = new com.google.api.Logging.LoggingDestination(this);
+      @Override
+      public LoggingDestination buildPartial() {
+        LoggingDestination result = new LoggingDestination(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.monitoredResource_ = monitoredResource_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           logs_ = logs_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
@@ -657,50 +656,50 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
-      @java.lang.Override
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.api.Logging.LoggingDestination) {
-          return mergeFrom((com.google.api.Logging.LoggingDestination)other);
+        if (other instanceof LoggingDestination) {
+          return mergeFrom((LoggingDestination)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.google.api.Logging.LoggingDestination other) {
-        if (other == com.google.api.Logging.LoggingDestination.getDefaultInstance()) return this;
+      public Builder mergeFrom(LoggingDestination other) {
+        if (other == LoggingDestination.getDefaultInstance()) return this;
         if (!other.getMonitoredResource().isEmpty()) {
           monitoredResource_ = other.monitoredResource_;
           onChanged();
@@ -720,21 +719,21 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.api.Logging.LoggingDestination parsedMessage = null;
+        LoggingDestination parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.google.api.Logging.LoggingDestination) e.getUnfinishedMessage();
+          parsedMessage = (LoggingDestination) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -745,7 +744,7 @@ private static final long serialVersionUID = 0L;
       }
       private int bitField0_;
 
-      private java.lang.Object monitoredResource_ = "";
+      private Object monitoredResource_ = "";
       /**
        * <pre>
        * The monitored resource type. The type must be defined in the
@@ -754,16 +753,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string monitored_resource = 3;</code>
        */
-      public java.lang.String getMonitoredResource() {
-        java.lang.Object ref = monitoredResource_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getMonitoredResource() {
+        Object ref = monitoredResource_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           monitoredResource_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -776,11 +775,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getMonitoredResourceBytes() {
-        java.lang.Object ref = monitoredResource_;
+        Object ref = monitoredResource_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           monitoredResource_ = b;
           return b;
         } else {
@@ -796,7 +795,7 @@ private static final long serialVersionUID = 0L;
        * <code>string monitored_resource = 3;</code>
        */
       public Builder setMonitoredResource(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -841,7 +840,7 @@ private static final long serialVersionUID = 0L;
 
       private com.google.protobuf.LazyStringList logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureLogsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           logs_ = new com.google.protobuf.LazyStringArrayList(logs_);
           bitField0_ |= 0x00000002;
          }
@@ -883,7 +882,7 @@ private static final long serialVersionUID = 0L;
        *
        * <code>repeated string logs = 1;</code>
        */
-      public java.lang.String getLogs(int index) {
+      public String getLogs(int index) {
         return logs_.get(index);
       }
       /**
@@ -911,7 +910,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string logs = 1;</code>
        */
       public Builder setLogs(
-          int index, java.lang.String value) {
+          int index, String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -931,7 +930,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string logs = 1;</code>
        */
       public Builder addLogs(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -951,7 +950,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string logs = 1;</code>
        */
       public Builder addAllLogs(
-          java.lang.Iterable<java.lang.String> values) {
+          Iterable<String> values) {
         ensureLogsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, logs_);
@@ -995,13 +994,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1012,18 +1011,18 @@ private static final long serialVersionUID = 0L;
     }
 
     // @@protoc_insertion_point(class_scope:google.api.Logging.LoggingDestination)
-    private static final com.google.api.Logging.LoggingDestination DEFAULT_INSTANCE;
+    private static final LoggingDestination DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.google.api.Logging.LoggingDestination();
+      DEFAULT_INSTANCE = new LoggingDestination();
     }
 
-    public static com.google.api.Logging.LoggingDestination getDefaultInstance() {
+    public static LoggingDestination getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<LoggingDestination>
         PARSER = new com.google.protobuf.AbstractParser<LoggingDestination>() {
-      @java.lang.Override
+      @Override
       public LoggingDestination parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1036,20 +1035,20 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<LoggingDestination> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.api.Logging.LoggingDestination getDefaultInstanceForType() {
+    @Override
+    public LoggingDestination getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public static final int PRODUCER_DESTINATIONS_FIELD_NUMBER = 1;
-  private java.util.List<com.google.api.Logging.LoggingDestination> producerDestinations_;
+  private java.util.List<LoggingDestination> producerDestinations_;
   /**
    * <pre>
    * Logging configurations for sending logs to the producer project.
@@ -1060,7 +1059,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  public java.util.List<com.google.api.Logging.LoggingDestination> getProducerDestinationsList() {
+  public java.util.List<LoggingDestination> getProducerDestinationsList() {
     return producerDestinations_;
   }
   /**
@@ -1073,7 +1072,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+  public java.util.List<? extends LoggingDestinationOrBuilder>
       getProducerDestinationsOrBuilderList() {
     return producerDestinations_;
   }
@@ -1100,7 +1099,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  public com.google.api.Logging.LoggingDestination getProducerDestinations(int index) {
+  public LoggingDestination getProducerDestinations(int index) {
     return producerDestinations_.get(index);
   }
   /**
@@ -1113,13 +1112,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  public com.google.api.Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
+  public LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
       int index) {
     return producerDestinations_.get(index);
   }
 
   public static final int CONSUMER_DESTINATIONS_FIELD_NUMBER = 2;
-  private java.util.List<com.google.api.Logging.LoggingDestination> consumerDestinations_;
+  private java.util.List<LoggingDestination> consumerDestinations_;
   /**
    * <pre>
    * Logging configurations for sending logs to the consumer project.
@@ -1130,7 +1129,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  public java.util.List<com.google.api.Logging.LoggingDestination> getConsumerDestinationsList() {
+  public java.util.List<LoggingDestination> getConsumerDestinationsList() {
     return consumerDestinations_;
   }
   /**
@@ -1143,7 +1142,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+  public java.util.List<? extends LoggingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
   }
@@ -1170,7 +1169,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  public com.google.api.Logging.LoggingDestination getConsumerDestinations(int index) {
+  public LoggingDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
   /**
@@ -1183,13 +1182,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  public com.google.api.Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+  public LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index) {
     return consumerDestinations_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -1199,7 +1198,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < producerDestinations_.size(); i++) {
@@ -1211,7 +1210,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -1230,26 +1229,25 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.Logging)) {
+    if (!(obj instanceof Logging)) {
       return super.equals(obj);
     }
-    com.google.api.Logging other = (com.google.api.Logging) obj;
+    Logging other = (Logging) obj;
 
-    boolean result = true;
-    result = result && getProducerDestinationsList()
-        .equals(other.getProducerDestinationsList());
-    result = result && getConsumerDestinationsList()
-        .equals(other.getConsumerDestinationsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getProducerDestinationsList()
+        .equals(other.getProducerDestinationsList())) return false;
+    if (!getConsumerDestinationsList()
+        .equals(other.getConsumerDestinationsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -1269,69 +1267,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Logging parseFrom(byte[] data)
+  public static Logging parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Logging parseFrom(java.io.InputStream input)
+  public static Logging parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Logging parseDelimitedFrom(java.io.InputStream input)
+  public static Logging parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.Logging parseDelimitedFrom(
+  public static Logging parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Logging parseFrom(
+  public static Logging parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1339,23 +1337,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.Logging prototype) {
+  public static Builder newBuilder(Logging prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -1401,12 +1399,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.LoggingProto.internal_static_google_api_Logging_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.LoggingProto.internal_static_google_api_Logging_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Logging.class, com.google.api.Logging.Builder.class);
+              Logging.class, Builder.class);
     }
 
     // Construct using com.google.api.Logging.newBuilder()
@@ -1415,7 +1413,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -1426,7 +1424,7 @@ private static final long serialVersionUID = 0L;
         getConsumerDestinationsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (producerDestinationsBuilder_ == null) {
@@ -1444,32 +1442,32 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.LoggingProto.internal_static_google_api_Logging_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.Logging getDefaultInstanceForType() {
-      return com.google.api.Logging.getDefaultInstance();
+    @Override
+    public Logging getDefaultInstanceForType() {
+      return Logging.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.Logging build() {
-      com.google.api.Logging result = buildPartial();
+    @Override
+    public Logging build() {
+      Logging result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.Logging buildPartial() {
-      com.google.api.Logging result = new com.google.api.Logging(this);
+    @Override
+    public Logging buildPartial() {
+      Logging result = new Logging(this);
       int from_bitField0_ = bitField0_;
       if (producerDestinationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -1478,7 +1476,7 @@ private static final long serialVersionUID = 0L;
         result.producerDestinations_ = producerDestinationsBuilder_.build();
       }
       if (consumerDestinationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           consumerDestinations_ = java.util.Collections.unmodifiableList(consumerDestinations_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
@@ -1490,50 +1488,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Logging) {
-        return mergeFrom((com.google.api.Logging)other);
+      if (other instanceof Logging) {
+        return mergeFrom((Logging)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.Logging other) {
-      if (other == com.google.api.Logging.getDefaultInstance()) return this;
+    public Builder mergeFrom(Logging other) {
+      if (other == Logging.getDefaultInstance()) return this;
       if (producerDestinationsBuilder_ == null) {
         if (!other.producerDestinations_.isEmpty()) {
           if (producerDestinations_.isEmpty()) {
@@ -1591,21 +1589,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.Logging parsedMessage = null;
+      Logging parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.Logging) e.getUnfinishedMessage();
+        parsedMessage = (Logging) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1616,17 +1614,17 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.google.api.Logging.LoggingDestination> producerDestinations_ =
+    private java.util.List<LoggingDestination> producerDestinations_ =
       java.util.Collections.emptyList();
     private void ensureProducerDestinationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-        producerDestinations_ = new java.util.ArrayList<com.google.api.Logging.LoggingDestination>(producerDestinations_);
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        producerDestinations_ = new java.util.ArrayList<LoggingDestination>(producerDestinations_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder> producerDestinationsBuilder_;
+        LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder> producerDestinationsBuilder_;
 
     /**
      * <pre>
@@ -1638,7 +1636,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public java.util.List<com.google.api.Logging.LoggingDestination> getProducerDestinationsList() {
+    public java.util.List<LoggingDestination> getProducerDestinationsList() {
       if (producerDestinationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(producerDestinations_);
       } else {
@@ -1672,7 +1670,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public com.google.api.Logging.LoggingDestination getProducerDestinations(int index) {
+    public LoggingDestination getProducerDestinations(int index) {
       if (producerDestinationsBuilder_ == null) {
         return producerDestinations_.get(index);
       } else {
@@ -1690,7 +1688,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder setProducerDestinations(
-        int index, com.google.api.Logging.LoggingDestination value) {
+        int index, LoggingDestination value) {
       if (producerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1714,7 +1712,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder setProducerDestinations(
-        int index, com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        int index, LoggingDestination.Builder builderForValue) {
       if (producerDestinationsBuilder_ == null) {
         ensureProducerDestinationsIsMutable();
         producerDestinations_.set(index, builderForValue.build());
@@ -1734,7 +1732,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public Builder addProducerDestinations(com.google.api.Logging.LoggingDestination value) {
+    public Builder addProducerDestinations(LoggingDestination value) {
       if (producerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1758,7 +1756,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder addProducerDestinations(
-        int index, com.google.api.Logging.LoggingDestination value) {
+        int index, LoggingDestination value) {
       if (producerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1782,7 +1780,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder addProducerDestinations(
-        com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        LoggingDestination.Builder builderForValue) {
       if (producerDestinationsBuilder_ == null) {
         ensureProducerDestinationsIsMutable();
         producerDestinations_.add(builderForValue.build());
@@ -1803,7 +1801,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder addProducerDestinations(
-        int index, com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        int index, LoggingDestination.Builder builderForValue) {
       if (producerDestinationsBuilder_ == null) {
         ensureProducerDestinationsIsMutable();
         producerDestinations_.add(index, builderForValue.build());
@@ -1824,7 +1822,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
     public Builder addAllProducerDestinations(
-        java.lang.Iterable<? extends com.google.api.Logging.LoggingDestination> values) {
+        Iterable<? extends LoggingDestination> values) {
       if (producerDestinationsBuilder_ == null) {
         ensureProducerDestinationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1885,7 +1883,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder getProducerDestinationsBuilder(
+    public LoggingDestination.Builder getProducerDestinationsBuilder(
         int index) {
       return getProducerDestinationsFieldBuilder().getBuilder(index);
     }
@@ -1899,7 +1897,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public com.google.api.Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
+    public LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
         int index) {
       if (producerDestinationsBuilder_ == null) {
         return producerDestinations_.get(index);  } else {
@@ -1916,7 +1914,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+    public java.util.List<? extends LoggingDestinationOrBuilder>
          getProducerDestinationsOrBuilderList() {
       if (producerDestinationsBuilder_ != null) {
         return producerDestinationsBuilder_.getMessageOrBuilderList();
@@ -1934,9 +1932,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder addProducerDestinationsBuilder() {
+    public LoggingDestination.Builder addProducerDestinationsBuilder() {
       return getProducerDestinationsFieldBuilder().addBuilder(
-          com.google.api.Logging.LoggingDestination.getDefaultInstance());
+          LoggingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1948,10 +1946,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder addProducerDestinationsBuilder(
+    public LoggingDestination.Builder addProducerDestinationsBuilder(
         int index) {
       return getProducerDestinationsFieldBuilder().addBuilder(
-          index, com.google.api.Logging.LoggingDestination.getDefaultInstance());
+          index, LoggingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1963,18 +1961,18 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
      */
-    public java.util.List<com.google.api.Logging.LoggingDestination.Builder> 
+    public java.util.List<LoggingDestination.Builder>
          getProducerDestinationsBuilderList() {
       return getProducerDestinationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder> 
+        LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder>
         getProducerDestinationsFieldBuilder() {
       if (producerDestinationsBuilder_ == null) {
         producerDestinationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder>(
+            LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder>(
                 producerDestinations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         producerDestinations_ = null;
@@ -1982,17 +1980,17 @@ private static final long serialVersionUID = 0L;
       return producerDestinationsBuilder_;
     }
 
-    private java.util.List<com.google.api.Logging.LoggingDestination> consumerDestinations_ =
+    private java.util.List<LoggingDestination> consumerDestinations_ =
       java.util.Collections.emptyList();
     private void ensureConsumerDestinationsIsMutable() {
-      if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-        consumerDestinations_ = new java.util.ArrayList<com.google.api.Logging.LoggingDestination>(consumerDestinations_);
+      if (!((bitField0_ & 0x00000002) != 0)) {
+        consumerDestinations_ = new java.util.ArrayList<LoggingDestination>(consumerDestinations_);
         bitField0_ |= 0x00000002;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder> consumerDestinationsBuilder_;
+        LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder> consumerDestinationsBuilder_;
 
     /**
      * <pre>
@@ -2004,7 +2002,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public java.util.List<com.google.api.Logging.LoggingDestination> getConsumerDestinationsList() {
+    public java.util.List<LoggingDestination> getConsumerDestinationsList() {
       if (consumerDestinationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(consumerDestinations_);
       } else {
@@ -2038,7 +2036,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public com.google.api.Logging.LoggingDestination getConsumerDestinations(int index) {
+    public LoggingDestination getConsumerDestinations(int index) {
       if (consumerDestinationsBuilder_ == null) {
         return consumerDestinations_.get(index);
       } else {
@@ -2056,7 +2054,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder setConsumerDestinations(
-        int index, com.google.api.Logging.LoggingDestination value) {
+        int index, LoggingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -2080,7 +2078,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder setConsumerDestinations(
-        int index, com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        int index, LoggingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.set(index, builderForValue.build());
@@ -2100,7 +2098,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public Builder addConsumerDestinations(com.google.api.Logging.LoggingDestination value) {
+    public Builder addConsumerDestinations(LoggingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -2124,7 +2122,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder addConsumerDestinations(
-        int index, com.google.api.Logging.LoggingDestination value) {
+        int index, LoggingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -2148,7 +2146,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder addConsumerDestinations(
-        com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        LoggingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.add(builderForValue.build());
@@ -2169,7 +2167,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder addConsumerDestinations(
-        int index, com.google.api.Logging.LoggingDestination.Builder builderForValue) {
+        int index, LoggingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.add(index, builderForValue.build());
@@ -2190,7 +2188,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
     public Builder addAllConsumerDestinations(
-        java.lang.Iterable<? extends com.google.api.Logging.LoggingDestination> values) {
+        Iterable<? extends LoggingDestination> values) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -2251,7 +2249,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder getConsumerDestinationsBuilder(
+    public LoggingDestination.Builder getConsumerDestinationsBuilder(
         int index) {
       return getConsumerDestinationsFieldBuilder().getBuilder(index);
     }
@@ -2265,7 +2263,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public com.google.api.Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+    public LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
         int index) {
       if (consumerDestinationsBuilder_ == null) {
         return consumerDestinations_.get(index);  } else {
@@ -2282,7 +2280,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+    public java.util.List<? extends LoggingDestinationOrBuilder>
          getConsumerDestinationsOrBuilderList() {
       if (consumerDestinationsBuilder_ != null) {
         return consumerDestinationsBuilder_.getMessageOrBuilderList();
@@ -2300,9 +2298,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder addConsumerDestinationsBuilder() {
+    public LoggingDestination.Builder addConsumerDestinationsBuilder() {
       return getConsumerDestinationsFieldBuilder().addBuilder(
-          com.google.api.Logging.LoggingDestination.getDefaultInstance());
+          LoggingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -2314,10 +2312,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public com.google.api.Logging.LoggingDestination.Builder addConsumerDestinationsBuilder(
+    public LoggingDestination.Builder addConsumerDestinationsBuilder(
         int index) {
       return getConsumerDestinationsFieldBuilder().addBuilder(
-          index, com.google.api.Logging.LoggingDestination.getDefaultInstance());
+          index, LoggingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -2329,31 +2327,31 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
      */
-    public java.util.List<com.google.api.Logging.LoggingDestination.Builder> 
+    public java.util.List<LoggingDestination.Builder>
          getConsumerDestinationsBuilderList() {
       return getConsumerDestinationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder> 
+        LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder>
         getConsumerDestinationsFieldBuilder() {
       if (consumerDestinationsBuilder_ == null) {
         consumerDestinationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Logging.LoggingDestination, com.google.api.Logging.LoggingDestination.Builder, com.google.api.Logging.LoggingDestinationOrBuilder>(
+            LoggingDestination, LoggingDestination.Builder, LoggingDestinationOrBuilder>(
                 consumerDestinations_,
-                ((bitField0_ & 0x00000002) == 0x00000002),
+                ((bitField0_ & 0x00000002) != 0),
                 getParentForChildren(),
                 isClean());
         consumerDestinations_ = null;
       }
       return consumerDestinationsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -2364,18 +2362,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Logging)
-  private static final com.google.api.Logging DEFAULT_INSTANCE;
+  private static final Logging DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.Logging();
+    DEFAULT_INSTANCE = new Logging();
   }
 
-  public static com.google.api.Logging getDefaultInstance() {
+  public static Logging getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Logging>
       PARSER = new com.google.protobuf.AbstractParser<Logging>() {
-    @java.lang.Override
+    @Override
     public Logging parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2388,13 +2386,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Logging> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.Logging getDefaultInstanceForType() {
+  @Override
+  public Logging getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

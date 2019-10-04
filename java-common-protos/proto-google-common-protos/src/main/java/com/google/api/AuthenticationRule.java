@@ -27,11 +27,10 @@ private static final long serialVersionUID = 0L;
   }
   private AuthenticationRule() {
     selector_ = "";
-    allowWithoutCredential_ = false;
     requirements_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -42,7 +41,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -56,17 +55,17 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             selector_ = s;
             break;
           }
           case 18: {
-            com.google.api.OAuthRequirements.Builder subBuilder = null;
+            OAuthRequirements.Builder subBuilder = null;
             if (oauth_ != null) {
               subBuilder = oauth_.toBuilder();
             }
-            oauth_ = input.readMessage(com.google.api.OAuthRequirements.parser(), extensionRegistry);
+            oauth_ = input.readMessage(OAuthRequirements.parser(), extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(oauth_);
               oauth_ = subBuilder.buildPartial();
@@ -80,16 +79,16 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 58: {
-            if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-              requirements_ = new java.util.ArrayList<com.google.api.AuthRequirement>();
+            if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+              requirements_ = new java.util.ArrayList<AuthRequirement>();
               mutable_bitField0_ |= 0x00000008;
             }
             requirements_.add(
-                input.readMessage(com.google.api.AuthRequirement.parser(), extensionRegistry));
+                input.readMessage(AuthRequirement.parser(), extensionRegistry));
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -103,7 +102,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((mutable_bitField0_ & 0x00000008) != 0)) {
         requirements_ = java.util.Collections.unmodifiableList(requirements_);
       }
       this.unknownFields = unknownFields.build();
@@ -112,20 +111,20 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
+    return AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_fieldAccessorTable
+    return AuthProto.internal_static_google_api_AuthenticationRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.AuthenticationRule.class, com.google.api.AuthenticationRule.Builder.class);
+            AuthenticationRule.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+  private volatile Object selector_;
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -134,14 +133,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string selector = 1;</code>
    */
-  public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSelector() {
+    Object ref = selector_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       selector_ = s;
       return s;
     }
@@ -156,11 +155,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
+    Object ref = selector_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       selector_ = b;
       return b;
     } else {
@@ -169,7 +168,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int OAUTH_FIELD_NUMBER = 2;
-  private com.google.api.OAuthRequirements oauth_;
+  private OAuthRequirements oauth_;
   /**
    * <pre>
    * The requirements for OAuth credentials.
@@ -187,8 +186,8 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
-  public com.google.api.OAuthRequirements getOauth() {
-    return oauth_ == null ? com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
+  public OAuthRequirements getOauth() {
+    return oauth_ == null ? OAuthRequirements.getDefaultInstance() : oauth_;
   }
   /**
    * <pre>
@@ -215,7 +214,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REQUIREMENTS_FIELD_NUMBER = 7;
-  private java.util.List<com.google.api.AuthRequirement> requirements_;
+  private java.util.List<AuthRequirement> requirements_;
   /**
    * <pre>
    * Requirements for additional authentication providers.
@@ -223,7 +222,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  public java.util.List<com.google.api.AuthRequirement> getRequirementsList() {
+  public java.util.List<AuthRequirement> getRequirementsList() {
     return requirements_;
   }
   /**
@@ -254,7 +253,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  public com.google.api.AuthRequirement getRequirements(int index) {
+  public AuthRequirement getRequirements(int index) {
     return requirements_.get(index);
   }
   /**
@@ -270,7 +269,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -280,7 +279,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -298,7 +297,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -324,33 +323,32 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.AuthenticationRule)) {
+    if (!(obj instanceof AuthenticationRule)) {
       return super.equals(obj);
     }
-    com.google.api.AuthenticationRule other = (com.google.api.AuthenticationRule) obj;
+    AuthenticationRule other = (AuthenticationRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && (hasOauth() == other.hasOauth());
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (hasOauth() != other.hasOauth()) return false;
     if (hasOauth()) {
-      result = result && getOauth()
-          .equals(other.getOauth());
+      if (!getOauth()
+          .equals(other.getOauth())) return false;
     }
-    result = result && (getAllowWithoutCredential()
-        == other.getAllowWithoutCredential());
-    result = result && getRequirementsList()
-        .equals(other.getRequirementsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (getAllowWithoutCredential()
+        != other.getAllowWithoutCredential()) return false;
+    if (!getRequirementsList()
+        .equals(other.getRequirementsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -375,69 +373,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthenticationRule parseFrom(byte[] data)
+  public static AuthenticationRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthenticationRule parseFrom(java.io.InputStream input)
+  public static AuthenticationRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.AuthenticationRule parseDelimitedFrom(java.io.InputStream input)
+  public static AuthenticationRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthenticationRule parseDelimitedFrom(
+  public static AuthenticationRule parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthenticationRule parseFrom(
+  public static AuthenticationRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -445,23 +443,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.AuthenticationRule prototype) {
+  public static Builder newBuilder(AuthenticationRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -484,15 +482,15 @@ private static final long serialVersionUID = 0L;
       com.google.api.AuthenticationRuleOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
+      return AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_fieldAccessorTable
+      return AuthProto.internal_static_google_api_AuthenticationRule_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.AuthenticationRule.class, com.google.api.AuthenticationRule.Builder.class);
+              AuthenticationRule.class, Builder.class);
     }
 
     // Construct using com.google.api.AuthenticationRule.newBuilder()
@@ -501,7 +499,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -511,7 +509,7 @@ private static final long serialVersionUID = 0L;
         getRequirementsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -533,29 +531,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
+      return AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.AuthenticationRule getDefaultInstanceForType() {
-      return com.google.api.AuthenticationRule.getDefaultInstance();
+    @Override
+    public AuthenticationRule getDefaultInstanceForType() {
+      return AuthenticationRule.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.AuthenticationRule build() {
-      com.google.api.AuthenticationRule result = buildPartial();
+    @Override
+    public AuthenticationRule build() {
+      AuthenticationRule result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.AuthenticationRule buildPartial() {
-      com.google.api.AuthenticationRule result = new com.google.api.AuthenticationRule(this);
+    @Override
+    public AuthenticationRule buildPartial() {
+      AuthenticationRule result = new AuthenticationRule(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.selector_ = selector_;
@@ -566,7 +564,7 @@ private static final long serialVersionUID = 0L;
       }
       result.allowWithoutCredential_ = allowWithoutCredential_;
       if (requirementsBuilder_ == null) {
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((bitField0_ & 0x00000008) != 0)) {
           requirements_ = java.util.Collections.unmodifiableList(requirements_);
           bitField0_ = (bitField0_ & ~0x00000008);
         }
@@ -579,50 +577,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.AuthenticationRule) {
-        return mergeFrom((com.google.api.AuthenticationRule)other);
+      if (other instanceof AuthenticationRule) {
+        return mergeFrom((AuthenticationRule)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.AuthenticationRule other) {
-      if (other == com.google.api.AuthenticationRule.getDefaultInstance()) return this;
+    public Builder mergeFrom(AuthenticationRule other) {
+      if (other == AuthenticationRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
         onChanged();
@@ -664,21 +662,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.AuthenticationRule parsedMessage = null;
+      AuthenticationRule parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.AuthenticationRule) e.getUnfinishedMessage();
+        parsedMessage = (AuthenticationRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -689,7 +687,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object selector_ = "";
+    private Object selector_ = "";
     /**
      * <pre>
      * Selects the methods to which this rule applies.
@@ -698,16 +696,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string selector = 1;</code>
      */
-    public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSelector() {
+      Object ref = selector_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         selector_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -720,11 +718,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
-      java.lang.Object ref = selector_;
+      Object ref = selector_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         selector_ = b;
         return b;
       } else {
@@ -740,7 +738,7 @@ private static final long serialVersionUID = 0L;
      * <code>string selector = 1;</code>
      */
     public Builder setSelector(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -783,9 +781,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.api.OAuthRequirements oauth_ = null;
+    private OAuthRequirements oauth_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.OAuthRequirements, com.google.api.OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder> oauthBuilder_;
+        OAuthRequirements, OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder> oauthBuilder_;
     /**
      * <pre>
      * The requirements for OAuth credentials.
@@ -803,9 +801,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
-    public com.google.api.OAuthRequirements getOauth() {
+    public OAuthRequirements getOauth() {
       if (oauthBuilder_ == null) {
-        return oauth_ == null ? com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
+        return oauth_ == null ? OAuthRequirements.getDefaultInstance() : oauth_;
       } else {
         return oauthBuilder_.getMessage();
       }
@@ -817,7 +815,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
-    public Builder setOauth(com.google.api.OAuthRequirements value) {
+    public Builder setOauth(OAuthRequirements value) {
       if (oauthBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -838,7 +836,7 @@ private static final long serialVersionUID = 0L;
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
     public Builder setOauth(
-        com.google.api.OAuthRequirements.Builder builderForValue) {
+        OAuthRequirements.Builder builderForValue) {
       if (oauthBuilder_ == null) {
         oauth_ = builderForValue.build();
         onChanged();
@@ -855,11 +853,11 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
-    public Builder mergeOauth(com.google.api.OAuthRequirements value) {
+    public Builder mergeOauth(OAuthRequirements value) {
       if (oauthBuilder_ == null) {
         if (oauth_ != null) {
           oauth_ =
-            com.google.api.OAuthRequirements.newBuilder(oauth_).mergeFrom(value).buildPartial();
+            OAuthRequirements.newBuilder(oauth_).mergeFrom(value).buildPartial();
         } else {
           oauth_ = value;
         }
@@ -895,7 +893,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
-    public com.google.api.OAuthRequirements.Builder getOauthBuilder() {
+    public OAuthRequirements.Builder getOauthBuilder() {
       
       onChanged();
       return getOauthFieldBuilder().getBuilder();
@@ -912,7 +910,7 @@ private static final long serialVersionUID = 0L;
         return oauthBuilder_.getMessageOrBuilder();
       } else {
         return oauth_ == null ?
-            com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
+            OAuthRequirements.getDefaultInstance() : oauth_;
       }
     }
     /**
@@ -923,11 +921,11 @@ private static final long serialVersionUID = 0L;
      * <code>.google.api.OAuthRequirements oauth = 2;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.OAuthRequirements, com.google.api.OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder> 
+        OAuthRequirements, OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder>
         getOauthFieldBuilder() {
       if (oauthBuilder_ == null) {
         oauthBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.OAuthRequirements, com.google.api.OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder>(
+            OAuthRequirements, OAuthRequirements.Builder, com.google.api.OAuthRequirementsOrBuilder>(
                 getOauth(),
                 getParentForChildren(),
                 isClean());
@@ -974,17 +972,17 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<com.google.api.AuthRequirement> requirements_ =
+    private java.util.List<AuthRequirement> requirements_ =
       java.util.Collections.emptyList();
     private void ensureRequirementsIsMutable() {
-      if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-        requirements_ = new java.util.ArrayList<com.google.api.AuthRequirement>(requirements_);
+      if (!((bitField0_ & 0x00000008) != 0)) {
+        requirements_ = new java.util.ArrayList<AuthRequirement>(requirements_);
         bitField0_ |= 0x00000008;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.AuthRequirement, com.google.api.AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder> requirementsBuilder_;
+        AuthRequirement, AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder> requirementsBuilder_;
 
     /**
      * <pre>
@@ -993,7 +991,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public java.util.List<com.google.api.AuthRequirement> getRequirementsList() {
+    public java.util.List<AuthRequirement> getRequirementsList() {
       if (requirementsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(requirements_);
       } else {
@@ -1021,7 +1019,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public com.google.api.AuthRequirement getRequirements(int index) {
+    public AuthRequirement getRequirements(int index) {
       if (requirementsBuilder_ == null) {
         return requirements_.get(index);
       } else {
@@ -1036,7 +1034,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder setRequirements(
-        int index, com.google.api.AuthRequirement value) {
+        int index, AuthRequirement value) {
       if (requirementsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1057,7 +1055,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder setRequirements(
-        int index, com.google.api.AuthRequirement.Builder builderForValue) {
+        int index, AuthRequirement.Builder builderForValue) {
       if (requirementsBuilder_ == null) {
         ensureRequirementsIsMutable();
         requirements_.set(index, builderForValue.build());
@@ -1074,7 +1072,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public Builder addRequirements(com.google.api.AuthRequirement value) {
+    public Builder addRequirements(AuthRequirement value) {
       if (requirementsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1095,7 +1093,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder addRequirements(
-        int index, com.google.api.AuthRequirement value) {
+        int index, AuthRequirement value) {
       if (requirementsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1116,7 +1114,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder addRequirements(
-        com.google.api.AuthRequirement.Builder builderForValue) {
+        AuthRequirement.Builder builderForValue) {
       if (requirementsBuilder_ == null) {
         ensureRequirementsIsMutable();
         requirements_.add(builderForValue.build());
@@ -1134,7 +1132,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder addRequirements(
-        int index, com.google.api.AuthRequirement.Builder builderForValue) {
+        int index, AuthRequirement.Builder builderForValue) {
       if (requirementsBuilder_ == null) {
         ensureRequirementsIsMutable();
         requirements_.add(index, builderForValue.build());
@@ -1152,7 +1150,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
     public Builder addAllRequirements(
-        java.lang.Iterable<? extends com.google.api.AuthRequirement> values) {
+        Iterable<? extends AuthRequirement> values) {
       if (requirementsBuilder_ == null) {
         ensureRequirementsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1204,7 +1202,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public com.google.api.AuthRequirement.Builder getRequirementsBuilder(
+    public AuthRequirement.Builder getRequirementsBuilder(
         int index) {
       return getRequirementsFieldBuilder().getBuilder(index);
     }
@@ -1244,9 +1242,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public com.google.api.AuthRequirement.Builder addRequirementsBuilder() {
+    public AuthRequirement.Builder addRequirementsBuilder() {
       return getRequirementsFieldBuilder().addBuilder(
-          com.google.api.AuthRequirement.getDefaultInstance());
+          AuthRequirement.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1255,10 +1253,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public com.google.api.AuthRequirement.Builder addRequirementsBuilder(
+    public AuthRequirement.Builder addRequirementsBuilder(
         int index) {
       return getRequirementsFieldBuilder().addBuilder(
-          index, com.google.api.AuthRequirement.getDefaultInstance());
+          index, AuthRequirement.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1267,31 +1265,31 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
      */
-    public java.util.List<com.google.api.AuthRequirement.Builder> 
+    public java.util.List<AuthRequirement.Builder>
          getRequirementsBuilderList() {
       return getRequirementsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.AuthRequirement, com.google.api.AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder> 
+        AuthRequirement, AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder>
         getRequirementsFieldBuilder() {
       if (requirementsBuilder_ == null) {
         requirementsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.AuthRequirement, com.google.api.AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder>(
+            AuthRequirement, AuthRequirement.Builder, com.google.api.AuthRequirementOrBuilder>(
                 requirements_,
-                ((bitField0_ & 0x00000008) == 0x00000008),
+                ((bitField0_ & 0x00000008) != 0),
                 getParentForChildren(),
                 isClean());
         requirements_ = null;
       }
       return requirementsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1302,18 +1300,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.AuthenticationRule)
-  private static final com.google.api.AuthenticationRule DEFAULT_INSTANCE;
+  private static final AuthenticationRule DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.AuthenticationRule();
+    DEFAULT_INSTANCE = new AuthenticationRule();
   }
 
-  public static com.google.api.AuthenticationRule getDefaultInstance() {
+  public static AuthenticationRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<AuthenticationRule>
       PARSER = new com.google.protobuf.AbstractParser<AuthenticationRule>() {
-    @java.lang.Override
+    @Override
     public AuthenticationRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1326,13 +1324,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<AuthenticationRule> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.AuthenticationRule getDefaultInstanceForType() {
+  @Override
+  public AuthenticationRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

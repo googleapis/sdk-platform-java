@@ -17,7 +17,7 @@ public interface BillingOrBuilder extends
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  java.util.List<com.google.api.Billing.BillingDestination> 
+  java.util.List<Billing.BillingDestination>
       getConsumerDestinationsList();
   /**
    * <pre>
@@ -29,7 +29,7 @@ public interface BillingOrBuilder extends
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  com.google.api.Billing.BillingDestination getConsumerDestinations(int index);
+  Billing.BillingDestination getConsumerDestinations(int index);
   /**
    * <pre>
    * Billing configurations for sending metrics to the consumer project.
@@ -51,7 +51,7 @@ public interface BillingOrBuilder extends
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder> 
+  java.util.List<? extends Billing.BillingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
   /**
    * <pre>
@@ -63,6 +63,6 @@ public interface BillingOrBuilder extends
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+  Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index);
 }

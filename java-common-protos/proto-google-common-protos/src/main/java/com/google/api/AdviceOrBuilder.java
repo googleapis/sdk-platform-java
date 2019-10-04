@@ -15,7 +15,7 @@ public interface AdviceOrBuilder extends
    *
    * <code>string description = 2;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * Useful description for why this advice was applied and what actions should

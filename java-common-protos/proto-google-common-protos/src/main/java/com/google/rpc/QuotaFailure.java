@@ -31,7 +31,7 @@ private static final long serialVersionUID = 0L;
     violations_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -42,7 +42,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -56,16 +56,16 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              violations_ = new java.util.ArrayList<com.google.rpc.QuotaFailure.Violation>();
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              violations_ = new java.util.ArrayList<Violation>();
               mutable_bitField0_ |= 0x00000001;
             }
             violations_.add(
-                input.readMessage(com.google.rpc.QuotaFailure.Violation.parser(), extensionRegistry));
+                input.readMessage(Violation.parser(), extensionRegistry));
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -79,7 +79,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         violations_ = java.util.Collections.unmodifiableList(violations_);
       }
       this.unknownFields = unknownFields.build();
@@ -91,12 +91,12 @@ private static final long serialVersionUID = 0L;
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.rpc.QuotaFailure.class, com.google.rpc.QuotaFailure.Builder.class);
+            QuotaFailure.class, Builder.class);
   }
 
   public interface ViolationOrBuilder extends
@@ -112,7 +112,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string subject = 1;</code>
      */
-    java.lang.String getSubject();
+    String getSubject();
     /**
      * <pre>
      * The subject on which the quota check failed.
@@ -137,7 +137,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 2;</code>
      */
-    java.lang.String getDescription();
+    String getDescription();
     /**
      * <pre>
      * A description of how the quota check failed. Clients can use this
@@ -175,7 +175,7 @@ private static final long serialVersionUID = 0L;
       description_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -186,7 +186,7 @@ private static final long serialVersionUID = 0L;
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -200,19 +200,19 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               subject_ = s;
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               description_ = s;
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -235,16 +235,16 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_Violation_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.rpc.QuotaFailure.Violation.class, com.google.rpc.QuotaFailure.Violation.Builder.class);
+              Violation.class, Builder.class);
     }
 
     public static final int SUBJECT_FIELD_NUMBER = 1;
-    private volatile java.lang.Object subject_;
+    private volatile Object subject_;
     /**
      * <pre>
      * The subject on which the quota check failed.
@@ -254,14 +254,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string subject = 1;</code>
      */
-    public java.lang.String getSubject() {
-      java.lang.Object ref = subject_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getSubject() {
+      Object ref = subject_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         subject_ = s;
         return s;
       }
@@ -277,11 +277,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSubjectBytes() {
-      java.lang.Object ref = subject_;
-      if (ref instanceof java.lang.String) {
+      Object ref = subject_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         subject_ = b;
         return b;
       } else {
@@ -290,7 +290,7 @@ private static final long serialVersionUID = 0L;
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
-    private volatile java.lang.Object description_;
+    private volatile Object description_;
     /**
      * <pre>
      * A description of how the quota check failed. Clients can use this
@@ -303,14 +303,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 2;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getDescription() {
+      Object ref = description_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       }
@@ -329,11 +329,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
+      Object ref = description_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -342,7 +342,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -352,7 +352,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getSubjectBytes().isEmpty()) {
@@ -364,7 +364,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -381,26 +381,25 @@ private static final long serialVersionUID = 0L;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.google.rpc.QuotaFailure.Violation)) {
+      if (!(obj instanceof Violation)) {
         return super.equals(obj);
       }
-      com.google.rpc.QuotaFailure.Violation other = (com.google.rpc.QuotaFailure.Violation) obj;
+      Violation other = (Violation) obj;
 
-      boolean result = true;
-      result = result && getSubject()
-          .equals(other.getSubject());
-      result = result && getDescription()
-          .equals(other.getDescription());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getSubject()
+          .equals(other.getSubject())) return false;
+      if (!getDescription()
+          .equals(other.getDescription())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -416,69 +415,69 @@ private static final long serialVersionUID = 0L;
       return hash;
     }
 
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(byte[] data)
+    public static Violation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(java.io.InputStream input)
+    public static Violation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseDelimitedFrom(java.io.InputStream input)
+    public static Violation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseDelimitedFrom(
+    public static Violation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.rpc.QuotaFailure.Violation parseFrom(
+    public static Violation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -486,23 +485,23 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.google.rpc.QuotaFailure.Violation prototype) {
+    public static Builder newBuilder(Violation prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -517,18 +516,18 @@ private static final long serialVersionUID = 0L;
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:google.rpc.QuotaFailure.Violation)
-        com.google.rpc.QuotaFailure.ViolationOrBuilder {
+        ViolationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_Violation_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_Violation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.google.rpc.QuotaFailure.Violation.class, com.google.rpc.QuotaFailure.Violation.Builder.class);
+                Violation.class, Builder.class);
       }
 
       // Construct using com.google.rpc.QuotaFailure.Violation.newBuilder()
@@ -537,7 +536,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -546,7 +545,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         subject_ = "";
@@ -556,79 +555,79 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_Violation_descriptor;
       }
 
-      @java.lang.Override
-      public com.google.rpc.QuotaFailure.Violation getDefaultInstanceForType() {
-        return com.google.rpc.QuotaFailure.Violation.getDefaultInstance();
+      @Override
+      public Violation getDefaultInstanceForType() {
+        return Violation.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.google.rpc.QuotaFailure.Violation build() {
-        com.google.rpc.QuotaFailure.Violation result = buildPartial();
+      @Override
+      public Violation build() {
+        Violation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.google.rpc.QuotaFailure.Violation buildPartial() {
-        com.google.rpc.QuotaFailure.Violation result = new com.google.rpc.QuotaFailure.Violation(this);
+      @Override
+      public Violation buildPartial() {
+        Violation result = new Violation(this);
         result.subject_ = subject_;
         result.description_ = description_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
-      @java.lang.Override
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.QuotaFailure.Violation) {
-          return mergeFrom((com.google.rpc.QuotaFailure.Violation)other);
+        if (other instanceof Violation) {
+          return mergeFrom((Violation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.google.rpc.QuotaFailure.Violation other) {
-        if (other == com.google.rpc.QuotaFailure.Violation.getDefaultInstance()) return this;
+      public Builder mergeFrom(Violation other) {
+        if (other == Violation.getDefaultInstance()) return this;
         if (!other.getSubject().isEmpty()) {
           subject_ = other.subject_;
           onChanged();
@@ -642,21 +641,21 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.rpc.QuotaFailure.Violation parsedMessage = null;
+        Violation parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.google.rpc.QuotaFailure.Violation) e.getUnfinishedMessage();
+          parsedMessage = (Violation) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -666,7 +665,7 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      private java.lang.Object subject_ = "";
+      private Object subject_ = "";
       /**
        * <pre>
        * The subject on which the quota check failed.
@@ -676,16 +675,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string subject = 1;</code>
        */
-      public java.lang.String getSubject() {
-        java.lang.Object ref = subject_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getSubject() {
+        Object ref = subject_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           subject_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -699,11 +698,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getSubjectBytes() {
-        java.lang.Object ref = subject_;
+        Object ref = subject_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           subject_ = b;
           return b;
         } else {
@@ -720,7 +719,7 @@ private static final long serialVersionUID = 0L;
        * <code>string subject = 1;</code>
        */
       public Builder setSubject(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -765,7 +764,7 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      private java.lang.Object description_ = "";
+      private Object description_ = "";
       /**
        * <pre>
        * A description of how the quota check failed. Clients can use this
@@ -778,16 +777,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string description = 2;</code>
        */
-      public java.lang.String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getDescription() {
+        Object ref = description_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           description_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -804,11 +803,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getDescriptionBytes() {
-        java.lang.Object ref = description_;
+        Object ref = description_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           description_ = b;
           return b;
         } else {
@@ -828,7 +827,7 @@ private static final long serialVersionUID = 0L;
        * <code>string description = 2;</code>
        */
       public Builder setDescription(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -878,13 +877,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -895,18 +894,18 @@ private static final long serialVersionUID = 0L;
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.QuotaFailure.Violation)
-    private static final com.google.rpc.QuotaFailure.Violation DEFAULT_INSTANCE;
+    private static final Violation DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.QuotaFailure.Violation();
+      DEFAULT_INSTANCE = new Violation();
     }
 
-    public static com.google.rpc.QuotaFailure.Violation getDefaultInstance() {
+    public static Violation getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<Violation>
         PARSER = new com.google.protobuf.AbstractParser<Violation>() {
-      @java.lang.Override
+      @Override
       public Violation parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -919,20 +918,20 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<Violation> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.rpc.QuotaFailure.Violation getDefaultInstanceForType() {
+    @Override
+    public Violation getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public static final int VIOLATIONS_FIELD_NUMBER = 1;
-  private java.util.List<com.google.rpc.QuotaFailure.Violation> violations_;
+  private java.util.List<Violation> violations_;
   /**
    * <pre>
    * Describes all quota violations.
@@ -940,7 +939,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
-  public java.util.List<com.google.rpc.QuotaFailure.Violation> getViolationsList() {
+  public java.util.List<Violation> getViolationsList() {
     return violations_;
   }
   /**
@@ -950,7 +949,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
-  public java.util.List<? extends com.google.rpc.QuotaFailure.ViolationOrBuilder> 
+  public java.util.List<? extends ViolationOrBuilder>
       getViolationsOrBuilderList() {
     return violations_;
   }
@@ -971,7 +970,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
-  public com.google.rpc.QuotaFailure.Violation getViolations(int index) {
+  public Violation getViolations(int index) {
     return violations_.get(index);
   }
   /**
@@ -981,13 +980,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
-  public com.google.rpc.QuotaFailure.ViolationOrBuilder getViolationsOrBuilder(
+  public ViolationOrBuilder getViolationsOrBuilder(
       int index) {
     return violations_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -997,7 +996,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < violations_.size(); i++) {
@@ -1006,7 +1005,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -1021,24 +1020,23 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.rpc.QuotaFailure)) {
+    if (!(obj instanceof QuotaFailure)) {
       return super.equals(obj);
     }
-    com.google.rpc.QuotaFailure other = (com.google.rpc.QuotaFailure) obj;
+    QuotaFailure other = (QuotaFailure) obj;
 
-    boolean result = true;
-    result = result && getViolationsList()
-        .equals(other.getViolationsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getViolationsList()
+        .equals(other.getViolationsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -1054,69 +1052,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(byte[] data)
+  public static QuotaFailure parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(java.io.InputStream input)
+  public static QuotaFailure parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.QuotaFailure parseDelimitedFrom(java.io.InputStream input)
+  public static QuotaFailure parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.rpc.QuotaFailure parseDelimitedFrom(
+  public static QuotaFailure parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.QuotaFailure parseFrom(
+  public static QuotaFailure parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1124,23 +1122,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.rpc.QuotaFailure prototype) {
+  public static Builder newBuilder(QuotaFailure prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -1168,12 +1166,12 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.rpc.QuotaFailure.class, com.google.rpc.QuotaFailure.Builder.class);
+              QuotaFailure.class, Builder.class);
     }
 
     // Construct using com.google.rpc.QuotaFailure.newBuilder()
@@ -1182,7 +1180,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -1192,7 +1190,7 @@ private static final long serialVersionUID = 0L;
         getViolationsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (violationsBuilder_ == null) {
@@ -1204,32 +1202,32 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_QuotaFailure_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.rpc.QuotaFailure getDefaultInstanceForType() {
-      return com.google.rpc.QuotaFailure.getDefaultInstance();
+    @Override
+    public QuotaFailure getDefaultInstanceForType() {
+      return QuotaFailure.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.rpc.QuotaFailure build() {
-      com.google.rpc.QuotaFailure result = buildPartial();
+    @Override
+    public QuotaFailure build() {
+      QuotaFailure result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.rpc.QuotaFailure buildPartial() {
-      com.google.rpc.QuotaFailure result = new com.google.rpc.QuotaFailure(this);
+    @Override
+    public QuotaFailure buildPartial() {
+      QuotaFailure result = new QuotaFailure(this);
       int from_bitField0_ = bitField0_;
       if (violationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           violations_ = java.util.Collections.unmodifiableList(violations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -1241,50 +1239,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.QuotaFailure) {
-        return mergeFrom((com.google.rpc.QuotaFailure)other);
+      if (other instanceof QuotaFailure) {
+        return mergeFrom((QuotaFailure)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.rpc.QuotaFailure other) {
-      if (other == com.google.rpc.QuotaFailure.getDefaultInstance()) return this;
+    public Builder mergeFrom(QuotaFailure other) {
+      if (other == QuotaFailure.getDefaultInstance()) return this;
       if (violationsBuilder_ == null) {
         if (!other.violations_.isEmpty()) {
           if (violations_.isEmpty()) {
@@ -1316,21 +1314,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.rpc.QuotaFailure parsedMessage = null;
+      QuotaFailure parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.rpc.QuotaFailure) e.getUnfinishedMessage();
+        parsedMessage = (QuotaFailure) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1341,17 +1339,17 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.google.rpc.QuotaFailure.Violation> violations_ =
+    private java.util.List<Violation> violations_ =
       java.util.Collections.emptyList();
     private void ensureViolationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-        violations_ = new java.util.ArrayList<com.google.rpc.QuotaFailure.Violation>(violations_);
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        violations_ = new java.util.ArrayList<Violation>(violations_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.rpc.QuotaFailure.Violation, com.google.rpc.QuotaFailure.Violation.Builder, com.google.rpc.QuotaFailure.ViolationOrBuilder> violationsBuilder_;
+        Violation, Violation.Builder, ViolationOrBuilder> violationsBuilder_;
 
     /**
      * <pre>
@@ -1360,7 +1358,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public java.util.List<com.google.rpc.QuotaFailure.Violation> getViolationsList() {
+    public java.util.List<Violation> getViolationsList() {
       if (violationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(violations_);
       } else {
@@ -1388,7 +1386,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public com.google.rpc.QuotaFailure.Violation getViolations(int index) {
+    public Violation getViolations(int index) {
       if (violationsBuilder_ == null) {
         return violations_.get(index);
       } else {
@@ -1403,7 +1401,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder setViolations(
-        int index, com.google.rpc.QuotaFailure.Violation value) {
+        int index, Violation value) {
       if (violationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1424,7 +1422,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder setViolations(
-        int index, com.google.rpc.QuotaFailure.Violation.Builder builderForValue) {
+        int index, Violation.Builder builderForValue) {
       if (violationsBuilder_ == null) {
         ensureViolationsIsMutable();
         violations_.set(index, builderForValue.build());
@@ -1441,7 +1439,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public Builder addViolations(com.google.rpc.QuotaFailure.Violation value) {
+    public Builder addViolations(Violation value) {
       if (violationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1462,7 +1460,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder addViolations(
-        int index, com.google.rpc.QuotaFailure.Violation value) {
+        int index, Violation value) {
       if (violationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1483,7 +1481,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder addViolations(
-        com.google.rpc.QuotaFailure.Violation.Builder builderForValue) {
+        Violation.Builder builderForValue) {
       if (violationsBuilder_ == null) {
         ensureViolationsIsMutable();
         violations_.add(builderForValue.build());
@@ -1501,7 +1499,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder addViolations(
-        int index, com.google.rpc.QuotaFailure.Violation.Builder builderForValue) {
+        int index, Violation.Builder builderForValue) {
       if (violationsBuilder_ == null) {
         ensureViolationsIsMutable();
         violations_.add(index, builderForValue.build());
@@ -1519,7 +1517,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
     public Builder addAllViolations(
-        java.lang.Iterable<? extends com.google.rpc.QuotaFailure.Violation> values) {
+        Iterable<? extends Violation> values) {
       if (violationsBuilder_ == null) {
         ensureViolationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1571,7 +1569,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public com.google.rpc.QuotaFailure.Violation.Builder getViolationsBuilder(
+    public Violation.Builder getViolationsBuilder(
         int index) {
       return getViolationsFieldBuilder().getBuilder(index);
     }
@@ -1582,7 +1580,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public com.google.rpc.QuotaFailure.ViolationOrBuilder getViolationsOrBuilder(
+    public ViolationOrBuilder getViolationsOrBuilder(
         int index) {
       if (violationsBuilder_ == null) {
         return violations_.get(index);  } else {
@@ -1596,7 +1594,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public java.util.List<? extends com.google.rpc.QuotaFailure.ViolationOrBuilder> 
+    public java.util.List<? extends ViolationOrBuilder>
          getViolationsOrBuilderList() {
       if (violationsBuilder_ != null) {
         return violationsBuilder_.getMessageOrBuilderList();
@@ -1611,9 +1609,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public com.google.rpc.QuotaFailure.Violation.Builder addViolationsBuilder() {
+    public Violation.Builder addViolationsBuilder() {
       return getViolationsFieldBuilder().addBuilder(
-          com.google.rpc.QuotaFailure.Violation.getDefaultInstance());
+          Violation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1622,10 +1620,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public com.google.rpc.QuotaFailure.Violation.Builder addViolationsBuilder(
+    public Violation.Builder addViolationsBuilder(
         int index) {
       return getViolationsFieldBuilder().addBuilder(
-          index, com.google.rpc.QuotaFailure.Violation.getDefaultInstance());
+          index, Violation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1634,31 +1632,31 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
      */
-    public java.util.List<com.google.rpc.QuotaFailure.Violation.Builder> 
+    public java.util.List<Violation.Builder>
          getViolationsBuilderList() {
       return getViolationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.rpc.QuotaFailure.Violation, com.google.rpc.QuotaFailure.Violation.Builder, com.google.rpc.QuotaFailure.ViolationOrBuilder> 
+        Violation, Violation.Builder, ViolationOrBuilder>
         getViolationsFieldBuilder() {
       if (violationsBuilder_ == null) {
         violationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.QuotaFailure.Violation, com.google.rpc.QuotaFailure.Violation.Builder, com.google.rpc.QuotaFailure.ViolationOrBuilder>(
+            Violation, Violation.Builder, ViolationOrBuilder>(
                 violations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         violations_ = null;
       }
       return violationsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1669,18 +1667,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.QuotaFailure)
-  private static final com.google.rpc.QuotaFailure DEFAULT_INSTANCE;
+  private static final QuotaFailure DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.QuotaFailure();
+    DEFAULT_INSTANCE = new QuotaFailure();
   }
 
-  public static com.google.rpc.QuotaFailure getDefaultInstance() {
+  public static QuotaFailure getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<QuotaFailure>
       PARSER = new com.google.protobuf.AbstractParser<QuotaFailure>() {
-    @java.lang.Override
+    @Override
     public QuotaFailure parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1693,13 +1691,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<QuotaFailure> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.rpc.QuotaFailure getDefaultInstanceForType() {
+  @Override
+  public QuotaFailure getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

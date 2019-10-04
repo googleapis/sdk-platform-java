@@ -59,7 +59,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>.google.api.Distribution.Range range = 4;</code>
    */
-  com.google.api.Distribution.Range getRange();
+  Distribution.Range getRange();
   /**
    * <pre>
    * If specified, contains the range of the population values. The field
@@ -68,7 +68,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>.google.api.Distribution.Range range = 4;</code>
    */
-  com.google.api.Distribution.RangeOrBuilder getRangeOrBuilder();
+  Distribution.RangeOrBuilder getRangeOrBuilder();
 
   /**
    * <pre>
@@ -87,7 +87,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
-  com.google.api.Distribution.BucketOptions getBucketOptions();
+  Distribution.BucketOptions getBucketOptions();
   /**
    * <pre>
    * Defines the histogram bucket boundaries. If the distribution does not
@@ -96,7 +96,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
-  com.google.api.Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder();
+  Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder();
 
   /**
    * <pre>
@@ -117,7 +117,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>repeated int64 bucket_counts = 7;</code>
    */
-  java.util.List<java.lang.Long> getBucketCountsList();
+  java.util.List<Long> getBucketCountsList();
   /**
    * <pre>
    * The number of values in each bucket of the histogram, as described in
@@ -166,7 +166,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
-  java.util.List<com.google.api.Distribution.Exemplar> 
+  java.util.List<Distribution.Exemplar>
       getExemplarsList();
   /**
    * <pre>
@@ -175,7 +175,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
-  com.google.api.Distribution.Exemplar getExemplars(int index);
+  Distribution.Exemplar getExemplars(int index);
   /**
    * <pre>
    * Must be in increasing order of `value` field.
@@ -191,7 +191,7 @@ public interface DistributionOrBuilder extends
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
-  java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder> 
+  java.util.List<? extends Distribution.ExemplarOrBuilder>
       getExemplarsOrBuilderList();
   /**
    * <pre>
@@ -200,6 +200,6 @@ public interface DistributionOrBuilder extends
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
-  com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(
+  Distribution.ExemplarOrBuilder getExemplarsOrBuilder(
       int index);
 }

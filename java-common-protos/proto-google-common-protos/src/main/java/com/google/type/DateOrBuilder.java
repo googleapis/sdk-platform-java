@@ -19,7 +19,8 @@ public interface DateOrBuilder extends
 
   /**
    * <pre>
-   * Month of year. Must be from 1 to 12.
+   * Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+   * month and day.
    * </pre>
    *
    * <code>int32 month = 2;</code>
@@ -29,7 +30,8 @@ public interface DateOrBuilder extends
   /**
    * <pre>
    * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-   * if specifying a year/month where the day is not significant.
+   * if specifying a year by itself or a year and month where the day is not
+   * significant.
    * </pre>
    *
    * <code>int32 day = 3;</code>

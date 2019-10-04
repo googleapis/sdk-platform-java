@@ -24,21 +24,14 @@ private static final long serialVersionUID = 0L;
   private HttpRequest() {
     requestMethod_ = "";
     requestUrl_ = "";
-    requestSize_ = 0L;
-    status_ = 0;
-    responseSize_ = 0L;
     userAgent_ = "";
     remoteIp_ = "";
     serverIp_ = "";
     referer_ = "";
-    cacheLookup_ = false;
-    cacheHit_ = false;
-    cacheValidatedWithOriginServer_ = false;
-    cacheFillBytes_ = 0L;
     protocol_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -49,7 +42,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -63,13 +56,13 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             requestMethod_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             requestUrl_ = s;
             break;
@@ -90,19 +83,19 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 50: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             userAgent_ = s;
             break;
           }
           case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             remoteIp_ = s;
             break;
           }
           case 66: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             referer_ = s;
             break;
@@ -128,7 +121,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 106: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             serverIp_ = s;
             break;
@@ -147,13 +140,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 122: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             protocol_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -176,16 +169,16 @@ private static final long serialVersionUID = 0L;
     return com.google.logging.type.HttpRequestProto.internal_static_google_logging_type_HttpRequest_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.logging.type.HttpRequestProto.internal_static_google_logging_type_HttpRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.logging.type.HttpRequest.class, com.google.logging.type.HttpRequest.Builder.class);
+            HttpRequest.class, Builder.class);
   }
 
   public static final int REQUEST_METHOD_FIELD_NUMBER = 1;
-  private volatile java.lang.Object requestMethod_;
+  private volatile Object requestMethod_;
   /**
    * <pre>
    * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
@@ -193,14 +186,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string request_method = 1;</code>
    */
-  public java.lang.String getRequestMethod() {
-    java.lang.Object ref = requestMethod_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getRequestMethod() {
+    Object ref = requestMethod_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       requestMethod_ = s;
       return s;
     }
@@ -214,11 +207,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getRequestMethodBytes() {
-    java.lang.Object ref = requestMethod_;
-    if (ref instanceof java.lang.String) {
+    Object ref = requestMethod_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       requestMethod_ = b;
       return b;
     } else {
@@ -227,7 +220,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REQUEST_URL_FIELD_NUMBER = 2;
-  private volatile java.lang.Object requestUrl_;
+  private volatile Object requestUrl_;
   /**
    * <pre>
    * The scheme (http, https), the host name, the path and the query
@@ -237,14 +230,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string request_url = 2;</code>
    */
-  public java.lang.String getRequestUrl() {
-    java.lang.Object ref = requestUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getRequestUrl() {
+    Object ref = requestUrl_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       requestUrl_ = s;
       return s;
     }
@@ -260,11 +253,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getRequestUrlBytes() {
-    java.lang.Object ref = requestUrl_;
-    if (ref instanceof java.lang.String) {
+    Object ref = requestUrl_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       requestUrl_ = b;
       return b;
     } else {
@@ -315,23 +308,24 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int USER_AGENT_FIELD_NUMBER = 6;
-  private volatile java.lang.Object userAgent_;
+  private volatile Object userAgent_;
   /**
    * <pre>
    * The user agent sent by the client. Example:
-   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
    * </pre>
    *
    * <code>string user_agent = 6;</code>
    */
-  public java.lang.String getUserAgent() {
-    java.lang.Object ref = userAgent_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getUserAgent() {
+    Object ref = userAgent_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       userAgent_ = s;
       return s;
     }
@@ -339,18 +333,19 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The user agent sent by the client. Example:
-   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
    * </pre>
    *
    * <code>string user_agent = 6;</code>
    */
   public com.google.protobuf.ByteString
       getUserAgentBytes() {
-    java.lang.Object ref = userAgent_;
-    if (ref instanceof java.lang.String) {
+    Object ref = userAgent_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       userAgent_ = b;
       return b;
     } else {
@@ -359,7 +354,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REMOTE_IP_FIELD_NUMBER = 7;
-  private volatile java.lang.Object remoteIp_;
+  private volatile Object remoteIp_;
   /**
    * <pre>
    * The IP address (IPv4 or IPv6) of the client that issued the HTTP
@@ -368,14 +363,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string remote_ip = 7;</code>
    */
-  public java.lang.String getRemoteIp() {
-    java.lang.Object ref = remoteIp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getRemoteIp() {
+    Object ref = remoteIp_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       remoteIp_ = s;
       return s;
     }
@@ -390,11 +385,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getRemoteIpBytes() {
-    java.lang.Object ref = remoteIp_;
-    if (ref instanceof java.lang.String) {
+    Object ref = remoteIp_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       remoteIp_ = b;
       return b;
     } else {
@@ -403,7 +398,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int SERVER_IP_FIELD_NUMBER = 13;
-  private volatile java.lang.Object serverIp_;
+  private volatile Object serverIp_;
   /**
    * <pre>
    * The IP address (IPv4 or IPv6) of the origin server that the request was
@@ -412,14 +407,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string server_ip = 13;</code>
    */
-  public java.lang.String getServerIp() {
-    java.lang.Object ref = serverIp_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getServerIp() {
+    Object ref = serverIp_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       serverIp_ = s;
       return s;
     }
@@ -434,11 +429,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getServerIpBytes() {
-    java.lang.Object ref = serverIp_;
-    if (ref instanceof java.lang.String) {
+    Object ref = serverIp_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       serverIp_ = b;
       return b;
     } else {
@@ -447,23 +442,24 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REFERER_FIELD_NUMBER = 8;
-  private volatile java.lang.Object referer_;
+  private volatile Object referer_;
   /**
    * <pre>
    * The referer URL of the request, as defined in
-   * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * [HTTP/1.1 Header Field
+   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
    * <code>string referer = 8;</code>
    */
-  public java.lang.String getReferer() {
-    java.lang.Object ref = referer_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getReferer() {
+    Object ref = referer_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       referer_ = s;
       return s;
     }
@@ -471,18 +467,19 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The referer URL of the request, as defined in
-   * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * [HTTP/1.1 Header Field
+   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
    * <code>string referer = 8;</code>
    */
   public com.google.protobuf.ByteString
       getRefererBytes() {
-    java.lang.Object ref = referer_;
-    if (ref instanceof java.lang.String) {
+    Object ref = referer_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       referer_ = b;
       return b;
     } else {
@@ -583,7 +580,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int PROTOCOL_FIELD_NUMBER = 15;
-  private volatile java.lang.Object protocol_;
+  private volatile Object protocol_;
   /**
    * <pre>
    * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
@@ -591,14 +588,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string protocol = 15;</code>
    */
-  public java.lang.String getProtocol() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getProtocol() {
+    Object ref = protocol_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       protocol_ = s;
       return s;
     }
@@ -612,11 +609,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getProtocolBytes() {
-    java.lang.Object ref = protocol_;
-    if (ref instanceof java.lang.String) {
+    Object ref = protocol_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       protocol_ = b;
       return b;
     } else {
@@ -625,7 +622,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -635,7 +632,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getRequestMethodBytes().isEmpty()) {
@@ -686,7 +683,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -750,55 +747,54 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.logging.type.HttpRequest)) {
+    if (!(obj instanceof HttpRequest)) {
       return super.equals(obj);
     }
-    com.google.logging.type.HttpRequest other = (com.google.logging.type.HttpRequest) obj;
+    HttpRequest other = (HttpRequest) obj;
 
-    boolean result = true;
-    result = result && getRequestMethod()
-        .equals(other.getRequestMethod());
-    result = result && getRequestUrl()
-        .equals(other.getRequestUrl());
-    result = result && (getRequestSize()
-        == other.getRequestSize());
-    result = result && (getStatus()
-        == other.getStatus());
-    result = result && (getResponseSize()
-        == other.getResponseSize());
-    result = result && getUserAgent()
-        .equals(other.getUserAgent());
-    result = result && getRemoteIp()
-        .equals(other.getRemoteIp());
-    result = result && getServerIp()
-        .equals(other.getServerIp());
-    result = result && getReferer()
-        .equals(other.getReferer());
-    result = result && (hasLatency() == other.hasLatency());
+    if (!getRequestMethod()
+        .equals(other.getRequestMethod())) return false;
+    if (!getRequestUrl()
+        .equals(other.getRequestUrl())) return false;
+    if (getRequestSize()
+        != other.getRequestSize()) return false;
+    if (getStatus()
+        != other.getStatus()) return false;
+    if (getResponseSize()
+        != other.getResponseSize()) return false;
+    if (!getUserAgent()
+        .equals(other.getUserAgent())) return false;
+    if (!getRemoteIp()
+        .equals(other.getRemoteIp())) return false;
+    if (!getServerIp()
+        .equals(other.getServerIp())) return false;
+    if (!getReferer()
+        .equals(other.getReferer())) return false;
+    if (hasLatency() != other.hasLatency()) return false;
     if (hasLatency()) {
-      result = result && getLatency()
-          .equals(other.getLatency());
+      if (!getLatency()
+          .equals(other.getLatency())) return false;
     }
-    result = result && (getCacheLookup()
-        == other.getCacheLookup());
-    result = result && (getCacheHit()
-        == other.getCacheHit());
-    result = result && (getCacheValidatedWithOriginServer()
-        == other.getCacheValidatedWithOriginServer());
-    result = result && (getCacheFillBytes()
-        == other.getCacheFillBytes());
-    result = result && getProtocol()
-        .equals(other.getProtocol());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (getCacheLookup()
+        != other.getCacheLookup()) return false;
+    if (getCacheHit()
+        != other.getCacheHit()) return false;
+    if (getCacheValidatedWithOriginServer()
+        != other.getCacheValidatedWithOriginServer()) return false;
+    if (getCacheFillBytes()
+        != other.getCacheFillBytes()) return false;
+    if (!getProtocol()
+        .equals(other.getProtocol())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -848,69 +844,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(byte[] data)
+  public static HttpRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(java.io.InputStream input)
+  public static HttpRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.logging.type.HttpRequest parseDelimitedFrom(java.io.InputStream input)
+  public static HttpRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.logging.type.HttpRequest parseDelimitedFrom(
+  public static HttpRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.logging.type.HttpRequest parseFrom(
+  public static HttpRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -918,23 +914,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.logging.type.HttpRequest prototype) {
+  public static Builder newBuilder(HttpRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -956,12 +952,12 @@ private static final long serialVersionUID = 0L;
       return com.google.logging.type.HttpRequestProto.internal_static_google_logging_type_HttpRequest_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.logging.type.HttpRequestProto.internal_static_google_logging_type_HttpRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.logging.type.HttpRequest.class, com.google.logging.type.HttpRequest.Builder.class);
+              HttpRequest.class, Builder.class);
     }
 
     // Construct using com.google.logging.type.HttpRequest.newBuilder()
@@ -970,7 +966,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -979,7 +975,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       requestMethod_ = "";
@@ -1019,29 +1015,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.logging.type.HttpRequestProto.internal_static_google_logging_type_HttpRequest_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest getDefaultInstanceForType() {
-      return com.google.logging.type.HttpRequest.getDefaultInstance();
+    @Override
+    public HttpRequest getDefaultInstanceForType() {
+      return HttpRequest.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest build() {
-      com.google.logging.type.HttpRequest result = buildPartial();
+    @Override
+    public HttpRequest build() {
+      HttpRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.logging.type.HttpRequest buildPartial() {
-      com.google.logging.type.HttpRequest result = new com.google.logging.type.HttpRequest(this);
+    @Override
+    public HttpRequest buildPartial() {
+      HttpRequest result = new HttpRequest(this);
       result.requestMethod_ = requestMethod_;
       result.requestUrl_ = requestUrl_;
       result.requestSize_ = requestSize_;
@@ -1065,50 +1061,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.logging.type.HttpRequest) {
-        return mergeFrom((com.google.logging.type.HttpRequest)other);
+      if (other instanceof HttpRequest) {
+        return mergeFrom((HttpRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.logging.type.HttpRequest other) {
-      if (other == com.google.logging.type.HttpRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(HttpRequest other) {
+      if (other == HttpRequest.getDefaultInstance()) return this;
       if (!other.getRequestMethod().isEmpty()) {
         requestMethod_ = other.requestMethod_;
         onChanged();
@@ -1166,21 +1162,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.logging.type.HttpRequest parsedMessage = null;
+      HttpRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.logging.type.HttpRequest) e.getUnfinishedMessage();
+        parsedMessage = (HttpRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1190,7 +1186,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object requestMethod_ = "";
+    private Object requestMethod_ = "";
     /**
      * <pre>
      * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
@@ -1198,16 +1194,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string request_method = 1;</code>
      */
-    public java.lang.String getRequestMethod() {
-      java.lang.Object ref = requestMethod_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getRequestMethod() {
+      Object ref = requestMethod_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         requestMethod_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1219,11 +1215,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getRequestMethodBytes() {
-      java.lang.Object ref = requestMethod_;
+      Object ref = requestMethod_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         requestMethod_ = b;
         return b;
       } else {
@@ -1238,7 +1234,7 @@ private static final long serialVersionUID = 0L;
      * <code>string request_method = 1;</code>
      */
     public Builder setRequestMethod(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1279,7 +1275,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object requestUrl_ = "";
+    private Object requestUrl_ = "";
     /**
      * <pre>
      * The scheme (http, https), the host name, the path and the query
@@ -1289,16 +1285,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string request_url = 2;</code>
      */
-    public java.lang.String getRequestUrl() {
-      java.lang.Object ref = requestUrl_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getRequestUrl() {
+      Object ref = requestUrl_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         requestUrl_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1312,11 +1308,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getRequestUrlBytes() {
-      java.lang.Object ref = requestUrl_;
+      Object ref = requestUrl_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         requestUrl_ = b;
         return b;
       } else {
@@ -1333,7 +1329,7 @@ private static final long serialVersionUID = 0L;
      * <code>string request_url = 2;</code>
      */
     public Builder setRequestUrl(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1501,42 +1497,44 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object userAgent_ = "";
+    private Object userAgent_ = "";
     /**
      * <pre>
      * The user agent sent by the client. Example:
-     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+     * CLR 1.0.3705)"`.
      * </pre>
      *
      * <code>string user_agent = 6;</code>
      */
-    public java.lang.String getUserAgent() {
-      java.lang.Object ref = userAgent_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getUserAgent() {
+      Object ref = userAgent_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         userAgent_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
      * The user agent sent by the client. Example:
-     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+     * CLR 1.0.3705)"`.
      * </pre>
      *
      * <code>string user_agent = 6;</code>
      */
     public com.google.protobuf.ByteString
         getUserAgentBytes() {
-      java.lang.Object ref = userAgent_;
+      Object ref = userAgent_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         userAgent_ = b;
         return b;
       } else {
@@ -1546,13 +1544,14 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The user agent sent by the client. Example:
-     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+     * CLR 1.0.3705)"`.
      * </pre>
      *
      * <code>string user_agent = 6;</code>
      */
     public Builder setUserAgent(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1564,7 +1563,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The user agent sent by the client. Example:
-     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+     * CLR 1.0.3705)"`.
      * </pre>
      *
      * <code>string user_agent = 6;</code>
@@ -1578,7 +1578,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The user agent sent by the client. Example:
-     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+     * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+     * CLR 1.0.3705)"`.
      * </pre>
      *
      * <code>string user_agent = 6;</code>
@@ -1595,7 +1596,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object remoteIp_ = "";
+    private Object remoteIp_ = "";
     /**
      * <pre>
      * The IP address (IPv4 or IPv6) of the client that issued the HTTP
@@ -1604,16 +1605,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string remote_ip = 7;</code>
      */
-    public java.lang.String getRemoteIp() {
-      java.lang.Object ref = remoteIp_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getRemoteIp() {
+      Object ref = remoteIp_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         remoteIp_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1626,11 +1627,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getRemoteIpBytes() {
-      java.lang.Object ref = remoteIp_;
+      Object ref = remoteIp_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         remoteIp_ = b;
         return b;
       } else {
@@ -1646,7 +1647,7 @@ private static final long serialVersionUID = 0L;
      * <code>string remote_ip = 7;</code>
      */
     public Builder setRemoteIp(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1689,7 +1690,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object serverIp_ = "";
+    private Object serverIp_ = "";
     /**
      * <pre>
      * The IP address (IPv4 or IPv6) of the origin server that the request was
@@ -1698,16 +1699,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string server_ip = 13;</code>
      */
-    public java.lang.String getServerIp() {
-      java.lang.Object ref = serverIp_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getServerIp() {
+      Object ref = serverIp_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         serverIp_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1720,11 +1721,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getServerIpBytes() {
-      java.lang.Object ref = serverIp_;
+      Object ref = serverIp_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         serverIp_ = b;
         return b;
       } else {
@@ -1740,7 +1741,7 @@ private static final long serialVersionUID = 0L;
      * <code>string server_ip = 13;</code>
      */
     public Builder setServerIp(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1783,42 +1784,44 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object referer_ = "";
+    private Object referer_ = "";
     /**
      * <pre>
      * The referer URL of the request, as defined in
-     * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+     * [HTTP/1.1 Header Field
+     * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
      * </pre>
      *
      * <code>string referer = 8;</code>
      */
-    public java.lang.String getReferer() {
-      java.lang.Object ref = referer_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getReferer() {
+      Object ref = referer_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         referer_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
      * The referer URL of the request, as defined in
-     * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+     * [HTTP/1.1 Header Field
+     * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
      * </pre>
      *
      * <code>string referer = 8;</code>
      */
     public com.google.protobuf.ByteString
         getRefererBytes() {
-      java.lang.Object ref = referer_;
+      Object ref = referer_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         referer_ = b;
         return b;
       } else {
@@ -1828,13 +1831,14 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The referer URL of the request, as defined in
-     * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+     * [HTTP/1.1 Header Field
+     * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
      * </pre>
      *
      * <code>string referer = 8;</code>
      */
     public Builder setReferer(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1846,7 +1850,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The referer URL of the request, as defined in
-     * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+     * [HTTP/1.1 Header Field
+     * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
      * </pre>
      *
      * <code>string referer = 8;</code>
@@ -1860,7 +1865,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The referer URL of the request, as defined in
-     * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+     * [HTTP/1.1 Header Field
+     * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
      * </pre>
      *
      * <code>string referer = 8;</code>
@@ -1877,7 +1883,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.Duration latency_ = null;
+    private com.google.protobuf.Duration latency_;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> latencyBuilder_;
     /**
@@ -2203,7 +2209,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object protocol_ = "";
+    private Object protocol_ = "";
     /**
      * <pre>
      * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
@@ -2211,16 +2217,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string protocol = 15;</code>
      */
-    public java.lang.String getProtocol() {
-      java.lang.Object ref = protocol_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getProtocol() {
+      Object ref = protocol_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         protocol_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -2232,11 +2238,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getProtocolBytes() {
-      java.lang.Object ref = protocol_;
+      Object ref = protocol_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         protocol_ = b;
         return b;
       } else {
@@ -2251,7 +2257,7 @@ private static final long serialVersionUID = 0L;
      * <code>string protocol = 15;</code>
      */
     public Builder setProtocol(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2291,13 +2297,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -2308,18 +2314,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.logging.type.HttpRequest)
-  private static final com.google.logging.type.HttpRequest DEFAULT_INSTANCE;
+  private static final HttpRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.logging.type.HttpRequest();
+    DEFAULT_INSTANCE = new HttpRequest();
   }
 
-  public static com.google.logging.type.HttpRequest getDefaultInstance() {
+  public static HttpRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<HttpRequest>
       PARSER = new com.google.protobuf.AbstractParser<HttpRequest>() {
-    @java.lang.Override
+    @Override
     public HttpRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2332,13 +2338,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<HttpRequest> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.logging.type.HttpRequest getDefaultInstanceForType() {
+  @Override
+  public HttpRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

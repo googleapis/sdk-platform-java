@@ -15,7 +15,7 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
-  java.util.List<com.google.api.AuthenticationRule> 
+  java.util.List<AuthenticationRule>
       getRulesList();
   /**
    * <pre>
@@ -25,7 +25,7 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
-  com.google.api.AuthenticationRule getRules(int index);
+  AuthenticationRule getRules(int index);
   /**
    * <pre>
    * A list of authentication rules that apply to individual API methods.
@@ -63,7 +63,7 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
-  java.util.List<com.google.api.AuthProvider> 
+  java.util.List<AuthProvider>
       getProvidersList();
   /**
    * <pre>
@@ -72,7 +72,7 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
-  com.google.api.AuthProvider getProviders(int index);
+  AuthProvider getProviders(int index);
   /**
    * <pre>
    * Defines a set of authentication providers that a service supports.
@@ -88,7 +88,7 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
-  java.util.List<? extends com.google.api.AuthProviderOrBuilder> 
+  java.util.List<? extends AuthProviderOrBuilder>
       getProvidersOrBuilderList();
   /**
    * <pre>
@@ -97,6 +97,6 @@ public interface AuthenticationOrBuilder extends
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
-  com.google.api.AuthProviderOrBuilder getProvidersOrBuilder(
+  AuthProviderOrBuilder getProvidersOrBuilder(
       int index);
 }

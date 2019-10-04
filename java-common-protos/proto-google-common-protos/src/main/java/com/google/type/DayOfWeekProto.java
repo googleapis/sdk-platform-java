@@ -22,7 +22,7 @@ public final class DayOfWeekProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\033google/type/dayofweek.proto\022\013google.ty" +
       "pe*\204\001\n\tDayOfWeek\022\033\n\027DAY_OF_WEEK_UNSPECIF" +
       "IED\020\000\022\n\n\006MONDAY\020\001\022\013\n\007TUESDAY\020\002\022\r\n\tWEDNES" +

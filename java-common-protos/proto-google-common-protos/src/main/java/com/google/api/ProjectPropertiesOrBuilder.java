@@ -14,7 +14,7 @@ public interface ProjectPropertiesOrBuilder extends
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  java.util.List<com.google.api.Property> 
+  java.util.List<Property>
       getPropertiesList();
   /**
    * <pre>
@@ -23,7 +23,7 @@ public interface ProjectPropertiesOrBuilder extends
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  com.google.api.Property getProperties(int index);
+  Property getProperties(int index);
   /**
    * <pre>
    * List of per consumer project-specific properties.
@@ -39,7 +39,7 @@ public interface ProjectPropertiesOrBuilder extends
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  java.util.List<? extends com.google.api.PropertyOrBuilder> 
+  java.util.List<? extends PropertyOrBuilder>
       getPropertiesOrBuilderList();
   /**
    * <pre>
@@ -48,6 +48,6 @@ public interface ProjectPropertiesOrBuilder extends
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
-  com.google.api.PropertyOrBuilder getPropertiesOrBuilder(
+  PropertyOrBuilder getPropertiesOrBuilder(
       int index);
 }

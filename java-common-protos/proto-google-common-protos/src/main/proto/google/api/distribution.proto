@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC.
+// Copyright 2019 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ option java_multiple_files = true;
 option java_outer_classname = "DistributionProto";
 option java_package = "com.google.api";
 option objc_class_prefix = "GAPI";
-
 
 // `Distribution` contains summary statistics for a population of values. It
 // optionally contains a histogram representing the distribution of those values
@@ -151,7 +150,7 @@ message Distribution {
 
     // Contextual information about the example value. Examples are:
     //
-    //   Trace ID: type.googleapis.com/google.devtools.cloudtrace.v1.Trace
+    //   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
     //
     //   Literal string: type.googleapis.com/google.protobuf.StringValue
     //

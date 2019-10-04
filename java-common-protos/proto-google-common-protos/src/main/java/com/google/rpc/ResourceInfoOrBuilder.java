@@ -16,7 +16,7 @@ public interface ResourceInfoOrBuilder extends
    *
    * <code>string resource_type = 1;</code>
    */
-  java.lang.String getResourceType();
+  String getResourceType();
   /**
    * <pre>
    * A name for the type of resource being accessed, e.g. "sql table",
@@ -33,17 +33,19 @@ public interface ResourceInfoOrBuilder extends
    * <pre>
    * The name of the resource being accessed.  For example, a shared calendar
    * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
-   * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
+   * error is
+   * [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
    * <code>string resource_name = 2;</code>
    */
-  java.lang.String getResourceName();
+  String getResourceName();
   /**
    * <pre>
    * The name of the resource being accessed.  For example, a shared calendar
    * name: "example.com_4fghdhgsrgh&#64;group.calendar.google.com", if the current
-   * error is [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
+   * error is
+   * [google.rpc.Code.PERMISSION_DENIED][google.rpc.Code.PERMISSION_DENIED].
    * </pre>
    *
    * <code>string resource_name = 2;</code>
@@ -60,7 +62,7 @@ public interface ResourceInfoOrBuilder extends
    *
    * <code>string owner = 3;</code>
    */
-  java.lang.String getOwner();
+  String getOwner();
   /**
    * <pre>
    * The owner of the resource (optional).
@@ -82,7 +84,7 @@ public interface ResourceInfoOrBuilder extends
    *
    * <code>string description = 4;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * Describes what error is encountered when accessing this resource.

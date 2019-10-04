@@ -14,7 +14,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The canonical name of this endpoint.
@@ -35,7 +35,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated java.util.List<java.lang.String>
+  @Deprecated java.util.List<String>
       getAliasesList();
   /**
    * <pre>
@@ -47,7 +47,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated int getAliasesCount();
+  @Deprecated int getAliasesCount();
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
@@ -58,7 +58,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated java.lang.String getAliases(int index);
+  @Deprecated String getAliases(int index);
   /**
    * <pre>
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
@@ -69,7 +69,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated com.google.protobuf.ByteString
+  @Deprecated com.google.protobuf.ByteString
       getAliasesBytes(int index);
 
   /**
@@ -79,7 +79,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string features = 4;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getFeaturesList();
   /**
    * <pre>
@@ -96,7 +96,7 @@ public interface EndpointOrBuilder extends
    *
    * <code>repeated string features = 4;</code>
    */
-  java.lang.String getFeatures(int index);
+  String getFeatures(int index);
   /**
    * <pre>
    * The list of features enabled on this endpoint.
@@ -110,20 +110,22 @@ public interface EndpointOrBuilder extends
   /**
    * <pre>
    * The specification of an Internet routable address of API frontend that will
-   * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-   * It should be either a valid IPv4 address or a fully-qualified domain name.
-   * For example, "8.8.8.8" or "myservice.appspot.com".
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
    * <code>string target = 101;</code>
    */
-  java.lang.String getTarget();
+  String getTarget();
   /**
    * <pre>
    * The specification of an Internet routable address of API frontend that will
-   * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-   * It should be either a valid IPv4 address or a fully-qualified domain name.
-   * For example, "8.8.8.8" or "myservice.appspot.com".
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
    * <code>string target = 101;</code>

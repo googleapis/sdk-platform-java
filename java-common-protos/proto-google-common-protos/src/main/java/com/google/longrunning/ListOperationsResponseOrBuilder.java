@@ -14,7 +14,7 @@ public interface ListOperationsResponseOrBuilder extends
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  java.util.List<com.google.longrunning.Operation> 
+  java.util.List<Operation>
       getOperationsList();
   /**
    * <pre>
@@ -23,7 +23,7 @@ public interface ListOperationsResponseOrBuilder extends
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  com.google.longrunning.Operation getOperations(int index);
+  Operation getOperations(int index);
   /**
    * <pre>
    * A list of operations that matches the specified filter in the request.
@@ -39,7 +39,7 @@ public interface ListOperationsResponseOrBuilder extends
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  java.util.List<? extends com.google.longrunning.OperationOrBuilder> 
+  java.util.List<? extends OperationOrBuilder>
       getOperationsOrBuilderList();
   /**
    * <pre>
@@ -48,7 +48,7 @@ public interface ListOperationsResponseOrBuilder extends
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(
+  OperationOrBuilder getOperationsOrBuilder(
       int index);
 
   /**
@@ -58,7 +58,7 @@ public interface ListOperationsResponseOrBuilder extends
    *
    * <code>string next_page_token = 2;</code>
    */
-  java.lang.String getNextPageToken();
+  String getNextPageToken();
   /**
    * <pre>
    * The standard List next-page token.

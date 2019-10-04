@@ -17,7 +17,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string name = 6;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * Name of the quota limit.
@@ -40,7 +40,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string description = 2;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * Optional. User-visible, extended description for this quota limit.
@@ -110,7 +110,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string duration = 5;</code>
    */
-  java.lang.String getDuration();
+  String getDuration();
   /**
    * <pre>
    * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
@@ -134,7 +134,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string metric = 8;</code>
    */
-  java.lang.String getMetric();
+  String getMetric();
   /**
    * <pre>
    * The name of the metric this quota limit applies to. The quota limits with
@@ -160,7 +160,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string unit = 9;</code>
    */
-  java.lang.String getUnit();
+  String getUnit();
   /**
    * <pre>
    * Specify the unit of the quota limit. It uses the same syntax as
@@ -197,12 +197,12 @@ public interface QuotaLimitOrBuilder extends
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
   boolean containsValues(
-      java.lang.String key);
+      String key);
   /**
    * Use {@link #getValuesMap()} instead.
    */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.String, java.lang.Long>
+  @Deprecated
+  java.util.Map<String, Long>
   getValues();
   /**
    * <pre>
@@ -213,7 +213,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
-  java.util.Map<java.lang.String, java.lang.Long>
+  java.util.Map<String, Long>
   getValuesMap();
   /**
    * <pre>
@@ -226,7 +226,7 @@ public interface QuotaLimitOrBuilder extends
    */
 
   long getValuesOrDefault(
-      java.lang.String key,
+      String key,
       long defaultValue);
   /**
    * <pre>
@@ -239,7 +239,7 @@ public interface QuotaLimitOrBuilder extends
    */
 
   long getValuesOrThrow(
-      java.lang.String key);
+      String key);
 
   /**
    * <pre>
@@ -251,7 +251,7 @@ public interface QuotaLimitOrBuilder extends
    *
    * <code>string display_name = 12;</code>
    */
-  java.lang.String getDisplayName();
+  String getDisplayName();
   /**
    * <pre>
    * User-visible display name for this limit.

@@ -15,7 +15,7 @@ public interface MetricRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -51,12 +51,12 @@ public interface MetricRuleOrBuilder extends
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
   boolean containsMetricCosts(
-      java.lang.String key);
+      String key);
   /**
    * Use {@link #getMetricCostsMap()} instead.
    */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.String, java.lang.Long>
+  @Deprecated
+  java.util.Map<String, Long>
   getMetricCosts();
   /**
    * <pre>
@@ -69,7 +69,7 @@ public interface MetricRuleOrBuilder extends
    *
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
-  java.util.Map<java.lang.String, java.lang.Long>
+  java.util.Map<String, Long>
   getMetricCostsMap();
   /**
    * <pre>
@@ -84,7 +84,7 @@ public interface MetricRuleOrBuilder extends
    */
 
   long getMetricCostsOrDefault(
-      java.lang.String key,
+      String key,
       long defaultValue);
   /**
    * <pre>
@@ -99,5 +99,5 @@ public interface MetricRuleOrBuilder extends
    */
 
   long getMetricCostsOrThrow(
-      java.lang.String key);
+      String key);
 }

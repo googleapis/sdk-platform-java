@@ -7,7 +7,7 @@ public final class AnnotationsProto {
   private AnnotationsProto() {}
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
-    registry.add(com.google.api.AnnotationsProto.http);
+    registry.add(AnnotationsProto.http);
   }
 
   public static void registerAllExtensions(
@@ -26,10 +26,10 @@ public final class AnnotationsProto {
   public static final
     com.google.protobuf.GeneratedMessage.GeneratedExtension<
       com.google.protobuf.DescriptorProtos.MethodOptions,
-      com.google.api.HttpRule> http = com.google.protobuf.GeneratedMessage
+      HttpRule> http = com.google.protobuf.GeneratedMessage
           .newFileScopedGeneratedExtension(
-        com.google.api.HttpRule.class,
-        com.google.api.HttpRule.getDefaultInstance());
+        HttpRule.class,
+        HttpRule.getDefaultInstance());
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -38,7 +38,7 @@ public final class AnnotationsProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\034google/api/annotations.proto\022\ngoogle.a" +
       "pi\032\025google/api/http.proto\032 google/protob" +
       "uf/descriptor.proto:E\n\004http\022\036.google.pro" +
@@ -59,11 +59,11 @@ public final class AnnotationsProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.HttpProto.getDescriptor(),
+          HttpProto.getDescriptor(),
           com.google.protobuf.DescriptorProtos.getDescriptor(),
         }, assigner);
     http.internalInit(descriptor.getExtensions().get(0));
-    com.google.api.HttpProto.getDescriptor();
+    HttpProto.getDescriptor();
     com.google.protobuf.DescriptorProtos.getDescriptor();
   }
 

@@ -72,12 +72,12 @@ public interface MonitoredResourceMetadataOrBuilder extends
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
   boolean containsUserLabels(
-      java.lang.String key);
+      String key);
   /**
    * Use {@link #getUserLabelsMap()} instead.
    */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.String, java.lang.String>
+  @Deprecated
+  java.util.Map<String, String>
   getUserLabels();
   /**
    * <pre>
@@ -86,7 +86,7 @@ public interface MonitoredResourceMetadataOrBuilder extends
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
-  java.util.Map<java.lang.String, java.lang.String>
+  java.util.Map<String, String>
   getUserLabelsMap();
   /**
    * <pre>
@@ -96,9 +96,9 @@ public interface MonitoredResourceMetadataOrBuilder extends
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
 
-  java.lang.String getUserLabelsOrDefault(
-      java.lang.String key,
-      java.lang.String defaultValue);
+  String getUserLabelsOrDefault(
+      String key,
+      String defaultValue);
   /**
    * <pre>
    * Output only. A map of user-defined metadata labels.
@@ -107,6 +107,6 @@ public interface MonitoredResourceMetadataOrBuilder extends
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
 
-  java.lang.String getUserLabelsOrThrow(
-      java.lang.String key);
+  String getUserLabelsOrThrow(
+      String key);
 }

@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
     nextPageToken_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -35,7 +35,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -49,22 +49,22 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              operations_ = new java.util.ArrayList<com.google.longrunning.Operation>();
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              operations_ = new java.util.ArrayList<Operation>();
               mutable_bitField0_ |= 0x00000001;
             }
             operations_.add(
-                input.readMessage(com.google.longrunning.Operation.parser(), extensionRegistry));
+                input.readMessage(Operation.parser(), extensionRegistry));
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             nextPageToken_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -78,7 +78,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         operations_ = java.util.Collections.unmodifiableList(operations_);
       }
       this.unknownFields = unknownFields.build();
@@ -87,20 +87,20 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
+    return OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
+    return OperationsProto.internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.longrunning.ListOperationsResponse.class, com.google.longrunning.ListOperationsResponse.Builder.class);
+            ListOperationsResponse.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int OPERATIONS_FIELD_NUMBER = 1;
-  private java.util.List<com.google.longrunning.Operation> operations_;
+  private java.util.List<Operation> operations_;
   /**
    * <pre>
    * A list of operations that matches the specified filter in the request.
@@ -108,7 +108,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  public java.util.List<com.google.longrunning.Operation> getOperationsList() {
+  public java.util.List<Operation> getOperationsList() {
     return operations_;
   }
   /**
@@ -118,7 +118,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  public java.util.List<? extends com.google.longrunning.OperationOrBuilder> 
+  public java.util.List<? extends OperationOrBuilder>
       getOperationsOrBuilderList() {
     return operations_;
   }
@@ -139,7 +139,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  public com.google.longrunning.Operation getOperations(int index) {
+  public Operation getOperations(int index) {
     return operations_.get(index);
   }
   /**
@@ -149,13 +149,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.longrunning.Operation operations = 1;</code>
    */
-  public com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(
+  public OperationOrBuilder getOperationsOrBuilder(
       int index) {
     return operations_.get(index);
   }
 
   public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
-  private volatile java.lang.Object nextPageToken_;
+  private volatile Object nextPageToken_;
   /**
    * <pre>
    * The standard List next-page token.
@@ -163,14 +163,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string next_page_token = 2;</code>
    */
-  public java.lang.String getNextPageToken() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getNextPageToken() {
+    Object ref = nextPageToken_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       nextPageToken_ = s;
       return s;
     }
@@ -184,11 +184,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getNextPageTokenBytes() {
-    java.lang.Object ref = nextPageToken_;
-    if (ref instanceof java.lang.String) {
+    Object ref = nextPageToken_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       nextPageToken_ = b;
       return b;
     } else {
@@ -197,7 +197,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -207,7 +207,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < operations_.size(); i++) {
@@ -219,7 +219,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -237,26 +237,25 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.longrunning.ListOperationsResponse)) {
+    if (!(obj instanceof ListOperationsResponse)) {
       return super.equals(obj);
     }
-    com.google.longrunning.ListOperationsResponse other = (com.google.longrunning.ListOperationsResponse) obj;
+    ListOperationsResponse other = (ListOperationsResponse) obj;
 
-    boolean result = true;
-    result = result && getOperationsList()
-        .equals(other.getOperationsList());
-    result = result && getNextPageToken()
-        .equals(other.getNextPageToken());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getOperationsList()
+        .equals(other.getOperationsList())) return false;
+    if (!getNextPageToken()
+        .equals(other.getNextPageToken())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -274,69 +273,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(byte[] data)
+  public static ListOperationsResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(java.io.InputStream input)
+  public static ListOperationsResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsResponse parseDelimitedFrom(java.io.InputStream input)
+  public static ListOperationsResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsResponse parseDelimitedFrom(
+  public static ListOperationsResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsResponse parseFrom(
+  public static ListOperationsResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -344,23 +343,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.longrunning.ListOperationsResponse prototype) {
+  public static Builder newBuilder(ListOperationsResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -377,15 +376,15 @@ private static final long serialVersionUID = 0L;
       com.google.longrunning.ListOperationsResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
+      return OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
+      return OperationsProto.internal_static_google_longrunning_ListOperationsResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.longrunning.ListOperationsResponse.class, com.google.longrunning.ListOperationsResponse.Builder.class);
+              ListOperationsResponse.class, Builder.class);
     }
 
     // Construct using com.google.longrunning.ListOperationsResponse.newBuilder()
@@ -394,7 +393,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -404,7 +403,7 @@ private static final long serialVersionUID = 0L;
         getOperationsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (operationsBuilder_ == null) {
@@ -418,33 +417,33 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
+      return OperationsProto.internal_static_google_longrunning_ListOperationsResponse_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse getDefaultInstanceForType() {
-      return com.google.longrunning.ListOperationsResponse.getDefaultInstance();
+    @Override
+    public ListOperationsResponse getDefaultInstanceForType() {
+      return ListOperationsResponse.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse build() {
-      com.google.longrunning.ListOperationsResponse result = buildPartial();
+    @Override
+    public ListOperationsResponse build() {
+      ListOperationsResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsResponse buildPartial() {
-      com.google.longrunning.ListOperationsResponse result = new com.google.longrunning.ListOperationsResponse(this);
+    @Override
+    public ListOperationsResponse buildPartial() {
+      ListOperationsResponse result = new ListOperationsResponse(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       if (operationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           operations_ = java.util.Collections.unmodifiableList(operations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -458,50 +457,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.ListOperationsResponse) {
-        return mergeFrom((com.google.longrunning.ListOperationsResponse)other);
+      if (other instanceof ListOperationsResponse) {
+        return mergeFrom((ListOperationsResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.longrunning.ListOperationsResponse other) {
-      if (other == com.google.longrunning.ListOperationsResponse.getDefaultInstance()) return this;
+    public Builder mergeFrom(ListOperationsResponse other) {
+      if (other == ListOperationsResponse.getDefaultInstance()) return this;
       if (operationsBuilder_ == null) {
         if (!other.operations_.isEmpty()) {
           if (operations_.isEmpty()) {
@@ -537,21 +536,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.longrunning.ListOperationsResponse parsedMessage = null;
+      ListOperationsResponse parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.longrunning.ListOperationsResponse) e.getUnfinishedMessage();
+        parsedMessage = (ListOperationsResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -562,17 +561,17 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.google.longrunning.Operation> operations_ =
+    private java.util.List<Operation> operations_ =
       java.util.Collections.emptyList();
     private void ensureOperationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-        operations_ = new java.util.ArrayList<com.google.longrunning.Operation>(operations_);
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        operations_ = new java.util.ArrayList<Operation>(operations_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.longrunning.Operation, com.google.longrunning.Operation.Builder, com.google.longrunning.OperationOrBuilder> operationsBuilder_;
+        Operation, Operation.Builder, OperationOrBuilder> operationsBuilder_;
 
     /**
      * <pre>
@@ -581,7 +580,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public java.util.List<com.google.longrunning.Operation> getOperationsList() {
+    public java.util.List<Operation> getOperationsList() {
       if (operationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(operations_);
       } else {
@@ -609,7 +608,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public com.google.longrunning.Operation getOperations(int index) {
+    public Operation getOperations(int index) {
       if (operationsBuilder_ == null) {
         return operations_.get(index);
       } else {
@@ -624,7 +623,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder setOperations(
-        int index, com.google.longrunning.Operation value) {
+        int index, Operation value) {
       if (operationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -645,7 +644,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder setOperations(
-        int index, com.google.longrunning.Operation.Builder builderForValue) {
+        int index, Operation.Builder builderForValue) {
       if (operationsBuilder_ == null) {
         ensureOperationsIsMutable();
         operations_.set(index, builderForValue.build());
@@ -662,7 +661,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public Builder addOperations(com.google.longrunning.Operation value) {
+    public Builder addOperations(Operation value) {
       if (operationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -683,7 +682,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(
-        int index, com.google.longrunning.Operation value) {
+        int index, Operation value) {
       if (operationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -704,7 +703,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(
-        com.google.longrunning.Operation.Builder builderForValue) {
+        Operation.Builder builderForValue) {
       if (operationsBuilder_ == null) {
         ensureOperationsIsMutable();
         operations_.add(builderForValue.build());
@@ -722,7 +721,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addOperations(
-        int index, com.google.longrunning.Operation.Builder builderForValue) {
+        int index, Operation.Builder builderForValue) {
       if (operationsBuilder_ == null) {
         ensureOperationsIsMutable();
         operations_.add(index, builderForValue.build());
@@ -740,7 +739,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
     public Builder addAllOperations(
-        java.lang.Iterable<? extends com.google.longrunning.Operation> values) {
+        Iterable<? extends Operation> values) {
       if (operationsBuilder_ == null) {
         ensureOperationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -792,7 +791,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public com.google.longrunning.Operation.Builder getOperationsBuilder(
+    public Operation.Builder getOperationsBuilder(
         int index) {
       return getOperationsFieldBuilder().getBuilder(index);
     }
@@ -803,7 +802,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public com.google.longrunning.OperationOrBuilder getOperationsOrBuilder(
+    public OperationOrBuilder getOperationsOrBuilder(
         int index) {
       if (operationsBuilder_ == null) {
         return operations_.get(index);  } else {
@@ -817,7 +816,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public java.util.List<? extends com.google.longrunning.OperationOrBuilder> 
+    public java.util.List<? extends OperationOrBuilder>
          getOperationsOrBuilderList() {
       if (operationsBuilder_ != null) {
         return operationsBuilder_.getMessageOrBuilderList();
@@ -832,9 +831,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public com.google.longrunning.Operation.Builder addOperationsBuilder() {
+    public Operation.Builder addOperationsBuilder() {
       return getOperationsFieldBuilder().addBuilder(
-          com.google.longrunning.Operation.getDefaultInstance());
+          Operation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -843,10 +842,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public com.google.longrunning.Operation.Builder addOperationsBuilder(
+    public Operation.Builder addOperationsBuilder(
         int index) {
       return getOperationsFieldBuilder().addBuilder(
-          index, com.google.longrunning.Operation.getDefaultInstance());
+          index, Operation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -855,18 +854,18 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.longrunning.Operation operations = 1;</code>
      */
-    public java.util.List<com.google.longrunning.Operation.Builder> 
+    public java.util.List<Operation.Builder>
          getOperationsBuilderList() {
       return getOperationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.longrunning.Operation, com.google.longrunning.Operation.Builder, com.google.longrunning.OperationOrBuilder> 
+        Operation, Operation.Builder, OperationOrBuilder>
         getOperationsFieldBuilder() {
       if (operationsBuilder_ == null) {
         operationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.longrunning.Operation, com.google.longrunning.Operation.Builder, com.google.longrunning.OperationOrBuilder>(
+            Operation, Operation.Builder, OperationOrBuilder>(
                 operations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         operations_ = null;
@@ -874,7 +873,7 @@ private static final long serialVersionUID = 0L;
       return operationsBuilder_;
     }
 
-    private java.lang.Object nextPageToken_ = "";
+    private Object nextPageToken_ = "";
     /**
      * <pre>
      * The standard List next-page token.
@@ -882,16 +881,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string next_page_token = 2;</code>
      */
-    public java.lang.String getNextPageToken() {
-      java.lang.Object ref = nextPageToken_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getNextPageToken() {
+      Object ref = nextPageToken_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         nextPageToken_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -903,11 +902,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getNextPageTokenBytes() {
-      java.lang.Object ref = nextPageToken_;
+      Object ref = nextPageToken_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         nextPageToken_ = b;
         return b;
       } else {
@@ -922,7 +921,7 @@ private static final long serialVersionUID = 0L;
      * <code>string next_page_token = 2;</code>
      */
     public Builder setNextPageToken(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -962,13 +961,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -979,18 +978,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.ListOperationsResponse)
-  private static final com.google.longrunning.ListOperationsResponse DEFAULT_INSTANCE;
+  private static final ListOperationsResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.ListOperationsResponse();
+    DEFAULT_INSTANCE = new ListOperationsResponse();
   }
 
-  public static com.google.longrunning.ListOperationsResponse getDefaultInstance() {
+  public static ListOperationsResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<ListOperationsResponse>
       PARSER = new com.google.protobuf.AbstractParser<ListOperationsResponse>() {
-    @java.lang.Override
+    @Override
     public ListOperationsResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1003,13 +1002,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<ListOperationsResponse> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.longrunning.ListOperationsResponse getDefaultInstanceForType() {
+  @Override
+  public ListOperationsResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

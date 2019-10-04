@@ -51,7 +51,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The service name, which is a DNS-like logical identifier for the
@@ -74,7 +74,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>string id = 33;</code>
    */
-  java.lang.String getId();
+  String getId();
   /**
    * <pre>
    * A unique ID for a specific instance of this message, typically assigned
@@ -94,7 +94,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>string title = 2;</code>
    */
-  java.lang.String getTitle();
+  String getTitle();
   /**
    * <pre>
    * The product title for this service.
@@ -112,7 +112,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>string producer_project_id = 22;</code>
    */
-  java.lang.String getProducerProjectId();
+  String getProducerProjectId();
   /**
    * <pre>
    * The Google project that owns this service.
@@ -345,7 +345,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Documentation documentation = 6;</code>
    */
-  com.google.api.Documentation getDocumentation();
+  Documentation getDocumentation();
   /**
    * <pre>
    * Additional API documentation.
@@ -370,7 +370,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Backend backend = 8;</code>
    */
-  com.google.api.Backend getBackend();
+  Backend getBackend();
   /**
    * <pre>
    * API backend configuration.
@@ -378,7 +378,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Backend backend = 8;</code>
    */
-  com.google.api.BackendOrBuilder getBackendOrBuilder();
+  BackendOrBuilder getBackendOrBuilder();
 
   /**
    * <pre>
@@ -395,7 +395,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Http http = 9;</code>
    */
-  com.google.api.Http getHttp();
+  Http getHttp();
   /**
    * <pre>
    * HTTP configuration.
@@ -403,7 +403,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Http http = 9;</code>
    */
-  com.google.api.HttpOrBuilder getHttpOrBuilder();
+  HttpOrBuilder getHttpOrBuilder();
 
   /**
    * <pre>
@@ -420,7 +420,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Quota quota = 10;</code>
    */
-  com.google.api.Quota getQuota();
+  Quota getQuota();
   /**
    * <pre>
    * Quota configuration.
@@ -428,7 +428,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Quota quota = 10;</code>
    */
-  com.google.api.QuotaOrBuilder getQuotaOrBuilder();
+  QuotaOrBuilder getQuotaOrBuilder();
 
   /**
    * <pre>
@@ -445,7 +445,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Authentication authentication = 11;</code>
    */
-  com.google.api.Authentication getAuthentication();
+  Authentication getAuthentication();
   /**
    * <pre>
    * Auth configuration.
@@ -470,7 +470,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Context context = 12;</code>
    */
-  com.google.api.Context getContext();
+  Context getContext();
   /**
    * <pre>
    * Context configuration.
@@ -478,7 +478,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Context context = 12;</code>
    */
-  com.google.api.ContextOrBuilder getContextOrBuilder();
+  ContextOrBuilder getContextOrBuilder();
 
   /**
    * <pre>
@@ -495,7 +495,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Usage usage = 15;</code>
    */
-  com.google.api.Usage getUsage();
+  Usage getUsage();
   /**
    * <pre>
    * Configuration controlling usage of this service.
@@ -503,7 +503,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Usage usage = 15;</code>
    */
-  com.google.api.UsageOrBuilder getUsageOrBuilder();
+  UsageOrBuilder getUsageOrBuilder();
 
   /**
    * <pre>
@@ -514,7 +514,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
-  java.util.List<com.google.api.Endpoint> 
+  java.util.List<Endpoint>
       getEndpointsList();
   /**
    * <pre>
@@ -525,7 +525,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.Endpoint endpoints = 18;</code>
    */
-  com.google.api.Endpoint getEndpoints(int index);
+  Endpoint getEndpoints(int index);
   /**
    * <pre>
    * Configuration for network endpoints.  If this is empty, then an endpoint
@@ -574,7 +574,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Control control = 21;</code>
    */
-  com.google.api.Control getControl();
+  Control getControl();
   /**
    * <pre>
    * Configuration for the service control plane.
@@ -582,7 +582,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Control control = 21;</code>
    */
-  com.google.api.ControlOrBuilder getControlOrBuilder();
+  ControlOrBuilder getControlOrBuilder();
 
   /**
    * <pre>
@@ -591,7 +591,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
-  java.util.List<com.google.api.LogDescriptor> 
+  java.util.List<LogDescriptor>
       getLogsList();
   /**
    * <pre>
@@ -600,7 +600,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.LogDescriptor logs = 23;</code>
    */
-  com.google.api.LogDescriptor getLogs(int index);
+  LogDescriptor getLogs(int index);
   /**
    * <pre>
    * Defines the logs used by this service.
@@ -635,7 +635,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
-  java.util.List<com.google.api.MetricDescriptor> 
+  java.util.List<MetricDescriptor>
       getMetricsList();
   /**
    * <pre>
@@ -644,7 +644,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>repeated .google.api.MetricDescriptor metrics = 24;</code>
    */
-  com.google.api.MetricDescriptor getMetrics(int index);
+  MetricDescriptor getMetrics(int index);
   /**
    * <pre>
    * Defines the metrics used by this service.
@@ -736,7 +736,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Billing billing = 26;</code>
    */
-  com.google.api.Billing getBilling();
+  Billing getBilling();
   /**
    * <pre>
    * Billing configuration.
@@ -744,7 +744,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Billing billing = 26;</code>
    */
-  com.google.api.BillingOrBuilder getBillingOrBuilder();
+  BillingOrBuilder getBillingOrBuilder();
 
   /**
    * <pre>
@@ -761,7 +761,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Logging logging = 27;</code>
    */
-  com.google.api.Logging getLogging();
+  Logging getLogging();
   /**
    * <pre>
    * Logging configuration.
@@ -769,7 +769,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Logging logging = 27;</code>
    */
-  com.google.api.LoggingOrBuilder getLoggingOrBuilder();
+  LoggingOrBuilder getLoggingOrBuilder();
 
   /**
    * <pre>
@@ -786,7 +786,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.Monitoring monitoring = 28;</code>
    */
-  com.google.api.Monitoring getMonitoring();
+  Monitoring getMonitoring();
   /**
    * <pre>
    * Monitoring configuration.
@@ -836,7 +836,7 @@ public interface ServiceOrBuilder extends
    *
    * <code>.google.api.SourceInfo source_info = 37;</code>
    */
-  com.google.api.SourceInfo getSourceInfo();
+  SourceInfo getSourceInfo();
   /**
    * <pre>
    * Output only. The source information for this configuration if available.
@@ -845,29 +845,4 @@ public interface ServiceOrBuilder extends
    * <code>.google.api.SourceInfo source_info = 37;</code>
    */
   com.google.api.SourceInfoOrBuilder getSourceInfoOrBuilder();
-
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  boolean hasExperimental();
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  com.google.api.Experimental getExperimental();
-  /**
-   * <pre>
-   * Experimental configuration.
-   * </pre>
-   *
-   * <code>.google.api.Experimental experimental = 101;</code>
-   */
-  com.google.api.ExperimentalOrBuilder getExperimentalOrBuilder();
 }

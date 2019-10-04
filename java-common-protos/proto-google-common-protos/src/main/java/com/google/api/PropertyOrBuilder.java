@@ -14,7 +14,7 @@ public interface PropertyOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The name of the property (a.k.a key).
@@ -40,7 +40,7 @@ public interface PropertyOrBuilder extends
    *
    * <code>.google.api.Property.PropertyType type = 2;</code>
    */
-  com.google.api.Property.PropertyType getType();
+  Property.PropertyType getType();
 
   /**
    * <pre>
@@ -49,7 +49,7 @@ public interface PropertyOrBuilder extends
    *
    * <code>string description = 3;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * The description of the property

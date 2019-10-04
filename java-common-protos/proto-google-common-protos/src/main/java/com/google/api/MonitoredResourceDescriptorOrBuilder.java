@@ -19,7 +19,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>string name = 5;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * Optional. The resource name of the monitored resource descriptor:
@@ -44,7 +44,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>string type = 1;</code>
    */
-  java.lang.String getType();
+  String getType();
   /**
    * <pre>
    * Required. The monitored resource type. For example, the type
@@ -67,7 +67,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>string display_name = 2;</code>
    */
-  java.lang.String getDisplayName();
+  String getDisplayName();
   /**
    * <pre>
    * Optional. A concise name for the monitored resource type that might be
@@ -89,7 +89,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>string description = 3;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * Optional. A detailed description of the monitored resource type that might
@@ -110,7 +110,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  java.util.List<com.google.api.LabelDescriptor> 
+  java.util.List<LabelDescriptor>
       getLabelsList();
   /**
    * <pre>
@@ -121,7 +121,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  com.google.api.LabelDescriptor getLabels(int index);
+  LabelDescriptor getLabels(int index);
   /**
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
@@ -141,7 +141,7 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> 
+  java.util.List<? extends LabelDescriptorOrBuilder>
       getLabelsOrBuilderList();
   /**
    * <pre>
@@ -152,6 +152,23 @@ public interface MonitoredResourceDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(
+  LabelDescriptorOrBuilder getLabelsOrBuilder(
       int index);
+
+  /**
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   */
+  int getLaunchStageValue();
+  /**
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   */
+  LaunchStage getLaunchStage();
 }

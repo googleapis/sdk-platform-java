@@ -42,7 +42,7 @@ public final class AuditLogProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\"google/cloud/audit/audit_log.proto\022\022go" +
       "ogle.cloud.audit\032\034google/api/annotations" +
       ".proto\032\031google/protobuf/any.proto\032\034googl" +
@@ -89,25 +89,25 @@ public final class AuditLogProto {
     internal_static_google_cloud_audit_AuditLog_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_cloud_audit_AuditLog_descriptor,
-        new java.lang.String[] { "ServiceName", "MethodName", "ResourceName", "NumResponseItems", "Status", "AuthenticationInfo", "AuthorizationInfo", "RequestMetadata", "Request", "Response", "ServiceData", });
+        new String[] { "ServiceName", "MethodName", "ResourceName", "NumResponseItems", "Status", "AuthenticationInfo", "AuthorizationInfo", "RequestMetadata", "Request", "Response", "ServiceData", });
     internal_static_google_cloud_audit_AuthenticationInfo_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_cloud_audit_AuthenticationInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_cloud_audit_AuthenticationInfo_descriptor,
-        new java.lang.String[] { "PrincipalEmail", });
+        new String[] { "PrincipalEmail", });
     internal_static_google_cloud_audit_AuthorizationInfo_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_google_cloud_audit_AuthorizationInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_cloud_audit_AuthorizationInfo_descriptor,
-        new java.lang.String[] { "Resource", "Permission", "Granted", });
+        new String[] { "Resource", "Permission", "Granted", });
     internal_static_google_cloud_audit_RequestMetadata_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_google_cloud_audit_RequestMetadata_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_cloud_audit_RequestMetadata_descriptor,
-        new java.lang.String[] { "CallerIp", "CallerSuppliedUserAgent", });
+        new String[] { "CallerIp", "CallerSuppliedUserAgent", });
     com.google.api.AnnotationsProto.getDescriptor();
     com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.StructProto.getDescriptor();

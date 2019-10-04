@@ -18,7 +18,7 @@ public interface OAuthRequirementsOrBuilder extends
    *
    * <code>string canonical_scopes = 1;</code>
    */
-  java.lang.String getCanonicalScopes();
+  String getCanonicalScopes();
   /**
    * <pre>
    * The list of publicly documented OAuth scopes that are allowed access. An

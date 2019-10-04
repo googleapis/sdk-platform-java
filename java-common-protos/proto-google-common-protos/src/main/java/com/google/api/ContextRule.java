@@ -28,7 +28,7 @@ private static final long serialVersionUID = 0L;
     allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -39,7 +39,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -53,14 +53,14 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             selector_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
               requested_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000002;
             }
@@ -68,8 +68,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
               provided_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000004;
             }
@@ -77,8 +77,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000008) != 0)) {
               allowedRequestExtensions_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000008;
             }
@@ -86,8 +86,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000010) != 0)) {
               allowedResponseExtensions_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000010;
             }
@@ -95,7 +95,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -109,16 +109,16 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
         requested_ = requested_.getUnmodifiableView();
       }
-      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
         provided_ = provided_.getUnmodifiableView();
       }
-      if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((mutable_bitField0_ & 0x00000008) != 0)) {
         allowedRequestExtensions_ = allowedRequestExtensions_.getUnmodifiableView();
       }
-      if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((mutable_bitField0_ & 0x00000010) != 0)) {
         allowedResponseExtensions_ = allowedResponseExtensions_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
@@ -130,17 +130,17 @@ private static final long serialVersionUID = 0L;
     return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.ContextProto.internal_static_google_api_ContextRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.ContextRule.class, com.google.api.ContextRule.Builder.class);
+            ContextRule.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+  private volatile Object selector_;
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -149,14 +149,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string selector = 1;</code>
    */
-  public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSelector() {
+    Object ref = selector_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       selector_ = s;
       return s;
     }
@@ -171,11 +171,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
+    Object ref = selector_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       selector_ = b;
       return b;
     } else {
@@ -213,7 +213,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string requested = 2;</code>
    */
-  public java.lang.String getRequested(int index) {
+  public String getRequested(int index) {
     return requested_.get(index);
   }
   /**
@@ -258,7 +258,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string provided = 3;</code>
    */
-  public java.lang.String getProvided(int index) {
+  public String getProvided(int index) {
     return provided_.get(index);
   }
   /**
@@ -306,7 +306,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string allowed_request_extensions = 4;</code>
    */
-  public java.lang.String getAllowedRequestExtensions(int index) {
+  public String getAllowedRequestExtensions(int index) {
     return allowedRequestExtensions_.get(index);
   }
   /**
@@ -355,7 +355,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string allowed_response_extensions = 5;</code>
    */
-  public java.lang.String getAllowedResponseExtensions(int index) {
+  public String getAllowedResponseExtensions(int index) {
     return allowedResponseExtensions_.get(index);
   }
   /**
@@ -372,7 +372,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -382,7 +382,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -403,7 +403,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -449,32 +449,31 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.ContextRule)) {
+    if (!(obj instanceof ContextRule)) {
       return super.equals(obj);
     }
-    com.google.api.ContextRule other = (com.google.api.ContextRule) obj;
+    ContextRule other = (ContextRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && getRequestedList()
-        .equals(other.getRequestedList());
-    result = result && getProvidedList()
-        .equals(other.getProvidedList());
-    result = result && getAllowedRequestExtensionsList()
-        .equals(other.getAllowedRequestExtensionsList());
-    result = result && getAllowedResponseExtensionsList()
-        .equals(other.getAllowedResponseExtensionsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (!getRequestedList()
+        .equals(other.getRequestedList())) return false;
+    if (!getProvidedList()
+        .equals(other.getProvidedList())) return false;
+    if (!getAllowedRequestExtensionsList()
+        .equals(other.getAllowedRequestExtensionsList())) return false;
+    if (!getAllowedResponseExtensionsList()
+        .equals(other.getAllowedResponseExtensionsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -504,69 +503,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.ContextRule parseFrom(byte[] data)
+  public static ContextRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.ContextRule parseFrom(java.io.InputStream input)
+  public static ContextRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.ContextRule parseDelimitedFrom(java.io.InputStream input)
+  public static ContextRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.ContextRule parseDelimitedFrom(
+  public static ContextRule parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.ContextRule parseFrom(
+  public static ContextRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -574,23 +573,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.ContextRule prototype) {
+  public static Builder newBuilder(ContextRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -611,12 +610,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.ContextProto.internal_static_google_api_ContextRule_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.ContextRule.class, com.google.api.ContextRule.Builder.class);
+              ContextRule.class, Builder.class);
     }
 
     // Construct using com.google.api.ContextRule.newBuilder()
@@ -625,7 +624,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -634,7 +633,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -650,48 +649,48 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.ContextProto.internal_static_google_api_ContextRule_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.ContextRule getDefaultInstanceForType() {
-      return com.google.api.ContextRule.getDefaultInstance();
+    @Override
+    public ContextRule getDefaultInstanceForType() {
+      return ContextRule.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.ContextRule build() {
-      com.google.api.ContextRule result = buildPartial();
+    @Override
+    public ContextRule build() {
+      ContextRule result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.ContextRule buildPartial() {
-      com.google.api.ContextRule result = new com.google.api.ContextRule(this);
+    @Override
+    public ContextRule buildPartial() {
+      ContextRule result = new ContextRule(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.selector_ = selector_;
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         requested_ = requested_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000002);
       }
       result.requested_ = requested_;
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         provided_ = provided_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000004);
       }
       result.provided_ = provided_;
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         allowedRequestExtensions_ = allowedRequestExtensions_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000008);
       }
       result.allowedRequestExtensions_ = allowedRequestExtensions_;
-      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((bitField0_ & 0x00000010) != 0)) {
         allowedResponseExtensions_ = allowedResponseExtensions_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000010);
       }
@@ -701,50 +700,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.ContextRule) {
-        return mergeFrom((com.google.api.ContextRule)other);
+      if (other instanceof ContextRule) {
+        return mergeFrom((ContextRule)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.ContextRule other) {
-      if (other == com.google.api.ContextRule.getDefaultInstance()) return this;
+    public Builder mergeFrom(ContextRule other) {
+      if (other == ContextRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
         onChanged();
@@ -794,21 +793,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.ContextRule parsedMessage = null;
+      ContextRule parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.ContextRule) e.getUnfinishedMessage();
+        parsedMessage = (ContextRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -819,7 +818,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object selector_ = "";
+    private Object selector_ = "";
     /**
      * <pre>
      * Selects the methods to which this rule applies.
@@ -828,16 +827,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string selector = 1;</code>
      */
-    public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSelector() {
+      Object ref = selector_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         selector_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -850,11 +849,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
-      java.lang.Object ref = selector_;
+      Object ref = selector_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         selector_ = b;
         return b;
       } else {
@@ -870,7 +869,7 @@ private static final long serialVersionUID = 0L;
      * <code>string selector = 1;</code>
      */
     public Builder setSelector(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -915,7 +914,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList requested_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureRequestedIsMutable() {
-      if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         requested_ = new com.google.protobuf.LazyStringArrayList(requested_);
         bitField0_ |= 0x00000002;
        }
@@ -948,7 +947,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string requested = 2;</code>
      */
-    public java.lang.String getRequested(int index) {
+    public String getRequested(int index) {
       return requested_.get(index);
     }
     /**
@@ -970,7 +969,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string requested = 2;</code>
      */
     public Builder setRequested(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -987,7 +986,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string requested = 2;</code>
      */
     public Builder addRequested(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1004,7 +1003,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string requested = 2;</code>
      */
     public Builder addAllRequested(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureRequestedIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, requested_);
@@ -1045,7 +1044,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureProvidedIsMutable() {
-      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         provided_ = new com.google.protobuf.LazyStringArrayList(provided_);
         bitField0_ |= 0x00000004;
        }
@@ -1078,7 +1077,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string provided = 3;</code>
      */
-    public java.lang.String getProvided(int index) {
+    public String getProvided(int index) {
       return provided_.get(index);
     }
     /**
@@ -1100,7 +1099,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string provided = 3;</code>
      */
     public Builder setProvided(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1117,7 +1116,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string provided = 3;</code>
      */
     public Builder addProvided(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1134,7 +1133,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string provided = 3;</code>
      */
     public Builder addAllProvided(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureProvidedIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, provided_);
@@ -1175,7 +1174,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureAllowedRequestExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+      if (!((bitField0_ & 0x00000008) != 0)) {
         allowedRequestExtensions_ = new com.google.protobuf.LazyStringArrayList(allowedRequestExtensions_);
         bitField0_ |= 0x00000008;
        }
@@ -1211,7 +1210,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string allowed_request_extensions = 4;</code>
      */
-    public java.lang.String getAllowedRequestExtensions(int index) {
+    public String getAllowedRequestExtensions(int index) {
       return allowedRequestExtensions_.get(index);
     }
     /**
@@ -1235,7 +1234,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_request_extensions = 4;</code>
      */
     public Builder setAllowedRequestExtensions(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1253,7 +1252,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_request_extensions = 4;</code>
      */
     public Builder addAllowedRequestExtensions(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1271,7 +1270,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_request_extensions = 4;</code>
      */
     public Builder addAllAllowedRequestExtensions(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureAllowedRequestExtensionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, allowedRequestExtensions_);
@@ -1314,7 +1313,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureAllowedResponseExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+      if (!((bitField0_ & 0x00000010) != 0)) {
         allowedResponseExtensions_ = new com.google.protobuf.LazyStringArrayList(allowedResponseExtensions_);
         bitField0_ |= 0x00000010;
        }
@@ -1350,7 +1349,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string allowed_response_extensions = 5;</code>
      */
-    public java.lang.String getAllowedResponseExtensions(int index) {
+    public String getAllowedResponseExtensions(int index) {
       return allowedResponseExtensions_.get(index);
     }
     /**
@@ -1374,7 +1373,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_response_extensions = 5;</code>
      */
     public Builder setAllowedResponseExtensions(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1392,7 +1391,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_response_extensions = 5;</code>
      */
     public Builder addAllowedResponseExtensions(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1410,7 +1409,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string allowed_response_extensions = 5;</code>
      */
     public Builder addAllAllowedResponseExtensions(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureAllowedResponseExtensionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, allowedResponseExtensions_);
@@ -1450,13 +1449,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1467,18 +1466,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.ContextRule)
-  private static final com.google.api.ContextRule DEFAULT_INSTANCE;
+  private static final ContextRule DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.ContextRule();
+    DEFAULT_INSTANCE = new ContextRule();
   }
 
-  public static com.google.api.ContextRule getDefaultInstance() {
+  public static ContextRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<ContextRule>
       PARSER = new com.google.protobuf.AbstractParser<ContextRule>() {
-    @java.lang.Override
+    @Override
     public ContextRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1491,13 +1490,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<ContextRule> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.ContextRule getDefaultInstanceForType() {
+  @Override
+  public ContextRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

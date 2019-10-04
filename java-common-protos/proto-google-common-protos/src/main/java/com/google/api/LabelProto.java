@@ -27,7 +27,7 @@ public final class LabelProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\026google/api/label.proto\022\ngoogle.api\"\234\001\n" +
       "\017LabelDescriptor\022\013\n\003key\030\001 \001(\t\0229\n\nvalue_t" +
       "ype\030\002 \001(\0162%.google.api.LabelDescriptor.V" +
@@ -54,7 +54,7 @@ public final class LabelProto {
     internal_static_google_api_LabelDescriptor_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_LabelDescriptor_descriptor,
-        new java.lang.String[] { "Key", "ValueType", "Description", });
+        new String[] { "Key", "ValueType", "Description", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

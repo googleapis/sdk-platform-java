@@ -16,7 +16,7 @@ public interface UsageRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all

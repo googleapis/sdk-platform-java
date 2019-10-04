@@ -22,7 +22,7 @@ public final class LogSeverityProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n&google/logging/type/log_severity.proto" +
       "\022\023google.logging.type\032\034google/api/annota" +
       "tions.proto*\202\001\n\013LogSeverity\022\013\n\007DEFAULT\020\000" +

@@ -27,7 +27,7 @@ public final class SourceInfoProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\034google/api/source_info.proto\022\ngoogle.a" +
       "pi\032\031google/protobuf/any.proto\"8\n\nSourceI" +
       "nfo\022*\n\014source_files\030\001 \003(\0132\024.google.proto" +
@@ -54,7 +54,7 @@ public final class SourceInfoProto {
     internal_static_google_api_SourceInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_SourceInfo_descriptor,
-        new java.lang.String[] { "SourceFiles", });
+        new String[] { "SourceFiles", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

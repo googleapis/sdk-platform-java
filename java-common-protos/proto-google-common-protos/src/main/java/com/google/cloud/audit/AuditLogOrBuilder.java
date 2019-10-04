@@ -15,7 +15,7 @@ public interface AuditLogOrBuilder extends
    *
    * <code>string service_name = 7;</code>
    */
-  java.lang.String getServiceName();
+  String getServiceName();
   /**
    * <pre>
    * The name of the API service performing the operation. For example,
@@ -38,7 +38,7 @@ public interface AuditLogOrBuilder extends
    *
    * <code>string method_name = 8;</code>
    */
-  java.lang.String getMethodName();
+  String getMethodName();
   /**
    * <pre>
    * The name of the service method or operation.
@@ -64,7 +64,7 @@ public interface AuditLogOrBuilder extends
    *
    * <code>string resource_name = 11;</code>
    */
-  java.lang.String getResourceName();
+  String getResourceName();
   /**
    * <pre>
    * The resource or collection that is the target of the operation.
@@ -208,7 +208,7 @@ public interface AuditLogOrBuilder extends
    *
    * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
    */
-  com.google.cloud.audit.RequestMetadata getRequestMetadata();
+  RequestMetadata getRequestMetadata();
   /**
    * <pre>
    * Metadata about the operation.

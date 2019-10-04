@@ -15,7 +15,7 @@ public interface MetricOrBuilder extends
    *
    * <code>string type = 3;</code>
    */
-  java.lang.String getType();
+  String getType();
   /**
    * <pre>
    * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
@@ -45,12 +45,12 @@ public interface MetricOrBuilder extends
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
   boolean containsLabels(
-      java.lang.String key);
+      String key);
   /**
    * Use {@link #getLabelsMap()} instead.
    */
-  @java.lang.Deprecated
-  java.util.Map<java.lang.String, java.lang.String>
+  @Deprecated
+  java.util.Map<String, String>
   getLabels();
   /**
    * <pre>
@@ -60,7 +60,7 @@ public interface MetricOrBuilder extends
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
-  java.util.Map<java.lang.String, java.lang.String>
+  java.util.Map<String, String>
   getLabelsMap();
   /**
    * <pre>
@@ -71,9 +71,9 @@ public interface MetricOrBuilder extends
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
 
-  java.lang.String getLabelsOrDefault(
-      java.lang.String key,
-      java.lang.String defaultValue);
+  String getLabelsOrDefault(
+      String key,
+      String defaultValue);
   /**
    * <pre>
    * The set of label values that uniquely identify this metric. All
@@ -83,6 +83,6 @@ public interface MetricOrBuilder extends
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
 
-  java.lang.String getLabelsOrThrow(
-      java.lang.String key);
+  String getLabelsOrThrow(
+      String key);
 }

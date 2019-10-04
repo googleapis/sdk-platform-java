@@ -28,7 +28,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string region_code = 2;</code>
    */
-  java.lang.String getRegionCode();
+  String getRegionCode();
   /**
    * <pre>
    * Required. CLDR region code of the country/region of the address. This
@@ -59,7 +59,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string language_code = 3;</code>
    */
-  java.lang.String getLanguageCode();
+  String getLanguageCode();
   /**
    * <pre>
    * Optional. BCP-47 language code of the contents of this address (if
@@ -89,7 +89,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string postal_code = 4;</code>
    */
-  java.lang.String getPostalCode();
+  String getPostalCode();
   /**
    * <pre>
    * Optional. Postal code of the address. Not all countries use or require
@@ -114,7 +114,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string sorting_code = 5;</code>
    */
-  java.lang.String getSortingCode();
+  String getSortingCode();
   /**
    * <pre>
    * Optional. Additional, country-specific, sorting code. This is not used
@@ -142,7 +142,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string administrative_area = 6;</code>
    */
-  java.lang.String getAdministrativeArea();
+  String getAdministrativeArea();
   /**
    * <pre>
    * Optional. Highest administrative subdivision which is used for postal
@@ -169,7 +169,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string locality = 7;</code>
    */
-  java.lang.String getLocality();
+  String getLocality();
   /**
    * <pre>
    * Optional. Generally refers to the city/town portion of the address.
@@ -191,7 +191,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string sublocality = 8;</code>
    */
-  java.lang.String getSublocality();
+  String getSublocality();
   /**
    * <pre>
    * Optional. Sublocality of the address.
@@ -228,7 +228,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>repeated string address_lines = 9;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getAddressLinesList();
   /**
    * <pre>
@@ -281,7 +281,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>repeated string address_lines = 9;</code>
    */
-  java.lang.String getAddressLines(int index);
+  String getAddressLines(int index);
   /**
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
@@ -319,7 +319,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>repeated string recipients = 10;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getRecipientsList();
   /**
    * <pre>
@@ -340,7 +340,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>repeated string recipients = 10;</code>
    */
-  java.lang.String getRecipients(int index);
+  String getRecipients(int index);
   /**
    * <pre>
    * Optional. The recipient at the address.
@@ -360,7 +360,7 @@ public interface PostalAddressOrBuilder extends
    *
    * <code>string organization = 11;</code>
    */
-  java.lang.String getOrganization();
+  String getOrganization();
   /**
    * <pre>
    * Optional. The name of the organization at the address.

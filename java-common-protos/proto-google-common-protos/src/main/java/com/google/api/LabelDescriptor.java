@@ -25,7 +25,7 @@ private static final long serialVersionUID = 0L;
     description_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -36,7 +36,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -50,7 +50,7 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             key_ = s;
             break;
@@ -62,13 +62,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             description_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -88,15 +88,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
+    return LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_fieldAccessorTable
+    return LabelProto.internal_static_google_api_LabelDescriptor_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.LabelDescriptor.class, com.google.api.LabelDescriptor.Builder.class);
+            LabelDescriptor.class, Builder.class);
   }
 
   /**
@@ -163,7 +163,7 @@ private static final long serialVersionUID = 0L;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
             "Can't get the number of an unknown enum value.");
       }
       return value;
@@ -172,7 +172,7 @@ private static final long serialVersionUID = 0L;
     /**
      * @deprecated Use {@link #forNumber(int)} instead.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public static ValueType valueOf(int value) {
       return forNumber(value);
     }
@@ -208,7 +208,7 @@ private static final long serialVersionUID = 0L;
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.google.api.LabelDescriptor.getDescriptor().getEnumTypes().get(0);
+      return LabelDescriptor.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final ValueType[] VALUES = values();
@@ -216,7 +216,7 @@ private static final long serialVersionUID = 0L;
     public static ValueType valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
           "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
@@ -235,7 +235,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int KEY_FIELD_NUMBER = 1;
-  private volatile java.lang.Object key_;
+  private volatile Object key_;
   /**
    * <pre>
    * The label key.
@@ -243,14 +243,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string key = 1;</code>
    */
-  public java.lang.String getKey() {
-    java.lang.Object ref = key_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getKey() {
+    Object ref = key_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       key_ = s;
       return s;
     }
@@ -264,11 +264,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getKeyBytes() {
-    java.lang.Object ref = key_;
-    if (ref instanceof java.lang.String) {
+    Object ref = key_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       key_ = b;
       return b;
     } else {
@@ -295,14 +295,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
    */
-  public com.google.api.LabelDescriptor.ValueType getValueType() {
+  public ValueType getValueType() {
     @SuppressWarnings("deprecation")
-    com.google.api.LabelDescriptor.ValueType result = com.google.api.LabelDescriptor.ValueType.valueOf(valueType_);
-    return result == null ? com.google.api.LabelDescriptor.ValueType.UNRECOGNIZED : result;
+    ValueType result = ValueType.valueOf(valueType_);
+    return result == null ? ValueType.UNRECOGNIZED : result;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object description_;
+  private volatile Object description_;
   /**
    * <pre>
    * A human-readable description for the label.
@@ -310,14 +310,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string description = 3;</code>
    */
-  public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDescription() {
+    Object ref = description_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       description_ = s;
       return s;
     }
@@ -331,11 +331,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
+    Object ref = description_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       description_ = b;
       return b;
     } else {
@@ -344,7 +344,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -354,13 +354,13 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getKeyBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
     }
-    if (valueType_ != com.google.api.LabelDescriptor.ValueType.STRING.getNumber()) {
+    if (valueType_ != ValueType.STRING.getNumber()) {
       output.writeEnum(2, valueType_);
     }
     if (!getDescriptionBytes().isEmpty()) {
@@ -369,7 +369,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -378,7 +378,7 @@ private static final long serialVersionUID = 0L;
     if (!getKeyBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
     }
-    if (valueType_ != com.google.api.LabelDescriptor.ValueType.STRING.getNumber()) {
+    if (valueType_ != ValueType.STRING.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, valueType_);
     }
@@ -390,27 +390,26 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.LabelDescriptor)) {
+    if (!(obj instanceof LabelDescriptor)) {
       return super.equals(obj);
     }
-    com.google.api.LabelDescriptor other = (com.google.api.LabelDescriptor) obj;
+    LabelDescriptor other = (LabelDescriptor) obj;
 
-    boolean result = true;
-    result = result && getKey()
-        .equals(other.getKey());
-    result = result && valueType_ == other.valueType_;
-    result = result && getDescription()
-        .equals(other.getDescription());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getKey()
+        .equals(other.getKey())) return false;
+    if (valueType_ != other.valueType_) return false;
+    if (!getDescription()
+        .equals(other.getDescription())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -428,69 +427,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.LabelDescriptor parseFrom(byte[] data)
+  public static LabelDescriptor parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.LabelDescriptor parseFrom(java.io.InputStream input)
+  public static LabelDescriptor parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.LabelDescriptor parseDelimitedFrom(java.io.InputStream input)
+  public static LabelDescriptor parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.LabelDescriptor parseDelimitedFrom(
+  public static LabelDescriptor parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.LabelDescriptor parseFrom(
+  public static LabelDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -498,23 +497,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.LabelDescriptor prototype) {
+  public static Builder newBuilder(LabelDescriptor prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -531,15 +530,15 @@ private static final long serialVersionUID = 0L;
       com.google.api.LabelDescriptorOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
+      return LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_fieldAccessorTable
+      return LabelProto.internal_static_google_api_LabelDescriptor_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.LabelDescriptor.class, com.google.api.LabelDescriptor.Builder.class);
+              LabelDescriptor.class, Builder.class);
     }
 
     // Construct using com.google.api.LabelDescriptor.newBuilder()
@@ -548,7 +547,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -557,7 +556,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       key_ = "";
@@ -569,29 +568,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
+      return LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.LabelDescriptor getDefaultInstanceForType() {
-      return com.google.api.LabelDescriptor.getDefaultInstance();
+    @Override
+    public LabelDescriptor getDefaultInstanceForType() {
+      return LabelDescriptor.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.LabelDescriptor build() {
-      com.google.api.LabelDescriptor result = buildPartial();
+    @Override
+    public LabelDescriptor build() {
+      LabelDescriptor result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.LabelDescriptor buildPartial() {
-      com.google.api.LabelDescriptor result = new com.google.api.LabelDescriptor(this);
+    @Override
+    public LabelDescriptor buildPartial() {
+      LabelDescriptor result = new LabelDescriptor(this);
       result.key_ = key_;
       result.valueType_ = valueType_;
       result.description_ = description_;
@@ -599,50 +598,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.LabelDescriptor) {
-        return mergeFrom((com.google.api.LabelDescriptor)other);
+      if (other instanceof LabelDescriptor) {
+        return mergeFrom((LabelDescriptor)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.LabelDescriptor other) {
-      if (other == com.google.api.LabelDescriptor.getDefaultInstance()) return this;
+    public Builder mergeFrom(LabelDescriptor other) {
+      if (other == LabelDescriptor.getDefaultInstance()) return this;
       if (!other.getKey().isEmpty()) {
         key_ = other.key_;
         onChanged();
@@ -659,21 +658,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.LabelDescriptor parsedMessage = null;
+      LabelDescriptor parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.LabelDescriptor) e.getUnfinishedMessage();
+        parsedMessage = (LabelDescriptor) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -683,7 +682,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object key_ = "";
+    private Object key_ = "";
     /**
      * <pre>
      * The label key.
@@ -691,16 +690,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string key = 1;</code>
      */
-    public java.lang.String getKey() {
-      java.lang.Object ref = key_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getKey() {
+      Object ref = key_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         key_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -712,11 +711,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getKeyBytes() {
-      java.lang.Object ref = key_;
+      Object ref = key_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         key_ = b;
         return b;
       } else {
@@ -731,7 +730,7 @@ private static final long serialVersionUID = 0L;
      * <code>string key = 1;</code>
      */
     public Builder setKey(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -802,10 +801,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
      */
-    public com.google.api.LabelDescriptor.ValueType getValueType() {
+    public ValueType getValueType() {
       @SuppressWarnings("deprecation")
-      com.google.api.LabelDescriptor.ValueType result = com.google.api.LabelDescriptor.ValueType.valueOf(valueType_);
-      return result == null ? com.google.api.LabelDescriptor.ValueType.UNRECOGNIZED : result;
+      ValueType result = ValueType.valueOf(valueType_);
+      return result == null ? ValueType.UNRECOGNIZED : result;
     }
     /**
      * <pre>
@@ -814,7 +813,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
      */
-    public Builder setValueType(com.google.api.LabelDescriptor.ValueType value) {
+    public Builder setValueType(ValueType value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -837,7 +836,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object description_ = "";
+    private Object description_ = "";
     /**
      * <pre>
      * A human-readable description for the label.
@@ -845,16 +844,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 3;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDescription() {
+      Object ref = description_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -866,11 +865,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
+      Object ref = description_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -885,7 +884,7 @@ private static final long serialVersionUID = 0L;
      * <code>string description = 3;</code>
      */
     public Builder setDescription(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -925,13 +924,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -942,18 +941,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.LabelDescriptor)
-  private static final com.google.api.LabelDescriptor DEFAULT_INSTANCE;
+  private static final LabelDescriptor DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.LabelDescriptor();
+    DEFAULT_INSTANCE = new LabelDescriptor();
   }
 
-  public static com.google.api.LabelDescriptor getDefaultInstance() {
+  public static LabelDescriptor getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<LabelDescriptor>
       PARSER = new com.google.protobuf.AbstractParser<LabelDescriptor>() {
-    @java.lang.Override
+    @Override
     public LabelDescriptor parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -966,13 +965,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<LabelDescriptor> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.LabelDescriptor getDefaultInstanceForType() {
+  @Override
+  public LabelDescriptor getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

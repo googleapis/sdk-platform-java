@@ -14,7 +14,7 @@ public interface AuthenticationInfoOrBuilder extends
    *
    * <code>string principal_email = 1;</code>
    */
-  java.lang.String getPrincipalEmail();
+  String getPrincipalEmail();
   /**
    * <pre>
    * The email address of the authenticated user making the request.

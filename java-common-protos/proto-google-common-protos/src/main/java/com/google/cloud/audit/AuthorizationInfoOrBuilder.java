@@ -15,7 +15,7 @@ public interface AuthorizationInfoOrBuilder extends
    *
    * <code>string resource = 1;</code>
    */
-  java.lang.String getResource();
+  String getResource();
   /**
    * <pre>
    * The resource being accessed, as a REST-style string. For example:
@@ -34,7 +34,7 @@ public interface AuthorizationInfoOrBuilder extends
    *
    * <code>string permission = 2;</code>
    */
-  java.lang.String getPermission();
+  String getPermission();
   /**
    * <pre>
    * The required IAM permission.

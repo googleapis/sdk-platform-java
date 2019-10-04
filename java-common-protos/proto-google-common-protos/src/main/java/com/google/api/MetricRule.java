@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
     selector_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -35,7 +35,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -49,18 +49,18 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             selector_ = s;
             break;
           }
           case 18: {
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
               metricCosts_ = com.google.protobuf.MapField.newMapField(
                   MetricCostsDefaultEntryHolder.defaultEntry);
               mutable_bitField0_ |= 0x00000002;
             }
-            com.google.protobuf.MapEntry<java.lang.String, java.lang.Long>
+            com.google.protobuf.MapEntry<String, Long>
             metricCosts__ = input.readMessage(
                 MetricCostsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
             metricCosts_.getMutableMap().put(
@@ -68,7 +68,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -92,7 +92,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
+  @Override
   protected com.google.protobuf.MapField internalGetMapField(
       int number) {
     switch (number) {
@@ -103,17 +103,17 @@ private static final long serialVersionUID = 0L;
             "Invalid map field number: " + number);
     }
   }
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.QuotaProto.internal_static_google_api_MetricRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.MetricRule.class, com.google.api.MetricRule.Builder.class);
+            MetricRule.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+  private volatile Object selector_;
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -122,14 +122,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string selector = 1;</code>
    */
-  public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSelector() {
+    Object ref = selector_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       selector_ = s;
       return s;
     }
@@ -144,11 +144,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
+    Object ref = selector_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       selector_ = b;
       return b;
     } else {
@@ -159,9 +159,9 @@ private static final long serialVersionUID = 0L;
   public static final int METRIC_COSTS_FIELD_NUMBER = 2;
   private static final class MetricCostsDefaultEntryHolder {
     static final com.google.protobuf.MapEntry<
-        java.lang.String, java.lang.Long> defaultEntry =
+        String, Long> defaultEntry =
             com.google.protobuf.MapEntry
-            .<java.lang.String, java.lang.Long>newDefaultInstance(
+            .<String, Long>newDefaultInstance(
                 com.google.api.QuotaProto.internal_static_google_api_MetricRule_MetricCostsEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.STRING,
                 "",
@@ -169,8 +169,8 @@ private static final long serialVersionUID = 0L;
                 0L);
   }
   private com.google.protobuf.MapField<
-      java.lang.String, java.lang.Long> metricCosts_;
-  private com.google.protobuf.MapField<java.lang.String, java.lang.Long>
+      String, Long> metricCosts_;
+  private com.google.protobuf.MapField<String, Long>
   internalGetMetricCosts() {
     if (metricCosts_ == null) {
       return com.google.protobuf.MapField.emptyMapField(
@@ -195,15 +195,15 @@ private static final long serialVersionUID = 0L;
    */
 
   public boolean containsMetricCosts(
-      java.lang.String key) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
+      String key) {
+    if (key == null) { throw new NullPointerException(); }
     return internalGetMetricCosts().getMap().containsKey(key);
   }
   /**
    * Use {@link #getMetricCostsMap()} instead.
    */
-  @java.lang.Deprecated
-  public java.util.Map<java.lang.String, java.lang.Long> getMetricCosts() {
+  @Deprecated
+  public java.util.Map<String, Long> getMetricCosts() {
     return getMetricCostsMap();
   }
   /**
@@ -218,7 +218,7 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
 
-  public java.util.Map<java.lang.String, java.lang.Long> getMetricCostsMap() {
+  public java.util.Map<String, Long> getMetricCostsMap() {
     return internalGetMetricCosts().getMap();
   }
   /**
@@ -234,10 +234,10 @@ private static final long serialVersionUID = 0L;
    */
 
   public long getMetricCostsOrDefault(
-      java.lang.String key,
+      String key,
       long defaultValue) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
-    java.util.Map<java.lang.String, java.lang.Long> map =
+    if (key == null) { throw new NullPointerException(); }
+    java.util.Map<String, Long> map =
         internalGetMetricCosts().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
@@ -254,18 +254,18 @@ private static final long serialVersionUID = 0L;
    */
 
   public long getMetricCostsOrThrow(
-      java.lang.String key) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
-    java.util.Map<java.lang.String, java.lang.Long> map =
+      String key) {
+    if (key == null) { throw new NullPointerException(); }
+    java.util.Map<String, Long> map =
         internalGetMetricCosts().getMap();
     if (!map.containsKey(key)) {
-      throw new java.lang.IllegalArgumentException();
+      throw new IllegalArgumentException();
     }
     return map.get(key);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -275,7 +275,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -290,7 +290,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -299,9 +299,9 @@ private static final long serialVersionUID = 0L;
     if (!getSelectorBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, selector_);
     }
-    for (java.util.Map.Entry<java.lang.String, java.lang.Long> entry
+    for (java.util.Map.Entry<String, Long> entry
          : internalGetMetricCosts().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.Long>
+      com.google.protobuf.MapEntry<String, Long>
       metricCosts__ = MetricCostsDefaultEntryHolder.defaultEntry.newBuilderForType()
           .setKey(entry.getKey())
           .setValue(entry.getValue())
@@ -314,26 +314,25 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.MetricRule)) {
+    if (!(obj instanceof MetricRule)) {
       return super.equals(obj);
     }
-    com.google.api.MetricRule other = (com.google.api.MetricRule) obj;
+    MetricRule other = (MetricRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && internalGetMetricCosts().equals(
-        other.internalGetMetricCosts());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (!internalGetMetricCosts().equals(
+        other.internalGetMetricCosts())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -351,69 +350,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricRule parseFrom(byte[] data)
+  public static MetricRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricRule parseFrom(java.io.InputStream input)
+  public static MetricRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MetricRule parseDelimitedFrom(java.io.InputStream input)
+  public static MetricRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricRule parseDelimitedFrom(
+  public static MetricRule parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricRule parseFrom(
+  public static MetricRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -421,23 +420,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.MetricRule prototype) {
+  public static Builder newBuilder(MetricRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -480,12 +479,12 @@ private static final long serialVersionUID = 0L;
               "Invalid map field number: " + number);
       }
     }
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.QuotaProto.internal_static_google_api_MetricRule_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.MetricRule.class, com.google.api.MetricRule.Builder.class);
+              MetricRule.class, Builder.class);
     }
 
     // Construct using com.google.api.MetricRule.newBuilder()
@@ -494,7 +493,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -503,7 +502,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -512,29 +511,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.QuotaProto.internal_static_google_api_MetricRule_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.MetricRule getDefaultInstanceForType() {
-      return com.google.api.MetricRule.getDefaultInstance();
+    @Override
+    public MetricRule getDefaultInstanceForType() {
+      return MetricRule.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.MetricRule build() {
-      com.google.api.MetricRule result = buildPartial();
+    @Override
+    public MetricRule build() {
+      MetricRule result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.MetricRule buildPartial() {
-      com.google.api.MetricRule result = new com.google.api.MetricRule(this);
+    @Override
+    public MetricRule buildPartial() {
+      MetricRule result = new MetricRule(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.selector_ = selector_;
@@ -545,50 +544,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.MetricRule) {
-        return mergeFrom((com.google.api.MetricRule)other);
+      if (other instanceof MetricRule) {
+        return mergeFrom((MetricRule)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.MetricRule other) {
-      if (other == com.google.api.MetricRule.getDefaultInstance()) return this;
+    public Builder mergeFrom(MetricRule other) {
+      if (other == MetricRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
         onChanged();
@@ -600,21 +599,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.MetricRule parsedMessage = null;
+      MetricRule parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.MetricRule) e.getUnfinishedMessage();
+        parsedMessage = (MetricRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -625,7 +624,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object selector_ = "";
+    private Object selector_ = "";
     /**
      * <pre>
      * Selects the methods to which this rule applies.
@@ -634,16 +633,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string selector = 1;</code>
      */
-    public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSelector() {
+      Object ref = selector_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         selector_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -656,11 +655,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
-      java.lang.Object ref = selector_;
+      Object ref = selector_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         selector_ = b;
         return b;
       } else {
@@ -676,7 +675,7 @@ private static final long serialVersionUID = 0L;
      * <code>string selector = 1;</code>
      */
     public Builder setSelector(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -720,8 +719,8 @@ private static final long serialVersionUID = 0L;
     }
 
     private com.google.protobuf.MapField<
-        java.lang.String, java.lang.Long> metricCosts_;
-    private com.google.protobuf.MapField<java.lang.String, java.lang.Long>
+        String, Long> metricCosts_;
+    private com.google.protobuf.MapField<String, Long>
     internalGetMetricCosts() {
       if (metricCosts_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
@@ -729,7 +728,7 @@ private static final long serialVersionUID = 0L;
       }
       return metricCosts_;
     }
-    private com.google.protobuf.MapField<java.lang.String, java.lang.Long>
+    private com.google.protobuf.MapField<String, Long>
     internalGetMutableMetricCosts() {
       onChanged();;
       if (metricCosts_ == null) {
@@ -758,15 +757,15 @@ private static final long serialVersionUID = 0L;
      */
 
     public boolean containsMetricCosts(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
       return internalGetMetricCosts().getMap().containsKey(key);
     }
     /**
      * Use {@link #getMetricCostsMap()} instead.
      */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.Long> getMetricCosts() {
+    @Deprecated
+    public java.util.Map<String, Long> getMetricCosts() {
       return getMetricCostsMap();
     }
     /**
@@ -781,7 +780,7 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
 
-    public java.util.Map<java.lang.String, java.lang.Long> getMetricCostsMap() {
+    public java.util.Map<String, Long> getMetricCostsMap() {
       return internalGetMetricCosts().getMap();
     }
     /**
@@ -797,10 +796,10 @@ private static final long serialVersionUID = 0L;
      */
 
     public long getMetricCostsOrDefault(
-        java.lang.String key,
+        String key,
         long defaultValue) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, java.lang.Long> map =
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, Long> map =
           internalGetMetricCosts().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
@@ -817,12 +816,12 @@ private static final long serialVersionUID = 0L;
      */
 
     public long getMetricCostsOrThrow(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, java.lang.Long> map =
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, Long> map =
           internalGetMetricCosts().getMap();
       if (!map.containsKey(key)) {
-        throw new java.lang.IllegalArgumentException();
+        throw new IllegalArgumentException();
       }
       return map.get(key);
     }
@@ -845,8 +844,8 @@ private static final long serialVersionUID = 0L;
      */
 
     public Builder removeMetricCosts(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
       internalGetMutableMetricCosts().getMutableMap()
           .remove(key);
       return this;
@@ -854,8 +853,8 @@ private static final long serialVersionUID = 0L;
     /**
      * Use alternate mutation accessors instead.
      */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.Long>
+    @Deprecated
+    public java.util.Map<String, Long>
     getMutableMetricCosts() {
       return internalGetMutableMetricCosts().getMutableMap();
     }
@@ -871,9 +870,9 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
     public Builder putMetricCosts(
-        java.lang.String key,
+        String key,
         long value) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+      if (key == null) { throw new NullPointerException(); }
       
       internalGetMutableMetricCosts().getMutableMap()
           .put(key, value);
@@ -892,18 +891,18 @@ private static final long serialVersionUID = 0L;
      */
 
     public Builder putAllMetricCosts(
-        java.util.Map<java.lang.String, java.lang.Long> values) {
+        java.util.Map<String, Long> values) {
       internalGetMutableMetricCosts().getMutableMap()
           .putAll(values);
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -914,18 +913,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.MetricRule)
-  private static final com.google.api.MetricRule DEFAULT_INSTANCE;
+  private static final MetricRule DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.MetricRule();
+    DEFAULT_INSTANCE = new MetricRule();
   }
 
-  public static com.google.api.MetricRule getDefaultInstance() {
+  public static MetricRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<MetricRule>
       PARSER = new com.google.protobuf.AbstractParser<MetricRule>() {
-    @java.lang.Override
+    @Override
     public MetricRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -938,13 +937,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<MetricRule> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.MetricRule getDefaultInstanceForType() {
+  @Override
+  public MetricRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

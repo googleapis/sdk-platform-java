@@ -14,7 +14,7 @@ public interface HttpBodyOrBuilder extends
    *
    * <code>string content_type = 1;</code>
    */
-  java.lang.String getContentType();
+  String getContentType();
   /**
    * <pre>
    * The HTTP Content-Type header value specifying the content type of the body.

@@ -5,21 +5,22 @@ package com.google.rpc;
 
 /**
  * <pre>
- * The `Status` type defines a logical error model that is suitable for different
- * programming environments, including REST APIs and RPC APIs. It is used by
- * [gRPC](https://github.com/grpc). The error model is designed to be:
+ * The `Status` type defines a logical error model that is suitable for
+ * different programming environments, including REST APIs and RPC APIs. It is
+ * used by [gRPC](https://github.com/grpc). The error model is designed to be:
  * - Simple to use and understand for most users
  * - Flexible enough to meet unexpected needs
  * # Overview
- * The `Status` message contains three pieces of data: error code, error message,
- * and error details. The error code should be an enum value of
- * [google.rpc.Code][google.rpc.Code], but it may accept additional error codes if needed.  The
- * error message should be a developer-facing English message that helps
- * developers *understand* and *resolve* the error. If a localized user-facing
- * error message is needed, put the localized message in the error details or
- * localize it in the client. The optional error details may contain arbitrary
- * information about the error. There is a predefined set of error detail types
- * in the package `google.rpc` that can be used for common error conditions.
+ * The `Status` message contains three pieces of data: error code, error
+ * message, and error details. The error code should be an enum value of
+ * [google.rpc.Code][google.rpc.Code], but it may accept additional error codes
+ * if needed.  The error message should be a developer-facing English message
+ * that helps developers *understand* and *resolve* the error. If a localized
+ * user-facing error message is needed, put the localized message in the error
+ * details or localize it in the client. The optional error details may contain
+ * arbitrary information about the error. There is a predefined set of error
+ * detail types in the package `google.rpc` that can be used for common error
+ * conditions.
  * # Language mapping
  * The `Status` message is the logical representation of the error model, but it
  * is not necessarily the actual wire format. When the `Status` message is
@@ -58,12 +59,11 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private Status() {
-    code_ = 0;
     message_ = "";
     details_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -74,7 +74,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -93,13 +93,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             message_ = s;
             break;
           }
           case 26: {
-            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
               details_ = new java.util.ArrayList<com.google.protobuf.Any>();
               mutable_bitField0_ |= 0x00000004;
             }
@@ -108,7 +108,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -122,7 +122,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
         details_ = java.util.Collections.unmodifiableList(details_);
       }
       this.unknownFields = unknownFields.build();
@@ -134,12 +134,12 @@ private static final long serialVersionUID = 0L;
     return com.google.rpc.StatusProto.internal_static_google_rpc_Status_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.rpc.StatusProto.internal_static_google_rpc_Status_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.rpc.Status.class, com.google.rpc.Status.Builder.class);
+            Status.class, Builder.class);
   }
 
   private int bitField0_;
@@ -147,7 +147,8 @@ private static final long serialVersionUID = 0L;
   private int code_;
   /**
    * <pre>
-   * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+   * The status code, which should be an enum value of
+   * [google.rpc.Code][google.rpc.Code].
    * </pre>
    *
    * <code>int32 code = 1;</code>
@@ -157,24 +158,25 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object message_;
+  private volatile Object message_;
   /**
    * <pre>
    * A developer-facing error message, which should be in English. Any
    * user-facing error message should be localized and sent in the
-   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+   * by the client.
    * </pre>
    *
    * <code>string message = 2;</code>
    */
-  public java.lang.String getMessage() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getMessage() {
+    Object ref = message_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       message_ = s;
       return s;
     }
@@ -183,18 +185,19 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * A developer-facing error message, which should be in English. Any
    * user-facing error message should be localized and sent in the
-   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+   * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+   * by the client.
    * </pre>
    *
    * <code>string message = 2;</code>
    */
   public com.google.protobuf.ByteString
       getMessageBytes() {
-    java.lang.Object ref = message_;
-    if (ref instanceof java.lang.String) {
+    Object ref = message_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       message_ = b;
       return b;
     } else {
@@ -263,7 +266,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -273,7 +276,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (code_ != 0) {
@@ -288,7 +291,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -310,28 +313,27 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.rpc.Status)) {
+    if (!(obj instanceof Status)) {
       return super.equals(obj);
     }
-    com.google.rpc.Status other = (com.google.rpc.Status) obj;
+    Status other = (Status) obj;
 
-    boolean result = true;
-    result = result && (getCode()
-        == other.getCode());
-    result = result && getMessage()
-        .equals(other.getMessage());
-    result = result && getDetailsList()
-        .equals(other.getDetailsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (getCode()
+        != other.getCode()) return false;
+    if (!getMessage()
+        .equals(other.getMessage())) return false;
+    if (!getDetailsList()
+        .equals(other.getDetailsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -351,69 +353,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.Status parseFrom(byte[] data)
+  public static Status parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.Status parseFrom(java.io.InputStream input)
+  public static Status parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.Status parseDelimitedFrom(java.io.InputStream input)
+  public static Status parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.rpc.Status parseDelimitedFrom(
+  public static Status parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.Status parseFrom(
+  public static Status parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -421,43 +423,44 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.rpc.Status prototype) {
+  public static Builder newBuilder(Status prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
   /**
    * <pre>
-   * The `Status` type defines a logical error model that is suitable for different
-   * programming environments, including REST APIs and RPC APIs. It is used by
-   * [gRPC](https://github.com/grpc). The error model is designed to be:
+   * The `Status` type defines a logical error model that is suitable for
+   * different programming environments, including REST APIs and RPC APIs. It is
+   * used by [gRPC](https://github.com/grpc). The error model is designed to be:
    * - Simple to use and understand for most users
    * - Flexible enough to meet unexpected needs
    * # Overview
-   * The `Status` message contains three pieces of data: error code, error message,
-   * and error details. The error code should be an enum value of
-   * [google.rpc.Code][google.rpc.Code], but it may accept additional error codes if needed.  The
-   * error message should be a developer-facing English message that helps
-   * developers *understand* and *resolve* the error. If a localized user-facing
-   * error message is needed, put the localized message in the error details or
-   * localize it in the client. The optional error details may contain arbitrary
-   * information about the error. There is a predefined set of error detail types
-   * in the package `google.rpc` that can be used for common error conditions.
+   * The `Status` message contains three pieces of data: error code, error
+   * message, and error details. The error code should be an enum value of
+   * [google.rpc.Code][google.rpc.Code], but it may accept additional error codes
+   * if needed.  The error message should be a developer-facing English message
+   * that helps developers *understand* and *resolve* the error. If a localized
+   * user-facing error message is needed, put the localized message in the error
+   * details or localize it in the client. The optional error details may contain
+   * arbitrary information about the error. There is a predefined set of error
+   * detail types in the package `google.rpc` that can be used for common error
+   * conditions.
    * # Language mapping
    * The `Status` message is the logical representation of the error model, but it
    * is not necessarily the actual wire format. When the `Status` message is
@@ -495,12 +498,12 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.StatusProto.internal_static_google_rpc_Status_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.StatusProto.internal_static_google_rpc_Status_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.rpc.Status.class, com.google.rpc.Status.Builder.class);
+              Status.class, Builder.class);
     }
 
     // Construct using com.google.rpc.Status.newBuilder()
@@ -509,7 +512,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -519,7 +522,7 @@ private static final long serialVersionUID = 0L;
         getDetailsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       code_ = 0;
@@ -535,35 +538,35 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.rpc.StatusProto.internal_static_google_rpc_Status_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.rpc.Status getDefaultInstanceForType() {
-      return com.google.rpc.Status.getDefaultInstance();
+    @Override
+    public Status getDefaultInstanceForType() {
+      return Status.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.rpc.Status build() {
-      com.google.rpc.Status result = buildPartial();
+    @Override
+    public Status build() {
+      Status result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.rpc.Status buildPartial() {
-      com.google.rpc.Status result = new com.google.rpc.Status(this);
+    @Override
+    public Status buildPartial() {
+      Status result = new Status(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.code_ = code_;
       result.message_ = message_;
       if (detailsBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           details_ = java.util.Collections.unmodifiableList(details_);
           bitField0_ = (bitField0_ & ~0x00000004);
         }
@@ -576,50 +579,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.Status) {
-        return mergeFrom((com.google.rpc.Status)other);
+      if (other instanceof Status) {
+        return mergeFrom((Status)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.rpc.Status other) {
-      if (other == com.google.rpc.Status.getDefaultInstance()) return this;
+    public Builder mergeFrom(Status other) {
+      if (other == Status.getDefaultInstance()) return this;
       if (other.getCode() != 0) {
         setCode(other.getCode());
       }
@@ -658,21 +661,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.rpc.Status parsedMessage = null;
+      Status parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.rpc.Status) e.getUnfinishedMessage();
+        parsedMessage = (Status) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -686,7 +689,8 @@ private static final long serialVersionUID = 0L;
     private int code_ ;
     /**
      * <pre>
-     * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+     * The status code, which should be an enum value of
+     * [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
      * <code>int32 code = 1;</code>
@@ -696,7 +700,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+     * The status code, which should be an enum value of
+     * [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
      * <code>int32 code = 1;</code>
@@ -709,7 +714,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+     * The status code, which should be an enum value of
+     * [google.rpc.Code][google.rpc.Code].
      * </pre>
      *
      * <code>int32 code = 1;</code>
@@ -721,44 +727,46 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object message_ = "";
+    private Object message_ = "";
     /**
      * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
-     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
      * </pre>
      *
      * <code>string message = 2;</code>
      */
-    public java.lang.String getMessage() {
-      java.lang.Object ref = message_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getMessage() {
+      Object ref = message_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         message_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
-     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
      * </pre>
      *
      * <code>string message = 2;</code>
      */
     public com.google.protobuf.ByteString
         getMessageBytes() {
-      java.lang.Object ref = message_;
+      Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         message_ = b;
         return b;
       } else {
@@ -769,13 +777,14 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
-     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
      * </pre>
      *
      * <code>string message = 2;</code>
      */
     public Builder setMessage(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -788,7 +797,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
-     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
      * </pre>
      *
      * <code>string message = 2;</code>
@@ -803,7 +813,8 @@ private static final long serialVersionUID = 0L;
      * <pre>
      * A developer-facing error message, which should be in English. Any
      * user-facing error message should be localized and sent in the
-     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+     * [google.rpc.Status.details][google.rpc.Status.details] field, or localized
+     * by the client.
      * </pre>
      *
      * <code>string message = 2;</code>
@@ -823,7 +834,7 @@ private static final long serialVersionUID = 0L;
     private java.util.List<com.google.protobuf.Any> details_ =
       java.util.Collections.emptyList();
     private void ensureDetailsIsMutable() {
-      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         details_ = new java.util.ArrayList<com.google.protobuf.Any>(details_);
         bitField0_ |= 0x00000004;
        }
@@ -1008,7 +1019,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.protobuf.Any details = 3;</code>
      */
     public Builder addAllDetails(
-        java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+        Iterable<? extends com.google.protobuf.Any> values) {
       if (detailsBuilder_ == null) {
         ensureDetailsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1142,20 +1153,20 @@ private static final long serialVersionUID = 0L;
         detailsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
                 details_,
-                ((bitField0_ & 0x00000004) == 0x00000004),
+                ((bitField0_ & 0x00000004) != 0),
                 getParentForChildren(),
                 isClean());
         details_ = null;
       }
       return detailsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1166,18 +1177,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.Status)
-  private static final com.google.rpc.Status DEFAULT_INSTANCE;
+  private static final Status DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.Status();
+    DEFAULT_INSTANCE = new Status();
   }
 
-  public static com.google.rpc.Status getDefaultInstance() {
+  public static Status getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Status>
       PARSER = new com.google.protobuf.AbstractParser<Status>() {
-    @java.lang.Override
+    @Override
     public Status parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1190,13 +1201,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Status> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.rpc.Status getDefaultInstanceForType() {
+  @Override
+  public Status getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

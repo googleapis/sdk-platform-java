@@ -14,7 +14,7 @@ public interface QuotaOrBuilder extends
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
-  java.util.List<com.google.api.QuotaLimit> 
+  java.util.List<QuotaLimit>
       getLimitsList();
   /**
    * <pre>
@@ -23,7 +23,7 @@ public interface QuotaOrBuilder extends
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
-  com.google.api.QuotaLimit getLimits(int index);
+  QuotaLimit getLimits(int index);
   /**
    * <pre>
    * List of `QuotaLimit` definitions for the service.
@@ -59,7 +59,7 @@ public interface QuotaOrBuilder extends
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
-  java.util.List<com.google.api.MetricRule> 
+  java.util.List<MetricRule>
       getMetricRulesList();
   /**
    * <pre>
@@ -69,7 +69,7 @@ public interface QuotaOrBuilder extends
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
-  com.google.api.MetricRule getMetricRules(int index);
+  MetricRule getMetricRules(int index);
   /**
    * <pre>
    * List of `MetricRule` definitions, each one mapping a selected method to one

@@ -14,7 +14,7 @@ public interface DebugInfoOrBuilder extends
    *
    * <code>repeated string stack_entries = 1;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getStackEntriesList();
   /**
    * <pre>
@@ -31,7 +31,7 @@ public interface DebugInfoOrBuilder extends
    *
    * <code>repeated string stack_entries = 1;</code>
    */
-  java.lang.String getStackEntries(int index);
+  String getStackEntries(int index);
   /**
    * <pre>
    * The stack trace entries indicating where the error occurred.
@@ -49,7 +49,7 @@ public interface DebugInfoOrBuilder extends
    *
    * <code>string detail = 2;</code>
    */
-  java.lang.String getDetail();
+  String getDetail();
   /**
    * <pre>
    * Additional debugging information provided by the server.

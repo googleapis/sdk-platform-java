@@ -16,7 +16,7 @@ public interface UsageOrBuilder extends
    *
    * <code>repeated string requirements = 1;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getRequirementsList();
   /**
    * <pre>
@@ -37,7 +37,7 @@ public interface UsageOrBuilder extends
    *
    * <code>repeated string requirements = 1;</code>
    */
-  java.lang.String getRequirements(int index);
+  String getRequirements(int index);
   /**
    * <pre>
    * Requirements that must be satisfied before a consumer project can use the
@@ -58,7 +58,7 @@ public interface UsageOrBuilder extends
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
-  java.util.List<com.google.api.UsageRule> 
+  java.util.List<UsageRule>
       getRulesList();
   /**
    * <pre>
@@ -68,7 +68,7 @@ public interface UsageOrBuilder extends
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
-  com.google.api.UsageRule getRules(int index);
+  UsageRule getRules(int index);
   /**
    * <pre>
    * A list of usage rules that apply to individual API methods.
@@ -112,7 +112,7 @@ public interface UsageOrBuilder extends
    *
    * <code>string producer_notification_channel = 7;</code>
    */
-  java.lang.String getProducerNotificationChannel();
+  String getProducerNotificationChannel();
   /**
    * <pre>
    * The full resource name of a channel used for sending notifications to the

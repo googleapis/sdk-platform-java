@@ -27,7 +27,7 @@ public interface PageOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The name of the page. It will be used as an identity of the page to
@@ -53,17 +53,17 @@ public interface PageOrBuilder extends
 
   /**
    * <pre>
-   * The Markdown content of the page. You can use &lt;code&gt;&amp;#40;== include {path} ==&amp;#41;&lt;/code&gt;
-   * to include content from a Markdown file.
+   * The Markdown content of the page. You can use &lt;code&gt;&amp;#40;== include {path}
+   * ==&amp;#41;&lt;/code&gt; to include content from a Markdown file.
    * </pre>
    *
    * <code>string content = 2;</code>
    */
-  java.lang.String getContent();
+  String getContent();
   /**
    * <pre>
-   * The Markdown content of the page. You can use &lt;code&gt;&amp;#40;== include {path} ==&amp;#41;&lt;/code&gt;
-   * to include content from a Markdown file.
+   * The Markdown content of the page. You can use &lt;code&gt;&amp;#40;== include {path}
+   * ==&amp;#41;&lt;/code&gt; to include content from a Markdown file.
    * </pre>
    *
    * <code>string content = 2;</code>
@@ -79,7 +79,7 @@ public interface PageOrBuilder extends
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
-  java.util.List<com.google.api.Page> 
+  java.util.List<Page>
       getSubpagesList();
   /**
    * <pre>
@@ -89,7 +89,7 @@ public interface PageOrBuilder extends
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
-  com.google.api.Page getSubpages(int index);
+  Page getSubpages(int index);
   /**
    * <pre>
    * Subpages of this page. The order of subpages specified here will be
@@ -107,7 +107,7 @@ public interface PageOrBuilder extends
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
-  java.util.List<? extends com.google.api.PageOrBuilder> 
+  java.util.List<? extends PageOrBuilder>
       getSubpagesOrBuilderList();
   /**
    * <pre>
@@ -117,6 +117,6 @@ public interface PageOrBuilder extends
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
-  com.google.api.PageOrBuilder getSubpagesOrBuilder(
+  PageOrBuilder getSubpagesOrBuilder(
       int index);
 }

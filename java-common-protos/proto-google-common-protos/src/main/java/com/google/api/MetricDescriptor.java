@@ -30,9 +30,10 @@ private static final long serialVersionUID = 0L;
     unit_ = "";
     description_ = "";
     displayName_ = "";
+    launchStage_ = 0;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -43,7 +44,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -57,18 +58,18 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             name_ = s;
             break;
           }
           case 18: {
-            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-              labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>();
+            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+              labels_ = new java.util.ArrayList<LabelDescriptor>();
               mutable_bitField0_ |= 0x00000004;
             }
             labels_.add(
-                input.readMessage(com.google.api.LabelDescriptor.parser(), extensionRegistry));
+                input.readMessage(LabelDescriptor.parser(), extensionRegistry));
             break;
           }
           case 24: {
@@ -84,35 +85,35 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             unit_ = s;
             break;
           }
           case 50: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             description_ = s;
             break;
           }
           case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             displayName_ = s;
             break;
           }
           case 66: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             type_ = s;
             break;
           }
           case 82: {
-            com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder subBuilder = null;
+            MetricDescriptorMetadata.Builder subBuilder = null;
             if (metadata_ != null) {
               subBuilder = metadata_.toBuilder();
             }
-            metadata_ = input.readMessage(com.google.api.MetricDescriptor.MetricDescriptorMetadata.parser(), extensionRegistry);
+            metadata_ = input.readMessage(MetricDescriptorMetadata.parser(), extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(metadata_);
               metadata_ = subBuilder.buildPartial();
@@ -120,8 +121,14 @@ private static final long serialVersionUID = 0L;
 
             break;
           }
+          case 96: {
+            int rawValue = input.readEnum();
+
+            launchStage_ = rawValue;
+            break;
+          }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -135,7 +142,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
         labels_ = java.util.Collections.unmodifiableList(labels_);
       }
       this.unknownFields = unknownFields.build();
@@ -144,15 +151,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
+    return MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_fieldAccessorTable
+    return MetricProto.internal_static_google_api_MetricDescriptor_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.MetricDescriptor.class, com.google.api.MetricDescriptor.Builder.class);
+            MetricDescriptor.class, Builder.class);
   }
 
   /**
@@ -243,7 +250,7 @@ private static final long serialVersionUID = 0L;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
             "Can't get the number of an unknown enum value.");
       }
       return value;
@@ -252,7 +259,7 @@ private static final long serialVersionUID = 0L;
     /**
      * @deprecated Use {@link #forNumber(int)} instead.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public static MetricKind valueOf(int value) {
       return forNumber(value);
     }
@@ -289,7 +296,7 @@ private static final long serialVersionUID = 0L;
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.google.api.MetricDescriptor.getDescriptor().getEnumTypes().get(0);
+      return MetricDescriptor.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final MetricKind[] VALUES = values();
@@ -297,7 +304,7 @@ private static final long serialVersionUID = 0L;
     public static MetricKind valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
           "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
@@ -447,7 +454,7 @@ private static final long serialVersionUID = 0L;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
             "Can't get the number of an unknown enum value.");
       }
       return value;
@@ -456,7 +463,7 @@ private static final long serialVersionUID = 0L;
     /**
      * @deprecated Use {@link #forNumber(int)} instead.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public static ValueType valueOf(int value) {
       return forNumber(value);
     }
@@ -496,7 +503,7 @@ private static final long serialVersionUID = 0L;
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.google.api.MetricDescriptor.getDescriptor().getEnumTypes().get(1);
+      return MetricDescriptor.getDescriptor().getEnumTypes().get(1);
     }
 
     private static final ValueType[] VALUES = values();
@@ -504,7 +511,7 @@ private static final long serialVersionUID = 0L;
     public static ValueType valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
           "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
@@ -528,20 +535,22 @@ private static final long serialVersionUID = 0L;
 
     /**
      * <pre>
+     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
      * The launch stage of the metric definition.
      * </pre>
      *
-     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      */
-    int getLaunchStageValue();
+    @Deprecated int getLaunchStageValue();
     /**
      * <pre>
+     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
      * The launch stage of the metric definition.
      * </pre>
      *
-     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      */
-    com.google.api.LaunchStage getLaunchStage();
+    @Deprecated LaunchStage getLaunchStage();
 
     /**
      * <pre>
@@ -628,7 +637,7 @@ private static final long serialVersionUID = 0L;
       launchStage_ = 0;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -639,7 +648,7 @@ private static final long serialVersionUID = 0L;
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -685,7 +694,7 @@ private static final long serialVersionUID = 0L;
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -705,40 +714,42 @@ private static final long serialVersionUID = 0L;
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+      return MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
+      return MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.MetricDescriptor.MetricDescriptorMetadata.class, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder.class);
+              MetricDescriptorMetadata.class, Builder.class);
     }
 
     public static final int LAUNCH_STAGE_FIELD_NUMBER = 1;
     private int launchStage_;
     /**
      * <pre>
+     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
      * The launch stage of the metric definition.
      * </pre>
      *
-     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      */
-    public int getLaunchStageValue() {
+    @Deprecated public int getLaunchStageValue() {
       return launchStage_;
     }
     /**
      * <pre>
+     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
      * The launch stage of the metric definition.
      * </pre>
      *
-     * <code>.google.api.LaunchStage launch_stage = 1;</code>
+     * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      */
-    public com.google.api.LaunchStage getLaunchStage() {
+    @Deprecated public LaunchStage getLaunchStage() {
       @SuppressWarnings("deprecation")
-      com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
-      return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+      LaunchStage result = LaunchStage.valueOf(launchStage_);
+      return result == null ? LaunchStage.UNRECOGNIZED : result;
     }
 
     public static final int SAMPLE_PERIOD_FIELD_NUMBER = 2;
@@ -823,7 +834,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -833,10 +844,10 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
         output.writeEnum(1, launchStage_);
       }
       if (samplePeriod_ != null) {
@@ -848,13 +859,13 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(1, launchStage_);
       }
@@ -871,33 +882,32 @@ private static final long serialVersionUID = 0L;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.google.api.MetricDescriptor.MetricDescriptorMetadata)) {
+      if (!(obj instanceof MetricDescriptorMetadata)) {
         return super.equals(obj);
       }
-      com.google.api.MetricDescriptor.MetricDescriptorMetadata other = (com.google.api.MetricDescriptor.MetricDescriptorMetadata) obj;
+      MetricDescriptorMetadata other = (MetricDescriptorMetadata) obj;
 
-      boolean result = true;
-      result = result && launchStage_ == other.launchStage_;
-      result = result && (hasSamplePeriod() == other.hasSamplePeriod());
+      if (launchStage_ != other.launchStage_) return false;
+      if (hasSamplePeriod() != other.hasSamplePeriod()) return false;
       if (hasSamplePeriod()) {
-        result = result && getSamplePeriod()
-            .equals(other.getSamplePeriod());
+        if (!getSamplePeriod()
+            .equals(other.getSamplePeriod())) return false;
       }
-      result = result && (hasIngestDelay() == other.hasIngestDelay());
+      if (hasIngestDelay() != other.hasIngestDelay()) return false;
       if (hasIngestDelay()) {
-        result = result && getIngestDelay()
-            .equals(other.getIngestDelay());
+        if (!getIngestDelay()
+            .equals(other.getIngestDelay())) return false;
       }
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -919,69 +929,69 @@ private static final long serialVersionUID = 0L;
       return hash;
     }
 
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(byte[] data)
+    public static MetricDescriptorMetadata parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(java.io.InputStream input)
+    public static MetricDescriptorMetadata parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseDelimitedFrom(java.io.InputStream input)
+    public static MetricDescriptorMetadata parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseDelimitedFrom(
+    public static MetricDescriptorMetadata parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata parseFrom(
+    public static MetricDescriptorMetadata parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -989,23 +999,23 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.google.api.MetricDescriptor.MetricDescriptorMetadata prototype) {
+    public static Builder newBuilder(MetricDescriptorMetadata prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1019,18 +1029,18 @@ private static final long serialVersionUID = 0L;
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:google.api.MetricDescriptor.MetricDescriptorMetadata)
-        com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder {
+        MetricDescriptorMetadataOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+        return MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
+        return MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.google.api.MetricDescriptor.MetricDescriptorMetadata.class, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder.class);
+                MetricDescriptorMetadata.class, Builder.class);
       }
 
       // Construct using com.google.api.MetricDescriptor.MetricDescriptorMetadata.newBuilder()
@@ -1039,7 +1049,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -1048,7 +1058,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         launchStage_ = 0;
@@ -1068,29 +1078,29 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
+        return MetricProto.internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
       }
 
-      @java.lang.Override
-      public com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstanceForType() {
-        return com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance();
+      @Override
+      public MetricDescriptorMetadata getDefaultInstanceForType() {
+        return MetricDescriptorMetadata.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.google.api.MetricDescriptor.MetricDescriptorMetadata build() {
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata result = buildPartial();
+      @Override
+      public MetricDescriptorMetadata build() {
+        MetricDescriptorMetadata result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.google.api.MetricDescriptor.MetricDescriptorMetadata buildPartial() {
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata result = new com.google.api.MetricDescriptor.MetricDescriptorMetadata(this);
+      @Override
+      public MetricDescriptorMetadata buildPartial() {
+        MetricDescriptorMetadata result = new MetricDescriptorMetadata(this);
         result.launchStage_ = launchStage_;
         if (samplePeriodBuilder_ == null) {
           result.samplePeriod_ = samplePeriod_;
@@ -1106,50 +1116,50 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
-      @java.lang.Override
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.api.MetricDescriptor.MetricDescriptorMetadata) {
-          return mergeFrom((com.google.api.MetricDescriptor.MetricDescriptorMetadata)other);
+        if (other instanceof MetricDescriptorMetadata) {
+          return mergeFrom((MetricDescriptorMetadata)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.google.api.MetricDescriptor.MetricDescriptorMetadata other) {
-        if (other == com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()) return this;
+      public Builder mergeFrom(MetricDescriptorMetadata other) {
+        if (other == MetricDescriptorMetadata.getDefaultInstance()) return this;
         if (other.launchStage_ != 0) {
           setLaunchStageValue(other.getLaunchStageValue());
         }
@@ -1164,21 +1174,21 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata parsedMessage = null;
+        MetricDescriptorMetadata parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.google.api.MetricDescriptor.MetricDescriptorMetadata) e.getUnfinishedMessage();
+          parsedMessage = (MetricDescriptorMetadata) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1191,46 +1201,50 @@ private static final long serialVersionUID = 0L;
       private int launchStage_ = 0;
       /**
        * <pre>
+       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
        * The launch stage of the metric definition.
        * </pre>
        *
-       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        */
-      public int getLaunchStageValue() {
+      @Deprecated public int getLaunchStageValue() {
         return launchStage_;
       }
       /**
        * <pre>
+       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
        * The launch stage of the metric definition.
        * </pre>
        *
-       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        */
-      public Builder setLaunchStageValue(int value) {
+      @Deprecated public Builder setLaunchStageValue(int value) {
         launchStage_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
+       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
        * The launch stage of the metric definition.
        * </pre>
        *
-       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        */
-      public com.google.api.LaunchStage getLaunchStage() {
+      @Deprecated public LaunchStage getLaunchStage() {
         @SuppressWarnings("deprecation")
-        com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
-        return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+        LaunchStage result = LaunchStage.valueOf(launchStage_);
+        return result == null ? LaunchStage.UNRECOGNIZED : result;
       }
       /**
        * <pre>
+       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
        * The launch stage of the metric definition.
        * </pre>
        *
-       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        */
-      public Builder setLaunchStage(com.google.api.LaunchStage value) {
+      @Deprecated public Builder setLaunchStage(LaunchStage value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -1241,19 +1255,20 @@ private static final long serialVersionUID = 0L;
       }
       /**
        * <pre>
+       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
        * The launch stage of the metric definition.
        * </pre>
        *
-       * <code>.google.api.LaunchStage launch_stage = 1;</code>
+       * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        */
-      public Builder clearLaunchStage() {
+      @Deprecated public Builder clearLaunchStage() {
         
         launchStage_ = 0;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.Duration samplePeriod_ = null;
+      private com.google.protobuf.Duration samplePeriod_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> samplePeriodBuilder_;
       /**
@@ -1433,7 +1448,7 @@ private static final long serialVersionUID = 0L;
         return samplePeriodBuilder_;
       }
 
-      private com.google.protobuf.Duration ingestDelay_ = null;
+      private com.google.protobuf.Duration ingestDelay_;
       private com.google.protobuf.SingleFieldBuilderV3<
           com.google.protobuf.Duration, com.google.protobuf.Duration.Builder, com.google.protobuf.DurationOrBuilder> ingestDelayBuilder_;
       /**
@@ -1603,13 +1618,13 @@ private static final long serialVersionUID = 0L;
         }
         return ingestDelayBuilder_;
       }
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1620,18 +1635,18 @@ private static final long serialVersionUID = 0L;
     }
 
     // @@protoc_insertion_point(class_scope:google.api.MetricDescriptor.MetricDescriptorMetadata)
-    private static final com.google.api.MetricDescriptor.MetricDescriptorMetadata DEFAULT_INSTANCE;
+    private static final MetricDescriptorMetadata DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.google.api.MetricDescriptor.MetricDescriptorMetadata();
+      DEFAULT_INSTANCE = new MetricDescriptorMetadata();
     }
 
-    public static com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstance() {
+    public static MetricDescriptorMetadata getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<MetricDescriptorMetadata>
         PARSER = new com.google.protobuf.AbstractParser<MetricDescriptorMetadata>() {
-      @java.lang.Override
+      @Override
       public MetricDescriptorMetadata parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1644,13 +1659,13 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<MetricDescriptorMetadata> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.api.MetricDescriptor.MetricDescriptorMetadata getDefaultInstanceForType() {
+    @Override
+    public MetricDescriptorMetadata getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1658,7 +1673,7 @@ private static final long serialVersionUID = 0L;
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+  private volatile Object name_;
   /**
    * <pre>
    * The resource name of the metric descriptor.
@@ -1666,14 +1681,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string name = 1;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getName() {
+    Object ref = name_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       name_ = s;
       return s;
     }
@@ -1687,11 +1702,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
+    Object ref = name_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       name_ = b;
       return b;
     } else {
@@ -1700,7 +1715,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int TYPE_FIELD_NUMBER = 8;
-  private volatile java.lang.Object type_;
+  private volatile Object type_;
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
@@ -1714,14 +1729,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string type = 8;</code>
    */
-  public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getType() {
+    Object ref = type_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       type_ = s;
       return s;
     }
@@ -1741,11 +1756,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
+    Object ref = type_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       type_ = b;
       return b;
     } else {
@@ -1754,7 +1769,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int LABELS_FIELD_NUMBER = 2;
-  private java.util.List<com.google.api.LabelDescriptor> labels_;
+  private java.util.List<LabelDescriptor> labels_;
   /**
    * <pre>
    * The set of labels that can be used to describe a specific
@@ -1767,7 +1782,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
+  public java.util.List<LabelDescriptor> getLabelsList() {
     return labels_;
   }
   /**
@@ -1813,7 +1828,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  public com.google.api.LabelDescriptor getLabels(int index) {
+  public LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
   /**
@@ -1854,10 +1869,10 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
    */
-  public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
+  public MetricKind getMetricKind() {
     @SuppressWarnings("deprecation")
-    com.google.api.MetricDescriptor.MetricKind result = com.google.api.MetricDescriptor.MetricKind.valueOf(metricKind_);
-    return result == null ? com.google.api.MetricDescriptor.MetricKind.UNRECOGNIZED : result;
+    MetricKind result = MetricKind.valueOf(metricKind_);
+    return result == null ? MetricKind.UNRECOGNIZED : result;
   }
 
   public static final int VALUE_TYPE_FIELD_NUMBER = 4;
@@ -1881,14 +1896,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
    */
-  public com.google.api.MetricDescriptor.ValueType getValueType() {
+  public ValueType getValueType() {
     @SuppressWarnings("deprecation")
-    com.google.api.MetricDescriptor.ValueType result = com.google.api.MetricDescriptor.ValueType.valueOf(valueType_);
-    return result == null ? com.google.api.MetricDescriptor.ValueType.UNRECOGNIZED : result;
+    ValueType result = ValueType.valueOf(valueType_);
+    return result == null ? ValueType.UNRECOGNIZED : result;
   }
 
   public static final int UNIT_FIELD_NUMBER = 5;
-  private volatile java.lang.Object unit_;
+  private volatile Object unit_;
   /**
    * <pre>
    * The unit in which the metric value is reported. It is only applicable
@@ -1947,14 +1962,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string unit = 5;</code>
    */
-  public java.lang.String getUnit() {
-    java.lang.Object ref = unit_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getUnit() {
+    Object ref = unit_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       unit_ = s;
       return s;
     }
@@ -2019,11 +2034,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getUnitBytes() {
-    java.lang.Object ref = unit_;
-    if (ref instanceof java.lang.String) {
+    Object ref = unit_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       unit_ = b;
       return b;
     } else {
@@ -2032,7 +2047,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 6;
-  private volatile java.lang.Object description_;
+  private volatile Object description_;
   /**
    * <pre>
    * A detailed description of the metric, which can be used in documentation.
@@ -2040,14 +2055,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string description = 6;</code>
    */
-  public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDescription() {
+    Object ref = description_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       description_ = s;
       return s;
     }
@@ -2061,11 +2076,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
+    Object ref = description_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       description_ = b;
       return b;
     } else {
@@ -2074,7 +2089,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 7;
-  private volatile java.lang.Object displayName_;
+  private volatile Object displayName_;
   /**
    * <pre>
    * A concise name for the metric, which can be displayed in user interfaces.
@@ -2085,14 +2100,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string display_name = 7;</code>
    */
-  public java.lang.String getDisplayName() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDisplayName() {
+    Object ref = displayName_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       displayName_ = s;
       return s;
     }
@@ -2109,11 +2124,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDisplayNameBytes() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
+    Object ref = displayName_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       displayName_ = b;
       return b;
     } else {
@@ -2122,7 +2137,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int METADATA_FIELD_NUMBER = 10;
-  private com.google.api.MetricDescriptor.MetricDescriptorMetadata metadata_;
+  private MetricDescriptorMetadata metadata_;
   /**
    * <pre>
    * Optional. Metadata which can be used to guide usage of the metric.
@@ -2140,8 +2155,8 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
    */
-  public com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata() {
-    return metadata_ == null ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+  public MetricDescriptorMetadata getMetadata() {
+    return metadata_ == null ? MetricDescriptorMetadata.getDefaultInstance() : metadata_;
   }
   /**
    * <pre>
@@ -2150,12 +2165,37 @@ private static final long serialVersionUID = 0L;
    *
    * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
    */
-  public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
+  public MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
     return getMetadata();
   }
 
+  public static final int LAUNCH_STAGE_FIELD_NUMBER = 12;
+  private int launchStage_;
+  /**
+   * <pre>
+   * Optional. The launch stage of the metric definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 12;</code>
+   */
+  public int getLaunchStageValue() {
+    return launchStage_;
+  }
+  /**
+   * <pre>
+   * Optional. The launch stage of the metric definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 12;</code>
+   */
+  public LaunchStage getLaunchStage() {
+    @SuppressWarnings("deprecation")
+    LaunchStage result = LaunchStage.valueOf(launchStage_);
+    return result == null ? LaunchStage.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -2165,7 +2205,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getNameBytes().isEmpty()) {
@@ -2174,10 +2214,10 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < labels_.size(); i++) {
       output.writeMessage(2, labels_.get(i));
     }
-    if (metricKind_ != com.google.api.MetricDescriptor.MetricKind.METRIC_KIND_UNSPECIFIED.getNumber()) {
+    if (metricKind_ != MetricKind.METRIC_KIND_UNSPECIFIED.getNumber()) {
       output.writeEnum(3, metricKind_);
     }
-    if (valueType_ != com.google.api.MetricDescriptor.ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
+    if (valueType_ != ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
       output.writeEnum(4, valueType_);
     }
     if (!getUnitBytes().isEmpty()) {
@@ -2195,10 +2235,13 @@ private static final long serialVersionUID = 0L;
     if (metadata_ != null) {
       output.writeMessage(10, getMetadata());
     }
+    if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      output.writeEnum(12, launchStage_);
+    }
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -2211,11 +2254,11 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(2, labels_.get(i));
     }
-    if (metricKind_ != com.google.api.MetricDescriptor.MetricKind.METRIC_KIND_UNSPECIFIED.getNumber()) {
+    if (metricKind_ != MetricKind.METRIC_KIND_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(3, metricKind_);
     }
-    if (valueType_ != com.google.api.MetricDescriptor.ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
+    if (valueType_ != ValueType.VALUE_TYPE_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(4, valueType_);
     }
@@ -2235,46 +2278,50 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(10, getMetadata());
     }
+    if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(12, launchStage_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.MetricDescriptor)) {
+    if (!(obj instanceof MetricDescriptor)) {
       return super.equals(obj);
     }
-    com.google.api.MetricDescriptor other = (com.google.api.MetricDescriptor) obj;
+    MetricDescriptor other = (MetricDescriptor) obj;
 
-    boolean result = true;
-    result = result && getName()
-        .equals(other.getName());
-    result = result && getType()
-        .equals(other.getType());
-    result = result && getLabelsList()
-        .equals(other.getLabelsList());
-    result = result && metricKind_ == other.metricKind_;
-    result = result && valueType_ == other.valueType_;
-    result = result && getUnit()
-        .equals(other.getUnit());
-    result = result && getDescription()
-        .equals(other.getDescription());
-    result = result && getDisplayName()
-        .equals(other.getDisplayName());
-    result = result && (hasMetadata() == other.hasMetadata());
+    if (!getName()
+        .equals(other.getName())) return false;
+    if (!getType()
+        .equals(other.getType())) return false;
+    if (!getLabelsList()
+        .equals(other.getLabelsList())) return false;
+    if (metricKind_ != other.metricKind_) return false;
+    if (valueType_ != other.valueType_) return false;
+    if (!getUnit()
+        .equals(other.getUnit())) return false;
+    if (!getDescription()
+        .equals(other.getDescription())) return false;
+    if (!getDisplayName()
+        .equals(other.getDisplayName())) return false;
+    if (hasMetadata() != other.hasMetadata()) return false;
     if (hasMetadata()) {
-      result = result && getMetadata()
-          .equals(other.getMetadata());
+      if (!getMetadata()
+          .equals(other.getMetadata())) return false;
     }
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (launchStage_ != other.launchStage_) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -2303,74 +2350,76 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + METADATA_FIELD_NUMBER;
       hash = (53 * hash) + getMetadata().hashCode();
     }
+    hash = (37 * hash) + LAUNCH_STAGE_FIELD_NUMBER;
+    hash = (53 * hash) + launchStage_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricDescriptor parseFrom(byte[] data)
+  public static MetricDescriptor parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MetricDescriptor parseFrom(java.io.InputStream input)
+  public static MetricDescriptor parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MetricDescriptor parseDelimitedFrom(java.io.InputStream input)
+  public static MetricDescriptor parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricDescriptor parseDelimitedFrom(
+  public static MetricDescriptor parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MetricDescriptor parseFrom(
+  public static MetricDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -2378,23 +2427,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.MetricDescriptor prototype) {
+  public static Builder newBuilder(MetricDescriptor prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -2413,15 +2462,15 @@ private static final long serialVersionUID = 0L;
       com.google.api.MetricDescriptorOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
+      return MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_fieldAccessorTable
+      return MetricProto.internal_static_google_api_MetricDescriptor_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.MetricDescriptor.class, com.google.api.MetricDescriptor.Builder.class);
+              MetricDescriptor.class, Builder.class);
     }
 
     // Construct using com.google.api.MetricDescriptor.newBuilder()
@@ -2430,7 +2479,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -2440,7 +2489,7 @@ private static final long serialVersionUID = 0L;
         getLabelsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       name_ = "";
@@ -2469,38 +2518,40 @@ private static final long serialVersionUID = 0L;
         metadata_ = null;
         metadataBuilder_ = null;
       }
+      launchStage_ = 0;
+
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
+      return MetricProto.internal_static_google_api_MetricDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.MetricDescriptor getDefaultInstanceForType() {
-      return com.google.api.MetricDescriptor.getDefaultInstance();
+    @Override
+    public MetricDescriptor getDefaultInstanceForType() {
+      return MetricDescriptor.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.MetricDescriptor build() {
-      com.google.api.MetricDescriptor result = buildPartial();
+    @Override
+    public MetricDescriptor build() {
+      MetricDescriptor result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.MetricDescriptor buildPartial() {
-      com.google.api.MetricDescriptor result = new com.google.api.MetricDescriptor(this);
+    @Override
+    public MetricDescriptor buildPartial() {
+      MetricDescriptor result = new MetricDescriptor(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.name_ = name_;
       result.type_ = type_;
       if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           labels_ = java.util.Collections.unmodifiableList(labels_);
           bitField0_ = (bitField0_ & ~0x00000004);
         }
@@ -2518,55 +2569,56 @@ private static final long serialVersionUID = 0L;
       } else {
         result.metadata_ = metadataBuilder_.build();
       }
+      result.launchStage_ = launchStage_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.MetricDescriptor) {
-        return mergeFrom((com.google.api.MetricDescriptor)other);
+      if (other instanceof MetricDescriptor) {
+        return mergeFrom((MetricDescriptor)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.MetricDescriptor other) {
-      if (other == com.google.api.MetricDescriptor.getDefaultInstance()) return this;
+    public Builder mergeFrom(MetricDescriptor other) {
+      if (other == MetricDescriptor.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         onChanged();
@@ -2622,26 +2674,29 @@ private static final long serialVersionUID = 0L;
       if (other.hasMetadata()) {
         mergeMetadata(other.getMetadata());
       }
+      if (other.launchStage_ != 0) {
+        setLaunchStageValue(other.getLaunchStageValue());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.MetricDescriptor parsedMessage = null;
+      MetricDescriptor parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.MetricDescriptor) e.getUnfinishedMessage();
+        parsedMessage = (MetricDescriptor) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -2652,7 +2707,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object name_ = "";
+    private Object name_ = "";
     /**
      * <pre>
      * The resource name of the metric descriptor.
@@ -2660,16 +2715,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string name = 1;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getName() {
+      Object ref = name_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         name_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -2681,11 +2736,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
+      Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         name_ = b;
         return b;
       } else {
@@ -2700,7 +2755,7 @@ private static final long serialVersionUID = 0L;
      * <code>string name = 1;</code>
      */
     public Builder setName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2741,7 +2796,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object type_ = "";
+    private Object type_ = "";
     /**
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
@@ -2755,16 +2810,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string type = 8;</code>
      */
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getType() {
+      Object ref = type_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         type_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -2782,11 +2837,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
-      java.lang.Object ref = type_;
+      Object ref = type_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         type_ = b;
         return b;
       } else {
@@ -2807,7 +2862,7 @@ private static final long serialVersionUID = 0L;
      * <code>string type = 8;</code>
      */
     public Builder setType(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2860,17 +2915,17 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<com.google.api.LabelDescriptor> labels_ =
+    private java.util.List<LabelDescriptor> labels_ =
       java.util.Collections.emptyList();
     private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-        labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
+      if (!((bitField0_ & 0x00000004) != 0)) {
+        labels_ = new java.util.ArrayList<LabelDescriptor>(labels_);
         bitField0_ |= 0x00000004;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder> labelsBuilder_;
+        LabelDescriptor, LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder> labelsBuilder_;
 
     /**
      * <pre>
@@ -2884,7 +2939,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
+    public java.util.List<LabelDescriptor> getLabelsList() {
       if (labelsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(labels_);
       } else {
@@ -2922,7 +2977,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public com.google.api.LabelDescriptor getLabels(int index) {
+    public LabelDescriptor getLabels(int index) {
       if (labelsBuilder_ == null) {
         return labels_.get(index);
       } else {
@@ -2942,7 +2997,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder setLabels(
-        int index, com.google.api.LabelDescriptor value) {
+        int index, LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -2968,7 +3023,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder setLabels(
-        int index, com.google.api.LabelDescriptor.Builder builderForValue) {
+        int index, LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.set(index, builderForValue.build());
@@ -2990,7 +3045,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public Builder addLabels(com.google.api.LabelDescriptor value) {
+    public Builder addLabels(LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -3016,7 +3071,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(
-        int index, com.google.api.LabelDescriptor value) {
+        int index, LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -3042,7 +3097,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(
-        com.google.api.LabelDescriptor.Builder builderForValue) {
+        LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.add(builderForValue.build());
@@ -3065,7 +3120,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addLabels(
-        int index, com.google.api.LabelDescriptor.Builder builderForValue) {
+        int index, LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.add(index, builderForValue.build());
@@ -3088,7 +3143,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
     public Builder addAllLabels(
-        java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
+        Iterable<? extends LabelDescriptor> values) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -3155,7 +3210,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public com.google.api.LabelDescriptor.Builder getLabelsBuilder(
+    public LabelDescriptor.Builder getLabelsBuilder(
         int index) {
       return getLabelsFieldBuilder().getBuilder(index);
     }
@@ -3210,9 +3265,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder() {
+    public LabelDescriptor.Builder addLabelsBuilder() {
       return getLabelsFieldBuilder().addBuilder(
-          com.google.api.LabelDescriptor.getDefaultInstance());
+          LabelDescriptor.getDefaultInstance());
     }
     /**
      * <pre>
@@ -3226,10 +3281,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder(
+    public LabelDescriptor.Builder addLabelsBuilder(
         int index) {
       return getLabelsFieldBuilder().addBuilder(
-          index, com.google.api.LabelDescriptor.getDefaultInstance());
+          index, LabelDescriptor.getDefaultInstance());
     }
     /**
      * <pre>
@@ -3243,18 +3298,18 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
      */
-    public java.util.List<com.google.api.LabelDescriptor.Builder> 
+    public java.util.List<LabelDescriptor.Builder>
          getLabelsBuilderList() {
       return getLabelsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder> 
+        LabelDescriptor, LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder>
         getLabelsFieldBuilder() {
       if (labelsBuilder_ == null) {
         labelsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder>(
+            LabelDescriptor, LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder>(
                 labels_,
-                ((bitField0_ & 0x00000004) == 0x00000004),
+                ((bitField0_ & 0x00000004) != 0),
                 getParentForChildren(),
                 isClean());
         labels_ = null;
@@ -3295,10 +3350,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
      */
-    public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
+    public MetricKind getMetricKind() {
       @SuppressWarnings("deprecation")
-      com.google.api.MetricDescriptor.MetricKind result = com.google.api.MetricDescriptor.MetricKind.valueOf(metricKind_);
-      return result == null ? com.google.api.MetricDescriptor.MetricKind.UNRECOGNIZED : result;
+      MetricKind result = MetricKind.valueOf(metricKind_);
+      return result == null ? MetricKind.UNRECOGNIZED : result;
     }
     /**
      * <pre>
@@ -3308,7 +3363,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
      */
-    public Builder setMetricKind(com.google.api.MetricDescriptor.MetricKind value) {
+    public Builder setMetricKind(MetricKind value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -3365,10 +3420,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
      */
-    public com.google.api.MetricDescriptor.ValueType getValueType() {
+    public ValueType getValueType() {
       @SuppressWarnings("deprecation")
-      com.google.api.MetricDescriptor.ValueType result = com.google.api.MetricDescriptor.ValueType.valueOf(valueType_);
-      return result == null ? com.google.api.MetricDescriptor.ValueType.UNRECOGNIZED : result;
+      ValueType result = ValueType.valueOf(valueType_);
+      return result == null ? ValueType.UNRECOGNIZED : result;
     }
     /**
      * <pre>
@@ -3378,7 +3433,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
      */
-    public Builder setValueType(com.google.api.MetricDescriptor.ValueType value) {
+    public Builder setValueType(ValueType value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -3402,7 +3457,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object unit_ = "";
+    private Object unit_ = "";
     /**
      * <pre>
      * The unit in which the metric value is reported. It is only applicable
@@ -3461,16 +3516,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string unit = 5;</code>
      */
-    public java.lang.String getUnit() {
-      java.lang.Object ref = unit_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getUnit() {
+      Object ref = unit_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         unit_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -3533,11 +3588,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getUnitBytes() {
-      java.lang.Object ref = unit_;
+      Object ref = unit_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         unit_ = b;
         return b;
       } else {
@@ -3603,7 +3658,7 @@ private static final long serialVersionUID = 0L;
      * <code>string unit = 5;</code>
      */
     public Builder setUnit(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -3746,7 +3801,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object description_ = "";
+    private Object description_ = "";
     /**
      * <pre>
      * A detailed description of the metric, which can be used in documentation.
@@ -3754,16 +3809,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 6;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDescription() {
+      Object ref = description_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -3775,11 +3830,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
+      Object ref = description_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -3794,7 +3849,7 @@ private static final long serialVersionUID = 0L;
      * <code>string description = 6;</code>
      */
     public Builder setDescription(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -3835,7 +3890,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object displayName_ = "";
+    private Object displayName_ = "";
     /**
      * <pre>
      * A concise name for the metric, which can be displayed in user interfaces.
@@ -3846,16 +3901,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string display_name = 7;</code>
      */
-    public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDisplayName() {
+      Object ref = displayName_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         displayName_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -3870,11 +3925,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
+      Object ref = displayName_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         displayName_ = b;
         return b;
       } else {
@@ -3892,7 +3947,7 @@ private static final long serialVersionUID = 0L;
      * <code>string display_name = 7;</code>
      */
     public Builder setDisplayName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -3939,9 +3994,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.api.MetricDescriptor.MetricDescriptorMetadata metadata_ = null;
+    private MetricDescriptorMetadata metadata_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder> metadataBuilder_;
+        MetricDescriptorMetadata, MetricDescriptorMetadata.Builder, MetricDescriptorMetadataOrBuilder> metadataBuilder_;
     /**
      * <pre>
      * Optional. Metadata which can be used to guide usage of the metric.
@@ -3959,9 +4014,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
-    public com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata() {
+    public MetricDescriptorMetadata getMetadata() {
       if (metadataBuilder_ == null) {
-        return metadata_ == null ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+        return metadata_ == null ? MetricDescriptorMetadata.getDefaultInstance() : metadata_;
       } else {
         return metadataBuilder_.getMessage();
       }
@@ -3973,7 +4028,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
-    public Builder setMetadata(com.google.api.MetricDescriptor.MetricDescriptorMetadata value) {
+    public Builder setMetadata(MetricDescriptorMetadata value) {
       if (metadataBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -3994,7 +4049,7 @@ private static final long serialVersionUID = 0L;
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
     public Builder setMetadata(
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder builderForValue) {
+        MetricDescriptorMetadata.Builder builderForValue) {
       if (metadataBuilder_ == null) {
         metadata_ = builderForValue.build();
         onChanged();
@@ -4011,11 +4066,11 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
-    public Builder mergeMetadata(com.google.api.MetricDescriptor.MetricDescriptorMetadata value) {
+    public Builder mergeMetadata(MetricDescriptorMetadata value) {
       if (metadataBuilder_ == null) {
         if (metadata_ != null) {
           metadata_ =
-            com.google.api.MetricDescriptor.MetricDescriptorMetadata.newBuilder(metadata_).mergeFrom(value).buildPartial();
+            MetricDescriptorMetadata.newBuilder(metadata_).mergeFrom(value).buildPartial();
         } else {
           metadata_ = value;
         }
@@ -4051,7 +4106,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
-    public com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder getMetadataBuilder() {
+    public MetricDescriptorMetadata.Builder getMetadataBuilder() {
       
       onChanged();
       return getMetadataFieldBuilder().getBuilder();
@@ -4063,12 +4118,12 @@ private static final long serialVersionUID = 0L;
      *
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
-    public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
+    public MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
       if (metadataBuilder_ != null) {
         return metadataBuilder_.getMessageOrBuilder();
       } else {
         return metadata_ == null ?
-            com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance() : metadata_;
+            MetricDescriptorMetadata.getDefaultInstance() : metadata_;
       }
     }
     /**
@@ -4079,11 +4134,11 @@ private static final long serialVersionUID = 0L;
      * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder> 
+        MetricDescriptorMetadata, MetricDescriptorMetadata.Builder, MetricDescriptorMetadataOrBuilder>
         getMetadataFieldBuilder() {
       if (metadataBuilder_ == null) {
         metadataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.api.MetricDescriptor.MetricDescriptorMetadata, com.google.api.MetricDescriptor.MetricDescriptorMetadata.Builder, com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder>(
+            MetricDescriptorMetadata, MetricDescriptorMetadata.Builder, MetricDescriptorMetadataOrBuilder>(
                 getMetadata(),
                 getParentForChildren(),
                 isClean());
@@ -4091,13 +4146,78 @@ private static final long serialVersionUID = 0L;
       }
       return metadataBuilder_;
     }
-    @java.lang.Override
+
+    private int launchStage_ = 0;
+    /**
+     * <pre>
+     * Optional. The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 12;</code>
+     */
+    public int getLaunchStageValue() {
+      return launchStage_;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 12;</code>
+     */
+    public Builder setLaunchStageValue(int value) {
+      launchStage_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 12;</code>
+     */
+    public LaunchStage getLaunchStage() {
+      @SuppressWarnings("deprecation")
+      LaunchStage result = LaunchStage.valueOf(launchStage_);
+      return result == null ? LaunchStage.UNRECOGNIZED : result;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 12;</code>
+     */
+    public Builder setLaunchStage(LaunchStage value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      launchStage_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the metric definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 12;</code>
+     */
+    public Builder clearLaunchStage() {
+      
+      launchStage_ = 0;
+      onChanged();
+      return this;
+    }
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -4108,18 +4228,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.MetricDescriptor)
-  private static final com.google.api.MetricDescriptor DEFAULT_INSTANCE;
+  private static final MetricDescriptor DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.MetricDescriptor();
+    DEFAULT_INSTANCE = new MetricDescriptor();
   }
 
-  public static com.google.api.MetricDescriptor getDefaultInstance() {
+  public static MetricDescriptor getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<MetricDescriptor>
       PARSER = new com.google.protobuf.AbstractParser<MetricDescriptor>() {
-    @java.lang.Override
+    @Override
     public MetricDescriptor parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4132,13 +4252,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<MetricDescriptor> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.MetricDescriptor getDefaultInstanceForType() {
+  @Override
+  public MetricDescriptor getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

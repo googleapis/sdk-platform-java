@@ -15,7 +15,7 @@ public interface RequestInfoOrBuilder extends
    *
    * <code>string request_id = 1;</code>
    */
-  java.lang.String getRequestId();
+  String getRequestId();
   /**
    * <pre>
    * An opaque string that should only be interpreted by the service generating
@@ -35,7 +35,7 @@ public interface RequestInfoOrBuilder extends
    *
    * <code>string serving_data = 2;</code>
    */
-  java.lang.String getServingData();
+  String getServingData();
   /**
    * <pre>
    * Any data that was used to serve this request. For example, an encrypted

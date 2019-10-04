@@ -14,7 +14,7 @@ public interface LabelDescriptorOrBuilder extends
    *
    * <code>string key = 1;</code>
    */
-  java.lang.String getKey();
+  String getKey();
   /**
    * <pre>
    * The label key.
@@ -40,7 +40,7 @@ public interface LabelDescriptorOrBuilder extends
    *
    * <code>.google.api.LabelDescriptor.ValueType value_type = 2;</code>
    */
-  com.google.api.LabelDescriptor.ValueType getValueType();
+  LabelDescriptor.ValueType getValueType();
 
   /**
    * <pre>
@@ -49,7 +49,7 @@ public interface LabelDescriptorOrBuilder extends
    *
    * <code>string description = 3;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * A human-readable description for the label.

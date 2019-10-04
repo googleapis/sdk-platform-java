@@ -14,7 +14,7 @@ public interface PreconditionFailureOrBuilder extends
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  java.util.List<com.google.rpc.PreconditionFailure.Violation> 
+  java.util.List<PreconditionFailure.Violation>
       getViolationsList();
   /**
    * <pre>
@@ -23,7 +23,7 @@ public interface PreconditionFailureOrBuilder extends
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  com.google.rpc.PreconditionFailure.Violation getViolations(int index);
+  PreconditionFailure.Violation getViolations(int index);
   /**
    * <pre>
    * Describes all precondition violations.
@@ -39,7 +39,7 @@ public interface PreconditionFailureOrBuilder extends
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder> 
+  java.util.List<? extends PreconditionFailure.ViolationOrBuilder>
       getViolationsOrBuilderList();
   /**
    * <pre>
@@ -48,6 +48,6 @@ public interface PreconditionFailureOrBuilder extends
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
-  com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(
+  PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(
       int index);
 }

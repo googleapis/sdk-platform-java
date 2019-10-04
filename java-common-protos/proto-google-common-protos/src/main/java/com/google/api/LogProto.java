@@ -27,7 +27,7 @@ public final class LogProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\024google/api/log.proto\022\ngoogle.api\032\026goog" +
       "le/api/label.proto\"u\n\rLogDescriptor\022\014\n\004n" +
       "ame\030\001 \001(\t\022+\n\006labels\030\002 \003(\0132\033.google.api.L" +
@@ -55,7 +55,7 @@ public final class LogProto {
     internal_static_google_api_LogDescriptor_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_LogDescriptor_descriptor,
-        new java.lang.String[] { "Name", "Labels", "Description", "DisplayName", });
+        new String[] { "Name", "Labels", "Description", "DisplayName", });
     com.google.api.LabelProto.getDescriptor();
   }
 

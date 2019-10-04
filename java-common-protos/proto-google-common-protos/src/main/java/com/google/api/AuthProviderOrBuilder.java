@@ -16,7 +16,7 @@ public interface AuthProviderOrBuilder extends
    *
    * <code>string id = 1;</code>
    */
-  java.lang.String getId();
+  String getId();
   /**
    * <pre>
    * The unique identifier of the auth provider. It will be referred to by
@@ -40,7 +40,7 @@ public interface AuthProviderOrBuilder extends
    *
    * <code>string issuer = 2;</code>
    */
-  java.lang.String getIssuer();
+  String getIssuer();
   /**
    * <pre>
    * Identifies the principal that issued the JWT. See
@@ -58,27 +58,33 @@ public interface AuthProviderOrBuilder extends
   /**
    * <pre>
    * URL of the provider's public key set to validate signature of the JWT. See
-   * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
    * Optional if the key set document:
    *  - can be retrieved from
-   *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-   *    of the issuer.
-   *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+   *    the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
    * <code>string jwks_uri = 3;</code>
    */
-  java.lang.String getJwksUri();
+  String getJwksUri();
   /**
    * <pre>
    * URL of the provider's public key set to validate signature of the JWT. See
-   * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
    * Optional if the key set document:
    *  - can be retrieved from
-   *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-   *    of the issuer.
-   *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+   *    the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
@@ -104,7 +110,7 @@ public interface AuthProviderOrBuilder extends
    *
    * <code>string audiences = 4;</code>
    */
-  java.lang.String getAudiences();
+  String getAudiences();
   /**
    * <pre>
    * The list of JWT
@@ -133,7 +139,7 @@ public interface AuthProviderOrBuilder extends
    *
    * <code>string authorization_url = 5;</code>
    */
-  java.lang.String getAuthorizationUrl();
+  String getAuthorizationUrl();
   /**
    * <pre>
    * Redirect URL if JWT token is required but not present or is expired.

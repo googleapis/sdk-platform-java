@@ -19,7 +19,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
-  java.util.List<com.google.api.Monitoring.MonitoringDestination> 
+  java.util.List<Monitoring.MonitoringDestination>
       getProducerDestinationsList();
   /**
    * <pre>
@@ -33,7 +33,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
-  com.google.api.Monitoring.MonitoringDestination getProducerDestinations(int index);
+  Monitoring.MonitoringDestination getProducerDestinations(int index);
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the producer project.
@@ -59,7 +59,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
-  java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder> 
+  java.util.List<? extends Monitoring.MonitoringDestinationOrBuilder>
       getProducerDestinationsOrBuilderList();
   /**
    * <pre>
@@ -73,7 +73,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
-  com.google.api.Monitoring.MonitoringDestinationOrBuilder getProducerDestinationsOrBuilder(
+  Monitoring.MonitoringDestinationOrBuilder getProducerDestinationsOrBuilder(
       int index);
 
   /**
@@ -88,7 +88,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
-  java.util.List<com.google.api.Monitoring.MonitoringDestination> 
+  java.util.List<Monitoring.MonitoringDestination>
       getConsumerDestinationsList();
   /**
    * <pre>
@@ -102,7 +102,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
-  com.google.api.Monitoring.MonitoringDestination getConsumerDestinations(int index);
+  Monitoring.MonitoringDestination getConsumerDestinations(int index);
   /**
    * <pre>
    * Monitoring configurations for sending metrics to the consumer project.
@@ -128,7 +128,7 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
-  java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder> 
+  java.util.List<? extends Monitoring.MonitoringDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
   /**
    * <pre>
@@ -142,6 +142,6 @@ public interface MonitoringOrBuilder extends
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
-  com.google.api.Monitoring.MonitoringDestinationOrBuilder getConsumerDestinationsOrBuilder(
+  Monitoring.MonitoringDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index);
 }

@@ -32,18 +32,18 @@ public final class MonitoringProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\033google/api/monitoring.proto\022\ngoogle.ap" +
-      "i\032\034google/api/annotations.proto\"\354\001\n\nMoni" +
-      "toring\022K\n\025producer_destinations\030\001 \003(\0132,." +
-      "google.api.Monitoring.MonitoringDestinat" +
-      "ion\022K\n\025consumer_destinations\030\002 \003(\0132,.goo" +
-      "gle.api.Monitoring.MonitoringDestination" +
-      "\032D\n\025MonitoringDestination\022\032\n\022monitored_r" +
-      "esource\030\001 \001(\t\022\017\n\007metrics\030\002 \003(\tBq\n\016com.go" +
-      "ogle.apiB\017MonitoringProtoP\001ZEgoogle.gola" +
-      "ng.org/genproto/googleapis/api/serviceco" +
-      "nfig;serviceconfig\242\002\004GAPIb\006proto3"
+      "i\"\354\001\n\nMonitoring\022K\n\025producer_destination" +
+      "s\030\001 \003(\0132,.google.api.Monitoring.Monitori" +
+      "ngDestination\022K\n\025consumer_destinations\030\002" +
+      " \003(\0132,.google.api.Monitoring.MonitoringD" +
+      "estination\032D\n\025MonitoringDestination\022\032\n\022m" +
+      "onitored_resource\030\001 \001(\t\022\017\n\007metrics\030\002 \003(\t" +
+      "Bq\n\016com.google.apiB\017MonitoringProtoP\001ZEg" +
+      "oogle.golang.org/genproto/googleapis/api" +
+      "/serviceconfig;serviceconfig\242\002\004GAPIb\006pro" +
+      "to3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -56,21 +56,19 @@ public final class MonitoringProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.AnnotationsProto.getDescriptor(),
         }, assigner);
     internal_static_google_api_Monitoring_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_Monitoring_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Monitoring_descriptor,
-        new java.lang.String[] { "ProducerDestinations", "ConsumerDestinations", });
+        new String[] { "ProducerDestinations", "ConsumerDestinations", });
     internal_static_google_api_Monitoring_MonitoringDestination_descriptor =
       internal_static_google_api_Monitoring_descriptor.getNestedTypes().get(0);
     internal_static_google_api_Monitoring_MonitoringDestination_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Monitoring_MonitoringDestination_descriptor,
-        new java.lang.String[] { "MonitoredResource", "Metrics", });
-    com.google.api.AnnotationsProto.getDescriptor();
+        new String[] { "MonitoredResource", "Metrics", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

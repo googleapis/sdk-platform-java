@@ -37,7 +37,7 @@ public final class DocumentationProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\036google/api/documentation.proto\022\ngoogle" +
       ".api\"\241\001\n\rDocumentation\022\017\n\007summary\030\001 \001(\t\022" +
       "\037\n\005pages\030\005 \003(\0132\020.google.api.Page\022,\n\005rule" +
@@ -69,19 +69,19 @@ public final class DocumentationProto {
     internal_static_google_api_Documentation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Documentation_descriptor,
-        new java.lang.String[] { "Summary", "Pages", "Rules", "DocumentationRootUrl", "Overview", });
+        new String[] { "Summary", "Pages", "Rules", "DocumentationRootUrl", "Overview", });
     internal_static_google_api_DocumentationRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_DocumentationRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_DocumentationRule_descriptor,
-        new java.lang.String[] { "Selector", "Description", "DeprecationDescription", });
+        new String[] { "Selector", "Description", "DeprecationDescription", });
     internal_static_google_api_Page_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_google_api_Page_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Page_descriptor,
-        new java.lang.String[] { "Name", "Content", "Subpages", });
+        new String[] { "Name", "Content", "Subpages", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

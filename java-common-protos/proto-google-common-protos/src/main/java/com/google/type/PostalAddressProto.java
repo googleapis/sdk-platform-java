@@ -27,7 +27,7 @@ public final class PostalAddressProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n google/type/postal_address.proto\022\013goog" +
       "le.type\"\375\001\n\rPostalAddress\022\020\n\010revision\030\001 " +
       "\001(\005\022\023\n\013region_code\030\002 \001(\t\022\025\n\rlanguage_cod" +
@@ -57,7 +57,7 @@ public final class PostalAddressProto {
     internal_static_google_type_PostalAddress_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_type_PostalAddress_descriptor,
-        new java.lang.String[] { "Revision", "RegionCode", "LanguageCode", "PostalCode", "SortingCode", "AdministrativeArea", "Locality", "Sublocality", "AddressLines", "Recipients", "Organization", });
+        new String[] { "Revision", "RegionCode", "LanguageCode", "PostalCode", "SortingCode", "AdministrativeArea", "Locality", "Sublocality", "AddressLines", "Recipients", "Organization", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

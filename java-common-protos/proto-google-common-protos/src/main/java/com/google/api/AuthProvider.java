@@ -5,8 +5,9 @@ package com.google.api;
 
 /**
  * <pre>
- * Configuration for an anthentication provider, including support for
- * [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+ * Configuration for an authentication provider, including support for
+ * [JSON Web Token
+ * (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
  * </pre>
  *
  * Protobuf type {@code google.api.AuthProvider}
@@ -28,7 +29,7 @@ private static final long serialVersionUID = 0L;
     authorizationUrl_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -39,7 +40,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -53,37 +54,37 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             id_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             issuer_ = s;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             jwksUri_ = s;
             break;
           }
           case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             audiences_ = s;
             break;
           }
           case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             authorizationUrl_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -103,19 +104,19 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
+    return AuthProto.internal_static_google_api_AuthProvider_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
+    return AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.AuthProvider.class, com.google.api.AuthProvider.Builder.class);
+            AuthProvider.class, Builder.class);
   }
 
   public static final int ID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object id_;
+  private volatile Object id_;
   /**
    * <pre>
    * The unique identifier of the auth provider. It will be referred to by
@@ -125,14 +126,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string id = 1;</code>
    */
-  public java.lang.String getId() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getId() {
+    Object ref = id_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       id_ = s;
       return s;
     }
@@ -148,11 +149,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getIdBytes() {
-    java.lang.Object ref = id_;
-    if (ref instanceof java.lang.String) {
+    Object ref = id_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       id_ = b;
       return b;
     } else {
@@ -161,7 +162,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ISSUER_FIELD_NUMBER = 2;
-  private volatile java.lang.Object issuer_;
+  private volatile Object issuer_;
   /**
    * <pre>
    * Identifies the principal that issued the JWT. See
@@ -173,14 +174,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string issuer = 2;</code>
    */
-  public java.lang.String getIssuer() {
-    java.lang.Object ref = issuer_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getIssuer() {
+    Object ref = issuer_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       issuer_ = s;
       return s;
     }
@@ -198,11 +199,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getIssuerBytes() {
-    java.lang.Object ref = issuer_;
-    if (ref instanceof java.lang.String) {
+    Object ref = issuer_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       issuer_ = b;
       return b;
     } else {
@@ -211,29 +212,32 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int JWKS_URI_FIELD_NUMBER = 3;
-  private volatile java.lang.Object jwksUri_;
+  private volatile Object jwksUri_;
   /**
    * <pre>
    * URL of the provider's public key set to validate signature of the JWT. See
-   * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
    * Optional if the key set document:
    *  - can be retrieved from
-   *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-   *    of the issuer.
-   *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+   *    the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
    * <code>string jwks_uri = 3;</code>
    */
-  public java.lang.String getJwksUri() {
-    java.lang.Object ref = jwksUri_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getJwksUri() {
+    Object ref = jwksUri_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       jwksUri_ = s;
       return s;
     }
@@ -241,12 +245,15 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * URL of the provider's public key set to validate signature of the JWT. See
-   * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+   * [OpenID
+   * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
    * Optional if the key set document:
    *  - can be retrieved from
-   *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-   *    of the issuer.
-   *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+   *    [OpenID
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+   *    the issuer.
+   *  - can be inferred from the email domain of the issuer (e.g. a Google
+   *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
@@ -254,11 +261,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getJwksUriBytes() {
-    java.lang.Object ref = jwksUri_;
-    if (ref instanceof java.lang.String) {
+    Object ref = jwksUri_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       jwksUri_ = b;
       return b;
     } else {
@@ -267,7 +274,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int AUDIENCES_FIELD_NUMBER = 4;
-  private volatile java.lang.Object audiences_;
+  private volatile Object audiences_;
   /**
    * <pre>
    * The list of JWT
@@ -285,14 +292,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string audiences = 4;</code>
    */
-  public java.lang.String getAudiences() {
-    java.lang.Object ref = audiences_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getAudiences() {
+    Object ref = audiences_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       audiences_ = s;
       return s;
     }
@@ -316,11 +323,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getAudiencesBytes() {
-    java.lang.Object ref = audiences_;
-    if (ref instanceof java.lang.String) {
+    Object ref = audiences_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       audiences_ = b;
       return b;
     } else {
@@ -329,7 +336,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int AUTHORIZATION_URL_FIELD_NUMBER = 5;
-  private volatile java.lang.Object authorizationUrl_;
+  private volatile Object authorizationUrl_;
   /**
    * <pre>
    * Redirect URL if JWT token is required but not present or is expired.
@@ -338,14 +345,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string authorization_url = 5;</code>
    */
-  public java.lang.String getAuthorizationUrl() {
-    java.lang.Object ref = authorizationUrl_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getAuthorizationUrl() {
+    Object ref = authorizationUrl_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       authorizationUrl_ = s;
       return s;
     }
@@ -360,11 +367,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getAuthorizationUrlBytes() {
-    java.lang.Object ref = authorizationUrl_;
-    if (ref instanceof java.lang.String) {
+    Object ref = authorizationUrl_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       authorizationUrl_ = b;
       return b;
     } else {
@@ -373,7 +380,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -383,7 +390,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getIdBytes().isEmpty()) {
@@ -404,7 +411,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -430,32 +437,31 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.AuthProvider)) {
+    if (!(obj instanceof AuthProvider)) {
       return super.equals(obj);
     }
-    com.google.api.AuthProvider other = (com.google.api.AuthProvider) obj;
+    AuthProvider other = (AuthProvider) obj;
 
-    boolean result = true;
-    result = result && getId()
-        .equals(other.getId());
-    result = result && getIssuer()
-        .equals(other.getIssuer());
-    result = result && getJwksUri()
-        .equals(other.getJwksUri());
-    result = result && getAudiences()
-        .equals(other.getAudiences());
-    result = result && getAuthorizationUrl()
-        .equals(other.getAuthorizationUrl());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getId()
+        .equals(other.getId())) return false;
+    if (!getIssuer()
+        .equals(other.getIssuer())) return false;
+    if (!getJwksUri()
+        .equals(other.getJwksUri())) return false;
+    if (!getAudiences()
+        .equals(other.getAudiences())) return false;
+    if (!getAuthorizationUrl()
+        .equals(other.getAuthorizationUrl())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -477,69 +483,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthProvider parseFrom(byte[] data)
+  public static AuthProvider parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.AuthProvider parseFrom(java.io.InputStream input)
+  public static AuthProvider parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.AuthProvider parseDelimitedFrom(java.io.InputStream input)
+  public static AuthProvider parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthProvider parseDelimitedFrom(
+  public static AuthProvider parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.AuthProvider parseFrom(
+  public static AuthProvider parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -547,30 +553,31 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.AuthProvider prototype) {
+  public static Builder newBuilder(AuthProvider prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
   /**
    * <pre>
-   * Configuration for an anthentication provider, including support for
-   * [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+   * Configuration for an authentication provider, including support for
+   * [JSON Web Token
+   * (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
    * </pre>
    *
    * Protobuf type {@code google.api.AuthProvider}
@@ -581,15 +588,15 @@ private static final long serialVersionUID = 0L;
       com.google.api.AuthProviderOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
+      return AuthProto.internal_static_google_api_AuthProvider_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
+      return AuthProto.internal_static_google_api_AuthProvider_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.AuthProvider.class, com.google.api.AuthProvider.Builder.class);
+              AuthProvider.class, Builder.class);
     }
 
     // Construct using com.google.api.AuthProvider.newBuilder()
@@ -598,7 +605,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -607,7 +614,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       id_ = "";
@@ -623,29 +630,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
+      return AuthProto.internal_static_google_api_AuthProvider_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.AuthProvider getDefaultInstanceForType() {
-      return com.google.api.AuthProvider.getDefaultInstance();
+    @Override
+    public AuthProvider getDefaultInstanceForType() {
+      return AuthProvider.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.AuthProvider build() {
-      com.google.api.AuthProvider result = buildPartial();
+    @Override
+    public AuthProvider build() {
+      AuthProvider result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.AuthProvider buildPartial() {
-      com.google.api.AuthProvider result = new com.google.api.AuthProvider(this);
+    @Override
+    public AuthProvider buildPartial() {
+      AuthProvider result = new AuthProvider(this);
       result.id_ = id_;
       result.issuer_ = issuer_;
       result.jwksUri_ = jwksUri_;
@@ -655,50 +662,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.AuthProvider) {
-        return mergeFrom((com.google.api.AuthProvider)other);
+      if (other instanceof AuthProvider) {
+        return mergeFrom((AuthProvider)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.AuthProvider other) {
-      if (other == com.google.api.AuthProvider.getDefaultInstance()) return this;
+    public Builder mergeFrom(AuthProvider other) {
+      if (other == AuthProvider.getDefaultInstance()) return this;
       if (!other.getId().isEmpty()) {
         id_ = other.id_;
         onChanged();
@@ -724,21 +731,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.AuthProvider parsedMessage = null;
+      AuthProvider parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.AuthProvider) e.getUnfinishedMessage();
+        parsedMessage = (AuthProvider) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -748,7 +755,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object id_ = "";
+    private Object id_ = "";
     /**
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
@@ -758,16 +765,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string id = 1;</code>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getId() {
+      Object ref = id_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         id_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -781,11 +788,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getIdBytes() {
-      java.lang.Object ref = id_;
+      Object ref = id_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         id_ = b;
         return b;
       } else {
@@ -802,7 +809,7 @@ private static final long serialVersionUID = 0L;
      * <code>string id = 1;</code>
      */
     public Builder setId(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -847,7 +854,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object issuer_ = "";
+    private Object issuer_ = "";
     /**
      * <pre>
      * Identifies the principal that issued the JWT. See
@@ -859,16 +866,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string issuer = 2;</code>
      */
-    public java.lang.String getIssuer() {
-      java.lang.Object ref = issuer_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getIssuer() {
+      Object ref = issuer_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         issuer_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -884,11 +891,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getIssuerBytes() {
-      java.lang.Object ref = issuer_;
+      Object ref = issuer_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         issuer_ = b;
         return b;
       } else {
@@ -907,7 +914,7 @@ private static final long serialVersionUID = 0L;
      * <code>string issuer = 2;</code>
      */
     public Builder setIssuer(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -956,42 +963,48 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object jwksUri_ = "";
+    private Object jwksUri_ = "";
     /**
      * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
-     * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+     * [OpenID
+     * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
      *  - can be retrieved from
-     *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-     *    of the issuer.
-     *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+     *    [OpenID
+     *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+     *    the issuer.
+     *  - can be inferred from the email domain of the issuer (e.g. a Google
+     *  service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
      * <code>string jwks_uri = 3;</code>
      */
-    public java.lang.String getJwksUri() {
-      java.lang.Object ref = jwksUri_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getJwksUri() {
+      Object ref = jwksUri_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         jwksUri_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
-     * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+     * [OpenID
+     * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
      *  - can be retrieved from
-     *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-     *    of the issuer.
-     *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+     *    [OpenID
+     *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+     *    the issuer.
+     *  - can be inferred from the email domain of the issuer (e.g. a Google
+     *  service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -999,11 +1012,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getJwksUriBytes() {
-      java.lang.Object ref = jwksUri_;
+      Object ref = jwksUri_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         jwksUri_ = b;
         return b;
       } else {
@@ -1013,19 +1026,22 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
-     * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+     * [OpenID
+     * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
      *  - can be retrieved from
-     *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-     *    of the issuer.
-     *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+     *    [OpenID
+     *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+     *    the issuer.
+     *  - can be inferred from the email domain of the issuer (e.g. a Google
+     *  service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
      * <code>string jwks_uri = 3;</code>
      */
     public Builder setJwksUri(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1037,12 +1053,15 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
-     * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+     * [OpenID
+     * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
      *  - can be retrieved from
-     *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-     *    of the issuer.
-     *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+     *    [OpenID
+     *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+     *    the issuer.
+     *  - can be inferred from the email domain of the issuer (e.g. a Google
+     *  service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1057,12 +1076,15 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * URL of the provider's public key set to validate signature of the JWT. See
-     * [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+     * [OpenID
+     * Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
      * Optional if the key set document:
      *  - can be retrieved from
-     *    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-     *    of the issuer.
-     *  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+     *    [OpenID
+     *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+     *    the issuer.
+     *  - can be inferred from the email domain of the issuer (e.g. a Google
+     *  service account).
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1080,7 +1102,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object audiences_ = "";
+    private Object audiences_ = "";
     /**
      * <pre>
      * The list of JWT
@@ -1098,16 +1120,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string audiences = 4;</code>
      */
-    public java.lang.String getAudiences() {
-      java.lang.Object ref = audiences_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getAudiences() {
+      Object ref = audiences_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         audiences_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1129,11 +1151,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getAudiencesBytes() {
-      java.lang.Object ref = audiences_;
+      Object ref = audiences_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         audiences_ = b;
         return b;
       } else {
@@ -1158,7 +1180,7 @@ private static final long serialVersionUID = 0L;
      * <code>string audiences = 4;</code>
      */
     public Builder setAudiences(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1219,7 +1241,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object authorizationUrl_ = "";
+    private Object authorizationUrl_ = "";
     /**
      * <pre>
      * Redirect URL if JWT token is required but not present or is expired.
@@ -1228,16 +1250,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string authorization_url = 5;</code>
      */
-    public java.lang.String getAuthorizationUrl() {
-      java.lang.Object ref = authorizationUrl_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getAuthorizationUrl() {
+      Object ref = authorizationUrl_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         authorizationUrl_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1250,11 +1272,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getAuthorizationUrlBytes() {
-      java.lang.Object ref = authorizationUrl_;
+      Object ref = authorizationUrl_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         authorizationUrl_ = b;
         return b;
       } else {
@@ -1270,7 +1292,7 @@ private static final long serialVersionUID = 0L;
      * <code>string authorization_url = 5;</code>
      */
     public Builder setAuthorizationUrl(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1312,13 +1334,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1329,18 +1351,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.AuthProvider)
-  private static final com.google.api.AuthProvider DEFAULT_INSTANCE;
+  private static final AuthProvider DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.AuthProvider();
+    DEFAULT_INSTANCE = new AuthProvider();
   }
 
-  public static com.google.api.AuthProvider getDefaultInstance() {
+  public static AuthProvider getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<AuthProvider>
       PARSER = new com.google.protobuf.AbstractParser<AuthProvider>() {
-    @java.lang.Override
+    @Override
     public AuthProvider parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1353,13 +1375,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<AuthProvider> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.AuthProvider getDefaultInstanceForType() {
+  @Override
+  public AuthProvider getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

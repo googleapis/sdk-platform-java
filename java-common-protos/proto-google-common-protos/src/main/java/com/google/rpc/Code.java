@@ -453,7 +453,7 @@ public enum Code
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
-      throw new java.lang.IllegalArgumentException(
+      throw new IllegalArgumentException(
           "Can't get the number of an unknown enum value.");
     }
     return value;
@@ -462,7 +462,7 @@ public enum Code
   /**
    * @deprecated Use {@link #forNumber(int)} instead.
    */
-  @java.lang.Deprecated
+  @Deprecated
   public static Code valueOf(int value) {
     return forNumber(value);
   }
@@ -520,7 +520,7 @@ public enum Code
   public static Code valueOf(
       com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
     if (desc.getType() != getDescriptor()) {
-      throw new java.lang.IllegalArgumentException(
+      throw new IllegalArgumentException(
         "EnumValueDescriptor is not for this type.");
     }
     if (desc.getIndex() == -1) {

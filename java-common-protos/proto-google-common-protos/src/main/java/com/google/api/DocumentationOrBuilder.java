@@ -15,7 +15,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>string summary = 1;</code>
    */
-  java.lang.String getSummary();
+  String getSummary();
   /**
    * <pre>
    * A short summary of what the service does. Can only be provided by
@@ -34,7 +34,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  java.util.List<com.google.api.Page> 
+  java.util.List<Page>
       getPagesList();
   /**
    * <pre>
@@ -43,7 +43,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  com.google.api.Page getPages(int index);
+  Page getPages(int index);
   /**
    * <pre>
    * The top level pages for the documentation set.
@@ -59,7 +59,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  java.util.List<? extends com.google.api.PageOrBuilder> 
+  java.util.List<? extends PageOrBuilder>
       getPagesOrBuilderList();
   /**
    * <pre>
@@ -68,7 +68,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
-  com.google.api.PageOrBuilder getPagesOrBuilder(
+  PageOrBuilder getPagesOrBuilder(
       int index);
 
   /**
@@ -79,7 +79,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
-  java.util.List<com.google.api.DocumentationRule> 
+  java.util.List<DocumentationRule>
       getRulesList();
   /**
    * <pre>
@@ -89,7 +89,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
-  com.google.api.DocumentationRule getRules(int index);
+  DocumentationRule getRules(int index);
   /**
    * <pre>
    * A list of documentation rules that apply to individual API elements.
@@ -127,7 +127,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>string documentation_root_url = 4;</code>
    */
-  java.lang.String getDocumentationRootUrl();
+  String getDocumentationRootUrl();
   /**
    * <pre>
    * The URL to the root of documentation.
@@ -157,7 +157,7 @@ public interface DocumentationOrBuilder extends
    *
    * <code>string overview = 2;</code>
    */
-  java.lang.String getOverview();
+  String getOverview();
   /**
    * <pre>
    * Declares a single overview page. For example:

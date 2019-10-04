@@ -17,7 +17,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  java.util.List<com.google.api.Logging.LoggingDestination> 
+  java.util.List<Logging.LoggingDestination>
       getProducerDestinationsList();
   /**
    * <pre>
@@ -29,7 +29,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  com.google.api.Logging.LoggingDestination getProducerDestinations(int index);
+  Logging.LoggingDestination getProducerDestinations(int index);
   /**
    * <pre>
    * Logging configurations for sending logs to the producer project.
@@ -51,7 +51,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+  java.util.List<? extends Logging.LoggingDestinationOrBuilder>
       getProducerDestinationsOrBuilderList();
   /**
    * <pre>
@@ -63,7 +63,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
-  com.google.api.Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
+  Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
       int index);
 
   /**
@@ -76,7 +76,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  java.util.List<com.google.api.Logging.LoggingDestination> 
+  java.util.List<Logging.LoggingDestination>
       getConsumerDestinationsList();
   /**
    * <pre>
@@ -88,7 +88,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  com.google.api.Logging.LoggingDestination getConsumerDestinations(int index);
+  Logging.LoggingDestination getConsumerDestinations(int index);
   /**
    * <pre>
    * Logging configurations for sending logs to the consumer project.
@@ -110,7 +110,7 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder> 
+  java.util.List<? extends Logging.LoggingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList();
   /**
    * <pre>
@@ -122,6 +122,6 @@ public interface LoggingOrBuilder extends
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
-  com.google.api.Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+  Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index);
 }

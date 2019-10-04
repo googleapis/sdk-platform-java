@@ -9,15 +9,15 @@ public interface ListOperationsRequestOrBuilder extends
 
   /**
    * <pre>
-   * The name of the operation collection.
+   * The name of the operation's parent resource.
    * </pre>
    *
    * <code>string name = 4;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
-   * The name of the operation collection.
+   * The name of the operation's parent resource.
    * </pre>
    *
    * <code>string name = 4;</code>
@@ -32,7 +32,7 @@ public interface ListOperationsRequestOrBuilder extends
    *
    * <code>string filter = 1;</code>
    */
-  java.lang.String getFilter();
+  String getFilter();
   /**
    * <pre>
    * The standard list filter.
@@ -59,7 +59,7 @@ public interface ListOperationsRequestOrBuilder extends
    *
    * <code>string page_token = 3;</code>
    */
-  java.lang.String getPageToken();
+  String getPageToken();
   /**
    * <pre>
    * The standard list page token.

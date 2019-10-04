@@ -32,7 +32,7 @@ public final class ContextProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\030google/api/context.proto\022\ngoogle.api\"1" +
       "\n\007Context\022&\n\005rules\030\001 \003(\0132\027.google.api.Co" +
       "ntextRule\"\215\001\n\013ContextRule\022\020\n\010selector\030\001 " +
@@ -60,13 +60,13 @@ public final class ContextProto {
     internal_static_google_api_Context_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Context_descriptor,
-        new java.lang.String[] { "Rules", });
+        new String[] { "Rules", });
     internal_static_google_api_ContextRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_ContextRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_ContextRule_descriptor,
-        new java.lang.String[] { "Selector", "Requested", "Provided", "AllowedRequestExtensions", "AllowedResponseExtensions", });
+        new String[] { "Selector", "Requested", "Provided", "AllowedRequestExtensions", "AllowedResponseExtensions", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

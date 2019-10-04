@@ -27,7 +27,7 @@ public final class StatusProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\027google/rpc/status.proto\022\ngoogle.rpc\032\031g" +
       "oogle/protobuf/any.proto\"N\n\006Status\022\014\n\004co" +
       "de\030\001 \001(\005\022\017\n\007message\030\002 \001(\t\022%\n\007details\030\003 \003" +
@@ -54,7 +54,7 @@ public final class StatusProto {
     internal_static_google_rpc_Status_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_rpc_Status_descriptor,
-        new java.lang.String[] { "Code", "Message", "Details", });
+        new String[] { "Code", "Message", "Details", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

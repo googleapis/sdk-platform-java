@@ -25,7 +25,7 @@ private static final long serialVersionUID = 0L;
     deprecationDescription_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -36,7 +36,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -50,25 +50,25 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             selector_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             description_ = s;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             deprecationDescription_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -91,36 +91,36 @@ private static final long serialVersionUID = 0L;
     return com.google.api.DocumentationProto.internal_static_google_api_DocumentationRule_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.DocumentationProto.internal_static_google_api_DocumentationRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.DocumentationRule.class, com.google.api.DocumentationRule.Builder.class);
+            DocumentationRule.class, Builder.class);
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+  private volatile Object selector_;
   /**
    * <pre>
    * The selector is a comma-separated list of patterns. Each pattern is a
    * qualified name of the element which may end in "*", indicating a wildcard.
    * Wildcards are only allowed at the end and for a whole component of the
-   * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-   * specify a default for all applicable elements, the whole pattern "*"
-   * is used.
+   * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+   * wildcard will match one or more components. To specify a default for all
+   * applicable elements, the whole pattern "*" is used.
    * </pre>
    *
    * <code>string selector = 1;</code>
    */
-  public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSelector() {
+    Object ref = selector_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       selector_ = s;
       return s;
     }
@@ -130,20 +130,20 @@ private static final long serialVersionUID = 0L;
    * The selector is a comma-separated list of patterns. Each pattern is a
    * qualified name of the element which may end in "*", indicating a wildcard.
    * Wildcards are only allowed at the end and for a whole component of the
-   * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-   * specify a default for all applicable elements, the whole pattern "*"
-   * is used.
+   * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+   * wildcard will match one or more components. To specify a default for all
+   * applicable elements, the whole pattern "*" is used.
    * </pre>
    *
    * <code>string selector = 1;</code>
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
+    Object ref = selector_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       selector_ = b;
       return b;
     } else {
@@ -152,7 +152,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object description_;
+  private volatile Object description_;
   /**
    * <pre>
    * Description of the selected API(s).
@@ -160,14 +160,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string description = 2;</code>
    */
-  public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDescription() {
+    Object ref = description_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       description_ = s;
       return s;
     }
@@ -181,11 +181,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
+    Object ref = description_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       description_ = b;
       return b;
     } else {
@@ -194,42 +194,42 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DEPRECATION_DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object deprecationDescription_;
+  private volatile Object deprecationDescription_;
   /**
    * <pre>
-   * Deprecation description of the selected element(s). It can be provided if an
-   * element is marked as `deprecated`.
+   * Deprecation description of the selected element(s). It can be provided if
+   * an element is marked as `deprecated`.
    * </pre>
    *
    * <code>string deprecation_description = 3;</code>
    */
-  public java.lang.String getDeprecationDescription() {
-    java.lang.Object ref = deprecationDescription_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDeprecationDescription() {
+    Object ref = deprecationDescription_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       deprecationDescription_ = s;
       return s;
     }
   }
   /**
    * <pre>
-   * Deprecation description of the selected element(s). It can be provided if an
-   * element is marked as `deprecated`.
+   * Deprecation description of the selected element(s). It can be provided if
+   * an element is marked as `deprecated`.
    * </pre>
    *
    * <code>string deprecation_description = 3;</code>
    */
   public com.google.protobuf.ByteString
       getDeprecationDescriptionBytes() {
-    java.lang.Object ref = deprecationDescription_;
-    if (ref instanceof java.lang.String) {
+    Object ref = deprecationDescription_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       deprecationDescription_ = b;
       return b;
     } else {
@@ -238,7 +238,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -248,7 +248,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -263,7 +263,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -283,28 +283,27 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.DocumentationRule)) {
+    if (!(obj instanceof DocumentationRule)) {
       return super.equals(obj);
     }
-    com.google.api.DocumentationRule other = (com.google.api.DocumentationRule) obj;
+    DocumentationRule other = (DocumentationRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && getDescription()
-        .equals(other.getDescription());
-    result = result && getDeprecationDescription()
-        .equals(other.getDeprecationDescription());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (!getDescription()
+        .equals(other.getDescription())) return false;
+    if (!getDeprecationDescription()
+        .equals(other.getDeprecationDescription())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -322,69 +321,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.DocumentationRule parseFrom(byte[] data)
+  public static DocumentationRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.DocumentationRule parseFrom(java.io.InputStream input)
+  public static DocumentationRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.DocumentationRule parseDelimitedFrom(java.io.InputStream input)
+  public static DocumentationRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.DocumentationRule parseDelimitedFrom(
+  public static DocumentationRule parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.DocumentationRule parseFrom(
+  public static DocumentationRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -392,23 +391,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.DocumentationRule prototype) {
+  public static Builder newBuilder(DocumentationRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -428,12 +427,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.DocumentationProto.internal_static_google_api_DocumentationRule_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.DocumentationProto.internal_static_google_api_DocumentationRule_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.DocumentationRule.class, com.google.api.DocumentationRule.Builder.class);
+              DocumentationRule.class, Builder.class);
     }
 
     // Construct using com.google.api.DocumentationRule.newBuilder()
@@ -442,7 +441,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -451,7 +450,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -463,29 +462,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.DocumentationProto.internal_static_google_api_DocumentationRule_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.DocumentationRule getDefaultInstanceForType() {
-      return com.google.api.DocumentationRule.getDefaultInstance();
+    @Override
+    public DocumentationRule getDefaultInstanceForType() {
+      return DocumentationRule.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.DocumentationRule build() {
-      com.google.api.DocumentationRule result = buildPartial();
+    @Override
+    public DocumentationRule build() {
+      DocumentationRule result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.DocumentationRule buildPartial() {
-      com.google.api.DocumentationRule result = new com.google.api.DocumentationRule(this);
+    @Override
+    public DocumentationRule buildPartial() {
+      DocumentationRule result = new DocumentationRule(this);
       result.selector_ = selector_;
       result.description_ = description_;
       result.deprecationDescription_ = deprecationDescription_;
@@ -493,50 +492,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.DocumentationRule) {
-        return mergeFrom((com.google.api.DocumentationRule)other);
+      if (other instanceof DocumentationRule) {
+        return mergeFrom((DocumentationRule)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.DocumentationRule other) {
-      if (other == com.google.api.DocumentationRule.getDefaultInstance()) return this;
+    public Builder mergeFrom(DocumentationRule other) {
+      if (other == DocumentationRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
         onChanged();
@@ -554,21 +553,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.DocumentationRule parsedMessage = null;
+      DocumentationRule parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.DocumentationRule) e.getUnfinishedMessage();
+        parsedMessage = (DocumentationRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -578,29 +577,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object selector_ = "";
+    private Object selector_ = "";
     /**
      * <pre>
      * The selector is a comma-separated list of patterns. Each pattern is a
      * qualified name of the element which may end in "*", indicating a wildcard.
      * Wildcards are only allowed at the end and for a whole component of the
-     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-     * specify a default for all applicable elements, the whole pattern "*"
-     * is used.
+     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+     * wildcard will match one or more components. To specify a default for all
+     * applicable elements, the whole pattern "*" is used.
      * </pre>
      *
      * <code>string selector = 1;</code>
      */
-    public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSelector() {
+      Object ref = selector_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         selector_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -608,20 +607,20 @@ private static final long serialVersionUID = 0L;
      * The selector is a comma-separated list of patterns. Each pattern is a
      * qualified name of the element which may end in "*", indicating a wildcard.
      * Wildcards are only allowed at the end and for a whole component of the
-     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-     * specify a default for all applicable elements, the whole pattern "*"
-     * is used.
+     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+     * wildcard will match one or more components. To specify a default for all
+     * applicable elements, the whole pattern "*" is used.
      * </pre>
      *
      * <code>string selector = 1;</code>
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
-      java.lang.Object ref = selector_;
+      Object ref = selector_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         selector_ = b;
         return b;
       } else {
@@ -633,15 +632,15 @@ private static final long serialVersionUID = 0L;
      * The selector is a comma-separated list of patterns. Each pattern is a
      * qualified name of the element which may end in "*", indicating a wildcard.
      * Wildcards are only allowed at the end and for a whole component of the
-     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-     * specify a default for all applicable elements, the whole pattern "*"
-     * is used.
+     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+     * wildcard will match one or more components. To specify a default for all
+     * applicable elements, the whole pattern "*" is used.
      * </pre>
      *
      * <code>string selector = 1;</code>
      */
     public Builder setSelector(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -655,9 +654,9 @@ private static final long serialVersionUID = 0L;
      * The selector is a comma-separated list of patterns. Each pattern is a
      * qualified name of the element which may end in "*", indicating a wildcard.
      * Wildcards are only allowed at the end and for a whole component of the
-     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-     * specify a default for all applicable elements, the whole pattern "*"
-     * is used.
+     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+     * wildcard will match one or more components. To specify a default for all
+     * applicable elements, the whole pattern "*" is used.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -673,9 +672,9 @@ private static final long serialVersionUID = 0L;
      * The selector is a comma-separated list of patterns. Each pattern is a
      * qualified name of the element which may end in "*", indicating a wildcard.
      * Wildcards are only allowed at the end and for a whole component of the
-     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". To
-     * specify a default for all applicable elements, the whole pattern "*"
-     * is used.
+     * qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar". A
+     * wildcard will match one or more components. To specify a default for all
+     * applicable elements, the whole pattern "*" is used.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -692,7 +691,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object description_ = "";
+    private Object description_ = "";
     /**
      * <pre>
      * Description of the selected API(s).
@@ -700,16 +699,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 2;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDescription() {
+      Object ref = description_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -721,11 +720,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
+      Object ref = description_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -740,7 +739,7 @@ private static final long serialVersionUID = 0L;
      * <code>string description = 2;</code>
      */
     public Builder setDescription(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -781,42 +780,42 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object deprecationDescription_ = "";
+    private Object deprecationDescription_ = "";
     /**
      * <pre>
-     * Deprecation description of the selected element(s). It can be provided if an
-     * element is marked as `deprecated`.
+     * Deprecation description of the selected element(s). It can be provided if
+     * an element is marked as `deprecated`.
      * </pre>
      *
      * <code>string deprecation_description = 3;</code>
      */
-    public java.lang.String getDeprecationDescription() {
-      java.lang.Object ref = deprecationDescription_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDeprecationDescription() {
+      Object ref = deprecationDescription_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         deprecationDescription_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
-     * Deprecation description of the selected element(s). It can be provided if an
-     * element is marked as `deprecated`.
+     * Deprecation description of the selected element(s). It can be provided if
+     * an element is marked as `deprecated`.
      * </pre>
      *
      * <code>string deprecation_description = 3;</code>
      */
     public com.google.protobuf.ByteString
         getDeprecationDescriptionBytes() {
-      java.lang.Object ref = deprecationDescription_;
+      Object ref = deprecationDescription_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         deprecationDescription_ = b;
         return b;
       } else {
@@ -825,14 +824,14 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Deprecation description of the selected element(s). It can be provided if an
-     * element is marked as `deprecated`.
+     * Deprecation description of the selected element(s). It can be provided if
+     * an element is marked as `deprecated`.
      * </pre>
      *
      * <code>string deprecation_description = 3;</code>
      */
     public Builder setDeprecationDescription(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -843,8 +842,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Deprecation description of the selected element(s). It can be provided if an
-     * element is marked as `deprecated`.
+     * Deprecation description of the selected element(s). It can be provided if
+     * an element is marked as `deprecated`.
      * </pre>
      *
      * <code>string deprecation_description = 3;</code>
@@ -857,8 +856,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Deprecation description of the selected element(s). It can be provided if an
-     * element is marked as `deprecated`.
+     * Deprecation description of the selected element(s). It can be provided if
+     * an element is marked as `deprecated`.
      * </pre>
      *
      * <code>string deprecation_description = 3;</code>
@@ -874,13 +873,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -891,18 +890,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.DocumentationRule)
-  private static final com.google.api.DocumentationRule DEFAULT_INSTANCE;
+  private static final DocumentationRule DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.DocumentationRule();
+    DEFAULT_INSTANCE = new DocumentationRule();
   }
 
-  public static com.google.api.DocumentationRule getDefaultInstance() {
+  public static DocumentationRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<DocumentationRule>
       PARSER = new com.google.protobuf.AbstractParser<DocumentationRule>() {
-    @java.lang.Override
+    @Override
     public DocumentationRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -915,13 +914,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<DocumentationRule> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.DocumentationRule getDefaultInstanceForType() {
+  @Override
+  public DocumentationRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

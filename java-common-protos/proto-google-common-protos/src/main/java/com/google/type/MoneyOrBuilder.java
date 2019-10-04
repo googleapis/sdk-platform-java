@@ -14,7 +14,7 @@ public interface MoneyOrBuilder extends
    *
    * <code>string currency_code = 1;</code>
    */
-  java.lang.String getCurrencyCode();
+  String getCurrencyCode();
   /**
    * <pre>
    * The 3-letter currency code defined in ISO 4217.

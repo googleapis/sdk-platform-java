@@ -35,7 +35,7 @@ public interface SystemParametersOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
-  java.util.List<com.google.api.SystemParameterRule> 
+  java.util.List<SystemParameterRule>
       getRulesList();
   /**
    * <pre>
@@ -65,7 +65,7 @@ public interface SystemParametersOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
-  com.google.api.SystemParameterRule getRules(int index);
+  SystemParameterRule getRules(int index);
   /**
    * <pre>
    * Define system parameters.

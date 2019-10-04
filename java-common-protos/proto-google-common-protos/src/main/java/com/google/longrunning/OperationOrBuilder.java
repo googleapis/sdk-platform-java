@@ -16,7 +16,7 @@ public interface OperationOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The server-assigned name, which is only unique within the same service that
@@ -66,7 +66,7 @@ public interface OperationOrBuilder extends
   /**
    * <pre>
    * If the value is `false`, it means the operation is still in progress.
-   * If true, the operation is completed, and either `error` or `response` is
+   * If `true`, the operation is completed, and either `error` or `response` is
    * available.
    * </pre>
    *
@@ -145,5 +145,5 @@ public interface OperationOrBuilder extends
    */
   com.google.protobuf.AnyOrBuilder getResponseOrBuilder();
 
-  public com.google.longrunning.Operation.ResultCase getResultCase();
+  public Operation.ResultCase getResultCase();
 }

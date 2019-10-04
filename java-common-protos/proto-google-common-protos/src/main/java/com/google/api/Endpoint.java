@@ -37,10 +37,9 @@ private static final long serialVersionUID = 0L;
     aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     target_ = "";
-    allowCors_ = false;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -51,7 +50,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -65,14 +64,14 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             name_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
               aliases_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000002;
             }
@@ -80,8 +79,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
               features_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000004;
             }
@@ -94,13 +93,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 810: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             target_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -114,10 +113,10 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
         aliases_ = aliases_.getUnmodifiableView();
       }
-      if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
         features_ = features_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
@@ -129,17 +128,17 @@ private static final long serialVersionUID = 0L;
     return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.EndpointProto.internal_static_google_api_Endpoint_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.Endpoint.class, com.google.api.Endpoint.Builder.class);
+            Endpoint.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+  private volatile Object name_;
   /**
    * <pre>
    * The canonical name of this endpoint.
@@ -147,14 +146,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string name = 1;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getName() {
+    Object ref = name_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       name_ = s;
       return s;
     }
@@ -168,11 +167,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
+    Object ref = name_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       name_ = b;
       return b;
     } else {
@@ -192,7 +191,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated public com.google.protobuf.ProtocolStringList
+  @Deprecated public com.google.protobuf.ProtocolStringList
       getAliasesList() {
     return aliases_;
   }
@@ -206,7 +205,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated public int getAliasesCount() {
+  @Deprecated public int getAliasesCount() {
     return aliases_.size();
   }
   /**
@@ -219,7 +218,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated public java.lang.String getAliases(int index) {
+  @Deprecated public String getAliases(int index) {
     return aliases_.get(index);
   }
   /**
@@ -232,7 +231,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string aliases = 2 [deprecated = true];</code>
    */
-  @java.lang.Deprecated public com.google.protobuf.ByteString
+  @Deprecated public com.google.protobuf.ByteString
       getAliasesBytes(int index) {
     return aliases_.getByteString(index);
   }
@@ -267,7 +266,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string features = 4;</code>
    */
-  public java.lang.String getFeatures(int index) {
+  public String getFeatures(int index) {
     return features_.get(index);
   }
   /**
@@ -283,25 +282,26 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int TARGET_FIELD_NUMBER = 101;
-  private volatile java.lang.Object target_;
+  private volatile Object target_;
   /**
    * <pre>
    * The specification of an Internet routable address of API frontend that will
-   * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-   * It should be either a valid IPv4 address or a fully-qualified domain name.
-   * For example, "8.8.8.8" or "myservice.appspot.com".
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
    * <code>string target = 101;</code>
    */
-  public java.lang.String getTarget() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getTarget() {
+    Object ref = target_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       target_ = s;
       return s;
     }
@@ -309,20 +309,21 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The specification of an Internet routable address of API frontend that will
-   * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-   * It should be either a valid IPv4 address or a fully-qualified domain name.
-   * For example, "8.8.8.8" or "myservice.appspot.com".
+   * handle requests to this [API
+   * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+   * either a valid IPv4 address or a fully-qualified domain name. For example,
+   * "8.8.8.8" or "myservice.appspot.com".
    * </pre>
    *
    * <code>string target = 101;</code>
    */
   public com.google.protobuf.ByteString
       getTargetBytes() {
-    java.lang.Object ref = target_;
-    if (ref instanceof java.lang.String) {
+    Object ref = target_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       target_ = b;
       return b;
     } else {
@@ -349,7 +350,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -359,7 +360,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getNameBytes().isEmpty()) {
@@ -380,7 +381,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -417,32 +418,31 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.Endpoint)) {
+    if (!(obj instanceof Endpoint)) {
       return super.equals(obj);
     }
-    com.google.api.Endpoint other = (com.google.api.Endpoint) obj;
+    Endpoint other = (Endpoint) obj;
 
-    boolean result = true;
-    result = result && getName()
-        .equals(other.getName());
-    result = result && getAliasesList()
-        .equals(other.getAliasesList());
-    result = result && getFeaturesList()
-        .equals(other.getFeaturesList());
-    result = result && getTarget()
-        .equals(other.getTarget());
-    result = result && (getAllowCors()
-        == other.getAllowCors());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getName()
+        .equals(other.getName())) return false;
+    if (!getAliasesList()
+        .equals(other.getAliasesList())) return false;
+    if (!getFeaturesList()
+        .equals(other.getFeaturesList())) return false;
+    if (!getTarget()
+        .equals(other.getTarget())) return false;
+    if (getAllowCors()
+        != other.getAllowCors()) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -469,69 +469,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Endpoint parseFrom(byte[] data)
+  public static Endpoint parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Endpoint parseFrom(java.io.InputStream input)
+  public static Endpoint parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Endpoint parseDelimitedFrom(java.io.InputStream input)
+  public static Endpoint parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.Endpoint parseDelimitedFrom(
+  public static Endpoint parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Endpoint parseFrom(
+  public static Endpoint parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -539,23 +539,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.Endpoint prototype) {
+  public static Builder newBuilder(Endpoint prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -588,12 +588,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.EndpointProto.internal_static_google_api_Endpoint_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Endpoint.class, com.google.api.Endpoint.Builder.class);
+              Endpoint.class, Builder.class);
     }
 
     // Construct using com.google.api.Endpoint.newBuilder()
@@ -602,7 +602,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -611,7 +611,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       name_ = "";
@@ -627,38 +627,38 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.EndpointProto.internal_static_google_api_Endpoint_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.Endpoint getDefaultInstanceForType() {
-      return com.google.api.Endpoint.getDefaultInstance();
+    @Override
+    public Endpoint getDefaultInstanceForType() {
+      return Endpoint.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.Endpoint build() {
-      com.google.api.Endpoint result = buildPartial();
+    @Override
+    public Endpoint build() {
+      Endpoint result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.Endpoint buildPartial() {
-      com.google.api.Endpoint result = new com.google.api.Endpoint(this);
+    @Override
+    public Endpoint buildPartial() {
+      Endpoint result = new Endpoint(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.name_ = name_;
-      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         aliases_ = aliases_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000002);
       }
       result.aliases_ = aliases_;
-      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         features_ = features_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000004);
       }
@@ -670,50 +670,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Endpoint) {
-        return mergeFrom((com.google.api.Endpoint)other);
+      if (other instanceof Endpoint) {
+        return mergeFrom((Endpoint)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.Endpoint other) {
-      if (other == com.google.api.Endpoint.getDefaultInstance()) return this;
+    public Builder mergeFrom(Endpoint other) {
+      if (other == Endpoint.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         onChanged();
@@ -750,21 +750,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.Endpoint parsedMessage = null;
+      Endpoint parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.Endpoint) e.getUnfinishedMessage();
+        parsedMessage = (Endpoint) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -775,7 +775,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object name_ = "";
+    private Object name_ = "";
     /**
      * <pre>
      * The canonical name of this endpoint.
@@ -783,16 +783,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string name = 1;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getName() {
+      Object ref = name_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         name_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -804,11 +804,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
+      Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         name_ = b;
         return b;
       } else {
@@ -823,7 +823,7 @@ private static final long serialVersionUID = 0L;
      * <code>string name = 1;</code>
      */
     public Builder setName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -866,7 +866,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureAliasesIsMutable() {
-      if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         aliases_ = new com.google.protobuf.LazyStringArrayList(aliases_);
         bitField0_ |= 0x00000002;
        }
@@ -881,7 +881,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public com.google.protobuf.ProtocolStringList
+    @Deprecated public com.google.protobuf.ProtocolStringList
         getAliasesList() {
       return aliases_.getUnmodifiableView();
     }
@@ -895,7 +895,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public int getAliasesCount() {
+    @Deprecated public int getAliasesCount() {
       return aliases_.size();
     }
     /**
@@ -908,7 +908,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public java.lang.String getAliases(int index) {
+    @Deprecated public String getAliases(int index) {
       return aliases_.get(index);
     }
     /**
@@ -921,7 +921,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public com.google.protobuf.ByteString
+    @Deprecated public com.google.protobuf.ByteString
         getAliasesBytes(int index) {
       return aliases_.getByteString(index);
     }
@@ -935,8 +935,8 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public Builder setAliases(
-        int index, java.lang.String value) {
+    @Deprecated public Builder setAliases(
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -955,8 +955,8 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public Builder addAliases(
-        java.lang.String value) {
+    @Deprecated public Builder addAliases(
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -975,8 +975,8 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public Builder addAllAliases(
-        java.lang.Iterable<java.lang.String> values) {
+    @Deprecated public Builder addAllAliases(
+        Iterable<String> values) {
       ensureAliasesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, aliases_);
@@ -993,7 +993,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public Builder clearAliases() {
+    @Deprecated public Builder clearAliases() {
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
@@ -1009,7 +1009,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string aliases = 2 [deprecated = true];</code>
      */
-    @java.lang.Deprecated public Builder addAliasesBytes(
+    @Deprecated public Builder addAliasesBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
     throw new NullPointerException();
@@ -1023,7 +1023,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureFeaturesIsMutable() {
-      if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         features_ = new com.google.protobuf.LazyStringArrayList(features_);
         bitField0_ |= 0x00000004;
        }
@@ -1056,7 +1056,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string features = 4;</code>
      */
-    public java.lang.String getFeatures(int index) {
+    public String getFeatures(int index) {
       return features_.get(index);
     }
     /**
@@ -1078,7 +1078,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string features = 4;</code>
      */
     public Builder setFeatures(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1095,7 +1095,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string features = 4;</code>
      */
     public Builder addFeatures(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1112,7 +1112,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string features = 4;</code>
      */
     public Builder addAllFeatures(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureFeaturesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, features_);
@@ -1151,46 +1151,48 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object target_ = "";
+    private Object target_ = "";
     /**
      * <pre>
      * The specification of an Internet routable address of API frontend that will
-     * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-     * It should be either a valid IPv4 address or a fully-qualified domain name.
-     * For example, "8.8.8.8" or "myservice.appspot.com".
+     * handle requests to this [API
+     * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+     * either a valid IPv4 address or a fully-qualified domain name. For example,
+     * "8.8.8.8" or "myservice.appspot.com".
      * </pre>
      *
      * <code>string target = 101;</code>
      */
-    public java.lang.String getTarget() {
-      java.lang.Object ref = target_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getTarget() {
+      Object ref = target_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         target_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
      * The specification of an Internet routable address of API frontend that will
-     * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-     * It should be either a valid IPv4 address or a fully-qualified domain name.
-     * For example, "8.8.8.8" or "myservice.appspot.com".
+     * handle requests to this [API
+     * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+     * either a valid IPv4 address or a fully-qualified domain name. For example,
+     * "8.8.8.8" or "myservice.appspot.com".
      * </pre>
      *
      * <code>string target = 101;</code>
      */
     public com.google.protobuf.ByteString
         getTargetBytes() {
-      java.lang.Object ref = target_;
+      Object ref = target_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         target_ = b;
         return b;
       } else {
@@ -1200,15 +1202,16 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The specification of an Internet routable address of API frontend that will
-     * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-     * It should be either a valid IPv4 address or a fully-qualified domain name.
-     * For example, "8.8.8.8" or "myservice.appspot.com".
+     * handle requests to this [API
+     * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+     * either a valid IPv4 address or a fully-qualified domain name. For example,
+     * "8.8.8.8" or "myservice.appspot.com".
      * </pre>
      *
      * <code>string target = 101;</code>
      */
     public Builder setTarget(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1220,9 +1223,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The specification of an Internet routable address of API frontend that will
-     * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-     * It should be either a valid IPv4 address or a fully-qualified domain name.
-     * For example, "8.8.8.8" or "myservice.appspot.com".
+     * handle requests to this [API
+     * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+     * either a valid IPv4 address or a fully-qualified domain name. For example,
+     * "8.8.8.8" or "myservice.appspot.com".
      * </pre>
      *
      * <code>string target = 101;</code>
@@ -1236,9 +1240,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The specification of an Internet routable address of API frontend that will
-     * handle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).
-     * It should be either a valid IPv4 address or a fully-qualified domain name.
-     * For example, "8.8.8.8" or "myservice.appspot.com".
+     * handle requests to this [API
+     * Endpoint](https://cloud.google.com/apis/design/glossary). It should be
+     * either a valid IPv4 address or a fully-qualified domain name. For example,
+     * "8.8.8.8" or "myservice.appspot.com".
      * </pre>
      *
      * <code>string target = 101;</code>
@@ -1307,13 +1312,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1324,18 +1329,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Endpoint)
-  private static final com.google.api.Endpoint DEFAULT_INSTANCE;
+  private static final Endpoint DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.Endpoint();
+    DEFAULT_INSTANCE = new Endpoint();
   }
 
-  public static com.google.api.Endpoint getDefaultInstance() {
+  public static Endpoint getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Endpoint>
       PARSER = new com.google.protobuf.AbstractParser<Endpoint>() {
-    @java.lang.Override
+    @Override
     public Endpoint parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1348,13 +1353,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Endpoint> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.Endpoint getDefaultInstanceForType() {
+  @Override
+  public Endpoint getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

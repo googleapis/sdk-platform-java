@@ -27,10 +27,10 @@ public final class HttpRequestProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n&google/logging/type/http_request.proto" +
-      "\022\023google.logging.type\032\034google/api/annota" +
-      "tions.proto\032\036google/protobuf/duration.pr" +
+      "\022\023google.logging.type\032\036google/protobuf/d" +
+      "uration.proto\032\034google/api/annotations.pr" +
       "oto\"\357\002\n\013HttpRequest\022\026\n\016request_method\030\001 " +
       "\001(\t\022\023\n\013request_url\030\002 \001(\t\022\024\n\014request_size" +
       "\030\003 \001(\003\022\016\n\006status\030\004 \001(\005\022\025\n\rresponse_size\030" +
@@ -57,17 +57,17 @@ public final class HttpRequestProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.AnnotationsProto.getDescriptor(),
           com.google.protobuf.DurationProto.getDescriptor(),
+          com.google.api.AnnotationsProto.getDescriptor(),
         }, assigner);
     internal_static_google_logging_type_HttpRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_google_logging_type_HttpRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_logging_type_HttpRequest_descriptor,
-        new java.lang.String[] { "RequestMethod", "RequestUrl", "RequestSize", "Status", "ResponseSize", "UserAgent", "RemoteIp", "ServerIp", "Referer", "Latency", "CacheLookup", "CacheHit", "CacheValidatedWithOriginServer", "CacheFillBytes", "Protocol", });
-    com.google.api.AnnotationsProto.getDescriptor();
+        new String[] { "RequestMethod", "RequestUrl", "RequestSize", "Status", "ResponseSize", "UserAgent", "RemoteIp", "ServerIp", "Referer", "Latency", "CacheLookup", "CacheHit", "CacheValidatedWithOriginServer", "CacheFillBytes", "Protocol", });
     com.google.protobuf.DurationProto.getDescriptor();
+    com.google.api.AnnotationsProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -14,7 +14,7 @@ public interface HttpRequestOrBuilder extends
    *
    * <code>string request_method = 1;</code>
    */
-  java.lang.String getRequestMethod();
+  String getRequestMethod();
   /**
    * <pre>
    * The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
@@ -34,7 +34,7 @@ public interface HttpRequestOrBuilder extends
    *
    * <code>string request_url = 2;</code>
    */
-  java.lang.String getRequestUrl();
+  String getRequestUrl();
   /**
    * <pre>
    * The scheme (http, https), the host name, the path and the query
@@ -80,16 +80,18 @@ public interface HttpRequestOrBuilder extends
   /**
    * <pre>
    * The user agent sent by the client. Example:
-   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
    * </pre>
    *
    * <code>string user_agent = 6;</code>
    */
-  java.lang.String getUserAgent();
+  String getUserAgent();
   /**
    * <pre>
    * The user agent sent by the client. Example:
-   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+   * `"Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+   * CLR 1.0.3705)"`.
    * </pre>
    *
    * <code>string user_agent = 6;</code>
@@ -105,7 +107,7 @@ public interface HttpRequestOrBuilder extends
    *
    * <code>string remote_ip = 7;</code>
    */
-  java.lang.String getRemoteIp();
+  String getRemoteIp();
   /**
    * <pre>
    * The IP address (IPv4 or IPv6) of the client that issued the HTTP
@@ -125,7 +127,7 @@ public interface HttpRequestOrBuilder extends
    *
    * <code>string server_ip = 13;</code>
    */
-  java.lang.String getServerIp();
+  String getServerIp();
   /**
    * <pre>
    * The IP address (IPv4 or IPv6) of the origin server that the request was
@@ -140,16 +142,18 @@ public interface HttpRequestOrBuilder extends
   /**
    * <pre>
    * The referer URL of the request, as defined in
-   * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * [HTTP/1.1 Header Field
+   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
    * <code>string referer = 8;</code>
    */
-  java.lang.String getReferer();
+  String getReferer();
   /**
    * <pre>
    * The referer URL of the request, as defined in
-   * [HTTP/1.1 Header Field Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * [HTTP/1.1 Header Field
+   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
    * </pre>
    *
    * <code>string referer = 8;</code>
@@ -232,7 +236,7 @@ public interface HttpRequestOrBuilder extends
    *
    * <code>string protocol = 15;</code>
    */
-  java.lang.String getProtocol();
+  String getProtocol();
   /**
    * <pre>
    * Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"

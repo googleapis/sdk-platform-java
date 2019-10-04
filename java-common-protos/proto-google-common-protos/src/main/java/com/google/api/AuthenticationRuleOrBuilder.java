@@ -15,7 +15,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -42,7 +42,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
-  com.google.api.OAuthRequirements getOauth();
+  OAuthRequirements getOauth();
   /**
    * <pre>
    * The requirements for OAuth credentials.
@@ -50,7 +50,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
-  com.google.api.OAuthRequirementsOrBuilder getOauthOrBuilder();
+  OAuthRequirementsOrBuilder getOauthOrBuilder();
 
   /**
    * <pre>
@@ -68,7 +68,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  java.util.List<com.google.api.AuthRequirement> 
+  java.util.List<AuthRequirement>
       getRequirementsList();
   /**
    * <pre>
@@ -77,7 +77,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  com.google.api.AuthRequirement getRequirements(int index);
+  AuthRequirement getRequirements(int index);
   /**
    * <pre>
    * Requirements for additional authentication providers.
@@ -93,7 +93,7 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  java.util.List<? extends com.google.api.AuthRequirementOrBuilder> 
+  java.util.List<? extends AuthRequirementOrBuilder>
       getRequirementsOrBuilderList();
   /**
    * <pre>
@@ -102,6 +102,6 @@ public interface AuthenticationRuleOrBuilder extends
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
-  com.google.api.AuthRequirementOrBuilder getRequirementsOrBuilder(
+  AuthRequirementOrBuilder getRequirementsOrBuilder(
       int index);
 }

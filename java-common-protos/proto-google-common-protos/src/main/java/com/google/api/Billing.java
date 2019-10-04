@@ -41,7 +41,7 @@ private static final long serialVersionUID = 0L;
     consumerDestinations_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -52,7 +52,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -66,16 +66,16 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 66: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              consumerDestinations_ = new java.util.ArrayList<com.google.api.Billing.BillingDestination>();
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              consumerDestinations_ = new java.util.ArrayList<BillingDestination>();
               mutable_bitField0_ |= 0x00000001;
             }
             consumerDestinations_.add(
-                input.readMessage(com.google.api.Billing.BillingDestination.parser(), extensionRegistry));
+                input.readMessage(BillingDestination.parser(), extensionRegistry));
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -89,7 +89,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         consumerDestinations_ = java.util.Collections.unmodifiableList(consumerDestinations_);
       }
       this.unknownFields = unknownFields.build();
@@ -101,12 +101,12 @@ private static final long serialVersionUID = 0L;
     return com.google.api.BillingProto.internal_static_google_api_Billing_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.BillingProto.internal_static_google_api_Billing_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.Billing.class, com.google.api.Billing.Builder.class);
+            Billing.class, Builder.class);
   }
 
   public interface BillingDestinationOrBuilder extends
@@ -121,7 +121,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string monitored_resource = 1;</code>
      */
-    java.lang.String getMonitoredResource();
+    String getMonitoredResource();
     /**
      * <pre>
      * The monitored resource type. The type must be defined in
@@ -141,7 +141,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string metrics = 2;</code>
      */
-    java.util.List<java.lang.String>
+    java.util.List<String>
         getMetricsList();
     /**
      * <pre>
@@ -160,7 +160,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string metrics = 2;</code>
      */
-    java.lang.String getMetrics(int index);
+    String getMetrics(int index);
     /**
      * <pre>
      * Names of the metrics to report to this billing destination.
@@ -194,7 +194,7 @@ private static final long serialVersionUID = 0L;
       metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -205,7 +205,7 @@ private static final long serialVersionUID = 0L;
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -219,14 +219,14 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               monitoredResource_ = s;
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
                 metrics_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
@@ -234,7 +234,7 @@ private static final long serialVersionUID = 0L;
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -248,7 +248,7 @@ private static final long serialVersionUID = 0L;
         throw new com.google.protobuf.InvalidProtocolBufferException(
             e).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000002) != 0)) {
           metrics_ = metrics_.getUnmodifiableView();
         }
         this.unknownFields = unknownFields.build();
@@ -260,17 +260,17 @@ private static final long serialVersionUID = 0L;
       return com.google.api.BillingProto.internal_static_google_api_Billing_BillingDestination_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.BillingProto.internal_static_google_api_Billing_BillingDestination_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Billing.BillingDestination.class, com.google.api.Billing.BillingDestination.Builder.class);
+              BillingDestination.class, Builder.class);
     }
 
     private int bitField0_;
     public static final int MONITORED_RESOURCE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object monitoredResource_;
+    private volatile Object monitoredResource_;
     /**
      * <pre>
      * The monitored resource type. The type must be defined in
@@ -279,14 +279,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string monitored_resource = 1;</code>
      */
-    public java.lang.String getMonitoredResource() {
-      java.lang.Object ref = monitoredResource_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getMonitoredResource() {
+      Object ref = monitoredResource_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         monitoredResource_ = s;
         return s;
       }
@@ -301,11 +301,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getMonitoredResourceBytes() {
-      java.lang.Object ref = monitoredResource_;
-      if (ref instanceof java.lang.String) {
+      Object ref = monitoredResource_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         monitoredResource_ = b;
         return b;
       } else {
@@ -346,7 +346,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string metrics = 2;</code>
      */
-    public java.lang.String getMetrics(int index) {
+    public String getMetrics(int index) {
       return metrics_.get(index);
     }
     /**
@@ -363,7 +363,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -373,7 +373,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getMonitoredResourceBytes().isEmpty()) {
@@ -385,7 +385,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -407,26 +407,25 @@ private static final long serialVersionUID = 0L;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.google.api.Billing.BillingDestination)) {
+      if (!(obj instanceof BillingDestination)) {
         return super.equals(obj);
       }
-      com.google.api.Billing.BillingDestination other = (com.google.api.Billing.BillingDestination) obj;
+      BillingDestination other = (BillingDestination) obj;
 
-      boolean result = true;
-      result = result && getMonitoredResource()
-          .equals(other.getMonitoredResource());
-      result = result && getMetricsList()
-          .equals(other.getMetricsList());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getMonitoredResource()
+          .equals(other.getMonitoredResource())) return false;
+      if (!getMetricsList()
+          .equals(other.getMetricsList())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -444,69 +443,69 @@ private static final long serialVersionUID = 0L;
       return hash;
     }
 
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(byte[] data)
+    public static BillingDestination parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(java.io.InputStream input)
+    public static BillingDestination parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.Billing.BillingDestination parseDelimitedFrom(java.io.InputStream input)
+    public static BillingDestination parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.google.api.Billing.BillingDestination parseDelimitedFrom(
+    public static BillingDestination parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.api.Billing.BillingDestination parseFrom(
+    public static BillingDestination parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -514,23 +513,23 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.google.api.Billing.BillingDestination prototype) {
+    public static Builder newBuilder(BillingDestination prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -545,18 +544,18 @@ private static final long serialVersionUID = 0L;
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:google.api.Billing.BillingDestination)
-        com.google.api.Billing.BillingDestinationOrBuilder {
+        BillingDestinationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.google.api.BillingProto.internal_static_google_api_Billing_BillingDestination_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.api.BillingProto.internal_static_google_api_Billing_BillingDestination_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.google.api.Billing.BillingDestination.class, com.google.api.Billing.BillingDestination.Builder.class);
+                BillingDestination.class, Builder.class);
       }
 
       // Construct using com.google.api.Billing.BillingDestination.newBuilder()
@@ -565,7 +564,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -574,7 +573,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         monitoredResource_ = "";
@@ -584,33 +583,33 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.api.BillingProto.internal_static_google_api_Billing_BillingDestination_descriptor;
       }
 
-      @java.lang.Override
-      public com.google.api.Billing.BillingDestination getDefaultInstanceForType() {
-        return com.google.api.Billing.BillingDestination.getDefaultInstance();
+      @Override
+      public BillingDestination getDefaultInstanceForType() {
+        return BillingDestination.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.google.api.Billing.BillingDestination build() {
-        com.google.api.Billing.BillingDestination result = buildPartial();
+      @Override
+      public BillingDestination build() {
+        BillingDestination result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.google.api.Billing.BillingDestination buildPartial() {
-        com.google.api.Billing.BillingDestination result = new com.google.api.Billing.BillingDestination(this);
+      @Override
+      public BillingDestination buildPartial() {
+        BillingDestination result = new BillingDestination(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.monitoredResource_ = monitoredResource_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           metrics_ = metrics_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000002);
         }
@@ -620,50 +619,50 @@ private static final long serialVersionUID = 0L;
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
-      @java.lang.Override
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.api.Billing.BillingDestination) {
-          return mergeFrom((com.google.api.Billing.BillingDestination)other);
+        if (other instanceof BillingDestination) {
+          return mergeFrom((BillingDestination)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.google.api.Billing.BillingDestination other) {
-        if (other == com.google.api.Billing.BillingDestination.getDefaultInstance()) return this;
+      public Builder mergeFrom(BillingDestination other) {
+        if (other == BillingDestination.getDefaultInstance()) return this;
         if (!other.getMonitoredResource().isEmpty()) {
           monitoredResource_ = other.monitoredResource_;
           onChanged();
@@ -683,21 +682,21 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.api.Billing.BillingDestination parsedMessage = null;
+        BillingDestination parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.google.api.Billing.BillingDestination) e.getUnfinishedMessage();
+          parsedMessage = (BillingDestination) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -708,7 +707,7 @@ private static final long serialVersionUID = 0L;
       }
       private int bitField0_;
 
-      private java.lang.Object monitoredResource_ = "";
+      private Object monitoredResource_ = "";
       /**
        * <pre>
        * The monitored resource type. The type must be defined in
@@ -717,16 +716,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string monitored_resource = 1;</code>
        */
-      public java.lang.String getMonitoredResource() {
-        java.lang.Object ref = monitoredResource_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getMonitoredResource() {
+        Object ref = monitoredResource_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           monitoredResource_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -739,11 +738,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getMonitoredResourceBytes() {
-        java.lang.Object ref = monitoredResource_;
+        Object ref = monitoredResource_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           monitoredResource_ = b;
           return b;
         } else {
@@ -759,7 +758,7 @@ private static final long serialVersionUID = 0L;
        * <code>string monitored_resource = 1;</code>
        */
       public Builder setMonitoredResource(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -804,7 +803,7 @@ private static final long serialVersionUID = 0L;
 
       private com.google.protobuf.LazyStringList metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureMetricsIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           metrics_ = new com.google.protobuf.LazyStringArrayList(metrics_);
           bitField0_ |= 0x00000002;
          }
@@ -840,7 +839,7 @@ private static final long serialVersionUID = 0L;
        *
        * <code>repeated string metrics = 2;</code>
        */
-      public java.lang.String getMetrics(int index) {
+      public String getMetrics(int index) {
         return metrics_.get(index);
       }
       /**
@@ -864,7 +863,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string metrics = 2;</code>
        */
       public Builder setMetrics(
-          int index, java.lang.String value) {
+          int index, String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -882,7 +881,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string metrics = 2;</code>
        */
       public Builder addMetrics(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -900,7 +899,7 @@ private static final long serialVersionUID = 0L;
        * <code>repeated string metrics = 2;</code>
        */
       public Builder addAllMetrics(
-          java.lang.Iterable<java.lang.String> values) {
+          Iterable<String> values) {
         ensureMetricsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, metrics_);
@@ -940,13 +939,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -957,18 +956,18 @@ private static final long serialVersionUID = 0L;
     }
 
     // @@protoc_insertion_point(class_scope:google.api.Billing.BillingDestination)
-    private static final com.google.api.Billing.BillingDestination DEFAULT_INSTANCE;
+    private static final BillingDestination DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.google.api.Billing.BillingDestination();
+      DEFAULT_INSTANCE = new BillingDestination();
     }
 
-    public static com.google.api.Billing.BillingDestination getDefaultInstance() {
+    public static BillingDestination getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<BillingDestination>
         PARSER = new com.google.protobuf.AbstractParser<BillingDestination>() {
-      @java.lang.Override
+      @Override
       public BillingDestination parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -981,20 +980,20 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<BillingDestination> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.api.Billing.BillingDestination getDefaultInstanceForType() {
+    @Override
+    public BillingDestination getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public static final int CONSUMER_DESTINATIONS_FIELD_NUMBER = 8;
-  private java.util.List<com.google.api.Billing.BillingDestination> consumerDestinations_;
+  private java.util.List<BillingDestination> consumerDestinations_;
   /**
    * <pre>
    * Billing configurations for sending metrics to the consumer project.
@@ -1005,7 +1004,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  public java.util.List<com.google.api.Billing.BillingDestination> getConsumerDestinationsList() {
+  public java.util.List<BillingDestination> getConsumerDestinationsList() {
     return consumerDestinations_;
   }
   /**
@@ -1018,7 +1017,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  public java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder> 
+  public java.util.List<? extends BillingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
   }
@@ -1045,7 +1044,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  public com.google.api.Billing.BillingDestination getConsumerDestinations(int index) {
+  public BillingDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
   /**
@@ -1058,13 +1057,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
-  public com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+  public BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index) {
     return consumerDestinations_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -1074,7 +1073,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < consumerDestinations_.size(); i++) {
@@ -1083,7 +1082,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -1098,24 +1097,23 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.Billing)) {
+    if (!(obj instanceof Billing)) {
       return super.equals(obj);
     }
-    com.google.api.Billing other = (com.google.api.Billing) obj;
+    Billing other = (Billing) obj;
 
-    boolean result = true;
-    result = result && getConsumerDestinationsList()
-        .equals(other.getConsumerDestinationsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getConsumerDestinationsList()
+        .equals(other.getConsumerDestinationsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -1131,69 +1129,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Billing parseFrom(byte[] data)
+  public static Billing parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Billing parseFrom(java.io.InputStream input)
+  public static Billing parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Billing parseDelimitedFrom(java.io.InputStream input)
+  public static Billing parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.Billing parseDelimitedFrom(
+  public static Billing parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Billing parseFrom(
+  public static Billing parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1201,23 +1199,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.Billing prototype) {
+  public static Builder newBuilder(Billing prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -1255,12 +1253,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.BillingProto.internal_static_google_api_Billing_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.BillingProto.internal_static_google_api_Billing_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Billing.class, com.google.api.Billing.Builder.class);
+              Billing.class, Builder.class);
     }
 
     // Construct using com.google.api.Billing.newBuilder()
@@ -1269,7 +1267,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -1279,7 +1277,7 @@ private static final long serialVersionUID = 0L;
         getConsumerDestinationsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (consumerDestinationsBuilder_ == null) {
@@ -1291,32 +1289,32 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.BillingProto.internal_static_google_api_Billing_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.Billing getDefaultInstanceForType() {
-      return com.google.api.Billing.getDefaultInstance();
+    @Override
+    public Billing getDefaultInstanceForType() {
+      return Billing.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.Billing build() {
-      com.google.api.Billing result = buildPartial();
+    @Override
+    public Billing build() {
+      Billing result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.Billing buildPartial() {
-      com.google.api.Billing result = new com.google.api.Billing(this);
+    @Override
+    public Billing buildPartial() {
+      Billing result = new Billing(this);
       int from_bitField0_ = bitField0_;
       if (consumerDestinationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           consumerDestinations_ = java.util.Collections.unmodifiableList(consumerDestinations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -1328,50 +1326,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Billing) {
-        return mergeFrom((com.google.api.Billing)other);
+      if (other instanceof Billing) {
+        return mergeFrom((Billing)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.Billing other) {
-      if (other == com.google.api.Billing.getDefaultInstance()) return this;
+    public Builder mergeFrom(Billing other) {
+      if (other == Billing.getDefaultInstance()) return this;
       if (consumerDestinationsBuilder_ == null) {
         if (!other.consumerDestinations_.isEmpty()) {
           if (consumerDestinations_.isEmpty()) {
@@ -1403,21 +1401,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.Billing parsedMessage = null;
+      Billing parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.Billing) e.getUnfinishedMessage();
+        parsedMessage = (Billing) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1428,17 +1426,17 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.google.api.Billing.BillingDestination> consumerDestinations_ =
+    private java.util.List<BillingDestination> consumerDestinations_ =
       java.util.Collections.emptyList();
     private void ensureConsumerDestinationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-        consumerDestinations_ = new java.util.ArrayList<com.google.api.Billing.BillingDestination>(consumerDestinations_);
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        consumerDestinations_ = new java.util.ArrayList<BillingDestination>(consumerDestinations_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Billing.BillingDestination, com.google.api.Billing.BillingDestination.Builder, com.google.api.Billing.BillingDestinationOrBuilder> consumerDestinationsBuilder_;
+        BillingDestination, BillingDestination.Builder, BillingDestinationOrBuilder> consumerDestinationsBuilder_;
 
     /**
      * <pre>
@@ -1450,7 +1448,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public java.util.List<com.google.api.Billing.BillingDestination> getConsumerDestinationsList() {
+    public java.util.List<BillingDestination> getConsumerDestinationsList() {
       if (consumerDestinationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(consumerDestinations_);
       } else {
@@ -1484,7 +1482,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public com.google.api.Billing.BillingDestination getConsumerDestinations(int index) {
+    public BillingDestination getConsumerDestinations(int index) {
       if (consumerDestinationsBuilder_ == null) {
         return consumerDestinations_.get(index);
       } else {
@@ -1502,7 +1500,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder setConsumerDestinations(
-        int index, com.google.api.Billing.BillingDestination value) {
+        int index, BillingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1526,7 +1524,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder setConsumerDestinations(
-        int index, com.google.api.Billing.BillingDestination.Builder builderForValue) {
+        int index, BillingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.set(index, builderForValue.build());
@@ -1546,7 +1544,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public Builder addConsumerDestinations(com.google.api.Billing.BillingDestination value) {
+    public Builder addConsumerDestinations(BillingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1570,7 +1568,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder addConsumerDestinations(
-        int index, com.google.api.Billing.BillingDestination value) {
+        int index, BillingDestination value) {
       if (consumerDestinationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1594,7 +1592,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder addConsumerDestinations(
-        com.google.api.Billing.BillingDestination.Builder builderForValue) {
+        BillingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.add(builderForValue.build());
@@ -1615,7 +1613,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder addConsumerDestinations(
-        int index, com.google.api.Billing.BillingDestination.Builder builderForValue) {
+        int index, BillingDestination.Builder builderForValue) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         consumerDestinations_.add(index, builderForValue.build());
@@ -1636,7 +1634,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
     public Builder addAllConsumerDestinations(
-        java.lang.Iterable<? extends com.google.api.Billing.BillingDestination> values) {
+        Iterable<? extends BillingDestination> values) {
       if (consumerDestinationsBuilder_ == null) {
         ensureConsumerDestinationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1697,7 +1695,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public com.google.api.Billing.BillingDestination.Builder getConsumerDestinationsBuilder(
+    public BillingDestination.Builder getConsumerDestinationsBuilder(
         int index) {
       return getConsumerDestinationsFieldBuilder().getBuilder(index);
     }
@@ -1711,7 +1709,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
+    public BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
         int index) {
       if (consumerDestinationsBuilder_ == null) {
         return consumerDestinations_.get(index);  } else {
@@ -1728,7 +1726,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder> 
+    public java.util.List<? extends BillingDestinationOrBuilder>
          getConsumerDestinationsOrBuilderList() {
       if (consumerDestinationsBuilder_ != null) {
         return consumerDestinationsBuilder_.getMessageOrBuilderList();
@@ -1746,9 +1744,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public com.google.api.Billing.BillingDestination.Builder addConsumerDestinationsBuilder() {
+    public BillingDestination.Builder addConsumerDestinationsBuilder() {
       return getConsumerDestinationsFieldBuilder().addBuilder(
-          com.google.api.Billing.BillingDestination.getDefaultInstance());
+          BillingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1760,10 +1758,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public com.google.api.Billing.BillingDestination.Builder addConsumerDestinationsBuilder(
+    public BillingDestination.Builder addConsumerDestinationsBuilder(
         int index) {
       return getConsumerDestinationsFieldBuilder().addBuilder(
-          index, com.google.api.Billing.BillingDestination.getDefaultInstance());
+          index, BillingDestination.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1775,31 +1773,31 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
      */
-    public java.util.List<com.google.api.Billing.BillingDestination.Builder> 
+    public java.util.List<BillingDestination.Builder>
          getConsumerDestinationsBuilderList() {
       return getConsumerDestinationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.Billing.BillingDestination, com.google.api.Billing.BillingDestination.Builder, com.google.api.Billing.BillingDestinationOrBuilder> 
+        BillingDestination, BillingDestination.Builder, BillingDestinationOrBuilder>
         getConsumerDestinationsFieldBuilder() {
       if (consumerDestinationsBuilder_ == null) {
         consumerDestinationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.Billing.BillingDestination, com.google.api.Billing.BillingDestination.Builder, com.google.api.Billing.BillingDestinationOrBuilder>(
+            BillingDestination, BillingDestination.Builder, BillingDestinationOrBuilder>(
                 consumerDestinations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         consumerDestinations_ = null;
       }
       return consumerDestinationsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1810,18 +1808,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Billing)
-  private static final com.google.api.Billing DEFAULT_INSTANCE;
+  private static final Billing DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.Billing();
+    DEFAULT_INSTANCE = new Billing();
   }
 
-  public static com.google.api.Billing getDefaultInstance() {
+  public static Billing getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Billing>
       PARSER = new com.google.protobuf.AbstractParser<Billing>() {
-    @java.lang.Override
+    @Override
     public Billing parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1834,13 +1832,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Billing> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.Billing getDefaultInstanceForType() {
+  @Override
+  public Billing getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

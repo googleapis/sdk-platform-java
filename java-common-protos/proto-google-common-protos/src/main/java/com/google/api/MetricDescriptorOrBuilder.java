@@ -14,7 +14,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The resource name of the metric descriptor.
@@ -38,7 +38,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>string type = 8;</code>
    */
-  java.lang.String getType();
+  String getType();
   /**
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
@@ -67,7 +67,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  java.util.List<com.google.api.LabelDescriptor> 
+  java.util.List<LabelDescriptor>
       getLabelsList();
   /**
    * <pre>
@@ -81,7 +81,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  com.google.api.LabelDescriptor getLabels(int index);
+  LabelDescriptor getLabels(int index);
   /**
    * <pre>
    * The set of labels that can be used to describe a specific
@@ -107,7 +107,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> 
+  java.util.List<? extends LabelDescriptorOrBuilder>
       getLabelsOrBuilderList();
   /**
    * <pre>
@@ -121,7 +121,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(
+  LabelDescriptorOrBuilder getLabelsOrBuilder(
       int index);
 
   /**
@@ -141,7 +141,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>.google.api.MetricDescriptor.MetricKind metric_kind = 3;</code>
    */
-  com.google.api.MetricDescriptor.MetricKind getMetricKind();
+  MetricDescriptor.MetricKind getMetricKind();
 
   /**
    * <pre>
@@ -160,7 +160,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>.google.api.MetricDescriptor.ValueType value_type = 4;</code>
    */
-  com.google.api.MetricDescriptor.ValueType getValueType();
+  MetricDescriptor.ValueType getValueType();
 
   /**
    * <pre>
@@ -220,7 +220,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>string unit = 5;</code>
    */
-  java.lang.String getUnit();
+  String getUnit();
   /**
    * <pre>
    * The unit in which the metric value is reported. It is only applicable
@@ -289,7 +289,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>string description = 6;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * A detailed description of the metric, which can be used in documentation.
@@ -310,7 +310,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>string display_name = 7;</code>
    */
-  java.lang.String getDisplayName();
+  String getDisplayName();
   /**
    * <pre>
    * A concise name for the metric, which can be displayed in user interfaces.
@@ -339,7 +339,7 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
    */
-  com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata();
+  MetricDescriptor.MetricDescriptorMetadata getMetadata();
   /**
    * <pre>
    * Optional. Metadata which can be used to guide usage of the metric.
@@ -347,5 +347,22 @@ public interface MetricDescriptorOrBuilder extends
    *
    * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
    */
-  com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder();
+  MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder();
+
+  /**
+   * <pre>
+   * Optional. The launch stage of the metric definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 12;</code>
+   */
+  int getLaunchStageValue();
+  /**
+   * <pre>
+   * Optional. The launch stage of the metric definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 12;</code>
+   */
+  LaunchStage getLaunchStage();
 }

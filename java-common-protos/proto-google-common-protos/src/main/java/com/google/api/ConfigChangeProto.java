@@ -32,7 +32,7 @@ public final class ConfigChangeProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\036google/api/config_change.proto\022\ngoogle" +
       ".api\"\227\001\n\014ConfigChange\022\017\n\007element\030\001 \001(\t\022\021" +
       "\n\told_value\030\002 \001(\t\022\021\n\tnew_value\030\003 \001(\t\022+\n\013" +
@@ -62,13 +62,13 @@ public final class ConfigChangeProto {
     internal_static_google_api_ConfigChange_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_ConfigChange_descriptor,
-        new java.lang.String[] { "Element", "OldValue", "NewValue", "ChangeType", "Advices", });
+        new String[] { "Element", "OldValue", "NewValue", "ChangeType", "Advices", });
     internal_static_google_api_Advice_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_Advice_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Advice_descriptor,
-        new java.lang.String[] { "Description", });
+        new String[] { "Description", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

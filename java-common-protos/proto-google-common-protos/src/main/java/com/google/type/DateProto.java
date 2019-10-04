@@ -27,7 +27,7 @@ public final class DateProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\026google/type/date.proto\022\013google.type\"0\n" +
       "\004Date\022\014\n\004year\030\001 \001(\005\022\r\n\005month\030\002 \001(\005\022\013\n\003da" +
       "y\030\003 \001(\005B]\n\017com.google.typeB\tDateProtoP\001Z" +
@@ -51,7 +51,7 @@ public final class DateProto {
     internal_static_google_type_Date_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_type_Date_descriptor,
-        new java.lang.String[] { "Year", "Month", "Day", });
+        new String[] { "Year", "Month", "Day", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

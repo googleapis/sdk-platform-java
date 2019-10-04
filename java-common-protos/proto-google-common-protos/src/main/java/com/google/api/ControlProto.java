@@ -27,7 +27,7 @@ public final class ControlProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\030google/api/control.proto\022\ngoogle.api\"\036" +
       "\n\007Control\022\023\n\013environment\030\001 \001(\tBn\n\016com.go" +
       "ogle.apiB\014ControlProtoP\001ZEgoogle.golang." +
@@ -51,7 +51,7 @@ public final class ControlProto {
     internal_static_google_api_Control_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Control_descriptor,
-        new java.lang.String[] { "Environment", });
+        new String[] { "Environment", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

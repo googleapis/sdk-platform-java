@@ -16,7 +16,7 @@ public interface LocalizedMessageOrBuilder extends
    *
    * <code>string locale = 1;</code>
    */
-  java.lang.String getLocale();
+  String getLocale();
   /**
    * <pre>
    * The locale used following the specification defined at
@@ -36,7 +36,7 @@ public interface LocalizedMessageOrBuilder extends
    *
    * <code>string message = 2;</code>
    */
-  java.lang.String getMessage();
+  String getMessage();
   /**
    * <pre>
    * The localized error message in the above locale.

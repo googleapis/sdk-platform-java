@@ -15,7 +15,7 @@ public interface BackendOrBuilder extends
    *
    * <code>repeated .google.api.BackendRule rules = 1;</code>
    */
-  java.util.List<com.google.api.BackendRule> 
+  java.util.List<BackendRule>
       getRulesList();
   /**
    * <pre>
@@ -25,7 +25,7 @@ public interface BackendOrBuilder extends
    *
    * <code>repeated .google.api.BackendRule rules = 1;</code>
    */
-  com.google.api.BackendRule getRules(int index);
+  BackendRule getRules(int index);
   /**
    * <pre>
    * A list of API backend rules that apply to individual API methods.

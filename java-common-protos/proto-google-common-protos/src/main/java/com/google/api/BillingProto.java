@@ -32,17 +32,16 @@ public final class BillingProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
-      "\n\030google/api/billing.proto\022\ngoogle.api\032\034" +
-      "google/api/annotations.proto\032\027google/api" +
-      "/metric.proto\"\223\001\n\007Billing\022E\n\025consumer_de" +
-      "stinations\030\010 \003(\0132&.google.api.Billing.Bi" +
-      "llingDestination\032A\n\022BillingDestination\022\032" +
-      "\n\022monitored_resource\030\001 \001(\t\022\017\n\007metrics\030\002 " +
-      "\003(\tBn\n\016com.google.apiB\014BillingProtoP\001ZEg" +
-      "oogle.golang.org/genproto/googleapis/api" +
-      "/serviceconfig;serviceconfig\242\002\004GAPIb\006pro" +
-      "to3"
+    String[] descriptorData = {
+      "\n\030google/api/billing.proto\022\ngoogle.api\032\027" +
+      "google/api/metric.proto\"\223\001\n\007Billing\022E\n\025c" +
+      "onsumer_destinations\030\010 \003(\0132&.google.api." +
+      "Billing.BillingDestination\032A\n\022BillingDes" +
+      "tination\022\032\n\022monitored_resource\030\001 \001(\t\022\017\n\007" +
+      "metrics\030\002 \003(\tBn\n\016com.google.apiB\014Billing" +
+      "ProtoP\001ZEgoogle.golang.org/genproto/goog" +
+      "leapis/api/serviceconfig;serviceconfig\242\002" +
+      "\004GAPIb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -55,23 +54,21 @@ public final class BillingProto {
     com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.google.api.AnnotationsProto.getDescriptor(),
-          com.google.api.MetricProto.getDescriptor(),
+          MetricProto.getDescriptor(),
         }, assigner);
     internal_static_google_api_Billing_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_Billing_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Billing_descriptor,
-        new java.lang.String[] { "ConsumerDestinations", });
+        new String[] { "ConsumerDestinations", });
     internal_static_google_api_Billing_BillingDestination_descriptor =
       internal_static_google_api_Billing_descriptor.getNestedTypes().get(0);
     internal_static_google_api_Billing_BillingDestination_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Billing_BillingDestination_descriptor,
-        new java.lang.String[] { "MonitoredResource", "Metrics", });
-    com.google.api.AnnotationsProto.getDescriptor();
-    com.google.api.MetricProto.getDescriptor();
+        new String[] { "MonitoredResource", "Metrics", });
+    MetricProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

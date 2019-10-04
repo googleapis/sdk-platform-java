@@ -22,13 +22,10 @@ private static final long serialVersionUID = 0L;
   private BackendRule() {
     selector_ = "";
     address_ = "";
-    deadline_ = 0D;
-    minDeadline_ = 0D;
-    operationDeadline_ = 0D;
     pathTranslation_ = 0;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -39,7 +36,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -53,13 +50,13 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             selector_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             address_ = s;
             break;
@@ -86,13 +83,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
             authenticationCase_ = 7;
             authentication_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -115,12 +112,12 @@ private static final long serialVersionUID = 0L;
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.BackendRule.class, com.google.api.BackendRule.Builder.class);
+            BackendRule.class, Builder.class);
   }
 
   /**
@@ -155,9 +152,11 @@ private static final long serialVersionUID = 0L;
      * Requests to the following request paths will call the backend at the
      * translated path:
      *     Request path: /api/company/widgetworks/user/johndoe
-     *     Translated:   https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *     Translated:
+     *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
-     *     Translated:   https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
+     *     Translated:
+     *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
      * </pre>
      *
      * <code>CONSTANT_ADDRESS = 1;</code>
@@ -173,9 +172,11 @@ private static final long serialVersionUID = 0L;
      * Requests to the following request paths will call the backend at the
      * translated path:
      *     Request path: /api/company/widgetworks/user/johndoe
-     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *     Translated:
+     *     https://example.appspot.com/api/company/widgetworks/user/johndoe
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
-     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:
+     *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
      * </pre>
      *
      * <code>APPEND_PATH_TO_ADDRESS = 2;</code>
@@ -202,9 +203,11 @@ private static final long serialVersionUID = 0L;
      * Requests to the following request paths will call the backend at the
      * translated path:
      *     Request path: /api/company/widgetworks/user/johndoe
-     *     Translated:   https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *     Translated:
+     *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
-     *     Translated:   https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
+     *     Translated:
+     *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
      * </pre>
      *
      * <code>CONSTANT_ADDRESS = 1;</code>
@@ -220,9 +223,11 @@ private static final long serialVersionUID = 0L;
      * Requests to the following request paths will call the backend at the
      * translated path:
      *     Request path: /api/company/widgetworks/user/johndoe
-     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *     Translated:
+     *     https://example.appspot.com/api/company/widgetworks/user/johndoe
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
-     *     Translated:   https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
+     *     Translated:
+     *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
      * </pre>
      *
      * <code>APPEND_PATH_TO_ADDRESS = 2;</code>
@@ -232,7 +237,7 @@ private static final long serialVersionUID = 0L;
 
     public final int getNumber() {
       if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
             "Can't get the number of an unknown enum value.");
       }
       return value;
@@ -241,7 +246,7 @@ private static final long serialVersionUID = 0L;
     /**
      * @deprecated Use {@link #forNumber(int)} instead.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public static PathTranslation valueOf(int value) {
       return forNumber(value);
     }
@@ -277,7 +282,7 @@ private static final long serialVersionUID = 0L;
     }
     public static final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptor() {
-      return com.google.api.BackendRule.getDescriptor().getEnumTypes().get(0);
+      return BackendRule.getDescriptor().getEnumTypes().get(0);
     }
 
     private static final PathTranslation[] VALUES = values();
@@ -285,7 +290,7 @@ private static final long serialVersionUID = 0L;
     public static PathTranslation valueOf(
         com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
       if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
+        throw new IllegalArgumentException(
           "EnumValueDescriptor is not for this type.");
       }
       if (desc.getIndex() == -1) {
@@ -304,7 +309,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private int authenticationCase_ = 0;
-  private java.lang.Object authentication_;
+  private Object authentication_;
   public enum AuthenticationCase
       implements com.google.protobuf.Internal.EnumLite {
     JWT_AUDIENCE(7),
@@ -316,7 +321,7 @@ private static final long serialVersionUID = 0L;
     /**
      * @deprecated Use {@link #forNumber(int)} instead.
      */
-    @java.lang.Deprecated
+    @Deprecated
     public static AuthenticationCase valueOf(int value) {
       return forNumber(value);
     }
@@ -340,7 +345,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+  private volatile Object selector_;
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -349,14 +354,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string selector = 1;</code>
    */
-  public java.lang.String getSelector() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSelector() {
+    Object ref = selector_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       selector_ = s;
       return s;
     }
@@ -371,11 +376,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSelectorBytes() {
-    java.lang.Object ref = selector_;
-    if (ref instanceof java.lang.String) {
+    Object ref = selector_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       selector_ = b;
       return b;
     } else {
@@ -384,7 +389,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ADDRESS_FIELD_NUMBER = 2;
-  private volatile java.lang.Object address_;
+  private volatile Object address_;
   /**
    * <pre>
    * The address of the API backend.
@@ -392,14 +397,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string address = 2;</code>
    */
-  public java.lang.String getAddress() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getAddress() {
+    Object ref = address_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       address_ = s;
       return s;
     }
@@ -413,11 +418,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getAddressBytes() {
-    java.lang.Object ref = address_;
-    if (ref instanceof java.lang.String) {
+    Object ref = address_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       address_ = b;
       return b;
     } else {
@@ -478,10 +483,10 @@ private static final long serialVersionUID = 0L;
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    */
-  public com.google.api.BackendRule.PathTranslation getPathTranslation() {
+  public PathTranslation getPathTranslation() {
     @SuppressWarnings("deprecation")
-    com.google.api.BackendRule.PathTranslation result = com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
-    return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
+    PathTranslation result = PathTranslation.valueOf(pathTranslation_);
+    return result == null ? PathTranslation.UNRECOGNIZED : result;
   }
 
   public static final int JWT_AUDIENCE_FIELD_NUMBER = 7;
@@ -492,17 +497,17 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string jwt_audience = 7;</code>
    */
-  public java.lang.String getJwtAudience() {
-    java.lang.Object ref = "";
+  public String getJwtAudience() {
+    Object ref = "";
     if (authenticationCase_ == 7) {
       ref = authentication_;
     }
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       if (authenticationCase_ == 7) {
         authentication_ = s;
       }
@@ -518,14 +523,14 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getJwtAudienceBytes() {
-    java.lang.Object ref = "";
+    Object ref = "";
     if (authenticationCase_ == 7) {
       ref = authentication_;
     }
-    if (ref instanceof java.lang.String) {
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       if (authenticationCase_ == 7) {
         authentication_ = b;
       }
@@ -536,7 +541,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -546,7 +551,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getSelectorBytes().isEmpty()) {
@@ -564,7 +569,7 @@ private static final long serialVersionUID = 0L;
     if (operationDeadline_ != 0D) {
       output.writeDouble(5, operationDeadline_);
     }
-    if (pathTranslation_ != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
+    if (pathTranslation_ != PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
       output.writeEnum(6, pathTranslation_);
     }
     if (authenticationCase_ == 7) {
@@ -573,7 +578,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -597,7 +602,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeDoubleSize(5, operationDeadline_);
     }
-    if (pathTranslation_ != com.google.api.BackendRule.PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
+    if (pathTranslation_ != PathTranslation.PATH_TRANSLATION_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(6, pathTranslation_);
     }
@@ -609,50 +614,44 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.BackendRule)) {
+    if (!(obj instanceof BackendRule)) {
       return super.equals(obj);
     }
-    com.google.api.BackendRule other = (com.google.api.BackendRule) obj;
+    BackendRule other = (BackendRule) obj;
 
-    boolean result = true;
-    result = result && getSelector()
-        .equals(other.getSelector());
-    result = result && getAddress()
-        .equals(other.getAddress());
-    result = result && (
-        java.lang.Double.doubleToLongBits(getDeadline())
-        == java.lang.Double.doubleToLongBits(
-            other.getDeadline()));
-    result = result && (
-        java.lang.Double.doubleToLongBits(getMinDeadline())
-        == java.lang.Double.doubleToLongBits(
-            other.getMinDeadline()));
-    result = result && (
-        java.lang.Double.doubleToLongBits(getOperationDeadline())
-        == java.lang.Double.doubleToLongBits(
-            other.getOperationDeadline()));
-    result = result && pathTranslation_ == other.pathTranslation_;
-    result = result && getAuthenticationCase().equals(
-        other.getAuthenticationCase());
-    if (!result) return false;
+    if (!getSelector()
+        .equals(other.getSelector())) return false;
+    if (!getAddress()
+        .equals(other.getAddress())) return false;
+    if (Double.doubleToLongBits(getDeadline())
+        != Double.doubleToLongBits(
+            other.getDeadline())) return false;
+    if (Double.doubleToLongBits(getMinDeadline())
+        != Double.doubleToLongBits(
+            other.getMinDeadline())) return false;
+    if (Double.doubleToLongBits(getOperationDeadline())
+        != Double.doubleToLongBits(
+            other.getOperationDeadline())) return false;
+    if (pathTranslation_ != other.pathTranslation_) return false;
+    if (!getAuthenticationCase().equals(other.getAuthenticationCase())) return false;
     switch (authenticationCase_) {
       case 7:
-        result = result && getJwtAudience()
-            .equals(other.getJwtAudience());
+        if (!getJwtAudience()
+            .equals(other.getJwtAudience())) return false;
         break;
       case 0:
       default:
     }
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -665,13 +664,13 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getAddress().hashCode();
     hash = (37 * hash) + DEADLINE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getDeadline()));
+        Double.doubleToLongBits(getDeadline()));
     hash = (37 * hash) + MIN_DEADLINE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getMinDeadline()));
+        Double.doubleToLongBits(getMinDeadline()));
     hash = (37 * hash) + OPERATION_DEADLINE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-        java.lang.Double.doubleToLongBits(getOperationDeadline()));
+        Double.doubleToLongBits(getOperationDeadline()));
     hash = (37 * hash) + PATH_TRANSLATION_FIELD_NUMBER;
     hash = (53 * hash) + pathTranslation_;
     switch (authenticationCase_) {
@@ -687,69 +686,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.BackendRule parseFrom(byte[] data)
+  public static BackendRule parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.BackendRule parseFrom(java.io.InputStream input)
+  public static BackendRule parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.BackendRule parseDelimitedFrom(java.io.InputStream input)
+  public static BackendRule parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.BackendRule parseDelimitedFrom(
+  public static BackendRule parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.BackendRule parseFrom(
+  public static BackendRule parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -757,23 +756,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.BackendRule prototype) {
+  public static Builder newBuilder(BackendRule prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -793,12 +792,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.BackendProto.internal_static_google_api_BackendRule_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.BackendRule.class, com.google.api.BackendRule.Builder.class);
+              BackendRule.class, Builder.class);
     }
 
     // Construct using com.google.api.BackendRule.newBuilder()
@@ -807,7 +806,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -816,7 +815,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       selector_ = "";
@@ -836,29 +835,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.BackendRule getDefaultInstanceForType() {
-      return com.google.api.BackendRule.getDefaultInstance();
+    @Override
+    public BackendRule getDefaultInstanceForType() {
+      return BackendRule.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.BackendRule build() {
-      com.google.api.BackendRule result = buildPartial();
+    @Override
+    public BackendRule build() {
+      BackendRule result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.BackendRule buildPartial() {
-      com.google.api.BackendRule result = new com.google.api.BackendRule(this);
+    @Override
+    public BackendRule buildPartial() {
+      BackendRule result = new BackendRule(this);
       result.selector_ = selector_;
       result.address_ = address_;
       result.deadline_ = deadline_;
@@ -873,50 +872,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.BackendRule) {
-        return mergeFrom((com.google.api.BackendRule)other);
+      if (other instanceof BackendRule) {
+        return mergeFrom((BackendRule)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.BackendRule other) {
-      if (other == com.google.api.BackendRule.getDefaultInstance()) return this;
+    public Builder mergeFrom(BackendRule other) {
+      if (other == BackendRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
         onChanged();
@@ -953,21 +952,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.BackendRule parsedMessage = null;
+      BackendRule parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.BackendRule) e.getUnfinishedMessage();
+        parsedMessage = (BackendRule) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -977,7 +976,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     private int authenticationCase_ = 0;
-    private java.lang.Object authentication_;
+    private Object authentication_;
     public AuthenticationCase
         getAuthenticationCase() {
       return AuthenticationCase.forNumber(
@@ -992,7 +991,7 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    private java.lang.Object selector_ = "";
+    private Object selector_ = "";
     /**
      * <pre>
      * Selects the methods to which this rule applies.
@@ -1001,16 +1000,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string selector = 1;</code>
      */
-    public java.lang.String getSelector() {
-      java.lang.Object ref = selector_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSelector() {
+      Object ref = selector_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         selector_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1023,11 +1022,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSelectorBytes() {
-      java.lang.Object ref = selector_;
+      Object ref = selector_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         selector_ = b;
         return b;
       } else {
@@ -1043,7 +1042,7 @@ private static final long serialVersionUID = 0L;
      * <code>string selector = 1;</code>
      */
     public Builder setSelector(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1086,7 +1085,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object address_ = "";
+    private Object address_ = "";
     /**
      * <pre>
      * The address of the API backend.
@@ -1094,16 +1093,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string address = 2;</code>
      */
-    public java.lang.String getAddress() {
-      java.lang.Object ref = address_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getAddress() {
+      Object ref = address_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         address_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1115,11 +1114,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getAddressBytes() {
-      java.lang.Object ref = address_;
+      Object ref = address_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         address_ = b;
         return b;
       } else {
@@ -1134,7 +1133,7 @@ private static final long serialVersionUID = 0L;
      * <code>string address = 2;</code>
      */
     public Builder setAddress(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1316,15 +1315,15 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      */
-    public com.google.api.BackendRule.PathTranslation getPathTranslation() {
+    public PathTranslation getPathTranslation() {
       @SuppressWarnings("deprecation")
-      com.google.api.BackendRule.PathTranslation result = com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
-      return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
+      PathTranslation result = PathTranslation.valueOf(pathTranslation_);
+      return result == null ? PathTranslation.UNRECOGNIZED : result;
     }
     /**
      * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
      */
-    public Builder setPathTranslation(com.google.api.BackendRule.PathTranslation value) {
+    public Builder setPathTranslation(PathTranslation value) {
       if (value == null) {
         throw new NullPointerException();
       }
@@ -1350,21 +1349,21 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string jwt_audience = 7;</code>
      */
-    public java.lang.String getJwtAudience() {
-      java.lang.Object ref = "";
+    public String getJwtAudience() {
+      Object ref = "";
       if (authenticationCase_ == 7) {
         ref = authentication_;
       }
-      if (!(ref instanceof java.lang.String)) {
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         if (authenticationCase_ == 7) {
           authentication_ = s;
         }
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1376,14 +1375,14 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getJwtAudienceBytes() {
-      java.lang.Object ref = "";
+      Object ref = "";
       if (authenticationCase_ == 7) {
         ref = authentication_;
       }
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         if (authenticationCase_ == 7) {
           authentication_ = b;
         }
@@ -1400,7 +1399,7 @@ private static final long serialVersionUID = 0L;
      * <code>string jwt_audience = 7;</code>
      */
     public Builder setJwtAudience(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1442,13 +1441,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1459,18 +1458,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.BackendRule)
-  private static final com.google.api.BackendRule DEFAULT_INSTANCE;
+  private static final BackendRule DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.BackendRule();
+    DEFAULT_INSTANCE = new BackendRule();
   }
 
-  public static com.google.api.BackendRule getDefaultInstance() {
+  public static BackendRule getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<BackendRule>
       PARSER = new com.google.protobuf.AbstractParser<BackendRule>() {
-    @java.lang.Override
+    @Override
     public BackendRule parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1483,13 +1482,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<BackendRule> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.BackendRule getDefaultInstanceForType() {
+  @Override
+  public BackendRule getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

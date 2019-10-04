@@ -14,7 +14,7 @@ public interface SystemParameterOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * Define the name of the parameter, such as "api_key" . It is case sensitive.
@@ -33,7 +33,7 @@ public interface SystemParameterOrBuilder extends
    *
    * <code>string http_header = 2;</code>
    */
-  java.lang.String getHttpHeader();
+  String getHttpHeader();
   /**
    * <pre>
    * Define the HTTP header name to use for the parameter. It is case
@@ -53,7 +53,7 @@ public interface SystemParameterOrBuilder extends
    *
    * <code>string url_query_parameter = 3;</code>
    */
-  java.lang.String getUrlQueryParameter();
+  String getUrlQueryParameter();
   /**
    * <pre>
    * Define the URL query parameter name to use for the parameter. It is case

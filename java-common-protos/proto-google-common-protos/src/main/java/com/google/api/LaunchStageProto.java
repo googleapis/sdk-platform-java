@@ -22,7 +22,7 @@ public final class LaunchStageProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\035google/api/launch_stage.proto\022\ngoogle." +
       "api*j\n\013LaunchStage\022\034\n\030LAUNCH_STAGE_UNSPE" +
       "CIFIED\020\000\022\020\n\014EARLY_ACCESS\020\001\022\t\n\005ALPHA\020\002\022\010\n" +

@@ -7,7 +7,7 @@ package com.google.api;
  * <pre>
  * Quota configuration helps to achieve fairness and budgeting in service
  * usage.
- * The quota configuration works this way:
+ * The metric based quota configuration works this way:
  * - The service configuration defines a set of metrics.
  * - For API calls, the quota.metric_rules maps methods to metrics with
  *   corresponding costs.
@@ -63,7 +63,7 @@ private static final long serialVersionUID = 0L;
     metricRules_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -74,7 +74,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -88,7 +88,7 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 26: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
               limits_ = new java.util.ArrayList<com.google.api.QuotaLimit>();
               mutable_bitField0_ |= 0x00000001;
             }
@@ -97,7 +97,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 34: {
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
               metricRules_ = new java.util.ArrayList<com.google.api.MetricRule>();
               mutable_bitField0_ |= 0x00000002;
             }
@@ -106,7 +106,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -120,10 +120,10 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         limits_ = java.util.Collections.unmodifiableList(limits_);
       }
-      if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
         metricRules_ = java.util.Collections.unmodifiableList(metricRules_);
       }
       this.unknownFields = unknownFields.build();
@@ -135,12 +135,12 @@ private static final long serialVersionUID = 0L;
     return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.QuotaProto.internal_static_google_api_Quota_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.Quota.class, com.google.api.Quota.Builder.class);
+            Quota.class, Builder.class);
   }
 
   public static final int LIMITS_FIELD_NUMBER = 3;
@@ -259,7 +259,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -269,7 +269,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < limits_.size(); i++) {
@@ -281,7 +281,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -300,26 +300,25 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.Quota)) {
+    if (!(obj instanceof Quota)) {
       return super.equals(obj);
     }
-    com.google.api.Quota other = (com.google.api.Quota) obj;
+    Quota other = (Quota) obj;
 
-    boolean result = true;
-    result = result && getLimitsList()
-        .equals(other.getLimitsList());
-    result = result && getMetricRulesList()
-        .equals(other.getMetricRulesList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getLimitsList()
+        .equals(other.getLimitsList())) return false;
+    if (!getMetricRulesList()
+        .equals(other.getMetricRulesList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -339,69 +338,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Quota parseFrom(byte[] data)
+  public static Quota parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Quota parseFrom(java.io.InputStream input)
+  public static Quota parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Quota parseDelimitedFrom(java.io.InputStream input)
+  public static Quota parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.Quota parseDelimitedFrom(
+  public static Quota parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Quota parseFrom(
+  public static Quota parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -409,23 +408,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.Quota prototype) {
+  public static Builder newBuilder(Quota prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -433,7 +432,7 @@ private static final long serialVersionUID = 0L;
    * <pre>
    * Quota configuration helps to achieve fairness and budgeting in service
    * usage.
-   * The quota configuration works this way:
+   * The metric based quota configuration works this way:
    * - The service configuration defines a set of metrics.
    * - For API calls, the quota.metric_rules maps methods to metrics with
    *   corresponding costs.
@@ -484,12 +483,12 @@ private static final long serialVersionUID = 0L;
       return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.QuotaProto.internal_static_google_api_Quota_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Quota.class, com.google.api.Quota.Builder.class);
+              Quota.class, Builder.class);
     }
 
     // Construct using com.google.api.Quota.newBuilder()
@@ -498,7 +497,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -509,7 +508,7 @@ private static final long serialVersionUID = 0L;
         getMetricRulesFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (limitsBuilder_ == null) {
@@ -527,32 +526,32 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.QuotaProto.internal_static_google_api_Quota_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.Quota getDefaultInstanceForType() {
-      return com.google.api.Quota.getDefaultInstance();
+    @Override
+    public Quota getDefaultInstanceForType() {
+      return Quota.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.Quota build() {
-      com.google.api.Quota result = buildPartial();
+    @Override
+    public Quota build() {
+      Quota result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.Quota buildPartial() {
-      com.google.api.Quota result = new com.google.api.Quota(this);
+    @Override
+    public Quota buildPartial() {
+      Quota result = new Quota(this);
       int from_bitField0_ = bitField0_;
       if (limitsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           limits_ = java.util.Collections.unmodifiableList(limits_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -561,7 +560,7 @@ private static final long serialVersionUID = 0L;
         result.limits_ = limitsBuilder_.build();
       }
       if (metricRulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           metricRules_ = java.util.Collections.unmodifiableList(metricRules_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
@@ -573,50 +572,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Quota) {
-        return mergeFrom((com.google.api.Quota)other);
+      if (other instanceof Quota) {
+        return mergeFrom((Quota)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.Quota other) {
-      if (other == com.google.api.Quota.getDefaultInstance()) return this;
+    public Builder mergeFrom(Quota other) {
+      if (other == Quota.getDefaultInstance()) return this;
       if (limitsBuilder_ == null) {
         if (!other.limits_.isEmpty()) {
           if (limits_.isEmpty()) {
@@ -674,21 +673,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.Quota parsedMessage = null;
+      Quota parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.Quota) e.getUnfinishedMessage();
+        parsedMessage = (Quota) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -702,7 +701,7 @@ private static final long serialVersionUID = 0L;
     private java.util.List<com.google.api.QuotaLimit> limits_ =
       java.util.Collections.emptyList();
     private void ensureLimitsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         limits_ = new java.util.ArrayList<com.google.api.QuotaLimit>(limits_);
         bitField0_ |= 0x00000001;
        }
@@ -877,7 +876,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.QuotaLimit limits = 3;</code>
      */
     public Builder addAllLimits(
-        java.lang.Iterable<? extends com.google.api.QuotaLimit> values) {
+        Iterable<? extends com.google.api.QuotaLimit> values) {
       if (limitsBuilder_ == null) {
         ensureLimitsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1003,7 +1002,7 @@ private static final long serialVersionUID = 0L;
         limitsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.api.QuotaLimit, com.google.api.QuotaLimit.Builder, com.google.api.QuotaLimitOrBuilder>(
                 limits_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         limits_ = null;
@@ -1014,7 +1013,7 @@ private static final long serialVersionUID = 0L;
     private java.util.List<com.google.api.MetricRule> metricRules_ =
       java.util.Collections.emptyList();
     private void ensureMetricRulesIsMutable() {
-      if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         metricRules_ = new java.util.ArrayList<com.google.api.MetricRule>(metricRules_);
         bitField0_ |= 0x00000002;
        }
@@ -1199,7 +1198,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
      */
     public Builder addAllMetricRules(
-        java.lang.Iterable<? extends com.google.api.MetricRule> values) {
+        Iterable<? extends com.google.api.MetricRule> values) {
       if (metricRulesBuilder_ == null) {
         ensureMetricRulesIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1333,20 +1332,20 @@ private static final long serialVersionUID = 0L;
         metricRulesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             com.google.api.MetricRule, com.google.api.MetricRule.Builder, com.google.api.MetricRuleOrBuilder>(
                 metricRules_,
-                ((bitField0_ & 0x00000002) == 0x00000002),
+                ((bitField0_ & 0x00000002) != 0),
                 getParentForChildren(),
                 isClean());
         metricRules_ = null;
       }
       return metricRulesBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1357,18 +1356,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Quota)
-  private static final com.google.api.Quota DEFAULT_INSTANCE;
+  private static final Quota DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.Quota();
+    DEFAULT_INSTANCE = new Quota();
   }
 
-  public static com.google.api.Quota getDefaultInstance() {
+  public static Quota getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Quota>
       PARSER = new com.google.protobuf.AbstractParser<Quota>() {
-    @java.lang.Override
+    @Override
     public Quota parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1381,13 +1380,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Quota> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.Quota getDefaultInstanceForType() {
+  @Override
+  public Quota getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

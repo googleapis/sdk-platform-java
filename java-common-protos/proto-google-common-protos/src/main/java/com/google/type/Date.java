@@ -5,13 +5,14 @@ package com.google.type;
 
 /**
  * <pre>
- * Represents a whole calendar date, e.g. date of birth. The time of day and
- * time zone are either specified elsewhere or are not significant. The date
- * is relative to the Proleptic Gregorian Calendar. The day may be 0 to
- * represent a year and month where the day is not significant, e.g. credit card
- * expiration date. The year may be 0 to represent a month and day independent
- * of year, e.g. anniversary date. Related types are [google.type.TimeOfDay][google.type.TimeOfDay]
- * and `google.protobuf.Timestamp`.
+ * Represents a whole or partial calendar date, e.g. a birthday. The time of day
+ * and time zone are either specified elsewhere or are not significant. The date
+ * is relative to the Proleptic Gregorian Calendar. This can represent:
+ * * A full date, with non-zero year, month and day values
+ * * A month and day value, with a zero year, e.g. an anniversary
+ * * A year on its own, with zero month and day values
+ * * A year and month value, with a zero day, e.g. a credit card expiration date
+ * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and `google.protobuf.Timestamp`.
  * </pre>
  *
  * Protobuf type {@code google.type.Date}
@@ -26,12 +27,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private Date() {
-    year_ = 0;
-    month_ = 0;
-    day_ = 0;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -42,7 +40,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -71,7 +69,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -94,12 +92,12 @@ private static final long serialVersionUID = 0L;
     return com.google.type.DateProto.internal_static_google_type_Date_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.type.DateProto.internal_static_google_type_Date_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.type.Date.class, com.google.type.Date.Builder.class);
+            Date.class, Builder.class);
   }
 
   public static final int YEAR_FIELD_NUMBER = 1;
@@ -120,7 +118,8 @@ private static final long serialVersionUID = 0L;
   private int month_;
   /**
    * <pre>
-   * Month of year. Must be from 1 to 12.
+   * Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+   * month and day.
    * </pre>
    *
    * <code>int32 month = 2;</code>
@@ -134,7 +133,8 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-   * if specifying a year/month where the day is not significant.
+   * if specifying a year by itself or a year and month where the day is not
+   * significant.
    * </pre>
    *
    * <code>int32 day = 3;</code>
@@ -144,7 +144,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -154,7 +154,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (year_ != 0) {
@@ -169,7 +169,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -192,28 +192,27 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.type.Date)) {
+    if (!(obj instanceof Date)) {
       return super.equals(obj);
     }
-    com.google.type.Date other = (com.google.type.Date) obj;
+    Date other = (Date) obj;
 
-    boolean result = true;
-    result = result && (getYear()
-        == other.getYear());
-    result = result && (getMonth()
-        == other.getMonth());
-    result = result && (getDay()
-        == other.getDay());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (getYear()
+        != other.getYear()) return false;
+    if (getMonth()
+        != other.getMonth()) return false;
+    if (getDay()
+        != other.getDay()) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -231,69 +230,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Date parseFrom(byte[] data)
+  public static Date parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Date parseFrom(java.io.InputStream input)
+  public static Date parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.Date parseDelimitedFrom(java.io.InputStream input)
+  public static Date parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.type.Date parseDelimitedFrom(
+  public static Date parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.Date parseFrom(
+  public static Date parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -301,35 +300,36 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.type.Date prototype) {
+  public static Builder newBuilder(Date prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
   /**
    * <pre>
-   * Represents a whole calendar date, e.g. date of birth. The time of day and
-   * time zone are either specified elsewhere or are not significant. The date
-   * is relative to the Proleptic Gregorian Calendar. The day may be 0 to
-   * represent a year and month where the day is not significant, e.g. credit card
-   * expiration date. The year may be 0 to represent a month and day independent
-   * of year, e.g. anniversary date. Related types are [google.type.TimeOfDay][google.type.TimeOfDay]
-   * and `google.protobuf.Timestamp`.
+   * Represents a whole or partial calendar date, e.g. a birthday. The time of day
+   * and time zone are either specified elsewhere or are not significant. The date
+   * is relative to the Proleptic Gregorian Calendar. This can represent:
+   * * A full date, with non-zero year, month and day values
+   * * A month and day value, with a zero year, e.g. an anniversary
+   * * A year on its own, with zero month and day values
+   * * A year and month value, with a zero day, e.g. a credit card expiration date
+   * Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and `google.protobuf.Timestamp`.
    * </pre>
    *
    * Protobuf type {@code google.type.Date}
@@ -343,12 +343,12 @@ private static final long serialVersionUID = 0L;
       return com.google.type.DateProto.internal_static_google_type_Date_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.type.DateProto.internal_static_google_type_Date_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.type.Date.class, com.google.type.Date.Builder.class);
+              Date.class, Builder.class);
     }
 
     // Construct using com.google.type.Date.newBuilder()
@@ -357,7 +357,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -366,7 +366,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       year_ = 0;
@@ -378,29 +378,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.type.DateProto.internal_static_google_type_Date_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.type.Date getDefaultInstanceForType() {
-      return com.google.type.Date.getDefaultInstance();
+    @Override
+    public Date getDefaultInstanceForType() {
+      return Date.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.type.Date build() {
-      com.google.type.Date result = buildPartial();
+    @Override
+    public Date build() {
+      Date result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.type.Date buildPartial() {
-      com.google.type.Date result = new com.google.type.Date(this);
+    @Override
+    public Date buildPartial() {
+      Date result = new Date(this);
       result.year_ = year_;
       result.month_ = month_;
       result.day_ = day_;
@@ -408,50 +408,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.Date) {
-        return mergeFrom((com.google.type.Date)other);
+      if (other instanceof Date) {
+        return mergeFrom((Date)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.type.Date other) {
-      if (other == com.google.type.Date.getDefaultInstance()) return this;
+    public Builder mergeFrom(Date other) {
+      if (other == Date.getDefaultInstance()) return this;
       if (other.getYear() != 0) {
         setYear(other.getYear());
       }
@@ -466,21 +466,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.type.Date parsedMessage = null;
+      Date parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.type.Date) e.getUnfinishedMessage();
+        parsedMessage = (Date) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -534,7 +534,8 @@ private static final long serialVersionUID = 0L;
     private int month_ ;
     /**
      * <pre>
-     * Month of year. Must be from 1 to 12.
+     * Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+     * month and day.
      * </pre>
      *
      * <code>int32 month = 2;</code>
@@ -544,7 +545,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Month of year. Must be from 1 to 12.
+     * Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+     * month and day.
      * </pre>
      *
      * <code>int32 month = 2;</code>
@@ -557,7 +559,8 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * Month of year. Must be from 1 to 12.
+     * Month of year. Must be from 1 to 12, or 0 if specifying a year without a
+     * month and day.
      * </pre>
      *
      * <code>int32 month = 2;</code>
@@ -573,7 +576,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-     * if specifying a year/month where the day is not significant.
+     * if specifying a year by itself or a year and month where the day is not
+     * significant.
      * </pre>
      *
      * <code>int32 day = 3;</code>
@@ -584,7 +588,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-     * if specifying a year/month where the day is not significant.
+     * if specifying a year by itself or a year and month where the day is not
+     * significant.
      * </pre>
      *
      * <code>int32 day = 3;</code>
@@ -598,7 +603,8 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Day of month. Must be from 1 to 31 and valid for the year and month, or 0
-     * if specifying a year/month where the day is not significant.
+     * if specifying a year by itself or a year and month where the day is not
+     * significant.
      * </pre>
      *
      * <code>int32 day = 3;</code>
@@ -609,13 +615,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -626,18 +632,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.type.Date)
-  private static final com.google.type.Date DEFAULT_INSTANCE;
+  private static final Date DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.type.Date();
+    DEFAULT_INSTANCE = new Date();
   }
 
-  public static com.google.type.Date getDefaultInstance() {
+  public static Date getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Date>
       PARSER = new com.google.protobuf.AbstractParser<Date>() {
-    @java.lang.Override
+    @Override
     public Date parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -650,13 +656,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Date> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.type.Date getDefaultInstanceForType() {
+  @Override
+  public Date getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC.
+// Copyright 2019 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,21 +15,21 @@
 
 syntax = "proto3";
 
-package google.api;
+package google.type;
 
-import "google/api/annotations.proto";
-import "google/api/experimental/authorization_config.proto";
-
-option go_package = "google.golang.org/genproto/googleapis/api;api";
+option go_package = "google.golang.org/genproto/googleapis/type/fraction;fraction";
 option java_multiple_files = true;
-option java_outer_classname = "ExperimentalProto";
-option java_package = "com.google.api";
-option objc_class_prefix = "GAPI";
+option java_outer_classname = "FractionProto";
+option java_package = "com.google.type";
+option objc_class_prefix = "GTP";
 
 
-// Experimental service configuration. These configuration options can
-// only be used by whitelisted users.
-message Experimental {
-  // Authorization configuration.
-  AuthorizationConfig authorization = 8;
+// Represents a fraction in terms of a numerator divided by a denominator.
+message Fraction {
+  // The portion of the denominator in the faction, e.g. 2 in 2/3.
+  int64 numerator = 1;
+
+  // The value by which the numerator is divided, e.g. 3 in 2/3. Must be
+  // positive.
+  int64 denominator = 2;
 }

@@ -32,7 +32,7 @@ public final class BackendProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\030google/api/backend.proto\022\ngoogle.api\"1" +
       "\n\007Backend\022&\n\005rules\030\001 \003(\0132\027.google.api.Ba" +
       "ckendRule\"\310\002\n\013BackendRule\022\020\n\010selector\030\001 " +
@@ -65,13 +65,13 @@ public final class BackendProto {
     internal_static_google_api_Backend_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Backend_descriptor,
-        new java.lang.String[] { "Rules", });
+        new String[] { "Rules", });
     internal_static_google_api_BackendRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_BackendRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_BackendRule_descriptor,
-        new java.lang.String[] { "Selector", "Address", "Deadline", "MinDeadline", "OperationDeadline", "PathTranslation", "JwtAudience", "Authentication", });
+        new String[] { "Selector", "Address", "Deadline", "MinDeadline", "OperationDeadline", "PathTranslation", "JwtAudience", "Authentication", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

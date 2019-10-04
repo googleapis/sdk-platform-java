@@ -32,7 +32,7 @@ public final class ConsumerProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\031google/api/consumer.proto\022\ngoogle.api\"" +
       "=\n\021ProjectProperties\022(\n\nproperties\030\001 \003(\013" +
       "2\024.google.api.Property\"\254\001\n\010Property\022\014\n\004n" +
@@ -61,13 +61,13 @@ public final class ConsumerProto {
     internal_static_google_api_ProjectProperties_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_ProjectProperties_descriptor,
-        new java.lang.String[] { "Properties", });
+        new String[] { "Properties", });
     internal_static_google_api_Property_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_Property_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Property_descriptor,
-        new java.lang.String[] { "Name", "Type", "Description", });
+        new String[] { "Name", "Type", "Description", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

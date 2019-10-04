@@ -14,7 +14,7 @@ public interface HelpOrBuilder extends
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  java.util.List<com.google.rpc.Help.Link> 
+  java.util.List<Help.Link>
       getLinksList();
   /**
    * <pre>
@@ -23,7 +23,7 @@ public interface HelpOrBuilder extends
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  com.google.rpc.Help.Link getLinks(int index);
+  Help.Link getLinks(int index);
   /**
    * <pre>
    * URL(s) pointing to additional information on handling the current error.
@@ -39,7 +39,7 @@ public interface HelpOrBuilder extends
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> 
+  java.util.List<? extends Help.LinkOrBuilder>
       getLinksOrBuilderList();
   /**
    * <pre>
@@ -48,6 +48,6 @@ public interface HelpOrBuilder extends
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
-  com.google.rpc.Help.LinkOrBuilder getLinksOrBuilder(
+  Help.LinkOrBuilder getLinksOrBuilder(
       int index);
 }

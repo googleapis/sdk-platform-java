@@ -37,7 +37,7 @@ public final class SystemParameterProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n!google/api/system_parameter.proto\022\ngoo" +
       "gle.api\"B\n\020SystemParameters\022.\n\005rules\030\001 \003" +
       "(\0132\037.google.api.SystemParameterRule\"X\n\023S" +
@@ -67,19 +67,19 @@ public final class SystemParameterProto {
     internal_static_google_api_SystemParameters_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_SystemParameters_descriptor,
-        new java.lang.String[] { "Rules", });
+        new String[] { "Rules", });
     internal_static_google_api_SystemParameterRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_SystemParameterRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_SystemParameterRule_descriptor,
-        new java.lang.String[] { "Selector", "Parameters", });
+        new String[] { "Selector", "Parameters", });
     internal_static_google_api_SystemParameter_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_google_api_SystemParameter_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_SystemParameter_descriptor,
-        new java.lang.String[] { "Name", "HttpHeader", "UrlQueryParameter", });
+        new String[] { "Name", "HttpHeader", "UrlQueryParameter", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

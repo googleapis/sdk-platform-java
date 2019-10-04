@@ -14,7 +14,7 @@ public interface RequestMetadataOrBuilder extends
    *
    * <code>string caller_ip = 1;</code>
    */
-  java.lang.String getCallerIp();
+  String getCallerIp();
   /**
    * <pre>
    * The IP address of the caller.
@@ -34,13 +34,14 @@ public interface RequestMetadataOrBuilder extends
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
    *     The request was made by the Google Cloud SDK CLI (gcloud).
-   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
+   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+   * s~my-project`:
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *
    * <code>string caller_supplied_user_agent = 2;</code>
    */
-  java.lang.String getCallerSuppliedUserAgent();
+  String getCallerSuppliedUserAgent();
   /**
    * <pre>
    * The user agent of the caller.
@@ -50,7 +51,8 @@ public interface RequestMetadataOrBuilder extends
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
    *     The request was made by the Google Cloud SDK CLI (gcloud).
-   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:
+   * +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+   * s~my-project`:
    *     The request was made from the `my-project` App Engine app.
    * </pre>
    *

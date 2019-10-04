@@ -14,7 +14,7 @@ public interface DeleteOperationRequestOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The name of the operation resource to be deleted.

@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
     type_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -35,7 +35,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -49,12 +49,12 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 18: {
-            if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
               labels_ = com.google.protobuf.MapField.newMapField(
                   LabelsDefaultEntryHolder.defaultEntry);
               mutable_bitField0_ |= 0x00000002;
             }
-            com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+            com.google.protobuf.MapEntry<String, String>
             labels__ = input.readMessage(
                 LabelsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
             labels_.getMutableMap().put(
@@ -62,13 +62,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             type_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -92,7 +92,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @SuppressWarnings({"rawtypes"})
-  @java.lang.Override
+  @Override
   protected com.google.protobuf.MapField internalGetMapField(
       int number) {
     switch (number) {
@@ -103,17 +103,17 @@ private static final long serialVersionUID = 0L;
             "Invalid map field number: " + number);
     }
   }
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.api.MetricProto.internal_static_google_api_Metric_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.Metric.class, com.google.api.Metric.Builder.class);
+            Metric.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int TYPE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object type_;
+  private volatile Object type_;
   /**
    * <pre>
    * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
@@ -122,14 +122,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string type = 3;</code>
    */
-  public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getType() {
+    Object ref = type_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       type_ = s;
       return s;
     }
@@ -144,11 +144,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
+    Object ref = type_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       type_ = b;
       return b;
     } else {
@@ -159,9 +159,9 @@ private static final long serialVersionUID = 0L;
   public static final int LABELS_FIELD_NUMBER = 2;
   private static final class LabelsDefaultEntryHolder {
     static final com.google.protobuf.MapEntry<
-        java.lang.String, java.lang.String> defaultEntry =
+        String, String> defaultEntry =
             com.google.protobuf.MapEntry
-            .<java.lang.String, java.lang.String>newDefaultInstance(
+            .<String, String>newDefaultInstance(
                 com.google.api.MetricProto.internal_static_google_api_Metric_LabelsEntry_descriptor, 
                 com.google.protobuf.WireFormat.FieldType.STRING,
                 "",
@@ -169,8 +169,8 @@ private static final long serialVersionUID = 0L;
                 "");
   }
   private com.google.protobuf.MapField<
-      java.lang.String, java.lang.String> labels_;
-  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      String, String> labels_;
+  private com.google.protobuf.MapField<String, String>
   internalGetLabels() {
     if (labels_ == null) {
       return com.google.protobuf.MapField.emptyMapField(
@@ -192,15 +192,15 @@ private static final long serialVersionUID = 0L;
    */
 
   public boolean containsLabels(
-      java.lang.String key) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
+      String key) {
+    if (key == null) { throw new NullPointerException(); }
     return internalGetLabels().getMap().containsKey(key);
   }
   /**
    * Use {@link #getLabelsMap()} instead.
    */
-  @java.lang.Deprecated
-  public java.util.Map<java.lang.String, java.lang.String> getLabels() {
+  @Deprecated
+  public java.util.Map<String, String> getLabels() {
     return getLabelsMap();
   }
   /**
@@ -212,7 +212,7 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
 
-  public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
+  public java.util.Map<String, String> getLabelsMap() {
     return internalGetLabels().getMap();
   }
   /**
@@ -224,11 +224,11 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
 
-  public java.lang.String getLabelsOrDefault(
-      java.lang.String key,
-      java.lang.String defaultValue) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
-    java.util.Map<java.lang.String, java.lang.String> map =
+  public String getLabelsOrDefault(
+      String key,
+      String defaultValue) {
+    if (key == null) { throw new NullPointerException(); }
+    java.util.Map<String, String> map =
         internalGetLabels().getMap();
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
@@ -241,19 +241,19 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
 
-  public java.lang.String getLabelsOrThrow(
-      java.lang.String key) {
-    if (key == null) { throw new java.lang.NullPointerException(); }
-    java.util.Map<java.lang.String, java.lang.String> map =
+  public String getLabelsOrThrow(
+      String key) {
+    if (key == null) { throw new NullPointerException(); }
+    java.util.Map<String, String> map =
         internalGetLabels().getMap();
     if (!map.containsKey(key)) {
-      throw new java.lang.IllegalArgumentException();
+      throw new IllegalArgumentException();
     }
     return map.get(key);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -263,7 +263,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     com.google.protobuf.GeneratedMessageV3
@@ -278,15 +278,15 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
 
     size = 0;
-    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+    for (java.util.Map.Entry<String, String> entry
          : internalGetLabels().getMap().entrySet()) {
-      com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+      com.google.protobuf.MapEntry<String, String>
       labels__ = LabelsDefaultEntryHolder.defaultEntry.newBuilderForType()
           .setKey(entry.getKey())
           .setValue(entry.getValue())
@@ -302,26 +302,25 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.Metric)) {
+    if (!(obj instanceof Metric)) {
       return super.equals(obj);
     }
-    com.google.api.Metric other = (com.google.api.Metric) obj;
+    Metric other = (Metric) obj;
 
-    boolean result = true;
-    result = result && getType()
-        .equals(other.getType());
-    result = result && internalGetLabels().equals(
-        other.internalGetLabels());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getType()
+        .equals(other.getType())) return false;
+    if (!internalGetLabels().equals(
+        other.internalGetLabels())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -339,69 +338,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Metric parseFrom(byte[] data)
+  public static Metric parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.Metric parseFrom(java.io.InputStream input)
+  public static Metric parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Metric parseDelimitedFrom(java.io.InputStream input)
+  public static Metric parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.Metric parseDelimitedFrom(
+  public static Metric parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.Metric parseFrom(
+  public static Metric parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -409,23 +408,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.Metric prototype) {
+  public static Builder newBuilder(Metric prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -468,12 +467,12 @@ private static final long serialVersionUID = 0L;
               "Invalid map field number: " + number);
       }
     }
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.api.MetricProto.internal_static_google_api_Metric_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.Metric.class, com.google.api.Metric.Builder.class);
+              Metric.class, Builder.class);
     }
 
     // Construct using com.google.api.Metric.newBuilder()
@@ -482,7 +481,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -491,7 +490,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       type_ = "";
@@ -500,29 +499,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.api.MetricProto.internal_static_google_api_Metric_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.Metric getDefaultInstanceForType() {
-      return com.google.api.Metric.getDefaultInstance();
+    @Override
+    public Metric getDefaultInstanceForType() {
+      return Metric.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.Metric build() {
-      com.google.api.Metric result = buildPartial();
+    @Override
+    public Metric build() {
+      Metric result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.Metric buildPartial() {
-      com.google.api.Metric result = new com.google.api.Metric(this);
+    @Override
+    public Metric buildPartial() {
+      Metric result = new Metric(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.type_ = type_;
@@ -533,50 +532,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.Metric) {
-        return mergeFrom((com.google.api.Metric)other);
+      if (other instanceof Metric) {
+        return mergeFrom((Metric)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.Metric other) {
-      if (other == com.google.api.Metric.getDefaultInstance()) return this;
+    public Builder mergeFrom(Metric other) {
+      if (other == Metric.getDefaultInstance()) return this;
       if (!other.getType().isEmpty()) {
         type_ = other.type_;
         onChanged();
@@ -588,21 +587,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.Metric parsedMessage = null;
+      Metric parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.Metric) e.getUnfinishedMessage();
+        parsedMessage = (Metric) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -613,7 +612,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object type_ = "";
+    private Object type_ = "";
     /**
      * <pre>
      * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
@@ -622,16 +621,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string type = 3;</code>
      */
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getType() {
+      Object ref = type_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         type_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -644,11 +643,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
-      java.lang.Object ref = type_;
+      Object ref = type_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         type_ = b;
         return b;
       } else {
@@ -664,7 +663,7 @@ private static final long serialVersionUID = 0L;
      * <code>string type = 3;</code>
      */
     public Builder setType(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -708,8 +707,8 @@ private static final long serialVersionUID = 0L;
     }
 
     private com.google.protobuf.MapField<
-        java.lang.String, java.lang.String> labels_;
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        String, String> labels_;
+    private com.google.protobuf.MapField<String, String>
     internalGetLabels() {
       if (labels_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
@@ -717,7 +716,7 @@ private static final long serialVersionUID = 0L;
       }
       return labels_;
     }
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    private com.google.protobuf.MapField<String, String>
     internalGetMutableLabels() {
       onChanged();;
       if (labels_ == null) {
@@ -743,15 +742,15 @@ private static final long serialVersionUID = 0L;
      */
 
     public boolean containsLabels(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
       return internalGetLabels().getMap().containsKey(key);
     }
     /**
      * Use {@link #getLabelsMap()} instead.
      */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String> getLabels() {
+    @Deprecated
+    public java.util.Map<String, String> getLabels() {
       return getLabelsMap();
     }
     /**
@@ -763,7 +762,7 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
 
-    public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
+    public java.util.Map<String, String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
     /**
@@ -775,11 +774,11 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
 
-    public java.lang.String getLabelsOrDefault(
-        java.lang.String key,
-        java.lang.String defaultValue) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, java.lang.String> map =
+    public String getLabelsOrDefault(
+        String key,
+        String defaultValue) {
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, String> map =
           internalGetLabels().getMap();
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
@@ -792,13 +791,13 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
 
-    public java.lang.String getLabelsOrThrow(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      java.util.Map<java.lang.String, java.lang.String> map =
+    public String getLabelsOrThrow(
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
+      java.util.Map<String, String> map =
           internalGetLabels().getMap();
       if (!map.containsKey(key)) {
-        throw new java.lang.IllegalArgumentException();
+        throw new IllegalArgumentException();
       }
       return map.get(key);
     }
@@ -818,8 +817,8 @@ private static final long serialVersionUID = 0L;
      */
 
     public Builder removeLabels(
-        java.lang.String key) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
+        String key) {
+      if (key == null) { throw new NullPointerException(); }
       internalGetMutableLabels().getMutableMap()
           .remove(key);
       return this;
@@ -827,8 +826,8 @@ private static final long serialVersionUID = 0L;
     /**
      * Use alternate mutation accessors instead.
      */
-    @java.lang.Deprecated
-    public java.util.Map<java.lang.String, java.lang.String>
+    @Deprecated
+    public java.util.Map<String, String>
     getMutableLabels() {
       return internalGetMutableLabels().getMutableMap();
     }
@@ -841,10 +840,10 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
     public Builder putLabels(
-        java.lang.String key,
-        java.lang.String value) {
-      if (key == null) { throw new java.lang.NullPointerException(); }
-      if (value == null) { throw new java.lang.NullPointerException(); }
+        String key,
+        String value) {
+      if (key == null) { throw new NullPointerException(); }
+      if (value == null) { throw new NullPointerException(); }
       internalGetMutableLabels().getMutableMap()
           .put(key, value);
       return this;
@@ -859,18 +858,18 @@ private static final long serialVersionUID = 0L;
      */
 
     public Builder putAllLabels(
-        java.util.Map<java.lang.String, java.lang.String> values) {
+        java.util.Map<String, String> values) {
       internalGetMutableLabels().getMutableMap()
           .putAll(values);
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -881,18 +880,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.Metric)
-  private static final com.google.api.Metric DEFAULT_INSTANCE;
+  private static final Metric DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.Metric();
+    DEFAULT_INSTANCE = new Metric();
   }
 
-  public static com.google.api.Metric getDefaultInstance() {
+  public static Metric getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Metric>
       PARSER = new com.google.protobuf.AbstractParser<Metric>() {
-    @java.lang.Override
+    @Override
     public Metric parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -905,13 +904,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Metric> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.Metric getDefaultInstanceForType() {
+  @Override
+  public Metric getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

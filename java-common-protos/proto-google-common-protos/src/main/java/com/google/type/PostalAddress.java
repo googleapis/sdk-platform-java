@@ -14,7 +14,7 @@ package com.google.type;
  * existing data, depending on the type of process.
  * Advice on address input / editing:
  *  - Use an i18n-ready address widget such as
- *    https://github.com/googlei18n/libaddressinput)
+ *    https://github.com/google/libaddressinput)
  * - Users should not be presented with UI elements for input or editing of
  *   fields outside countries where that field is used.
  * For more guidance on how to use this schema, please see:
@@ -33,7 +33,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private PostalAddress() {
-    revision_ = 0;
     regionCode_ = "";
     languageCode_ = "";
     postalCode_ = "";
@@ -46,7 +45,7 @@ private static final long serialVersionUID = 0L;
     organization_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -57,7 +56,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -76,50 +75,50 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             regionCode_ = s;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             languageCode_ = s;
             break;
           }
           case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             postalCode_ = s;
             break;
           }
           case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             sortingCode_ = s;
             break;
           }
           case 50: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             administrativeArea_ = s;
             break;
           }
           case 58: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             locality_ = s;
             break;
           }
           case 66: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             sublocality_ = s;
             break;
           }
           case 74: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000100) != 0)) {
               addressLines_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000100;
             }
@@ -127,8 +126,8 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 82: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+            String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000200) != 0)) {
               recipients_ = new com.google.protobuf.LazyStringArrayList();
               mutable_bitField0_ |= 0x00000200;
             }
@@ -136,13 +135,13 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 90: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             organization_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -156,10 +155,10 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((mutable_bitField0_ & 0x00000100) != 0)) {
         addressLines_ = addressLines_.getUnmodifiableView();
       }
-      if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((mutable_bitField0_ & 0x00000200) != 0)) {
         recipients_ = recipients_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
@@ -171,12 +170,12 @@ private static final long serialVersionUID = 0L;
     return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.type.PostalAddress.class, com.google.type.PostalAddress.Builder.class);
+            PostalAddress.class, Builder.class);
   }
 
   private int bitField0_;
@@ -195,7 +194,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REGION_CODE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object regionCode_;
+  private volatile Object regionCode_;
   /**
    * <pre>
    * Required. CLDR region code of the country/region of the address. This
@@ -207,14 +206,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string region_code = 2;</code>
    */
-  public java.lang.String getRegionCode() {
-    java.lang.Object ref = regionCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getRegionCode() {
+    Object ref = regionCode_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       regionCode_ = s;
       return s;
     }
@@ -232,11 +231,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getRegionCodeBytes() {
-    java.lang.Object ref = regionCode_;
-    if (ref instanceof java.lang.String) {
+    Object ref = regionCode_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       regionCode_ = b;
       return b;
     } else {
@@ -245,7 +244,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int LANGUAGE_CODE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object languageCode_;
+  private volatile Object languageCode_;
   /**
    * <pre>
    * Optional. BCP-47 language code of the contents of this address (if
@@ -262,14 +261,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string language_code = 3;</code>
    */
-  public java.lang.String getLanguageCode() {
-    java.lang.Object ref = languageCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getLanguageCode() {
+    Object ref = languageCode_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       languageCode_ = s;
       return s;
     }
@@ -292,11 +291,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getLanguageCodeBytes() {
-    java.lang.Object ref = languageCode_;
-    if (ref instanceof java.lang.String) {
+    Object ref = languageCode_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       languageCode_ = b;
       return b;
     } else {
@@ -305,7 +304,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int POSTAL_CODE_FIELD_NUMBER = 4;
-  private volatile java.lang.Object postalCode_;
+  private volatile Object postalCode_;
   /**
    * <pre>
    * Optional. Postal code of the address. Not all countries use or require
@@ -316,14 +315,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string postal_code = 4;</code>
    */
-  public java.lang.String getPostalCode() {
-    java.lang.Object ref = postalCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getPostalCode() {
+    Object ref = postalCode_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       postalCode_ = s;
       return s;
     }
@@ -340,11 +339,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getPostalCodeBytes() {
-    java.lang.Object ref = postalCode_;
-    if (ref instanceof java.lang.String) {
+    Object ref = postalCode_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       postalCode_ = b;
       return b;
     } else {
@@ -353,7 +352,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int SORTING_CODE_FIELD_NUMBER = 5;
-  private volatile java.lang.Object sortingCode_;
+  private volatile Object sortingCode_;
   /**
    * <pre>
    * Optional. Additional, country-specific, sorting code. This is not used
@@ -365,14 +364,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string sorting_code = 5;</code>
    */
-  public java.lang.String getSortingCode() {
-    java.lang.Object ref = sortingCode_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSortingCode() {
+    Object ref = sortingCode_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       sortingCode_ = s;
       return s;
     }
@@ -390,11 +389,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSortingCodeBytes() {
-    java.lang.Object ref = sortingCode_;
-    if (ref instanceof java.lang.String) {
+    Object ref = sortingCode_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       sortingCode_ = b;
       return b;
     } else {
@@ -403,7 +402,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ADMINISTRATIVE_AREA_FIELD_NUMBER = 6;
-  private volatile java.lang.Object administrativeArea_;
+  private volatile Object administrativeArea_;
   /**
    * <pre>
    * Optional. Highest administrative subdivision which is used for postal
@@ -417,14 +416,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string administrative_area = 6;</code>
    */
-  public java.lang.String getAdministrativeArea() {
-    java.lang.Object ref = administrativeArea_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getAdministrativeArea() {
+    Object ref = administrativeArea_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       administrativeArea_ = s;
       return s;
     }
@@ -444,11 +443,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getAdministrativeAreaBytes() {
-    java.lang.Object ref = administrativeArea_;
-    if (ref instanceof java.lang.String) {
+    Object ref = administrativeArea_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       administrativeArea_ = b;
       return b;
     } else {
@@ -457,7 +456,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int LOCALITY_FIELD_NUMBER = 7;
-  private volatile java.lang.Object locality_;
+  private volatile Object locality_;
   /**
    * <pre>
    * Optional. Generally refers to the city/town portion of the address.
@@ -468,14 +467,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string locality = 7;</code>
    */
-  public java.lang.String getLocality() {
-    java.lang.Object ref = locality_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getLocality() {
+    Object ref = locality_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       locality_ = s;
       return s;
     }
@@ -492,11 +491,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getLocalityBytes() {
-    java.lang.Object ref = locality_;
-    if (ref instanceof java.lang.String) {
+    Object ref = locality_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       locality_ = b;
       return b;
     } else {
@@ -505,7 +504,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int SUBLOCALITY_FIELD_NUMBER = 8;
-  private volatile java.lang.Object sublocality_;
+  private volatile Object sublocality_;
   /**
    * <pre>
    * Optional. Sublocality of the address.
@@ -514,14 +513,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string sublocality = 8;</code>
    */
-  public java.lang.String getSublocality() {
-    java.lang.Object ref = sublocality_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getSublocality() {
+    Object ref = sublocality_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       sublocality_ = s;
       return s;
     }
@@ -536,11 +535,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getSublocalityBytes() {
-    java.lang.Object ref = sublocality_;
-    if (ref instanceof java.lang.String) {
+    Object ref = sublocality_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       sublocality_ = b;
       return b;
     } else {
@@ -632,7 +631,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string address_lines = 9;</code>
    */
-  public java.lang.String getAddressLines(int index) {
+  public String getAddressLines(int index) {
     return addressLines_.get(index);
   }
   /**
@@ -701,7 +700,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated string recipients = 10;</code>
    */
-  public java.lang.String getRecipients(int index) {
+  public String getRecipients(int index) {
     return recipients_.get(index);
   }
   /**
@@ -719,7 +718,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ORGANIZATION_FIELD_NUMBER = 11;
-  private volatile java.lang.Object organization_;
+  private volatile Object organization_;
   /**
    * <pre>
    * Optional. The name of the organization at the address.
@@ -727,14 +726,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string organization = 11;</code>
    */
-  public java.lang.String getOrganization() {
-    java.lang.Object ref = organization_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getOrganization() {
+    Object ref = organization_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       organization_ = s;
       return s;
     }
@@ -748,11 +747,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getOrganizationBytes() {
-    java.lang.Object ref = organization_;
-    if (ref instanceof java.lang.String) {
+    Object ref = organization_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       organization_ = b;
       return b;
     } else {
@@ -761,7 +760,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -771,7 +770,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (revision_ != 0) {
@@ -810,7 +809,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -865,44 +864,43 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.type.PostalAddress)) {
+    if (!(obj instanceof PostalAddress)) {
       return super.equals(obj);
     }
-    com.google.type.PostalAddress other = (com.google.type.PostalAddress) obj;
+    PostalAddress other = (PostalAddress) obj;
 
-    boolean result = true;
-    result = result && (getRevision()
-        == other.getRevision());
-    result = result && getRegionCode()
-        .equals(other.getRegionCode());
-    result = result && getLanguageCode()
-        .equals(other.getLanguageCode());
-    result = result && getPostalCode()
-        .equals(other.getPostalCode());
-    result = result && getSortingCode()
-        .equals(other.getSortingCode());
-    result = result && getAdministrativeArea()
-        .equals(other.getAdministrativeArea());
-    result = result && getLocality()
-        .equals(other.getLocality());
-    result = result && getSublocality()
-        .equals(other.getSublocality());
-    result = result && getAddressLinesList()
-        .equals(other.getAddressLinesList());
-    result = result && getRecipientsList()
-        .equals(other.getRecipientsList());
-    result = result && getOrganization()
-        .equals(other.getOrganization());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (getRevision()
+        != other.getRevision()) return false;
+    if (!getRegionCode()
+        .equals(other.getRegionCode())) return false;
+    if (!getLanguageCode()
+        .equals(other.getLanguageCode())) return false;
+    if (!getPostalCode()
+        .equals(other.getPostalCode())) return false;
+    if (!getSortingCode()
+        .equals(other.getSortingCode())) return false;
+    if (!getAdministrativeArea()
+        .equals(other.getAdministrativeArea())) return false;
+    if (!getLocality()
+        .equals(other.getLocality())) return false;
+    if (!getSublocality()
+        .equals(other.getSublocality())) return false;
+    if (!getAddressLinesList()
+        .equals(other.getAddressLinesList())) return false;
+    if (!getRecipientsList()
+        .equals(other.getRecipientsList())) return false;
+    if (!getOrganization()
+        .equals(other.getOrganization())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -940,69 +938,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.PostalAddress parseFrom(byte[] data)
+  public static PostalAddress parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.PostalAddress parseFrom(java.io.InputStream input)
+  public static PostalAddress parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.PostalAddress parseDelimitedFrom(java.io.InputStream input)
+  public static PostalAddress parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.type.PostalAddress parseDelimitedFrom(
+  public static PostalAddress parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.PostalAddress parseFrom(
+  public static PostalAddress parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1010,23 +1008,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.type.PostalAddress prototype) {
+  public static Builder newBuilder(PostalAddress prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -1041,7 +1039,7 @@ private static final long serialVersionUID = 0L;
    * existing data, depending on the type of process.
    * Advice on address input / editing:
    *  - Use an i18n-ready address widget such as
-   *    https://github.com/googlei18n/libaddressinput)
+   *    https://github.com/google/libaddressinput)
    * - Users should not be presented with UI elements for input or editing of
    *   fields outside countries where that field is used.
    * For more guidance on how to use this schema, please see:
@@ -1059,12 +1057,12 @@ private static final long serialVersionUID = 0L;
       return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.type.PostalAddress.class, com.google.type.PostalAddress.Builder.class);
+              PostalAddress.class, Builder.class);
     }
 
     // Construct using com.google.type.PostalAddress.newBuilder()
@@ -1073,7 +1071,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -1082,7 +1080,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       revision_ = 0;
@@ -1110,29 +1108,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.type.PostalAddressProto.internal_static_google_type_PostalAddress_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.type.PostalAddress getDefaultInstanceForType() {
-      return com.google.type.PostalAddress.getDefaultInstance();
+    @Override
+    public PostalAddress getDefaultInstanceForType() {
+      return PostalAddress.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.type.PostalAddress build() {
-      com.google.type.PostalAddress result = buildPartial();
+    @Override
+    public PostalAddress build() {
+      PostalAddress result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.type.PostalAddress buildPartial() {
-      com.google.type.PostalAddress result = new com.google.type.PostalAddress(this);
+    @Override
+    public PostalAddress buildPartial() {
+      PostalAddress result = new PostalAddress(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.revision_ = revision_;
@@ -1143,12 +1141,12 @@ private static final long serialVersionUID = 0L;
       result.administrativeArea_ = administrativeArea_;
       result.locality_ = locality_;
       result.sublocality_ = sublocality_;
-      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (((bitField0_ & 0x00000100) != 0)) {
         addressLines_ = addressLines_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000100);
       }
       result.addressLines_ = addressLines_;
-      if (((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (((bitField0_ & 0x00000200) != 0)) {
         recipients_ = recipients_.getUnmodifiableView();
         bitField0_ = (bitField0_ & ~0x00000200);
       }
@@ -1159,50 +1157,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.PostalAddress) {
-        return mergeFrom((com.google.type.PostalAddress)other);
+      if (other instanceof PostalAddress) {
+        return mergeFrom((PostalAddress)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.type.PostalAddress other) {
-      if (other == com.google.type.PostalAddress.getDefaultInstance()) return this;
+    public Builder mergeFrom(PostalAddress other) {
+      if (other == PostalAddress.getDefaultInstance()) return this;
       if (other.getRevision() != 0) {
         setRevision(other.getRevision());
       }
@@ -1263,21 +1261,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.type.PostalAddress parsedMessage = null;
+      PostalAddress parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.type.PostalAddress) e.getUnfinishedMessage();
+        parsedMessage = (PostalAddress) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1329,7 +1327,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object regionCode_ = "";
+    private Object regionCode_ = "";
     /**
      * <pre>
      * Required. CLDR region code of the country/region of the address. This
@@ -1341,16 +1339,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string region_code = 2;</code>
      */
-    public java.lang.String getRegionCode() {
-      java.lang.Object ref = regionCode_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getRegionCode() {
+      Object ref = regionCode_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         regionCode_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1366,11 +1364,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getRegionCodeBytes() {
-      java.lang.Object ref = regionCode_;
+      Object ref = regionCode_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         regionCode_ = b;
         return b;
       } else {
@@ -1389,7 +1387,7 @@ private static final long serialVersionUID = 0L;
      * <code>string region_code = 2;</code>
      */
     public Builder setRegionCode(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1438,7 +1436,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object languageCode_ = "";
+    private Object languageCode_ = "";
     /**
      * <pre>
      * Optional. BCP-47 language code of the contents of this address (if
@@ -1455,16 +1453,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string language_code = 3;</code>
      */
-    public java.lang.String getLanguageCode() {
-      java.lang.Object ref = languageCode_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getLanguageCode() {
+      Object ref = languageCode_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         languageCode_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1485,11 +1483,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getLanguageCodeBytes() {
-      java.lang.Object ref = languageCode_;
+      Object ref = languageCode_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         languageCode_ = b;
         return b;
       } else {
@@ -1513,7 +1511,7 @@ private static final long serialVersionUID = 0L;
      * <code>string language_code = 3;</code>
      */
     public Builder setLanguageCode(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1572,7 +1570,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object postalCode_ = "";
+    private Object postalCode_ = "";
     /**
      * <pre>
      * Optional. Postal code of the address. Not all countries use or require
@@ -1583,16 +1581,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string postal_code = 4;</code>
      */
-    public java.lang.String getPostalCode() {
-      java.lang.Object ref = postalCode_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getPostalCode() {
+      Object ref = postalCode_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         postalCode_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1607,11 +1605,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getPostalCodeBytes() {
-      java.lang.Object ref = postalCode_;
+      Object ref = postalCode_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         postalCode_ = b;
         return b;
       } else {
@@ -1629,7 +1627,7 @@ private static final long serialVersionUID = 0L;
      * <code>string postal_code = 4;</code>
      */
     public Builder setPostalCode(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1676,7 +1674,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object sortingCode_ = "";
+    private Object sortingCode_ = "";
     /**
      * <pre>
      * Optional. Additional, country-specific, sorting code. This is not used
@@ -1688,16 +1686,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string sorting_code = 5;</code>
      */
-    public java.lang.String getSortingCode() {
-      java.lang.Object ref = sortingCode_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSortingCode() {
+      Object ref = sortingCode_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         sortingCode_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1713,11 +1711,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSortingCodeBytes() {
-      java.lang.Object ref = sortingCode_;
+      Object ref = sortingCode_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         sortingCode_ = b;
         return b;
       } else {
@@ -1736,7 +1734,7 @@ private static final long serialVersionUID = 0L;
      * <code>string sorting_code = 5;</code>
      */
     public Builder setSortingCode(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1785,7 +1783,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object administrativeArea_ = "";
+    private Object administrativeArea_ = "";
     /**
      * <pre>
      * Optional. Highest administrative subdivision which is used for postal
@@ -1799,16 +1797,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string administrative_area = 6;</code>
      */
-    public java.lang.String getAdministrativeArea() {
-      java.lang.Object ref = administrativeArea_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getAdministrativeArea() {
+      Object ref = administrativeArea_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         administrativeArea_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1826,11 +1824,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getAdministrativeAreaBytes() {
-      java.lang.Object ref = administrativeArea_;
+      Object ref = administrativeArea_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         administrativeArea_ = b;
         return b;
       } else {
@@ -1851,7 +1849,7 @@ private static final long serialVersionUID = 0L;
      * <code>string administrative_area = 6;</code>
      */
     public Builder setAdministrativeArea(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1904,7 +1902,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object locality_ = "";
+    private Object locality_ = "";
     /**
      * <pre>
      * Optional. Generally refers to the city/town portion of the address.
@@ -1915,16 +1913,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string locality = 7;</code>
      */
-    public java.lang.String getLocality() {
-      java.lang.Object ref = locality_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getLocality() {
+      Object ref = locality_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         locality_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1939,11 +1937,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getLocalityBytes() {
-      java.lang.Object ref = locality_;
+      Object ref = locality_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         locality_ = b;
         return b;
       } else {
@@ -1961,7 +1959,7 @@ private static final long serialVersionUID = 0L;
      * <code>string locality = 7;</code>
      */
     public Builder setLocality(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2008,7 +2006,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object sublocality_ = "";
+    private Object sublocality_ = "";
     /**
      * <pre>
      * Optional. Sublocality of the address.
@@ -2017,16 +2015,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string sublocality = 8;</code>
      */
-    public java.lang.String getSublocality() {
-      java.lang.Object ref = sublocality_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getSublocality() {
+      Object ref = sublocality_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         sublocality_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -2039,11 +2037,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getSublocalityBytes() {
-      java.lang.Object ref = sublocality_;
+      Object ref = sublocality_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         sublocality_ = b;
         return b;
       } else {
@@ -2059,7 +2057,7 @@ private static final long serialVersionUID = 0L;
      * <code>string sublocality = 8;</code>
      */
     public Builder setSublocality(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2104,7 +2102,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList addressLines_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureAddressLinesIsMutable() {
-      if (!((bitField0_ & 0x00000100) == 0x00000100)) {
+      if (!((bitField0_ & 0x00000100) != 0)) {
         addressLines_ = new com.google.protobuf.LazyStringArrayList(addressLines_);
         bitField0_ |= 0x00000100;
        }
@@ -2191,7 +2189,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string address_lines = 9;</code>
      */
-    public java.lang.String getAddressLines(int index) {
+    public String getAddressLines(int index) {
       return addressLines_.get(index);
     }
     /**
@@ -2249,7 +2247,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string address_lines = 9;</code>
      */
     public Builder setAddressLines(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2284,7 +2282,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string address_lines = 9;</code>
      */
     public Builder addAddressLines(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2319,7 +2317,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string address_lines = 9;</code>
      */
     public Builder addAllAddressLines(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureAddressLinesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, addressLines_);
@@ -2396,7 +2394,7 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList recipients_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureRecipientsIsMutable() {
-      if (!((bitField0_ & 0x00000200) == 0x00000200)) {
+      if (!((bitField0_ & 0x00000200) != 0)) {
         recipients_ = new com.google.protobuf.LazyStringArrayList(recipients_);
         bitField0_ |= 0x00000200;
        }
@@ -2435,7 +2433,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated string recipients = 10;</code>
      */
-    public java.lang.String getRecipients(int index) {
+    public String getRecipients(int index) {
       return recipients_.get(index);
     }
     /**
@@ -2461,7 +2459,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string recipients = 10;</code>
      */
     public Builder setRecipients(
-        int index, java.lang.String value) {
+        int index, String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2480,7 +2478,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string recipients = 10;</code>
      */
     public Builder addRecipients(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2499,7 +2497,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated string recipients = 10;</code>
      */
     public Builder addAllRecipients(
-        java.lang.Iterable<java.lang.String> values) {
+        Iterable<String> values) {
       ensureRecipientsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, recipients_);
@@ -2542,7 +2540,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object organization_ = "";
+    private Object organization_ = "";
     /**
      * <pre>
      * Optional. The name of the organization at the address.
@@ -2550,16 +2548,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string organization = 11;</code>
      */
-    public java.lang.String getOrganization() {
-      java.lang.Object ref = organization_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getOrganization() {
+      Object ref = organization_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         organization_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -2571,11 +2569,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getOrganizationBytes() {
-      java.lang.Object ref = organization_;
+      Object ref = organization_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         organization_ = b;
         return b;
       } else {
@@ -2590,7 +2588,7 @@ private static final long serialVersionUID = 0L;
      * <code>string organization = 11;</code>
      */
     public Builder setOrganization(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -2630,13 +2628,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -2647,18 +2645,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.type.PostalAddress)
-  private static final com.google.type.PostalAddress DEFAULT_INSTANCE;
+  private static final PostalAddress DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.type.PostalAddress();
+    DEFAULT_INSTANCE = new PostalAddress();
   }
 
-  public static com.google.type.PostalAddress getDefaultInstance() {
+  public static PostalAddress getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<PostalAddress>
       PARSER = new com.google.protobuf.AbstractParser<PostalAddress>() {
-    @java.lang.Override
+    @Override
     public PostalAddress parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2671,13 +2669,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<PostalAddress> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.type.PostalAddress getDefaultInstanceForType() {
+  @Override
+  public PostalAddress getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

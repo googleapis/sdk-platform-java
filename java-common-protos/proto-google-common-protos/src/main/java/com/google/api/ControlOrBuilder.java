@@ -15,7 +15,7 @@ public interface ControlOrBuilder extends
    *
    * <code>string environment = 1;</code>
    */
-  java.lang.String getEnvironment();
+  String getEnvironment();
   /**
    * <pre>
    * The service control environment to use. If empty, no control plane

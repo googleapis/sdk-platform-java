@@ -57,7 +57,7 @@ public final class DistributionProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\035google/api/distribution.proto\022\ngoogle." +
       "api\032\031google/protobuf/any.proto\032\037google/p" +
       "rotobuf/timestamp.proto\"\331\006\n\014Distribution" +
@@ -106,43 +106,43 @@ public final class DistributionProto {
     internal_static_google_api_Distribution_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_descriptor,
-        new java.lang.String[] { "Count", "Mean", "SumOfSquaredDeviation", "Range", "BucketOptions", "BucketCounts", "Exemplars", });
+        new String[] { "Count", "Mean", "SumOfSquaredDeviation", "Range", "BucketOptions", "BucketCounts", "Exemplars", });
     internal_static_google_api_Distribution_Range_descriptor =
       internal_static_google_api_Distribution_descriptor.getNestedTypes().get(0);
     internal_static_google_api_Distribution_Range_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_Range_descriptor,
-        new java.lang.String[] { "Min", "Max", });
+        new String[] { "Min", "Max", });
     internal_static_google_api_Distribution_BucketOptions_descriptor =
       internal_static_google_api_Distribution_descriptor.getNestedTypes().get(1);
     internal_static_google_api_Distribution_BucketOptions_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_BucketOptions_descriptor,
-        new java.lang.String[] { "LinearBuckets", "ExponentialBuckets", "ExplicitBuckets", "Options", });
+        new String[] { "LinearBuckets", "ExponentialBuckets", "ExplicitBuckets", "Options", });
     internal_static_google_api_Distribution_BucketOptions_Linear_descriptor =
       internal_static_google_api_Distribution_BucketOptions_descriptor.getNestedTypes().get(0);
     internal_static_google_api_Distribution_BucketOptions_Linear_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_BucketOptions_Linear_descriptor,
-        new java.lang.String[] { "NumFiniteBuckets", "Width", "Offset", });
+        new String[] { "NumFiniteBuckets", "Width", "Offset", });
     internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor =
       internal_static_google_api_Distribution_BucketOptions_descriptor.getNestedTypes().get(1);
     internal_static_google_api_Distribution_BucketOptions_Exponential_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor,
-        new java.lang.String[] { "NumFiniteBuckets", "GrowthFactor", "Scale", });
+        new String[] { "NumFiniteBuckets", "GrowthFactor", "Scale", });
     internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor =
       internal_static_google_api_Distribution_BucketOptions_descriptor.getNestedTypes().get(2);
     internal_static_google_api_Distribution_BucketOptions_Explicit_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor,
-        new java.lang.String[] { "Bounds", });
+        new String[] { "Bounds", });
     internal_static_google_api_Distribution_Exemplar_descriptor =
       internal_static_google_api_Distribution_descriptor.getNestedTypes().get(2);
     internal_static_google_api_Distribution_Exemplar_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Distribution_Exemplar_descriptor,
-        new java.lang.String[] { "Value", "Timestamp", "Attachments", });
+        new String[] { "Value", "Timestamp", "Attachments", });
     com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.TimestampProto.getDescriptor();
   }

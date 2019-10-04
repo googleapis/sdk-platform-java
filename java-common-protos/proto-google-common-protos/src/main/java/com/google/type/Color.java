@@ -11,7 +11,11 @@ package com.google.type;
  * can be trivially provided to the constructor of "java.awt.Color" in Java; it
  * can also be trivially provided to UIColor's "+colorWithRed:green:blue:alpha"
  * method in iOS; and, with just a little work, it can be easily formatted into
- * a CSS "rgba()" string in JavaScript, as well. Here are some examples:
+ * a CSS "rgba()" string in JavaScript, as well.
+ * Note: this proto does not carry information about the absolute color space
+ * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
+ * DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the sRGB color
+ * space.
  * Example (Java):
  *      import com.google.type.Color;
  *      // ...
@@ -65,7 +69,7 @@ package com.google.type;
  *          if (![color getRed:&amp;red green:&amp;green blue:&amp;blue alpha:&amp;alpha]) {
  *            return nil;
  *          }
- *          Color* result = [Color alloc] init];
+ *          Color* result = [[Color alloc] init];
  *          [result setRed:red];
  *          [result setGreen:green];
  *          [result setBlue:blue];
@@ -118,12 +122,9 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private Color() {
-    red_ = 0F;
-    green_ = 0F;
-    blue_ = 0F;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -134,7 +135,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -176,7 +177,7 @@ private static final long serialVersionUID = 0L;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -199,12 +200,12 @@ private static final long serialVersionUID = 0L;
     return com.google.type.ColorProto.internal_static_google_type_Color_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.type.ColorProto.internal_static_google_type_Color_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.type.Color.class, com.google.type.Color.Builder.class);
+            Color.class, Builder.class);
   }
 
   public static final int RED_FIELD_NUMBER = 1;
@@ -304,7 +305,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -314,7 +315,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (red_ != 0F) {
@@ -332,7 +333,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -359,39 +360,35 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.type.Color)) {
+    if (!(obj instanceof Color)) {
       return super.equals(obj);
     }
-    com.google.type.Color other = (com.google.type.Color) obj;
+    Color other = (Color) obj;
 
-    boolean result = true;
-    result = result && (
-        java.lang.Float.floatToIntBits(getRed())
-        == java.lang.Float.floatToIntBits(
-            other.getRed()));
-    result = result && (
-        java.lang.Float.floatToIntBits(getGreen())
-        == java.lang.Float.floatToIntBits(
-            other.getGreen()));
-    result = result && (
-        java.lang.Float.floatToIntBits(getBlue())
-        == java.lang.Float.floatToIntBits(
-            other.getBlue()));
-    result = result && (hasAlpha() == other.hasAlpha());
+    if (Float.floatToIntBits(getRed())
+        != Float.floatToIntBits(
+            other.getRed())) return false;
+    if (Float.floatToIntBits(getGreen())
+        != Float.floatToIntBits(
+            other.getGreen())) return false;
+    if (Float.floatToIntBits(getBlue())
+        != Float.floatToIntBits(
+            other.getBlue())) return false;
+    if (hasAlpha() != other.hasAlpha()) return false;
     if (hasAlpha()) {
-      result = result && getAlpha()
-          .equals(other.getAlpha());
+      if (!getAlpha()
+          .equals(other.getAlpha())) return false;
     }
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -399,13 +396,13 @@ private static final long serialVersionUID = 0L;
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + RED_FIELD_NUMBER;
-    hash = (53 * hash) + java.lang.Float.floatToIntBits(
+    hash = (53 * hash) + Float.floatToIntBits(
         getRed());
     hash = (37 * hash) + GREEN_FIELD_NUMBER;
-    hash = (53 * hash) + java.lang.Float.floatToIntBits(
+    hash = (53 * hash) + Float.floatToIntBits(
         getGreen());
     hash = (37 * hash) + BLUE_FIELD_NUMBER;
-    hash = (53 * hash) + java.lang.Float.floatToIntBits(
+    hash = (53 * hash) + Float.floatToIntBits(
         getBlue());
     if (hasAlpha()) {
       hash = (37 * hash) + ALPHA_FIELD_NUMBER;
@@ -416,69 +413,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Color parseFrom(byte[] data)
+  public static Color parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.type.Color parseFrom(java.io.InputStream input)
+  public static Color parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.Color parseDelimitedFrom(java.io.InputStream input)
+  public static Color parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.type.Color parseDelimitedFrom(
+  public static Color parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.type.Color parseFrom(
+  public static Color parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -486,23 +483,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.type.Color prototype) {
+  public static Builder newBuilder(Color prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -514,7 +511,11 @@ private static final long serialVersionUID = 0L;
    * can be trivially provided to the constructor of "java.awt.Color" in Java; it
    * can also be trivially provided to UIColor's "+colorWithRed:green:blue:alpha"
    * method in iOS; and, with just a little work, it can be easily formatted into
-   * a CSS "rgba()" string in JavaScript, as well. Here are some examples:
+   * a CSS "rgba()" string in JavaScript, as well.
+   * Note: this proto does not carry information about the absolute color space
+   * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
+   * DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the sRGB color
+   * space.
    * Example (Java):
    *      import com.google.type.Color;
    *      // ...
@@ -568,7 +569,7 @@ private static final long serialVersionUID = 0L;
    *          if (![color getRed:&amp;red green:&amp;green blue:&amp;blue alpha:&amp;alpha]) {
    *            return nil;
    *          }
-   *          Color* result = [Color alloc] init];
+   *          Color* result = [[Color alloc] init];
    *          [result setRed:red];
    *          [result setGreen:green];
    *          [result setBlue:blue];
@@ -620,12 +621,12 @@ private static final long serialVersionUID = 0L;
       return com.google.type.ColorProto.internal_static_google_type_Color_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.type.ColorProto.internal_static_google_type_Color_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.type.Color.class, com.google.type.Color.Builder.class);
+              Color.class, Builder.class);
     }
 
     // Construct using com.google.type.Color.newBuilder()
@@ -634,7 +635,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -643,7 +644,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       red_ = 0F;
@@ -661,29 +662,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.type.ColorProto.internal_static_google_type_Color_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.type.Color getDefaultInstanceForType() {
-      return com.google.type.Color.getDefaultInstance();
+    @Override
+    public Color getDefaultInstanceForType() {
+      return Color.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.type.Color build() {
-      com.google.type.Color result = buildPartial();
+    @Override
+    public Color build() {
+      Color result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.type.Color buildPartial() {
-      com.google.type.Color result = new com.google.type.Color(this);
+    @Override
+    public Color buildPartial() {
+      Color result = new Color(this);
       result.red_ = red_;
       result.green_ = green_;
       result.blue_ = blue_;
@@ -696,50 +697,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.type.Color) {
-        return mergeFrom((com.google.type.Color)other);
+      if (other instanceof Color) {
+        return mergeFrom((Color)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.type.Color other) {
-      if (other == com.google.type.Color.getDefaultInstance()) return this;
+    public Builder mergeFrom(Color other) {
+      if (other == Color.getDefaultInstance()) return this;
       if (other.getRed() != 0F) {
         setRed(other.getRed());
       }
@@ -757,21 +758,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.type.Color parsedMessage = null;
+      Color parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.type.Color) e.getUnfinishedMessage();
+        parsedMessage = (Color) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -895,7 +896,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.FloatValue alpha_ = null;
+    private com.google.protobuf.FloatValue alpha_;
     private com.google.protobuf.SingleFieldBuilderV3<
         com.google.protobuf.FloatValue, com.google.protobuf.FloatValue.Builder, com.google.protobuf.FloatValueOrBuilder> alphaBuilder_;
     /**
@@ -1119,13 +1120,13 @@ private static final long serialVersionUID = 0L;
       }
       return alphaBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1136,18 +1137,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.type.Color)
-  private static final com.google.type.Color DEFAULT_INSTANCE;
+  private static final Color DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.type.Color();
+    DEFAULT_INSTANCE = new Color();
   }
 
-  public static com.google.type.Color getDefaultInstance() {
+  public static Color getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<Color>
       PARSER = new com.google.protobuf.AbstractParser<Color>() {
-    @java.lang.Override
+    @Override
     public Color parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1160,13 +1161,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<Color> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.type.Color getDefaultInstanceForType() {
+  @Override
+  public Color getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

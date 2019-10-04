@@ -15,14 +15,14 @@ public interface ConfigChangeOrBuilder extends
    * 'key' is used. If the field has no unique identifier, the numeric index
    * is used.
    * Examples:
-   * - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
+   * - visibility.rules[selector=="google.LibraryService.ListBooks"].restriction
    * - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
    * - logging.producer_destinations[0]
    * </pre>
    *
    * <code>string element = 1;</code>
    */
-  java.lang.String getElement();
+  String getElement();
   /**
    * <pre>
    * Object hierarchy path to the change, with levels separated by a '.'
@@ -31,7 +31,7 @@ public interface ConfigChangeOrBuilder extends
    * 'key' is used. If the field has no unique identifier, the numeric index
    * is used.
    * Examples:
-   * - visibility.rules[selector=="google.LibraryService.CreateBook"].restriction
+   * - visibility.rules[selector=="google.LibraryService.ListBooks"].restriction
    * - quota.metric_rules[selector=="google"].metric_costs[key=="reads"].value
    * - logging.producer_destinations[0]
    * </pre>
@@ -49,7 +49,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>string old_value = 2;</code>
    */
-  java.lang.String getOldValue();
+  String getOldValue();
   /**
    * <pre>
    * Value of the changed object in the old Service configuration,
@@ -69,7 +69,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>string new_value = 3;</code>
    */
-  java.lang.String getNewValue();
+  String getNewValue();
   /**
    * <pre>
    * Value of the changed object in the new Service configuration,
@@ -96,7 +96,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>.google.api.ChangeType change_type = 4;</code>
    */
-  com.google.api.ChangeType getChangeType();
+  ChangeType getChangeType();
 
   /**
    * <pre>
@@ -106,7 +106,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
-  java.util.List<com.google.api.Advice> 
+  java.util.List<Advice>
       getAdvicesList();
   /**
    * <pre>
@@ -116,7 +116,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
-  com.google.api.Advice getAdvices(int index);
+  Advice getAdvices(int index);
   /**
    * <pre>
    * Collection of advice provided for this change, useful for determining the
@@ -134,7 +134,7 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
-  java.util.List<? extends com.google.api.AdviceOrBuilder> 
+  java.util.List<? extends AdviceOrBuilder>
       getAdvicesOrBuilderList();
   /**
    * <pre>
@@ -144,6 +144,6 @@ public interface ConfigChangeOrBuilder extends
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
-  com.google.api.AdviceOrBuilder getAdvicesOrBuilder(
+  AdviceOrBuilder getAdvicesOrBuilder(
       int index);
 }

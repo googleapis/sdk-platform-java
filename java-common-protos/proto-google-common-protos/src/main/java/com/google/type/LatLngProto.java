@@ -27,12 +27,12 @@ public final class LatLngProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\030google/type/latlng.proto\022\013google.type\"" +
       "-\n\006LatLng\022\020\n\010latitude\030\001 \001(\001\022\021\n\tlongitude" +
-      "\030\002 \001(\001B`\n\017com.google.typeB\013LatLngProtoP\001" +
+      "\030\002 \001(\001Bc\n\017com.google.typeB\013LatLngProtoP\001" +
       "Z8google.golang.org/genproto/googleapis/" +
-      "type/latlng;latlng\242\002\003GTPb\006proto3"
+      "type/latlng;latlng\370\001\001\242\002\003GTPb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -51,7 +51,7 @@ public final class LatLngProto {
     internal_static_google_type_LatLng_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_type_LatLng_descriptor,
-        new java.lang.String[] { "Latitude", "Longitude", });
+        new String[] { "Latitude", "Longitude", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

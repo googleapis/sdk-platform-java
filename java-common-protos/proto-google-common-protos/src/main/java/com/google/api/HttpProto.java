@@ -37,7 +37,7 @@ public final class HttpProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    java.lang.String[] descriptorData = {
+    String[] descriptorData = {
       "\n\025google/api/http.proto\022\ngoogle.api\"T\n\004H" +
       "ttp\022#\n\005rules\030\001 \003(\0132\024.google.api.HttpRule" +
       "\022\'\n\037fully_decode_reserved_expansion\030\002 \001(" +
@@ -70,19 +70,19 @@ public final class HttpProto {
     internal_static_google_api_Http_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_Http_descriptor,
-        new java.lang.String[] { "Rules", "FullyDecodeReservedExpansion", });
+        new String[] { "Rules", "FullyDecodeReservedExpansion", });
     internal_static_google_api_HttpRule_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_google_api_HttpRule_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_HttpRule_descriptor,
-        new java.lang.String[] { "Selector", "Get", "Put", "Post", "Delete", "Patch", "Custom", "Body", "ResponseBody", "AdditionalBindings", "Pattern", });
+        new String[] { "Selector", "Get", "Put", "Post", "Delete", "Patch", "Custom", "Body", "ResponseBody", "AdditionalBindings", "Pattern", });
     internal_static_google_api_CustomHttpPattern_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_google_api_CustomHttpPattern_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_api_CustomHttpPattern_descriptor,
-        new java.lang.String[] { "Kind", "Path", });
+        new String[] { "Kind", "Path", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

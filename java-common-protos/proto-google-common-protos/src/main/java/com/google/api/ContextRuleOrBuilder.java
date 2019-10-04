@@ -15,7 +15,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -34,7 +34,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string requested = 2;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getRequestedList();
   /**
    * <pre>
@@ -51,7 +51,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string requested = 2;</code>
    */
-  java.lang.String getRequested(int index);
+  String getRequested(int index);
   /**
    * <pre>
    * A list of full type names of requested contexts.
@@ -69,7 +69,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string provided = 3;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getProvidedList();
   /**
    * <pre>
@@ -86,7 +86,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string provided = 3;</code>
    */
-  java.lang.String getProvided(int index);
+  String getProvided(int index);
   /**
    * <pre>
    * A list of full type names of provided contexts.
@@ -105,7 +105,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string allowed_request_extensions = 4;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getAllowedRequestExtensionsList();
   /**
    * <pre>
@@ -124,7 +124,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string allowed_request_extensions = 4;</code>
    */
-  java.lang.String getAllowedRequestExtensions(int index);
+  String getAllowedRequestExtensions(int index);
   /**
    * <pre>
    * A list of full type names or extension IDs of extensions allowed in grpc
@@ -144,7 +144,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string allowed_response_extensions = 5;</code>
    */
-  java.util.List<java.lang.String>
+  java.util.List<String>
       getAllowedResponseExtensionsList();
   /**
    * <pre>
@@ -163,7 +163,7 @@ public interface ContextRuleOrBuilder extends
    *
    * <code>repeated string allowed_response_extensions = 5;</code>
    */
-  java.lang.String getAllowedResponseExtensions(int index);
+  String getAllowedResponseExtensions(int index);
   /**
    * <pre>
    * A list of full type names or extension IDs of extensions allowed in grpc

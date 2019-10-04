@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC.
+// Copyright 2019 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,15 +27,15 @@ option java_outer_classname = "MetricProto";
 option java_package = "com.google.api";
 option objc_class_prefix = "GAPI";
 
-
 // Defines a metric type and its schema. Once a metric descriptor is created,
 // deleting or altering it stops data collection and makes the metric type's
 // existing data unusable.
 message MetricDescriptor {
   // Additional annotations that can be used to guide the usage of a metric.
   message MetricDescriptorMetadata {
+    // Deprecated. Please use the MetricDescriptor.launch_stage instead.
     // The launch stage of the metric definition.
-    LaunchStage launch_stage = 1;
+    LaunchStage launch_stage = 1 [deprecated = true];
 
     // The sampling period of metric data points. For metrics which are written
     // periodically, consecutive data points are stored at this time interval,
@@ -201,6 +201,9 @@ message MetricDescriptor {
 
   // Optional. Metadata which can be used to guide usage of the metric.
   MetricDescriptorMetadata metadata = 10;
+
+  // Optional. The launch stage of the metric definition.
+  LaunchStage launch_stage = 12;
 }
 
 // A specific metric, identified by specifying values for all of the

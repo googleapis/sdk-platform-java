@@ -32,9 +32,10 @@ private static final long serialVersionUID = 0L;
     displayName_ = "";
     description_ = "";
     labels_ = java.util.Collections.emptyList();
+    launchStage_ = 0;
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -45,7 +46,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -59,40 +60,46 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             type_ = s;
             break;
           }
           case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             displayName_ = s;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             description_ = s;
             break;
           }
           case 34: {
-            if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-              labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>();
+            if (!((mutable_bitField0_ & 0x00000010) != 0)) {
+              labels_ = new java.util.ArrayList<LabelDescriptor>();
               mutable_bitField0_ |= 0x00000010;
             }
             labels_.add(
-                input.readMessage(com.google.api.LabelDescriptor.parser(), extensionRegistry));
+                input.readMessage(LabelDescriptor.parser(), extensionRegistry));
             break;
           }
           case 42: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             name_ = s;
             break;
           }
+          case 56: {
+            int rawValue = input.readEnum();
+
+            launchStage_ = rawValue;
+            break;
+          }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -106,7 +113,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+      if (((mutable_bitField0_ & 0x00000010) != 0)) {
         labels_ = java.util.Collections.unmodifiableList(labels_);
       }
       this.unknownFields = unknownFields.build();
@@ -115,20 +122,20 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.api.MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
+    return MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.api.MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
+    return MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.api.MonitoredResourceDescriptor.class, com.google.api.MonitoredResourceDescriptor.Builder.class);
+            MonitoredResourceDescriptor.class, Builder.class);
   }
 
   private int bitField0_;
   public static final int NAME_FIELD_NUMBER = 5;
-  private volatile java.lang.Object name_;
+  private volatile Object name_;
   /**
    * <pre>
    * Optional. The resource name of the monitored resource descriptor:
@@ -141,14 +148,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string name = 5;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getName() {
+    Object ref = name_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       name_ = s;
       return s;
     }
@@ -167,11 +174,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
+    Object ref = name_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       name_ = b;
       return b;
     } else {
@@ -180,7 +187,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int TYPE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object type_;
+  private volatile Object type_;
   /**
    * <pre>
    * Required. The monitored resource type. For example, the type
@@ -190,14 +197,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string type = 1;</code>
    */
-  public java.lang.String getType() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getType() {
+    Object ref = type_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       type_ = s;
       return s;
     }
@@ -213,11 +220,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getTypeBytes() {
-    java.lang.Object ref = type_;
-    if (ref instanceof java.lang.String) {
+    Object ref = type_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       type_ = b;
       return b;
     } else {
@@ -226,7 +233,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 2;
-  private volatile java.lang.Object displayName_;
+  private volatile Object displayName_;
   /**
    * <pre>
    * Optional. A concise name for the monitored resource type that might be
@@ -237,14 +244,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string display_name = 2;</code>
    */
-  public java.lang.String getDisplayName() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDisplayName() {
+    Object ref = displayName_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       displayName_ = s;
       return s;
     }
@@ -261,11 +268,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDisplayNameBytes() {
-    java.lang.Object ref = displayName_;
-    if (ref instanceof java.lang.String) {
+    Object ref = displayName_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       displayName_ = b;
       return b;
     } else {
@@ -274,7 +281,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object description_;
+  private volatile Object description_;
   /**
    * <pre>
    * Optional. A detailed description of the monitored resource type that might
@@ -283,14 +290,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string description = 3;</code>
    */
-  public java.lang.String getDescription() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getDescription() {
+    Object ref = description_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       description_ = s;
       return s;
     }
@@ -305,11 +312,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getDescriptionBytes() {
-    java.lang.Object ref = description_;
-    if (ref instanceof java.lang.String) {
+    Object ref = description_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       description_ = b;
       return b;
     } else {
@@ -318,7 +325,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int LABELS_FIELD_NUMBER = 4;
-  private java.util.List<com.google.api.LabelDescriptor> labels_;
+  private java.util.List<LabelDescriptor> labels_;
   /**
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
@@ -328,7 +335,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
+  public java.util.List<LabelDescriptor> getLabelsList() {
     return labels_;
   }
   /**
@@ -340,7 +347,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> 
+  public java.util.List<? extends LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
   }
@@ -365,7 +372,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  public com.google.api.LabelDescriptor getLabels(int index) {
+  public LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
   /**
@@ -377,13 +384,38 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
-  public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(
+  public LabelDescriptorOrBuilder getLabelsOrBuilder(
       int index) {
     return labels_.get(index);
   }
 
+  public static final int LAUNCH_STAGE_FIELD_NUMBER = 7;
+  private int launchStage_;
+  /**
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   */
+  public int getLaunchStageValue() {
+    return launchStage_;
+  }
+  /**
+   * <pre>
+   * Optional. The launch stage of the monitored resource definition.
+   * </pre>
+   *
+   * <code>.google.api.LaunchStage launch_stage = 7;</code>
+   */
+  public LaunchStage getLaunchStage() {
+    @SuppressWarnings("deprecation")
+    LaunchStage result = LaunchStage.valueOf(launchStage_);
+    return result == null ? LaunchStage.UNRECOGNIZED : result;
+  }
+
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -393,7 +425,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getTypeBytes().isEmpty()) {
@@ -411,10 +443,13 @@ private static final long serialVersionUID = 0L;
     if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 5, name_);
     }
+    if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      output.writeEnum(7, launchStage_);
+    }
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -436,37 +471,41 @@ private static final long serialVersionUID = 0L;
     if (!getNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, name_);
     }
+    if (launchStage_ != LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeEnumSize(7, launchStage_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.api.MonitoredResourceDescriptor)) {
+    if (!(obj instanceof MonitoredResourceDescriptor)) {
       return super.equals(obj);
     }
-    com.google.api.MonitoredResourceDescriptor other = (com.google.api.MonitoredResourceDescriptor) obj;
+    MonitoredResourceDescriptor other = (MonitoredResourceDescriptor) obj;
 
-    boolean result = true;
-    result = result && getName()
-        .equals(other.getName());
-    result = result && getType()
-        .equals(other.getType());
-    result = result && getDisplayName()
-        .equals(other.getDisplayName());
-    result = result && getDescription()
-        .equals(other.getDescription());
-    result = result && getLabelsList()
-        .equals(other.getLabelsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getName()
+        .equals(other.getName())) return false;
+    if (!getType()
+        .equals(other.getType())) return false;
+    if (!getDisplayName()
+        .equals(other.getDisplayName())) return false;
+    if (!getDescription()
+        .equals(other.getDescription())) return false;
+    if (!getLabelsList()
+        .equals(other.getLabelsList())) return false;
+    if (launchStage_ != other.launchStage_) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -485,74 +524,76 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + LABELS_FIELD_NUMBER;
       hash = (53 * hash) + getLabelsList().hashCode();
     }
+    hash = (37 * hash) + LAUNCH_STAGE_FIELD_NUMBER;
+    hash = (53 * hash) + launchStage_;
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(byte[] data)
+  public static MonitoredResourceDescriptor parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(java.io.InputStream input)
+  public static MonitoredResourceDescriptor parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseDelimitedFrom(java.io.InputStream input)
+  public static MonitoredResourceDescriptor parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseDelimitedFrom(
+  public static MonitoredResourceDescriptor parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.api.MonitoredResourceDescriptor parseFrom(
+  public static MonitoredResourceDescriptor parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -560,23 +601,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.api.MonitoredResourceDescriptor prototype) {
+  public static Builder newBuilder(MonitoredResourceDescriptor prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -600,15 +641,15 @@ private static final long serialVersionUID = 0L;
       com.google.api.MonitoredResourceDescriptorOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.api.MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
+      return MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.api.MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
+      return MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.api.MonitoredResourceDescriptor.class, com.google.api.MonitoredResourceDescriptor.Builder.class);
+              MonitoredResourceDescriptor.class, Builder.class);
     }
 
     // Construct using com.google.api.MonitoredResourceDescriptor.newBuilder()
@@ -617,7 +658,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -627,7 +668,7 @@ private static final long serialVersionUID = 0L;
         getLabelsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       name_ = "";
@@ -644,32 +685,34 @@ private static final long serialVersionUID = 0L;
       } else {
         labelsBuilder_.clear();
       }
+      launchStage_ = 0;
+
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.api.MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
+      return MonitoredResourceProto.internal_static_google_api_MonitoredResourceDescriptor_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor getDefaultInstanceForType() {
-      return com.google.api.MonitoredResourceDescriptor.getDefaultInstance();
+    @Override
+    public MonitoredResourceDescriptor getDefaultInstanceForType() {
+      return MonitoredResourceDescriptor.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor build() {
-      com.google.api.MonitoredResourceDescriptor result = buildPartial();
+    @Override
+    public MonitoredResourceDescriptor build() {
+      MonitoredResourceDescriptor result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.api.MonitoredResourceDescriptor buildPartial() {
-      com.google.api.MonitoredResourceDescriptor result = new com.google.api.MonitoredResourceDescriptor(this);
+    @Override
+    public MonitoredResourceDescriptor buildPartial() {
+      MonitoredResourceDescriptor result = new MonitoredResourceDescriptor(this);
       int from_bitField0_ = bitField0_;
       int to_bitField0_ = 0;
       result.name_ = name_;
@@ -677,7 +720,7 @@ private static final long serialVersionUID = 0L;
       result.displayName_ = displayName_;
       result.description_ = description_;
       if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        if (((bitField0_ & 0x00000010) != 0)) {
           labels_ = java.util.Collections.unmodifiableList(labels_);
           bitField0_ = (bitField0_ & ~0x00000010);
         }
@@ -685,55 +728,56 @@ private static final long serialVersionUID = 0L;
       } else {
         result.labels_ = labelsBuilder_.build();
       }
+      result.launchStage_ = launchStage_;
       result.bitField0_ = to_bitField0_;
       onBuilt();
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.api.MonitoredResourceDescriptor) {
-        return mergeFrom((com.google.api.MonitoredResourceDescriptor)other);
+      if (other instanceof MonitoredResourceDescriptor) {
+        return mergeFrom((MonitoredResourceDescriptor)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.api.MonitoredResourceDescriptor other) {
-      if (other == com.google.api.MonitoredResourceDescriptor.getDefaultInstance()) return this;
+    public Builder mergeFrom(MonitoredResourceDescriptor other) {
+      if (other == MonitoredResourceDescriptor.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         onChanged();
@@ -776,26 +820,29 @@ private static final long serialVersionUID = 0L;
           }
         }
       }
+      if (other.launchStage_ != 0) {
+        setLaunchStageValue(other.getLaunchStageValue());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.api.MonitoredResourceDescriptor parsedMessage = null;
+      MonitoredResourceDescriptor parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.api.MonitoredResourceDescriptor) e.getUnfinishedMessage();
+        parsedMessage = (MonitoredResourceDescriptor) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -806,7 +853,7 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object name_ = "";
+    private Object name_ = "";
     /**
      * <pre>
      * Optional. The resource name of the monitored resource descriptor:
@@ -819,16 +866,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string name = 5;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getName() {
+      Object ref = name_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         name_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -845,11 +892,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
+      Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         name_ = b;
         return b;
       } else {
@@ -869,7 +916,7 @@ private static final long serialVersionUID = 0L;
      * <code>string name = 5;</code>
      */
     public Builder setName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -920,7 +967,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object type_ = "";
+    private Object type_ = "";
     /**
      * <pre>
      * Required. The monitored resource type. For example, the type
@@ -930,16 +977,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string type = 1;</code>
      */
-    public java.lang.String getType() {
-      java.lang.Object ref = type_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getType() {
+      Object ref = type_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         type_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -953,11 +1000,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getTypeBytes() {
-      java.lang.Object ref = type_;
+      Object ref = type_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         type_ = b;
         return b;
       } else {
@@ -974,7 +1021,7 @@ private static final long serialVersionUID = 0L;
      * <code>string type = 1;</code>
      */
     public Builder setType(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1019,7 +1066,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object displayName_ = "";
+    private Object displayName_ = "";
     /**
      * <pre>
      * Optional. A concise name for the monitored resource type that might be
@@ -1030,16 +1077,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string display_name = 2;</code>
      */
-    public java.lang.String getDisplayName() {
-      java.lang.Object ref = displayName_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDisplayName() {
+      Object ref = displayName_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         displayName_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1054,11 +1101,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDisplayNameBytes() {
-      java.lang.Object ref = displayName_;
+      Object ref = displayName_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         displayName_ = b;
         return b;
       } else {
@@ -1076,7 +1123,7 @@ private static final long serialVersionUID = 0L;
      * <code>string display_name = 2;</code>
      */
     public Builder setDisplayName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1123,7 +1170,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object description_ = "";
+    private Object description_ = "";
     /**
      * <pre>
      * Optional. A detailed description of the monitored resource type that might
@@ -1132,16 +1179,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 3;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getDescription() {
+      Object ref = description_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -1154,11 +1201,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
+      Object ref = description_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -1174,7 +1221,7 @@ private static final long serialVersionUID = 0L;
      * <code>string description = 3;</code>
      */
     public Builder setDescription(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -1217,17 +1264,17 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<com.google.api.LabelDescriptor> labels_ =
+    private java.util.List<LabelDescriptor> labels_ =
       java.util.Collections.emptyList();
     private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-        labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
+      if (!((bitField0_ & 0x00000010) != 0)) {
+        labels_ = new java.util.ArrayList<LabelDescriptor>(labels_);
         bitField0_ |= 0x00000010;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder> labelsBuilder_;
+        LabelDescriptor, LabelDescriptor.Builder, LabelDescriptorOrBuilder> labelsBuilder_;
 
     /**
      * <pre>
@@ -1238,7 +1285,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
+    public java.util.List<LabelDescriptor> getLabelsList() {
       if (labelsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(labels_);
       } else {
@@ -1270,7 +1317,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public com.google.api.LabelDescriptor getLabels(int index) {
+    public LabelDescriptor getLabels(int index) {
       if (labelsBuilder_ == null) {
         return labels_.get(index);
       } else {
@@ -1287,7 +1334,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder setLabels(
-        int index, com.google.api.LabelDescriptor value) {
+        int index, LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1310,7 +1357,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder setLabels(
-        int index, com.google.api.LabelDescriptor.Builder builderForValue) {
+        int index, LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.set(index, builderForValue.build());
@@ -1329,7 +1376,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public Builder addLabels(com.google.api.LabelDescriptor value) {
+    public Builder addLabels(LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1352,7 +1399,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(
-        int index, com.google.api.LabelDescriptor value) {
+        int index, LabelDescriptor value) {
       if (labelsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1375,7 +1422,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(
-        com.google.api.LabelDescriptor.Builder builderForValue) {
+        LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.add(builderForValue.build());
@@ -1395,7 +1442,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addLabels(
-        int index, com.google.api.LabelDescriptor.Builder builderForValue) {
+        int index, LabelDescriptor.Builder builderForValue) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         labels_.add(index, builderForValue.build());
@@ -1415,7 +1462,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
     public Builder addAllLabels(
-        java.lang.Iterable<? extends com.google.api.LabelDescriptor> values) {
+        Iterable<? extends LabelDescriptor> values) {
       if (labelsBuilder_ == null) {
         ensureLabelsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1473,7 +1520,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public com.google.api.LabelDescriptor.Builder getLabelsBuilder(
+    public LabelDescriptor.Builder getLabelsBuilder(
         int index) {
       return getLabelsFieldBuilder().getBuilder(index);
     }
@@ -1486,7 +1533,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(
+    public LabelDescriptorOrBuilder getLabelsOrBuilder(
         int index) {
       if (labelsBuilder_ == null) {
         return labels_.get(index);  } else {
@@ -1502,7 +1549,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder> 
+    public java.util.List<? extends LabelDescriptorOrBuilder>
          getLabelsOrBuilderList() {
       if (labelsBuilder_ != null) {
         return labelsBuilder_.getMessageOrBuilderList();
@@ -1519,9 +1566,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder() {
+    public LabelDescriptor.Builder addLabelsBuilder() {
       return getLabelsFieldBuilder().addBuilder(
-          com.google.api.LabelDescriptor.getDefaultInstance());
+          LabelDescriptor.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1532,10 +1579,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public com.google.api.LabelDescriptor.Builder addLabelsBuilder(
+    public LabelDescriptor.Builder addLabelsBuilder(
         int index) {
       return getLabelsFieldBuilder().addBuilder(
-          index, com.google.api.LabelDescriptor.getDefaultInstance());
+          index, LabelDescriptor.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1546,31 +1593,96 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
      */
-    public java.util.List<com.google.api.LabelDescriptor.Builder> 
+    public java.util.List<LabelDescriptor.Builder>
          getLabelsBuilderList() {
       return getLabelsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder> 
+        LabelDescriptor, LabelDescriptor.Builder, LabelDescriptorOrBuilder>
         getLabelsFieldBuilder() {
       if (labelsBuilder_ == null) {
         labelsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.api.LabelDescriptor, com.google.api.LabelDescriptor.Builder, com.google.api.LabelDescriptorOrBuilder>(
+            LabelDescriptor, LabelDescriptor.Builder, LabelDescriptorOrBuilder>(
                 labels_,
-                ((bitField0_ & 0x00000010) == 0x00000010),
+                ((bitField0_ & 0x00000010) != 0),
                 getParentForChildren(),
                 isClean());
         labels_ = null;
       }
       return labelsBuilder_;
     }
-    @java.lang.Override
+
+    private int launchStage_ = 0;
+    /**
+     * <pre>
+     * Optional. The launch stage of the monitored resource definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 7;</code>
+     */
+    public int getLaunchStageValue() {
+      return launchStage_;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the monitored resource definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 7;</code>
+     */
+    public Builder setLaunchStageValue(int value) {
+      launchStage_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the monitored resource definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 7;</code>
+     */
+    public LaunchStage getLaunchStage() {
+      @SuppressWarnings("deprecation")
+      LaunchStage result = LaunchStage.valueOf(launchStage_);
+      return result == null ? LaunchStage.UNRECOGNIZED : result;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the monitored resource definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 7;</code>
+     */
+    public Builder setLaunchStage(LaunchStage value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      
+      launchStage_ = value.getNumber();
+      onChanged();
+      return this;
+    }
+    /**
+     * <pre>
+     * Optional. The launch stage of the monitored resource definition.
+     * </pre>
+     *
+     * <code>.google.api.LaunchStage launch_stage = 7;</code>
+     */
+    public Builder clearLaunchStage() {
+      
+      launchStage_ = 0;
+      onChanged();
+      return this;
+    }
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1581,18 +1693,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.api.MonitoredResourceDescriptor)
-  private static final com.google.api.MonitoredResourceDescriptor DEFAULT_INSTANCE;
+  private static final MonitoredResourceDescriptor DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.api.MonitoredResourceDescriptor();
+    DEFAULT_INSTANCE = new MonitoredResourceDescriptor();
   }
 
-  public static com.google.api.MonitoredResourceDescriptor getDefaultInstance() {
+  public static MonitoredResourceDescriptor getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<MonitoredResourceDescriptor>
       PARSER = new com.google.protobuf.AbstractParser<MonitoredResourceDescriptor>() {
-    @java.lang.Override
+    @Override
     public MonitoredResourceDescriptor parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1605,13 +1717,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<MonitoredResourceDescriptor> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.api.MonitoredResourceDescriptor getDefaultInstanceForType() {
+  @Override
+  public MonitoredResourceDescriptor getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

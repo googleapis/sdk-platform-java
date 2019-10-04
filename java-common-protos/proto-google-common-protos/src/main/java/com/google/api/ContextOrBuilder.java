@@ -15,7 +15,7 @@ public interface ContextOrBuilder extends
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
-  java.util.List<com.google.api.ContextRule> 
+  java.util.List<ContextRule>
       getRulesList();
   /**
    * <pre>
@@ -25,7 +25,7 @@ public interface ContextOrBuilder extends
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
-  com.google.api.ContextRule getRules(int index);
+  ContextRule getRules(int index);
   /**
    * <pre>
    * A list of RPC context rules that apply to individual API methods.

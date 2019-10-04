@@ -15,7 +15,7 @@ public interface BackendRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies.
@@ -34,7 +34,7 @@ public interface BackendRuleOrBuilder extends
    *
    * <code>string address = 2;</code>
    */
-  java.lang.String getAddress();
+  String getAddress();
   /**
    * <pre>
    * The address of the API backend.
@@ -82,7 +82,7 @@ public interface BackendRuleOrBuilder extends
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    */
-  com.google.api.BackendRule.PathTranslation getPathTranslation();
+  BackendRule.PathTranslation getPathTranslation();
 
   /**
    * <pre>
@@ -91,7 +91,7 @@ public interface BackendRuleOrBuilder extends
    *
    * <code>string jwt_audience = 7;</code>
    */
-  java.lang.String getJwtAudience();
+  String getJwtAudience();
   /**
    * <pre>
    * The JWT audience is used when generating a JWT id token for the backend.
@@ -102,5 +102,5 @@ public interface BackendRuleOrBuilder extends
   com.google.protobuf.ByteString
       getJwtAudienceBytes();
 
-  public com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
+  public BackendRule.AuthenticationCase getAuthenticationCase();
 }

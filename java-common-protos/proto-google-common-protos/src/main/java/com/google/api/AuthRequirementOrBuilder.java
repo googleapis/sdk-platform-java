@@ -16,7 +16,7 @@ public interface AuthRequirementOrBuilder extends
    *
    * <code>string provider_id = 1;</code>
    */
-  java.lang.String getProviderId();
+  String getProviderId();
   /**
    * <pre>
    * [id][google.api.AuthProvider.id] from authentication provider.
@@ -48,7 +48,7 @@ public interface AuthRequirementOrBuilder extends
    *
    * <code>string audiences = 2;</code>
    */
-  java.lang.String getAudiences();
+  String getAudiences();
   /**
    * <pre>
    * NOTE: This will be deprecated soon, once AuthProvider.audiences is

@@ -16,7 +16,7 @@ public interface SystemParameterRuleOrBuilder extends
    *
    * <code>string selector = 1;</code>
    */
-  java.lang.String getSelector();
+  String getSelector();
   /**
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
@@ -40,7 +40,7 @@ public interface SystemParameterRuleOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
-  java.util.List<com.google.api.SystemParameter> 
+  java.util.List<SystemParameter>
       getParametersList();
   /**
    * <pre>
@@ -53,7 +53,7 @@ public interface SystemParameterRuleOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
-  com.google.api.SystemParameter getParameters(int index);
+  SystemParameter getParameters(int index);
   /**
    * <pre>
    * Define parameters. Multiple names may be defined for a parameter.
@@ -77,7 +77,7 @@ public interface SystemParameterRuleOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
-  java.util.List<? extends com.google.api.SystemParameterOrBuilder> 
+  java.util.List<? extends SystemParameterOrBuilder>
       getParametersOrBuilderList();
   /**
    * <pre>
@@ -90,6 +90,6 @@ public interface SystemParameterRuleOrBuilder extends
    *
    * <code>repeated .google.api.SystemParameter parameters = 2;</code>
    */
-  com.google.api.SystemParameterOrBuilder getParametersOrBuilder(
+  SystemParameterOrBuilder getParametersOrBuilder(
       int index);
 }

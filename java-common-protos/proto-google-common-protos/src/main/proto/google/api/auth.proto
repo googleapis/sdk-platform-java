@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC.
+// Copyright 2019 Google LLC.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,14 +17,11 @@ syntax = "proto3";
 
 package google.api;
 
-import "google/api/annotations.proto";
-
 option go_package = "google.golang.org/genproto/googleapis/api/serviceconfig;serviceconfig";
 option java_multiple_files = true;
 option java_outer_classname = "AuthProto";
 option java_package = "com.google.api";
 option objc_class_prefix = "GAPI";
-
 
 // `Authentication` defines the authentication configuration for an API.
 //
@@ -75,8 +72,9 @@ message AuthenticationRule {
   repeated AuthRequirement requirements = 7;
 }
 
-// Configuration for an anthentication provider, including support for
-// [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+// Configuration for an authentication provider, including support for
+// [JSON Web Token
+// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 message AuthProvider {
   // The unique identifier of the auth provider. It will be referred to by
   // `AuthRequirement.provider_id`.
@@ -93,12 +91,15 @@ message AuthProvider {
   string issuer = 2;
 
   // URL of the provider's public key set to validate signature of the JWT. See
-  // [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
+  // [OpenID
+  // Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata).
   // Optional if the key set document:
   //  - can be retrieved from
-  //    [OpenID Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
-  //    of the issuer.
-  //  - can be inferred from the email domain of the issuer (e.g. a Google service account).
+  //    [OpenID
+  //    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
+  //    the issuer.
+  //  - can be inferred from the email domain of the issuer (e.g. a Google
+  //  service account).
   //
   // Example: https://www.googleapis.com/oauth2/v1/certs
   string jwks_uri = 3;
@@ -153,7 +154,8 @@ message OAuthRequirements {
 }
 
 // User-defined authentication requirements, including support for
-// [JSON Web Token (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
+// [JSON Web Token
+// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).
 message AuthRequirement {
   // [id][google.api.AuthProvider.id] from authentication provider.
   //

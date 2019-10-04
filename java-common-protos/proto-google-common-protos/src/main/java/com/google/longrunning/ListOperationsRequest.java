@@ -22,11 +22,10 @@ private static final long serialVersionUID = 0L;
   private ListOperationsRequest() {
     name_ = "";
     filter_ = "";
-    pageSize_ = 0;
     pageToken_ = "";
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -37,7 +36,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -51,7 +50,7 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             filter_ = s;
             break;
@@ -62,19 +61,19 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             pageToken_ = s;
             break;
           }
           case 34: {
-            java.lang.String s = input.readStringRequireUtf8();
+            String s = input.readStringRequireUtf8();
 
             name_ = s;
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -94,52 +93,52 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
+    return OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsRequest_fieldAccessorTable
+    return OperationsProto.internal_static_google_longrunning_ListOperationsRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.longrunning.ListOperationsRequest.class, com.google.longrunning.ListOperationsRequest.Builder.class);
+            ListOperationsRequest.class, Builder.class);
   }
 
   public static final int NAME_FIELD_NUMBER = 4;
-  private volatile java.lang.Object name_;
+  private volatile Object name_;
   /**
    * <pre>
-   * The name of the operation collection.
+   * The name of the operation's parent resource.
    * </pre>
    *
    * <code>string name = 4;</code>
    */
-  public java.lang.String getName() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getName() {
+    Object ref = name_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       name_ = s;
       return s;
     }
   }
   /**
    * <pre>
-   * The name of the operation collection.
+   * The name of the operation's parent resource.
    * </pre>
    *
    * <code>string name = 4;</code>
    */
   public com.google.protobuf.ByteString
       getNameBytes() {
-    java.lang.Object ref = name_;
-    if (ref instanceof java.lang.String) {
+    Object ref = name_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       name_ = b;
       return b;
     } else {
@@ -148,7 +147,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int FILTER_FIELD_NUMBER = 1;
-  private volatile java.lang.Object filter_;
+  private volatile Object filter_;
   /**
    * <pre>
    * The standard list filter.
@@ -156,14 +155,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string filter = 1;</code>
    */
-  public java.lang.String getFilter() {
-    java.lang.Object ref = filter_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getFilter() {
+    Object ref = filter_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       filter_ = s;
       return s;
     }
@@ -177,11 +176,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getFilterBytes() {
-    java.lang.Object ref = filter_;
-    if (ref instanceof java.lang.String) {
+    Object ref = filter_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       filter_ = b;
       return b;
     } else {
@@ -203,7 +202,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int PAGE_TOKEN_FIELD_NUMBER = 3;
-  private volatile java.lang.Object pageToken_;
+  private volatile Object pageToken_;
   /**
    * <pre>
    * The standard list page token.
@@ -211,14 +210,14 @@ private static final long serialVersionUID = 0L;
    *
    * <code>string page_token = 3;</code>
    */
-  public java.lang.String getPageToken() {
-    java.lang.Object ref = pageToken_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
+  public String getPageToken() {
+    Object ref = pageToken_;
+    if (ref instanceof String) {
+      return (String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
+      String s = bs.toStringUtf8();
       pageToken_ = s;
       return s;
     }
@@ -232,11 +231,11 @@ private static final long serialVersionUID = 0L;
    */
   public com.google.protobuf.ByteString
       getPageTokenBytes() {
-    java.lang.Object ref = pageToken_;
-    if (ref instanceof java.lang.String) {
+    Object ref = pageToken_;
+    if (ref instanceof String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+              (String) ref);
       pageToken_ = b;
       return b;
     } else {
@@ -245,7 +244,7 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -255,7 +254,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!getFilterBytes().isEmpty()) {
@@ -273,7 +272,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -297,30 +296,29 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.longrunning.ListOperationsRequest)) {
+    if (!(obj instanceof ListOperationsRequest)) {
       return super.equals(obj);
     }
-    com.google.longrunning.ListOperationsRequest other = (com.google.longrunning.ListOperationsRequest) obj;
+    ListOperationsRequest other = (ListOperationsRequest) obj;
 
-    boolean result = true;
-    result = result && getName()
-        .equals(other.getName());
-    result = result && getFilter()
-        .equals(other.getFilter());
-    result = result && (getPageSize()
-        == other.getPageSize());
-    result = result && getPageToken()
-        .equals(other.getPageToken());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getName()
+        .equals(other.getName())) return false;
+    if (!getFilter()
+        .equals(other.getFilter())) return false;
+    if (getPageSize()
+        != other.getPageSize()) return false;
+    if (!getPageToken()
+        .equals(other.getPageToken())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -340,69 +338,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(byte[] data)
+  public static ListOperationsRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(java.io.InputStream input)
+  public static ListOperationsRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsRequest parseDelimitedFrom(java.io.InputStream input)
+  public static ListOperationsRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsRequest parseDelimitedFrom(
+  public static ListOperationsRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.longrunning.ListOperationsRequest parseFrom(
+  public static ListOperationsRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -410,23 +408,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.longrunning.ListOperationsRequest prototype) {
+  public static Builder newBuilder(ListOperationsRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -443,15 +441,15 @@ private static final long serialVersionUID = 0L;
       com.google.longrunning.ListOperationsRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
+      return OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsRequest_fieldAccessorTable
+      return OperationsProto.internal_static_google_longrunning_ListOperationsRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.longrunning.ListOperationsRequest.class, com.google.longrunning.ListOperationsRequest.Builder.class);
+              ListOperationsRequest.class, Builder.class);
     }
 
     // Construct using com.google.longrunning.ListOperationsRequest.newBuilder()
@@ -460,7 +458,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -469,7 +467,7 @@ private static final long serialVersionUID = 0L;
               .alwaysUseFieldBuilders) {
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       name_ = "";
@@ -483,29 +481,29 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.longrunning.OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
+      return OperationsProto.internal_static_google_longrunning_ListOperationsRequest_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsRequest getDefaultInstanceForType() {
-      return com.google.longrunning.ListOperationsRequest.getDefaultInstance();
+    @Override
+    public ListOperationsRequest getDefaultInstanceForType() {
+      return ListOperationsRequest.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsRequest build() {
-      com.google.longrunning.ListOperationsRequest result = buildPartial();
+    @Override
+    public ListOperationsRequest build() {
+      ListOperationsRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.longrunning.ListOperationsRequest buildPartial() {
-      com.google.longrunning.ListOperationsRequest result = new com.google.longrunning.ListOperationsRequest(this);
+    @Override
+    public ListOperationsRequest buildPartial() {
+      ListOperationsRequest result = new ListOperationsRequest(this);
       result.name_ = name_;
       result.filter_ = filter_;
       result.pageSize_ = pageSize_;
@@ -514,50 +512,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.longrunning.ListOperationsRequest) {
-        return mergeFrom((com.google.longrunning.ListOperationsRequest)other);
+      if (other instanceof ListOperationsRequest) {
+        return mergeFrom((ListOperationsRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.longrunning.ListOperationsRequest other) {
-      if (other == com.google.longrunning.ListOperationsRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(ListOperationsRequest other) {
+      if (other == ListOperationsRequest.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         onChanged();
@@ -578,21 +576,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.longrunning.ListOperationsRequest parsedMessage = null;
+      ListOperationsRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.longrunning.ListOperationsRequest) e.getUnfinishedMessage();
+        parsedMessage = (ListOperationsRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -602,40 +600,40 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object name_ = "";
+    private Object name_ = "";
     /**
      * <pre>
-     * The name of the operation collection.
+     * The name of the operation's parent resource.
      * </pre>
      *
      * <code>string name = 4;</code>
      */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getName() {
+      Object ref = name_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         name_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
      * <pre>
-     * The name of the operation collection.
+     * The name of the operation's parent resource.
      * </pre>
      *
      * <code>string name = 4;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
-      java.lang.Object ref = name_;
+      Object ref = name_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         name_ = b;
         return b;
       } else {
@@ -644,13 +642,13 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the operation collection.
+     * The name of the operation's parent resource.
      * </pre>
      *
      * <code>string name = 4;</code>
      */
     public Builder setName(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -661,7 +659,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the operation collection.
+     * The name of the operation's parent resource.
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -674,7 +672,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * The name of the operation collection.
+     * The name of the operation's parent resource.
      * </pre>
      *
      * <code>string name = 4;</code>
@@ -691,7 +689,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object filter_ = "";
+    private Object filter_ = "";
     /**
      * <pre>
      * The standard list filter.
@@ -699,16 +697,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string filter = 1;</code>
      */
-    public java.lang.String getFilter() {
-      java.lang.Object ref = filter_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getFilter() {
+      Object ref = filter_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         filter_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -720,11 +718,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getFilterBytes() {
-      java.lang.Object ref = filter_;
+      Object ref = filter_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         filter_ = b;
         return b;
       } else {
@@ -739,7 +737,7 @@ private static final long serialVersionUID = 0L;
      * <code>string filter = 1;</code>
      */
     public Builder setFilter(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -818,7 +816,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object pageToken_ = "";
+    private Object pageToken_ = "";
     /**
      * <pre>
      * The standard list page token.
@@ -826,16 +824,16 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string page_token = 3;</code>
      */
-    public java.lang.String getPageToken() {
-      java.lang.Object ref = pageToken_;
-      if (!(ref instanceof java.lang.String)) {
+    public String getPageToken() {
+      Object ref = pageToken_;
+      if (!(ref instanceof String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         pageToken_ = s;
         return s;
       } else {
-        return (java.lang.String) ref;
+        return (String) ref;
       }
     }
     /**
@@ -847,11 +845,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getPageTokenBytes() {
-      java.lang.Object ref = pageToken_;
+      Object ref = pageToken_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         pageToken_ = b;
         return b;
       } else {
@@ -866,7 +864,7 @@ private static final long serialVersionUID = 0L;
      * <code>string page_token = 3;</code>
      */
     public Builder setPageToken(
-        java.lang.String value) {
+        String value) {
       if (value == null) {
     throw new NullPointerException();
   }
@@ -906,13 +904,13 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -923,18 +921,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.longrunning.ListOperationsRequest)
-  private static final com.google.longrunning.ListOperationsRequest DEFAULT_INSTANCE;
+  private static final ListOperationsRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.longrunning.ListOperationsRequest();
+    DEFAULT_INSTANCE = new ListOperationsRequest();
   }
 
-  public static com.google.longrunning.ListOperationsRequest getDefaultInstance() {
+  public static ListOperationsRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<ListOperationsRequest>
       PARSER = new com.google.protobuf.AbstractParser<ListOperationsRequest>() {
-    @java.lang.Override
+    @Override
     public ListOperationsRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -947,13 +945,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<ListOperationsRequest> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.longrunning.ListOperationsRequest getDefaultInstanceForType() {
+  @Override
+  public ListOperationsRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

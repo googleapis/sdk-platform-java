@@ -17,7 +17,7 @@ public interface LogDescriptorOrBuilder extends
    *
    * <code>string name = 1;</code>
    */
-  java.lang.String getName();
+  String getName();
   /**
    * <pre>
    * The name of the log. It must be less than 512 characters long and can
@@ -40,7 +40,7 @@ public interface LogDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  java.util.List<com.google.api.LabelDescriptor> 
+  java.util.List<LabelDescriptor>
       getLabelsList();
   /**
    * <pre>
@@ -51,7 +51,7 @@ public interface LogDescriptorOrBuilder extends
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
-  com.google.api.LabelDescriptor getLabels(int index);
+  LabelDescriptor getLabels(int index);
   /**
    * <pre>
    * The set of labels that are available to describe a specific log entry.
@@ -93,7 +93,7 @@ public interface LogDescriptorOrBuilder extends
    *
    * <code>string description = 3;</code>
    */
-  java.lang.String getDescription();
+  String getDescription();
   /**
    * <pre>
    * A human-readable description of this log. This information appears in
@@ -113,7 +113,7 @@ public interface LogDescriptorOrBuilder extends
    *
    * <code>string display_name = 4;</code>
    */
-  java.lang.String getDisplayName();
+  String getDisplayName();
   /**
    * <pre>
    * The human-readable name for this log. This information appears on

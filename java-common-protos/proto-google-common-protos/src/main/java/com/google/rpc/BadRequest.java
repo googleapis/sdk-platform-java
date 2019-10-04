@@ -24,7 +24,7 @@ private static final long serialVersionUID = 0L;
     fieldViolations_ = java.util.Collections.emptyList();
   }
 
-  @java.lang.Override
+  @Override
   public final com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
@@ -35,7 +35,7 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
+      throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -49,16 +49,16 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
-              fieldViolations_ = new java.util.ArrayList<com.google.rpc.BadRequest.FieldViolation>();
+            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              fieldViolations_ = new java.util.ArrayList<FieldViolation>();
               mutable_bitField0_ |= 0x00000001;
             }
             fieldViolations_.add(
-                input.readMessage(com.google.rpc.BadRequest.FieldViolation.parser(), extensionRegistry));
+                input.readMessage(FieldViolation.parser(), extensionRegistry));
             break;
           }
           default: {
-            if (!parseUnknownFieldProto3(
+            if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
               done = true;
             }
@@ -72,7 +72,7 @@ private static final long serialVersionUID = 0L;
       throw new com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
-      if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
         fieldViolations_ = java.util.Collections.unmodifiableList(fieldViolations_);
       }
       this.unknownFields = unknownFields.build();
@@ -84,12 +84,12 @@ private static final long serialVersionUID = 0L;
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_descriptor;
   }
 
-  @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  @Override
+  protected FieldAccessorTable
       internalGetFieldAccessorTable() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.rpc.BadRequest.class, com.google.rpc.BadRequest.Builder.class);
+            BadRequest.class, Builder.class);
   }
 
   public interface FieldViolationOrBuilder extends
@@ -105,7 +105,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string field = 1;</code>
      */
-    java.lang.String getField();
+    String getField();
     /**
      * <pre>
      * A path leading to a field in the request body. The value will be a
@@ -125,7 +125,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 2;</code>
      */
-    java.lang.String getDescription();
+    String getDescription();
     /**
      * <pre>
      * A description of why the request element is bad.
@@ -157,7 +157,7 @@ private static final long serialVersionUID = 0L;
       description_ = "";
     }
 
-    @java.lang.Override
+    @Override
     public final com.google.protobuf.UnknownFieldSet
     getUnknownFields() {
       return this.unknownFields;
@@ -168,7 +168,7 @@ private static final long serialVersionUID = 0L;
         throws com.google.protobuf.InvalidProtocolBufferException {
       this();
       if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
+        throw new NullPointerException();
       }
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
@@ -182,19 +182,19 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               field_ = s;
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
+              String s = input.readStringRequireUtf8();
 
               description_ = s;
               break;
             }
             default: {
-              if (!parseUnknownFieldProto3(
+              if (!parseUnknownField(
                   input, unknownFields, extensionRegistry, tag)) {
                 done = true;
               }
@@ -217,16 +217,16 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_FieldViolation_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_FieldViolation_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.rpc.BadRequest.FieldViolation.class, com.google.rpc.BadRequest.FieldViolation.Builder.class);
+              FieldViolation.class, Builder.class);
     }
 
     public static final int FIELD_FIELD_NUMBER = 1;
-    private volatile java.lang.Object field_;
+    private volatile Object field_;
     /**
      * <pre>
      * A path leading to a field in the request body. The value will be a
@@ -236,14 +236,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string field = 1;</code>
      */
-    public java.lang.String getField() {
-      java.lang.Object ref = field_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getField() {
+      Object ref = field_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         field_ = s;
         return s;
       }
@@ -259,11 +259,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getFieldBytes() {
-      java.lang.Object ref = field_;
-      if (ref instanceof java.lang.String) {
+      Object ref = field_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         field_ = b;
         return b;
       } else {
@@ -272,7 +272,7 @@ private static final long serialVersionUID = 0L;
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 2;
-    private volatile java.lang.Object description_;
+    private volatile Object description_;
     /**
      * <pre>
      * A description of why the request element is bad.
@@ -280,14 +280,14 @@ private static final long serialVersionUID = 0L;
      *
      * <code>string description = 2;</code>
      */
-    public java.lang.String getDescription() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
+    public String getDescription() {
+      Object ref = description_;
+      if (ref instanceof String) {
+        return (String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
+        String s = bs.toStringUtf8();
         description_ = s;
         return s;
       }
@@ -301,11 +301,11 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ByteString
         getDescriptionBytes() {
-      java.lang.Object ref = description_;
-      if (ref instanceof java.lang.String) {
+      Object ref = description_;
+      if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+                (String) ref);
         description_ = b;
         return b;
       } else {
@@ -314,7 +314,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -324,7 +324,7 @@ private static final long serialVersionUID = 0L;
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!getFieldBytes().isEmpty()) {
@@ -336,7 +336,7 @@ private static final long serialVersionUID = 0L;
       unknownFields.writeTo(output);
     }
 
-    @java.lang.Override
+    @Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -353,26 +353,25 @@ private static final long serialVersionUID = 0L;
       return size;
     }
 
-    @java.lang.Override
-    public boolean equals(final java.lang.Object obj) {
+    @Override
+    public boolean equals(final Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.google.rpc.BadRequest.FieldViolation)) {
+      if (!(obj instanceof FieldViolation)) {
         return super.equals(obj);
       }
-      com.google.rpc.BadRequest.FieldViolation other = (com.google.rpc.BadRequest.FieldViolation) obj;
+      FieldViolation other = (FieldViolation) obj;
 
-      boolean result = true;
-      result = result && getField()
-          .equals(other.getField());
-      result = result && getDescription()
-          .equals(other.getDescription());
-      result = result && unknownFields.equals(other.unknownFields);
-      return result;
+      if (!getField()
+          .equals(other.getField())) return false;
+      if (!getDescription()
+          .equals(other.getDescription())) return false;
+      if (!unknownFields.equals(other.unknownFields)) return false;
+      return true;
     }
 
-    @java.lang.Override
+    @Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -388,69 +387,69 @@ private static final long serialVersionUID = 0L;
       return hash;
     }
 
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(byte[] data)
+    public static FieldViolation parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(java.io.InputStream input)
+    public static FieldViolation parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseDelimitedFrom(java.io.InputStream input)
+    public static FieldViolation parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseDelimitedFrom(
+    public static FieldViolation parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.google.rpc.BadRequest.FieldViolation parseFrom(
+    public static FieldViolation parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -458,23 +457,23 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @java.lang.Override
+    @Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.google.rpc.BadRequest.FieldViolation prototype) {
+    public static Builder newBuilder(FieldViolation prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
+    @Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @java.lang.Override
+    @Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -488,18 +487,18 @@ private static final long serialVersionUID = 0L;
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:google.rpc.BadRequest.FieldViolation)
-        com.google.rpc.BadRequest.FieldViolationOrBuilder {
+        FieldViolationOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_FieldViolation_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      @Override
+      protected FieldAccessorTable
           internalGetFieldAccessorTable() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_FieldViolation_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.google.rpc.BadRequest.FieldViolation.class, com.google.rpc.BadRequest.FieldViolation.Builder.class);
+                FieldViolation.class, Builder.class);
       }
 
       // Construct using com.google.rpc.BadRequest.FieldViolation.newBuilder()
@@ -508,7 +507,7 @@ private static final long serialVersionUID = 0L;
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
@@ -517,7 +516,7 @@ private static final long serialVersionUID = 0L;
                 .alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      @Override
       public Builder clear() {
         super.clear();
         field_ = "";
@@ -527,79 +526,79 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_FieldViolation_descriptor;
       }
 
-      @java.lang.Override
-      public com.google.rpc.BadRequest.FieldViolation getDefaultInstanceForType() {
-        return com.google.rpc.BadRequest.FieldViolation.getDefaultInstance();
+      @Override
+      public FieldViolation getDefaultInstanceForType() {
+        return FieldViolation.getDefaultInstance();
       }
 
-      @java.lang.Override
-      public com.google.rpc.BadRequest.FieldViolation build() {
-        com.google.rpc.BadRequest.FieldViolation result = buildPartial();
+      @Override
+      public FieldViolation build() {
+        FieldViolation result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @java.lang.Override
-      public com.google.rpc.BadRequest.FieldViolation buildPartial() {
-        com.google.rpc.BadRequest.FieldViolation result = new com.google.rpc.BadRequest.FieldViolation(this);
+      @Override
+      public FieldViolation buildPartial() {
+        FieldViolation result = new FieldViolation(this);
         result.field_ = field_;
         result.description_ = description_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
+      @Override
       public Builder clone() {
-        return (Builder) super.clone();
+        return super.clone();
       }
-      @java.lang.Override
+      @Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.setField(field, value);
+          Object value) {
+        return super.setField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return (Builder) super.clearField(field);
+        return super.clearField(field);
       }
-      @java.lang.Override
+      @Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return (Builder) super.clearOneof(oneof);
+        return super.clearOneof(oneof);
       }
-      @java.lang.Override
+      @Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return (Builder) super.setRepeatedField(field, index, value);
+          int index, Object value) {
+        return super.setRepeatedField(field, index, value);
       }
-      @java.lang.Override
+      @Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return (Builder) super.addRepeatedField(field, value);
+          Object value) {
+        return super.addRepeatedField(field, value);
       }
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.google.rpc.BadRequest.FieldViolation) {
-          return mergeFrom((com.google.rpc.BadRequest.FieldViolation)other);
+        if (other instanceof FieldViolation) {
+          return mergeFrom((FieldViolation)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.google.rpc.BadRequest.FieldViolation other) {
-        if (other == com.google.rpc.BadRequest.FieldViolation.getDefaultInstance()) return this;
+      public Builder mergeFrom(FieldViolation other) {
+        if (other == FieldViolation.getDefaultInstance()) return this;
         if (!other.getField().isEmpty()) {
           field_ = other.field_;
           onChanged();
@@ -613,21 +612,21 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      @java.lang.Override
+      @Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
+      @Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.google.rpc.BadRequest.FieldViolation parsedMessage = null;
+        FieldViolation parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.google.rpc.BadRequest.FieldViolation) e.getUnfinishedMessage();
+          parsedMessage = (FieldViolation) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -637,7 +636,7 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      private java.lang.Object field_ = "";
+      private Object field_ = "";
       /**
        * <pre>
        * A path leading to a field in the request body. The value will be a
@@ -647,16 +646,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string field = 1;</code>
        */
-      public java.lang.String getField() {
-        java.lang.Object ref = field_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getField() {
+        Object ref = field_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           field_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -670,11 +669,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getFieldBytes() {
-        java.lang.Object ref = field_;
+        Object ref = field_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           field_ = b;
           return b;
         } else {
@@ -691,7 +690,7 @@ private static final long serialVersionUID = 0L;
        * <code>string field = 1;</code>
        */
       public Builder setField(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -736,7 +735,7 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      private java.lang.Object description_ = "";
+      private Object description_ = "";
       /**
        * <pre>
        * A description of why the request element is bad.
@@ -744,16 +743,16 @@ private static final long serialVersionUID = 0L;
        *
        * <code>string description = 2;</code>
        */
-      public java.lang.String getDescription() {
-        java.lang.Object ref = description_;
-        if (!(ref instanceof java.lang.String)) {
+      public String getDescription() {
+        Object ref = description_;
+        if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
+          String s = bs.toStringUtf8();
           description_ = s;
           return s;
         } else {
-          return (java.lang.String) ref;
+          return (String) ref;
         }
       }
       /**
@@ -765,11 +764,11 @@ private static final long serialVersionUID = 0L;
        */
       public com.google.protobuf.ByteString
           getDescriptionBytes() {
-        java.lang.Object ref = description_;
+        Object ref = description_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
+                  (String) ref);
           description_ = b;
           return b;
         } else {
@@ -784,7 +783,7 @@ private static final long serialVersionUID = 0L;
        * <code>string description = 2;</code>
        */
       public Builder setDescription(
-          java.lang.String value) {
+          String value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -824,13 +823,13 @@ private static final long serialVersionUID = 0L;
         onChanged();
         return this;
       }
-      @java.lang.Override
+      @Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFieldsProto3(unknownFields);
+        return super.setUnknownFields(unknownFields);
       }
 
-      @java.lang.Override
+      @Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -841,18 +840,18 @@ private static final long serialVersionUID = 0L;
     }
 
     // @@protoc_insertion_point(class_scope:google.rpc.BadRequest.FieldViolation)
-    private static final com.google.rpc.BadRequest.FieldViolation DEFAULT_INSTANCE;
+    private static final FieldViolation DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.google.rpc.BadRequest.FieldViolation();
+      DEFAULT_INSTANCE = new FieldViolation();
     }
 
-    public static com.google.rpc.BadRequest.FieldViolation getDefaultInstance() {
+    public static FieldViolation getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<FieldViolation>
         PARSER = new com.google.protobuf.AbstractParser<FieldViolation>() {
-      @java.lang.Override
+      @Override
       public FieldViolation parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -865,20 +864,20 @@ private static final long serialVersionUID = 0L;
       return PARSER;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Parser<FieldViolation> getParserForType() {
       return PARSER;
     }
 
-    @java.lang.Override
-    public com.google.rpc.BadRequest.FieldViolation getDefaultInstanceForType() {
+    @Override
+    public FieldViolation getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public static final int FIELD_VIOLATIONS_FIELD_NUMBER = 1;
-  private java.util.List<com.google.rpc.BadRequest.FieldViolation> fieldViolations_;
+  private java.util.List<FieldViolation> fieldViolations_;
   /**
    * <pre>
    * Describes all violations in a client request.
@@ -886,7 +885,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
-  public java.util.List<com.google.rpc.BadRequest.FieldViolation> getFieldViolationsList() {
+  public java.util.List<FieldViolation> getFieldViolationsList() {
     return fieldViolations_;
   }
   /**
@@ -896,7 +895,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
-  public java.util.List<? extends com.google.rpc.BadRequest.FieldViolationOrBuilder> 
+  public java.util.List<? extends FieldViolationOrBuilder>
       getFieldViolationsOrBuilderList() {
     return fieldViolations_;
   }
@@ -917,7 +916,7 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
-  public com.google.rpc.BadRequest.FieldViolation getFieldViolations(int index) {
+  public FieldViolation getFieldViolations(int index) {
     return fieldViolations_.get(index);
   }
   /**
@@ -927,13 +926,13 @@ private static final long serialVersionUID = 0L;
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
-  public com.google.rpc.BadRequest.FieldViolationOrBuilder getFieldViolationsOrBuilder(
+  public FieldViolationOrBuilder getFieldViolationsOrBuilder(
       int index) {
     return fieldViolations_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
-  @java.lang.Override
+  @Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
     if (isInitialized == 1) return true;
@@ -943,7 +942,7 @@ private static final long serialVersionUID = 0L;
     return true;
   }
 
-  @java.lang.Override
+  @Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < fieldViolations_.size(); i++) {
@@ -952,7 +951,7 @@ private static final long serialVersionUID = 0L;
     unknownFields.writeTo(output);
   }
 
-  @java.lang.Override
+  @Override
   public int getSerializedSize() {
     int size = memoizedSize;
     if (size != -1) return size;
@@ -967,24 +966,23 @@ private static final long serialVersionUID = 0L;
     return size;
   }
 
-  @java.lang.Override
-  public boolean equals(final java.lang.Object obj) {
+  @Override
+  public boolean equals(final Object obj) {
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.rpc.BadRequest)) {
+    if (!(obj instanceof BadRequest)) {
       return super.equals(obj);
     }
-    com.google.rpc.BadRequest other = (com.google.rpc.BadRequest) obj;
+    BadRequest other = (BadRequest) obj;
 
-    boolean result = true;
-    result = result && getFieldViolationsList()
-        .equals(other.getFieldViolationsList());
-    result = result && unknownFields.equals(other.unknownFields);
-    return result;
+    if (!getFieldViolationsList()
+        .equals(other.getFieldViolationsList())) return false;
+    if (!unknownFields.equals(other.unknownFields)) return false;
+    return true;
   }
 
-  @java.lang.Override
+  @Override
   public int hashCode() {
     if (memoizedHashCode != 0) {
       return memoizedHashCode;
@@ -1000,69 +998,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.BadRequest parseFrom(byte[] data)
+  public static BadRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.rpc.BadRequest parseFrom(java.io.InputStream input)
+  public static BadRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.BadRequest parseDelimitedFrom(java.io.InputStream input)
+  public static BadRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.rpc.BadRequest parseDelimitedFrom(
+  public static BadRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.rpc.BadRequest parseFrom(
+  public static BadRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -1070,23 +1068,23 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  @java.lang.Override
+  @Override
   public Builder newBuilderForType() { return newBuilder(); }
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.rpc.BadRequest prototype) {
+  public static Builder newBuilder(BadRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
-  @java.lang.Override
+  @Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
         ? new Builder() : new Builder().mergeFrom(this);
   }
 
-  @java.lang.Override
+  @Override
   protected Builder newBuilderForType(
-      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      BuilderParent parent) {
     Builder builder = new Builder(parent);
     return builder;
   }
@@ -1107,12 +1105,12 @@ private static final long serialVersionUID = 0L;
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    @Override
+    protected FieldAccessorTable
         internalGetFieldAccessorTable() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.rpc.BadRequest.class, com.google.rpc.BadRequest.Builder.class);
+              BadRequest.class, Builder.class);
     }
 
     // Construct using com.google.rpc.BadRequest.newBuilder()
@@ -1121,7 +1119,7 @@ private static final long serialVersionUID = 0L;
     }
 
     private Builder(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        BuilderParent parent) {
       super(parent);
       maybeForceBuilderInitialization();
     }
@@ -1131,7 +1129,7 @@ private static final long serialVersionUID = 0L;
         getFieldViolationsFieldBuilder();
       }
     }
-    @java.lang.Override
+    @Override
     public Builder clear() {
       super.clear();
       if (fieldViolationsBuilder_ == null) {
@@ -1143,32 +1141,32 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_descriptor;
     }
 
-    @java.lang.Override
-    public com.google.rpc.BadRequest getDefaultInstanceForType() {
-      return com.google.rpc.BadRequest.getDefaultInstance();
+    @Override
+    public BadRequest getDefaultInstanceForType() {
+      return BadRequest.getDefaultInstance();
     }
 
-    @java.lang.Override
-    public com.google.rpc.BadRequest build() {
-      com.google.rpc.BadRequest result = buildPartial();
+    @Override
+    public BadRequest build() {
+      BadRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
       return result;
     }
 
-    @java.lang.Override
-    public com.google.rpc.BadRequest buildPartial() {
-      com.google.rpc.BadRequest result = new com.google.rpc.BadRequest(this);
+    @Override
+    public BadRequest buildPartial() {
+      BadRequest result = new BadRequest(this);
       int from_bitField0_ = bitField0_;
       if (fieldViolationsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           fieldViolations_ = java.util.Collections.unmodifiableList(fieldViolations_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
@@ -1180,50 +1178,50 @@ private static final long serialVersionUID = 0L;
       return result;
     }
 
-    @java.lang.Override
+    @Override
     public Builder clone() {
-      return (Builder) super.clone();
+      return super.clone();
     }
-    @java.lang.Override
+    @Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.setField(field, value);
+        Object value) {
+      return super.setField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return (Builder) super.clearField(field);
+      return super.clearField(field);
     }
-    @java.lang.Override
+    @Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return (Builder) super.clearOneof(oneof);
+      return super.clearOneof(oneof);
     }
-    @java.lang.Override
+    @Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return (Builder) super.setRepeatedField(field, index, value);
+        int index, Object value) {
+      return super.setRepeatedField(field, index, value);
     }
-    @java.lang.Override
+    @Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return (Builder) super.addRepeatedField(field, value);
+        Object value) {
+      return super.addRepeatedField(field, value);
     }
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.rpc.BadRequest) {
-        return mergeFrom((com.google.rpc.BadRequest)other);
+      if (other instanceof BadRequest) {
+        return mergeFrom((BadRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.rpc.BadRequest other) {
-      if (other == com.google.rpc.BadRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(BadRequest other) {
+      if (other == BadRequest.getDefaultInstance()) return this;
       if (fieldViolationsBuilder_ == null) {
         if (!other.fieldViolations_.isEmpty()) {
           if (fieldViolations_.isEmpty()) {
@@ -1255,21 +1253,21 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    @java.lang.Override
+    @Override
     public final boolean isInitialized() {
       return true;
     }
 
-    @java.lang.Override
+    @Override
     public Builder mergeFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.rpc.BadRequest parsedMessage = null;
+      BadRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.rpc.BadRequest) e.getUnfinishedMessage();
+        parsedMessage = (BadRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -1280,17 +1278,17 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<com.google.rpc.BadRequest.FieldViolation> fieldViolations_ =
+    private java.util.List<FieldViolation> fieldViolations_ =
       java.util.Collections.emptyList();
     private void ensureFieldViolationsIsMutable() {
-      if (!((bitField0_ & 0x00000001) == 0x00000001)) {
-        fieldViolations_ = new java.util.ArrayList<com.google.rpc.BadRequest.FieldViolation>(fieldViolations_);
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        fieldViolations_ = new java.util.ArrayList<FieldViolation>(fieldViolations_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.rpc.BadRequest.FieldViolation, com.google.rpc.BadRequest.FieldViolation.Builder, com.google.rpc.BadRequest.FieldViolationOrBuilder> fieldViolationsBuilder_;
+        FieldViolation, FieldViolation.Builder, FieldViolationOrBuilder> fieldViolationsBuilder_;
 
     /**
      * <pre>
@@ -1299,7 +1297,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public java.util.List<com.google.rpc.BadRequest.FieldViolation> getFieldViolationsList() {
+    public java.util.List<FieldViolation> getFieldViolationsList() {
       if (fieldViolationsBuilder_ == null) {
         return java.util.Collections.unmodifiableList(fieldViolations_);
       } else {
@@ -1327,7 +1325,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public com.google.rpc.BadRequest.FieldViolation getFieldViolations(int index) {
+    public FieldViolation getFieldViolations(int index) {
       if (fieldViolationsBuilder_ == null) {
         return fieldViolations_.get(index);
       } else {
@@ -1342,7 +1340,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder setFieldViolations(
-        int index, com.google.rpc.BadRequest.FieldViolation value) {
+        int index, FieldViolation value) {
       if (fieldViolationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1363,7 +1361,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder setFieldViolations(
-        int index, com.google.rpc.BadRequest.FieldViolation.Builder builderForValue) {
+        int index, FieldViolation.Builder builderForValue) {
       if (fieldViolationsBuilder_ == null) {
         ensureFieldViolationsIsMutable();
         fieldViolations_.set(index, builderForValue.build());
@@ -1380,7 +1378,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public Builder addFieldViolations(com.google.rpc.BadRequest.FieldViolation value) {
+    public Builder addFieldViolations(FieldViolation value) {
       if (fieldViolationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1401,7 +1399,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder addFieldViolations(
-        int index, com.google.rpc.BadRequest.FieldViolation value) {
+        int index, FieldViolation value) {
       if (fieldViolationsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -1422,7 +1420,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder addFieldViolations(
-        com.google.rpc.BadRequest.FieldViolation.Builder builderForValue) {
+        FieldViolation.Builder builderForValue) {
       if (fieldViolationsBuilder_ == null) {
         ensureFieldViolationsIsMutable();
         fieldViolations_.add(builderForValue.build());
@@ -1440,7 +1438,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder addFieldViolations(
-        int index, com.google.rpc.BadRequest.FieldViolation.Builder builderForValue) {
+        int index, FieldViolation.Builder builderForValue) {
       if (fieldViolationsBuilder_ == null) {
         ensureFieldViolationsIsMutable();
         fieldViolations_.add(index, builderForValue.build());
@@ -1458,7 +1456,7 @@ private static final long serialVersionUID = 0L;
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
     public Builder addAllFieldViolations(
-        java.lang.Iterable<? extends com.google.rpc.BadRequest.FieldViolation> values) {
+        Iterable<? extends FieldViolation> values) {
       if (fieldViolationsBuilder_ == null) {
         ensureFieldViolationsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1510,7 +1508,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public com.google.rpc.BadRequest.FieldViolation.Builder getFieldViolationsBuilder(
+    public FieldViolation.Builder getFieldViolationsBuilder(
         int index) {
       return getFieldViolationsFieldBuilder().getBuilder(index);
     }
@@ -1521,7 +1519,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public com.google.rpc.BadRequest.FieldViolationOrBuilder getFieldViolationsOrBuilder(
+    public FieldViolationOrBuilder getFieldViolationsOrBuilder(
         int index) {
       if (fieldViolationsBuilder_ == null) {
         return fieldViolations_.get(index);  } else {
@@ -1535,7 +1533,7 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public java.util.List<? extends com.google.rpc.BadRequest.FieldViolationOrBuilder> 
+    public java.util.List<? extends FieldViolationOrBuilder>
          getFieldViolationsOrBuilderList() {
       if (fieldViolationsBuilder_ != null) {
         return fieldViolationsBuilder_.getMessageOrBuilderList();
@@ -1550,9 +1548,9 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public com.google.rpc.BadRequest.FieldViolation.Builder addFieldViolationsBuilder() {
+    public FieldViolation.Builder addFieldViolationsBuilder() {
       return getFieldViolationsFieldBuilder().addBuilder(
-          com.google.rpc.BadRequest.FieldViolation.getDefaultInstance());
+          FieldViolation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1561,10 +1559,10 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public com.google.rpc.BadRequest.FieldViolation.Builder addFieldViolationsBuilder(
+    public FieldViolation.Builder addFieldViolationsBuilder(
         int index) {
       return getFieldViolationsFieldBuilder().addBuilder(
-          index, com.google.rpc.BadRequest.FieldViolation.getDefaultInstance());
+          index, FieldViolation.getDefaultInstance());
     }
     /**
      * <pre>
@@ -1573,31 +1571,31 @@ private static final long serialVersionUID = 0L;
      *
      * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
      */
-    public java.util.List<com.google.rpc.BadRequest.FieldViolation.Builder> 
+    public java.util.List<FieldViolation.Builder>
          getFieldViolationsBuilderList() {
       return getFieldViolationsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        com.google.rpc.BadRequest.FieldViolation, com.google.rpc.BadRequest.FieldViolation.Builder, com.google.rpc.BadRequest.FieldViolationOrBuilder> 
+        FieldViolation, FieldViolation.Builder, FieldViolationOrBuilder>
         getFieldViolationsFieldBuilder() {
       if (fieldViolationsBuilder_ == null) {
         fieldViolationsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            com.google.rpc.BadRequest.FieldViolation, com.google.rpc.BadRequest.FieldViolation.Builder, com.google.rpc.BadRequest.FieldViolationOrBuilder>(
+            FieldViolation, FieldViolation.Builder, FieldViolationOrBuilder>(
                 fieldViolations_,
-                ((bitField0_ & 0x00000001) == 0x00000001),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         fieldViolations_ = null;
       }
       return fieldViolationsBuilder_;
     }
-    @java.lang.Override
+    @Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFieldsProto3(unknownFields);
+      return super.setUnknownFields(unknownFields);
     }
 
-    @java.lang.Override
+    @Override
     public final Builder mergeUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
@@ -1608,18 +1606,18 @@ private static final long serialVersionUID = 0L;
   }
 
   // @@protoc_insertion_point(class_scope:google.rpc.BadRequest)
-  private static final com.google.rpc.BadRequest DEFAULT_INSTANCE;
+  private static final BadRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.rpc.BadRequest();
+    DEFAULT_INSTANCE = new BadRequest();
   }
 
-  public static com.google.rpc.BadRequest getDefaultInstance() {
+  public static BadRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
   private static final com.google.protobuf.Parser<BadRequest>
       PARSER = new com.google.protobuf.AbstractParser<BadRequest>() {
-    @java.lang.Override
+    @Override
     public BadRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1632,13 +1630,13 @@ private static final long serialVersionUID = 0L;
     return PARSER;
   }
 
-  @java.lang.Override
+  @Override
   public com.google.protobuf.Parser<BadRequest> getParserForType() {
     return PARSER;
   }
 
-  @java.lang.Override
-  public com.google.rpc.BadRequest getDefaultInstanceForType() {
+  @Override
+  public BadRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 
