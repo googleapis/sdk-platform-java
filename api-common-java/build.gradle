@@ -190,6 +190,9 @@ artifacts {
 
 signing {
   required { gradle.taskGraph.hasTask("uploadArchives") }
+  if (project.hasProperty('signing.gnupg.executable')) {
+    useGpgCmd()
+  }
   sign configurations.archives
 }
 
