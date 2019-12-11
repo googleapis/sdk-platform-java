@@ -8,7 +8,7 @@ addons:
   hostname: fake-hostname-to-work-around-travis-bug
 jdk:
   - oraclejdk8
-  - openjdk7
+  - openjdk8
 script:
   ./gradlew check --info
 after_success:

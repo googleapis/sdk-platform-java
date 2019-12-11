@@ -39,9 +39,10 @@ ext {
   // Shortcuts for libraries we are using
   libraries = [
       javax_annotations: 'javax.annotation:javax.annotation-api:1.3.2',
+      auto_value_annotations: 'com.google.auto.value:auto-value-annotations:1.7',
+      auto_value: 'com.google.auto.value:auto-value:1.7',
       guava: 'com.google.guava:guava:28.1-android',
       jsr305: 'com.google.code.findbugs:jsr305:3.0.2',
-      autovalue: 'com.google.auto.value:auto-value:1.1',
       error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.3.3',
 
       // Testing
@@ -57,12 +58,15 @@ repositories {
 }
 
 dependencies {
+
+  annotationProcessor libraries.auto_value
+
   compile libraries.guava,
     libraries.jsr305,
-    libraries.javax_annotations
+    libraries.javax_annotations,
+    libraries.auto_value_annotations
 
-  compileOnly libraries.autovalue,
-    libraries.error_prone_annotations
+  compileOnly libraries.error_prone_annotations
 
   testCompile libraries.junit,
     libraries.mockito,
@@ -134,9 +138,8 @@ configurations {
 }
 
 dependencies {
-  codeGeneration libraries.autovalue, libraries.jsr305
-  compile libraries.jsr305
-  compileOnly libraries.autovalue
+  codeGeneration libraries.auto_value, libraries.jsr305
+  compile libraries.jsr305, libraries.auto_value_annotations
 }
 
 compileJava.classpath += configurations.codeGeneration
