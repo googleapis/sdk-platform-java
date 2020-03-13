@@ -104,6 +104,27 @@ public final class ApiFutures {
     return new ListenableFutureToApiFuture<V>(catchingFuture);
   }
 
+  @BetaApi
+  public static <V, X extends Throwable> ApiFuture<V> catchingAsync(
+      ApiFuture<V> input,
+      Class<X> exceptionType,
+      final ApiAsyncFunction<? super X, V> callback,
+      Executor executor) {
+    ListenableFuture<V> catchingFuture =
+        Futures.catchingAsync(
+            listenableFutureForApiFuture(input),
+            exceptionType,
+            new AsyncFunction<X, V>() {
+              @Override
+              public ListenableFuture<V> apply(X exception) throws Exception {
+                ApiFuture<V> result = callback.apply(exception);
+                return listenableFutureForApiFuture(result);
+              }
+            },
+            executor);
+    return new ListenableFutureToApiFuture<>(catchingFuture);
+  }
+
   public static <V> ApiFuture<V> immediateFuture(V value) {
     return new ListenableFutureToApiFuture<>(Futures.<V>immediateFuture(value));
   }

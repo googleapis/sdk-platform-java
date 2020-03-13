@@ -84,6 +84,24 @@ public class ApiFuturesTest {
   }
 
   @Test
+  public void testCatchAsync() throws Exception {
+    SettableApiFuture<Integer> future = SettableApiFuture.<Integer>create();
+    ApiFuture<Integer> fallback =
+        ApiFutures.catchingAsync(
+            future,
+            Exception.class,
+            new ApiAsyncFunction<Exception, Integer>() {
+              @Override
+              public ApiFuture<Integer> apply(Exception ex) {
+                return ApiFutures.immediateFuture(42);
+              }
+            },
+            directExecutor());
+    future.setException(new Exception());
+    assertThat(fallback.get()).isEqualTo(42);
+  }
+
+  @Test
   public void testTransform() throws Exception {
     SettableApiFuture<Integer> inputFuture = SettableApiFuture.<Integer>create();
     ApiFuture<String> transformedFuture =
