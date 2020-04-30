@@ -1,0 +1,14 @@
+{
+  "name": "common-protos",
+  "name_pretty": "Common Protos",
+  "product_documentation": "n/a",
+  "api_description": "n/a",
+  "client_documentation": "https://googleapis.dev/java/proto-google-common-protos/latest/index.html",
+  "release_level": "beta",
+  "transport": "grpc",
+  "requires_billing": true,
+  "language": "java",
+  "repo": "googleapis/java-common-protos",
+  "repo_short": "java-common-protos",
+  "distribution_name": "com.google.api.grpc:proto-google-common-protos"
+}

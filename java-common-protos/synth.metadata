@@ -1,0 +1,91 @@
+{
+  "sources": [
+    {
+      "git": {
+        "name": ".",
+        "sha": "4ae7753ac03b6ee4d171af52cfa2bc8dfc944ad4"
+      }
+    },
+    {
+      "git": {
+        "name": "synthtool",
+        "remote": "https://github.com/googleapis/synthtool.git",
+        "sha": "01b6f23d24b27878b48667ce597876d66b59780e"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-api-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-cloud-audit-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-geo-type-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-logging-type-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-longrunning-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-rpc-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-rpc-context-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    },
+    {
+      "client": {
+        "source": "googleapis",
+        "apiName": "google-type-java",
+        "apiVersion": "unused",
+        "language": "java",
+        "generator": "bazel"
+      }
+    }
+  ]
+}
