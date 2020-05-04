@@ -8,8 +8,8 @@
   <name>proto-google-common-protos</name>
   <description>PROTO library for proto-google-common-protos</description>
   <parent>
-    <groupId>com.google.cloud</groupId>
-    <artifactId>google-iam-parent</artifactId>
+    <groupId>com.google.api.grpc</groupId>
+    <artifactId>google-common-protos-parent</artifactId>
     <version>1.17.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
   </parent>
   <dependencies>

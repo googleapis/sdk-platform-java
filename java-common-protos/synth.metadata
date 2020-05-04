@@ -3,14 +3,14 @@
     {
       "git": {
         "name": ".",
-        "sha": "4ae7753ac03b6ee4d171af52cfa2bc8dfc944ad4"
+        "sha": "5db1f39de2cc7b7a5faaea7707eb1e1bd579e058"
       }
     },
     {
       "git": {
         "name": "synthtool",
         "remote": "https://github.com/googleapis/synthtool.git",
-        "sha": "01b6f23d24b27878b48667ce597876d66b59780e"
+        "sha": "969a2340e74c73227e7c1638ed7650abcac22ee4"
       }
     }
   ],
