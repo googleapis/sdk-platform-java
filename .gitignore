@@ -1,0 +1,10 @@
+# Bazel.
+bazel-bin/*
+bazel-googleapis/*
+baze-out/*
+bazel-testlogs/*
+
+
+# Vim.
+*.sw*
+*.vim
