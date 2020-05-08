@@ -1,0 +1,10 @@
+java_binary(
+    name = "gapic_generator_java",
+    srcs = [
+        "//src/main/java/com/google/api/generator:generator_files",
+    ],
+    main_class = "com.google.api.generator.Main",
+    deps = [
+        "//src/main/java/com/google/api/generator",
+    ],
+)
