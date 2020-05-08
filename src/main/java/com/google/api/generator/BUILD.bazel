@@ -1,0 +1,13 @@
+package(default_visibility = ["//:__pkg__"])
+
+filegroup(
+    name = "generator_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "generator",
+    srcs = [
+        ":generator_files",
+    ],
+)
