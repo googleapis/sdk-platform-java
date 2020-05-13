@@ -40,6 +40,7 @@ import com.google.common.collect.Maps;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -139,12 +140,28 @@ public class PathTemplate {
   // A splitter on slash.
   private static final Splitter SLASH_SPLITTER = Splitter.on('/').trimResults();
 
+  // A regex to match the valid complex resource ID delimiters.
+  private static final Pattern COMPLEX_DELIMITER_PATTERN = Pattern.compile("[_\\-\\.~]");
+
+  // A regex to match multiple complex resource ID delimiters.
+  private static final Pattern MULTIPLE_COMPLEX_DELIMITER_PATTERN =
+      Pattern.compile("\\}[_\\-\\.~]{2,}\\{");
+
+  // A regex to match a missing complex resource ID delimiter.
+  private static final Pattern MISSING_COMPLEX_DELIMITER_PATTERN = Pattern.compile("\\}\\{");
+
+  // A regex to match invalid complex resource ID delimiters.
+  private static final Pattern INVALID_COMPLEX_DELIMITER_PATTERN =
+      Pattern.compile("\\}[^_\\-\\.~]\\{");
+
+  // A regex to match a closing segment (end brace) followed by one complex resource ID delimiter.
+  private static final Pattern END_SEGMENT_COMPLEX_DELIMITER_PATTERN =
+      Pattern.compile("\\}[_\\-\\.~]{1}");
+
   // Helper Types
   // ============
 
-  /**
-   * Specifies a path segment kind.
-   */
+  /** Specifies a path segment kind. */
   enum SegmentKind {
     /** A literal path segment. */
     LITERAL,
@@ -165,37 +182,34 @@ public class PathTemplate {
     END_BINDING,
   }
 
-  /**
-   * Specifies a path segment.
-   */
+  /** Specifies a path segment. */
   @AutoValue
   abstract static class Segment {
 
-    /**
-     * A constant for the WILDCARD segment.
-     */
+    /** A constant for the WILDCARD segment. */
     private static final Segment WILDCARD = create(SegmentKind.WILDCARD, "*");
 
-    /**
-     * A constant for the PATH_WILDCARD segment.
-     */
+    /** A constant for the PATH_WILDCARD segment. */
     private static final Segment PATH_WILDCARD = create(SegmentKind.PATH_WILDCARD, "**");
 
-    /**
-     * A constant for the END_BINDING segment.
-     */
+    /** A constant for the END_BINDING segment. */
     private static final Segment END_BINDING = create(SegmentKind.END_BINDING, "");
 
-    /**
-     * Creates a segment of given kind and value.
-     */
+    /** Creates a segment of given kind and value. */
     private static Segment create(SegmentKind kind, String value) {
-      return new AutoValue_PathTemplate_Segment(kind, value);
+      return new AutoValue_PathTemplate_Segment(kind, value, "");
     }
 
-    /**
-     * The path segment kind.
-     */
+    private static Segment wildcardCreate(String complexSeparator) {
+      return new AutoValue_PathTemplate_Segment(
+          SegmentKind.WILDCARD,
+          "*",
+          !complexSeparator.isEmpty() && COMPLEX_DELIMITER_PATTERN.matcher(complexSeparator).find()
+              ? complexSeparator
+              : "");
+    }
+
+    /** The path segment kind. */
     abstract SegmentKind kind();
 
     /**
@@ -204,9 +218,9 @@ public class PathTemplate {
      */
     abstract String value();
 
-    /**
-     * Returns true of this segment is one of the wildcards,
-     */
+    abstract String complexSeparator();
+
+    /** Returns true of this segment is one of the wildcards, */
     boolean isAnyWildcard() {
       return kind() == SegmentKind.WILDCARD || kind() == SegmentKind.PATH_WILDCARD;
     }
@@ -277,9 +291,7 @@ public class PathTemplate {
     this.urlEncoding = urlEncoding;
   }
 
-  /**
-   * Returns the set of variable names used in the template.
-   */
+  /** Returns the set of variable names used in the template. */
   public Set<String> vars() {
     return bindings.keySet();
   }
@@ -363,16 +375,12 @@ public class PathTemplate {
         String.format("Variable '%s' is undefined in template '%s'", varName, this.toRawString()));
   }
 
-  /**
-   * Returns true of this template ends with a literal.
-   */
+  /** Returns true of this template ends with a literal. */
   public boolean endsWithLiteral() {
     return segments.get(segments.size() - 1).kind() == SegmentKind.LITERAL;
   }
 
-  /**
-   * Returns true of this template ends with a custom verb.
-   */
+  /** Returns true of this template ends with a custom verb. */
   public boolean endsWithCustomVerb() {
     return segments.get(segments.size() - 1).kind() == SegmentKind.CUSTOM_VERB;
   }
@@ -464,9 +472,7 @@ public class PathTemplate {
     return matchMap;
   }
 
-  /**
-   * Returns true if the template matches the path.
-   */
+  /** Returns true if the template matches the path. */
   public boolean matches(String path) {
     return match(path) != null;
   }
@@ -565,7 +571,8 @@ public class PathTemplate {
     return ImmutableMap.copyOf(values);
   }
 
-  // Aligns input to start of literal value of literal or binding segment if input contains hostname.
+  // Aligns input to start of literal value of literal or binding segment if input contains
+  // hostname.
   private int alignInputToAlignableSegment(List<String> input, int inPos, Segment segment) {
     switch (segment.kind()) {
       case BINDING:
@@ -597,6 +604,7 @@ public class PathTemplate {
       int segPos,
       Map<String, String> values) {
     String currentVar = null;
+    List<String> modifiableInput = new ArrayList<>(input);
     while (segPos < segments.size()) {
       Segment seg = segments.get(segPos++);
       switch (seg.kind()) {
@@ -614,15 +622,27 @@ public class PathTemplate {
           break;
         case LITERAL:
         case WILDCARD:
-          if (inPos >= input.size()) {
+          if (inPos >= modifiableInput.size()) {
             // End of input
             return false;
           }
           // Check literal match.
-          String next = decodeUrl(input.get(inPos++));
+          String next = decodeUrl(modifiableInput.get(inPos++));
           if (seg.kind() == SegmentKind.LITERAL) {
             if (!seg.value().equals(next)) {
               // Literal does not match.
+              return false;
+            }
+          }
+          if (seg.kind() == SegmentKind.WILDCARD && !seg.complexSeparator().isEmpty()) {
+            // Parse the complex resource separators one by one.
+            int complexSeparatorIndex = next.indexOf(seg.complexSeparator());
+            if (complexSeparatorIndex >= 0) {
+              modifiableInput.add(inPos, next.substring(complexSeparatorIndex + 1));
+              next = next.substring(0, complexSeparatorIndex);
+              modifiableInput.set(inPos - 1, next);
+            } else {
+              // No complex resource ID separator found in the literal when we expected one.
               return false;
             }
           }
@@ -645,18 +665,19 @@ public class PathTemplate {
                 segsToMatch++;
             }
           }
-          int available = (input.size() - inPos) - segsToMatch;
+          int available = (modifiableInput.size() - inPos) - segsToMatch;
           // If this segment is empty, make sure it is still captured.
           if (available == 0 && !values.containsKey(currentVar)) {
             values.put(currentVar, "");
           }
           while (available-- > 0) {
             values.put(
-                currentVar, concatCaptures(values.get(currentVar), decodeUrl(input.get(inPos++))));
+                currentVar,
+                concatCaptures(values.get(currentVar), decodeUrl(modifiableInput.get(inPos++))));
           }
       }
     }
-    return inPos == input.size();
+    return inPos == modifiableInput.size();
   }
 
   private static String concatCaptures(@Nullable String cur, String next) {
@@ -681,9 +702,7 @@ public class PathTemplate {
     return instantiate(values, false);
   }
 
-  /**
-   * Shortcut for {@link #instantiate(Map)} with a vararg parameter for keys and values.
-   */
+  /** Shortcut for {@link #instantiate(Map)} with a vararg parameter for keys and values. */
   public String instantiate(String... keysAndValues) {
     ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
     for (int i = 0; i < keysAndValues.length; i += 2) {
@@ -850,89 +869,118 @@ public class PathTemplate {
     int pathWildCardBound = 0;
 
     for (String seg : Splitter.on('/').trimResults().split(template)) {
+      if (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(0, 1)).find()
+          || COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(seg.length() - 1)).find()) {
+        throw new ValidationException("parse error: invalid begin or end character in '%s'", seg);
+      }
+      // Disallow zero or multiple delimiters between variable names.
+      if (MULTIPLE_COMPLEX_DELIMITER_PATTERN.matcher(seg).find()
+          || MISSING_COMPLEX_DELIMITER_PATTERN.matcher(seg).find()) {
+        throw new ValidationException(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'", seg);
+      }
       // If segment starts with '{', a binding group starts.
       boolean bindingStarts = seg.startsWith("{");
       boolean implicitWildcard = false;
+      boolean complexDelimiterFound = false;
       if (bindingStarts) {
         if (varName != null) {
           throw new ValidationException("parse error: nested binding in '%s'", template);
         }
         seg = seg.substring(1);
 
-        int i = seg.indexOf('=');
-        if (i <= 0) {
-          // Possibly looking at something like "{name}" with implicit wildcard.
-          if (seg.endsWith("}")) {
-            // Remember to add an implicit wildcard later.
-            implicitWildcard = true;
-            varName = seg.substring(0, seg.length() - 1).trim();
-            seg = seg.substring(seg.length() - 1).trim();
-          } else {
-            throw new ValidationException("parse error: invalid binding syntax in '%s'", template);
-          }
+        // Check for invalid complex resource ID delimiters.
+        if (INVALID_COMPLEX_DELIMITER_PATTERN.matcher(seg).find()) {
+          throw new ValidationException(
+              "parse error: invalid complex resource ID delimiter character in '%s'", seg);
+        }
+
+        Matcher complexPatternDelimiterMatcher = END_SEGMENT_COMPLEX_DELIMITER_PATTERN.matcher(seg);
+        complexDelimiterFound = complexPatternDelimiterMatcher.find();
+
+        // Look for complex resource names.
+        // Need to handle something like "{user_a}~{user_b}".
+        if (complexDelimiterFound) {
+          builder.addAll(parseComplexResourceId(seg));
         } else {
-          // Looking at something like "{name=wildcard}".
-          varName = seg.substring(0, i).trim();
-          seg = seg.substring(i + 1).trim();
-        }
-        builder.add(Segment.create(SegmentKind.BINDING, varName));
-      }
-
-      // If segment ends with '}', a binding group ends. Remove the brace and remember.
-      boolean bindingEnds = seg.endsWith("}");
-      if (bindingEnds) {
-        seg = seg.substring(0, seg.length() - 1).trim();
-      }
-
-      // Process the segment, after stripping off "{name=.." and "..}".
-      switch (seg) {
-        case "**":
-        case "*":
-          if ("**".equals(seg)) {
-            pathWildCardBound++;
-          }
-          Segment wildcard = seg.length() == 2 ? Segment.PATH_WILDCARD : Segment.WILDCARD;
-          if (varName == null) {
-            // Not in a binding, turn wildcard into implicit binding.
-            // "*" => "{$n=*}"
-            builder.add(Segment.create(SegmentKind.BINDING, "$" + freeWildcardCounter));
-            freeWildcardCounter++;
-            builder.add(wildcard);
-            builder.add(Segment.END_BINDING);
+          int i = seg.indexOf('=');
+          if (i <= 0) {
+            // Possibly looking at something like "{name}" with implicit wildcard.
+            if (seg.endsWith("}")) {
+              // Remember to add an implicit wildcard later.
+              implicitWildcard = true;
+              varName = seg.substring(0, seg.length() - 1).trim();
+              seg = seg.substring(seg.length() - 1).trim();
+            } else {
+              throw new ValidationException(
+                  "parse error: invalid binding syntax in '%s'", template);
+            }
           } else {
-            builder.add(wildcard);
+            // Looking at something like "{name=wildcard}".
+            varName = seg.substring(0, i).trim();
+            seg = seg.substring(i + 1).trim();
           }
-          break;
-        case "":
-          if (!bindingEnds) {
-            throw new ValidationException(
-                "parse error: empty segment not allowed in '%s'", template);
-          }
-          // If the wildcard is implicit, seg will be empty. Just continue.
-          break;
-        default:
-          builder.add(Segment.create(SegmentKind.LITERAL, seg));
-      }
-
-      // End a binding.
-      if (bindingEnds) {
-        // Reset varName to null for next binding.
-        varName = null;
-
-        if (implicitWildcard) {
-          // Looking at something like "{var}". Insert an implicit wildcard, as it is the same
-          // as "{var=*}".
-          builder.add(Segment.WILDCARD);
+          builder.add(Segment.create(SegmentKind.BINDING, varName));
         }
-        builder.add(Segment.END_BINDING);
       }
 
-      if (pathWildCardBound > 1) {
-        // Report restriction on number of '**' in the pattern. There can be only one, which
-        // enables non-backtracking based matching.
-        throw new ValidationException(
-            "parse error: pattern must not contain more than one path wildcard ('**') in '%s'",
-            template);
+      if (!complexDelimiterFound) {
+        // If segment ends with '}', a binding group ends. Remove the brace and remember.
+        boolean bindingEnds = seg.endsWith("}");
+        if (bindingEnds) {
+          seg = seg.substring(0, seg.length() - 1).trim();
+        }
+
+        // Process the segment, after stripping off "{name=.." and "..}".
+        switch (seg) {
+          case "**":
+          case "*":
+            if ("**".equals(seg)) {
+              pathWildCardBound++;
+            }
+            Segment wildcard = seg.length() == 2 ? Segment.PATH_WILDCARD : Segment.WILDCARD;
+            if (varName == null) {
+              // Not in a binding, turn wildcard into implicit binding.
+              // "*" => "{$n=*}"
+              builder.add(Segment.create(SegmentKind.BINDING, "$" + freeWildcardCounter));
+              freeWildcardCounter++;
+              builder.add(wildcard);
+              builder.add(Segment.END_BINDING);
+            } else {
+              builder.add(wildcard);
+            }
+            break;
+          case "":
+            if (!bindingEnds) {
+              throw new ValidationException(
+                  "parse error: empty segment not allowed in '%s'", template);
+            }
+            // If the wildcard is implicit, seg will be empty. Just continue.
+            break;
+          default:
+            builder.add(Segment.create(SegmentKind.LITERAL, seg));
+        }
+
+        // End a binding.
+        if (bindingEnds && !complexDelimiterFound) {
+          // Reset varName to null for next binding.
+          varName = null;
+
+          if (implicitWildcard) {
+            // Looking at something like "{var}". Insert an implicit wildcard, as it is the same
+            // as "{var=*}".
+            builder.add(Segment.WILDCARD);
+          }
+          builder.add(Segment.END_BINDING);
+        }
+
+        if (pathWildCardBound > 1) {
+          // Report restriction on number of '**' in the pattern. There can be only one, which
+          // enables non-backtracking based matching.
+          throw new ValidationException(
+              "parse error: pattern must not contain more than one path wildcard ('**') in '%s'",
+              template);
+        }
       }
     }
 
@@ -940,6 +988,77 @@ public class PathTemplate {
       builder.add(Segment.create(SegmentKind.CUSTOM_VERB, customVerb));
     }
     return builder.build();
+  }
+
+  private static List<Segment> parseComplexResourceId(String seg) {
+    List<Segment> segments = new ArrayList<>();
+    List<String> separatorIndices = new ArrayList<>();
+
+    Matcher complexPatternDelimiterMatcher = END_SEGMENT_COMPLEX_DELIMITER_PATTERN.matcher(seg);
+    boolean delimiterFound = complexPatternDelimiterMatcher.find();
+
+    while (delimiterFound) {
+      int delimiterIndex = complexPatternDelimiterMatcher.start();
+      if (seg.substring(delimiterIndex).startsWith("}")) {
+        delimiterIndex += 1;
+      }
+      String currDelimiter = seg.substring(delimiterIndex, delimiterIndex + 1);
+      if (!COMPLEX_DELIMITER_PATTERN.matcher(currDelimiter).find()) {
+        throw new ValidationException(
+            "parse error: invalid complex ID delimiter '%s' in '%s'", currDelimiter, seg);
+      }
+      separatorIndices.add(currDelimiter);
+      delimiterFound = complexPatternDelimiterMatcher.find(delimiterIndex + 1);
+    }
+    // The last entry does not have a delimiter.
+    separatorIndices.add("");
+
+    String subVarName = null;
+    Iterable<String> complexSubsegments =
+        Splitter.onPattern("\\}[_\\-\\.~]").trimResults().split(seg);
+    boolean complexSegImplicitWildcard = false;
+    int currIteratorIndex = 0;
+    for (String complexSeg : complexSubsegments) {
+      boolean subsegmentBindingStarts = complexSeg.startsWith("{");
+      if (subsegmentBindingStarts) {
+        if (subVarName != null) {
+          throw new ValidationException("parse error: nested binding in '%s'", complexSeg);
+        }
+        complexSeg = complexSeg.substring(1);
+      }
+      subVarName = complexSeg.trim();
+
+      boolean subBindingEnds = complexSeg.endsWith("}");
+      int i = complexSeg.indexOf('=');
+      if (i <= 0) {
+        // Possibly looking at something like "{name}" with implicit wildcard.
+        if (subBindingEnds) {
+          // Remember to add an implicit wildcard later.
+          complexSegImplicitWildcard = true;
+          subVarName = complexSeg.substring(0, complexSeg.length() - 1).trim();
+          complexSeg = complexSeg.substring(complexSeg.length() - 1).trim();
+        }
+      } else {
+        // Looking at something like "{name=wildcard}".
+        subVarName = complexSeg.substring(0, i).trim();
+        complexSeg = complexSeg.substring(i + 1).trim();
+        if (complexSeg.equals("**")) {
+          throw new ValidationException(
+              "parse error: wildcard path not allowed in complex ID resource '%s'", subVarName);
+        }
+      }
+      String complexDelimiter =
+          currIteratorIndex < separatorIndices.size()
+              ? separatorIndices.get(currIteratorIndex)
+              : "";
+      segments.add(Segment.create(SegmentKind.BINDING, subVarName));
+      segments.add(Segment.wildcardCreate(complexDelimiter));
+      segments.add(Segment.END_BINDING);
+      subVarName = null;
+
+      currIteratorIndex++;
+    }
+    return segments;
   }
 
   // Helpers
@@ -1003,9 +1122,7 @@ public class PathTemplate {
   // Equality and String Conversion
   // ==============================
 
-  /**
-   * Returns a pretty version of the template as a string.
-   */
+  /** Returns a pretty version of the template as a string. */
   @Override
   public String toString() {
     return toSyntax(segments, true);

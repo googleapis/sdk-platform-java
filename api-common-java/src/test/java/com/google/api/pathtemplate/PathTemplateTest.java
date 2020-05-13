@@ -33,6 +33,9 @@ package com.google.api.pathtemplate;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,9 +43,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-/**
- * Tests for {@link PathTemplate}.
- */
+/** Tests for {@link PathTemplate}. */
 @RunWith(JUnit4.class)
 public class PathTemplateTest {
 
@@ -169,6 +170,251 @@ public class PathTemplateTest {
   public void matchWithUnboundInMiddle() {
     PathTemplate template = PathTemplate.create("bar/**/foo/*");
     assertPositionalMatch(template.match("bar/foo/foo/foo/bar"), "foo/foo", "bar");
+  }
+
+  // Complex Resource ID Segments.
+  // ========
+
+  @Test
+  public void complexResourceIdBasicCases() {
+    // Separate by "~".
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c~us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a}~{zone_b")).isNull();
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+
+    // Separate by "-".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}-{zone_b}");
+    match = template.match("projects/project-123/zones/europe-west3-c~us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("west3-c~us-east3-a");
+
+    // Separate by ".".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}.{zone_b}");
+    match = template.match("projects/project-123/zones/europe-west3-c.us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+
+    // Separate by "_".
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}");
+    match = template.match("projects/project-123/zones/europe-west3-c_us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+  }
+
+  @Test
+  public void complexResourceIdEqualsWildcard() {
+    PathTemplate template = PathTemplate.create("projects/{project=*}/zones/{zone_a=*}~{zone_b=*}");
+    Map<String, String> match =
+        template.match("projects/project-123/zones/europe-west3-c~us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a}~{zone_b")).isNull();
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+  }
+
+  @Test
+  public void complexResourceIdEqualsPathWildcard() {
+    thrown.expect(ValidationException.class);
+    PathTemplate template = PathTemplate.create("projects/{project=*}/zones/{zone_a=**}~{zone_b}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_a"));
+
+    template = PathTemplate.create("projects/{project=*}/zones/{zone_a}.{zone_b=**}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: wildcard path not allowed in complex ID resource '%s'", "zone_b"));
+  }
+
+  @Test
+  public void complexResourceIdMissingMatches() {
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
+    Truth.assertThat(template.match("projects/project-123/zones/europe-west3-c")).isNull();
+
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}.{zone_c}");
+    Map<String, String> match =
+        template.match("projects/project-123/zones/europe-west3-c~.us-east3-a");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a}~{zone_b")).isNull();
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEmpty();
+    Truth.assertThat(match.get("zone_c")).isEqualTo("us-east3-a");
+  }
+
+  @Test
+  public void complexResourceIdNoSeparator() {
+    thrown.expect(ValidationException.class);
+    PathTemplate.create("projects/{project}/zones/{zone_a}{zone_b}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}{zone_b}"));
+
+    PathTemplate.create("projects/{project}/zones/{zone_a}_{zone_b}{zone_c}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}_{zone_b}{zone_c}"));
+  }
+
+  @Test
+  public void complexResourceIdInvalidDelimiter() {
+    thrown.expect(ValidationException.class);
+    // Not a comprehensive set of invalid delimiters, please check the class's defined pattern.
+    List<String> someInvalidDelimiters =
+        new ArrayList<>(Arrays.asList("|", "!", "@", "a", "1", ",", "{", ")"));
+    for (String invalidDelimiter : someInvalidDelimiters) {
+      PathTemplate.create(
+          String.format("projects/{project=*}/zones/{zone_a}%s{zone_b}", invalidDelimiter));
+      thrown.expectMessage(
+          String.format(
+              "parse error: invalid complex resource ID delimiter character in '%s'",
+              String.format("{zone_a}%s{zone_b}", invalidDelimiter)));
+    }
+  }
+
+  @Test
+  public void complexResourceIdMixedSeparators() {
+    // Separate by a mix of delimiters.
+    PathTemplate template =
+        PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}.{zone_c}-{zone_d}");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c~us-east3-a.us-west2-b-europe-west2-b");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+    Truth.assertThat(match.get("zone_c")).isEqualTo("us");
+    Truth.assertThat(match.get("zone_d")).isEqualTo("west2-b-europe-west2-b");
+
+    template = PathTemplate.create("projects/{project}/zones/{zone_a}.{zone_b}.{zone_c}~{zone_d}");
+    match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c.us-east3-a.us-west2-b~europe-west2-b");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe-west3-c");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("us-east3-a");
+    Truth.assertThat(match.get("zone_c")).isEqualTo("us-west2-b");
+    Truth.assertThat(match.get("zone_d")).isEqualTo("europe-west2-b");
+  }
+
+  @Test
+  public void complexResourceIdInParent() {
+    // One parent has a complex resource ID.
+    PathTemplate template =
+        PathTemplate.create(
+            "projects/{project}/zones/{zone_a}-{zone_b}_{zone_c}/machines/{machine}");
+    Map<String, String> match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project-123/zones/europe-west3-c-us-east3-a_us-west2-b/machines/roomba");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("project")).isEqualTo("project-123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("west3-c-us-east3-a");
+    Truth.assertThat(match.get("zone_c")).isEqualTo("us-west2-b");
+    Truth.assertThat(match.get("machine")).isEqualTo("roomba");
+
+    // All parents and resource IDs have complex resource IDs.
+    template =
+        PathTemplate.create(
+            "projects/{foo}_{bar}/zones/{zone_a}-{zone_b}_{zone_c}/machines/{cell1}.{cell2}");
+    match =
+        template.match(
+            "https://www.googleapis.com/compute/v1/projects/project_123/zones/europe-west3-c-us-east3-a_us-west2-b/machines/roomba.broomba");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get(PathTemplate.HOSTNAME_VAR)).isEqualTo("https://www.googleapis.com");
+    Truth.assertThat(match.get("foo")).isEqualTo("project");
+    Truth.assertThat(match.get("bar")).isEqualTo("123");
+    Truth.assertThat(match.get("zone_a")).isEqualTo("europe");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("west3-c-us-east3-a");
+    Truth.assertThat(match.get("zone_c")).isEqualTo("us-west2-b");
+    Truth.assertThat(match.get("cell1")).isEqualTo("roomba");
+    Truth.assertThat(match.get("cell2")).isEqualTo("broomba");
+  }
+
+  @Test
+  public void complexResourceBasicInvalidIds() {
+    thrown.expect(ValidationException.class);
+    PathTemplate.create("projects/*/zones/~{zone_a}");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "~{zone_a}"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}~");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "{zone_a}~"));
+
+    PathTemplate.create("projects/*/zones/.{zone_a}");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", ".{zone_a}"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}.");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "{zone_a}."));
+
+    PathTemplate.create("projects/*/zones/-{zone_a}");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "-{zone_a}"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}-");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "{zone_a}-"));
+
+    PathTemplate.create("projects/*/zones/_{zone_a}");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "{zone_a}_"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}_");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", "{zone_a}_"));
+  }
+
+  @Test
+  public void complexResourceMultipleDelimiters() {
+    thrown.expect(ValidationException.class);
+    PathTemplate.create("projects/*/zones/.-~{zone_a}");
+    thrown.expectMessage(
+        String.format("parse error: invalid begin or end character in '%s'", ".-~{zone_a}"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}~.{zone_b}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}~.{zone_b}"));
+
+    PathTemplate.create("projects/*/zones/{zone_a}~{zone_b}..{zone_c}");
+    thrown.expectMessage(
+        String.format(
+            "parse error: missing or 2+ consecutive delimiter characters in '%s'",
+            "{zone_a}~{zone_b}..{zone_c}"));
+
+    String pathString = "projects/project_123/zones/lorum~ipsum";
+    PathTemplate template = PathTemplate.create("projects/*/zones/{zone_.~-a}~{zone_b}");
+    template.validate(pathString, "");
+    // No assertion - success is no exception thrown from template.validate().
+    Map<String, String> match = template.match(pathString);
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("zone_.~-a")).isEqualTo("lorum");
+    Truth.assertThat(match.get("zone_b")).isEqualTo("ipsum");
   }
 
   // Validate
