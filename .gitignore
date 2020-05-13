@@ -1,6 +1,7 @@
 # Bazel.
 bazel-bin/*
 bazel-googleapis/*
+bazel-java-gapic-generator/*
 baze-out/*
 bazel-testlogs/*
 
