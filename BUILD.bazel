@@ -1,3 +1,9 @@
+load(
+    "//:gapic_generator_java.bzl",
+    "google_java_format",
+    "google_java_format_verification",
+)
+
 java_binary(
     name = "gapic_generator_java",
     srcs = [
@@ -7,4 +13,28 @@ java_binary(
     deps = [
         "//src/main/java/com/google/api/generator",
     ],
+)
+
+# google-java-format
+java_binary(
+    name = "google_java_format_binary",
+    jvm_flags = ["-Xmx512m"],
+    main_class = "com.google.googlejavaformat.java.Main",
+    visibility = ["//visibility:public"],
+    runtime_deps = ["@google_java_format_all_deps//jar"],
+)
+
+# Run `bazel build //:google_java_format_verification` to verify that gapic-generator-java sources
+# are formatted correctly.
+google_java_format_verification(
+    name = "google_java_format_verification",
+    srcs = glob(["src/**/*.java"]),
+    formatter = "//:google_java_format_binary",
+)
+
+# Run `bazel run //:google_java_format` to format gapic-generator-java sources.
+google_java_format(
+    name = "google_java_format",
+    srcs = ["//src/main/java/com/google/api/generator:generator_files"],
+    formatter = "//:google_java_format_binary",
 )
