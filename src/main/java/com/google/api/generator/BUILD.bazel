@@ -11,4 +11,8 @@ java_library(
     srcs = [
         ":generator_files",
     ],
+    deps = [
+        "@com_google_guava_guava__com_google_api_codegen//jar",
+        "@com_google_protobuf//:protobuf_java",
+    ],
 )

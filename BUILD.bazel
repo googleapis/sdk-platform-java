@@ -5,13 +5,15 @@ load(
 )
 
 java_binary(
-    name = "gapic_generator_java",
+    name = "protoc-gen-gapic-java",
     srcs = [
         "//src/main/java/com/google/api/generator:generator_files",
     ],
     main_class = "com.google.api.generator.Main",
     deps = [
         "//src/main/java/com/google/api/generator",
+        "@com_google_guava_guava__com_google_api_codegen",
+        "@com_google_protobuf//:protobuf_java",
     ],
 )
 
