@@ -20,6 +20,7 @@ jobs:
           at: /home/circleci/workspace
       - run:
           name: Java Linter
+          working_directory: /home/circleci/workspace/gapic-generator-java
           command: |
             bazel build //:google_java_format_verification
 
