@@ -30,11 +30,12 @@ jobs:
           command: |
             LATEST_COMMIT=$(git rev-parse HEAD)
             NUM_JAVA=$(git diff-tree --no-commit-id --name-only -r $LATEST_COMMIT | grep .*.java | wc -l)
+            echo "$LATEST_COMMIT -> $NUM_JAVA"
             # Run Java linter checks only if there are Java files in this change.
-            if [ $NUM_JAVA != 0 ]
-            then
-              bazel build //:google_java_format_verification
-            fi
+            #if [ $NUM_JAVA != 0 ]
+            #then
+            #bazel build //:google_java_format_verification
+            #fi
 
 # ======================= WORKFLOWS =======================
 
