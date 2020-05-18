@@ -30,7 +30,7 @@ java_binary(
 # are formatted correctly.
 google_java_format_verification(
     name = "google_java_format_verification",
-    srcs = glob(["src/**/*.java"]),
+    srcs = ["//src/main/java/com/google/api/generator:generator_files"],
     formatter = "//:google_java_format_binary",
 )
 

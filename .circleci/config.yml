@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Java Linter
           command: |
-            bazel run //:google_java_format_verification
+            bazel build //:google_java_format_verification
 
 # ======================= WORKFLOWS =======================
 
