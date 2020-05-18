@@ -11,7 +11,14 @@ jobs:
       - run:
           name: Builder
           command: |
-            bazel build //...
+            LATEST_COMMIT=`git rev-parse HEAD`
+            NUM_NOCHECKS=`git diff-tree --no-commit-id --name-only -r $LATEST_COMMIT | grep .*.md | wc -l`
+            NUM_TOTAL=`git diff-tree --no-commit-id --name-only -r $LATEST_COMMIT | grep .*.md | wc -l`
+            if [ $NUM_NOCHECKS == $NUM_TOTAL ]
+            then
+              # Run build checks only if there are non-Markdown files in this change.
+              bazel build //...
+            fi
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel
@@ -21,7 +28,13 @@ jobs:
       - run:
           name: Java Linter
           command: |
-            bazel build //:google_java_format_verification
+            LATEST_COMMIT=`git rev-parse HEAD`
+            NUM_JAVA=`git diff-tree --no-commit-id --name-only -r $LATEST_COMMIT | grep .*.java | wc -l`
+            # Run Java linter checks only if there are Java files in this change.
+            if [ $NUM_JAVA != 0 ]
+            then
+              bazel build //:google_java_format_verification
+            fi
 
 # ======================= WORKFLOWS =======================
 
