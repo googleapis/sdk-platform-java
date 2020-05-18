@@ -15,12 +15,11 @@ jobs:
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel
+    working_directory: /home/circleci/workspace/gapic-generator-java
     steps:
-      - attach_workspace:
-          at: /home/circleci/workspace
+      - checkout
       - run:
           name: Java Linter
-          working_directory: /home/circleci/workspace/gapic-generator-java
           command: |
             bazel build //:google_java_format_verification
 
@@ -31,6 +30,4 @@ workflows:
   run_tests:
     jobs:
       - gapic-generator-java-tests
-      - google-java-format:
-          requires:
-            - gapic-generator-java-tests
+      - google-java-format
