@@ -32,6 +32,7 @@ function echo_status {
 function echo_success {
   BOLD="\e[1m"
   UNSET="\e[0m"
+  WHITE="\e[97m"
   BACK_GREEN="\e[42m"
   BACK_BLUE="\e[44m"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN SUCCESS. $UNSET All checks passed!"
