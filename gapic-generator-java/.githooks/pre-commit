@@ -15,7 +15,6 @@ function echo_error {
   BACK_MAGENTA="\e[45m"
   BACK_BLUE="\e[44m"
   BACK_RED="\e[41m"
-  INVERT="\e[7m"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED Changes NOT committed. $UNSET"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED $WHITE $ERR_MSG $BACK_BLUE $HELP_MSG $UNSET"
 }
@@ -35,7 +34,7 @@ function echo_success {
   WHITE="\e[97m"
   BACK_GREEN="\e[42m"
   BACK_BLUE="\e[44m"
-  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN SUCCESS. $UNSET All checks passed!"
+  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN $WHITE SUCCESS. $UNSET All checks passed!"
 }
 
 # Constants.
