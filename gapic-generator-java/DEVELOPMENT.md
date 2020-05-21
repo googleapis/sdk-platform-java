@@ -3,6 +3,16 @@
 This is a temporal workflow that will evolve with codebase. The steps described
 below are temporary and better ones will be coming.
 
+## Set Up
+
+1.  Clone this repo.
+2.  Symlink the Git pre-commit hooks. This will automatically check the build,
+    run tests, and perform linting before each commit.
+
+    ```sh
+    ln -s .githooks/pre-commit .git/hooks/pre-commit
+    ```
+
 ## Running the Plugin
 
 1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
