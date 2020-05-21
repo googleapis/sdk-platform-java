@@ -6,11 +6,11 @@ below are temporary and better ones will be coming.
 ## Set Up
 
 1.  Clone this repo.
-2.  Symlink the Git pre-commit hooks. This will automatically check the build,
-    run tests, and perform linting before each commit.
+2.  Copy the Git pre-commit hooks. This will automatically check the build, run
+    tests, and perform linting before each commit.
 
     ```sh
-    ln -s .githooks/pre-commit .git/hooks/pre-commit
+    cp .githooks/pre-commit .git/hooks/pre-commit
     ```
 
 ## Running the Plugin
