@@ -1,0 +1,16 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "lexicon_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "lexicon",
+    srcs = [
+        ":lexicon_files",
+    ],
+    deps = [
+        "@com_google_guava_guava__com_google_api_codegen//jar",
+    ],
+)

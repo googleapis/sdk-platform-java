@@ -1,0 +1,15 @@
+package(default_visibility = ["//visibility:public"])
+
+TESTS = [
+    "KeywordTest",
+]
+
+[java_test(
+    name = test_name,
+    srcs = ["{0}.java".format(test_name)],
+    test_class = "com.google.api.generator.engine.lexicon.{0}".format(test_name),
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/lexicon",
+        "@com_google_truth_truth//jar",
+    ],
+) for test_name in TESTS]
