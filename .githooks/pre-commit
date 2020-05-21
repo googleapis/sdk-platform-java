@@ -1,0 +1,77 @@
+#!/bin/sh
+
+# Pre-commit Git checks.
+# Set up:
+#  ln -s .githooks/pre-commit .git/hooks/pre-commit
+
+function echo_error {
+  ERR_MSG=$1
+  HELP_MSG=$2
+  BOLD="\e[1m"
+  UNSET="\e[0m"
+  WHITE="\e[97m"
+  RED="\e[91m"
+  BACK_MAGENTA="\e[45m"
+  BACK_BLUE="\e[44m"
+  BACK_RED="\e[41m"
+  INVERT="\e[7m"
+  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED Changes NOT committed. $UNSET"
+  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED $WHITE $ERR_MSG $BACK_BLUE $HELP_MSG $UNSET"
+}
+
+function echo_status {
+  STATUS_MSG=$1
+  BOLD="\e[1m"
+  UNSET="\e[0m"
+  WHITE="\e[97m"
+  BACK_BLUE="\e[44m"
+  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $STATUS_MSG $UNSET"
+}
+
+function echo_success {
+  BOLD="\e[1m"
+  UNSET="\e[0m"
+  BACK_GREEN="\e[42m"
+  BACK_BLUE="\e[44m"
+  echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN SUCCESS. $UNSET All checks passed!"
+}
+
+if [ -x /usr/lib/git-core/google_hook ]; then
+  /usr/lib/git-core/google_hook pre-commit "$@"
+fi
+
+# Check that everything builds.
+echo_status "Checking the build..."
+bazel build //...
+BUILD_STATUS=$?
+if [ $BUILD_STATUS != 0 ]
+then
+  echo_error "Build failed." "Please fix it and try again."
+fi
+
+echo_status "Checking tests..."
+bazel test //...
+TEST_STATUS=$?
+if [ $TEST_STATUS != 0 ]
+then
+  echo_error "Tests failed." "Please fix them and try again."
+  exit 1
+fi
+
+# Check Java format.
+echo_status "Running Java linter..."
+bazel build //:google_java_format_verification
+FORMAT_STATUS=$?
+if [ $FORMAT_STATUS != 0 ]
+then
+  echo_error "Linting failed." "Please run :google_java_format and try again."
+  exit 1
+fi
+
+# Check and fix Bazel format.
+for FILE in $(find ./ -name BUILD.bazel)
+do
+  buildifier --lint=fix $FILE
+done
+
+echo_success
