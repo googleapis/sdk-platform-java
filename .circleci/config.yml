@@ -9,9 +9,13 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Builder
+          name: Build targets
           command: |
             bazel build //...
+      - run:
+          name: Test targets
+          command: |
+            bazel test //...
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel
