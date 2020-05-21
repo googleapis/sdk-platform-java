@@ -1,0 +1,9 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "engine_files",
+    srcs = [
+        "//src/test/java/com/google/api/generator/engine/basics:basics_files",
+        "//src/test/java/com/google/api/generator/engine/lexicon:lexicon_files",
+    ],
+)
