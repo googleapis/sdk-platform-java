@@ -25,6 +25,5 @@ public class KeywordTest {
     assertThat(Keyword.isKeyword("null")).isFalse();
     assertThat(Keyword.isKeyword("asdf")).isFalse();
     assertThat(Keyword.isKeyword("12345")).isFalse();
-    assertThat(3).isEqualTo(2);
   }
 }
