@@ -1,11 +1,9 @@
 package com.google.api.generator.engine.lexicon;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 
 public class Keyword {
-  @VisibleForTesting
-  static final ImmutableList<String> KEYWORDS =
+  private static final ImmutableList<String> KEYWORDS =
       ImmutableList.of(
           "abstract",
           "continue",
