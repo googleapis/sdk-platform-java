@@ -46,7 +46,6 @@ NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only "*BUILD.bazel" | wc -l)
 if [ $NUM_TOTAL_FILES_CHANGED -le 0 ]
 then
   echo_error "No new files to commit." ""
-
   exit 1
 fi
 
