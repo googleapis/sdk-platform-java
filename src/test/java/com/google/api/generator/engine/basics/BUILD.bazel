@@ -1,12 +1,15 @@
 package(default_visibility = ["//visibility:public"])
 
-java_test(
-    name = "IdentifierTest",
-    srcs = ["IdentifierTest.java"],
-    test_class = "com.google.api.generator.engine.basics.IdentifierTest",
+TESTS = [
+    "IdentifierTest",
+]
+
+[java_test(
+    name = test_name,
+    srcs = ["{0}.java".format(test_name)],
+    test_class = "com.google.api.generator.engine.basics.{0}".format(test_name),
     deps = [
         "//src/main/java/com/google/api/generator/engine/basics",
         "@com_google_truth_truth//jar",
-        "@org_mockito_mockito_core//jar",
     ],
-)
+) for test_name in TESTS]
