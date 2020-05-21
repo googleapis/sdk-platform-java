@@ -4,6 +4,7 @@
 # Set up:
 #  ln -s .githooks/pre-commit .git/hooks/pre-commit
 
+# Methods.
 function echo_error {
   ERR_MSG=$1
   HELP_MSG=$2
@@ -36,42 +37,66 @@ function echo_success {
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN SUCCESS. $UNSET All checks passed!"
 }
 
+# Constants.
+NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
+NUM_JAVA_FILES_CHANGED=$(git diff --cached --name-only | grep "*.java" | wc -l)
+NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only | grep "BUILD.bazel" | wc -l)
+
+if [ $NUM_TOTAL_FILES_CHANGED -le 0 ]
+then
+  echo_error "No files to commit." ""
+fi
+
+
 if [ -x /usr/lib/git-core/google_hook ]; then
   /usr/lib/git-core/google_hook pre-commit "$@"
 fi
 
-# Check that everything builds.
-echo_status "Checking the build..."
-bazel build //...
-BUILD_STATUS=$?
-if [ $BUILD_STATUS != 0 ]
+# Check that everything builds, but only if there are Java or Bazel changes.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
 then
-  echo_error "Build failed." "Please fix it and try again."
+  echo_status "Checking the build..."
+  bazel build //...
+  BUILD_STATUS=$?
+  if [ $BUILD_STATUS != 0 ]
+  then
+    echo_error "Build failed." "Please fix it and try again."
+  fi
 fi
 
-echo_status "Checking tests..."
-bazel test //...
-TEST_STATUS=$?
-if [ $TEST_STATUS != 0 ]
+# Check tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
-  echo_error "Tests failed." "Please fix them and try again."
-  exit 1
+  echo_status "Checking tests..."
+  bazel test //...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
+    echo_error "Tests failed." "Please fix them and try again."
+    exit 1
+  fi
 fi
 
 # Check Java format.
-echo_status "Running Java linter..."
-bazel build //:google_java_format_verification
-FORMAT_STATUS=$?
-if [ $FORMAT_STATUS != 0 ]
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
-  echo_error "Linting failed." "Please run :google_java_format and try again."
-  exit 1
+  echo_status "Running Java linter..."
+  bazel build //:google_java_format_verification
+  FORMAT_STATUS=$?
+  if [ $FORMAT_STATUS != 0 ]
+  then
+    echo_error "Linting failed." "Please run :google_java_format and try again."
+    exit 1
+  fi
 fi
 
 # Check and fix Bazel format.
-for FILE in $(find ./ -name BUILD.bazel)
-do
-  buildifier --lint=fix $FILE
-done
+if [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
+then
+  for FILE in $(find ./ -name BUILD.bazel)
+  do
+    buildifier --lint=fix $FILE
+  done
+fi
 
 echo_success
