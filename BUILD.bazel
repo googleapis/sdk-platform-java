@@ -4,6 +4,15 @@ load(
     "google_java_format_verification",
 )
 
+JAVA_SRCS = [
+    "//src/main/java/com/google/api/generator:generator_files",
+    "//src/main/java/com/google/api/generator/engine:engine_files",
+]
+
+TEST_SRCS = [
+    "//src/test/java/com/google/api/generator/engine:engine_files",
+]
+
 java_binary(
     name = "protoc-gen-gapic-java",
     srcs = [
@@ -30,13 +39,13 @@ java_binary(
 # are formatted correctly.
 google_java_format_verification(
     name = "google_java_format_verification",
-    srcs = ["//src/main/java/com/google/api/generator:generator_files"],
+    srcs = JAVA_SRCS + TEST_SRCS,
     formatter = "//:google_java_format_binary",
 )
 
 # Run `bazel run //:google_java_format` to format gapic-generator-java sources.
 google_java_format(
     name = "google_java_format",
-    srcs = ["//src/main/java/com/google/api/generator:generator_files"],
+    srcs = JAVA_SRCS + TEST_SRCS,
     formatter = "//:google_java_format_binary",
 )

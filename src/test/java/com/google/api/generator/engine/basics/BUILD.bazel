@@ -4,6 +4,11 @@ TESTS = [
     "IdentifierTest",
 ]
 
+filegroup(
+    name = "basics_files",
+    srcs = ["{0}.java".format(f) for f in TESTS],
+)
+
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
