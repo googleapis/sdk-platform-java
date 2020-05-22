@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class KeywordTest {
   @Test
-  public void keywordTest() {
+  public void keywordDetected() {
     // Modifiers.
     assertThat(Keyword.isKeyword("static")).isTrue();
     assertThat(Keyword.isKeyword("private")).isTrue();

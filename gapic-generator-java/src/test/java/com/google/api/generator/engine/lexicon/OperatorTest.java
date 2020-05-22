@@ -7,7 +7,7 @@ import org.junit.Test;
 public class OperatorTest {
 
   @Test
-  public void separatorTest() {
+  public void operatorsDetected() {
     assertThat(Operator.containsOperator("foo")).isFalse();
 
     assertThat(Operator.containsOperator("foo+foo")).isTrue();
