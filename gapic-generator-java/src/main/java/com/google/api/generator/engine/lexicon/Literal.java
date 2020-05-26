@@ -38,4 +38,13 @@ public class Literal {
   public static boolean isNullLiteral(String str) {
     return str.equals(NULL_VALUE);
   }
+
+  public static boolean isLiteral(String str) {
+    return isBooleanLiteral(str)
+        || isIntegerLiteral(str)
+        || isLongLiteral(str)
+        || isFloatLiteral(str)
+        || isDoubleLiteral(str)
+        || isNullLiteral(str);
+  }
 }
