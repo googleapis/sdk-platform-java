@@ -5,21 +5,21 @@ below are temporary and better ones will be coming.
 
 ## Running the Plugin
 
-1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
-    [gapic-showcase](https://github.com/googleapis/gapic-showcase/) and install
-    protoc.
-2.  Copy the protos from Showcase into googleapis/google/showcase.
+1.  Clone [googleapis](https://github.com/googleapis/googleapis) and install protoc.
+
+2. create output folder
 
     ```sh
-    cp gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta
+    mkdir .test-out-showcase
     ```
 
 3.  Export tool paths.
 
     ```sh
-    PROTOC_INCLUDE_DIR=/usr/local/include/google/protobuf/
-    GOOGLEAPIS_DIR=/usr/local/google/home/$USER/dev/googleapis
-    YOUR_PROTO_DIR=/usr/local/google/home/USER/dev/googleapis/google/showcase/v1beta
+    PROTOC_INCLUDE_DIR=test-fixtures/protos/api-common-protos
+    YOUR_PROTO_DIR=test-fixtures/protos/google
+    YOUR_PROTO_FILES=test-fixtures/protos/google/showcase/v1beta1/*.proto
+    OUTPUT_DIR=.test-out-showcase
     ```
 
 4.  Build this plugin.
@@ -33,8 +33,8 @@ below are temporary and better ones will be coming.
 
     ```
     protoc -I=${PROTOC_INCLUDE_DIR} -I=${GOOGLEAPIS_DIR} -I=${YOUR_PROTO_DIR} \
-        --plugin=bazel-bin/protoc-gen-gapic-java ~/dev/googleapis/google/showcase/v1test/*.proto \
-        --gapic-java_out=/tmp/test
+        ${YOUR_PROTO_FILES} --plugin=bazel-bin/protoc-gen-gapic-java
+        --gapic-java_out=${OUTPUT_DIR}
     ```
 
 ## Code Formatting
