@@ -1,7 +1,11 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "InvalidSymbolTest",
     "KeywordTest",
+    "LiteralTest",
+    "OperatorTest",
+    "SeparatorTest",
 ]
 
 filegroup(
