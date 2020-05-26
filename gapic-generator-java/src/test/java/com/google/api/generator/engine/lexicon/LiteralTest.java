@@ -58,6 +58,19 @@ public class LiteralTest {
     assertThat(Literal.isDoubleLiteral("123e2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123e")).isFalse();
     assertThat(Literal.isDoubleLiteral("123E-")).isFalse();
-    double a = 123.e-2;
+  }
+
+  @Test
+  public void literalDetected() {
+    assertThat(Literal.isLiteral("False")).isFalse();
+    assertThat(Literal.isLiteral("asdf")).isFalse();
+    assertThat(Literal.isLiteral("asdf12345")).isFalse();
+    assertThat(Literal.isLiteral("asdf1f")).isFalse();
+
+    assertThat(Literal.isLiteral("false")).isTrue();
+    assertThat(Literal.isLiteral("null")).isTrue();
+    assertThat(Literal.isLiteral("123")).isTrue();
+    assertThat(Literal.isLiteral("123E-2")).isTrue();
+    assertThat(Literal.isLiteral("123.f")).isTrue();
   }
 }
