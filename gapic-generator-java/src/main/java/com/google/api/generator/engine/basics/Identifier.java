@@ -1,5 +1,6 @@
 package com.google.api.generator.engine.basics;
 
+import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.lexicon.InvalidSymbol;
 import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.api.generator.engine.lexicon.Literal;
@@ -8,7 +9,7 @@ import com.google.api.generator.engine.lexicon.Separator;
 import java.util.regex.Pattern;
 import javax.validation.constraints.NotNull;
 
-public class Identifier {
+public class Identifier implements AstNode {
   static class InvalidIdentifierException extends RuntimeException {
     public InvalidIdentifierException(String errorMessage) {
       super(errorMessage);
@@ -54,6 +55,11 @@ public class Identifier {
   }
 
   public String name() {
+    return identifierName;
+  }
+
+  @Override
+  public String write() {
     return identifierName;
   }
 

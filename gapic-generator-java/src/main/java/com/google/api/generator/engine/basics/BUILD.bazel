@@ -11,6 +11,7 @@ java_library(
         ":basics_files",
     ],
     deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/lexicon",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_guava_guava__com_google_api_codegen//jar",
