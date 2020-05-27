@@ -10,4 +10,8 @@ java_library(
     srcs = [
         ":basics_files",
     ],
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/lexicon",
+        "@javax_validation_javax_validation_api//jar",
+    ],
 )
