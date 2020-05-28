@@ -42,7 +42,7 @@ jobs:
             bazel build //:google_java_format_verification
   license-header:
     docker:
-      -image: circleci/golang:1.13
+      - image: circleci/golang:1.13
     working_directory: /home/circleci/workspace/gapic-generator-java
     steps:
       - checkout
