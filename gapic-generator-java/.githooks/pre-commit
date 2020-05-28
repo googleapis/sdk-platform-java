@@ -101,4 +101,18 @@ then
   done
 fi
 
+# Check Apache License header for source files.
+if [ $NUM_TOTAL_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking Apache License Header ..."
+  go get -u github.com/google/addlicense
+  addlicense -c "Google LLC" -l apache .
+  FORMAT_STATUS=$?
+  if [ $FORMAT_STATUS != 0 ]
+  then
+    echo_error "License header check failed." "Please make sure adding the latest header to the source files."
+    exit 1
+  fi
+fi
+
 echo_success
