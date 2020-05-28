@@ -107,10 +107,10 @@ then
   echo_status "Checking Apache License Header ..."
   go get -u github.com/google/addlicense
   addlicense -c "Google LLC" -l apache .
-  FORMAT_STATUS=$?
-  if [ $FORMAT_STATUS != 0 ]
+  CHECK_STATUS=$?
+  if [ $CHECK_STATUS != 0 ]
   then
-    echo_error "License header check failed." "Please make sure adding the latest header to the source files."
+    echo_error "License header check failed." "Please make sure adding the latest header to the source."
     exit 1
   fi
 fi
