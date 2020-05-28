@@ -90,6 +90,12 @@ public class IdentifierTest {
     assertInvalidIdentifier("implements");
   }
 
+  @Test
+  public void writeIdentifier() {
+    String idName = "foobar";
+    assertThat(Identifier.create(idName).write()).isEqualTo(idName);
+  }
+
   private static void assertInvalidIdentifier(String idName) {
     assertThrows(
         InvalidIdentifierException.class,

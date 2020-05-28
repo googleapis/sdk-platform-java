@@ -1,10 +1,11 @@
 package com.google.api.generator.engine.basics;
 
+import com.google.api.generator.engine.ast.AstNode;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 
-public class Type {
+public class Type implements AstNode {
   public enum TypeKind {
     BYTE,
     SHORT,
@@ -18,8 +19,8 @@ public class Type {
   }
 
   private final TypeKind typeKind;
-  @Nullable private final Reference reference;
   private final boolean isArray;
+  @Nullable private final Reference reference;
 
   private Type(@NotNull TypeKind typeKind, @Nullable Reference reference, boolean isArray) {
     this.typeKind = typeKind;
@@ -44,10 +45,28 @@ public class Type {
     return createPrimitiveArrayType(TypeKind.BYTE);
   }
 
-  public TypeKind tyepKind() {
+  public TypeKind typeKind() {
     return typeKind;
   }
 
+  // AstNode overrides.
+  @Override
+  public String write() {
+    StringBuilder generatedCodeBuilder = new StringBuilder();
+    if (isPrimitiveType(typeKind)) {
+      generatedCodeBuilder.append(typeKind.toString().toLowerCase());
+    } else {
+      // A null pointer exception will be thrown if reference is null, which is WAI.
+      generatedCodeBuilder.append(reference.write());
+    }
+
+    if (isArray) {
+      generatedCodeBuilder.append("[]");
+    }
+    return generatedCodeBuilder.toString();
+  }
+
+  // Java overrides.
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Type)) {
@@ -61,7 +80,7 @@ public class Type {
   }
 
   private static Type createPrimitiveType(TypeKind typeKind) {
-    if (typeKind.equals(TypeKind.OBJECT)) {
+    if (!isPrimitiveType(typeKind)) {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
     return new Type(typeKind, null, false);
@@ -72,5 +91,9 @@ public class Type {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
     return new Type(typeKind, null, true);
+  }
+
+  private static boolean isPrimitiveType(TypeKind typeKind) {
+    return !typeKind.equals(TypeKind.OBJECT);
   }
 }

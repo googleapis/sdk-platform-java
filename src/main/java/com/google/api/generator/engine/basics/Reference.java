@@ -1,6 +1,12 @@
 package com.google.api.generator.engine.basics;
 
-public class Reference {
+import com.google.api.generator.engine.ast.AstNode;
+
+public class Reference implements AstNode {
   // TODO(miraleung): More logic here.
-  public void foobar() {}
+
+  @Override
+  public String write() {
+    throw new RuntimeException("Not yet implemented for reference types");
+  }
 }
