@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "ast_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "ast",
+    srcs = [
+        ":ast_files",
+    ],
+)
