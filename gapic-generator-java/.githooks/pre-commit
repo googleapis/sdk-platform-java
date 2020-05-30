@@ -44,9 +44,8 @@ function header_check_preparation {
   then 
       echo_status "Please install Go first, instructions can be found here: https://golang.org/doc/install." 
   else 
-      ENV_PATH=$(echo $PATH)
-      echo $ENV_PATH
-      if [["$ENV_PATH" !== *"$GOPATH"*]];
+      export ENV_PATH=$(echo $PATH)
+      if [[ $ENV_PATH != *$GOPATH* ]];
       then
         echo_status "GOPATH is not in the system path, adding it now."
         export PATH=$GOPATH/bin:$PATH
