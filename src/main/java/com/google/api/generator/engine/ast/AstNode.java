@@ -1,3 +1,4 @@
+
 package com.google.api.generator.engine.ast;
 
 public interface AstNode {
