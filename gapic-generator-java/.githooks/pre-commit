@@ -37,7 +37,7 @@ function echo_success {
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN $WHITE SUCCESS. $UNSET All checks passed!"
 }
 
-function header_check_preparation{
+function header_check_preparation {
   echo_status "setting up license check environment"
   export GOPATH=$(go env GOPATH)
   if [ $? -ne 0 ]; 
