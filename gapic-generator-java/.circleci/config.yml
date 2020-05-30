@@ -36,7 +36,7 @@ jobs:
           name: License Header
           command: |
             go get -u github.com/google/addlicense
-            addlicense -c "Google LLC" -l apache .
+            addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java')
 # ======================= WORKFLOWS =======================
 
 workflows:
