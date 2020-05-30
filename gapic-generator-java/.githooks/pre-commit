@@ -37,6 +37,28 @@ function echo_success {
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN $WHITE SUCCESS. $UNSET All checks passed!"
 }
 
+function header_check_preparation{
+  echo_status "setting up license check environment"
+  export GOPATH=$(go env GOPATH)
+  if [ $? -ne 0 ]; 
+  then 
+      echo_status "Please install Go first, instructions can be found here: https://golang.org/doc/install." 
+  else 
+      ENV_PATH=$(echo $PATH)
+      if [[$ENV_PATH !== *$GOPATH*]];
+      then
+        echo_status "GOPATH is not in the system path, adding it now."
+        export PATH=$GOPATH/bin:$PATH
+      fi
+      which addlicense
+      if [ $? -ne 0 ]; 
+      then
+        echo_status "addlicense tool is not yet installed, downloading it now."
+        go get -u github.com/google/addlicense
+      fi
+  fi
+}
+
 # Constants.
 # Check only the staged files.
 NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
@@ -105,8 +127,8 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking Apache License Header ..."
-  go get -u github.com/google/addlicense
-  addlicense -c "Google LLC" -l apache -check .
+  header_check_preparation
+  addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java')
   CHECK_STATUS=$?
   if [ $CHECK_STATUS != 0 ]
   then
