@@ -132,7 +132,7 @@ then
   CHECK_STATUS=$?
   if [ $CHECK_STATUS != 0 ]
   then
-    echo_error "Please ensure that all source files have a license header."
+    echo_error "License header check failed." "Please ensure that all source files have a license header."
     exit 1
   fi
 fi
