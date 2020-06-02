@@ -26,7 +26,17 @@ jobs:
           name: Java Linter
           command: |
             bazel build //:google_java_format_verification
-
+  license-header:
+    docker:
+      - image: circleci/golang:1.13
+    working_directory: /home/circleci/workspace/gapic-generator-java
+    steps:
+      - checkout
+      - run:
+          name: License Header
+          command: |
+            go get -u github.com/google/addlicense
+            addlicense -c "Google LLC" -l apache -check $(find $PWD -type f -name '*.java')
 # ======================= WORKFLOWS =======================
 
 workflows:
@@ -35,3 +45,4 @@ workflows:
     jobs:
       - gapic-generator-java-tests
       - google-java-format
+      - license-header
