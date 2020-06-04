@@ -54,6 +54,21 @@ License
 
 BSD - See [LICENSE] for more information.
 
-[CONTRIBUTING]:https://github.com/googleapis/path-template-java/blob/master/CONTRIBUTING.md
-[LICENSE]: https://github.com/googleapis/path-template-java/blob/master/LICENSE
+Build and Test
+--------------
+To build this library, please do the following.
+
+```sh
+./gradlew build
+```
+
+After making changes, run the following commands to format your code and test your changes.
+
+```sh
+./gradlew googleJavaFormat
+./gradlew test
+```
+
+[CONTRIBUTING]:https://github.com/googleapis/api-common-java/blob/master/CONTRIBUTING.md
+[LICENSE]: https://github.com/googleapis/api-common-java/blob/master/LICENSE
 
