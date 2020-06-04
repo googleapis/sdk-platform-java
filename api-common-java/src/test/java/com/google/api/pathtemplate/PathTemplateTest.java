@@ -318,6 +318,31 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void collectionWildcardMatchingInParent() {
+    PathTemplate template = PathTemplate.create("v1/publishers/-/books/{book}");
+    Map<String, String> match =
+        template.match(
+            "https://example.googleapis.com/v1/publishers/publisher-abc/books/blockchain_for_babies");
+    Truth.assertThat(match).isNotNull();
+
+    template = PathTemplate.create("/v1/{parent=rooms/-}/blurbs/{blurb}");
+    match = template.match("https://example.googleapis.com/v1/rooms/den/blurbs/asdf");
+    Truth.assertThat(match).isNotNull();
+  }
+
+  @Test
+  public void collectionWildcardMatchingInvalid() {
+    thrown.expect(ValidationException.class);
+    PathTemplate.create("v1/publishers/{publisher}/books/-");
+  }
+
+  @Test
+  public void complexResourceIdPubSubDeletedTopic() {
+    PathTemplate template = PathTemplate.create("_deleted-topic_");
+    Truth.assertThat(template).isNotNull();
+  }
+
+  @Test
   public void complexResourceIdInParent() {
     // One parent has a complex resource ID.
     PathTemplate template =

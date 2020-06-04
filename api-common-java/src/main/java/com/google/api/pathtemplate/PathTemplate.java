@@ -869,8 +869,17 @@ public class PathTemplate {
     int pathWildCardBound = 0;
 
     for (String seg : Splitter.on('/').trimResults().split(template)) {
-      if (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(0, 1)).find()
-          || COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(seg.length() - 1)).find()) {
+      // Handle _deleted-topic_ for PubSub.
+      if (seg.equals("_deleted-topic_")) {
+        builder.add(Segment.create(SegmentKind.LITERAL, seg));
+        continue;
+      }
+
+      boolean isLastSegment = (template.indexOf(seg) + seg.length()) == template.length();
+      boolean isCollectionWildcard = !isLastSegment && (seg.equals("-") || seg.equals("-}"));
+      if (!isCollectionWildcard
+          && (COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(0, 1)).find()
+              || COMPLEX_DELIMITER_PATTERN.matcher(seg.substring(seg.length() - 1)).find())) {
         throw new ValidationException("parse error: invalid begin or end character in '%s'", seg);
       }
       // Disallow zero or multiple delimiters between variable names.
@@ -896,7 +905,7 @@ public class PathTemplate {
         }
 
         Matcher complexPatternDelimiterMatcher = END_SEGMENT_COMPLEX_DELIMITER_PATTERN.matcher(seg);
-        complexDelimiterFound = complexPatternDelimiterMatcher.find();
+        complexDelimiterFound = !isCollectionWildcard && complexPatternDelimiterMatcher.find();
 
         // Look for complex resource names.
         // Need to handle something like "{user_a}~{user_b}".
@@ -915,6 +924,8 @@ public class PathTemplate {
               throw new ValidationException(
                   "parse error: invalid binding syntax in '%s'", template);
             }
+          } else if (seg.indexOf('-') <= 0 && isCollectionWildcard) {
+            implicitWildcard = true;
           } else {
             // Looking at something like "{name=wildcard}".
             varName = seg.substring(0, i).trim();
@@ -956,6 +967,10 @@ public class PathTemplate {
                   "parse error: empty segment not allowed in '%s'", template);
             }
             // If the wildcard is implicit, seg will be empty. Just continue.
+            break;
+          case "-":
+            builder.add(Segment.WILDCARD);
+            implicitWildcard = false;
             break;
           default:
             builder.add(Segment.create(SegmentKind.LITERAL, seg));
