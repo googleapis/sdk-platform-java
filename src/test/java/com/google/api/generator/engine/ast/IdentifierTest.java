@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.basics;
+package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.engine.basics.Identifier.InvalidIdentifierException;
+import com.google.api.generator.engine.ast.Identifier.InvalidIdentifierException;
 import org.junit.Test;
 
 public class IdentifierTest {
@@ -102,12 +102,6 @@ public class IdentifierTest {
     assertInvalidIdentifier("final");
     assertInvalidIdentifier("extends");
     assertInvalidIdentifier("implements");
-  }
-
-  @Test
-  public void writeIdentifier() {
-    String idName = "foobar";
-    assertThat(Identifier.create(idName).write()).isEqualTo(idName);
   }
 
   private static void assertInvalidIdentifier(String idName) {
