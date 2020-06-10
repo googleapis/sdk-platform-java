@@ -6,6 +6,25 @@ filegroup(
     srcs = glob(["*.java"]),
 )
 
+java_plugin(
+    name = "autovalue_plugin",
+    processor_class = "com.google.auto.value.processor.AutoValueProcessor",
+    deps = [
+        "@com_google_auto_value_auto_value//jar",
+    ],
+)
+
+java_library(
+    name = "autovalue",
+    exported_plugins = [
+        ":autovalue_plugin",
+    ],
+    neverlink = 1,
+    exports = [
+        "@com_google_auto_value_auto_value//jar",
+    ],
+)
+
 java_library(
     name = "generator",
     srcs = [
