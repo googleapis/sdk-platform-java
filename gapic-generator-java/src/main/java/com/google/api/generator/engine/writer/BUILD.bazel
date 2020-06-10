@@ -1,0 +1,16 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "writer_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "writer",
+    srcs = [
+        ":writer_files",
+    ],
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+    ],
+)
