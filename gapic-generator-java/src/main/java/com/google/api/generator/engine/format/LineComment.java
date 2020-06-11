@@ -14,7 +14,20 @@
 
 package com.google.api.generator.engine.format;
 
-public interface Comment {
-    public String write();
-    public void setContent(String content);
+import com.google.auto.value.AutoValue;
+
+@AutoValue
+public abstract class LineComment {
+  public abstract String getComment();
+
+  public static Builder builder() {
+    return new AutoValue_LineComment.Builder();
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setComment(String comment);
+
+    public abstract LineComment build();
+  }
 }

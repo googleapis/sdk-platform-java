@@ -5,6 +5,7 @@ filegroup(
     srcs = [
         "//src/main/java/com/google/api/generator/engine/basics:basics_files",
         "//src/main/java/com/google/api/generator/engine/lexicon:lexicon_files",
+        "//src/main/java/com/google/api/generator/engine/format:format_files",
     ],
 )
 
@@ -13,5 +14,6 @@ java_library(
     runtime_deps = [
         "//src/main/java/com/google/api/generator/engine/basics",
         "//src/main/java/com/google/api/generator/engine/lexicon",
+        "//src/main/java/com/google/api/generator/engine/format",
     ],
 )
