@@ -12,15 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.basics;
+package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.ast.AstNode;
+public interface AstNodeVisitor {
+  /** Writes the syntatically-correct Java code representation of this node. */
+  public void visit(Identifier identifier);
 
-public class Reference implements AstNode {
-  // TODO(miraleung): More logic here.
+  public void visit(Type type);
 
-  @Override
-  public String write() {
-    throw new RuntimeException("Not yet implemented for reference types");
-  }
+  public void visit(Reference reference);
 }
