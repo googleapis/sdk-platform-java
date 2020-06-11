@@ -1,21 +1,21 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
-    "IdentifierTest",
-    "TypeTest",
+    "JavaWriterVisitorTest",
 ]
 
 filegroup(
-    name = "basics_files",
+    name = "writer_files",
     srcs = ["{0}.java".format(f) for f in TESTS],
 )
 
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
-    test_class = "com.google.api.generator.engine.basics.{0}".format(test_name),
+    test_class = "com.google.api.generator.engine.writer.{0}".format(test_name),
     deps = [
-        "//src/main/java/com/google/api/generator/engine/basics",
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
         "@com_google_guava_guava__com_google_api_codegen//jar",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",

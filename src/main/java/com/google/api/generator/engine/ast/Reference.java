@@ -12,22 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.basics;
+package com.google.api.generator.engine.ast;
 
-import static com.google.common.truth.Truth.assertThat;
+public class Reference implements AstNode {
+  // TODO(miraleung): More logic here.
 
-import org.junit.Test;
-
-public class TypeTest {
-  @Test
-  public void writePrimitiveType() {
-    Type intType = Type.createIntType();
-    assertThat(intType).isNotNull();
-    assertThat(intType.write()).isEqualTo("int");
-  }
-
-  @Test
-  public void writePrimitiveArrayType() {
-    assertThat(Type.createByteArrayType().write()).isEqualTo("byte[]");
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 }
