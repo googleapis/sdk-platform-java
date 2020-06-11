@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.basics;
+package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.ast.AstNode;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
@@ -63,21 +62,21 @@ public class Type implements AstNode {
     return typeKind;
   }
 
-  // AstNode overrides.
-  @Override
-  public String write() {
-    StringBuilder generatedCodeBuilder = new StringBuilder();
-    if (isPrimitiveType(typeKind)) {
-      generatedCodeBuilder.append(typeKind.toString().toLowerCase());
-    } else {
-      // A null pointer exception will be thrown if reference is null, which is WAI.
-      generatedCodeBuilder.append(reference.write());
-    }
+  public Reference reference() {
+    return reference;
+  }
 
-    if (isArray) {
-      generatedCodeBuilder.append("[]");
-    }
-    return generatedCodeBuilder.toString();
+  public boolean isArray() {
+    return isArray;
+  }
+
+  public boolean isPrimitiveType() {
+    return isPrimitiveType(typeKind);
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 
   // Java overrides.

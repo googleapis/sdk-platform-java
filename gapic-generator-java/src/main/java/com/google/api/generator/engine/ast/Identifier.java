@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.basics;
+package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.lexicon.InvalidSymbol;
 import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.api.generator.engine.lexicon.Literal;
@@ -73,8 +72,8 @@ public class Identifier implements AstNode {
   }
 
   @Override
-  public String write() {
-    return identifierName;
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 
   @Override

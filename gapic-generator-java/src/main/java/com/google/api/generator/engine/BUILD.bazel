@@ -3,8 +3,8 @@ package(default_visibility = ["//visibility:public"])
 filegroup(
     name = "engine_files",
     srcs = [
-        "//src/main/java/com/google/api/generator/engine/basics:basics_files",
         "//src/main/java/com/google/api/generator/engine/format:format_files",
+        "//src/main/java/com/google/api/generator/engine/ast:ast_files",
         "//src/main/java/com/google/api/generator/engine/lexicon:lexicon_files",
     ],
 )
@@ -12,8 +12,8 @@ filegroup(
 java_library(
     name = "engine",
     runtime_deps = [
-        "//src/main/java/com/google/api/generator/engine/basics",
         "//src/main/java/com/google/api/generator/engine/format",
+        "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/lexicon",
     ],
 )
