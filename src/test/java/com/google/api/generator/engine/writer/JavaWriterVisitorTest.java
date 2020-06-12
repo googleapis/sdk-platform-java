@@ -33,7 +33,7 @@ public class JavaWriterVisitorTest {
   public void writeIdentifier() {
 
     String idName = "foobar";
-    Identifier.create(idName).accept(writerVisitor);
+    Identifier.builder().setName(idName).build().accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo(idName);
   }
 
