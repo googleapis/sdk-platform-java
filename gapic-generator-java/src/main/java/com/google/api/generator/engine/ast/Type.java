@@ -14,11 +14,12 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.auto.value.AutoValue;
 import java.util.Objects;
 import javax.annotation.Nullable;
-import javax.validation.constraints.NotNull;
 
-public class Type implements AstNode {
+@AutoValue
+public abstract class Type implements AstNode {
   public enum TypeKind {
     BYTE,
     SHORT,
@@ -31,23 +32,39 @@ public class Type implements AstNode {
     OBJECT
   }
 
-  private final TypeKind typeKind;
-  private final boolean isArray;
-  @Nullable private final Reference reference;
+  public abstract TypeKind typeKind();
 
-  private Type(@NotNull TypeKind typeKind, @Nullable Reference reference, boolean isArray) {
-    this.typeKind = typeKind;
-    this.reference = reference;
-    this.isArray = isArray;
+  public abstract boolean isArray();
+
+  @Nullable
+  public abstract Reference reference();
+
+  public static Builder builder() {
+    return new AutoValue_Type.Builder().setIsArray(false);
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setTypeKind(TypeKind typeKind);
+
+    public abstract Builder setIsArray(boolean isArray);
+
+    public abstract Builder setReference(Reference reference);
+
+    public abstract Type build();
   }
 
   // TODO(miraleung): More type creation helpers to come...
   public static Type createReferenceType(Reference reference) {
-    return new Type(TypeKind.OBJECT, reference, false);
+    return Type.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
   }
 
   public static Type createReferenceArrayType(Reference reference) {
-    return new Type(TypeKind.OBJECT, reference, true);
+    return Type.builder()
+        .setTypeKind(TypeKind.OBJECT)
+        .setReference(reference)
+        .setIsArray(true)
+        .build();
   }
 
   public static Type createIntType() {
@@ -58,20 +75,8 @@ public class Type implements AstNode {
     return createPrimitiveArrayType(TypeKind.BYTE);
   }
 
-  public TypeKind typeKind() {
-    return typeKind;
-  }
-
-  public Reference reference() {
-    return reference;
-  }
-
-  public boolean isArray() {
-    return isArray;
-  }
-
   public boolean isPrimitiveType() {
-    return isPrimitiveType(typeKind);
+    return isPrimitiveType(typeKind());
   }
 
   @Override
@@ -87,23 +92,23 @@ public class Type implements AstNode {
     }
 
     Type type = (Type) o;
-    return typeKind.equals(type.typeKind)
-        && (isArray == type.isArray)
-        && Objects.equals(reference, type.reference);
+    return typeKind().equals(type.typeKind())
+        && (isArray() == type.isArray())
+        && Objects.equals(reference(), type.reference());
   }
 
   private static Type createPrimitiveType(TypeKind typeKind) {
     if (!isPrimitiveType(typeKind)) {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
-    return new Type(typeKind, null, false);
+    return Type.builder().setTypeKind(typeKind).build();
   }
 
   private static Type createPrimitiveArrayType(TypeKind typeKind) {
     if (typeKind.equals(TypeKind.OBJECT)) {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
-    return new Type(typeKind, null, true);
+    return Type.builder().setTypeKind(typeKind).setIsArray(true).build();
   }
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
