@@ -18,9 +18,9 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Variable {
-  public abstract Identifier identifier();
+  public abstract IdentifierNode identifier();
 
-  public abstract Type type();
+  public abstract TypeNode type();
 
   public static Builder builder() {
     return new AutoValue_Variable.Builder();
@@ -28,9 +28,9 @@ public abstract class Variable {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setType(Type type);
+    public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setIdentifier(Identifier identifier);
+    public abstract Builder setIdentifier(IdentifierNode identifier);
 
     public abstract Variable build();
   }

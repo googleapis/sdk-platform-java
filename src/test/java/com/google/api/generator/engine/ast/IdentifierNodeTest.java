@@ -17,10 +17,10 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.engine.ast.Identifier.InvalidIdentifierException;
+import com.google.api.generator.engine.ast.IdentifierNode.InvalidIdentifierException;
 import org.junit.Test;
 
-public class IdentifierTest {
+public class IdentifierNodeTest {
   @Test
   public void createIdentifier_basic() {
     assertValidIdentifier("foobar");
@@ -108,11 +108,11 @@ public class IdentifierTest {
     assertThrows(
         InvalidIdentifierException.class,
         () -> {
-          Identifier.builder().setName(idName).build();
+          IdentifierNode.builder().setName(idName).build();
         });
   }
 
   private static void assertValidIdentifier(String idName) {
-    assertThat(Identifier.builder().setName(idName).build().name()).isEqualTo(idName);
+    assertThat(IdentifierNode.builder().setName(idName).build().name()).isEqualTo(idName);
   }
 }
