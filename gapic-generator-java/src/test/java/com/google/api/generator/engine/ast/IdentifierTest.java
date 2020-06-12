@@ -108,11 +108,11 @@ public class IdentifierTest {
     assertThrows(
         InvalidIdentifierException.class,
         () -> {
-          Identifier.create(idName);
+          Identifier.builder().setName(idName).build();
         });
   }
 
   private static void assertValidIdentifier(String idName) {
-    assertThat(Identifier.create(idName).name()).isEqualTo(idName);
+    assertThat(Identifier.builder().setName(idName).build().name()).isEqualTo(idName);
   }
 }
