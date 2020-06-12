@@ -16,8 +16,8 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.generator.engine.ast.Identifier;
-import com.google.api.generator.engine.ast.Type;
+import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.TypeNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,13 +33,13 @@ public class JavaWriterVisitorTest {
   public void writeIdentifier() {
 
     String idName = "foobar";
-    Identifier.builder().setName(idName).build().accept(writerVisitor);
+    IdentifierNode.builder().setName(idName).build().accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo(idName);
   }
 
   @Test
   public void writePrimitiveType() {
-    Type intType = Type.createIntType();
+    TypeNode intType = TypeNode.createIntType();
     assertThat(intType).isNotNull();
     intType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("int");
@@ -47,7 +47,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writePrimitiveArrayType() {
-    Type byteArrayType = Type.createByteArrayType();
+    TypeNode byteArrayType = TypeNode.createByteArrayType();
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");

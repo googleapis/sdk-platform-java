@@ -16,9 +16,9 @@ package com.google.api.generator.engine.ast;
 
 public interface AstNodeVisitor {
   /** Writes the syntatically-correct Java code representation of this node. */
-  public void visit(Identifier identifier);
+  public void visit(IdentifierNode identifier);
 
-  public void visit(Type type);
+  public void visit(TypeNode type);
 
-  public void visit(Reference reference);
+  public void visit(ReferenceTypeNode reference);
 }
