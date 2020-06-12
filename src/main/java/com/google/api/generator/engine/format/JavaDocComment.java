@@ -11,27 +11,47 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package com.google.api.generator.engine.format;
 
 import com.google.auto.value.AutoValue;
+import java.util.Optional;
 
 @AutoValue
-public abstract class LineComment implements Comment {
+public abstract class JavaDocComment implements Comment {
   public abstract String comment();
 
+  public abstract Optional<String> deprecatedText();
+
+  public abstract Optional<String> sampleCode();
+
+  public abstract Optional<String> throwsText();
+
+  public abstract Optional<ParamPair> params();
+
+  public class ParamPair {
+    String paramName;
+    String paramDescription;
+  }
+
   public static Builder builder() {
-    return new AutoValue_LineComment.Builder();
+    return new AutoValue_JavaDocComment.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setComment(String comment);
+    abstract Builder setDeprecatedText(String deprecatedText);
 
-    public abstract LineComment build();
+    abstract Builder setComment(String comment);
+
+    abstract Builder setParams(ParamPair paramPair);
+
+    abstract Builder setSampleCode(String sampleCode);
+
+    abstract Builder setThrowsText(String throwsText);
+
+    abstract JavaDocComment build();
   }
 
-  @Override
   public String write() {
     return comment();
   }

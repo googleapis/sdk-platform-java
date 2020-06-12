@@ -17,8 +17,8 @@ package com.google.api.generator.engine.format;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class BlockComment {
-  public abstract String getComment();
+public abstract class BlockComment implements Comment {
+  public abstract String comment();
 
   public static Builder builder() {
     return new AutoValue_BlockComment.Builder();
@@ -29,5 +29,10 @@ public abstract class BlockComment {
     public abstract Builder setComment(String comment);
 
     public abstract BlockComment build();
+  }
+
+  @Override
+  public String write() {
+    return comment();
   }
 }

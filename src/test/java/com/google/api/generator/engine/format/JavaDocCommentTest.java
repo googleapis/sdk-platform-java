@@ -18,19 +18,12 @@ import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
-public class LineCommentTest {
+public class JavaDocCommentTest {
   @Test
-  public void writeNormalLineComment() {
+  public void writeNormalJavaDocComment() {
       String content = "this is a test comment";
-      LineComment lineComment = LineComment.builder().setComment(content).build();
-      assertThat(lineComment.write()).isEqualTo(content);
+      String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+      JavaDocComment javaDocComment = JavaDocComment.builder().setComment(content).setDeprecatedText(deprecatedText).build();
+      assertThat(javaDocComment.write()).isEqualTo(content);
   }
-
-  @Test
-  public void writeLongLineComment() {
-    String content = "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
-    LineComment lineComment = LineComment.builder().setComment(content).build();
-    // TODO(xiaozhenliu): The long line comments will be splitted into several lines.
-    assertThat(lineComment.write()).isEqualTo(content);
-  } 
 }
