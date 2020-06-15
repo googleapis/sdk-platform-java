@@ -14,8 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
-public class Reference implements AstNode {
-  // TODO(miraleung): More logic here.
+public class ReferenceTypeNode implements AstNode {
+  // TODO(miraleung): More logic here. Make this extend TypeNode.
 
   @Override
   public void accept(AstNodeVisitor visitor) {

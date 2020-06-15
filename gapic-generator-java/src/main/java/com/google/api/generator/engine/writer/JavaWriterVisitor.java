@@ -15,10 +15,10 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AstNodeVisitor;
-import com.google.api.generator.engine.ast.Identifier;
-import com.google.api.generator.engine.ast.Reference;
-import com.google.api.generator.engine.ast.Type;
-import com.google.api.generator.engine.ast.Type.TypeKind;
+import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.ReferenceTypeNode;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private final StringBuffer buffer = new StringBuffer();
@@ -34,12 +34,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(Identifier identifier) {
+  public void visit(IdentifierNode identifier) {
     buffer.append(identifier.name());
   }
 
   @Override
-  public void visit(Type type) {
+  public void visit(TypeNode type) {
     TypeKind typeKind = type.typeKind();
     StringBuilder generatedCodeBuilder = new StringBuilder();
     if (type.isPrimitiveType()) {
@@ -59,7 +59,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(Reference reference) {
+  public void visit(ReferenceTypeNode reference) {
     throw new RuntimeException("Not yet implemented for reference types");
   }
 }
