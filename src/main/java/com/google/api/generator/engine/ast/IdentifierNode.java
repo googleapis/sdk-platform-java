@@ -24,7 +24,7 @@ import com.google.common.base.Preconditions;
 import java.util.regex.Pattern;
 
 @AutoValue
-public abstract class Identifier implements AstNode {
+public abstract class IdentifierNode implements AstNode {
   static class InvalidIdentifierException extends RuntimeException {
     public InvalidIdentifierException(String errorMessage) {
       super(errorMessage);
@@ -36,7 +36,7 @@ public abstract class Identifier implements AstNode {
   public abstract String name();
 
   public static Builder builder() {
-    return new AutoValue_Identifier.Builder();
+    return new AutoValue_IdentifierNode.Builder();
   }
 
   @Override
@@ -53,10 +53,10 @@ public abstract class Identifier implements AstNode {
   public abstract static class Builder {
     public abstract Builder setName(String name);
 
-    abstract Identifier autoBuild();
+    abstract IdentifierNode autoBuild();
 
-    public Identifier build() throws InvalidIdentifierException {
-      Identifier identifier = autoBuild();
+    public IdentifierNode build() throws InvalidIdentifierException {
+      IdentifierNode identifier = autoBuild();
       String identifierName = identifier.name();
       Preconditions.checkNotNull(identifierName);
 

@@ -19,7 +19,7 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class Type implements AstNode {
+public abstract class TypeNode implements AstNode {
   public enum TypeKind {
     BYTE,
     SHORT,
@@ -37,10 +37,10 @@ public abstract class Type implements AstNode {
   public abstract boolean isArray();
 
   @Nullable
-  public abstract Reference reference();
+  public abstract ReferenceTypeNode reference();
 
   public static Builder builder() {
-    return new AutoValue_Type.Builder().setIsArray(false);
+    return new AutoValue_TypeNode.Builder().setIsArray(false);
   }
 
   @AutoValue.Builder
@@ -49,29 +49,29 @@ public abstract class Type implements AstNode {
 
     public abstract Builder setIsArray(boolean isArray);
 
-    public abstract Builder setReference(Reference reference);
+    public abstract Builder setReference(ReferenceTypeNode reference);
 
-    public abstract Type build();
+    public abstract TypeNode build();
   }
 
   // TODO(miraleung): More type creation helpers to come...
-  public static Type createReferenceType(Reference reference) {
-    return Type.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
+  public static TypeNode createReferenceType(ReferenceTypeNode reference) {
+    return TypeNode.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
   }
 
-  public static Type createReferenceArrayType(Reference reference) {
-    return Type.builder()
+  public static TypeNode createReferenceArrayType(ReferenceTypeNode reference) {
+    return TypeNode.builder()
         .setTypeKind(TypeKind.OBJECT)
         .setReference(reference)
         .setIsArray(true)
         .build();
   }
 
-  public static Type createIntType() {
+  public static TypeNode createIntType() {
     return createPrimitiveType(TypeKind.INT);
   }
 
-  public static Type createByteArrayType() {
+  public static TypeNode createByteArrayType() {
     return createPrimitiveArrayType(TypeKind.BYTE);
   }
 
@@ -87,28 +87,28 @@ public abstract class Type implements AstNode {
   // Java overrides.
   @Override
   public boolean equals(Object o) {
-    if (!(o instanceof Type)) {
+    if (!(o instanceof TypeNode)) {
       return false;
     }
 
-    Type type = (Type) o;
+    TypeNode type = (TypeNode) o;
     return typeKind().equals(type.typeKind())
         && (isArray() == type.isArray())
         && Objects.equals(reference(), type.reference());
   }
 
-  private static Type createPrimitiveType(TypeKind typeKind) {
+  private static TypeNode createPrimitiveType(TypeKind typeKind) {
     if (!isPrimitiveType(typeKind)) {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
-    return Type.builder().setTypeKind(typeKind).build();
+    return TypeNode.builder().setTypeKind(typeKind).build();
   }
 
-  private static Type createPrimitiveArrayType(TypeKind typeKind) {
+  private static TypeNode createPrimitiveArrayType(TypeKind typeKind) {
     if (typeKind.equals(TypeKind.OBJECT)) {
       throw new IllegalArgumentException("Object is not a primitive type.");
     }
-    return Type.builder().setTypeKind(typeKind).setIsArray(true).build();
+    return TypeNode.builder().setTypeKind(typeKind).setIsArray(true).build();
   }
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
