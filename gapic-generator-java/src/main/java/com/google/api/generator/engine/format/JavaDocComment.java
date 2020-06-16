@@ -78,12 +78,12 @@ public abstract class JavaDocComment implements Comment {
     for (ParamPair p : paramList) {
       formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
     }
-    if (deprecatedText().isPresent()) {
-      formattedComment.append("* @deprecated " + deprecatedText() + "\n");
-    }
     if (sampleCode().isPresent()) {
       formattedComment.append("* Sample code:\n* <pre><code>\n");
       formattedComment.append("*" + sampleCode() + "\n* </code></pre>\n");
+    }
+    if (deprecatedText().isPresent()) {
+      formattedComment.append("* @deprecated " + deprecatedText() + "\n");
     }
     if (throwsText().isPresent()) {
       formattedComment.append("* @throws " + throwsText() + "\n");
