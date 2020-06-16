@@ -107,7 +107,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     type.accept(this);
     space();
     identifier.accept(this);
-    System.out.println("DEL: |" + buffer.toString());
   }
 
   private void space() {
