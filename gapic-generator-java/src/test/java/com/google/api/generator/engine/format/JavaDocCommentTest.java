@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.format;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
+import com.google.api.generator.engine.format.JavaDocComment.ParamPair;
 
 import org.junit.Test;
 
@@ -23,7 +24,9 @@ public class JavaDocCommentTest {
   public void writeNormalJavaDocComment() {
       String content = "this is a test comment";
       String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
-      JavaDocComment javaDocComment = JavaDocComment.builder().setComment(content).setDeprecatedText(deprecatedText).build();
-      assertThat(javaDocComment.write()).isEqualTo(content);
+      ParamPair p = new ParamPair("shelfName", "The name of the shelf where books are published to.");
+      JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).setDeprecatedText(deprecatedText).addParam(p).build();
+      String expected = "/**\n* this is a test comment\n* @param shelfName The name of the shelf where books are published to.\n* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n*/";
+      assertThat(javaDocComment.write()).isEqualTo(expected);
   }
 }

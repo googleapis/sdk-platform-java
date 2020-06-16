@@ -14,11 +14,12 @@
 package com.google.api.generator.engine.format;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
 import java.util.Optional;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
-  public abstract String comment();
+  public abstract ImmutableList<String> comments();
 
   public abstract Optional<String> deprecatedText();
 
@@ -26,11 +27,16 @@ public abstract class JavaDocComment implements Comment {
 
   public abstract Optional<String> throwsText();
 
-  public abstract Optional<ParamPair> params();
+  public abstract ImmutableList<ParamPair> params();
 
-  public class ParamPair {
+  public static class ParamPair {
     String paramName;
     String paramDescription;
+
+    public ParamPair(String paramName, String paramDescription) {
+      this.paramName = paramName;
+      this.paramDescription = paramDescription;
+    }
   }
 
   public static Builder builder() {
@@ -41,18 +47,47 @@ public abstract class JavaDocComment implements Comment {
   public abstract static class Builder {
     abstract Builder setDeprecatedText(String deprecatedText);
 
-    abstract Builder setComment(String comment);
-
-    abstract Builder setParams(ParamPair paramPair);
-
     abstract Builder setSampleCode(String sampleCode);
 
     abstract Builder setThrowsText(String throwsText);
+
+    protected abstract ImmutableList.Builder<String> commentsBuilder();
+
+    protected abstract ImmutableList.Builder<ParamPair> paramsBuilder();
+
+    public Builder addComment(String comment) {
+      commentsBuilder().add(comment);
+      return this;
+    }
+
+    public Builder addParam(ParamPair paramPair) {
+      paramsBuilder().add(paramPair);
+      return this;
+    }
 
     abstract JavaDocComment build();
   }
 
   public String write() {
-    return comment();
+    StringBuilder formattedComment = new StringBuilder("/**\n");
+    ImmutableList<String> commentList = comments();
+    ImmutableList<ParamPair> paramList = params();
+    for (String comment : commentList) {
+      formattedComment.append("* " + comment + "\n");
+    }
+    for (ParamPair p : paramList) {
+      formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
+    }
+    if (deprecatedText().isPresent()) {
+      formattedComment.append("* @deprecated " + deprecatedText() + "\n");
+    }
+    if (sampleCode().isPresent()) {
+      formattedComment.append("* Sample code:\n* <pre><code>\n");
+      formattedComment.append("*" + sampleCode() + "\n* </code></pre>\n");
+    }
+    if (throwsText().isPresent()) {
+      formattedComment.append("* @throws " + throwsText() + "\n");
+    }
+    return formattedComment.append("*/").toString();
   }
 }
