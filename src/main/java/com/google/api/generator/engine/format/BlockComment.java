@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.format;
 
 import com.google.auto.value.AutoValue;
+import com.google.googlejavaformat.java.Formatter;
 
 @AutoValue
 public abstract class BlockComment implements Comment {
@@ -33,6 +34,15 @@ public abstract class BlockComment implements Comment {
 
   @Override
   public String write() {
-    return comment();
+    // split the comments by new line and embrace `/** */` with the comment block.
+    String sourceString = comment();
+    String formattedSource = "";
+    try {
+      formattedSource = new Formatter().formatSource("/** " + sourceString + " */");
+      return formattedSource;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return formattedSource;
   }
 }

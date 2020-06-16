@@ -23,6 +23,8 @@ public class BlockCommentTest {
   public void writeNormalBlockComment() {
       String content = "this is a test comment";
       BlockComment blockComment = BlockComment.builder().setComment(content).build();
-      assertThat(blockComment.write()).isEqualTo(content);
+      String expected = "/** this is a test comment */\n";
+      String formattedComment = blockComment.write();
+      assertThat(formattedComment).isEqualTo(expected);
   }
 }

@@ -23,14 +23,15 @@ public class LineCommentTest {
   public void writeNormalLineComment() {
       String content = "this is a test comment";
       LineComment lineComment = LineComment.builder().setComment(content).build();
-      assertThat(lineComment.write()).isEqualTo(content);
+      String formattedComment = "// this is a test comment\n";
+      assertThat(lineComment.write()).isEqualTo(formattedComment);
   }
 
   @Test
   public void writeLongLineComment() {
     String content = "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
     LineComment lineComment = LineComment.builder().setComment(content).build();
-    // TODO(xiaozhenliu): The long line comments will be splitted into several lines.
-    assertThat(lineComment.write()).isEqualTo(content);
+    String expected = "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
+    assertThat(lineComment.write()).isEqualTo(expected);
   } 
 }
