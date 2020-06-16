@@ -17,12 +17,15 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
+  private static final String SPACE = " ";
+
   private final StringBuffer buffer = new StringBuffer();
 
   public JavaWriterVisitor() {}
@@ -58,6 +61,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
 
     buffer.append(generatedCodeBuilder.toString());
+  }
+
+  @Override
+  public void visit(ScopeNode scope) {
+    buffer.append(scope.toString());
   }
 
   @Override
