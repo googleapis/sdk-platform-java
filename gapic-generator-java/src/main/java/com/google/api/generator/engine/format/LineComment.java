@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.format;
 
 import com.google.auto.value.AutoValue;
+import com.google.googlejavaformat.java.Formatter;
 
 @AutoValue
 public abstract class LineComment implements Comment {
@@ -33,6 +34,18 @@ public abstract class LineComment implements Comment {
 
   @Override
   public String write() {
-    return comment();
+    // split the comments by new line and add `//` to each line.
+    String[] sourceStrings = comment().split("\\r?\\n");
+    for (int i = 0; i < sourceStrings.length; i++) {
+      sourceStrings[i] = "// " + sourceStrings[i];
+    }
+    String formattedSource = "";
+    try {
+      formattedSource = new Formatter().formatSource(String.join("\n", sourceStrings));
+      return formattedSource;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return formattedSource;
   }
 }
