@@ -20,8 +20,12 @@ public interface AstNodeVisitor {
 
   public void visit(TypeNode type);
 
+  public void visit(ScopeNode scope);
+
   public void visit(ReferenceTypeNode reference);
 
   /** =============================== EXPRESSIONS =============================== */
   public void visit(VariableExpr variableExpr);
+
+  public void visit(VariableDeclExpr variableDeclExpr);
 }
