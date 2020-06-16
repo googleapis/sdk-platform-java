@@ -29,7 +29,8 @@ public abstract class TypeNode implements AstNode {
     DOUBLE,
     BOOLEAN,
     CHAR,
-    OBJECT
+    OBJECT,
+    VOID
   }
 
   public abstract TypeKind typeKind();
