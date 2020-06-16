@@ -15,30 +15,29 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Preconditions;
 
 @AutoValue
-public abstract class Variable {
-  public abstract IdentifierNode identifier();
-
-  public abstract TypeNode type();
+public abstract class VariableExpr implements AstNode, Expr {
+  public abstract Variable variable();
 
   public static Builder builder() {
-    return new AutoValue_Variable.Builder();
+    return new AutoValue_VariableExpr.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setType(TypeNode type);
+    public abstract Builder setVariable(Variable variable);
 
-    public abstract Builder setIdentifier(IdentifierNode identifier);
+    public abstract VariableExpr build();
+  }
 
-    abstract Variable autoBuild();
+  @Override
+  public TypeNode type() {
+    return TypeNode.VOID_TYPE;
+  }
 
-    public Variable build() {
-      Variable variable = autoBuild();
-      Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
-      return variable;
-    }
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 }

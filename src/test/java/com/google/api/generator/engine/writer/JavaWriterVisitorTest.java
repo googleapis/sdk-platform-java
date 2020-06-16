@@ -18,6 +18,8 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writePrimitiveType() {
-    TypeNode intType = TypeNode.createIntType();
+    TypeNode intType = TypeNode.INT_TYPE;
     assertThat(intType).isNotNull();
     intType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("int");
@@ -51,5 +53,16 @@ public class JavaWriterVisitorTest {
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
+  }
+
+  @Test
+  public void writeVariableExpr() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable =
+        Variable.builder().setIdentifier(identifier).setType(TypeNode.INT_TYPE).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    variableExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("x");
   }
 }

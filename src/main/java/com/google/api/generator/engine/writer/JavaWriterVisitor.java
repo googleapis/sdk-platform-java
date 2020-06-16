@@ -19,6 +19,8 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
+import com.google.api.generator.engine.ast.Variable;
+import com.google.api.generator.engine.ast.VariableExpr;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private final StringBuffer buffer = new StringBuffer();
@@ -61,5 +63,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ReferenceTypeNode reference) {
     throw new RuntimeException("Not yet implemented for reference types");
+  }
+
+  /** =============================== EXPRESSIONS =============================== */
+  @Override
+  public void visit(VariableExpr variableExpr) {
+    Variable variable = variableExpr.variable();
+    IdentifierNode identifier = variable.identifier();
+    identifier.accept(this);
   }
 }
