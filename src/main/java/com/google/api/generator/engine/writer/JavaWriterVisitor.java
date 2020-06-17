@@ -20,6 +20,7 @@ import com.google.api.generator.engine.ast.ReferenceTypeNode;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableDeclExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -75,6 +76,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== EXPRESSIONS =============================== */
+  @Override
+  public void visit(ValueExpr valueExpr) {
+    buffer.append(valueExpr.value().toString());
+  }
+
   @Override
   public void visit(VariableExpr variableExpr) {
     Variable variable = variableExpr.variable();

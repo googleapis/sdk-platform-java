@@ -25,13 +25,19 @@ public abstract class PrimitiveValue implements Value {
     }
   }
 
-  // TODO(miraleung):F Handle object types.
+  // TODO(miraleung): Handle object types.
+  @Override
   public abstract TypeNode type();
 
   public abstract String value();
 
   public static Builder builder() {
     return new AutoValue_PrimitiveValue.Builder();
+  }
+
+  @Override
+  public String toString() {
+    return value();
   }
 
   @AutoValue.Builder
