@@ -17,7 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class VariableExpr implements AstNode, Expr {
+public abstract class VariableExpr implements Expr {
   public abstract Variable variable();
 
   /** Variable declaration fields. */
