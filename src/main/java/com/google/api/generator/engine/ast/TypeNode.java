@@ -33,8 +33,9 @@ public abstract class TypeNode implements AstNode {
     VOID
   }
 
-  public static final TypeNode VOID_TYPE = builder().setTypeKind(TypeKind.VOID).build();
-  public static final TypeNode INT_TYPE = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
+  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
 
   public abstract TypeKind typeKind();
 
