@@ -16,6 +16,8 @@ jobs:
           name: Test targets
           command: |
             bazel test //...
+      - store_test_results:
+          path:  ~/.cache/bazel
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel
