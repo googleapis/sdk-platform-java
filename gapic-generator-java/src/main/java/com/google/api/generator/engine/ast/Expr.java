@@ -12,26 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.lexicon;
+package com.google.api.generator.engine.ast;
 
-public enum Scope {
-  UNSPECIFIED,
-  PRIVATE,
-  PROTECTED,
-  PUBLIC;
-
-  @Override
-  public String toString() {
-    switch (this) {
-      case PRIVATE:
-        return "private";
-      case PROTECTED:
-        return "protected";
-      case PUBLIC:
-        return "public";
-      case UNSPECIFIED:
-      default:
-        return "";
-    }
-  }
+public interface Expr {
+  TypeNode type();
 }
