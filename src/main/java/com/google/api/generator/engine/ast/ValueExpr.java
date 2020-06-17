@@ -17,7 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class ValueExpr implements AstNode, Expr {
+public abstract class ValueExpr implements Expr {
   public abstract Value value();
 
   public static Builder builder() {
