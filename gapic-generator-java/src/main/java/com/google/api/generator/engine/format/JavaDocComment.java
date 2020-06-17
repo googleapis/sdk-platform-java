@@ -15,6 +15,7 @@ package com.google.api.generator.engine.format;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.googlejavaformat.java.Formatter;
 import java.util.Optional;
 
 @AutoValue
@@ -88,6 +89,12 @@ public abstract class JavaDocComment implements Comment {
     if (throwsText().isPresent()) {
       formattedComment.append("* @throws " + throwsText() + "\n");
     }
-    return formattedComment.append("*/").toString();
+    String formattedSource = "";
+    try {
+      formattedSource = new Formatter().formatSource(formattedComment.append("*/").toString());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return formattedSource;
   }
 }

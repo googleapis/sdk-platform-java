@@ -26,7 +26,7 @@ public class JavaDocCommentTest {
       String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
       ParamPair p = new ParamPair("shelfName", "The name of the shelf where books are published to.");
       JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).setDeprecatedText(deprecatedText).addParam(p).build();
-      String expected = "/**\n* this is a test comment\n* @param shelfName The name of the shelf where books are published to.\n* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n*/";
+      String expected = "/**\n* this is a test comment\n* @param shelfName The name of the shelf where books are published to.\n* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n*/\n";
       assertThat(javaDocComment.write()).isEqualTo(expected);
   }
 }
