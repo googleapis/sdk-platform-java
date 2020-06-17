@@ -25,8 +25,24 @@ public class JavaDocCommentTest {
       String content = "this is a test comment";
       String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
       ParamPair p = new ParamPair("shelfName", "The name of the shelf where books are published to.");
-      JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).setDeprecatedText(deprecatedText).addParam(p).build();
-      String expected = "/**\n* this is a test comment\n* @param shelfName The name of the shelf where books are published to.\n* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n*/\n";
+      String sampleCode = "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
+      String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails";
+      JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).setSampleCode(sampleCode).addParam(p).setDeprecatedText(deprecatedText).setThrowsText(throwText).build();
+      String expected = "/**\n" +
+      "* this is a test comment\n" + 
+      "* @param shelfName The name of the shelf where books are published to.\n" + 
+      "* Sample code:\n" + 
+      "* <pre><code>\n" +
+      "* try (LibraryClient libraryClient = LibraryClient.create()) {\n" +
+      "*  Shelf shelf = Shelf.newBuilder().build();\n"+
+      "* Shelf response = libraryClient.createShelf(shelf);\n" + 
+      "* }\n" +
+      "* </code></pre>\n" +
+      "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n" + 
+      "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"+
+      "*/\n";
+      System.out.println(javaDocComment.write());
+      System.out.println(expected);
       assertThat(javaDocComment.write()).isEqualTo(expected);
   }
 }
