@@ -4,6 +4,7 @@ TESTS = [
     "AssignmentExprTest",
     "IdentifierNodeTest",
     "PrimitiveValueTest",
+    "ReferenceTest",
 ]
 
 filegroup(

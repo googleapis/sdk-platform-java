@@ -42,7 +42,7 @@ public abstract class TypeNode implements AstNode {
   public abstract boolean isArray();
 
   @Nullable
-  public abstract ReferenceTypeNode reference();
+  public abstract Reference reference();
 
   public static Builder builder() {
     return new AutoValue_TypeNode.Builder().setIsArray(false);
@@ -54,17 +54,17 @@ public abstract class TypeNode implements AstNode {
 
     public abstract Builder setIsArray(boolean isArray);
 
-    public abstract Builder setReference(ReferenceTypeNode reference);
+    public abstract Builder setReference(Reference reference);
 
     public abstract TypeNode build();
   }
 
   // TODO(miraleung): More type creation helpers to come...
-  public static TypeNode createReferenceType(ReferenceTypeNode reference) {
+  public static TypeNode createReferenceType(Reference reference) {
     return TypeNode.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
   }
 
-  public static TypeNode createReferenceArrayType(ReferenceTypeNode reference) {
+  public static TypeNode createReferenceArrayType(Reference reference) {
     return TypeNode.builder()
         .setTypeKind(TypeKind.OBJECT)
         .setReference(reference)
