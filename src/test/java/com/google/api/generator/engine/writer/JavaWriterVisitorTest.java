@@ -16,6 +16,8 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -148,5 +150,47 @@ public class JavaWriterVisitorTest {
 
     expr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("public static final boolean x");
+  }
+
+  @Test
+  public void writeAssignmentExpr_basicValue() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("int x = 3");
+  }
+
+  @Test
+  public void writeAssignmentExpr_varToVar() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("foobar").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsDecl(true)
+            .build();
+
+    IdentifierNode anotherIdentifier = IdentifierNode.builder().setName("y").build();
+    Variable anotherVariable =
+        Variable.builder().setIdentifier(anotherIdentifier).setType(TypeNode.INT).build();
+    Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("private static final int foobar = y");
   }
 }

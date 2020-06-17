@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.writer;
 
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
@@ -107,6 +108,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
 
     variable.identifier().accept(this);
+  }
+
+  @Override
+  public void visit(AssignmentExpr assignmentExpr) {
+    assignmentExpr.variableExpr().accept(this);
+    buffer.append(" = ");
+    assignmentExpr.valueExpr().accept(this);
   }
 
   private void space() {

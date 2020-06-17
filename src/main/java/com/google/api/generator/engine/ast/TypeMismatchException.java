@@ -14,20 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
-public interface AstNodeVisitor {
-  /** Writes the syntatically-correct Java code representation of this node. */
-  public void visit(IdentifierNode identifier);
-
-  public void visit(TypeNode type);
-
-  public void visit(ScopeNode scope);
-
-  public void visit(ReferenceTypeNode reference);
-
-  /** =============================== EXPRESSIONS =============================== */
-  public void visit(ValueExpr valueExpr);
-
-  public void visit(VariableExpr variableExpr);
-
-  public void visit(AssignmentExpr assignmentExpr);
+public class TypeMismatchException extends RuntimeException {
+  public TypeMismatchException(String errorMessage) {
+    super(errorMessage);
+  }
 }
