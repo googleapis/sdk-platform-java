@@ -26,4 +26,6 @@ public interface AstNodeVisitor {
 
   /** =============================== EXPRESSIONS =============================== */
   public void visit(VariableExpr variableExpr);
+
+  public void visit(VariableDeclExpr variableDeclExpr);
 }
