@@ -17,8 +17,11 @@ package com.google.api.generator.engine.writer;
 import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.Value;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableDeclExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -55,6 +58,14 @@ public class JavaWriterVisitorTest {
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
+  }
+
+  @Test
+  public void writeValueExpr() {
+    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
+    valueExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("3");
   }
 
   @Test
