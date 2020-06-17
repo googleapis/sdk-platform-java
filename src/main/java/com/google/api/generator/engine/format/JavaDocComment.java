@@ -81,7 +81,12 @@ public abstract class JavaDocComment implements Comment {
     }
     if (sampleCode().isPresent()) {
       formattedComment.append("* Sample code:\n* <pre><code>\n");
-      formattedComment.append("*" + sampleCode() + "\n* </code></pre>\n");
+      String sampleCode = sampleCode().get();
+      String[] sampleLines = sampleCode.split("\\r?\\n");
+      for (int i = 0; i < sampleLines.length; i++) {
+        sampleLines[i] = "* " + sampleLines[i];
+      }
+      formattedComment.append(String.join("\n", sampleLines) + "\n* </code></pre>\n");
     }
     if (deprecatedText().isPresent()) {
       formattedComment.append("* @deprecated " + deprecatedText() + "\n");
