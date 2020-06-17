@@ -33,6 +33,10 @@ public abstract class TypeNode implements AstNode {
     VOID
   }
 
+  public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
+  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
+
   public abstract TypeKind typeKind();
 
   public abstract boolean isArray();
@@ -66,10 +70,6 @@ public abstract class TypeNode implements AstNode {
         .setReference(reference)
         .setIsArray(true)
         .build();
-  }
-
-  public static TypeNode createIntType() {
-    return createPrimitiveType(TypeKind.INT);
   }
 
   public static TypeNode createByteArrayType() {
