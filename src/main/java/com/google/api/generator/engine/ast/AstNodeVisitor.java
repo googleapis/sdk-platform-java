@@ -28,6 +28,4 @@ public interface AstNodeVisitor {
   public void visit(ValueExpr valueExpr);
 
   public void visit(VariableExpr variableExpr);
-
-  public void visit(VariableDeclExpr variableDeclExpr);
 }
