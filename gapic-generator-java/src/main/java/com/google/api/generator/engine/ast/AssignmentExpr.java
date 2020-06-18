@@ -17,33 +17,35 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class VariableDeclExpr implements AstNode, Expr {
-  public abstract ScopeNode scope();
+public abstract class AssignmentExpr implements Expr {
+  public abstract VariableExpr variableExpr();
 
-  public abstract boolean isStatic();
-
-  public abstract boolean isFinal();
-
-  public abstract Variable variable();
+  public abstract Expr valueExpr();
 
   public static Builder builder() {
-    return new AutoValue_VariableDeclExpr.Builder()
-        .setIsFinal(false)
-        .setIsStatic(false)
-        .setScope(ScopeNode.LOCAL);
+    return new AutoValue_AssignmentExpr.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setScope(ScopeNode scope);
+    public abstract Builder setVariableExpr(VariableExpr variableExpr);
 
-    public abstract Builder setIsStatic(boolean isStatic);
+    public abstract Builder setValueExpr(Expr valueExpr);
 
-    public abstract Builder setIsFinal(boolean isFinal);
+    abstract AssignmentExpr autoBuild();
 
-    public abstract Builder setVariable(Variable variable);
+    public AssignmentExpr build() {
+      AssignmentExpr assignmentExpr = autoBuild();
+      TypeNode lhsType = assignmentExpr.variableExpr().variable().type();
+      TypeNode rhsType = assignmentExpr.valueExpr().type();
+      if (!lhsType.equals(rhsType)) {
+        throw new TypeMismatchException(
+            String.format(
+                "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
+      }
 
-    public abstract VariableDeclExpr build();
+      return assignmentExpr;
+    }
   }
 
   @Override

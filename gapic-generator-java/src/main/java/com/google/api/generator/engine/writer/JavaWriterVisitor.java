@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.writer;
 
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
@@ -22,7 +23,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
-import com.google.api.generator.engine.ast.VariableDeclExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -84,35 +84,37 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(VariableExpr variableExpr) {
     Variable variable = variableExpr.variable();
-    IdentifierNode identifier = variable.identifier();
-    identifier.accept(this);
+    TypeNode type = variable.type();
+    ScopeNode scope = variableExpr.scope();
+
+    if (variableExpr.isDecl()) {
+      if (!scope.equals(ScopeNode.LOCAL)) {
+        scope.accept(this);
+        space();
+      }
+
+      if (variableExpr.isStatic()) {
+        buffer.append("static");
+        space();
+      }
+
+      if (variableExpr.isFinal()) {
+        buffer.append("final");
+        space();
+      }
+
+      type.accept(this);
+      space();
+    }
+
+    variable.identifier().accept(this);
   }
 
   @Override
-  public void visit(VariableDeclExpr variableDeclExpr) {
-    Variable variable = variableDeclExpr.variable();
-    IdentifierNode identifier = variable.identifier();
-    TypeNode type = variable.type();
-    ScopeNode scope = variableDeclExpr.scope();
-
-    if (!scope.equals(ScopeNode.LOCAL)) {
-      scope.accept(this);
-      space();
-    }
-
-    if (variableDeclExpr.isStatic()) {
-      buffer.append("static");
-      space();
-    }
-
-    if (variableDeclExpr.isFinal()) {
-      buffer.append("final");
-      space();
-    }
-
-    type.accept(this);
-    space();
-    identifier.accept(this);
+  public void visit(AssignmentExpr assignmentExpr) {
+    assignmentExpr.variableExpr().accept(this);
+    buffer.append(" = ");
+    assignmentExpr.valueExpr().accept(this);
   }
 
   private void space() {

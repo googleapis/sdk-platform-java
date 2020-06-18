@@ -17,23 +17,47 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class VariableExpr implements AstNode, Expr {
+public abstract class VariableExpr implements Expr {
   public abstract Variable variable();
 
+  /** Variable declaration fields. */
+  public abstract boolean isDecl();
+
+  public abstract ScopeNode scope();
+
+  public abstract boolean isStatic();
+
+  public abstract boolean isFinal();
+
   public static Builder builder() {
-    return new AutoValue_VariableExpr.Builder();
+    return new AutoValue_VariableExpr.Builder()
+        .setIsDecl(false)
+        .setIsFinal(false)
+        .setIsStatic(false)
+        .setScope(ScopeNode.LOCAL);
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setVariable(Variable variable);
 
+    public abstract Builder setIsDecl(boolean isDecl);
+
+    public abstract Builder setScope(ScopeNode scope);
+
+    public abstract Builder setIsStatic(boolean isStatic);
+
+    public abstract Builder setIsFinal(boolean isFinal);
+
     public abstract VariableExpr build();
   }
 
   @Override
   public TypeNode type() {
-    return TypeNode.VOID;
+    if (isDecl()) {
+      return TypeNode.VOID;
+    }
+    return variable().type();
   }
 
   @Override
