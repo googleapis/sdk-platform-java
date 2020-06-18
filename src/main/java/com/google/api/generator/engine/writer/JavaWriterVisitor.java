@@ -19,13 +19,17 @@ import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.List;
+import java.util.Map;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -154,6 +158,41 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(ExprStatement exprStatement) {
     exprStatement.expression().accept(this);
     buffer.append(";");
+    newline();
+  }
+
+  @Override
+  public void visit(IfStatement ifStatement) {
+    buffer.append("if (");
+    ifStatement.conditionExpr().accept(this);
+    buffer.append(") {");
+    newline();
+    for (Statement statement : ifStatement.body()) {
+      statement.accept(this);
+    }
+    buffer.append("} ");
+    if (!ifStatement.elseIfs().isEmpty()) {
+      for (Map.Entry<Expr, List<Statement>> elseIfEntry : ifStatement.elseIfs().entrySet()) {
+        Expr elseIfConditionExpr = elseIfEntry.getKey();
+        List<Statement> elseIfBody = elseIfEntry.getValue();
+        buffer.append("else if (");
+        elseIfConditionExpr.accept(this);
+        buffer.append(") {");
+        newline();
+        for (Statement statement : elseIfBody) {
+          statement.accept(this);
+        }
+        buffer.append("} ");
+      }
+    }
+    if (!ifStatement.elseBody().isEmpty()) {
+      buffer.append("else {");
+      newline();
+      for (Statement statement : ifStatement.elseBody()) {
+        statement.accept(this);
+      }
+      buffer.append("} ");
+    }
     newline();
   }
 
