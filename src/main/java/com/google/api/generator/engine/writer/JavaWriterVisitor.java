@@ -128,36 +128,25 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(SPACE);
   }
 
+  /** =============================== STATEMENT =============================== */
   public String visit(LineComment linecomment){
       // Split comments by new line and add `//` to each line.
       String[] sourceStrings = linecomment.comment().split("\\r?\\n");
       for (int i = 0; i < sourceStrings.length; i++) {
         sourceStrings[i] = "// " + sourceStrings[i];
       }
-      String formattedSource = "";
-      try {
-        formattedSource = new Formatter().formatSource(String.join("\n", sourceStrings));
-        return formattedSource;
-      } catch (Exception e) {
-        System.out.println(e.getMessage());
-      }
+      String formattedSource =format(String.join("\n", sourceStrings));
       return formattedSource;
   }
 
   public String visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    String formattedSource = "";
-    try {
-      formattedSource = new Formatter().formatSource("/** " + sourceString + " */");
-      return formattedSource;
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
+    String formattedSource = format("/** " + sourceString + " */");
     return formattedSource;
   }
 
-  public String visit(JavaDocComment javaDocComment){
+  public String visit(JavaDocComment javaDocComment) {
     StringBuilder formattedComment = new StringBuilder("/**\n");
     ImmutableList<String> commentList = javaDocComment.comments();
     ImmutableList<ParamPair> paramList = javaDocComment.params();
@@ -182,12 +171,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (javaDocComment.throwsText().isPresent()) {
       formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
     }
-    String formattedSource = "";
-    try {
-      formattedSource = new Formatter().formatSource(formattedComment.append("*/").toString());
-    } catch (Exception e) {
+    String formattedSource = format(formattedComment.append("*/").toString());
+    return formattedSource;
+  }
+
+  public String format(String comment) {
+    String formattedComment = "";
+    try{
+      formattedComment = new Formatter().formatSource(comment);
+    }catch(Exception e) {
       System.out.println(e.getMessage());
     }
-    return formattedSource;
+    return formattedComment;
   }
 }
