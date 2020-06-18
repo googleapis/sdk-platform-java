@@ -52,7 +52,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       generatedCodeBuilder.append(typeKind.toString().toLowerCase());
     } else {
       // A null pointer exception will be thrown if reference is null, which is WAI.
-      // TODO(miraleung): Clean this up.
       generatedCodeBuilder.append(type.reference().name());
       return;
     }
