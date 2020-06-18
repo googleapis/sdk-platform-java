@@ -30,16 +30,6 @@ public abstract class JavaDocComment {
 
   public abstract ImmutableMap<String, String> params();
 
-  public static class ParamPair {
-    public String paramName;
-    public String paramDescription;
-
-    public ParamPair(String paramName, String paramDescription) {
-      this.paramName = paramName;
-      this.paramDescription = paramDescription;
-    }
-  }
-
   public static Builder builder() {
     return new AutoValue_JavaDocComment.Builder();
   }
