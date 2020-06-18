@@ -29,5 +29,5 @@ public interface AstNodeVisitor {
 
   public void visit(VariableExpr variableExpr);
 
-  public void visit(VariableDeclExpr variableDeclExpr);
+  public void visit(AssignmentExpr assignmentExpr);
 }
