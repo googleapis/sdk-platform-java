@@ -15,6 +15,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.Optional;
 
 @AutoValue
@@ -27,7 +28,7 @@ public abstract class JavaDocComment {
 
   public abstract Optional<String> throwsText();
 
-  public abstract ImmutableList<ParamPair> params();
+  public abstract ImmutableMap<String, String> params();
 
   public static class ParamPair {
     public String paramName;
@@ -51,7 +52,7 @@ public abstract class JavaDocComment {
 
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
-    protected abstract ImmutableList.Builder<ParamPair> paramsBuilder();
+    protected abstract ImmutableMap.Builder<String, String> paramsBuilder();
 
     protected abstract ImmutableList.Builder<String> sampleCodeBuilder();
 
@@ -60,8 +61,8 @@ public abstract class JavaDocComment {
       return this;
     }
 
-    public Builder addParam(ParamPair paramPair) {
-      paramsBuilder().add(paramPair);
+    public Builder addParam(String name, String description) {
+      paramsBuilder().put(name, description);
       return this;
     }
 
