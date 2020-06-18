@@ -17,23 +17,40 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class ValueExpr implements Expr {
-  public abstract Value value();
+public abstract class AssignmentExpr implements Expr {
+  public abstract VariableExpr variableExpr();
+
+  public abstract Expr valueExpr();
 
   public static Builder builder() {
-    return new AutoValue_ValueExpr.Builder();
+    return new AutoValue_AssignmentExpr.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setValue(Value value);
+    public abstract Builder setVariableExpr(VariableExpr variableExpr);
 
-    public abstract ValueExpr build();
+    public abstract Builder setValueExpr(Expr valueExpr);
+
+    abstract AssignmentExpr autoBuild();
+
+    public AssignmentExpr build() {
+      AssignmentExpr assignmentExpr = autoBuild();
+      TypeNode lhsType = assignmentExpr.variableExpr().variable().type();
+      TypeNode rhsType = assignmentExpr.valueExpr().type();
+      if (!lhsType.equals(rhsType)) {
+        throw new TypeMismatchException(
+            String.format(
+                "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
+      }
+
+      return assignmentExpr;
+    }
   }
 
   @Override
   public TypeNode type() {
-    return value().type();
+    return TypeNode.VOID;
   }
 
   @Override

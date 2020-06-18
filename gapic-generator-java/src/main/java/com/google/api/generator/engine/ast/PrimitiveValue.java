@@ -19,12 +19,6 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class PrimitiveValue implements Value {
-  static class TypeMismatchException extends RuntimeException {
-    public TypeMismatchException(String errorMessage) {
-      super(errorMessage);
-    }
-  }
-
   // TODO(miraleung): Handle object types.
   @Override
   public abstract TypeNode type();

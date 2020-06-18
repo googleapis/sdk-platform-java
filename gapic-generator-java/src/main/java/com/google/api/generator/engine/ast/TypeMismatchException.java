@@ -14,30 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.auto.value.AutoValue;
-
-@AutoValue
-public abstract class ValueExpr implements Expr {
-  public abstract Value value();
-
-  public static Builder builder() {
-    return new AutoValue_ValueExpr.Builder();
-  }
-
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setValue(Value value);
-
-    public abstract ValueExpr build();
-  }
-
-  @Override
-  public TypeNode type() {
-    return value().type();
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
+public class TypeMismatchException extends RuntimeException {
+  public TypeMismatchException(String errorMessage) {
+    super(errorMessage);
   }
 }
