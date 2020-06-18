@@ -23,7 +23,7 @@ public abstract class JavaDocComment {
 
   public abstract Optional<String> deprecated();
 
-  public abstract Optional<String> sampleCode();
+  public abstract ImmutableList<String> sampleCode();
 
   public abstract Optional<String> throwsText();
 
@@ -47,13 +47,13 @@ public abstract class JavaDocComment {
   public abstract static class Builder {
     public abstract Builder setDeprecated(String deprecatedText);
 
-    public abstract Builder setSampleCode(String sampleCode);
-
     public abstract Builder setThrowsText(String throwsText);
 
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
     protected abstract ImmutableList.Builder<ParamPair> paramsBuilder();
+
+    protected abstract ImmutableList.Builder<String> sampleCodeBuilder();
 
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
@@ -62,6 +62,11 @@ public abstract class JavaDocComment {
 
     public Builder addParam(ParamPair paramPair) {
       paramsBuilder().add(paramPair);
+      return this;
+    }
+
+    public Builder addSampleCode(String sampleCode) {
+      sampleCodeBuilder().add(sampleCode);
       return this;
     }
 

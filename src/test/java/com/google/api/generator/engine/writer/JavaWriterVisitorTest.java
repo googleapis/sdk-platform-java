@@ -196,7 +196,7 @@ public class JavaWriterVisitorTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
-            .setSampleCode(sampleCode)
+            .addSampleCode(sampleCode)
             .addParam(p)
             .setDeprecated(deprecatedText)
             .setThrowsText(throwText)
@@ -215,7 +215,10 @@ public class JavaWriterVisitorTest {
             + "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n"
             + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
             + "*/\n";
+    System.out.println(expected);
     String formattedComment = javaDocComment.accept(writerVisitor);
+    System.out.println(formattedComment);
+
     assertThat(formattedComment).isEqualTo(expected);
   }
   @Test
