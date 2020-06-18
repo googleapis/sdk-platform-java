@@ -27,7 +27,6 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.engine.ast.JavaDocComment.ParamPair;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;

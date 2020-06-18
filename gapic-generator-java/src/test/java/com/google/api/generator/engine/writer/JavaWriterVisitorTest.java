@@ -29,7 +29,6 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.JavaDocComment.ParamPair;
 import org.junit.Before;
 import org.junit.Test;
 
