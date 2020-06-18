@@ -8,3 +8,6 @@ bazel-testlogs
 # Vim.
 *.sw*
 *.vim
+
+# Vscode Settings
+.vscode/settings.json
