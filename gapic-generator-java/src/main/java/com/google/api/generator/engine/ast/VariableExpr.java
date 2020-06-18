@@ -14,18 +14,30 @@
 
 package com.google.api.generator.engine.ast;
 
-public interface AstNodeVisitor {
-  /** Writes the syntatically-correct Java code representation of this node. */
-  public void visit(IdentifierNode identifier);
+import com.google.auto.value.AutoValue;
 
-  public void visit(TypeNode type);
+@AutoValue
+public abstract class VariableExpr implements AstNode, Expr {
+  public abstract Variable variable();
 
-  public void visit(ScopeNode scope);
+  public static Builder builder() {
+    return new AutoValue_VariableExpr.Builder();
+  }
 
-  public void visit(ReferenceTypeNode reference);
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setVariable(Variable variable);
 
-  /** =============================== EXPRESSIONS =============================== */
-  public void visit(VariableExpr variableExpr);
+    public abstract VariableExpr build();
+  }
 
-  public void visit(VariableDeclExpr variableDeclExpr);
+  @Override
+  public TypeNode type() {
+    return TypeNode.VOID;
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
 }
