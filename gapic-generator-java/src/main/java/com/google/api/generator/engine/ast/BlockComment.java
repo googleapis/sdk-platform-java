@@ -34,7 +34,7 @@ public abstract class BlockComment implements Comment {
 
   @Override
   public String write() {
-    // split the comments by new line and embrace `/** */` with the comment block.
+    // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = comment();
     String formattedSource = "";
     try {

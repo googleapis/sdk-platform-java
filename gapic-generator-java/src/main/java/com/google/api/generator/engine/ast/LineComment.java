@@ -34,7 +34,7 @@ public abstract class LineComment implements Comment {
 
   @Override
   public String write() {
-    // split the comments by new line and add `//` to each line.
+    // Split comments by new line and add `//` to each line.
     String[] sourceStrings = comment().split("\\r?\\n");
     for (int i = 0; i < sourceStrings.length; i++) {
       sourceStrings[i] = "// " + sourceStrings[i];
