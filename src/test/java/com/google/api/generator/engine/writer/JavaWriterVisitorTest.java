@@ -18,6 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
@@ -292,5 +293,18 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertThat(writerVisitor.write())
         .isEqualTo("libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeExprStatement() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
+
+    exprStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
   }
 }
