@@ -11,20 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+package com.google.api.generator.engine.ast;
 
-package com.google.api.generator.engine.format;
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
-
-import org.junit.Test;
-
-public class BlockCommentTest {
-  @Test
-  public void writeNormalBlockComment() {
-      String content = "this is a test comment";
-      BlockComment blockComment = BlockComment.builder().setComment(content).build();
-      String expected = "/** this is a test comment */\n";
-      String formattedComment = blockComment.write();
-      assertThat(formattedComment).isEqualTo(expected);
-  }
+public interface Comment {
+  // format the comment
+  public String write();
 }

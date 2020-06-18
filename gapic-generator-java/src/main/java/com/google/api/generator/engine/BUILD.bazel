@@ -4,7 +4,6 @@ filegroup(
     name = "engine_files",
     srcs = [
         "//src/main/java/com/google/api/generator/engine/ast:ast_files",
-        "//src/main/java/com/google/api/generator/engine/format:format_files",
         "//src/main/java/com/google/api/generator/engine/lexicon:lexicon_files",
     ],
 )
@@ -13,7 +12,6 @@ java_library(
     name = "engine",
     runtime_deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/format",
         "//src/main/java/com/google/api/generator/engine/lexicon",
     ],
 )

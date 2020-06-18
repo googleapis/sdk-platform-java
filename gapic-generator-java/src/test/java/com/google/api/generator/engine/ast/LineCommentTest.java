@@ -12,26 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.format;
+package com.google.api.generator.engine.ast;
+
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
 public class LineCommentTest {
   @Test
   public void writeNormalLineComment() {
-      String content = "this is a test comment";
-      LineComment lineComment = LineComment.builder().setComment(content).build();
-      String formattedComment = "// this is a test comment\n";
-      assertThat(lineComment.write()).isEqualTo(formattedComment);
+    String content = "this is a test comment";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String formattedComment = "// this is a test comment\n";
+    assertThat(lineComment.write()).isEqualTo(formattedComment);
   }
 
   @Test
   public void writeLongLineComment() {
-    String content = "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
     LineComment lineComment = LineComment.builder().setComment(content).build();
-    String expected = "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
+    String expected =
+        "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
     assertThat(lineComment.write()).isEqualTo(expected);
-  } 
+  }
 }
