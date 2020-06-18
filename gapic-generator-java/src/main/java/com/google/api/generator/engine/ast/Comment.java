@@ -14,6 +14,6 @@
 package com.google.api.generator.engine.ast;
 
 public interface Comment {
-  // format the comment
-  public String write();
+  // Format the comment
+  public String comment();
 }

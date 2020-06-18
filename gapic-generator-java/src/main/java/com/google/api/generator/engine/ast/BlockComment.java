@@ -15,7 +15,6 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.googlejavaformat.java.Formatter;
 
 @AutoValue
 public abstract class BlockComment implements Comment {
@@ -32,17 +31,7 @@ public abstract class BlockComment implements Comment {
     public abstract BlockComment build();
   }
 
-  @Override
-  public String write() {
-    // Split comments by new line and embrace the comment block with `/** */`.
-    String sourceString = comment();
-    String formattedSource = "";
-    try {
-      formattedSource = new Formatter().formatSource("/** " + sourceString + " */");
-      return formattedSource;
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
-    return formattedSource;
+  public String accept(AstNodeVisitor visitor) {
+    return visitor.visit(this);
   }
 }
