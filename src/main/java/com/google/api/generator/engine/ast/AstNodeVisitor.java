@@ -28,4 +28,11 @@ public interface AstNodeVisitor {
   public void visit(VariableExpr variableExpr);
 
   public void visit(VariableDeclExpr variableDeclExpr);
+
+  /** =============================== STATEMENT =============================== */
+  public String visit(LineComment lineComment);
+
+  public String visit(BlockComment blockComment);
+
+  public String visit(JavaDocComment javaDocComment);
 }

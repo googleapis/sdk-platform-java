@@ -15,7 +15,10 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -23,6 +26,10 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableDeclExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.JavaDocComment.ParamPair;
+import com.google.googlejavaformat.java.Formatter;
+import com.google.common.collect.ImmutableList;
+
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -111,5 +118,68 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void space() {
     buffer.append(SPACE);
+  }
+
+  public String visit(LineComment linecomment){
+      // Split comments by new line and add `//` to each line.
+      String[] sourceStrings = linecomment.comment().split("\\r?\\n");
+      for (int i = 0; i < sourceStrings.length; i++) {
+        sourceStrings[i] = "// " + sourceStrings[i];
+      }
+      String formattedSource = "";
+      try {
+        formattedSource = new Formatter().formatSource(String.join("\n", sourceStrings));
+        return formattedSource;
+      } catch (Exception e) {
+        System.out.println(e.getMessage());
+      }
+      return formattedSource;
+  }
+
+  public String visit(BlockComment blockComment){
+    // Split comments by new line and embrace the comment block with `/** */`.
+    String sourceString = blockComment.comment();
+    String formattedSource = "";
+    try {
+      formattedSource = new Formatter().formatSource("/** " + sourceString + " */");
+      return formattedSource;
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return formattedSource;
+  }
+
+  public String visit(JavaDocComment javaDocComment){
+    StringBuilder formattedComment = new StringBuilder("/**\n");
+    ImmutableList<String> commentList = javaDocComment.comments();
+    ImmutableList<ParamPair> paramList = javaDocComment.params();
+    for (String comment : commentList) {
+      formattedComment.append("* " + comment + "\n");
+    }
+    for (ParamPair p : paramList) {
+      formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
+    }
+    if (javaDocComment.sampleCode().isPresent()) {
+      formattedComment.append("* Sample code:\n* <pre><code>\n");
+      String sampleCode = javaDocComment.sampleCode().get();
+      String[] sampleLines = sampleCode.split("\\r?\\n");
+      for (int i = 0; i < sampleLines.length; i++) {
+        sampleLines[i] = "* " + sampleLines[i];
+      }
+      formattedComment.append(String.join("\n", sampleLines) + "\n* </code></pre>\n");
+    }
+    if (javaDocComment.deprecated().isPresent()) {
+      formattedComment.append("* @deprecated " + javaDocComment.deprecated() + "\n");
+    }
+    if (javaDocComment.throwsText().isPresent()) {
+      formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
+    }
+    String formattedSource = "";
+    try {
+      formattedSource = new Formatter().formatSource(formattedComment.append("*/").toString());
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+    return formattedSource;
   }
 }

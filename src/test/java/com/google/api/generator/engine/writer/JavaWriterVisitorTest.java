@@ -22,6 +22,10 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableDeclExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.JavaDocComment.ParamPair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -116,5 +120,68 @@ public class JavaWriterVisitorTest {
 
     expr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("public static final boolean x");
+  }
+
+  @Test  
+  public void writeNormalBlockComment() {
+    String content = "this is a test comment";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected = "/** this is a test comment */\n";
+    String formattedComment = blockComment.accept(writerVisitor);
+    assertThat(formattedComment).isEqualTo(expected);
+  }
+
+  @Test
+  public void writeNormalLineComment() {
+    String content = "this is a test comment";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected = "// this is a test comment\n";
+    String formattedComment = lineComment.accept(writerVisitor);
+    assertThat(formattedComment).isEqualTo(expected);
+  }
+
+  @Test
+  public void writeLongLineComment() {
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected =
+        "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
+    String formattedComment = lineComment.accept(writerVisitor);
+    assertThat(formattedComment).isEqualTo(expected);
+  }
+
+  @Test
+  public void writeNormalJavaDocComment() {
+    String content = "this is a test comment";
+    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    ParamPair p = new ParamPair("shelfName", "The name of the shelf where books are published to.");
+    String sampleCode =
+        "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
+    String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(content)
+            .setSampleCode(sampleCode)
+            .addParam(p)
+            .setDeprecated(deprecatedText)
+            .setThrowsText(throwText)
+            .build();
+    String expected =
+        "/**\n"
+            + "* this is a test comment\n"
+            + "* @param shelfName The name of the shelf where books are published to.\n"
+            + "* Sample code:\n"
+            + "* <pre><code>\n"
+            + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
+            + "*  Shelf shelf = Shelf.newBuilder().build();\n"
+            + "* Shelf response = libraryClient.createShelf(shelf);\n"
+            + "* }\n"
+            + "* </code></pre>\n"
+            + "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n"
+            + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
+            + "*/\n";
+    String formattedComment = javaDocComment.accept(writerVisitor);
+    assertThat(formattedComment).isEqualTo(expected);
   }
 }

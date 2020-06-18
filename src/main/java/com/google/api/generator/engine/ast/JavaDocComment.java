@@ -15,11 +15,10 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import com.google.googlejavaformat.java.Formatter;
 import java.util.Optional;
 
 @AutoValue
-public abstract class JavaDocComment implements Comment {
+public abstract class JavaDocComment {
   public abstract ImmutableList<String> comments();
 
   public abstract Optional<String> deprecated();
@@ -31,8 +30,8 @@ public abstract class JavaDocComment implements Comment {
   public abstract ImmutableList<ParamPair> params();
 
   public static class ParamPair {
-    String paramName;
-    String paramDescription;
+    public String paramName;
+    public String paramDescription;
 
     public ParamPair(String paramName, String paramDescription) {
       this.paramName = paramName;
@@ -46,11 +45,11 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    abstract Builder setDeprecated(String deprecatedText);
+    public abstract Builder setDeprecated(String deprecatedText);
 
-    abstract Builder setSampleCode(String sampleCode);
+    public abstract Builder setSampleCode(String sampleCode);
 
-    abstract Builder setThrowsText(String throwsText);
+    public abstract Builder setThrowsText(String throwsText);
 
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
@@ -66,40 +65,10 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    abstract JavaDocComment build();
+    public abstract JavaDocComment build();
   }
 
-  public String write() {
-    StringBuilder formattedComment = new StringBuilder("/**\n");
-    ImmutableList<String> commentList = comments();
-    ImmutableList<ParamPair> paramList = params();
-    for (String comment : commentList) {
-      formattedComment.append("* " + comment + "\n");
-    }
-    for (ParamPair p : paramList) {
-      formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
-    }
-    if (sampleCode().isPresent()) {
-      formattedComment.append("* Sample code:\n* <pre><code>\n");
-      String sampleCode = sampleCode().get();
-      String[] sampleLines = sampleCode.split("\\r?\\n");
-      for (int i = 0; i < sampleLines.length; i++) {
-        sampleLines[i] = "* " + sampleLines[i];
-      }
-      formattedComment.append(String.join("\n", sampleLines) + "\n* </code></pre>\n");
-    }
-    if (deprecated().isPresent()) {
-      formattedComment.append("* @deprecated " + deprecated() + "\n");
-    }
-    if (throwsText().isPresent()) {
-      formattedComment.append("* @throws " + throwsText() + "\n");
-    }
-    String formattedSource = "";
-    try {
-      formattedSource = new Formatter().formatSource(formattedComment.append("*/").toString());
-    } catch (Exception e) {
-      System.out.println(e.getMessage());
-    }
-    return formattedSource;
+  public String accept(AstNodeVisitor visitor) {
+    return visitor.visit(this);
   }
 }
