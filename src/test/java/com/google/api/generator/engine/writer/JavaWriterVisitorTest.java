@@ -54,7 +54,8 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writePrimitiveArrayType() {
-    TypeNode byteArrayType = TypeNode.createByteArrayType();
+    TypeNode byteArrayType =
+        TypeNode.builder().setTypeKind(TypeNode.TypeKind.BYTE).setIsArray(true).build();
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");

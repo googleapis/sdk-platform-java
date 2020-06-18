@@ -37,6 +37,14 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
 
+  public static final TypeNode STRING = withReference(Reference.withClazz(String.class));
+  public static final TypeNode STRING_ARRAY =
+      builder()
+          .setTypeKind(TypeKind.OBJECT)
+          .setReference(Reference.withClazz(String.class))
+          .setIsArray(true)
+          .build();
+
   public abstract TypeKind typeKind();
 
   public abstract boolean isArray();
@@ -60,20 +68,8 @@ public abstract class TypeNode implements AstNode {
   }
 
   // TODO(miraleung): More type creation helpers to come...
-  public static TypeNode createReferenceType(Reference reference) {
+  public static TypeNode withReference(Reference reference) {
     return TypeNode.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
-  }
-
-  public static TypeNode createReferenceArrayType(Reference reference) {
-    return TypeNode.builder()
-        .setTypeKind(TypeKind.OBJECT)
-        .setReference(reference)
-        .setIsArray(true)
-        .build();
-  }
-
-  public static TypeNode createByteArrayType() {
-    return createPrimitiveArrayType(TypeKind.BYTE);
   }
 
   public boolean isPrimitiveType() {
@@ -96,6 +92,15 @@ public abstract class TypeNode implements AstNode {
     return typeKind().equals(type.typeKind())
         && (isArray() == type.isArray())
         && Objects.equals(reference(), type.reference());
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 17 * typeKind().hashCode() + 19 * (isArray() ? 1 : 3);
+    if (reference() != null) {
+      hash += 23 * reference().hashCode();
+    }
+    return hash;
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
