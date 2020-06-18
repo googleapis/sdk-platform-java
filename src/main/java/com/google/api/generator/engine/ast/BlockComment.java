@@ -12,36 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.format;
+package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.googlejavaformat.java.Formatter;
 
 @AutoValue
-public abstract class LineComment implements Comment {
+public abstract class BlockComment implements Comment {
   public abstract String comment();
 
   public static Builder builder() {
-    return new AutoValue_LineComment.Builder();
+    return new AutoValue_BlockComment.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setComment(String comment);
 
-    public abstract LineComment build();
+    public abstract BlockComment build();
   }
 
   @Override
   public String write() {
-    // split the comments by new line and add `//` to each line.
-    String[] sourceStrings = comment().split("\\r?\\n");
-    for (int i = 0; i < sourceStrings.length; i++) {
-      sourceStrings[i] = "// " + sourceStrings[i];
-    }
+    // split the comments by new line and embrace `/** */` with the comment block.
+    String sourceString = comment();
     String formattedSource = "";
     try {
-      formattedSource = new Formatter().formatSource(String.join("\n", sourceStrings));
+      formattedSource = new Formatter().formatSource("/** " + sourceString + " */");
       return formattedSource;
     } catch (Exception e) {
       System.out.println(e.getMessage());
