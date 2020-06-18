@@ -150,16 +150,16 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     StringBuilder formattedComment = new StringBuilder("/**\n");
     ImmutableList<String> commentList = javaDocComment.comments();
     ImmutableList<ParamPair> paramList = javaDocComment.params();
+    ImmutableList<String> sampleCodeList = javaDocComment.sampleCode();
     for (String comment : commentList) {
       formattedComment.append("* " + comment + "\n");
     }
     for (ParamPair p : paramList) {
       formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
     }
-    if (javaDocComment.sampleCode().isPresent()) {
+    for (String sample : sampleCodeList) {
       formattedComment.append("* Sample code:\n* <pre><code>\n");
-      String sampleCode = javaDocComment.sampleCode().get();
-      String[] sampleLines = sampleCode.split("\\r?\\n");
+      String[] sampleLines = sample.split("\\r?\\n");
       for (int i = 0; i < sampleLines.length; i++) {
         sampleLines[i] = "* " + sampleLines[i];
       }
