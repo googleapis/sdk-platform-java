@@ -189,7 +189,8 @@ public class JavaWriterVisitorTest {
   public void writeNormalJavaDocComment() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
-    ParamPair p = new ParamPair("shelfName", "The name of the shelf where books are published to.");
+    String paramName = "shelfName";
+    String paramDescription =  "The name of the shelf where books are published to.";
     String sampleCode =
         "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
     String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails";
@@ -197,7 +198,7 @@ public class JavaWriterVisitorTest {
         JavaDocComment.builder()
             .addComment(content)
             .addSampleCode(sampleCode)
-            .addParam(p)
+            .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
             .setThrowsText(throwText)
             .build();

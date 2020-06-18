@@ -30,7 +30,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.JavaDocComment.ParamPair;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.common.collect.ImmutableList;
-
+import com.google.common.collect.ImmutableMap;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -149,13 +149,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public String visit(JavaDocComment javaDocComment) {
     StringBuilder formattedComment = new StringBuilder("/**\n");
     ImmutableList<String> commentList = javaDocComment.comments();
-    ImmutableList<ParamPair> paramList = javaDocComment.params();
+    ImmutableMap<String, String> paramList = javaDocComment.params();
     ImmutableList<String> sampleCodeList = javaDocComment.sampleCode();
     for (String comment : commentList) {
       formattedComment.append("* " + comment + "\n");
     }
-    for (ParamPair p : paramList) {
-      formattedComment.append("* @param " + p.paramName + " " + p.paramDescription + "\n");
+    for (String name : paramList.keySet()) {
+      formattedComment.append("* @param " + name + " " + paramList.get(name) + "\n");
     }
     for (String sample : sampleCodeList) {
       formattedComment.append("* Sample code:\n* <pre><code>\n");
