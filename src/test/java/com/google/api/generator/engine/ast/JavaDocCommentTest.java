@@ -50,8 +50,6 @@ public class JavaDocCommentTest {
             + "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n"
             + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
             + "*/\n";
-    System.out.println(javaDocComment.write());
-    System.out.println(expected);
     assertThat(javaDocComment.write()).isEqualTo(expected);
   }
 }
