@@ -20,6 +20,7 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -465,6 +466,30 @@ public class JavaWriterVisitorTest {
             "} \n",
             "} \n");
     assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeForStatement() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
+
+    VariableExpr varDeclExpr = createVariableDeclExpr("str", TypeNode.STRING);
+    Expr collectionExpr = MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
+
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(varDeclExpr)
+            .setCollectionExpr(collectionExpr)
+            .setBody(body)
+            .build();
+
+    forStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s",
+            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
   }
 
   private static AssignmentExpr createAssignmentExpr(
