@@ -35,4 +35,6 @@ public interface AstNodeVisitor {
   public void visit(ExprStatement exprStatement);
 
   public void visit(IfStatement ifStatement);
+
+  public void visit(ForStatement forStatement);
 }
