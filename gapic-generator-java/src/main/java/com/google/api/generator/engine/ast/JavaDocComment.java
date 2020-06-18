@@ -16,19 +16,37 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @AutoValue
 public abstract class JavaDocComment {
-  public abstract ImmutableList<String> comments();
+  public enum COMMENT_TYPE {
+    COMMENT,
+    HTML_P,
+    HTML_UL,
+    HTML_OL,
+    SAMPLE_CODE,
+  }
+
+  public static List<COMMENT_TYPE> commentList = new ArrayList<>();;
 
   public abstract Optional<String> deprecated();
-
-  public abstract ImmutableList<String> sampleCode();
 
   public abstract Optional<String> throwsText();
 
   public abstract ImmutableMap<String, String> params();
+
+  public abstract ImmutableList<String> sampleCode();
+
+  public abstract ImmutableList<String> comments();
+
+  public abstract ImmutableList<String> html_p();
+
+  public abstract ImmutableList<List<String>> html_ol();
+
+  public abstract ImmutableList<List<String>> html_ul();
 
   public static Builder builder() {
     return new AutoValue_JavaDocComment.Builder();
@@ -40,14 +58,21 @@ public abstract class JavaDocComment {
 
     public abstract Builder setThrowsText(String throwsText);
 
-    protected abstract ImmutableList.Builder<String> commentsBuilder();
-
     protected abstract ImmutableMap.Builder<String, String> paramsBuilder();
 
     protected abstract ImmutableList.Builder<String> sampleCodeBuilder();
 
+    protected abstract ImmutableList.Builder<String> commentsBuilder();
+
+    protected abstract ImmutableList.Builder<String> html_pBuilder();
+
+    protected abstract ImmutableList.Builder<List<String>> html_olBuilder();
+
+    protected abstract ImmutableList.Builder<List<String>> html_ulBuilder();
+
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
+      commentList.add(COMMENT_TYPE.COMMENT);
       return this;
     }
 
@@ -58,6 +83,25 @@ public abstract class JavaDocComment {
 
     public Builder addSampleCode(String sampleCode) {
       sampleCodeBuilder().add(sampleCode);
+      commentList.add(COMMENT_TYPE.SAMPLE_CODE);
+      return this;
+    }
+
+    public Builder addHtmlP(String paragraph) {
+      html_pBuilder().add(paragraph);
+      commentList.add(COMMENT_TYPE.HTML_P);
+      return this;
+    }
+
+    public Builder addHtmlOl(List<String> oList) {
+      html_olBuilder().add(oList);
+      commentList.add(COMMENT_TYPE.HTML_OL);
+      return this;
+    }
+
+    public Builder addHtmlUl(List<String> uList) {
+      html_ulBuilder().add(uList);
+      commentList.add(COMMENT_TYPE.HTML_UL);
       return this;
     }
 

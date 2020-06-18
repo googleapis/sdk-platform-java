@@ -204,7 +204,6 @@ public class JavaWriterVisitorTest {
     String expected =
         "/**\n"
             + "* this is a test comment\n"
-            + "* @param shelfName The name of the shelf where books are published to.\n"
             + "* Sample code:\n"
             + "* <pre><code>\n"
             + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
@@ -212,13 +211,11 @@ public class JavaWriterVisitorTest {
             + "* Shelf response = libraryClient.createShelf(shelf);\n"
             + "* }\n"
             + "* </code></pre>\n"
+            + "* @param shelfName The name of the shelf where books are published to.\n"
             + "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n"
             + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
             + "*/\n";
-    System.out.println(expected);
     String formattedComment = javaDocComment.accept(writerVisitor);
-    System.out.println(formattedComment);
-
     assertThat(formattedComment).isEqualTo(expected);
   }
   @Test
