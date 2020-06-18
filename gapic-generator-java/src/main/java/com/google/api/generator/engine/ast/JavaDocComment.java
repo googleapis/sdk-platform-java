@@ -22,7 +22,7 @@ import java.util.Optional;
 public abstract class JavaDocComment implements Comment {
   public abstract ImmutableList<String> comments();
 
-  public abstract Optional<String> deprecatedText();
+  public abstract Optional<String> deprecated();
 
   public abstract Optional<String> sampleCode();
 
@@ -46,7 +46,7 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    abstract Builder setDeprecatedText(String deprecatedText);
+    abstract Builder setDeprecated(String deprecatedText);
 
     abstract Builder setSampleCode(String sampleCode);
 
@@ -88,8 +88,8 @@ public abstract class JavaDocComment implements Comment {
       }
       formattedComment.append(String.join("\n", sampleLines) + "\n* </code></pre>\n");
     }
-    if (deprecatedText().isPresent()) {
-      formattedComment.append("* @deprecated " + deprecatedText() + "\n");
+    if (deprecated().isPresent()) {
+      formattedComment.append("* @deprecated " + deprecated() + "\n");
     }
     if (throwsText().isPresent()) {
       formattedComment.append("* @throws " + throwsText() + "\n");

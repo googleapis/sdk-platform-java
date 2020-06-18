@@ -33,7 +33,7 @@ public class JavaDocCommentTest {
             .addComment(content)
             .setSampleCode(sampleCode)
             .addParam(p)
-            .setDeprecatedText(deprecatedText)
+            .setDeprecated(deprecatedText)
             .setThrowsText(throwText)
             .build();
     String expected =
