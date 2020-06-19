@@ -162,6 +162,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     List<List<String>> html_ol = new ArrayList<>(javaDocComment.html_ol());
     List<List<String>> html_ul = new ArrayList<>(javaDocComment.html_ol());
     List<COMMENT_TYPE> orderList = new ArrayList<>(JavaDocComment.commentList);
+
     for(COMMENT_TYPE type : orderList){
       switch(type) {
         case COMMENT:
@@ -186,23 +187,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
           break;
         case HTML_OL:
           List<String> ol_items = html_ol.get(0);
-          ol_items.remove(0);
+          html_ol.remove(0);
           formattedComment.append("* <ol>\n");
           for (int i = 0; i < ol_items.size(); i++) {
-            ol_items.set(i,  "* <li>" + ol_items.get(i));
+            ol_items.set(i,  "* <li>" + ol_items.get(i) + "\n");
           }
-          formattedComment.append(String.join("\n", ol_items));
-          formattedComment.append("* </ol>\n");
+          formattedComment.append(String.join("",ol_items) + "* </ol>\n");
           break;
         case HTML_UL:
           List<String> ul_items = html_ul.get(0);
-          ul_items.remove(0);
+          html_ul.remove(0);
           formattedComment.append("* <ul>\n");
           for (int i = 0; i < ul_items.size(); i++) {
-            ul_items.set(i,  "* <li>" + ul_items.get(i));
+            ul_items.set(i,  "* <li>" + ul_items.get(i) + "\n");
           }
-          formattedComment.append(String.join("\n", ul_items));
-          formattedComment.append("* </ul>\n");
+          formattedComment.append(String.join("",ul_items) + "* </ul>\n");
           break;
       }
     }

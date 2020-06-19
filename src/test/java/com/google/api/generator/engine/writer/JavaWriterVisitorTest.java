@@ -31,6 +31,8 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.Arrays;
+import java.util.List;
 
 public class JavaWriterVisitorTest {
   private JavaWriterVisitor writerVisitor;
@@ -190,12 +192,19 @@ public class JavaWriterVisitorTest {
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
     String paramDescription =  "The name of the shelf where books are published to.";
+    String htmlP1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
+    String htmlP2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
     String sampleCode =
         "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
+    List<String> htmlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
     String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
+            .addHtmlP(htmlP1)
+            .addSampleCode(sampleCode)
+            .addHtmlP(htmlP2)
+            .addHtmlOl(htmlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
@@ -204,6 +213,20 @@ public class JavaWriterVisitorTest {
     String expected =
         "/**\n"
             + "* this is a test comment\n"
+            + "* <p> This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:\n"
+            + "* Sample code:\n"
+            + "* <pre><code>\n"
+            + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
+            + "*  Shelf shelf = Shelf.newBuilder().build();\n"
+            + "* Shelf response = libraryClient.createShelf(shelf);\n"
+            + "* }\n"
+            + "* </code></pre>\n"
+            + "* <p> The surface of this class includes several types of Java methods for each of the API's methods:\n"
+            + "* <ol>\n"
+            + "* <li>A flattened method.\n"
+            + "* <li> A request object method.\n"
+            + "* <li>A callable method.\n"
+            + "* </ol>\n"
             + "* Sample code:\n"
             + "* <pre><code>\n"
             + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
@@ -216,6 +239,9 @@ public class JavaWriterVisitorTest {
             + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
             + "*/\n";
     String formattedComment = javaDocComment.accept(writerVisitor);
+    System.out.println(expected);
+    System.out.println(formattedComment);
+
     assertThat(formattedComment).isEqualTo(expected);
   }
   @Test
