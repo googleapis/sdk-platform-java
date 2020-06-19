@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import org.junit.Before;
 import org.junit.Test;
@@ -782,17 +783,28 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeClassDefinition_statementsAndMethods() {
+    List<Reference> subGenerics =
+        Arrays.asList(
+            Reference.withClazz(String.class), Reference.withClazz(MethodDefinition.class));
+    Reference mapEntryReference =
+        Reference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
+    List<Reference> generics =
+        Arrays.asList(
+            Reference.withClazz(ClassDefinition.class), Reference.withClazz(Map.Entry.class));
+    Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(
                 VariableExpr.builder()
-                    .setVariable(createVariable("x", TypeNode.INT))
+                    .setVariable(
+                        createVariable(
+                            "x", TypeNode.withReference(Reference.withClazz(AssignmentExpr.class))))
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .build()),
             ExprStatement.withExpr(
                 VariableExpr.builder()
-                    .setVariable(createVariable("y", TypeNode.INT))
+                    .setVariable(createVariable("y", TypeNode.withReference(mapReference)))
                     .setIsDecl(true)
                     .setScope(ScopeNode.PROTECTED)
                     .build()));
@@ -845,12 +857,18 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(18),
+            createLines(24),
             "package com.google.example.library.v1.stub;\n",
             "\n",
+            "import static java.util.Map.Entry;\n",
+            "\n",
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.ClassDefinition;\n",
+            "import java.util.Map;\n",
+            "\n",
             "public class LibraryServiceStub {\n",
-            "private int x;\n",
-            "protected int y;\n",
+            "private AssignmentExpr x;\n",
+            "protected Map<ClassDefinition, Entry> y;\n",
             "public boolean open() {\n",
             "return true;\n",
             "}\n",
