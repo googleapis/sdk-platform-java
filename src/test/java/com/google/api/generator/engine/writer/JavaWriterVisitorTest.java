@@ -171,8 +171,6 @@ public class JavaWriterVisitorTest {
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected = "// this is a test comment\n";
     String formattedComment = lineComment.accept(writerVisitor);
-    System.out.println(formattedComment);
-    System.out.println(expected);
     assertThat(formattedComment).isEqualTo(expected);
   }
 
@@ -184,8 +182,6 @@ public class JavaWriterVisitorTest {
     String expected =
         "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
     String formattedComment = lineComment.accept(writerVisitor);
-    System.out.println(formattedComment);
-    System.out.println(expected);
     assertThat(formattedComment).isEqualTo(expected);
   }
 
@@ -200,7 +196,7 @@ public class JavaWriterVisitorTest {
     String sampleCode =
         "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
     List<String> htmlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
-    String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails";
+    String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails.";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
@@ -238,11 +234,10 @@ public class JavaWriterVisitorTest {
             + "* }\n"
             + "* </code></pre>\n"
             + "* @param shelfName The name of the shelf where books are published to.\n"
-            + "* @deprecated Optional[Use the {@link ArchivedBookName} class instead.]\n"
-            + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
+            + "* @deprecated Use the {@link ArchivedBookName} class instead.\n"
+            + "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "*/\n";
     String formattedComment = javaDocComment.accept(writerVisitor);
-
     assertThat(formattedComment).isEqualTo(expected);
   }
   @Test

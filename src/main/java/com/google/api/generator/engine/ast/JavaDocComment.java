@@ -18,7 +18,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class JavaDocComment {
@@ -32,9 +32,11 @@ public abstract class JavaDocComment {
 
   public static List<COMMENT_TYPE> commentList = new ArrayList<>();;
 
-  public abstract Optional<String> deprecated();
+  @Nullable
+  public abstract String deprecated();
 
-  public abstract Optional<String> throwsText();
+  @Nullable
+  public abstract String throwsText();
 
   public abstract ImmutableMap<String, String> params();
 

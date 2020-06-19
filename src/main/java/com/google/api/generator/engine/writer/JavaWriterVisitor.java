@@ -202,10 +202,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     for (String name : paramList.keySet()) {
       formattedComment.append("* @param " + name + " " + paramList.get(name) + "\n");
     }
-    if (javaDocComment.deprecated().isPresent()) {
+    if (!javaDocComment.deprecated().equals(null)) {
       formattedComment.append("* @deprecated " + javaDocComment.deprecated() + "\n");
     }
-    if (javaDocComment.throwsText().isPresent()) {
+    if (!javaDocComment.throwsText().equals(null)) {
       formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
     }
     return formatter.format(formattedComment.append("*/").toString());
