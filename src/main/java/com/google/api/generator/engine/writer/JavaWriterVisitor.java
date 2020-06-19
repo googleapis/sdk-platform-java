@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -31,6 +32,7 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -213,7 +215,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(") {");
     newline();
     statements(forStatement.body());
-    buffer.append("} ");
+    buffer.append("}");
     newline();
   }
 
@@ -239,6 +241,72 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       statements(tryCatchStatement.catchBody());
       buffer.append("}");
     }
+    newline();
+  }
+
+  /** =============================== OTHER =============================== */
+  @Override
+  public void visit(MethodDefinition methodDefinition) {
+    // Annotations, if any.
+    for (AnnotationNode annotation : methodDefinition.annotations()) {
+      annotation.accept(this);
+    }
+
+    // Method scope.
+    methodDefinition.scope().accept(this);
+    space();
+
+    // Modifiers.
+    if (methodDefinition.isStatic()) {
+      buffer.append("static ");
+    }
+    if (methodDefinition.isFinal()) {
+      buffer.append("final ");
+    }
+    methodDefinition.returnType().accept(this);
+    space();
+
+    // Method name.
+    methodDefinition.methodIdentifier().accept(this);
+    buffer.append("(");
+
+    // Arguments, if any.
+    int numArguments = methodDefinition.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      methodDefinition.arguments().get(i).accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(", ");
+      }
+    }
+    buffer.append(") ");
+
+    // Thrown exceptions.
+    if (!methodDefinition.throwsExceptions().isEmpty()) {
+      buffer.append("throws ");
+      int numExceptionsThrown = methodDefinition.throwsExceptions().size();
+      Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
+      while (exceptionIter.hasNext()) {
+        TypeNode exceptionType = exceptionIter.next();
+        exceptionType.accept(this);
+        if (exceptionIter.hasNext()) {
+          buffer.append(",");
+        }
+        space();
+      }
+    }
+
+    // Method body.
+    buffer.append("{");
+    newline();
+    statements(methodDefinition.body());
+    if (methodDefinition.returnExpr() != null) {
+      buffer.append("return ");
+      methodDefinition.returnExpr().accept(this);
+      buffer.append(";");
+      newline();
+    }
+
+    buffer.append("}");
     newline();
   }
 
