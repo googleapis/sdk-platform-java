@@ -36,7 +36,6 @@ import java.util.List;
 
 public class JavaWriterVisitorTest {
   private JavaWriterVisitor writerVisitor;
-
   @Before
   public void setUp() {
     writerVisitor = new JavaWriterVisitor();

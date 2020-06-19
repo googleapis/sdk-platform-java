@@ -42,6 +42,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
 
   private final StringBuffer buffer = new StringBuffer();
+  private JavaFormatter formatter = JavaFormatter.getInstance();
 
   public JavaWriterVisitor() {}
 
@@ -137,14 +138,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== COMMENT =============================== */
   public String visit(LineComment lineComment) throws Exception{
       // Split comments by new line and add `//` to each line.
-      JavaFormatter formatter = JavaFormatter.getInstance();
       return formatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
   }
 
   public String visit(BlockComment blockComment) throws Exception{
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    JavaFormatter formatter = JavaFormatter.getInstance();
     return formatter.format("/** " + sourceString + " */");
   }
 
@@ -209,7 +208,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (javaDocComment.throwsText().isPresent()) {
       formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
     }
-    JavaFormatter formatter = JavaFormatter.getInstance();
     return formatter.format(formattedComment.append("*/").toString());
   }
 
