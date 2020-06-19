@@ -44,4 +44,6 @@ public interface AstNodeVisitor {
 
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);
+
+  public void visit(ClassDefinition classDefinition);
 }

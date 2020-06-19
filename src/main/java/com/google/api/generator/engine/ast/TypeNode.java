@@ -79,9 +79,11 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isExceptionType(TypeNode type) {
-    Reference exceptionReference = type.reference();
-    return exceptionReference != null
-        && Exception.class.isAssignableFrom(exceptionReference.clazz());
+    return isReferenceType(type) && Exception.class.isAssignableFrom(type.reference().clazz());
+  }
+
+  public static boolean isReferenceType(TypeNode type) {
+    return type.typeKind().equals(TypeKind.OBJECT) && type.reference() != null;
   }
 
   public boolean isPrimitiveType() {
