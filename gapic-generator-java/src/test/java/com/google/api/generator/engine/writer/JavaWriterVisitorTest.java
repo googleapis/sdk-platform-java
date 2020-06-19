@@ -239,8 +239,6 @@ public class JavaWriterVisitorTest {
             + "* @throws Optional[com.google.api.gax.rpc.ApiException if the remote call fails]\n"
             + "*/\n";
     String formattedComment = javaDocComment.accept(writerVisitor);
-    System.out.println(expected);
-    System.out.println(formattedComment);
 
     assertThat(formattedComment).isEqualTo(expected);
   }
