@@ -158,7 +158,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test  
-  public void writeNormalBlockComment() {
+  public void writeNormalBlockComment() throws Exception {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected = "/** this is a test comment */\n";
@@ -167,7 +167,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNormalLineComment() {
+  public void writeNormalLineComment()throws Exception {
     String content = "this is a test comment";
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected = "// this is a test comment\n";
@@ -178,7 +178,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLongLineComment() {
+  public void writeLongLineComment() throws Exception {
     String content =
         "this is a long test comment with so many words, hello world, hello again, hello for 3 times, blah, blah!";
     LineComment lineComment = LineComment.builder().setComment(content).build();
@@ -191,7 +191,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNormalJavaDocComment() {
+  public void writeNormalJavaDocComment() throws Exception {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";

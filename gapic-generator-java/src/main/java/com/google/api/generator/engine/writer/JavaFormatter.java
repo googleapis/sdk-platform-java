@@ -12,26 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.engine.writer;
+import com.google.googlejavaformat.java.Formatter;
 
-import com.google.auto.value.AutoValue;
+import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
 
-@AutoValue
-public abstract class BlockComment implements Comment {
-  public abstract String comment();
+public final class JavaFormatter {
 
-  public static Builder builder() {
-    return new AutoValue_BlockComment.Builder();
-  }
+    private static final JavaFormatter INSTANCE = new JavaFormatter();
+    
+    private JavaFormatter() {}
+    
+    public static JavaFormatter getInstance() {
+        return INSTANCE;
+    }
 
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setComment(String comment);
-
-    public abstract BlockComment build();
-  }
-
-  public String accept(AstNodeVisitor visitor) throws Exception {
-    return visitor.visit(this);
-  }
+    public String format(String comment) throws Exception{
+        return new Formatter().formatSource(comment);
+    } 
 }

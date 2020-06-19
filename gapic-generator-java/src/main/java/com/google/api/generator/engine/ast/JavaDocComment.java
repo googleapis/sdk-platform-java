@@ -108,7 +108,7 @@ public abstract class JavaDocComment {
     public abstract JavaDocComment build();
   }
 
-  public String accept(AstNodeVisitor visitor) {
+  public String accept(AstNodeVisitor visitor) throws Exception {
     return visitor.visit(this);
   }
 }
