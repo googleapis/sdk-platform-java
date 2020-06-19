@@ -35,7 +35,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.JavaDocComment.COMMENT_TYPE;
-import com.google.googlejavaformat.java.Formatter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
@@ -136,19 +135,20 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== COMMENT =============================== */
-  public String visit(LineComment lineComment){
+  public String visit(LineComment lineComment) throws Exception{
       // Split comments by new line and add `//` to each line.
-      return format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+      JavaFormatter formatter = JavaFormatter.getInstance();
+      return formatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
   }
 
-  public String visit(BlockComment blockComment){
+  public String visit(BlockComment blockComment) throws Exception{
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    String formattedSource = format("/** " + sourceString + " */");
-    return formattedSource;
+    JavaFormatter formatter = JavaFormatter.getInstance();
+    return formatter.format("/** " + sourceString + " */");
   }
 
-  public String visit(JavaDocComment javaDocComment) {
+  public String visit(JavaDocComment javaDocComment) throws Exception{
     StringBuilder formattedComment = new StringBuilder("/**\n");
     List<String> commentList = new ArrayList<>(javaDocComment.comments());
     Map<String, String> paramList = new HashMap<>(javaDocComment.params());
@@ -209,17 +209,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (javaDocComment.throwsText().isPresent()) {
       formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
     }
-    String formattedSource = format(formattedComment.append("*/").toString());
-    return formattedSource;
+    JavaFormatter formatter = JavaFormatter.getInstance();
+    return formatter.format(formattedComment.append("*/").toString());
   }
 
-  public String format(String comment) {
-    String formattedComment = "";
-    try{
-      formattedComment = new Formatter().formatSource(comment);
-    }catch(Exception e) {
-      System.out.println(e.getMessage());
-    }
-    return formattedComment;
-  }
 }
