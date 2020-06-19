@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -70,6 +71,17 @@ public abstract class TypeNode implements AstNode {
   // TODO(miraleung): More type creation helpers to come...
   public static TypeNode withReference(Reference reference) {
     return TypeNode.builder().setTypeKind(TypeKind.OBJECT).setReference(reference).build();
+  }
+
+  public static TypeNode withExceptionClazz(Class clazz) {
+    Preconditions.checkState(Exception.class.isAssignableFrom(clazz));
+    return withReference(Reference.withClazz(clazz));
+  }
+
+  public static boolean isExceptionType(TypeNode type) {
+    Reference exceptionReference = type.reference();
+    return exceptionReference != null
+        && Exception.class.isAssignableFrom(exceptionReference.clazz());
   }
 
   public boolean isPrimitiveType() {

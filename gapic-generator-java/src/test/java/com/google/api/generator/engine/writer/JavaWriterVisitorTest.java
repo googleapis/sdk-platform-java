@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -35,9 +36,12 @@ import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -398,10 +402,9 @@ public class JavaWriterVisitorTest {
             .build();
 
     ifStatement.accept(writerVisitor);
-    String ifFormatStr = "%s%s%s";
     String expected =
         String.format(
-            new String(new char[4]).replace("\0", ifFormatStr) + "%s",
+            createLines(13),
             "if (condition) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
@@ -460,10 +463,9 @@ public class JavaWriterVisitorTest {
 
     ifStatement.accept(writerVisitor);
 
-    int numLines = 17;
     String expected =
         String.format(
-            new String(new char[numLines]).replace("\0", "%s"),
+            createLines(17),
             "if (condition) {\n",
             "if (condition) {\n",
             "if (fooBarCheck) {\n",
@@ -505,7 +507,7 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             "%s%s%s%s",
-            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -609,6 +611,127 @@ public class JavaWriterVisitorTest {
             "}\n"));
   }
 
+  @Test
+  public void writeMethodDefinition_basic() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_withArgumentsAndReturnExpr() {
+    ValueExpr returnExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+            .build();
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.INT))
+                .setIsDecl(true)
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.INT))
+                .setIsDecl(true)
+                .build());
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.INT)
+            .setArguments(arguments)
+            .setReturnExpr(returnExpr)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN))))
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s",
+            "public int close(int x, int y) {\n",
+            "boolean foobar = false;\n",
+            "return 3;\n",
+            "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_withAnnotationsAndThrows() {
+    ValueExpr returnExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+            .build();
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("valOne", TypeNode.STRING))
+                .setIsDecl(true)
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("valTwo", TypeNode.BOOLEAN))
+                .setIsDecl(true)
+                .build());
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setIsOverride(true)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(TypeNode.INT)
+            .setThrowsExceptions(
+                new HashSet<>(
+                    Arrays.asList(
+                        TypeNode.withExceptionClazz(IOException.class),
+                        TypeNode.withExceptionClazz(TimeoutException.class),
+                        TypeNode.withExceptionClazz(InterruptedException.class))))
+            .setArguments(arguments)
+            .setReturnExpr(returnExpr)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED))
+            .setBody(
+                Arrays.asList(
+                    createForStatement(),
+                    ExprStatement.withExpr(
+                        createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN))))
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(10),
+            "@SuppressWarnings(\"all\")\n",
+            "@Deprecated\n",
+            "@Override\n",
+            "protected static final int close(String valOne, boolean valTwo) throws"
+                + " InterruptedException, TimeoutException, IOException {\n",
+            "for (String str : getSomeStrings()) {\n",
+            "boolean aBool = false;\n",
+            "}\n",
+            "boolean foobar = false;\n",
+            "return 3;\n",
+            "}\n"));
+  }
+
+  private static String createLines(int numLines) {
+    return new String(new char[numLines]).replace("\0", "%s");
+  }
+
   private static AssignmentExpr createAssignmentExpr(
       String variableName, String value, TypeNode type) {
     VariableExpr variableExpr = createVariableDeclExpr(variableName, type);
@@ -636,5 +759,17 @@ public class JavaWriterVisitorTest {
   private static Variable createVariable(String variableName, TypeNode type) {
     IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
     return Variable.builder().setIdentifier(identifier).setType(type).build();
+  }
+
+  private static ForStatement createForStatement() {
+    Expr collectionExpr = MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
+    ExprStatement assignExprStatement =
+        ExprStatement.withExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN));
+    List<Statement> body = Arrays.asList(assignExprStatement);
+    return ForStatement.builder()
+        .setLocalVariableExpr(createVariableDeclExpr("str", TypeNode.STRING))
+        .setCollectionExpr(collectionExpr)
+        .setBody(body)
+        .build();
   }
 }

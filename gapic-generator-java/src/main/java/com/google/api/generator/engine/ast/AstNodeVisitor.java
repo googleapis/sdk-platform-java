@@ -41,4 +41,7 @@ public interface AstNodeVisitor {
   public void visit(ForStatement forStatement);
 
   public void visit(TryCatchStatement tryCatchStatement);
+
+  /** =============================== OTHER =============================== */
+  public void visit(MethodDefinition methodDefinition);
 }
