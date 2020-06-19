@@ -18,6 +18,7 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class LineComment implements Comment {
+  @Override
   public abstract String comment();
 
   public static Builder builder() {
