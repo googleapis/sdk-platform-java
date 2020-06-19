@@ -16,11 +16,14 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import java.lang.ProcessBuilder.Redirect.Type;
+
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -61,6 +64,12 @@ public class JavaWriterVisitorTest {
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
   }
 
+  @Test
+  public void writeStringObjectValue() {
+    StringObjectValue s = StringObjectValue.builder().setValue("test").build();
+    assertThat(s.value()).isEqualTo("test");
+    assertThat(s.type()).isEqualTo(TypeNode.BOOLEAN);
+  }
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
