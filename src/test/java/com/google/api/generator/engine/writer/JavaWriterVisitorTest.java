@@ -172,6 +172,8 @@ public class JavaWriterVisitorTest {
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected = "// this is a test comment\n";
     String formattedComment = lineComment.accept(writerVisitor);
+    System.out.println(formattedComment);
+    System.out.println(expected);
     assertThat(formattedComment).isEqualTo(expected);
   }
 
@@ -183,6 +185,8 @@ public class JavaWriterVisitorTest {
     String expected =
         "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
     String formattedComment = lineComment.accept(writerVisitor);
+    System.out.println(formattedComment);
+    System.out.println(expected);
     assertThat(formattedComment).isEqualTo(expected);
   }
 

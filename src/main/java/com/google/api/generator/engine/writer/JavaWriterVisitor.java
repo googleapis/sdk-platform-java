@@ -138,12 +138,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== COMMENT =============================== */
   public String visit(LineComment lineComment){
       // Split comments by new line and add `//` to each line.
-      String[] sourceStrings = lineComment.comment().split("\\r?\\n");
-      for (int i = 0; i < sourceStrings.length; i++) {
-        sourceStrings[i] = "// " + sourceStrings[i];
-      }
-      String formattedSource =format(String.join("\n", sourceStrings));
-      return formattedSource;
+      return format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
   }
 
   public String visit(BlockComment blockComment){
