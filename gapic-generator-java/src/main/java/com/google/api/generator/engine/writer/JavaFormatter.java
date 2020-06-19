@@ -15,8 +15,6 @@
 package com.google.api.generator.engine.writer;
 import com.google.googlejavaformat.java.Formatter;
 
-import jdk.jshell.spi.ExecutionControl.ExecutionControlException;
-
 public final class JavaFormatter {
 
     private static final JavaFormatter INSTANCE = new JavaFormatter();
