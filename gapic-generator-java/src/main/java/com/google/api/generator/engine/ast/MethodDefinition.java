@@ -17,10 +17,8 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -35,7 +33,8 @@ public abstract class MethodDefinition implements AstNode {
   // TODO(xiahzhenliu): Add a Nullable JavaDoc here.
   public abstract ImmutableList<AnnotationNode> annotations();
 
-  public abstract ImmutableSet<TypeNode> throwsExceptions();
+  // Using a list helps with determinism in unit tests.
+  public abstract ImmutableList<TypeNode> throwsExceptions();
 
   public abstract ImmutableList<VariableExpr> arguments();
 
@@ -63,7 +62,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setAnnotations(Collections.emptyList())
-        .setThrowsExceptions(Collections.emptySet())
+        .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
         .setIsOverride(false);
   }
@@ -85,7 +84,7 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setIsFinal(boolean isFinal);
 
-    public abstract Builder setThrowsExceptions(Set<TypeNode> exceptionTypes);
+    public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
 

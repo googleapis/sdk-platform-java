@@ -39,7 +39,6 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import org.junit.Before;
@@ -693,11 +692,10 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(TypeNode.INT)
             .setThrowsExceptions(
-                new HashSet<>(
-                    Arrays.asList(
-                        TypeNode.withExceptionClazz(IOException.class),
-                        TypeNode.withExceptionClazz(TimeoutException.class),
-                        TypeNode.withExceptionClazz(InterruptedException.class))))
+                Arrays.asList(
+                    TypeNode.withExceptionClazz(IOException.class),
+                    TypeNode.withExceptionClazz(TimeoutException.class),
+                    TypeNode.withExceptionClazz(InterruptedException.class)))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
             .setAnnotations(
@@ -719,7 +717,7 @@ public class JavaWriterVisitorTest {
             "@Deprecated\n",
             "@Override\n",
             "protected static final int close(String valOne, boolean valTwo) throws"
-                + " InterruptedException, TimeoutException, IOException {\n",
+                + " IOException, TimeoutException, InterruptedException {\n",
             "for (String str : getSomeStrings()) {\n",
             "boolean aBool = false;\n",
             "}\n",
