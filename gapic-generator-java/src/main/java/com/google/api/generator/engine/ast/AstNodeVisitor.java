@@ -22,6 +22,8 @@ public interface AstNodeVisitor {
 
   public void visit(ScopeNode scope);
 
+  public void visit(AnnotationNode annotation);
+
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
