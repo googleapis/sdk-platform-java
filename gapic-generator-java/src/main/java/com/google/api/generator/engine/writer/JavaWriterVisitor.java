@@ -135,10 +135,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(SPACE);
   }
 
-  /** =============================== STATEMENT =============================== */
-  public String visit(LineComment linecomment){
+  /** =============================== COMMENT =============================== */
+  public String visit(LineComment lineComment){
       // Split comments by new line and add `//` to each line.
-      String[] sourceStrings = linecomment.comment().split("\\r?\\n");
+      String[] sourceStrings = lineComment.comment().split("\\r?\\n");
       for (int i = 0; i < sourceStrings.length; i++) {
         sourceStrings[i] = "// " + sourceStrings[i];
       }

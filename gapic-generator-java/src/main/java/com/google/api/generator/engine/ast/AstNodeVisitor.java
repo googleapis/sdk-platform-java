@@ -31,7 +31,7 @@ public interface AstNodeVisitor {
 
   public void visit(AssignmentExpr assignmentExpr);
 
-  /** =============================== STATEMENT =============================== */
+  /** =============================== COMMENT =============================== */
   public String visit(LineComment lineComment);
 
   public String visit(BlockComment blockComment);
