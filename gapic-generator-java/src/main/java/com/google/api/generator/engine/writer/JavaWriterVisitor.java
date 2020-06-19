@@ -317,7 +317,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       newline();
     }
 
-    // TODO(miraleung): Add imports here, handle static imports.
+    ImportWriterVisitor importWriterVisitor =
+        new ImportWriterVisitor(classDefinition.packageString());
+    classDefinition.accept(importWriterVisitor);
+    buffer.append(importWriterVisitor.write());
 
     // Annotations, if any.
     annotations(classDefinition.annotations());
