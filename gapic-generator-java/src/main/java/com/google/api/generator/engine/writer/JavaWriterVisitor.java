@@ -16,7 +16,10 @@ package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
@@ -26,6 +29,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
+  private static final String NEWLINE = "\n";
 
   private final StringBuffer buffer = new StringBuffer();
 
@@ -52,9 +56,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       generatedCodeBuilder.append(typeKind.toString().toLowerCase());
     } else {
       // A null pointer exception will be thrown if reference is null, which is WAI.
-      // TODO(miraleung): Clean this up.
       generatedCodeBuilder.append(type.reference().name());
-      return;
     }
 
     if (type.isArray()) {
@@ -111,7 +113,56 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     assignmentExpr.valueExpr().accept(this);
   }
 
+  @Override
+  public void visit(MethodInvocationExpr methodInvocationExpr) {
+    // Expression or static reference.
+    if (methodInvocationExpr.exprReferenceExpr() != null) {
+      methodInvocationExpr.exprReferenceExpr().accept(this);
+      buffer.append(".");
+    } else if (methodInvocationExpr.staticReferenceIdentifier() != null) {
+      methodInvocationExpr.staticReferenceIdentifier().accept(this);
+      buffer.append(".");
+    }
+
+    if (methodInvocationExpr.isGeneric()) {
+      buffer.append("<");
+      int numGenerics = methodInvocationExpr.generics().size();
+      for (int i = 0; i < numGenerics; i++) {
+        buffer.append(methodInvocationExpr.generics().get(i).name());
+        if (i < numGenerics - 1) {
+          buffer.append(", ");
+        }
+      }
+      buffer.append(">");
+    }
+
+    methodInvocationExpr.methodIdentifier().accept(this);
+    buffer.append("(");
+    int numArguments = methodInvocationExpr.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      Expr argExpr = methodInvocationExpr.arguments().get(i);
+      argExpr.accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(", ");
+      }
+    }
+    buffer.append(")");
+  }
+
+  /** =============================== STATEMENTS =============================== */
+  @Override
+  public void visit(ExprStatement exprStatement) {
+    exprStatement.expression().accept(this);
+    buffer.append(";");
+    newline();
+  }
+
+  /** =============================== PRIVATE HELPERS =============================== */
   private void space() {
     buffer.append(SPACE);
+  }
+
+  private void newline() {
+    buffer.append(NEWLINE);
   }
 }

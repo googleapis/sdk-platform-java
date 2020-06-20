@@ -18,14 +18,19 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.Arrays;
+import java.util.HashMap;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,7 +59,8 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writePrimitiveArrayType() {
-    TypeNode byteArrayType = TypeNode.createByteArrayType();
+    TypeNode byteArrayType =
+        TypeNode.builder().setTypeKind(TypeNode.TypeKind.BYTE).setIsArray(true).build();
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
@@ -191,5 +197,114 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("private static final int foobar = y");
+  }
+
+  @Test
+  public void writeMethodInvocationExpr_basic() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder().setMethodName("foobar").build();
+
+    methodExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("foobar()");
+  }
+
+  @Test
+  public void writeMethodInvocationExpr_staticRef() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+
+    methodExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar()");
+  }
+
+  @Test
+  public void writeMethodInvocationExpr_genericWithArgs() {
+    Reference mapReference =
+        Reference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(
+                Arrays.asList(
+                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
+            .build();
+    Reference outerMapReference =
+        Reference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(mapReference, mapReference))
+            .build();
+
+    IdentifierNode identifier = IdentifierNode.builder().setName("anArg").build();
+    Variable variable = Variable.builder().setType(TypeNode.INT).setIdentifier(identifier).build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setGenerics(
+                Arrays.asList(
+                    Reference.withClazz(String.class),
+                    Reference.withClazz(Double.class),
+                    outerMapReference))
+            .setArguments(Arrays.asList(varExpr, varExpr, varExpr))
+            .setExprReferenceExpr(varExpr)
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    IdentifierNode lhsVarIdentifier = IdentifierNode.builder().setName("someStr").build();
+    Variable lhsVariable =
+        Variable.builder().setType(TypeNode.STRING).setIdentifier(lhsVarIdentifier).build();
+    VariableExpr lhsVarExpr =
+        VariableExpr.builder().setVariable(lhsVariable).setIsDecl(true).setIsFinal(true).build();
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(lhsVarExpr).setValueExpr(methodExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
+                + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
+  }
+
+  @Test
+  public void writeMethodInvocationExpr_chained() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("libraryClient").build();
+    Variable variable = Variable.builder().setType(TypeNode.INT).setIdentifier(identifier).build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+
+    MethodInvocationExpr firstMethodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("streamBooksCallable")
+            .setExprReferenceExpr(varExpr)
+            .build();
+    MethodInvocationExpr secondMethodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("doAnotherThing")
+            .setExprReferenceExpr(firstMethodExpr)
+            .build();
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("call")
+            .setExprReferenceExpr(secondMethodExpr)
+            .build();
+
+    methodExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo("libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeExprStatement() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
+
+    exprStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
   }
 }
