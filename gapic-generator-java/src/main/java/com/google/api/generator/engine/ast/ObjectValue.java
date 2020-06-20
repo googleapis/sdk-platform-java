@@ -14,4 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
-public interface ObjectValue extends Value {}
+public interface ObjectValue extends Value {
+  TypeNode type();
+
+  String value();
+}
