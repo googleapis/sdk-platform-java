@@ -789,8 +789,7 @@ public class JavaWriterVisitorTest {
     Reference mapEntryReference =
         Reference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
     List<Reference> generics =
-        Arrays.asList(
-            Reference.withClazz(ClassDefinition.class), Reference.withClazz(Map.Entry.class));
+        Arrays.asList(Reference.withClazz(ClassDefinition.class), mapEntryReference);
     Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
     List<Statement> statements =
         Arrays.asList(
@@ -857,18 +856,19 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(24),
+            createLines(25),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "import static java.util.Map.Entry;\n",
             "\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.ClassDefinition;\n",
+            "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import java.util.Map;\n",
             "\n",
             "public class LibraryServiceStub {\n",
             "private AssignmentExpr x;\n",
-            "protected Map<ClassDefinition, Entry> y;\n",
+            "protected Map<ClassDefinition, Entry<String, MethodDefinition>> y;\n",
             "public boolean open() {\n",
             "return true;\n",
             "}\n",
