@@ -15,15 +15,19 @@
 package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -31,6 +35,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -66,6 +71,7 @@ public class JavaWriterVisitorTest {
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
   }
 
+  /** =============================== EXPRESSIONS =============================== */
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
@@ -295,6 +301,7 @@ public class JavaWriterVisitorTest {
         .isEqualTo("libraryClient.streamBooksCallable().doAnotherThing().call()");
   }
 
+  /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
     MethodInvocationExpr methodExpr =
@@ -306,5 +313,205 @@ public class JavaWriterVisitorTest {
 
     exprStatement.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
+  }
+
+  @Test
+  public void writeIfStatement_simple() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    IfStatement ifStatement =
+        IfStatement.builder().setConditionExpr(condExpr).setBody(ifBody).build();
+
+    ifStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            String.format(
+                "%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+  }
+
+  @Test
+  public void writeIfStatement_withElse() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExpr)
+            .setBody(ifBody)
+            .setElseBody(ifBody)
+            .build();
+
+    ifStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s" + "%s%s%s%s",
+            "if (condition) {\n",
+            "int x = 3;\n",
+            "int x = 3;\n",
+            "} else {\n",
+            "int x = 3;\n",
+            "int x = 3;\n",
+            "} \n"));
+  }
+
+  @Test
+  public void writeIfStatement_elseIfs() {
+    List<Statement> ifBody =
+        Arrays.asList(
+            ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT)),
+            ExprStatement.withExpr(createAssignmentExpr("fooBar", "true", TypeNode.BOOLEAN)));
+
+    VariableExpr condExprOne = createVariableExpr("condition", TypeNode.BOOLEAN);
+    VariableExpr condExprTwo = createVariableExpr("fooBarCheck", TypeNode.BOOLEAN);
+    VariableExpr condExprThree = createVariableExpr("anotherCondition", TypeNode.BOOLEAN);
+    VariableExpr condExprFour = createVariableExpr("lookAtMe", TypeNode.BOOLEAN);
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExprOne)
+            .setBody(ifBody)
+            .addElseIf(condExprTwo, ifBody)
+            .addElseIf(condExprThree, ifBody)
+            .addElseIf(condExprFour, ifBody)
+            .build();
+
+    ifStatement.accept(writerVisitor);
+    String ifFormatStr = "%s%s%s";
+    String expected =
+        String.format(
+            new String(new char[4]).replace("\0", ifFormatStr) + "%s",
+            "if (condition) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} else if (fooBarCheck) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} else if (anotherCondition) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} else if (lookAtMe) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} \n");
+
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeIfStatement_nested() {
+    List<Statement> ifBody =
+        Arrays.asList(
+            ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT)),
+            ExprStatement.withExpr(createAssignmentExpr("fooBar", "true", TypeNode.BOOLEAN)));
+
+    VariableExpr condExprOne = createVariableExpr("condition", TypeNode.BOOLEAN);
+    VariableExpr condExprTwo = createVariableExpr("fooBarCheck", TypeNode.BOOLEAN);
+    VariableExpr condExprThree = createVariableExpr("anotherCondition", TypeNode.BOOLEAN);
+    VariableExpr condExprFour = createVariableExpr("lookAtMe", TypeNode.BOOLEAN);
+
+    IfStatement nestedTwoIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExprThree)
+            .setBody(ifBody)
+            .setElseBody(ifBody)
+            .build();
+    IfStatement nestedOneIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExprTwo)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(createAssignmentExpr("anInt", "10", TypeNode.INT)),
+                    nestedTwoIfStatement))
+            .build();
+    IfStatement nestedZeroIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExprOne)
+            .setBody(Arrays.asList(nestedOneIfStatement))
+            .addElseIf(condExprFour, ifBody)
+            .build();
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(condExprOne)
+            .setBody(Arrays.asList(nestedZeroIfStatement))
+            .build();
+
+    ifStatement.accept(writerVisitor);
+
+    int numLines = 17;
+    String expected =
+        String.format(
+            new String(new char[numLines]).replace("\0", "%s"),
+            "if (condition) {\n",
+            "if (condition) {\n",
+            "if (fooBarCheck) {\n",
+            "int anInt = 10;\n",
+            "if (anotherCondition) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} else {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} \n",
+            "} \n",
+            "} else if (lookAtMe) {\n",
+            "int x = 3;\n",
+            "boolean fooBar = true;\n",
+            "} \n",
+            "} \n");
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeForStatement() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
+
+    VariableExpr varDeclExpr = createVariableDeclExpr("str", TypeNode.STRING);
+    Expr collectionExpr = MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
+
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(varDeclExpr)
+            .setCollectionExpr(collectionExpr)
+            .setBody(body)
+            .build();
+
+    forStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s",
+            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+  }
+
+  private static AssignmentExpr createAssignmentExpr(
+      String variableName, String value, TypeNode type) {
+    VariableExpr variableExpr = createVariableDeclExpr(variableName, type);
+    Value val = PrimitiveValue.builder().setType(type).setValue(value).build();
+    Expr valueExpr = ValueExpr.builder().setValue(val).build();
+    return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+  }
+
+  private static VariableExpr createVariableExpr(String variableName, TypeNode type) {
+    return createVariableExpr(variableName, type, false);
+  }
+
+  private static VariableExpr createVariableDeclExpr(String variableName, TypeNode type) {
+    return createVariableExpr(variableName, type, true);
+  }
+
+  private static VariableExpr createVariableExpr(
+      String variableName, TypeNode type, boolean isDecl) {
+    IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(type).build();
+    return VariableExpr.builder().setVariable(variable).setIsDecl(isDecl).build();
   }
 }
