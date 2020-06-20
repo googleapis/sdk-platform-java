@@ -15,22 +15,12 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class JavaDocComment {
-  public enum COMMENT_TYPE {
-    COMMENT,
-    HTML_P,
-    HTML_UL,
-    HTML_OL,
-    SAMPLE_CODE,
-  }
-
-  public static List<COMMENT_TYPE> commentList = new ArrayList<>();;
+public abstract class JavaDocComment implements Comment {
 
   @Nullable
   public abstract String deprecated();
@@ -38,17 +28,7 @@ public abstract class JavaDocComment {
   @Nullable
   public abstract String throwsText();
 
-  public abstract ImmutableMap<String, String> params();
-
-  public abstract ImmutableList<String> sampleCode();
-
   public abstract ImmutableList<String> comments();
-
-  public abstract ImmutableList<String> html_p();
-
-  public abstract ImmutableList<List<String>> html_ol();
-
-  public abstract ImmutableList<List<String>> html_ul();
 
   public static Builder builder() {
     return new AutoValue_JavaDocComment.Builder();
@@ -56,58 +36,66 @@ public abstract class JavaDocComment {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    protected abstract ImmutableList.Builder<String> commentsBuilder();
+
     public abstract Builder setDeprecated(String deprecatedText);
 
     public abstract Builder setThrowsText(String throwsText);
 
-    protected abstract ImmutableMap.Builder<String, String> paramsBuilder();
-
-    protected abstract ImmutableList.Builder<String> sampleCodeBuilder();
-
-    protected abstract ImmutableList.Builder<String> commentsBuilder();
-
-    protected abstract ImmutableList.Builder<String> html_pBuilder();
-
-    protected abstract ImmutableList.Builder<List<String>> html_olBuilder();
-
-    protected abstract ImmutableList.Builder<List<String>> html_ulBuilder();
-
     public Builder addComment(String comment) {
-      commentsBuilder().add(comment);
-      commentList.add(COMMENT_TYPE.COMMENT);
+      commentsBuilder().add(("* " + comment + "\n"));
       return this;
     }
 
     public Builder addParam(String name, String description) {
-      paramsBuilder().put(name, description);
+      String parameter = "* @param " + name + " " + description + "\n";
+      commentsBuilder().add(parameter);
       return this;
     }
 
     public Builder addSampleCode(String sampleCode) {
-      sampleCodeBuilder().add(sampleCode);
-      commentList.add(COMMENT_TYPE.SAMPLE_CODE);
+      commentsBuilder().add("* Sample code:\n* <pre><code>\n");
+      String[] sampleLines = sampleCode.split("\\r?\\n");
+      for (int i = 0; i < sampleLines.length; i++) {
+        sampleLines[i] = "* " + sampleLines[i];
+      }
+      commentsBuilder().add(String.join("\n", sampleLines) + "\n* </code></pre>\n");
       return this;
     }
 
     public Builder addHtmlP(String paragraph) {
-      html_pBuilder().add(paragraph);
-      commentList.add(COMMENT_TYPE.HTML_P);
+      commentsBuilder().add("* <p> " + paragraph + "\n");
       return this;
     }
 
     public Builder addHtmlOl(List<String> oList) {
-      html_olBuilder().add(oList);
-      commentList.add(COMMENT_TYPE.HTML_OL);
+      commentsBuilder().add("* <ol>\n");
+      for (int i = 0; i < oList.size(); i++) {
+        oList.set(i, "* <li>" + oList.get(i) + "\n");
+      }
+      commentsBuilder().add(String.join("", oList) + "* </ol>\n");
       return this;
     }
 
     public Builder addHtmlUl(List<String> uList) {
-      html_ulBuilder().add(uList);
-      commentList.add(COMMENT_TYPE.HTML_UL);
+      commentsBuilder().add("* <ul>\n");
+      for (int i = 0; i < uList.size(); i++) {
+        uList.set(i, "* <li>" + uList.get(i) + "\n");
+      }
+      commentsBuilder().add(String.join("", uList) + "* </ul>\n");
       return this;
     }
 
     public abstract JavaDocComment build();
+  }
+
+  public String comment() {
+    List<String> commentBody = new ArrayList<>(comments());
+    commentBody.add(0, "/**\n");
+    commentBody.add("* @deprecated " + deprecated() + "\n");
+    commentBody.add("* @throws " + throwsText() + "\n");
+    commentBody.add("*/");
+    return String.join("", commentBody);
   }
 
   public String accept(AstNodeVisitor visitor) throws Exception {
