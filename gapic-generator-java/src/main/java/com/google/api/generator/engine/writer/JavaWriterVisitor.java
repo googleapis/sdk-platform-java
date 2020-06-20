@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -28,6 +29,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
+  private static final String NEWLINE = "\n";
 
   private final StringBuffer buffer = new StringBuffer();
 
@@ -147,7 +149,20 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(")");
   }
 
+  /** =============================== STATEMENTS =============================== */
+  @Override
+  public void visit(ExprStatement exprStatement) {
+    exprStatement.expression().accept(this);
+    buffer.append(";");
+    newline();
+  }
+
+  /** =============================== PRIVATE HELPERS =============================== */
   private void space() {
     buffer.append(SPACE);
+  }
+
+  private void newline() {
+    buffer.append(NEWLINE);
   }
 }

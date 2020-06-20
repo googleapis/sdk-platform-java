@@ -30,4 +30,7 @@ public interface AstNodeVisitor {
   public void visit(AssignmentExpr assignmentExpr);
 
   public void visit(MethodInvocationExpr methodInvocationExpr);
+
+  /** =============================== STATEMENTS =============================== */
+  public void visit(ExprStatement exprStatement);
 }
