@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -193,6 +194,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
       buffer.append("} ");
     }
+    newline();
+  }
+
+  @Override
+  public void visit(ForStatement forStatement) {
+    buffer.append("for (");
+    forStatement.localVariableExpr().accept(this);
+    buffer.append(" : ");
+    forStatement.collectionExpr().accept(this);
+    buffer.append(") {");
+    newline();
+    for (Statement statement : forStatement.body()) {
+      statement.accept(this);
+    }
+    buffer.append("} ");
     newline();
   }
 
