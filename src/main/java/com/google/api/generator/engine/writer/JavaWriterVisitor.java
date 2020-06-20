@@ -34,9 +34,6 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.engine.ast.JavaDocComment.COMMENT_TYPE;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -148,67 +145,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   public String visit(JavaDocComment javaDocComment) throws Exception{
-    StringBuilder formattedComment = new StringBuilder("/**\n");
-    List<String> commentList = new ArrayList<>(javaDocComment.comments());
-    Map<String, String> paramList = new HashMap<>(javaDocComment.params());
-    List<String> sampleCodeList = new ArrayList<>(javaDocComment.sampleCode());
-    List<String> html_p = new ArrayList<>(javaDocComment.html_p());
-    List<List<String>> html_ol = new ArrayList<>(javaDocComment.html_ol());
-    List<List<String>> html_ul = new ArrayList<>(javaDocComment.html_ol());
-    List<COMMENT_TYPE> orderList = new ArrayList<>(JavaDocComment.commentList);
-
-    for(COMMENT_TYPE type : orderList){
-      switch(type) {
-        case COMMENT:
-          String comment = commentList.get(0);
-          commentList.remove(0);
-          formattedComment.append("* " + comment + "\n");
-          break;
-        case SAMPLE_CODE:
-          String sample = sampleCodeList.get(0);
-          sampleCodeList.remove(0);
-          formattedComment.append("* Sample code:\n* <pre><code>\n");
-          String[] sampleLines = sample.split("\\r?\\n");
-          for (int i = 0; i < sampleLines.length; i++) {
-            sampleLines[i] = "* " + sampleLines[i];
-          }
-          formattedComment.append(String.join("\n", sampleLines) + "\n* </code></pre>\n");
-          break;
-        case HTML_P:
-          String p = html_p.get(0);
-          html_p.remove(0);
-          formattedComment.append("* <p> " + p + "\n");
-          break;
-        case HTML_OL:
-          List<String> ol_items = html_ol.get(0);
-          html_ol.remove(0);
-          formattedComment.append("* <ol>\n");
-          for (int i = 0; i < ol_items.size(); i++) {
-            ol_items.set(i,  "* <li>" + ol_items.get(i) + "\n");
-          }
-          formattedComment.append(String.join("",ol_items) + "* </ol>\n");
-          break;
-        case HTML_UL:
-          List<String> ul_items = html_ul.get(0);
-          html_ul.remove(0);
-          formattedComment.append("* <ul>\n");
-          for (int i = 0; i < ul_items.size(); i++) {
-            ul_items.set(i,  "* <li>" + ul_items.get(i) + "\n");
-          }
-          formattedComment.append(String.join("",ul_items) + "* </ul>\n");
-          break;
-      }
-    }
-    for (String name : paramList.keySet()) {
-      formattedComment.append("* @param " + name + " " + paramList.get(name) + "\n");
-    }
-    if (!javaDocComment.deprecated().equals(null)) {
-      formattedComment.append("* @deprecated " + javaDocComment.deprecated() + "\n");
-    }
-    if (!javaDocComment.throwsText().equals(null)) {
-      formattedComment.append("* @throws " + javaDocComment.throwsText() + "\n");
-    }
-    return formatter.format(formattedComment.append("*/").toString());
+    String comment = javaDocComment.comment();
+    return formatter.format(comment);
   }
 
 }
