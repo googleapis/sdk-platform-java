@@ -73,7 +73,7 @@ public class JavaWriterVisitorTest {
   public void writeStringObjectValue() {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
     assertThat(s.value()).isEqualTo("test");
-    assertThat(s.type()).isEqualTo(TypeNode.BOOLEAN);
+    assertThat(s.type()).isEqualTo(TypeNode.STRING);
   }
   @Test
   public void writeValueExpr() {
