@@ -39,7 +39,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeIdentifier() {
-
     String idName = "foobar";
     IdentifierNode.builder().setName(idName).build().accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo(idName);
