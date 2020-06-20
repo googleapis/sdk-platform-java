@@ -19,7 +19,6 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class PrimitiveValue implements Value {
-  // TODO(miraleung): Handle object types.
   @Override
   public abstract TypeNode type();
 
@@ -45,7 +44,6 @@ public abstract class PrimitiveValue implements Value {
 
     public PrimitiveValue build() throws TypeMismatchException {
       // TODO(unsupported): byte, short, char, array initialization.
-      // TODO(miraleung): Object type checking?
       PrimitiveValue primitiveValue = autoBuild();
       TypeNode type = primitiveValue.type();
       String value = primitiveValue.value();
