@@ -43,12 +43,13 @@ public abstract class JavaDocComment implements Comment {
     public abstract Builder setThrowsText(String throwsText);
 
     public Builder addComment(String comment) {
-      commentsBuilder().add(("* " + comment + "\n"));
+      commentsBuilder().add(String.format("%1$s" + comment + "%2$s", "* ", "\n"));
       return this;
     }
 
     public Builder addParam(String name, String description) {
-      String parameter = "* @param " + name + " " + description + "\n";
+      String parameter =
+          String.format("%1$s" + name + "%2$s" + description + "%3$s", "* @param ", " ", "\n");
       commentsBuilder().add(parameter);
       return this;
     }
@@ -59,41 +60,43 @@ public abstract class JavaDocComment implements Comment {
       for (int i = 0; i < sampleLines.length; i++) {
         sampleLines[i] = "* " + sampleLines[i];
       }
-      commentsBuilder().add(String.join("\n", sampleLines) + "\n* </code></pre>\n");
+      commentsBuilder()
+          .add(String.format(String.join("\n", sampleLines) + "%s", "\n* </code></pre>\n"));
       return this;
     }
 
     public Builder addHtmlP(String paragraph) {
-      commentsBuilder().add("* <p> " + paragraph + "\n");
+      commentsBuilder().add(String.format("%1$s" + paragraph + "%2$s", "* <p> ", "\n"));
       return this;
     }
 
     public Builder addHtmlOl(List<String> oList) {
       commentsBuilder().add("* <ol>\n");
       for (int i = 0; i < oList.size(); i++) {
-        oList.set(i, "* <li>" + oList.get(i) + "\n");
+        oList.set(i, String.format("%1$s" + oList.get(i) + "%2$s", "* <li>", "\n"));
       }
-      commentsBuilder().add(String.join("", oList) + "* </ol>\n");
+      commentsBuilder().add(String.format(String.join("", oList) + "%s", "* </ol>\n"));
       return this;
     }
 
     public Builder addHtmlUl(List<String> uList) {
       commentsBuilder().add("* <ul>\n");
       for (int i = 0; i < uList.size(); i++) {
-        uList.set(i, "* <li>" + uList.get(i) + "\n");
+        uList.set(i, String.format("%1$s" + uList.get(i) + "%2$s", "* <li>", "\n"));
       }
-      commentsBuilder().add(String.join("", uList) + "* </ul>\n");
+      commentsBuilder().add(String.format(String.join("", uList) + "%s", "* </ul>\n"));
       return this;
     }
 
     public abstract JavaDocComment build();
   }
 
+  @Override
   public String comment() {
     List<String> commentBody = new ArrayList<>(comments());
     commentBody.add(0, "/**\n");
-    commentBody.add("* @deprecated " + deprecated() + "\n");
-    commentBody.add("* @throws " + throwsText() + "\n");
+    commentBody.add(String.format("%1$s" + deprecated() + "%2$s", "* @deprecated ", "\n"));
+    commentBody.add(String.format("%1$s" + throwsText() + "%2$s", "* @throws ", "\n"));
     commentBody.add("*/");
     return String.join("", commentBody);
   }
