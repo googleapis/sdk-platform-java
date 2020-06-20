@@ -16,4 +16,6 @@ package com.google.api.generator.engine.ast;
 
 public interface Value {
   TypeNode type();
+
+  String value();
 }
