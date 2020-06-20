@@ -21,7 +21,7 @@ public abstract class StringObjectValue implements ObjectValue {
 
   @Override
   public TypeNode type() {
-    return TypeNode.BOOLEAN;
+    return TypeNode.STRING;
   }
 
   public abstract String value();
