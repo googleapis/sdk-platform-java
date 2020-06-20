@@ -17,7 +17,6 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.IdentifierNode;
-import com.google.api.generator.engine.ast.ReferenceTypeNode;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
@@ -54,7 +53,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     } else {
       // A null pointer exception will be thrown if reference is null, which is WAI.
       // TODO(miraleung): Clean this up.
-      visit(type.reference());
+      generatedCodeBuilder.append(type.reference().name());
       return;
     }
 
@@ -68,11 +67,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ScopeNode scope) {
     buffer.append(scope.toString());
-  }
-
-  @Override
-  public void visit(ReferenceTypeNode reference) {
-    throw new RuntimeException("Not yet implemented for reference types");
   }
 
   /** =============================== EXPRESSIONS =============================== */
