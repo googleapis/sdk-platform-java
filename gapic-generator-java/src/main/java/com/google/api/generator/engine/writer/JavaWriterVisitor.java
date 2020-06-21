@@ -41,6 +41,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
   private static final String NEWLINE = "\n";
 
+  private static final String CLASS = "class";
+  private static final String IMPLEMENTS = "implements";
+  private static final String EXTENDS = "extends";
+  private static final String THROWS = "throws";
+  private static final String STATIC = "static";
+  private static final String FINAL = "final";
+  private static final String ABSTRACT  = "abstract";
+
   private final StringBuffer buffer = new StringBuffer();
 
   public JavaWriterVisitor() {}
@@ -110,12 +118,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
 
       if (variableExpr.isStatic()) {
-        buffer.append("static");
+        buffer.append(STATIC);
         space();
       }
 
       if (variableExpr.isFinal()) {
-        buffer.append("final");
+        buffer.append(FINAL);
         space();
       }
 
@@ -257,10 +265,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // Modifiers.
     if (methodDefinition.isStatic()) {
-      buffer.append("static ");
+      buffer.append(STATIC);
+      space();
     }
     if (methodDefinition.isFinal()) {
-      buffer.append("final ");
+      buffer.append(FINAL);
+      space();
     }
     methodDefinition.returnType().accept(this);
     space();
@@ -334,27 +344,33 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // Modifiers.
     if (classDefinition.isStatic()) {
-      buffer.append("static ");
+      buffer.append(STATIC);
+      space();
     }
     if (classDefinition.isFinal()) {
-      buffer.append("final ");
+      buffer.append(FINAL);
+      space();
     }
     if (classDefinition.isAbstract()) {
-      buffer.append("abstract ");
+      buffer.append(ABSTRACT);
+      space();
     }
 
     // Name, extends, implements.
-    buffer.append("class ");
+    buffer.append(CLASS);
+      space();
     classDefinition.classIdentifier().accept(this);
     space();
     if (classDefinition.extendsType() != null) {
-      buffer.append("extends ");
+      buffer.append(EXTENDS);
+      space();
       classDefinition.extendsType().accept(this);
       space();
     }
 
     if (!classDefinition.implementsTypes().isEmpty()) {
-      buffer.append("implements ");
+      buffer.append(IMPLEMENTS);
+      space();
       int numImplementsTypes = classDefinition.implementsTypes().size();
       for (int i = 0; i < numImplementsTypes; i++) {
         classDefinition.implementsTypes().get(i).accept(this);
