@@ -65,6 +65,6 @@ public class ScopeNode implements AstNode {
 
   @Override
   public int hashCode() {
-    return 17 * scopeKind().hashCode();
+    return 17 * scopeKind.hashCode();
   }
 }
