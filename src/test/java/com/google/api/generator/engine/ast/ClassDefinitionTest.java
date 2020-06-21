@@ -271,8 +271,7 @@ public class ClassDefinitionTest {
   }
 
   private static Variable createVariable(String variableName, TypeNode type) {
-    IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
-    return Variable.builder().setIdentifier(identifier).setType(type).build();
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 
   private static AssignmentExpr createAssignmentExpr() {
