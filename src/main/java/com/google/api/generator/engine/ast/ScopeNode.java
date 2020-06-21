@@ -62,4 +62,9 @@ public class ScopeNode implements AstNode {
     ScopeNode scope = (ScopeNode) o;
     return scopeKind.equals(scope.scopeKind);
   }
+
+  @Override
+  public int hashCode() {
+    return 17 * scopeKind().hashCode();
+  }
 }
