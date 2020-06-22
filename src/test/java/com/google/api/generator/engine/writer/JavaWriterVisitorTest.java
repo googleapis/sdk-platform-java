@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -70,6 +71,20 @@ public class JavaWriterVisitorTest {
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
+  }
+
+  @Test
+  public void writeAnnotation_simple() {
+    AnnotationNode annotation = AnnotationNode.OVERRIDE;
+    annotation.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "@Override\n");
+  }
+
+  @Test
+  public void writeAnnotation_withDescription() {
+    AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
+    annotation.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
   }
 
   /** =============================== EXPRESSIONS =============================== */
