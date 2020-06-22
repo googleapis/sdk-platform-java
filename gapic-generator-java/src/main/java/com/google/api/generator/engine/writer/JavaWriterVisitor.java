@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.writer;
 
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.Expr;
@@ -75,6 +76,16 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ScopeNode scope) {
     buffer.append(scope.toString());
+  }
+
+  @Override
+  public void visit(AnnotationNode annotation) {
+    buffer.append("@");
+    annotation.type().accept(this);
+    if (annotation.description() != null && !annotation.description().isEmpty()) {
+      buffer.append(String.format("(\"%s\")", annotation.description()));
+    }
+    newline();
   }
 
   /** =============================== EXPRESSIONS =============================== */
