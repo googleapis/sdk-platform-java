@@ -30,6 +30,10 @@ public abstract class StringObjectValue implements ObjectValue {
     return new AutoValue_StringObjectValue.Builder();
   }
 
+  public static StringObjectValue withValue(String value) {
+    return builder().setValue(value).build();
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setValue(String value);
