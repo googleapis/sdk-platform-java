@@ -40,4 +40,9 @@ public abstract class StringObjectValue implements ObjectValue {
 
     public abstract StringObjectValue build();
   }
+
+  @Override
+  public String toString() {
+    return value();
+  }
 }

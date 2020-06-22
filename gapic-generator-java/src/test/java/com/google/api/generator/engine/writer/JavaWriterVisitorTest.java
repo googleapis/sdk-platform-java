@@ -83,15 +83,14 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_StringobjectValue() {
+  public void writeAssignmentExpr_StringObjectValue() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    Value value = StringObjectValue.withValue("\"test\"").build();
+    Value value = StringObjectValue.withValue("\"test\"");
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
-
     AssignmentExpr assignExpr =
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
