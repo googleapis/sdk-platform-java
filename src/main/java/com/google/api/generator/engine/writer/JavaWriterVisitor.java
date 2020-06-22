@@ -173,7 +173,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     for (Statement statement : whileStatement.body()) {
       statement.accept(this);
     }
-    buffer.append("} ");
+    buffer.append("}");
     newline();
   }
 
