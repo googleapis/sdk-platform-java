@@ -330,7 +330,7 @@ public class JavaWriterVisitorTest {
     assertThat(writerVisitor.write())
         .isEqualTo(
             String.format(
-                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
