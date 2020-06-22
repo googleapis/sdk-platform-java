@@ -22,6 +22,7 @@ public abstract class PrimitiveValue implements Value {
   @Override
   public abstract TypeNode type();
 
+  @Override
   public abstract String value();
 
   public static Builder builder() {
