@@ -126,13 +126,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(TernaryExpr ternaryExpr){
-    System.out.println("visit: " + ternaryExpr);
     ternaryExpr.conditionExpr().accept(this);
     buffer.append(" ? ");
     ternaryExpr.thenExpr().accept(this);
     buffer.append(" : ");
     ternaryExpr.elseExpr().accept(this);
-    System.out.println("buffer: " + buffer);
   }
 
   @Override
