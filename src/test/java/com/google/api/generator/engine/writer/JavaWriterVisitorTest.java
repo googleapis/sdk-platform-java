@@ -104,9 +104,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeStringObjectValue_assignmentExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -654,6 +652,51 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_basicEmptyBody() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public void close() {\n}\n");
+  }
+
+  @Test
+  public void writeMethodDefinition_basicAbstract() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setIsAbstract(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_basicAbstractEmptyBody() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setIsAbstract(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public abstract void close();\n");
   }
 
   @Test
