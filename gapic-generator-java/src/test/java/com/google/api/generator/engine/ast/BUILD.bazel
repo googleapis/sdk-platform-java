@@ -4,6 +4,7 @@ TESTS = [
     "AssignmentExprTest",
     "ExprStatementTest",
     "ForStatementTest",
+    "ClassDefinitionTest",
     "MethodDefinitionTest",
     "IdentifierNodeTest",
     "TryCatchStatementTest",

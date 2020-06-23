@@ -18,6 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -765,6 +766,145 @@ public class JavaWriterVisitorTest {
             "boolean foobar = false;\n",
             "return 3;\n",
             "}\n"));
+  }
+
+  @Test
+  public void writeClassDefinition_basic() {
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.example.library.v1.stub")
+            .setName("LibraryServiceStub")
+            .setScope(ScopeNode.PUBLIC)
+            .build();
+
+    classDef.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(4),
+            "package com.google.example.library.v1.stub;\n",
+            "\n",
+            "public class LibraryServiceStub {\n",
+            "}"));
+  }
+
+  @Test
+  public void writeClassDefinition_withAnnotationsExtendsAndImplements() {
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.example.library.v1.stub")
+            .setName("LibraryServiceStub")
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.DEPRECATED, AnnotationNode.withSuppressWarnings("all")))
+            .setExtendsType(TypeNode.STRING)
+            .setImplementsTypes(
+                Arrays.asList(
+                    TypeNode.withReference(Reference.withClazz(Appendable.class)),
+                    TypeNode.withReference(Reference.withClazz(Cloneable.class)),
+                    TypeNode.withReference(Reference.withClazz(Readable.class))))
+            .build();
+
+    classDef.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(6),
+            "package com.google.example.library.v1.stub;\n",
+            "\n",
+            "@Deprecated\n",
+            "@SuppressWarnings(\"all\")\n",
+            "public final class LibraryServiceStub extends String implements Appendable,"
+                + " Cloneable, Readable {\n",
+            "}"));
+  }
+
+  @Test
+  public void writeClassDefinition_statementsAndMethods() {
+    List<Statement> statements =
+        Arrays.asList(
+            ExprStatement.withExpr(
+                VariableExpr.builder()
+                    .setVariable(createVariable("x", TypeNode.INT))
+                    .setIsDecl(true)
+                    .setScope(ScopeNode.PRIVATE)
+                    .build()),
+            ExprStatement.withExpr(
+                VariableExpr.builder()
+                    .setVariable(createVariable("y", TypeNode.INT))
+                    .setIsDecl(true)
+                    .setScope(ScopeNode.PROTECTED)
+                    .build()));
+
+    MethodDefinition methodOne =
+        MethodDefinition.builder()
+            .setName("open")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.BOOLEAN)
+            .setReturnExpr(
+                ValueExpr.builder()
+                    .setValue(
+                        PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build())
+                    .build())
+            .build();
+
+    MethodDefinition methodTwo =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN))))
+            .build();
+
+    List<MethodDefinition> methods = Arrays.asList(methodOne, methodTwo);
+
+    ClassDefinition nestedClassDef =
+        ClassDefinition.builder()
+            .setName("IAmANestedClass")
+            .setIsNested(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setMethods(Arrays.asList(methodOne))
+            .build();
+
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.example.library.v1.stub")
+            .setName("LibraryServiceStub")
+            .setScope(ScopeNode.PUBLIC)
+            .setStatements(statements)
+            .setMethods(methods)
+            .setNestedClasses(Arrays.asList(nestedClassDef))
+            .build();
+
+    classDef.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(18),
+            "package com.google.example.library.v1.stub;\n",
+            "\n",
+            "public class LibraryServiceStub {\n",
+            "private int x;\n",
+            "protected int y;\n",
+            "public boolean open() {\n",
+            "return true;\n",
+            "}\n",
+            "public void close() {\n",
+            "boolean foobar = false;\n",
+            "}\n",
+            "\n",
+            "private static class IAmANestedClass {\n",
+            "public boolean open() {\n",
+            "return true;\n",
+            "}\n",
+            "}\n",
+            "}"));
   }
 
   private static String createLines(int numLines) {
