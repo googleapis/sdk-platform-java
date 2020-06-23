@@ -27,6 +27,8 @@ public interface AstNodeVisitor {
 
   public void visit(VariableExpr variableExpr);
 
+  public void visit(TernaryExpr tenaryExpr);
+
   public void visit(AssignmentExpr assignmentExpr);
 
   public void visit(MethodInvocationExpr methodInvocationExpr);

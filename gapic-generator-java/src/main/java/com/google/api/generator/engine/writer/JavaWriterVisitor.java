@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -109,6 +110,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
 
     variable.identifier().accept(this);
+  }
+
+  @Override
+  public void visit(TernaryExpr ternaryExpr){
+    System.out.println("visit: " + ternaryExpr);
+    ternaryExpr.conditionExpr().accept(this);
+    buffer.append(" ? ");
+    ternaryExpr.thenExpr().accept(this);
+    buffer.append(" : ");
+    ternaryExpr.elseExpr().accept(this);
+    System.out.println("buffer: " + buffer);
   }
 
   @Override
