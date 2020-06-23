@@ -22,13 +22,15 @@ public interface AstNodeVisitor {
 
   public void visit(ScopeNode scope);
 
+  public void visit(AnnotationNode annotation);
+
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
   public void visit(VariableExpr variableExpr);
 
   public void visit(AssignmentExpr assignmentExpr);
-  
+
   public void visit(MethodInvocationExpr methodInvocationExpr);
 
   /** =============================== COMMENT =============================== */
@@ -44,4 +46,6 @@ public interface AstNodeVisitor {
   public void visit(IfStatement ifStatement);
 
   public void visit(ForStatement forStatement);
+
+  public void visit(TryCatchStatement tryCatchStatement);
 }
