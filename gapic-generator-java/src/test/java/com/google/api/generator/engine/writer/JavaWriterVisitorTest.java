@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -29,6 +30,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -70,6 +72,20 @@ public class JavaWriterVisitorTest {
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("byte[]");
+  }
+
+  @Test
+  public void writeAnnotation_simple() {
+    AnnotationNode annotation = AnnotationNode.OVERRIDE;
+    annotation.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "@Override\n");
+  }
+
+  @Test
+  public void writeAnnotation_withDescription() {
+    AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
+    annotation.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -540,6 +556,107 @@ public class JavaWriterVisitorTest {
             "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
   }
 
+  @Test
+  public void writeTryCatchStatement_simple() {
+    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    TypeNode type = TypeNode.withReference(exceptionReference);
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .setCatchVariableExpr(variableExpr)
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s",
+            "try {\n", "int x = 3;\n", "} catch (IllegalArgumentException e) {\n", "}\n"));
+  }
+
+  @Test
+  public void writeTryCatchStatement_withResources() {
+    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    TypeNode type = TypeNode.withReference(exceptionReference);
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("y", "4", TypeNode.INT))))
+            .setCatchVariableExpr(variableExpr)
+            .setCatchBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(createAssignmentExpr("foobar", "123", TypeNode.INT))))
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s%s",
+            "try (boolean aBool = false) {\n",
+            "int y = 4;\n",
+            "} catch (IllegalArgumentException e) {\n",
+            "int foobar = 123;\n",
+            "}\n"));
+  }
+
+  @Test
+  public void writeTryCatchStatement_sampleCodeNoCatch() {
+    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    TypeNode type = TypeNode.withReference(exceptionReference);
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .setIsSampleCode(true)
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "} \n"));
+  }
+
+  @Test
+  public void writeTryCatchStatement_sampleCodeWithCatch() {
+    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    TypeNode type = TypeNode.withReference(exceptionReference);
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setIsSampleCode(true)
+            .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("y", "4", TypeNode.INT))))
+            .setCatchVariableExpr(variableExpr)
+            .setCatchBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(createAssignmentExpr("foobar", "123", TypeNode.INT))))
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s%s",
+            "try (boolean aBool = false) {\n",
+            "int y = 4;\n",
+            "} catch (IllegalArgumentException e) {\n",
+            "int foobar = 123;\n",
+            "}\n"));
+  }
+
   private static AssignmentExpr createAssignmentExpr(
       String variableName, String value, TypeNode type) {
     VariableExpr variableExpr = createVariableDeclExpr(variableName, type);
@@ -558,8 +675,14 @@ public class JavaWriterVisitorTest {
 
   private static VariableExpr createVariableExpr(
       String variableName, TypeNode type, boolean isDecl) {
+    return VariableExpr.builder()
+        .setVariable(createVariable(variableName, type))
+        .setIsDecl(isDecl)
+        .build();
+  }
+
+  private static Variable createVariable(String variableName, TypeNode type) {
     IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(type).build();
-    return VariableExpr.builder().setVariable(variable).setIsDecl(isDecl).build();
+    return Variable.builder().setIdentifier(identifier).setType(type).build();
   }
 }
