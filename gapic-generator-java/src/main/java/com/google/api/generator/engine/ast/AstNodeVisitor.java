@@ -22,14 +22,14 @@ public interface AstNodeVisitor {
 
   public void visit(ScopeNode scope);
 
-  public void visit(ReferenceTypeNode reference);
-
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
   public void visit(VariableExpr variableExpr);
 
   public void visit(AssignmentExpr assignmentExpr);
+  
+  public void visit(MethodInvocationExpr methodInvocationExpr);
 
   /** =============================== COMMENT =============================== */
   public String visit(LineComment lineComment) throws Exception;
@@ -37,4 +37,11 @@ public interface AstNodeVisitor {
   public String visit(BlockComment blockComment) throws Exception;
 
   public String visit(JavaDocComment javaDocComment) throws Exception;
+
+  /** =============================== STATEMENTS =============================== */
+  public void visit(ExprStatement exprStatement);
+
+  public void visit(IfStatement ifStatement);
+
+  public void visit(ForStatement forStatement);
 }
