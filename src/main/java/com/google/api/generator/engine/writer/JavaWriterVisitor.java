@@ -28,15 +28,25 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ReferenceTypeNode;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.IdentifierNode;
+import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import java.util.List;
+import java.util.Map;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
+  private static final String NEWLINE = "\n";
 
   private final StringBuffer buffer = new StringBuffer();
   private JavaFormatter formatter = JavaFormatter.getInstance();
@@ -64,9 +74,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       generatedCodeBuilder.append(typeKind.toString().toLowerCase());
     } else {
       // A null pointer exception will be thrown if reference is null, which is WAI.
-      // TODO(miraleung): Clean this up.
-      visit(type.reference());
-      return;
+      generatedCodeBuilder.append(type.reference().name());
     }
 
     if (type.isArray()) {
@@ -79,11 +87,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ScopeNode scope) {
     buffer.append(scope.toString());
-  }
-
-  @Override
-  public void visit(ReferenceTypeNode reference) {
-    throw new RuntimeException("Not yet implemented for reference types");
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -128,8 +131,98 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     assignmentExpr.valueExpr().accept(this);
   }
 
-  private void space() {
-    buffer.append(SPACE);
+  @Override
+  public void visit(MethodInvocationExpr methodInvocationExpr) {
+    // Expression or static reference.
+    if (methodInvocationExpr.exprReferenceExpr() != null) {
+      methodInvocationExpr.exprReferenceExpr().accept(this);
+      buffer.append(".");
+    } else if (methodInvocationExpr.staticReferenceIdentifier() != null) {
+      methodInvocationExpr.staticReferenceIdentifier().accept(this);
+      buffer.append(".");
+    }
+
+    if (methodInvocationExpr.isGeneric()) {
+      buffer.append("<");
+      int numGenerics = methodInvocationExpr.generics().size();
+      for (int i = 0; i < numGenerics; i++) {
+        buffer.append(methodInvocationExpr.generics().get(i).name());
+        if (i < numGenerics - 1) {
+          buffer.append(", ");
+        }
+      }
+      buffer.append(">");
+    }
+
+    methodInvocationExpr.methodIdentifier().accept(this);
+    buffer.append("(");
+    int numArguments = methodInvocationExpr.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      Expr argExpr = methodInvocationExpr.arguments().get(i);
+      argExpr.accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(", ");
+      }
+    }
+    buffer.append(")");
+  }
+
+  /** =============================== STATEMENTS =============================== */
+  @Override
+  public void visit(ExprStatement exprStatement) {
+    exprStatement.expression().accept(this);
+    buffer.append(";");
+    newline();
+  }
+
+  @Override
+  public void visit(IfStatement ifStatement) {
+    buffer.append("if (");
+    ifStatement.conditionExpr().accept(this);
+    buffer.append(") {");
+    newline();
+    for (Statement statement : ifStatement.body()) {
+      statement.accept(this);
+    }
+    buffer.append("} ");
+    if (!ifStatement.elseIfs().isEmpty()) {
+      for (Map.Entry<Expr, List<Statement>> elseIfEntry : ifStatement.elseIfs().entrySet()) {
+        Expr elseIfConditionExpr = elseIfEntry.getKey();
+        List<Statement> elseIfBody = elseIfEntry.getValue();
+        buffer.append("else if (");
+        elseIfConditionExpr.accept(this);
+        buffer.append(") {");
+        newline();
+        for (Statement statement : elseIfBody) {
+          statement.accept(this);
+        }
+        buffer.append("} ");
+      }
+    }
+    if (!ifStatement.elseBody().isEmpty()) {
+      buffer.append("else {");
+      newline();
+      for (Statement statement : ifStatement.elseBody()) {
+        statement.accept(this);
+      }
+      buffer.append("} ");
+    }
+    newline();
+  }
+
+  @Override
+  public void visit(ForStatement forStatement) {
+    buffer.append("for (");
+    forStatement.localVariableExpr().accept(this);
+    buffer.append(" : ");
+    forStatement.collectionExpr().accept(this);
+    buffer.append(") {");
+    newline();
+    for (Statement statement : forStatement.body()) {
+      statement.accept(this);
+    }
+    buffer.append("} ");
+    newline();
   }
 
   /** =============================== COMMENT =============================== */
@@ -149,4 +242,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     return formatter.format(comment);
   }
 
+
+  /** =============================== PRIVATE HELPERS =============================== */
+  private void space() {
+    buffer.append(SPACE);
+  }
+
+  private void newline() {
+    buffer.append(NEWLINE);
+  }
 }
