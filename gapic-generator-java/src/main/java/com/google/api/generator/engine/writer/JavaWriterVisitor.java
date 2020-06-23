@@ -69,6 +69,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String IMPLEMENTS = "implements";
   private static final String STATIC = "static";
   private static final String THROWS = "throws";
+  private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
 
