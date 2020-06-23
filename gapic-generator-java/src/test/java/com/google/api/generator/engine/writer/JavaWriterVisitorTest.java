@@ -23,6 +23,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -352,6 +353,23 @@ public class JavaWriterVisitorTest {
 
     exprStatement.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
+  }
+
+  @Test
+  public void writeWhileStatement_simple() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    WhileStatement whileStatement =
+        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+
+    whileStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            String.format(
+                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
