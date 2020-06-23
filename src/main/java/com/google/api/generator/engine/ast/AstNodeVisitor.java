@@ -43,4 +43,9 @@ public interface AstNodeVisitor {
   public void visit(WhileStatement whileStatement);
 
   public void visit(TryCatchStatement tryCatchStatement);
+
+  /** =============================== OTHER =============================== */
+  public void visit(MethodDefinition methodDefinition);
+
+  public void visit(ClassDefinition classDefinition);
 }
