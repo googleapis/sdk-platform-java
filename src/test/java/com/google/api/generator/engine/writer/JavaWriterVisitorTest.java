@@ -16,7 +16,7 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
-
+import static org.junit.Assert.assertThrows;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -161,6 +162,53 @@ public class JavaWriterVisitorTest {
 
     expr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("public static final boolean x");
+  }
+
+  @Test
+  public void writeTernaryExpr() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).build();
+
+    IdentifierNode conditionIdentifier = IdentifierNode.builder().setName("condition").build();
+    Variable conditionVariable = Variable.builder().setIdentifier(conditionIdentifier).setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    
+    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
+    Value value2 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("4").build();
+    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
+
+    TernaryExpr ternaryExpr = TernaryExpr.builder().setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(ternaryExpr).build();
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("x = condition ? 3 : 4");
+  }
+
+  @Test
+  public void writeInvalidTernaryExpr() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).build();
+
+    IdentifierNode conditionIdentifier = IdentifierNode.builder().setName("condition").build();
+    Variable conditionVariable = Variable.builder().setIdentifier(conditionIdentifier).setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    
+    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
+    Value value2 = PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build();
+    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          TernaryExpr.builder()
+              .setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr)
+              .build();
+        });
   }
 
   @Test
