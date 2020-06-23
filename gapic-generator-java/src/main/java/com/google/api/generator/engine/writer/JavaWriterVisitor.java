@@ -68,8 +68,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String RETURN = "return";
   private static final String STATIC = "static";
   private static final String THROWS = "throws";
-  private static final String TRY = "try";
   private static final String WHILE = "while";
+  private static final String TRY = "try";
 
   private final StringBuffer buffer = new StringBuffer();
 
