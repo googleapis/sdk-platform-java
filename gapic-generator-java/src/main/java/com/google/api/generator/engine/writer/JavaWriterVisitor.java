@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.writer;
 
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.Expr;
@@ -24,6 +25,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -74,6 +76,16 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ScopeNode scope) {
     buffer.append(scope.toString());
+  }
+
+  @Override
+  public void visit(AnnotationNode annotation) {
+    buffer.append("@");
+    annotation.type().accept(this);
+    if (annotation.description() != null && !annotation.description().isEmpty()) {
+      buffer.append(String.format("(\"%s\")", annotation.description()));
+    }
+    newline();
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -168,9 +180,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     ifStatement.conditionExpr().accept(this);
     buffer.append(") {");
     newline();
-    for (Statement statement : ifStatement.body()) {
-      statement.accept(this);
-    }
+    statements(ifStatement.body());
     buffer.append("} ");
     if (!ifStatement.elseIfs().isEmpty()) {
       for (Map.Entry<Expr, List<Statement>> elseIfEntry : ifStatement.elseIfs().entrySet()) {
@@ -180,18 +190,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         elseIfConditionExpr.accept(this);
         buffer.append(") {");
         newline();
-        for (Statement statement : elseIfBody) {
-          statement.accept(this);
-        }
+        statements(elseIfBody);
         buffer.append("} ");
       }
     }
     if (!ifStatement.elseBody().isEmpty()) {
       buffer.append("else {");
       newline();
-      for (Statement statement : ifStatement.elseBody()) {
-        statement.accept(this);
-      }
+      statements(ifStatement.elseBody());
+
       buffer.append("} ");
     }
     newline();
@@ -205,14 +212,43 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     forStatement.collectionExpr().accept(this);
     buffer.append(") {");
     newline();
-    for (Statement statement : forStatement.body()) {
-      statement.accept(this);
-    }
+    statements(forStatement.body());
     buffer.append("} ");
     newline();
   }
 
+  @Override
+  public void visit(TryCatchStatement tryCatchStatement) {
+    buffer.append("try ");
+    if (tryCatchStatement.tryResourceExpr() != null) {
+      buffer.append("(");
+      tryCatchStatement.tryResourceExpr().accept(this);
+      buffer.append(") ");
+    }
+    buffer.append("{");
+    newline();
+
+    statements(tryCatchStatement.tryBody());
+    buffer.append("} ");
+
+    if (tryCatchStatement.catchVariableExpr() != null) {
+      buffer.append("catch (");
+      tryCatchStatement.catchVariableExpr().accept(this);
+      buffer.append(") {");
+      newline();
+      statements(tryCatchStatement.catchBody());
+      buffer.append("}");
+    }
+    newline();
+  }
+
   /** =============================== PRIVATE HELPERS =============================== */
+  private void statements(List<Statement> statements) {
+    for (Statement statement : statements) {
+      statement.accept(this);
+    }
+  }
+
   private void space() {
     buffer.append(SPACE);
   }
