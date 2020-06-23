@@ -31,12 +31,14 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -93,6 +95,30 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== EXPRESSIONS =============================== */
+  @Test
+  public void writeStringObjectValue() {
+    StringObjectValue s = StringObjectValue.builder().setValue("\"test\"").build();
+    assertThat(s.value()).isEqualTo("\"test\"");
+    assertThat(s.type()).isEqualTo(TypeNode.STRING);
+  }
+
+  @Test
+  public void writeStringObjectValue_assignmentExpr() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable =
+        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = StringObjectValue.withValue("\"test\"");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("String x = \"test\"");
+  }
+
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
@@ -319,6 +345,23 @@ public class JavaWriterVisitorTest {
 
     exprStatement.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
+  }
+
+  @Test
+  public void writeWhileStatement_simple() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    WhileStatement whileStatement =
+        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+
+    whileStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            String.format(
+                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
