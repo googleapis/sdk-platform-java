@@ -17,9 +17,6 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @AutoValue
 public abstract class Reference {
@@ -50,20 +47,6 @@ public abstract class Reference {
       sb.append(">");
     }
     return sb.toString();
-  }
-
-  public Set<String> fullNames() {
-    Set<String> allNames =
-        Stream.<String>of(clazz().getCanonicalName()).collect(Collectors.toSet());
-    if (generics().isEmpty()) {
-      return allNames;
-    }
-
-    for (Reference genericRef : generics()) {
-      allNames.addAll(genericRef.fullNames());
-    }
-
-    return allNames;
   }
 
   @Override
