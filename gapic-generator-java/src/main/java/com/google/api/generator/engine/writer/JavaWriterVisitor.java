@@ -32,6 +32,8 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
+
 import java.util.List;
 import java.util.Map;
 
@@ -183,6 +185,19 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(ExprStatement exprStatement) {
     exprStatement.expression().accept(this);
     buffer.append(";");
+    newline();
+  }
+
+  @Override
+  public void visit(WhileStatement whileStatement) {
+    buffer.append("while (");
+    whileStatement.conditionExpr().accept(this);
+    buffer.append(") {");
+    newline();
+    for (Statement statement : whileStatement.body()) {
+      statement.accept(this);
+    }
+    buffer.append("}");
     newline();
   }
 
