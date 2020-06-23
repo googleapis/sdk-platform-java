@@ -17,11 +17,13 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -32,7 +34,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -228,7 +230,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(") {");
     newline();
     statements(forStatement.body());
-    buffer.append("} ");
+    buffer.append("}");
     newline();
   }
 
@@ -257,10 +259,160 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
   }
 
+  /** =============================== OTHER =============================== */
+  @Override
+  public void visit(MethodDefinition methodDefinition) {
+    // Annotations, if any.
+    annotations(methodDefinition.annotations());
+
+    // Method scope.
+    methodDefinition.scope().accept(this);
+    space();
+
+    // Modifiers.
+    if (methodDefinition.isStatic()) {
+      buffer.append("static ");
+    }
+    if (methodDefinition.isFinal()) {
+      buffer.append("final ");
+    }
+    methodDefinition.returnType().accept(this);
+    space();
+
+    // Method name.
+    methodDefinition.methodIdentifier().accept(this);
+    buffer.append("(");
+
+    // Arguments, if any.
+    int numArguments = methodDefinition.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      methodDefinition.arguments().get(i).accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(", ");
+      }
+    }
+    buffer.append(") ");
+
+    // Thrown exceptions.
+    if (!methodDefinition.throwsExceptions().isEmpty()) {
+      buffer.append("throws ");
+      int numExceptionsThrown = methodDefinition.throwsExceptions().size();
+      Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
+      while (exceptionIter.hasNext()) {
+        TypeNode exceptionType = exceptionIter.next();
+        exceptionType.accept(this);
+        if (exceptionIter.hasNext()) {
+          buffer.append(",");
+        }
+        space();
+      }
+    }
+
+    // Method body.
+    buffer.append("{");
+    newline();
+    statements(methodDefinition.body());
+    if (methodDefinition.returnExpr() != null) {
+      buffer.append("return ");
+      methodDefinition.returnExpr().accept(this);
+      buffer.append(";");
+      newline();
+    }
+
+    buffer.append("}");
+    newline();
+  }
+
+  @Override
+  public void visit(ClassDefinition classDefinition) {
+    if (!classDefinition.isNested()) {
+      buffer.append(String.format("package %s;", classDefinition.packageString()));
+      newline();
+      newline();
+    }
+
+    // TODO(miraleung): Add imports here, handle static imports.
+
+    // Annotations, if any.
+    annotations(classDefinition.annotations());
+
+    // Comments, if any.
+    // TODO(xiaozhenliu): Uncomment / update the lines below.
+    // statements(classDefinition.comments());
+
+    classDefinition.scope().accept(this);
+    space();
+
+    // Modifiers.
+    if (classDefinition.isStatic()) {
+      buffer.append("static ");
+    }
+    if (classDefinition.isFinal()) {
+      buffer.append("final ");
+    }
+    if (classDefinition.isAbstract()) {
+      buffer.append("abstract ");
+    }
+
+    // Name, extends, implements.
+    buffer.append("class ");
+    classDefinition.classIdentifier().accept(this);
+    space();
+    if (classDefinition.extendsType() != null) {
+      buffer.append("extends ");
+      classDefinition.extendsType().accept(this);
+      space();
+    }
+
+    if (!classDefinition.implementsTypes().isEmpty()) {
+      buffer.append("implements ");
+      int numImplementsTypes = classDefinition.implementsTypes().size();
+      for (int i = 0; i < numImplementsTypes; i++) {
+        classDefinition.implementsTypes().get(i).accept(this);
+        if (i < numImplementsTypes - 1) {
+          buffer.append(",");
+        }
+        space();
+      }
+    }
+
+    // Class body.
+    buffer.append("{");
+    newline();
+
+    statements(classDefinition.statements());
+    methods(classDefinition.methods());
+    classes(classDefinition.nestedClasses());
+
+    buffer.append("}");
+  }
+
   /** =============================== PRIVATE HELPERS =============================== */
+  private void annotations(List<AnnotationNode> annotations) {
+    for (AnnotationNode annotation : annotations) {
+      annotation.accept(this);
+    }
+  }
+
   private void statements(List<Statement> statements) {
     for (Statement statement : statements) {
       statement.accept(this);
+    }
+  }
+
+  private void methods(List<MethodDefinition> methods) {
+    for (MethodDefinition method : methods) {
+      method.accept(this);
+    }
+  }
+
+  private void classes(List<ClassDefinition> classes) {
+    if (!classes.isEmpty()) {
+      newline();
+    }
+    for (ClassDefinition classDef : classes) {
+      classDef.accept(this);
+      newline();
     }
   }
 

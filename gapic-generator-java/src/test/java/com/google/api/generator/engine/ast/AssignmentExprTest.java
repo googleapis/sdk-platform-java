@@ -17,6 +17,8 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 public class AssignmentExprTest {
@@ -45,6 +47,26 @@ public class AssignmentExprTest {
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
 
     assertInvalidAssignmentExpr(variableExpr, valueExpr);
+  }
+
+  @Test
+  public void assignSubtypeValue() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable =
+        Variable.builder()
+            .setIdentifier(identifier)
+            .setType(TypeNode.withReference(Reference.withClazz(List.class)))
+            .build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    MethodInvocationExpr valueExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getAList")
+            .setReturnType(TypeNode.withReference(Reference.withClazz(ArrayList.class)))
+            .build();
+
+    assertValidAssignmentExpr(variableExpr, valueExpr);
   }
 
   @Test
