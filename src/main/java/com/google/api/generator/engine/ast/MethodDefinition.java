@@ -42,6 +42,8 @@ public abstract class MethodDefinition implements AstNode {
 
   public abstract boolean isFinal();
 
+  public abstract boolean isAbstract();
+
   public abstract ImmutableList<Statement> body();
 
   @Nullable
@@ -59,6 +61,7 @@ public abstract class MethodDefinition implements AstNode {
   public static Builder builder() {
     return new AutoValue_MethodDefinition.Builder()
         .setArguments(Collections.emptyList())
+        .setIsAbstract(false)
         .setIsFinal(false)
         .setIsStatic(false)
         .setAnnotations(Collections.emptyList())
@@ -84,6 +87,8 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setIsFinal(boolean isFinal);
 
+    public abstract Builder setIsAbstract(boolean isAbstract);
+
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
@@ -102,6 +107,14 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract boolean isOverride();
 
+    abstract boolean isAbstract();
+
+    abstract boolean isFinal();
+
+    abstract boolean isStatic();
+
+    abstract ScopeNode scope();
+
     abstract MethodDefinition autoBuild();
 
     abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
@@ -109,6 +122,13 @@ public abstract class MethodDefinition implements AstNode {
     public MethodDefinition build() {
       IdentifierNode methodIdentifier = IdentifierNode.builder().setName(name()).build();
       setMethodIdentifier(methodIdentifier);
+
+      // Abstract and modifier checking.
+      if (isAbstract()) {
+        Preconditions.checkState(
+            !isFinal() && !isStatic() && !scope().equals(ScopeNode.PRIVATE),
+            "Abstract mehtods cannot be static, final, or private");
+      }
 
       // If this method overrides another, ensure that the Override annotaiton is the last one.
       if (isOverride()) {
