@@ -42,7 +42,7 @@ public abstract class WhileStatement implements Statement {
       WhileStatement whileStatement = autoBuild();
       Preconditions.checkState(
           whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN),
-          "While-condition must be a boolean-typed expression");
+          "While condition must be a boolean-typed expression");
       return whileStatement;
     }
   }
