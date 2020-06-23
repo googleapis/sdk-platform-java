@@ -8,6 +8,7 @@ TESTS = [
     "TryCatchStatementTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "TernaryExprTest",
 ]
 
 filegroup(
