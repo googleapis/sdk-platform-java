@@ -182,7 +182,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTernaryExpr() {
+  public void writeTernaryExpr_basic() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
     VariableExpr variableExpr =
@@ -203,31 +203,7 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("x = condition ? 3 : 4");
   }
-
-  @Test
-  public void writeInvalidTernaryExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).build();
-
-    IdentifierNode conditionIdentifier = IdentifierNode.builder().setName("condition").build();
-    Variable conditionVariable = Variable.builder().setIdentifier(conditionIdentifier).setType(TypeNode.BOOLEAN).build();
-    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
-    
-    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
-    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
-    Value value2 = PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build();
-    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          TernaryExpr.builder()
-              .setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr)
-              .build();
-        });
-  }
-
+  
   @Test
   public void writeAssignmentExpr_basicValue() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
