@@ -334,8 +334,7 @@ public class JavaWriterVisitorTest {
     ifStatement.accept(writerVisitor);
     assertThat(writerVisitor.write())
         .isEqualTo(
-            String.format(
-                "%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+            String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -363,7 +362,7 @@ public class JavaWriterVisitorTest {
             "} else {\n",
             "int x = 3;\n",
             "int x = 3;\n",
-            "} \n"));
+            "}\n"));
   }
 
   @Test
@@ -403,7 +402,7 @@ public class JavaWriterVisitorTest {
             "} else if (lookAtMe) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n");
+            "}\n");
 
     assertEquals(writerVisitor.write(), expected);
   }
@@ -462,13 +461,13 @@ public class JavaWriterVisitorTest {
             "} else {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n",
-            "} \n",
+            "}\n",
+            "}\n",
             "} else if (lookAtMe) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n",
-            "} \n");
+            "}\n",
+            "}\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -563,7 +562,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     tryCatch.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "} \n"));
+    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
