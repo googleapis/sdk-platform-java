@@ -19,7 +19,6 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -43,9 +42,8 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeAssignmentExprImports() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("clazz").build();
     Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(createType(AstNode.class)).build();
+        Variable.builder().setName("clazz").setType(createType(AstNode.class)).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -70,7 +68,6 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeAssignmentExprImports_staticAndNestedGenerics() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("clazz").build();
     List<Reference> nestedSubGenerics =
         Arrays.asList(
             Reference.withClazz(ClassDefinition.class), Reference.withClazz(AstNode.class));
@@ -84,7 +81,7 @@ public class ImportWriterVisitorTest {
     Reference reference =
         Reference.builder().setClazz(List.class).setGenerics(Arrays.asList(genericRef)).build();
     TypeNode type = TypeNode.withReference(reference);
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(type).build();
+    Variable variable = Variable.builder().setName("clazz").setType(type).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
