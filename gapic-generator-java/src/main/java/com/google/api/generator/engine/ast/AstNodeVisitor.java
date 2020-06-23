@@ -40,6 +40,8 @@ public interface AstNodeVisitor {
 
   public void visit(ForStatement forStatement);
 
+  public void visit(WhileStatement whileStatement);
+
   public void visit(TryCatchStatement tryCatchStatement);
 
   /** =============================== OTHER =============================== */
