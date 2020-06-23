@@ -5,6 +5,7 @@ TESTS = [
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
+    "TryCatchStatementTest",
     "PrimitiveValueTest",
     "ReferenceTest",
 ]

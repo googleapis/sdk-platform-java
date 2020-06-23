@@ -22,6 +22,8 @@ public interface AstNodeVisitor {
 
   public void visit(ScopeNode scope);
 
+  public void visit(AnnotationNode annotation);
+
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
@@ -39,4 +41,6 @@ public interface AstNodeVisitor {
   public void visit(ForStatement forStatement);
 
   public void visit(WhileStatement whileStatement);
+  
+  public void visit(TryCatchStatement tryCatchStatement);
 }
