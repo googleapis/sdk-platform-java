@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +145,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     forStatement.localVariableExpr().accept(this);
     forStatement.collectionExpr().accept(this);
     statements(forStatement.body());
+  }
+
+  @Override
+  public void visit(WhileStatement whileStatement) {
+    whileStatement.conditionExpr().accept(this);
+    statements(whileStatement.body());
   }
 
   @Override
