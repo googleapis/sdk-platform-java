@@ -41,16 +41,12 @@ public abstract class TernaryExpr implements Expr {
 
     public TernaryExpr build() {
       TernaryExpr ternaryExpr = autoBuild();
-      System.out.println(ternaryExpr.thenExpr());
-      System.out.println(ternaryExpr.elseExpr());
-      System.out.println(TypeNode.BOOLEAN);
-
       Preconditions.checkState(
           ternaryExpr.thenExpr().type().equals(ternaryExpr.elseExpr().type()),
-          "Type of two expressions should be identical");
+          "Second and third expressions should have the same type.");
       Preconditions.checkState(
           ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN),
-          "Type of condition expression should be boolean");
+          "Ternary condition must be a boolean expression.");
       return ternaryExpr;
     }
   }
