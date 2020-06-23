@@ -32,6 +32,13 @@ public class ExprStatementTest {
   }
 
   @Test
+  public void validVariableExprStatement() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    assertValidExprStatement(VariableExpr.builder().setVariable(variable).setIsDecl(true).build());
+  }
+
+  @Test
   public void validAssignmentExprStatement() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
