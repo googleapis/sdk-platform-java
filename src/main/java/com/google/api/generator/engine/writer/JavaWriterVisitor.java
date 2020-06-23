@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,35 @@ import java.util.Map;
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
   private static final String NEWLINE = "\n";
+
+  private static final String AT = "@";
+
+  private static final String COMMA = ",";
+  private static final String LEFT_BRACE = "{";
+  private static final String RIGHT_BRACE = "}";
+  private static final String COLON = ":";
+  private static final String SEMICOLON = ";";
+  private static final String LEFT_PAREN = "(";
+  private static final String RIGHT_PAREN = ")";
+  private static final String DOT = ".";
+  private static final String EQUALS = "=";
+  private static final String LEFT_ANGLE = "<";
+  private static final String RIGHT_ANGLE = ">";
+
+  private static final String ABSTRACT = "abstract";
+  private static final String RETURN = "return";
+  private static final String FOR = "for";
+  private static final String TRY = "try";
+  private static final String CATCH = "catch";
+  private static final String CLASS = "class";
+  private static final String IF = "if";
+  private static final String ELSE = "else";
+  private static final String EXTENDS = "extends";
+  private static final String FINAL = "final";
+  private static final String IMPLEMENTS = "implements";
+  private static final String STATIC = "static";
+  private static final String THROWS = "throws";
+  private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
 
@@ -83,7 +113,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(AnnotationNode annotation) {
-    buffer.append("@");
+    buffer.append(AT);
     annotation.type().accept(this);
     if (annotation.description() != null && !annotation.description().isEmpty()) {
       buffer.append(String.format("(\"%s\")", annotation.description()));
@@ -110,12 +140,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
 
       if (variableExpr.isStatic()) {
-        buffer.append("static");
+        buffer.append(STATIC);
         space();
       }
 
       if (variableExpr.isFinal()) {
-        buffer.append("final");
+        buffer.append(FINAL);
         space();
       }
 
@@ -129,7 +159,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(AssignmentExpr assignmentExpr) {
     assignmentExpr.variableExpr().accept(this);
-    buffer.append(" = ");
+    space();
+    buffer.append(EQUALS);
+    space();
     assignmentExpr.valueExpr().accept(this);
   }
 
@@ -138,109 +170,154 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     // Expression or static reference.
     if (methodInvocationExpr.exprReferenceExpr() != null) {
       methodInvocationExpr.exprReferenceExpr().accept(this);
-      buffer.append(".");
+      buffer.append(DOT);
     } else if (methodInvocationExpr.staticReferenceIdentifier() != null) {
       methodInvocationExpr.staticReferenceIdentifier().accept(this);
-      buffer.append(".");
+      buffer.append(DOT);
     }
 
     if (methodInvocationExpr.isGeneric()) {
-      buffer.append("<");
+      buffer.append(LEFT_ANGLE);
       int numGenerics = methodInvocationExpr.generics().size();
       for (int i = 0; i < numGenerics; i++) {
         buffer.append(methodInvocationExpr.generics().get(i).name());
         if (i < numGenerics - 1) {
-          buffer.append(", ");
+          buffer.append(COMMA);
+          space();
         }
       }
-      buffer.append(">");
+      buffer.append(RIGHT_ANGLE);
     }
 
     methodInvocationExpr.methodIdentifier().accept(this);
-    buffer.append("(");
+    leftParen();
     int numArguments = methodInvocationExpr.arguments().size();
     for (int i = 0; i < numArguments; i++) {
       Expr argExpr = methodInvocationExpr.arguments().get(i);
       argExpr.accept(this);
       if (i < numArguments - 1) {
-        buffer.append(", ");
+        buffer.append(COMMA);
+        space();
       }
     }
-    buffer.append(")");
+    rightParen();
   }
 
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
     exprStatement.expression().accept(this);
-    buffer.append(";");
+    semicolon();
+    newline();
+  }
+
+  @Override
+  public void visit(WhileStatement whileStatement) {
+    buffer.append(WHILE);
+    space();
+    leftParen();
+    whileStatement.conditionExpr().accept(this);
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(whileStatement.body());
+    rightBrace();
     newline();
   }
 
   @Override
   public void visit(IfStatement ifStatement) {
-    buffer.append("if (");
+    buffer.append(IF);
+    space();
+    leftParen();
+
     ifStatement.conditionExpr().accept(this);
-    buffer.append(") {");
+    rightParen();
+    space();
+    leftBrace();
     newline();
+
     statements(ifStatement.body());
-    buffer.append("} ");
+    buffer.append(RIGHT_BRACE);
     if (!ifStatement.elseIfs().isEmpty()) {
       for (Map.Entry<Expr, List<Statement>> elseIfEntry : ifStatement.elseIfs().entrySet()) {
         Expr elseIfConditionExpr = elseIfEntry.getKey();
         List<Statement> elseIfBody = elseIfEntry.getValue();
-        buffer.append("else if (");
+        space();
+        buffer.append(ELSE);
+        space();
+        buffer.append(IF);
+        space();
+        leftParen();
         elseIfConditionExpr.accept(this);
-        buffer.append(") {");
+        rightParen();
+        space();
+        leftBrace();
         newline();
         statements(elseIfBody);
-        buffer.append("} ");
+        rightBrace();
       }
     }
     if (!ifStatement.elseBody().isEmpty()) {
-      buffer.append("else {");
+      space();
+      buffer.append(ELSE);
+      space();
+      leftBrace();
       newline();
       statements(ifStatement.elseBody());
-
-      buffer.append("} ");
+      rightBrace();
     }
     newline();
   }
 
   @Override
   public void visit(ForStatement forStatement) {
-    buffer.append("for (");
+    buffer.append(FOR);
+    space();
+    leftParen();
     forStatement.localVariableExpr().accept(this);
-    buffer.append(" : ");
+    space();
+    buffer.append(COLON);
+    space();
     forStatement.collectionExpr().accept(this);
-    buffer.append(") {");
+    rightParen();
+    space();
+    leftBrace();
     newline();
     statements(forStatement.body());
-    buffer.append("}");
+    rightBrace();
     newline();
   }
 
   @Override
   public void visit(TryCatchStatement tryCatchStatement) {
-    buffer.append("try ");
+    buffer.append(TRY);
+    space();
     if (tryCatchStatement.tryResourceExpr() != null) {
-      buffer.append("(");
+      leftParen();
       tryCatchStatement.tryResourceExpr().accept(this);
-      buffer.append(") ");
+      rightParen();
+      space();
     }
-    buffer.append("{");
+    leftBrace();
     newline();
 
     statements(tryCatchStatement.tryBody());
-    buffer.append("} ");
+    rightBrace();
 
     if (tryCatchStatement.catchVariableExpr() != null) {
-      buffer.append("catch (");
+      space();
+      buffer.append(CATCH);
+      space();
+      leftParen();
       tryCatchStatement.catchVariableExpr().accept(this);
-      buffer.append(") {");
+      rightParen();
+      space();
+      leftBrace();
       newline();
       statements(tryCatchStatement.catchBody());
-      buffer.append("}");
+      rightBrace();
     }
     newline();
   }
@@ -257,55 +334,61 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // Modifiers.
     if (methodDefinition.isStatic()) {
-      buffer.append("static ");
+      buffer.append(STATIC);
+      space();
     }
     if (methodDefinition.isFinal()) {
-      buffer.append("final ");
+      buffer.append(FINAL);
+      space();
     }
     methodDefinition.returnType().accept(this);
     space();
 
     // Method name.
     methodDefinition.methodIdentifier().accept(this);
-    buffer.append("(");
+    leftParen();
 
     // Arguments, if any.
     int numArguments = methodDefinition.arguments().size();
     for (int i = 0; i < numArguments; i++) {
       methodDefinition.arguments().get(i).accept(this);
       if (i < numArguments - 1) {
-        buffer.append(", ");
+        buffer.append(COMMA);
+        space();
       }
     }
-    buffer.append(") ");
+    rightParen();
+    space();
 
     // Thrown exceptions.
     if (!methodDefinition.throwsExceptions().isEmpty()) {
-      buffer.append("throws ");
+      buffer.append(THROWS);
+      space();
       int numExceptionsThrown = methodDefinition.throwsExceptions().size();
       Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
       while (exceptionIter.hasNext()) {
         TypeNode exceptionType = exceptionIter.next();
         exceptionType.accept(this);
         if (exceptionIter.hasNext()) {
-          buffer.append(",");
+          buffer.append(COMMA);
         }
         space();
       }
     }
 
     // Method body.
-    buffer.append("{");
+    leftBrace();
     newline();
     statements(methodDefinition.body());
     if (methodDefinition.returnExpr() != null) {
-      buffer.append("return ");
+      buffer.append(RETURN);
+      space();
       methodDefinition.returnExpr().accept(this);
-      buffer.append(";");
+      semicolon();
       newline();
     }
 
-    buffer.append("}");
+    rightBrace();
     newline();
   }
 
@@ -334,46 +417,52 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     // Modifiers.
     if (classDefinition.isStatic()) {
-      buffer.append("static ");
+      buffer.append(STATIC);
+      space();
     }
     if (classDefinition.isFinal()) {
-      buffer.append("final ");
+      buffer.append(FINAL);
+      space();
     }
     if (classDefinition.isAbstract()) {
-      buffer.append("abstract ");
+      buffer.append(ABSTRACT);
+      space();
     }
 
     // Name, extends, implements.
-    buffer.append("class ");
+    buffer.append(CLASS);
+    space();
     classDefinition.classIdentifier().accept(this);
     space();
     if (classDefinition.extendsType() != null) {
-      buffer.append("extends ");
+      buffer.append(EXTENDS);
+      space();
       classDefinition.extendsType().accept(this);
       space();
     }
 
     if (!classDefinition.implementsTypes().isEmpty()) {
-      buffer.append("implements ");
+      buffer.append(IMPLEMENTS);
+      space();
       int numImplementsTypes = classDefinition.implementsTypes().size();
       for (int i = 0; i < numImplementsTypes; i++) {
         classDefinition.implementsTypes().get(i).accept(this);
         if (i < numImplementsTypes - 1) {
-          buffer.append(",");
+          buffer.append(COMMA);
         }
         space();
       }
     }
 
     // Class body.
-    buffer.append("{");
+    leftBrace();
     newline();
 
     statements(classDefinition.statements());
     methods(classDefinition.methods());
     classes(classDefinition.nestedClasses());
 
-    buffer.append("}");
+    rightBrace();
   }
 
   /** =============================== PRIVATE HELPERS =============================== */
@@ -411,5 +500,25 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void newline() {
     buffer.append(NEWLINE);
+  }
+
+  private void leftParen() {
+    buffer.append(LEFT_PAREN);
+  }
+
+  private void rightParen() {
+    buffer.append(RIGHT_PAREN);
+  }
+
+  private void leftBrace() {
+    buffer.append(LEFT_BRACE);
+  }
+
+  private void rightBrace() {
+    buffer.append(RIGHT_BRACE);
+  }
+
+  private void semicolon() {
+    buffer.append(SEMICOLON);
   }
 }

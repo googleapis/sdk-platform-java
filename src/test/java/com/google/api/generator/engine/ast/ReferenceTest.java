@@ -26,7 +26,6 @@ public class ReferenceTest {
   public void basicReference() {
     Reference reference = Reference.builder().setClazz(Integer.class).build();
     assertThat(reference.name()).isEqualTo(Integer.class.getSimpleName());
-    assertThat(reference.fullNames()).containsExactly(Integer.class.getCanonicalName());
   }
 
   @Test
@@ -39,11 +38,6 @@ public class ReferenceTest {
                     Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
             .build();
     assertThat(reference.name()).isEqualTo("HashMap<String, Integer>");
-    assertThat(reference.fullNames())
-        .containsExactly(
-            HashMap.class.getCanonicalName(),
-            String.class.getCanonicalName(),
-            Integer.class.getCanonicalName());
   }
 
   @Test
@@ -67,11 +61,5 @@ public class ReferenceTest {
             .build();
     assertThat(listReference.name())
         .isEqualTo("List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
-    assertThat(listReference.fullNames())
-        .containsExactly(
-            HashMap.class.getCanonicalName(),
-            List.class.getCanonicalName(),
-            String.class.getCanonicalName(),
-            Integer.class.getCanonicalName());
   }
 }
