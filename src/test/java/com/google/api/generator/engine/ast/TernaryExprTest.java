@@ -21,7 +21,7 @@ import org.junit.Test;
 
 public class TernaryExprTest {
   @Test
-  public void writeTernaryExpr() {
+  public void writeTernaryExpr_primitiveType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -42,6 +42,32 @@ public class TernaryExprTest {
             .build();
     assertThat(ternaryExpr.conditionExpr().type()).isEqualTo(TypeNode.BOOLEAN);
     assertThat(ternaryExpr.thenExpr().type()).isEqualTo(ternaryExpr.elseExpr().type());
+    assertThat(ternaryExpr.type()).isEqualTo(ternaryExpr.thenExpr().type());
+  }
+
+  @Test
+  public void writeTernaryExpr_ObjectType() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+
+    Value value1 = StringObjectValue.withValue("str1");
+    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
+    Value value2 = StringObjectValue.withValue("str2");
+    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
+
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(elseExpr)
+            .build();
+    assertThat(ternaryExpr.conditionExpr().type()).isEqualTo(TypeNode.BOOLEAN);
+    assertThat(ternaryExpr.thenExpr().type()).isEqualTo(ternaryExpr.elseExpr().type());
+    assertThat(ternaryExpr.type()).isEqualTo(ternaryExpr.thenExpr().type());
   }
 
   @Test
