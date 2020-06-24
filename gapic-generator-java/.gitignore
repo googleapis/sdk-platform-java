@@ -4,6 +4,9 @@ bazel-gapic-generator-java
 bazel-out
 bazel-testlogs
 
+# IDE
+.idea
+.ijwb
 
 # Vim.
 *.sw*
