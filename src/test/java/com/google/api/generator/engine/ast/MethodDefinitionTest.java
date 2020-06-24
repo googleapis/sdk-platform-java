@@ -34,6 +34,17 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_basicAbstract() {
+    MethodDefinition.builder()
+        .setName("close")
+        .setIsAbstract(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
   public void validMethodDefinition_withArgumentsAndReturnExpr() {
     ValueExpr returnExpr =
         ValueExpr.builder()
@@ -84,6 +95,50 @@ public class MethodDefinitionTest {
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
               .setThrowsExceptions(
                   Arrays.asList(TypeNode.withExceptionClazz(IllegalArgumentException.class)))
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_abstractStatic() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setIsAbstract(true)
+              .setIsStatic(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_abstractFinal() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setIsAbstract(true)
+              .setIsFinal(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_abstractPrivate() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setIsAbstract(true)
+              .setScope(ScopeNode.PRIVATE)
+              .setReturnType(TypeNode.VOID)
               .build();
         });
   }
@@ -161,8 +216,7 @@ public class MethodDefinitionTest {
   }
 
   private static Variable createVariable(String variableName, TypeNode type) {
-    IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
-    return Variable.builder().setIdentifier(identifier).setType(type).build();
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 
   private static AssignmentExpr createAssignmentExpr() {
