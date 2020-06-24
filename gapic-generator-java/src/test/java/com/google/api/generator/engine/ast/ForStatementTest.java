@@ -24,9 +24,7 @@ public class ForStatementTest {
 
   @Test
   public void validForStatement() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("str").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -44,9 +42,7 @@ public class ForStatementTest {
 
   @Test
   public void invalidForStatement() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("str").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     MethodInvocationExpr methodExpr =
@@ -64,14 +60,11 @@ public class ForStatementTest {
   }
 
   private static AssignmentExpr createAssignmentExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    IdentifierNode anotherIdentifier = IdentifierNode.builder().setName("y").build();
-    Variable anotherVariable =
-        Variable.builder().setIdentifier(anotherIdentifier).setType(TypeNode.INT).build();
+    Variable anotherVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
     Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
 
     return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
