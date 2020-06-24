@@ -23,6 +23,8 @@ public abstract class Variable {
 
   public abstract TypeNode type();
 
+  abstract String name();
+
   public static Builder builder() {
     return new AutoValue_Variable.Builder();
   }
@@ -31,11 +33,18 @@ public abstract class Variable {
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setIdentifier(IdentifierNode identifier);
+    public abstract Builder setName(String name);
+
+    abstract String name();
+
+    abstract Builder setIdentifier(IdentifierNode identifier);
 
     abstract Variable autoBuild();
 
     public Variable build() {
+      IdentifierNode identifier = IdentifierNode.builder().setName(name()).build();
+      setIdentifier(identifier);
+
       Variable variable = autoBuild();
       Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
       return variable;
