@@ -18,6 +18,9 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.BlockComment;
+import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -167,6 +170,20 @@ public class ImportWriterVisitor implements AstNodeVisitor {
             + " try-catch block");
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
+  }
+  /** =============================== COMMENT =============================== */
+
+  @Override
+  public String visit (LineComment lineComment){
+    return null;
+  }
+  @Override
+  public String visit (BlockComment blockComment){
+    return null;
+  }
+  @Override
+  public String visit (JavaDocComment javaDocComment){
+    return null;
   }
 
   /** =============================== OTHER =============================== */
