@@ -41,8 +41,8 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
-  private static final String SPACE = " ";
   private static final String NEWLINE = "\n";
+  private static final String SPACE = " ";
 
   private static final String AT = "@";
 
