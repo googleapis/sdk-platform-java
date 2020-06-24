@@ -56,6 +56,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
   private static final String SEMICOLON = ";";
+  private static final String QUESTION_MARK = "?";
 
   private static final String ABSTRACT = "abstract";
   private static final String CATCH = "catch";
@@ -160,9 +161,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(TernaryExpr ternaryExpr){
     ternaryExpr.conditionExpr().accept(this);
-    buffer.append(" ? ");
+    space();
+    buffer.append(QUESTION_MARK);
+    space();
     ternaryExpr.thenExpr().accept(this);
-    buffer.append(" : ");
+    space();
+    buffer.append(COLON);
+    space();
     ternaryExpr.elseExpr().accept(this);
   }
 
