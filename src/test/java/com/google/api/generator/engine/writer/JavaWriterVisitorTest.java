@@ -16,6 +16,8 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -26,12 +28,14 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
+import com.google.api.generator.engine.ast.TypeMismatchException;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -248,6 +252,39 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("private static final int foobar = y");
   }
+
+  @Test
+  public void writeAssignmentExpr_nullObjectValueReferenceType() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = NullObjectValue.create();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("String x = null");
+  }
+
+  @Test
+  public void writeAssignmentExpr_nullObjectValuePrimitiveType() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = NullObjectValue.create();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    assertThrows(TypeMismatchException.class, () -> {
+      AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+    });
+  }
+
 
   @Test
   public void writeMethodInvocationExpr_basic() {

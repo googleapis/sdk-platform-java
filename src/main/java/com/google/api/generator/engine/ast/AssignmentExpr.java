@@ -39,6 +39,11 @@ public abstract class AssignmentExpr implements Expr {
       TypeNode lhsType = assignmentExpr.variableExpr().variable().type();
       TypeNode rhsType = assignmentExpr.valueExpr().type();
       if (lhsType.isPrimitiveType()) {
+        if (rhsType == null) {
+          throw new TypeMismatchException(
+              String.format(
+                  "Null cannot be assigned to the primitive type %s", lhsType.toString()));
+        }
         if (!lhsType.equals(rhsType)) {
           throw new TypeMismatchException(
               String.format(
@@ -52,7 +57,6 @@ public abstract class AssignmentExpr implements Expr {
                   lhsType.reference().name(), rhsType.reference().name()));
         }
       }
-
       return assignmentExpr;
     }
   }
