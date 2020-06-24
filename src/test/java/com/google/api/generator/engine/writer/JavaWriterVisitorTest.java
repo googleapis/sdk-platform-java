@@ -93,26 +93,21 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== EXPRESSIONS =============================== */
-  @Test
-  public void writeStringObjectValue() {
-    StringObjectValue s = StringObjectValue.builder().setValue("\"test\"").build();
-    assertThat(s.value()).isEqualTo("\"test\"");
-    assertThat(s.type()).isEqualTo(TypeNode.STRING);
-  }
 
   @Test
-  public void writeStringObjectValue_assignmentExpr() {
+  public void writeStringObjectValue_assigenmentExpr() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
     Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    Value value = StringObjectValue.withValue("\"test\"");
+    Value value = StringObjectValue.withValue("test");
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
     AssignmentExpr assignExpr =
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
+    System.out.println(writerVisitor.write());
     assertThat(writerVisitor.write()).isEqualTo("String x = \"test\"");
   }
 

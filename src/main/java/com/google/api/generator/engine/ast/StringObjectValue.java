@@ -43,6 +43,6 @@ public abstract class StringObjectValue implements ObjectValue {
 
   @Override
   public String toString() {
-    return value();
+    return String.format("%s%s%s", "\"", value(), "\"");
   }
 }
