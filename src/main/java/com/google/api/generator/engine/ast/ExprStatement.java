@@ -43,9 +43,15 @@ public abstract class ExprStatement implements Statement {
     public ExprStatement build() {
       ExprStatement exprStatement = autoBuild();
       Expr expr = exprStatement.expression();
-      Preconditions.checkState(
-          (expr instanceof MethodInvocationExpr) || (expr instanceof AssignmentExpr),
-          "Expression statements must be either a method invocation or assignment expression");
+      if (expr instanceof VariableExpr) {
+        VariableExpr variableExpr = (VariableExpr) expr;
+        Preconditions.checkState(
+            variableExpr.isDecl(), "Expression variable statements must be declarations");
+      } else {
+        Preconditions.checkState(
+            (expr instanceof MethodInvocationExpr) || (expr instanceof AssignmentExpr),
+            "Expression statements must be either a method invocation or assignment expression");
+      }
       return exprStatement;
     }
   }
