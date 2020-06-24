@@ -123,21 +123,17 @@ public class TryCatchStatementTest {
   }
 
   private static AssignmentExpr createAssignmentExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    IdentifierNode anotherIdentifier = IdentifierNode.builder().setName("y").build();
-    Variable anotherVariable =
-        Variable.builder().setIdentifier(anotherIdentifier).setType(TypeNode.INT).build();
+    Variable anotherVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
     Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
 
     return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
   }
 
   private static Variable createVariable(String variableName, TypeNode type) {
-    IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
-    return Variable.builder().setIdentifier(identifier).setType(type).build();
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 }
