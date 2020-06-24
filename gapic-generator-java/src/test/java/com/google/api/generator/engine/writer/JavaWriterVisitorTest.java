@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
+import javax.lang.model.type.NullType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -269,22 +270,6 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("String x = null");
   }
-
-  @Test
-  public void writeAssignmentExpr_nullObjectValuePrimitiveType() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Value value = NullObjectValue.create();
-    Expr valueExpr = ValueExpr.builder().setValue(value).build();
-
-    assertThrows(TypeMismatchException.class, () -> {
-      AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-    });
-  }
-
 
   @Test
   public void writeMethodInvocationExpr_basic() {

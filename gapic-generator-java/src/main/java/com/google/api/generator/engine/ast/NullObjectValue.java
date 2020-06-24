@@ -1,11 +1,11 @@
 package com.google.api.generator.engine.ast;
 
-
 public class NullObjectValue implements ObjectValue {
   private static final String NULL_VALUE = "null";
+
   @Override
   public TypeNode type() {
-    return null;
+    return TypeNode.NULL;
   }
 
   @Override

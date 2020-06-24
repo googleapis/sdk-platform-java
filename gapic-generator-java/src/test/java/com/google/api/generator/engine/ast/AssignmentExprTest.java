@@ -84,6 +84,33 @@ public class AssignmentExprTest {
     assertValidAssignmentExpr(variableExpr, valueExpr);
   }
 
+  @Test
+  public void assignNullObjectValue() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable =
+        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = NullObjectValue.create();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    assertValidAssignmentExpr(variableExpr, valueExpr);
+  }
+
+  @Test
+  public void writeAssignmentExpr_nullObjectValuePrimitiveType() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = NullObjectValue.create();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    assertInvalidAssignmentExpr(variableExpr, valueExpr);
+  }
+
   private static void assertInvalidAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
     assertThrows(
         TypeMismatchException.class,
