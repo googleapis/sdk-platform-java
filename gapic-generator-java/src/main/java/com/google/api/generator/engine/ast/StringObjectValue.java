@@ -15,39 +15,34 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Preconditions;
 
 @AutoValue
-public abstract class Variable {
-  public abstract IdentifierNode identifier();
+public abstract class StringObjectValue implements ObjectValue {
 
-  public abstract TypeNode type();
+  @Override
+  public TypeNode type() {
+    return TypeNode.STRING;
+  }
 
-  abstract String name();
+  public abstract String value();
 
   public static Builder builder() {
-    return new AutoValue_Variable.Builder();
+    return new AutoValue_StringObjectValue.Builder();
+  }
+
+  public static StringObjectValue withValue(String value) {
+    return builder().setValue(value).build();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setType(TypeNode type);
+    public abstract Builder setValue(String value);
 
-    public abstract Builder setName(String name);
+    public abstract StringObjectValue build();
+  }
 
-    abstract String name();
-
-    abstract Builder setIdentifier(IdentifierNode identifier);
-
-    abstract Variable autoBuild();
-
-    public Variable build() {
-      IdentifierNode identifier = IdentifierNode.builder().setName(name()).build();
-      setIdentifier(identifier);
-
-      Variable variable = autoBuild();
-      Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
-      return variable;
-    }
+  @Override
+  public String toString() {
+    return value();
   }
 }

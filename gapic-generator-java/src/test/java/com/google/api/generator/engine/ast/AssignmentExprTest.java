@@ -17,13 +17,14 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 public class AssignmentExprTest {
   @Test
   public void assignMatchingValue() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -35,9 +36,7 @@ public class AssignmentExprTest {
 
   @Test
   public void assignMismatchedValue() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.BOOLEAN).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -48,15 +47,31 @@ public class AssignmentExprTest {
   }
 
   @Test
-  public void assignMatchingVariable() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+  public void assignSubtypeValue() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(Reference.withClazz(List.class)))
+            .build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    IdentifierNode anotherIdentifier = IdentifierNode.builder().setName("y").build();
-    Variable anotherVariable =
-        Variable.builder().setIdentifier(anotherIdentifier).setType(TypeNode.INT).build();
+    MethodInvocationExpr valueExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getAList")
+            .setReturnType(TypeNode.withReference(Reference.withClazz(ArrayList.class)))
+            .build();
+
+    assertValidAssignmentExpr(variableExpr, valueExpr);
+  }
+
+  @Test
+  public void assignMatchingVariable() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Variable anotherVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
     Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
 
     assertValidAssignmentExpr(variableExpr, valueExpr);
