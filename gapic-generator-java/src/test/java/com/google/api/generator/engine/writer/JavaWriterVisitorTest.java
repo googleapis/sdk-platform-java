@@ -861,6 +861,7 @@ public class JavaWriterVisitorTest {
     List<Reference> generics =
         Arrays.asList(Reference.withClazz(ClassDefinition.class), mapEntryReference);
     Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
+
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(
@@ -984,6 +985,18 @@ public class JavaWriterVisitorTest {
 
   private static Variable createVariable(String variableName, TypeNode type) {
     return Variable.builder().setName(variableName).setType(type).build();
+  }
+
+  private static ForStatement createForStatement() {
+    Expr collectionExpr = MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
+    ExprStatement assignExprStatement =
+        ExprStatement.withExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN));
+    List<Statement> body = Arrays.asList(assignExprStatement);
+    return ForStatement.builder()
+        .setLocalVariableExpr(createVariableDeclExpr("str", TypeNode.STRING))
+        .setCollectionExpr(collectionExpr)
+        .setBody(body)
+        .build();
   }
 
   private static ForStatement createForStatement() {
