@@ -33,15 +33,13 @@ public class ExprStatementTest {
 
   @Test
   public void validVariableExprStatement() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     assertValidExprStatement(VariableExpr.builder().setVariable(variable).setIsDecl(true).build());
   }
 
   @Test
   public void validAssignmentExprStatement() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -55,8 +53,7 @@ public class ExprStatementTest {
 
   @Test
   public void invalidVariableExprStatement() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("libraryClient").build();
-    Variable variable = Variable.builder().setType(TypeNode.INT).setIdentifier(identifier).build();
+    Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
     assertInvalidExprStatement(varExpr);
   }
