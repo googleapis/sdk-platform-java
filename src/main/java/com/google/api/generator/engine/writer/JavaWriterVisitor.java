@@ -34,9 +34,11 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -326,7 +328,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(MethodDefinition methodDefinition) {
     // Annotations, if any.
-    annotations(methodDefinition.annotations());
+    annotations(new TreeSet<>(methodDefinition.annotations()));
 
     // Method scope.
     methodDefinition.scope().accept(this);
@@ -369,7 +371,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append(THROWS);
       space();
       int numExceptionsThrown = methodDefinition.throwsExceptions().size();
-      Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
+      Iterator<TypeNode> exceptionIter =
+          new TreeSet<>(methodDefinition.throwsExceptions()).iterator();
       while (exceptionIter.hasNext()) {
         TypeNode exceptionType = exceptionIter.next();
         exceptionType.accept(this);
@@ -417,7 +420,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(importWriterVisitor.write());
 
     // Annotations, if any.
-    annotations(classDefinition.annotations());
+    annotations(new TreeSet<>(classDefinition.annotations()));
 
     // Comments, if any.
     // TODO(xiaozhenliu): Uncomment / update the lines below.
@@ -455,10 +458,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.implementsTypes().isEmpty()) {
       buffer.append(IMPLEMENTS);
       space();
-      int numImplementsTypes = classDefinition.implementsTypes().size();
-      for (int i = 0; i < numImplementsTypes; i++) {
-        classDefinition.implementsTypes().get(i).accept(this);
-        if (i < numImplementsTypes - 1) {
+      Iterator<TypeNode> implementsIter =
+          new TreeSet<>(classDefinition.implementsTypes()).iterator();
+      while (implementsIter.hasNext()) {
+        TypeNode implementsType = implementsIter.next();
+        implementsType.accept(this);
+        if (implementsIter.hasNext()) {
           buffer.append(COMMA);
         }
         space();
@@ -477,7 +482,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== PRIVATE HELPERS =============================== */
-  private void annotations(List<AnnotationNode> annotations) {
+  private void annotations(Collection<AnnotationNode> annotations) {
     for (AnnotationNode annotation : annotations) {
       annotation.accept(this);
     }

@@ -19,7 +19,7 @@ import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class AnnotationNode implements AstNode {
+public abstract class AnnotationNode implements AstNode, Comparable<AnnotationNode> {
   public static AnnotationNode OVERRIDE =
       AnnotationNode.builder().setType(annotationType(Override.class)).build();
   public static AnnotationNode DEPRECATED =
@@ -39,6 +39,11 @@ public abstract class AnnotationNode implements AstNode {
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
+  }
+
+  @Override
+  public int compareTo(AnnotationNode other) {
+    return type().compareTo(other.type());
   }
 
   public static AnnotationNode withSuppressWarnings(String description) {

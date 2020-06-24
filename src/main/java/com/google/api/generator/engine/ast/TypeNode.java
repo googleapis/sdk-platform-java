@@ -20,7 +20,7 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class TypeNode implements AstNode {
+public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   public enum TypeKind {
     BYTE,
     SHORT,
@@ -114,6 +114,15 @@ public abstract class TypeNode implements AstNode {
       hash += 23 * reference().hashCode();
     }
     return hash;
+  }
+
+  @Override
+  public int compareTo(TypeNode other) {
+    if (!isReferenceType(this) || !isReferenceType(other)) {
+      // Can't compare primitive types.
+      return 0;
+    }
+    return reference().compareTo(other.reference());
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {

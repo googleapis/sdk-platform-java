@@ -35,6 +35,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -199,7 +200,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== PRIVATE HELPERS =============================== */
-  private void annotations(List<AnnotationNode> annotations) {
+  private void annotations(Collection<AnnotationNode> annotations) {
     for (AnnotationNode annotation : annotations) {
       annotation.accept(this);
     }
@@ -243,7 +244,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
   }
 
-  private void types(List<TypeNode> types) {
+  private void types(Collection<TypeNode> types) {
     for (TypeNode type : types) {
       type.accept(this);
     }

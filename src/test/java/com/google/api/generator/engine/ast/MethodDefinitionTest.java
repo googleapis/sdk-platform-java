@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import org.junit.Test;
 
@@ -78,7 +79,8 @@ public class MethodDefinitionTest {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(InterruptedException.class)))
+        .setThrowsExceptions(
+            new HashSet<>(Arrays.asList(TypeNode.withExceptionClazz(InterruptedException.class))))
         .build();
     // No exception thrown, we're good.
   }
@@ -94,7 +96,8 @@ public class MethodDefinitionTest {
               .setReturnType(TypeNode.VOID)
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
               .setThrowsExceptions(
-                  Arrays.asList(TypeNode.withExceptionClazz(IllegalArgumentException.class)))
+                  new HashSet<>(
+                      Arrays.asList(TypeNode.withExceptionClazz(IllegalArgumentException.class))))
               .build();
         });
   }
@@ -153,7 +156,7 @@ public class MethodDefinitionTest {
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.VOID)
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
-              .setThrowsExceptions(Arrays.asList(TypeNode.STRING))
+              .setThrowsExceptions(new HashSet<>(Arrays.asList(TypeNode.STRING)))
               .build();
         });
   }

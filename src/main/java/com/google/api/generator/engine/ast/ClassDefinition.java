@@ -17,8 +17,9 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import java.util.Collections;
+import com.google.common.collect.ImmutableSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -35,10 +36,10 @@ public abstract class ClassDefinition implements AstNode {
 
   // Optional.
   // TODO(xiaozhenliu): Add a default-empty list of CommentStatements here.
-  public abstract ImmutableList<AnnotationNode> annotations();
+  public abstract ImmutableSet<AnnotationNode> annotations();
 
   // Using a list helps with determinism in unit tests.
-  public abstract ImmutableList<TypeNode> implementsTypes();
+  public abstract ImmutableSet<TypeNode> implementsTypes();
 
   @Nullable
   public abstract TypeNode extendsType();
@@ -69,11 +70,11 @@ public abstract class ClassDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsAbstract(false)
-        .setAnnotations(Collections.emptyList())
-        .setImplementsTypes(Collections.emptyList())
-        .setStatements(Collections.emptyList())
-        .setMethods(Collections.emptyList())
-        .setNestedClasses(Collections.emptyList());
+        .setAnnotations(ImmutableSet.of())
+        .setImplementsTypes(ImmutableSet.of())
+        .setStatements(ImmutableList.of())
+        .setMethods(ImmutableList.of())
+        .setNestedClasses(ImmutableList.of());
   }
 
   @AutoValue.Builder
@@ -86,7 +87,7 @@ public abstract class ClassDefinition implements AstNode {
 
     public abstract Builder setIsNested(boolean isNested);
 
-    public abstract Builder setAnnotations(List<AnnotationNode> annotations);
+    public abstract Builder setAnnotations(Set<AnnotationNode> annotations);
 
     public abstract Builder setIsAbstract(boolean isAbstract);
 
@@ -96,7 +97,7 @@ public abstract class ClassDefinition implements AstNode {
 
     public abstract Builder setExtendsType(TypeNode type);
 
-    public abstract Builder setImplementsTypes(List<TypeNode> types);
+    public abstract Builder setImplementsTypes(Set<TypeNode> types);
 
     public abstract Builder setStatements(List<Statement> body);
 

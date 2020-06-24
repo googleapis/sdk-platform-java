@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import org.junit.Test;
 
@@ -58,12 +59,15 @@ public class ClassDefinitionTest {
         .setScope(ScopeNode.PUBLIC)
         .setIsAbstract(true)
         .setAnnotations(
-            Arrays.asList(AnnotationNode.DEPRECATED, AnnotationNode.withSuppressWarnings("all")))
+            new HashSet<>(
+                Arrays.asList(
+                    AnnotationNode.DEPRECATED, AnnotationNode.withSuppressWarnings("all"))))
         .setExtendsType(TypeNode.STRING)
         .setImplementsTypes(
-            Arrays.asList(
-                TypeNode.withReference(Reference.withClazz(Cloneable.class)),
-                TypeNode.withReference(Reference.withClazz(Readable.class))))
+            new HashSet<>(
+                Arrays.asList(
+                    TypeNode.withReference(Reference.withClazz(Cloneable.class)),
+                    TypeNode.withReference(Reference.withClazz(Readable.class)))))
         .build();
     // No exception thrown, we're good.
   }
@@ -171,7 +175,7 @@ public class ClassDefinitionTest {
               .setIsAbstract(true)
               .setIsFinal(true)
               .setScope(ScopeNode.PUBLIC)
-              .setImplementsTypes(Arrays.asList(TypeNode.INT))
+              .setImplementsTypes(new HashSet<>(Arrays.asList(TypeNode.INT)))
               .build();
         });
   }
@@ -185,7 +189,7 @@ public class ClassDefinitionTest {
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
-              .setImplementsTypes(Arrays.asList(TypeNode.INT))
+              .setImplementsTypes(new HashSet<>(Arrays.asList(TypeNode.INT)))
               .build();
         });
   }
@@ -202,8 +206,10 @@ public class ClassDefinitionTest {
               .setScope(ScopeNode.PUBLIC)
               .setExtendsType(cloneableType)
               .setImplementsTypes(
-                  Arrays.asList(
-                      TypeNode.withReference(Reference.withClazz(Readable.class)), cloneableType))
+                  new HashSet<>(
+                      Arrays.asList(
+                          TypeNode.withReference(Reference.withClazz(Readable.class)),
+                          cloneableType)))
               .build();
         });
   }

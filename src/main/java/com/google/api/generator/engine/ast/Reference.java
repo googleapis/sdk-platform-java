@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 @AutoValue
-public abstract class Reference {
+public abstract class Reference implements Comparable<Reference> {
   public abstract Class clazz();
 
   public abstract List<Reference> generics();
@@ -62,6 +62,11 @@ public abstract class Reference {
   @Override
   public int hashCode() {
     return 17 * clazz().hashCode() + 31 * generics().hashCode();
+  }
+
+  @Override
+  public int compareTo(Reference other) {
+    return name().compareTo(other.name());
   }
 
   @AutoValue.Builder

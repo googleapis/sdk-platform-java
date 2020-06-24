@@ -42,6 +42,7 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -764,15 +765,17 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(TypeNode.INT)
             .setThrowsExceptions(
-                Arrays.asList(
-                    TypeNode.withExceptionClazz(IOException.class),
-                    TypeNode.withExceptionClazz(TimeoutException.class),
-                    TypeNode.withExceptionClazz(InterruptedException.class)))
+                new HashSet<>(
+                    Arrays.asList(
+                        TypeNode.withExceptionClazz(IOException.class),
+                        TypeNode.withExceptionClazz(TimeoutException.class),
+                        TypeNode.withExceptionClazz(InterruptedException.class))))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
             .setAnnotations(
-                Arrays.asList(
-                    AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED))
+                new HashSet<>(
+                    Arrays.asList(
+                        AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED)))
             .setBody(
                 Arrays.asList(
                     createForStatement(),
@@ -785,11 +788,11 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             createLines(10),
-            "@SuppressWarnings(\"all\")\n",
             "@Deprecated\n",
             "@Override\n",
+            "@SuppressWarnings(\"all\")\n",
             "protected static final int close(String valOne, boolean valTwo) throws"
-                + " IOException, TimeoutException, InterruptedException {\n",
+                + " IOException, InterruptedException, TimeoutException {\n",
             "for (String str : getSomeStrings()) {\n",
             "boolean aBool = false;\n",
             "}\n",
@@ -827,14 +830,16 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setAnnotations(
-                Arrays.asList(
-                    AnnotationNode.DEPRECATED, AnnotationNode.withSuppressWarnings("all")))
+                new HashSet<>(
+                    Arrays.asList(
+                        AnnotationNode.DEPRECATED, AnnotationNode.withSuppressWarnings("all"))))
             .setExtendsType(TypeNode.STRING)
             .setImplementsTypes(
-                Arrays.asList(
-                    TypeNode.withReference(Reference.withClazz(Appendable.class)),
-                    TypeNode.withReference(Reference.withClazz(Cloneable.class)),
-                    TypeNode.withReference(Reference.withClazz(Readable.class))))
+                new HashSet<>(
+                    Arrays.asList(
+                        TypeNode.withReference(Reference.withClazz(Appendable.class)),
+                        TypeNode.withReference(Reference.withClazz(Cloneable.class)),
+                        TypeNode.withReference(Reference.withClazz(Readable.class)))))
             .build();
 
     classDef.accept(writerVisitor);

@@ -17,8 +17,9 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import java.util.Collections;
+import com.google.common.collect.ImmutableSet;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -31,10 +32,10 @@ public abstract class MethodDefinition implements AstNode {
   public abstract IdentifierNode methodIdentifier();
 
   // TODO(xiahzhenliu): Add a Nullable JavaDoc here.
-  public abstract ImmutableList<AnnotationNode> annotations();
+  public abstract ImmutableSet<AnnotationNode> annotations();
 
   // Using a list helps with determinism in unit tests.
-  public abstract ImmutableList<TypeNode> throwsExceptions();
+  public abstract ImmutableSet<TypeNode> throwsExceptions();
 
   public abstract ImmutableList<VariableExpr> arguments();
 
@@ -60,13 +61,13 @@ public abstract class MethodDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_MethodDefinition.Builder()
-        .setArguments(Collections.emptyList())
+        .setArguments(ImmutableList.of())
         .setIsAbstract(false)
         .setIsFinal(false)
         .setIsStatic(false)
-        .setAnnotations(Collections.emptyList())
-        .setThrowsExceptions(Collections.emptyList())
-        .setBody(Collections.emptyList())
+        .setAnnotations(ImmutableSet.of())
+        .setThrowsExceptions(ImmutableSet.of())
+        .setBody(ImmutableList.of())
         .setIsOverride(false);
   }
 
@@ -78,7 +79,7 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setName(String name);
 
-    public Builder setAnnotations(List<AnnotationNode> annotations) {
+    public Builder setAnnotations(Set<AnnotationNode> annotations) {
       annotationsBuilder().addAll(annotations);
       return this;
     }
@@ -89,7 +90,7 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setIsAbstract(boolean isAbstract);
 
-    public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
+    public abstract Builder setThrowsExceptions(Set<TypeNode> exceptionTypes);
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
 
@@ -101,7 +102,7 @@ public abstract class MethodDefinition implements AstNode {
 
     // Private accessors.
 
-    abstract ImmutableList.Builder<AnnotationNode> annotationsBuilder();
+    abstract ImmutableSet.Builder<AnnotationNode> annotationsBuilder();
 
     abstract String name();
 
