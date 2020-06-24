@@ -16,38 +16,39 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
-public abstract class Variable {
-  public abstract IdentifierNode identifier();
+public abstract class WhileStatement implements Statement {
 
-  public abstract TypeNode type();
+  public abstract Expr conditionExpr();
 
-  abstract String name();
+  public abstract ImmutableList<Statement> body();
 
   public static Builder builder() {
-    return new AutoValue_Variable.Builder();
+    return new AutoValue_WhileStatement.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setType(TypeNode type);
+    public abstract Builder setConditionExpr(Expr expr);
 
-    public abstract Builder setName(String name);
+    public abstract Builder setBody(List<Statement> body);
 
-    abstract String name();
+    abstract WhileStatement autoBuild();
 
-    abstract Builder setIdentifier(IdentifierNode identifier);
-
-    abstract Variable autoBuild();
-
-    public Variable build() {
-      IdentifierNode identifier = IdentifierNode.builder().setName(name()).build();
-      setIdentifier(identifier);
-
-      Variable variable = autoBuild();
-      Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
-      return variable;
+    public WhileStatement build() {
+      WhileStatement whileStatement = autoBuild();
+      Preconditions.checkState(
+          whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN),
+          "While condition must be a boolean-typed expression");
+      return whileStatement;
     }
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 }

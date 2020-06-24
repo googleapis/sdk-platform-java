@@ -38,10 +38,19 @@ public abstract class AssignmentExpr implements Expr {
       AssignmentExpr assignmentExpr = autoBuild();
       TypeNode lhsType = assignmentExpr.variableExpr().variable().type();
       TypeNode rhsType = assignmentExpr.valueExpr().type();
-      if (!lhsType.equals(rhsType)) {
-        throw new TypeMismatchException(
-            String.format(
-                "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
+      if (lhsType.isPrimitiveType()) {
+        if (!lhsType.equals(rhsType)) {
+          throw new TypeMismatchException(
+              String.format(
+                  "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
+        }
+      } else {
+        if (!lhsType.reference().clazz().isAssignableFrom(rhsType.reference().clazz())) {
+          throw new TypeMismatchException(
+              String.format(
+                  "LHS type %s must be a supertype of the RHS type %s",
+                  lhsType.reference().name(), rhsType.reference().name()));
+        }
       }
 
       return assignmentExpr;
