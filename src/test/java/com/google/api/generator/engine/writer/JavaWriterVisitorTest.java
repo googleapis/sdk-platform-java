@@ -107,7 +107,6 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    System.out.println(writerVisitor.write());
     assertThat(writerVisitor.write()).isEqualTo("String x = \"test\"");
   }
 
