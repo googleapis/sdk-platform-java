@@ -27,7 +27,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_specialCharactor() {
+  public void writeStringObjectValue_specialCharacter() {
     StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \' \b \r \f \n");
     assertThat(valueSpecialChar.value()).isEqualTo("\" \t \\ \' \b \r \f \n");
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
