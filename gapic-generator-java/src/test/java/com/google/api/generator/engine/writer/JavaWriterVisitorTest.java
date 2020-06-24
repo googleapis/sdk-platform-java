@@ -32,8 +32,8 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
-import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeMismatchException;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import javax.lang.model.type.NullType;
 import org.junit.Before;
@@ -107,8 +108,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeStringObjectValue_assignmentExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -131,8 +131,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
@@ -141,9 +140,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_nonDeclIgnoresModifiers() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.BOOLEAN).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
             .setVariable(variable)
@@ -158,8 +155,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_basicLocalDecl() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr expr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
     expr.accept(writerVisitor);
@@ -168,9 +164,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeVariableExpr_localFinalDecl() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.BOOLEAN).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
 
     VariableExpr expr =
         VariableExpr.builder().setVariable(variable).setIsFinal(true).setIsDecl(true).build();
@@ -182,7 +176,7 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeVariableExpr_scopedDecl() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr expr =
         VariableExpr.builder()
             .setVariable(variable)
@@ -197,8 +191,7 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeVariableExpr_scopedStaticFinalDecl() {
     IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.BOOLEAN).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr expr =
         VariableExpr.builder()
             .setVariable(variable)
@@ -214,8 +207,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAssignmentExpr_basicValue() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
@@ -231,8 +223,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAssignmentExpr_varToVar() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("foobar").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("foobar").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
             .setVariable(variable)
@@ -242,9 +233,7 @@ public class JavaWriterVisitorTest {
             .setIsDecl(true)
             .build();
 
-    IdentifierNode anotherIdentifier = IdentifierNode.builder().setName("y").build();
-    Variable anotherVariable =
-        Variable.builder().setIdentifier(anotherIdentifier).setType(TypeNode.INT).build();
+    Variable anotherVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
     Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
 
     AssignmentExpr assignExpr =
@@ -307,8 +296,7 @@ public class JavaWriterVisitorTest {
             .setGenerics(Arrays.asList(mapReference, mapReference))
             .build();
 
-    IdentifierNode identifier = IdentifierNode.builder().setName("anArg").build();
-    Variable variable = Variable.builder().setType(TypeNode.INT).setIdentifier(identifier).build();
+    Variable variable = Variable.builder().setType(TypeNode.INT).setName("anArg").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
 
     MethodInvocationExpr methodExpr =
@@ -324,9 +312,7 @@ public class JavaWriterVisitorTest {
             .setReturnType(TypeNode.STRING)
             .build();
 
-    IdentifierNode lhsVarIdentifier = IdentifierNode.builder().setName("someStr").build();
-    Variable lhsVariable =
-        Variable.builder().setType(TypeNode.STRING).setIdentifier(lhsVarIdentifier).build();
+    Variable lhsVariable = Variable.builder().setType(TypeNode.STRING).setName("someStr").build();
     VariableExpr lhsVarExpr =
         VariableExpr.builder().setVariable(lhsVariable).setIsDecl(true).setIsFinal(true).build();
 
@@ -342,8 +328,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeMethodInvocationExpr_chained() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("libraryClient").build();
-    Variable variable = Variable.builder().setType(TypeNode.INT).setIdentifier(identifier).build();
+    Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
 
     MethodInvocationExpr firstMethodExpr =
@@ -411,8 +396,7 @@ public class JavaWriterVisitorTest {
     ifStatement.accept(writerVisitor);
     assertThat(writerVisitor.write())
         .isEqualTo(
-            String.format(
-                "%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "} \n"));
+            String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -440,7 +424,7 @@ public class JavaWriterVisitorTest {
             "} else {\n",
             "int x = 3;\n",
             "int x = 3;\n",
-            "} \n"));
+            "}\n"));
   }
 
   @Test
@@ -480,7 +464,7 @@ public class JavaWriterVisitorTest {
             "} else if (lookAtMe) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n");
+            "}\n");
 
     assertEquals(writerVisitor.write(), expected);
   }
@@ -539,13 +523,13 @@ public class JavaWriterVisitorTest {
             "} else {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n",
-            "} \n",
+            "}\n",
+            "}\n",
             "} else if (lookAtMe) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
-            "} \n",
-            "} \n");
+            "}\n",
+            "}\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -640,7 +624,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     tryCatch.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "} \n"));
+    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -689,6 +673,51 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_basicEmptyBody() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public void close() {\n}\n");
+  }
+
+  @Test
+  public void writeMethodDefinition_basicAbstract() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setIsAbstract(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_basicAbstractEmptyBody() {
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setIsAbstract(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public abstract void close();\n");
   }
 
   @Test
@@ -845,17 +874,28 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeClassDefinition_statementsAndMethods() {
+    List<Reference> subGenerics =
+        Arrays.asList(
+            Reference.withClazz(String.class), Reference.withClazz(MethodDefinition.class));
+    Reference mapEntryReference =
+        Reference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
+    List<Reference> generics =
+        Arrays.asList(Reference.withClazz(ClassDefinition.class), mapEntryReference);
+    Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
+
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(
                 VariableExpr.builder()
-                    .setVariable(createVariable("x", TypeNode.INT))
+                    .setVariable(
+                        createVariable(
+                            "x", TypeNode.withReference(Reference.withClazz(AssignmentExpr.class))))
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .build()),
             ExprStatement.withExpr(
                 VariableExpr.builder()
-                    .setVariable(createVariable("y", TypeNode.INT))
+                    .setVariable(createVariable("y", TypeNode.withReference(mapReference)))
                     .setIsDecl(true)
                     .setScope(ScopeNode.PROTECTED)
                     .build()));
@@ -908,12 +948,19 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(18),
+            createLines(25),
             "package com.google.example.library.v1.stub;\n",
             "\n",
+            "import static java.util.Map.Entry;\n",
+            "\n",
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.ClassDefinition;\n",
+            "import com.google.api.generator.engine.ast.MethodDefinition;\n",
+            "import java.util.Map;\n",
+            "\n",
             "public class LibraryServiceStub {\n",
-            "private int x;\n",
-            "protected int y;\n",
+            "private AssignmentExpr x;\n",
+            "protected Map<ClassDefinition, Entry<String, MethodDefinition>> y;\n",
             "public boolean open() {\n",
             "return true;\n",
             "}\n",
@@ -958,8 +1005,7 @@ public class JavaWriterVisitorTest {
   }
 
   private static Variable createVariable(String variableName, TypeNode type) {
-    IdentifierNode identifier = IdentifierNode.builder().setName(variableName).build();
-    return Variable.builder().setIdentifier(identifier).setType(type).build();
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 
   private static ForStatement createForStatement() {
