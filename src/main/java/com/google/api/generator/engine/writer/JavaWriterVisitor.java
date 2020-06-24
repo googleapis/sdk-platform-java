@@ -23,6 +23,7 @@ import javax.swing.text.html.HTMLWriter;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.JavaDocComment;
