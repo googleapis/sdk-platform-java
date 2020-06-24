@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="guava-26.0-jre_9bad606f">
-    <CLASSES>
-      <root url="jar:///private/var/tmp/_bazel_summerji/b69ad3c1807c89ad4aad5ef1d1299bdc/external/com_google_guava_guava__com_google_api_codegen/guava-26.0-jre.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
