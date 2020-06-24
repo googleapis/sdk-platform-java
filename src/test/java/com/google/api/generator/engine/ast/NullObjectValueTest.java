@@ -14,10 +14,9 @@
 
 package com.google.api.generator.engine.ast;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.Test;
 import static com.google.common.truth.Truth.assertThat;
+
+import org.junit.Test;
 
 public class NullObjectValueTest {
   private static final String NULL_VALUE = "null";
@@ -27,5 +26,4 @@ public class NullObjectValueTest {
     NullObjectValue nullValue = NullObjectValue.create();
     assertThat(nullValue.value()).isEqualTo(NULL_VALUE);
   }
-
 }
