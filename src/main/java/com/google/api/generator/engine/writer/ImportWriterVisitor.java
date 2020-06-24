@@ -200,6 +200,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== PRIVATE HELPERS =============================== */
+
   private void annotations(Collection<AnnotationNode> annotations) {
     for (AnnotationNode annotation : annotations) {
       annotation.accept(this);

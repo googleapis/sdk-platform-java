@@ -73,6 +73,35 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String TRY = "try";
   private static final String WHILE = "while";
 
+  private static final String AT = "@";
+
+  private static final String COLON = ":";
+  private static final String COMMA = ",";
+  private static final String DOT = ".";
+  private static final String EQUALS = "=";
+  private static final String LEFT_ANGLE = "<";
+  private static final String LEFT_BRACE = "{";
+  private static final String LEFT_PAREN = "(";
+  private static final String RIGHT_ANGLE = ">";
+  private static final String RIGHT_BRACE = "}";
+  private static final String RIGHT_PAREN = ")";
+  private static final String SEMICOLON = ";";
+
+  private static final String ABSTRACT = "abstract";
+  private static final String CATCH = "catch";
+  private static final String CLASS = "class";
+  private static final String ELSE = "else";
+  private static final String EXTENDS = "extends";
+  private static final String FINAL = "final";
+  private static final String FOR = "for";
+  private static final String IF = "if";
+  private static final String IMPLEMENTS = "implements";
+  private static final String RETURN = "return";
+  private static final String STATIC = "static";
+  private static final String THROWS = "throws";
+  private static final String TRY = "try";
+  private static final String WHILE = "while";
+
   private final StringBuffer buffer = new StringBuffer();
 
   public JavaWriterVisitor() {}
@@ -370,7 +399,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       space();
       buffer.append(THROWS);
       space();
-      int numExceptionsThrown = methodDefinition.throwsExceptions().size();
+
       Iterator<TypeNode> exceptionIter =
           new TreeSet<>(methodDefinition.throwsExceptions()).iterator();
       while (exceptionIter.hasNext()) {

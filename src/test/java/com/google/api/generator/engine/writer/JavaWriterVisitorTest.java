@@ -866,6 +866,7 @@ public class JavaWriterVisitorTest {
     List<Reference> generics =
         Arrays.asList(Reference.withClazz(ClassDefinition.class), mapEntryReference);
     Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
+
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(
