@@ -24,6 +24,10 @@ public abstract class BlockComment implements Comment {
     return new AutoValue_BlockComment.Builder();
   }
 
+  public static BlockComment withComment(String comment) {
+    return BlockComment.builder().setComment(comment).build();
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setComment(String comment);

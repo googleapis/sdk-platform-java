@@ -249,10 +249,10 @@ public class JavaWriterVisitorTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
-            .addHtmlP(htmlP1)
+            .addParagraph(htmlP1)
             .addSampleCode(sampleCode)
-            .addHtmlP(htmlP2)
-            .addHtmlOl(htmlList)
+            .addParagraph(htmlP2)
+            .addOrderedList(htmlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
@@ -262,7 +262,6 @@ public class JavaWriterVisitorTest {
         "/**\n"
             + "* this is a test comment\n"
             + "* <p> This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:\n"
-            + "* Sample code:\n"
             + "* <pre><code>\n"
             + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
             + "*  Shelf shelf = Shelf.newBuilder().build();\n"
@@ -275,7 +274,6 @@ public class JavaWriterVisitorTest {
             + "* <li> A request object method.\n"
             + "* <li>A callable method.\n"
             + "* </ol>\n"
-            + "* Sample code:\n"
             + "* <pre><code>\n"
             + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
             + "*  Shelf shelf = Shelf.newBuilder().build();\n"

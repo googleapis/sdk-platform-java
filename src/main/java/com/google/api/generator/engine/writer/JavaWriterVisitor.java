@@ -341,7 +341,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public String visit(BlockComment blockComment) throws Exception{
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    return formatter.format("/** " + sourceString + " */");
+    return formatter.format(String.format("%s%s%s", "/** ", sourceString, " */"));
   }
 
   public String visit(JavaDocComment javaDocComment) throws Exception{

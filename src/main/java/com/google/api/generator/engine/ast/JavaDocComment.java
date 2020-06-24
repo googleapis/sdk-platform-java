@@ -55,7 +55,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addSampleCode(String sampleCode) {
-      commentsBuilder().add("* Sample code:\n* <pre><code>\n");
+      commentsBuilder().add("* <pre><code>\n");
       String[] sampleLines = sampleCode.split("\\r?\\n");
       for (int i = 0; i < sampleLines.length; i++) {
         sampleLines[i] = "* " + sampleLines[i];
@@ -65,12 +65,12 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    public Builder addHtmlP(String paragraph) {
+    public Builder addParagraph(String paragraph) {
       commentsBuilder().add(String.format("%1$s" + paragraph + "%2$s", "* <p> ", "\n"));
       return this;
     }
 
-    public Builder addHtmlOl(List<String> oList) {
+    public Builder addOrderedList(List<String> oList) {
       commentsBuilder().add("* <ol>\n");
       for (int i = 0; i < oList.size(); i++) {
         oList.set(i, String.format("%1$s" + oList.get(i) + "%2$s", "* <li>", "\n"));
@@ -79,7 +79,7 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    public Builder addHtmlUl(List<String> uList) {
+    public Builder addUnorderedList(List<String> uList) {
       commentsBuilder().add("* <ul>\n");
       for (int i = 0; i < uList.size(); i++) {
         uList.set(i, String.format("%1$s" + uList.get(i) + "%2$s", "* <li>", "\n"));
