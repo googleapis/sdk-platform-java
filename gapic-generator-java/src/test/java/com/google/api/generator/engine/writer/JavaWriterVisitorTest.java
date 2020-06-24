@@ -998,16 +998,4 @@ public class JavaWriterVisitorTest {
         .setBody(body)
         .build();
   }
-
-  private static ForStatement createForStatement() {
-    Expr collectionExpr = MethodInvocationExpr.builder().setMethodName("getSomeStrings").build();
-    ExprStatement assignExprStatement =
-        ExprStatement.withExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN));
-    List<Statement> body = Arrays.asList(assignExprStatement);
-    return ForStatement.builder()
-        .setLocalVariableExpr(createVariableDeclExpr("str", TypeNode.STRING))
-        .setCollectionExpr(collectionExpr)
-        .setBody(body)
-        .build();
-  }
 }
