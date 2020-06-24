@@ -147,50 +147,6 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_abstractStatic() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          MethodDefinition.builder()
-              .setName("close")
-              .setIsAbstract(true)
-              .setIsStatic(true)
-              .setScope(ScopeNode.PUBLIC)
-              .setReturnType(TypeNode.VOID)
-              .build();
-        });
-  }
-
-  @Test
-  public void invalidMethodDefinition_abstractFinal() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          MethodDefinition.builder()
-              .setName("close")
-              .setIsAbstract(true)
-              .setIsFinal(true)
-              .setScope(ScopeNode.PUBLIC)
-              .setReturnType(TypeNode.VOID)
-              .build();
-        });
-  }
-
-  @Test
-  public void invalidMethodDefinition_abstractPrivate() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          MethodDefinition.builder()
-              .setName("close")
-              .setIsAbstract(true)
-              .setScope(ScopeNode.PRIVATE)
-              .setReturnType(TypeNode.VOID)
-              .build();
-        });
-  }
-
-  @Test
   public void invalidMethodDefinition_invalidException() {
     assertThrows(
         IllegalStateException.class,
