@@ -333,6 +333,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     space();
 
     // Modifiers.
+
     if (methodDefinition.isAbstract()) {
       buffer.append(ABSTRACT);
       space();
@@ -368,6 +369,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       space();
       buffer.append(THROWS);
       space();
+
       int numExceptionsThrown = methodDefinition.throwsExceptions().size();
       Iterator<TypeNode> exceptionIter = methodDefinition.throwsExceptions().iterator();
       while (exceptionIter.hasNext()) {
@@ -415,7 +417,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         new ImportWriterVisitor(classDefinition.packageString());
     classDefinition.accept(importWriterVisitor);
     buffer.append(importWriterVisitor.write());
-
+ 
     // Annotations, if any.
     annotations(classDefinition.annotations());
 
@@ -455,6 +457,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.implementsTypes().isEmpty()) {
       buffer.append(IMPLEMENTS);
       space();
+
       int numImplementsTypes = classDefinition.implementsTypes().size();
       for (int i = 0; i < numImplementsTypes; i++) {
         classDefinition.implementsTypes().get(i).accept(this);
