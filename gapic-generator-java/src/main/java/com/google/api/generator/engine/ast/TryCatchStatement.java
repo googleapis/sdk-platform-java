@@ -71,11 +71,8 @@ public abstract class TryCatchStatement implements Statement {
         Preconditions.checkState(
             tryCatchStatement.catchVariableExpr().isDecl(),
             "Catch variable expression must be a declaration");
-        Reference exceptionReference =
-            tryCatchStatement.catchVariableExpr().variable().type().reference();
         Preconditions.checkState(
-            exceptionReference != null
-                && Exception.class.isAssignableFrom(exceptionReference.clazz()),
+            TypeNode.isExceptionType(tryCatchStatement.catchVariableExpr().variable().type()),
             "Catch variable must be an Exception object reference");
       }
 
