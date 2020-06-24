@@ -15,8 +15,8 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -93,7 +93,7 @@ public abstract class JavaDocComment implements Comment {
 
   @Override
   public String comment() {
-    List<String> commentBody = new ArrayList<>(comments());
+    List<String> commentBody = comments().stream().collect(Collectors.toList());
     commentBody.add(0, "/**\n");
     commentBody.add(String.format("%1$s" + deprecated() + "%2$s", "* @deprecated ", "\n"));
     commentBody.add(String.format("%1$s" + throwsText() + "%2$s", "* @throws ", "\n"));
