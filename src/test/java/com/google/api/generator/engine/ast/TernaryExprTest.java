@@ -22,13 +22,11 @@ import org.junit.Test;
 public class TernaryExprTest {
   @Test
   public void writeTernaryExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable = Variable.builder().setIdentifier(identifier).setType(TypeNode.INT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
-    IdentifierNode conditionIdentifier = IdentifierNode.builder().setName("condition").build();
     Variable conditionVariable =
-        Variable.builder().setIdentifier(conditionIdentifier).setType(TypeNode.BOOLEAN).build();
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
 
     Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
@@ -48,14 +46,11 @@ public class TernaryExprTest {
 
   @Test
   public void writeInvalidTernaryExpr() {
-    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
-    Variable variable =
-        Variable.builder().setIdentifier(identifier).setType(TypeNode.STRING).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
-    IdentifierNode conditionIdentifier = IdentifierNode.builder().setName("condition").build();
     Variable conditionVariable =
-        Variable.builder().setIdentifier(conditionIdentifier).setType(TypeNode.BOOLEAN).build();
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
 
     Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
