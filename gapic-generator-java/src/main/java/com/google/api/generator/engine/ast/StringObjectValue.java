@@ -42,9 +42,9 @@ public abstract class StringObjectValue implements ObjectValue {
     public abstract StringObjectValue autobuild();
 
     public StringObjectValue build() {
-      String value = autobuild().value();
-      String change = "\"" + StringEscapeUtils.escapeJava(value) + "\"";
-      setValue(change);
+      String value =
+          String.format("%s%s%s", "\"", StringEscapeUtils.escapeJava(autobuild().value()), "\"");
+      setValue(value);
       return autobuild();
     }
   }
