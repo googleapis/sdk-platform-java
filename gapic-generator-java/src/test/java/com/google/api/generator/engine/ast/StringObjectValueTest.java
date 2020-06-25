@@ -27,9 +27,26 @@ public class StringObjectValueTest {
   }
 
   @Test
+  public void writeStringObjectValue_escapeCharacter() {
+    StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n");
+    String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n\"";
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
+    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
+  }
+
+  @Test
+  public void writeStringObjectValue_unicodeCharacter() {
+    StringObjectValue valueSpecialChar = StringObjectValue.withValue("one unicode: \uFFFF");
+    String expected = "\"one unicode: \\uFFFF\"";
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
+    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
+  }
+
+  @Test
   public void writeStringObjectValue_specialCharacter() {
-    StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \' \b \r \f \n");
-    assertThat(valueSpecialChar.value()).isEqualTo("\"\" \t \\ \' \b \r \f \n\"");
+    StringObjectValue valueSpecialChar = StringObjectValue.withValue("Tom said: \"Hi!\"; \n");
+    String expected = "\"Tom said: \\\"Hi!\\\"; \\n\"";
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
 }

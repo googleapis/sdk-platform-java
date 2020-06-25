@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 @AutoValue
 public abstract class StringObjectValue implements ObjectValue {
@@ -41,7 +42,12 @@ public abstract class StringObjectValue implements ObjectValue {
     public abstract StringObjectValue autobuild();
 
     public StringObjectValue build() {
-      setValue(String.format("%s%s%s", "\"", autobuild().value(), "\""));
+      String value = autobuild().value();
+      System.out.println("before escape: " + value);
+      System.out.println("call escape: " + StringEscapeUtils.escapeJava(value));
+      String change = "\"" + StringEscapeUtils.escapeJava(value) + "\"";
+      setValue(change);
+      System.out.println("after escape: " + change);
       return autobuild();
     }
   }
