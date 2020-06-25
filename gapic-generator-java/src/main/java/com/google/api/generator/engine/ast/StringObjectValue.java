@@ -38,11 +38,16 @@ public abstract class StringObjectValue implements ObjectValue {
   public abstract static class Builder {
     public abstract Builder setValue(String value);
 
-    public abstract StringObjectValue build();
+    public abstract StringObjectValue autobuild();
+
+    public StringObjectValue build() {
+      setValue("\"" + autobuild().value() + "\"");
+      return autobuild();
+    }
   }
 
   @Override
   public String toString() {
-    return String.format("%s%s%s", "\"", value(), "\"");
+    return value();
   }
 }
