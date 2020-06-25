@@ -21,7 +21,7 @@ import org.junit.Test;
 
 public class TernaryExprTest {
   @Test
-  public void writeTernaryExpr_primitiveType() {
+  public void validTernaryExpr_primitiveType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -46,7 +46,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void writeTernaryExpr_ObjectType() {
+  public void validTernaryExpr_ObjectType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -71,7 +71,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void writeInvalidTernaryExpr() {
+  public void invalidTernaryExpr() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 

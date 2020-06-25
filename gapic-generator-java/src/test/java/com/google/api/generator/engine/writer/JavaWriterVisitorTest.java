@@ -216,10 +216,8 @@ public class JavaWriterVisitorTest {
     Expr elseExpr = ValueExpr.builder().setValue(value2).build();
 
     TernaryExpr ternaryExpr = TernaryExpr.builder().setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr).build();
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(ternaryExpr).build();
-    assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("x = condition ? 3 : 4");
+    ternaryExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
   }
   
   @Test

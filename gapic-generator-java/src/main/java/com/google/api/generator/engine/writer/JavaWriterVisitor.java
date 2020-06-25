@@ -52,11 +52,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
   private static final String LEFT_PAREN = "(";
+  private static final String QUESTION_MARK = "?";
   private static final String RIGHT_ANGLE = ">";
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
   private static final String SEMICOLON = ";";
-  private static final String QUESTION_MARK = "?";
 
   private static final String ABSTRACT = "abstract";
   private static final String CATCH = "catch";
