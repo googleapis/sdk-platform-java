@@ -1,6 +1,6 @@
 # API Client Generator for Java
 
-A generator for protocol buffer described APIs for and in C#.
+A generator for protocol buffer described APIs for and in Java.
 
 This is a generator for API client libraries for APIs specified by protocol
 buffers, such as those inside Google. It takes a protocol buffer (with
