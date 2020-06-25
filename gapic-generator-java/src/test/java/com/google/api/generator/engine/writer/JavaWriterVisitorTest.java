@@ -101,21 +101,6 @@ public class JavaWriterVisitorTest {
   /** =============================== EXPRESSIONS =============================== */
 
   @Test
-  public void writeStringObjectValue_assignmentExpr() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Value value = StringObjectValue.withValue("Hi! World. \n");
-    Expr valueExpr = ValueExpr.builder().setValue(value).build();
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
-  }
-
-  @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
@@ -251,6 +236,21 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("String x = null");
+  }
+
+  @Test
+  public void writeAssignmentExpr_stringObjectValue() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = StringObjectValue.withValue("Hi! World. \n");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
   }
 
   @Test
