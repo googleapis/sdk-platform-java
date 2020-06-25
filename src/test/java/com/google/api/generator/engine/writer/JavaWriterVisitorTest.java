@@ -106,13 +106,13 @@ public class JavaWriterVisitorTest {
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
-    Value value = StringObjectValue.withValue("test");
+    Value value = StringObjectValue.withValue("Hi! World. \n");
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
     AssignmentExpr assignExpr =
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("String x = \"test\"");
+    assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
   }
 
   @Test
