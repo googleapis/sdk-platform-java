@@ -41,7 +41,7 @@ public abstract class StringObjectValue implements ObjectValue {
     public abstract StringObjectValue autobuild();
 
     public StringObjectValue build() {
-      setValue("\"" + autobuild().value() + "\"");
+      setValue(String.format("%s%s%s", "\"", autobuild().value(), "\""));
       return autobuild();
     }
   }
