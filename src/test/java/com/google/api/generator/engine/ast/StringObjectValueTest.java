@@ -22,14 +22,14 @@ public class StringObjectValueTest {
   @Test
   public void writeStringObjectValue() {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
-    assertThat(s.value()).isEqualTo("test");
+    assertThat(s.value()).isEqualTo("\"test\"");
     assertThat(s.type()).isEqualTo(TypeNode.STRING);
   }
 
   @Test
   public void writeStringObjectValue_specialCharacter() {
     StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \' \b \r \f \n");
-    assertThat(valueSpecialChar.value()).isEqualTo("\" \t \\ \' \b \r \f \n");
+    assertThat(valueSpecialChar.value()).isEqualTo("\"\" \t \\ \' \b \r \f \n\"");
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
 }
