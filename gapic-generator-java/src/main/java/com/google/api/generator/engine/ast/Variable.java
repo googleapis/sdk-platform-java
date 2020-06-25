@@ -47,6 +47,7 @@ public abstract class Variable {
 
       Variable variable = autoBuild();
       Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
+      Preconditions.checkState(!variable.type().equals(TypeNode.NULL));
       return variable;
     }
   }
