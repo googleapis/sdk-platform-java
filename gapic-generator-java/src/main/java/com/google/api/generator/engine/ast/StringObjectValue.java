@@ -43,11 +43,8 @@ public abstract class StringObjectValue implements ObjectValue {
 
     public StringObjectValue build() {
       String value = autobuild().value();
-      System.out.println("before escape: " + value);
-      System.out.println("call escape: " + StringEscapeUtils.escapeJava(value));
       String change = "\"" + StringEscapeUtils.escapeJava(value) + "\"";
       setValue(change);
-      System.out.println("after escape: " + change);
       return autobuild();
     }
   }
