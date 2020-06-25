@@ -11,6 +11,7 @@ TESTS = [
     "PrimitiveValueTest",
     "ReferenceTest",
     "TernaryExprTest",
+    "NullObjectValueTest",
 ]
 
 filegroup(
