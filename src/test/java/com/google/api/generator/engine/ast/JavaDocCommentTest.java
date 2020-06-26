@@ -40,7 +40,8 @@ public class JavaDocCommentTest {
         "The surface of this class includes several types of Java methods for each of the API's methods:";
     List<String> htmlList =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
-    String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails.";
+    String throwType = "com.google.api.gax.rpc.ApiException";
+    String throwsDescription = "if the remote call fails.";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
@@ -49,7 +50,7 @@ public class JavaDocCommentTest {
             .addOrderedList(htmlList)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
-            .setThrowsText(throwText)
+            .addThrowsText(throwType, throwsDescription)
             .build();
     String expected =
         "this is a test comment\n"
@@ -61,8 +62,8 @@ public class JavaDocCommentTest {
             + "<li> A callable method.\n"
             + "</ol>\n"
             + "@param shelfName The name of the shelf where books are published to.\n"
-            + "@deprecated Use the {@link ArchivedBookName} class instead.\n"
-            + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.";
+            + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
+            + "@deprecated Use the {@link ArchivedBookName} class instead.";
     assertThat(javaDocComment.comment()).isEqualTo(expected);
   }
 }

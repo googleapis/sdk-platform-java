@@ -25,13 +25,10 @@ public abstract class JavaDocComment implements Comment {
   @Nullable
   public abstract String deprecated();
 
-  @Nullable
-  public abstract String throwsText();
-
   public abstract ImmutableList<String> comments();
 
   public static Builder builder() {
-    return new AutoValue_JavaDocComment.Builder().setDeprecated("").setThrowsText("");
+    return new AutoValue_JavaDocComment.Builder().setDeprecated("");
   }
 
   @AutoValue.Builder
@@ -39,8 +36,6 @@ public abstract class JavaDocComment implements Comment {
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
     public abstract Builder setDeprecated(String deprecatedText);
-
-    public abstract Builder setThrowsText(String throwsText);
 
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
@@ -50,6 +45,12 @@ public abstract class JavaDocComment implements Comment {
     public Builder addParam(String name, String description) {
       String parameter = String.format("%s %s %s", "@param", name, description);
       commentsBuilder().add(parameter);
+      return this;
+    }
+
+    public Builder addThrowsText(String type, String description) {
+      String throwsText = String.format("%s %s %s", "@throws", type, description);
+      commentsBuilder().add(throwsText);
       return this;
     }
 
@@ -94,9 +95,6 @@ public abstract class JavaDocComment implements Comment {
     List<String> commentBody = comments().stream().collect(Collectors.toList());
     if (deprecated().length() != 0) {
       commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
-    }
-    if (throwsText().length() != 0) {
-      commentBody.add(String.format("%s %s", "@throws", throwsText()));
     }
     return String.join("\n", commentBody);
   }
