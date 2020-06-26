@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
@@ -48,7 +49,7 @@ public class PrimitiveValueTest {
   private static void assertValidValue(TypeKind typeKind, String value) {
     TypeNode type = TypeNode.builder().setTypeKind(typeKind).build();
     PrimitiveValue primitiveValue = PrimitiveValue.builder().setType(type).setValue(value).build();
-    assertThat(primitiveValue.value()).isEqualTo(value);
+    assertEquals(primitiveValue.value(), value);
     assertThat(primitiveValue.type()).isEqualTo(type);
   }
 
