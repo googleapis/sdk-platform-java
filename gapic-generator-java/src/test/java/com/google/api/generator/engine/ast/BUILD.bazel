@@ -12,6 +12,8 @@ TESTS = [
     "ReferenceTest",
     "StringObjectValueTest",
     "NullObjectValueTest",
+    "VariableTest",
+    "VariableExprTest",
 ]
 
 filegroup(
