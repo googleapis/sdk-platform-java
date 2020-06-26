@@ -10,8 +10,11 @@ TESTS = [
     "TryCatchStatementTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "TernaryExprTest",
     "NullObjectValueTest",
     "JavaDocCommentTest",
+    "VariableTest",
+    "VariableExprTest",
 ]
 
 filegroup(
