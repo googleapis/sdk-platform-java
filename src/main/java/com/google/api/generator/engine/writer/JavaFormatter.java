@@ -20,16 +20,11 @@ import com.google.googlejavaformat.java.FormatterException;
 
 public final class JavaFormatter {
 
-    private static final JavaFormatter INSTANCE = new JavaFormatter();
     private static final Formatter FORMATTER = new Formatter();
 
     private JavaFormatter() {}
-    
-    public static JavaFormatter getInstance() {
-        return INSTANCE;
-    }
 
-    public String format(String comment){
+    public static String format(String comment){
         try{
             return FORMATTER.formatSource(comment);
         }catch(FormatterException e){
