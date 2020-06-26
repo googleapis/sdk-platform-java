@@ -16,10 +16,10 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -35,7 +35,6 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TryCatchStatement;
-import com.google.api.generator.engine.ast.TypeMismatchException;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -48,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-import javax.lang.model.type.NullType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -366,20 +364,43 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeWhileStatement_simple() {
-    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
-    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
-    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
-    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+  public void writeBlockStatement_empty() {
+    BlockStatement blockStatement = BlockStatement.builder().build();
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "{\n}\n");
+  }
 
-    WhileStatement whileStatement =
-        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+  @Test
+  public void writeBlockStatement_simple() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    BlockStatement blockStatement =
+        BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
 
-    whileStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            String.format(
-                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "{\nSomeClass.foobar();\n}\n");
+  }
+
+  @Test
+  public void writeBlockStatement_static() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    BlockStatement blockStatement =
+        BlockStatement.builder()
+            .setIsStatic(true)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(methodExpr), ExprStatement.withExpr(methodExpr)))
+            .build();
+
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "static {\nSomeClass.foobar();\nSomeClass.foobar();\n}\n");
   }
 
   @Test
@@ -530,6 +551,23 @@ public class JavaWriterVisitorTest {
             "}\n",
             "}\n");
     assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeWhileStatement_simple() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    WhileStatement whileStatement =
+        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+
+    whileStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            String.format(
+                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
