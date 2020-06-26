@@ -246,8 +246,17 @@ public class JavaWriterVisitorTest {
     String paramDescription =  "The name of the shelf where books are published to.";
     String htmlP1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
     String htmlP2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
-    String sampleCode =
-        "try (LibraryClient libraryClient = LibraryClient.create()) {\n Shelf shelf = Shelf.newBuilder().build();\nShelf response = libraryClient.createShelf(shelf);\n}";
+
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .setIsSampleCode(true)
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    String sampleCode = writerVisitor.write();
     List<String> htmlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
     String throwText = "com.google.api.gax.rpc.ApiException if the remote call fails.";
     JavaDocComment javaDocComment =
@@ -267,9 +276,8 @@ public class JavaWriterVisitorTest {
             + "* this is a test comment\n"
             + "* <p> This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:\n"
             + "* <pre><code>\n"
-            + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
-            + "*  Shelf shelf = Shelf.newBuilder().build();\n"
-            + "* Shelf response = libraryClient.createShelf(shelf);\n"
+            + "* try (boolean condition = false) {\n"
+            + "* int x = 3;\n"
             + "* }\n"
             + "* </code></pre>\n"
             + "* <p> The surface of this class includes several types of Java methods for each of the API's methods:\n"
@@ -279,9 +287,8 @@ public class JavaWriterVisitorTest {
             + "* <li> A callable method.\n"
             + "* </ol>\n"
             + "* <pre><code>\n"
-            + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
-            + "*  Shelf shelf = Shelf.newBuilder().build();\n"
-            + "* Shelf response = libraryClient.createShelf(shelf);\n"
+            + "* try (boolean condition = false) {\n"
+            + "* int x = 3;\n"
             + "* }\n"
             + "* </code></pre>\n"
             + "* @param shelfName The name of the shelf where books are published to.\n"
