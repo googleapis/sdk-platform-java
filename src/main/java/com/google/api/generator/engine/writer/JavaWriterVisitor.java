@@ -55,6 +55,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private static final String COLON = ":";
   private static final String COMMA = ",";
+  private static final String COMMENT_START = "/**";
+  private static final String COMMENT_END = "*/";
   private static final String DOT = ".";
   private static final String EQUALS = "=";
   private static final String LEFT_ANGLE = "<";
@@ -64,6 +66,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
   private static final String SEMICOLON = ";";
+  private static final String STAR = "*";
 
   private static final String ABSTRACT = "abstract";
   private static final String CATCH = "catch";
@@ -343,8 +346,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   public String visit(JavaDocComment javaDocComment){
-    String comment = javaDocComment.comment();
-    return JavaFormatter.getInstance().format(comment);
+    StringBuilder formattedJavaDocComment = new StringBuilder();
+    formattedJavaDocComment.append(COMMENT_START + NEWLINE);
+    String[] commentLines = javaDocComment.comment().split("\\r?\\n");
+    for(String comment : commentLines){
+      formattedJavaDocComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
+    }
+    formattedJavaDocComment.append(COMMENT_END);
+    return JavaFormatter.getInstance().format(formattedJavaDocComment.toString());
   }
 
   /** =============================== OTHER =============================== */

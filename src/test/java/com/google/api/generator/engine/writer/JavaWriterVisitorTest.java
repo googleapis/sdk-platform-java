@@ -274,9 +274,9 @@ public class JavaWriterVisitorTest {
             + "* </code></pre>\n"
             + "* <p> The surface of this class includes several types of Java methods for each of the API's methods:\n"
             + "* <ol>\n"
-            + "* <li>A flattened method.\n"
-            + "* <li> A request object method.\n"
-            + "* <li>A callable method.\n"
+            + "* <li> A flattened method.\n"
+            + "* <li>  A request object method.\n"
+            + "* <li> A callable method.\n"
             + "* </ol>\n"
             + "* <pre><code>\n"
             + "* try (LibraryClient libraryClient = LibraryClient.create()) {\n"
@@ -289,7 +289,6 @@ public class JavaWriterVisitorTest {
             + "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "*/\n";
     String formattedComment = javaDocComment.accept(writerVisitor);
-
     assertThat(formattedComment).isEqualTo(expected);
   }
   @Test

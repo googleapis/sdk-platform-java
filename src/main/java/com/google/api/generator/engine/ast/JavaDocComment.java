@@ -43,48 +43,46 @@ public abstract class JavaDocComment implements Comment {
     public abstract Builder setThrowsText(String throwsText);
 
     public Builder addComment(String comment) {
-      commentsBuilder().add(String.format("%1$s" + comment + "%2$s", "* ", "\n"));
+      commentsBuilder().add(comment);
       return this;
     }
 
     public Builder addParam(String name, String description) {
-      String parameter =
-          String.format("%1$s" + name + "%2$s" + description + "%3$s", "* @param ", " ", "\n");
+      String parameter = String.format("%s %s %s", "@param", name, description);
       commentsBuilder().add(parameter);
       return this;
     }
 
     public Builder addSampleCode(String sampleCode) {
-      commentsBuilder().add("* <pre><code>\n");
+      commentsBuilder().add("<pre><code>");
       String[] sampleLines = sampleCode.split("\\r?\\n");
-      for (int i = 0; i < sampleLines.length; i++) {
-        sampleLines[i] = "* " + sampleLines[i];
+      for (String sampleLine : sampleLines) {
+        commentsBuilder().add(sampleLine);
       }
-      commentsBuilder()
-          .add(String.format(String.join("\n", sampleLines) + "%s", "\n* </code></pre>\n"));
+      commentsBuilder().add("</code></pre>");
       return this;
     }
 
     public Builder addParagraph(String paragraph) {
-      commentsBuilder().add(String.format("%1$s" + paragraph + "%2$s", "* <p> ", "\n"));
+      commentsBuilder().add(String.format("%s %s", "<p>", paragraph));
       return this;
     }
 
     public Builder addOrderedList(List<String> oList) {
-      commentsBuilder().add("* <ol>\n");
+      commentsBuilder().add("<ol>");
       for (int i = 0; i < oList.size(); i++) {
-        oList.set(i, String.format("%1$s" + oList.get(i) + "%2$s", "* <li>", "\n"));
+        commentsBuilder().add(String.format("%s %s", "<li>", oList.get(i)));
       }
-      commentsBuilder().add(String.format(String.join("", oList) + "%s", "* </ol>\n"));
+      commentsBuilder().add("</ol>");
       return this;
     }
 
     public Builder addUnorderedList(List<String> uList) {
-      commentsBuilder().add("* <ul>\n");
+      commentsBuilder().add("<ul>");
       for (int i = 0; i < uList.size(); i++) {
-        uList.set(i, String.format("%1$s" + uList.get(i) + "%2$s", "* <li>", "\n"));
+        commentsBuilder().add(String.format("%s %s", "<li>", uList.get(i)));
       }
-      commentsBuilder().add(String.format(String.join("", uList) + "%s", "* </ul>\n"));
+      commentsBuilder().add("</ul>");
       return this;
     }
 
@@ -94,11 +92,9 @@ public abstract class JavaDocComment implements Comment {
   @Override
   public String comment() {
     List<String> commentBody = comments().stream().collect(Collectors.toList());
-    commentBody.add(0, "/**\n");
-    commentBody.add(String.format("%1$s" + deprecated() + "%2$s", "* @deprecated ", "\n"));
-    commentBody.add(String.format("%1$s" + throwsText() + "%2$s", "* @throws ", "\n"));
-    commentBody.add("*/");
-    return String.join("", commentBody);
+    commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
+    commentBody.add(String.format("%s %s", "@throws", throwsText()));
+    return String.join("\n", commentBody);
   }
 
   public String accept(AstNodeVisitor visitor) throws Exception {
