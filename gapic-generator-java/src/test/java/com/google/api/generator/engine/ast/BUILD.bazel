@@ -10,6 +10,7 @@ TESTS = [
     "TryCatchStatementTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "TernaryExprTest",
     "NullObjectValueTest",
     "VariableTest",
     "VariableExprTest",
