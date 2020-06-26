@@ -161,7 +161,7 @@ public class MethodDefinitionTest {
   @Test
   public void invalidMethodDefinition_missingNonVoidReturnType() {
     assertThrows(
-        IllegalStateException.class,
+        NullPointerException.class,
         () -> {
           MethodDefinition.builder()
               .setName("close")
