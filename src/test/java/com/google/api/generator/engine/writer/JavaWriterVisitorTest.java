@@ -244,8 +244,8 @@ public class JavaWriterVisitorTest {
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
     String paramDescription =  "The name of the shelf where books are published to.";
-    String htmlP1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
-    String htmlP2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
+    String paragraph1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
+    String paragraph2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
 
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
@@ -263,9 +263,9 @@ public class JavaWriterVisitorTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
-            .addParagraph(htmlP1)
+            .addParagraph(paragraph1)
             .addSampleCode(sampleCode)
-            .addParagraph(htmlP2)
+            .addParagraph(paragraph2)
             .addOrderedList(htmlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
