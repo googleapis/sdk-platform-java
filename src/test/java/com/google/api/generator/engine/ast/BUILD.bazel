@@ -11,7 +11,7 @@ TESTS = [
     "PrimitiveValueTest",
     "ReferenceTest",
     "NullObjectValueTest",
-    "JavaDocCommentTest"
+    "JavaDocCommentTest",
 ]
 
 filegroup(
