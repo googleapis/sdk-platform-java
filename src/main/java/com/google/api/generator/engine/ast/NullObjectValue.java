@@ -27,11 +27,6 @@ public class NullObjectValue implements ObjectValue {
     return NULL_VALUE;
   }
 
-  @Override
-  public String toString() {
-    return value();
-  }
-
   public static NullObjectValue create() {
     return new NullObjectValue();
   }
