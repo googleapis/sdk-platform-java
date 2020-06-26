@@ -34,9 +34,9 @@ public class JavaDocCommentTest {
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
     String paramDescription = "The name of the shelf where books are published to.";
-    String htmlP1 =
+    String paragraph1 =
         "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
-    String htmlP2 =
+    String paragraph2 =
         "The surface of this class includes several types of Java methods for each of the API's methods:";
     List<String> htmlList =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
@@ -45,8 +45,8 @@ public class JavaDocCommentTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(content)
-            .addParagraph(htmlP1)
-            .addParagraph(htmlP2)
+            .addParagraph(paragraph1)
+            .addParagraph(paragraph2)
             .addOrderedList(htmlList)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)

@@ -49,8 +49,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private static final String COLON = ":";
   private static final String COMMA = ",";
-  private static final String COMMENT_START = "/**";
-  private static final String COMMENT_END = "*/";
+  private static final String BLOCK_COMMENT_START = "/**";
+  private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
   private static final String EQUALS = "=";
   private static final String LEFT_ANGLE = "<";
@@ -336,17 +336,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public String visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    return JavaFormatter.getInstance().format(String.format("%s%s%s", "/** ", sourceString, " */"));
+    return JavaFormatter.getInstance().format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
   }
 
   public String visit(JavaDocComment javaDocComment){
     StringBuilder formattedJavaDocComment = new StringBuilder();
-    formattedJavaDocComment.append(COMMENT_START + NEWLINE);
+    formattedJavaDocComment.append(BLOCK_COMMENT_START + NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
     for(String comment : commentLines){
       formattedJavaDocComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
     }
-    formattedJavaDocComment.append(COMMENT_END);
+    formattedJavaDocComment.append(BLOCK_COMMENT_END);
     return JavaFormatter.getInstance().format(formattedJavaDocComment.toString());
   }
 
