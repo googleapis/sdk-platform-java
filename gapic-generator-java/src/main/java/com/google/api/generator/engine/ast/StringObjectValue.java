@@ -19,12 +19,6 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 @AutoValue
 public abstract class StringObjectValue implements ObjectValue {
-
-  @Override
-  public TypeNode type() {
-    return TypeNode.STRING;
-  }
-
   public abstract String value();
 
   public static Builder builder() {
@@ -33,6 +27,11 @@ public abstract class StringObjectValue implements ObjectValue {
 
   public static StringObjectValue withValue(String value) {
     return builder().setValue(value).build();
+  }
+
+  @Override
+  public TypeNode type() {
+    return TypeNode.STRING;
   }
 
   @AutoValue.Builder
@@ -47,10 +46,5 @@ public abstract class StringObjectValue implements ObjectValue {
       setValue(value);
       return autobuild();
     }
-  }
-
-  @Override
-  public String toString() {
-    return value();
   }
 }
