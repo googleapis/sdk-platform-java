@@ -2,17 +2,17 @@ package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "AssignmentExprTest",
+    "ClassDefinitionTest",
     "ExprStatementTest",
     "ForStatementTest",
-    "ClassDefinitionTest",
-    "MethodDefinitionTest",
     "IdentifierNodeTest",
-    "TryCatchStatementTest",
+    "MethodDefinitionTest",
+    "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",
-    "NullObjectValueTest",
-    "VariableTest",
+    "TryCatchStatementTest",
     "VariableExprTest",
+    "VariableTest",
 ]
 
 filegroup(
