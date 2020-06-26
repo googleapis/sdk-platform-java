@@ -18,12 +18,6 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class StringObjectValue implements ObjectValue {
-
-  @Override
-  public TypeNode type() {
-    return TypeNode.STRING;
-  }
-
   public abstract String value();
 
   public static Builder builder() {
@@ -34,15 +28,15 @@ public abstract class StringObjectValue implements ObjectValue {
     return builder().setValue(value).build();
   }
 
+  @Override
+  public TypeNode type() {
+    return TypeNode.STRING;
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setValue(String value);
 
     public abstract StringObjectValue build();
-  }
-
-  @Override
-  public String toString() {
-    return value();
   }
 }
