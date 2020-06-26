@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeMismatchException;
@@ -205,6 +206,24 @@ public class JavaWriterVisitorTest {
     assertThat(writerVisitor.write()).isEqualTo("public static final boolean x");
   }
 
+  @Test
+  public void writeTernaryExpr_basic() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable conditionVariable = Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    
+    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
+    Value value2 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("4").build();
+    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
+
+    TernaryExpr ternaryExpr = TernaryExpr.builder().setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr).build();
+    ternaryExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
+  }
+  
   @Test
   public void writeAssignmentExpr_basicValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
