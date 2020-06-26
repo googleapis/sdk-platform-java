@@ -124,7 +124,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== EXPRESSIONS =============================== */
   @Override
   public void visit(ValueExpr valueExpr) {
-    buffer.append(valueExpr.value().toString());
+    buffer.append(valueExpr.value().value());
   }
 
   @Override
@@ -417,7 +417,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         new ImportWriterVisitor(classDefinition.packageString());
     classDefinition.accept(importWriterVisitor);
     buffer.append(importWriterVisitor.write());
- 
+
     // Annotations, if any.
     annotations(classDefinition.annotations());
 
