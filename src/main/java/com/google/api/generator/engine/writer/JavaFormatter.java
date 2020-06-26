@@ -17,18 +17,17 @@ package com.google.api.generator.engine.writer;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
-
 public final class JavaFormatter {
 
-    private static final Formatter FORMATTER = new Formatter();
+  private static final Formatter FORMATTER = new Formatter();
 
-    private JavaFormatter() {}
+  private JavaFormatter() {}
 
-    public static String format(String comment){
-        try{
-            return FORMATTER.formatSource(comment);
-        }catch(FormatterException e){
-            throw new RuntimeException(String.format("The input resource can not be parsed %s", e));
-        }
-    } 
+  public static String format(String comment) {
+    try {
+      return FORMATTER.formatSource(comment);
+    } catch (FormatterException e) {
+      throw new RuntimeException(String.format("The input resource can not be parsed %s", e));
+    }
+  }
 }
