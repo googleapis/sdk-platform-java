@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class NullObjectValueTest {
   @Test
   public void createNullObjectValue_valid() {
     NullObjectValue nullValue = NullObjectValue.create();
-    assertThat(nullValue.value()).isEqualTo(NULL_VALUE);
+    assertEquals(nullValue.value(), NULL_VALUE);
     assertThat(nullValue.type()).isEqualTo(TypeNode.NULL);
   }
 }
