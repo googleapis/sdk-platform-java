@@ -26,5 +26,6 @@ public class NullObjectValueTest {
     NullObjectValue nullValue = NullObjectValue.create();
     assertThat(nullValue.value()).isEqualTo(NULL_VALUE);
     assertThat(nullValue.type()).isEqualTo(TypeNode.NULL);
+    assertThat(nullValue.toString()).isEqualTo((NULL_VALUE));
   }
 }
