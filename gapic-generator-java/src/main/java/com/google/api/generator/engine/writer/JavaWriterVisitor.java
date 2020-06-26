@@ -330,13 +330,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== COMMENT =============================== */
   public String visit(LineComment lineComment){
       // Split comments by new line and add `//` to each line.
-      return JavaFormatter.getInstance().format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+      return JavaFormatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
   }
 
   public String visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    return JavaFormatter.getInstance().format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
+    return JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
   }
 
   public String visit(JavaDocComment javaDocComment){
@@ -347,7 +347,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       formattedJavaDocComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
     }
     formattedJavaDocComment.append(BLOCK_COMMENT_END);
-    return JavaFormatter.getInstance().format(formattedJavaDocComment.toString());
+    return JavaFormatter.format(formattedJavaDocComment.toString());
   }
 
   /** =============================== OTHER =============================== */
