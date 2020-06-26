@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class ReferenceTest {
   @Test
   public void basicReference() {
     Reference reference = Reference.builder().setClazz(Integer.class).build();
-    assertThat(reference.name()).isEqualTo(Integer.class.getSimpleName());
+    assertEquals(reference.name(), Integer.class.getSimpleName());
   }
 
   @Test
@@ -37,7 +37,7 @@ public class ReferenceTest {
                 Arrays.asList(
                     Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
             .build();
-    assertThat(reference.name()).isEqualTo("HashMap<String, Integer>");
+    assertEquals(reference.name(), "HashMap<String, Integer>");
   }
 
   @Test
@@ -59,7 +59,7 @@ public class ReferenceTest {
             .setClazz(List.class)
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
-    assertThat(listReference.name())
-        .isEqualTo("List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
+    assertEquals(
+        listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
   }
 }
