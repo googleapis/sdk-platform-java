@@ -34,11 +34,11 @@ public interface AstNodeVisitor {
   public void visit(MethodInvocationExpr methodInvocationExpr);
 
   /** =============================== COMMENT =============================== */
-  public String visit(LineComment lineComment) throws Exception;
+  public String visit(LineComment lineComment);
 
-  public String visit(BlockComment blockComment) throws Exception;
+  public String visit(BlockComment blockComment);
 
-  public String visit(JavaDocComment javaDocComment) throws Exception;
+  public String visit(JavaDocComment javaDocComment);
 
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);

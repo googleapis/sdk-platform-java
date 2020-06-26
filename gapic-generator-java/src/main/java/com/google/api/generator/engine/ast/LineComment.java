@@ -36,7 +36,7 @@ public abstract class LineComment implements Comment {
     public abstract LineComment build();
   }
 
-  public String accept(AstNodeVisitor visitor) throws Exception {
+  public String accept(AstNodeVisitor visitor) {
     return visitor.visit(this);
   }
 }
