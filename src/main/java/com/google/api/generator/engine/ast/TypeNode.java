@@ -84,11 +84,19 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isReferenceType(TypeNode type) {
-    return type.typeKind().equals(TypeKind.OBJECT) && type.reference() != null;
+    return !isPrimitiveType(type.typeKind())
+        && type.typeKind().equals(TypeKind.OBJECT)
+        && type.reference() != null;
   }
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public boolean isSupertypeOrEquals(TypeNode other) {
+    return !isPrimitiveType()
+        && !other.isPrimitiveType()
+        && reference().isSupertypeOrEquals(other.reference());
   }
 
   @Override
