@@ -31,7 +31,7 @@ public abstract class JavaDocComment implements Comment {
   public abstract ImmutableList<String> comments();
 
   public static Builder builder() {
-    return new AutoValue_JavaDocComment.Builder();
+    return new AutoValue_JavaDocComment.Builder().setDeprecated("").setThrowsText("");
   }
 
   @AutoValue.Builder
@@ -92,8 +92,12 @@ public abstract class JavaDocComment implements Comment {
   @Override
   public String comment() {
     List<String> commentBody = comments().stream().collect(Collectors.toList());
-    commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
-    commentBody.add(String.format("%s %s", "@throws", throwsText()));
+    if (deprecated().length() != 0) {
+      commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
+    }
+    if (throwsText().length() != 0) {
+      commentBody.add(String.format("%s %s", "@throws", throwsText()));
+    }
     return String.join("\n", commentBody);
   }
 
