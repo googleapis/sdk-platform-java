@@ -46,8 +46,8 @@ public abstract class Variable {
       setIdentifier(identifier);
 
       Variable variable = autoBuild();
-      Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID));
-      Preconditions.checkState(!variable.type().equals(TypeNode.NULL));
+      Preconditions.checkState(!variable.type().typeKind().equals(TypeNode.TypeKind.VOID), "Variable type cannot be void");
+      Preconditions.checkState(!variable.type().equals(TypeNode.NULL), "Variable type cannot be null");
       return variable;
     }
   }
