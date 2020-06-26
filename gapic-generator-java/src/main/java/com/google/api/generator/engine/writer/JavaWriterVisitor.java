@@ -13,12 +13,6 @@
 // limitations under the License.
 
 package com.google.api.generator.engine.writer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.text.html.HTMLWriter;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
