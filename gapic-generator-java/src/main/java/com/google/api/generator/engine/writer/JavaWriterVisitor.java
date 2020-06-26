@@ -23,15 +23,15 @@ import javax.swing.text.html.HTMLWriter;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
-import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.BlockComment;
-import com.google.api.generator.engine.ast.IdentifierNode;
-import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -81,8 +81,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
-  private JavaFormatter formatter = JavaFormatter.getInstance();
-
   public JavaWriterVisitor() {}
 
   public void clear() {
@@ -333,20 +331,20 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== COMMENT =============================== */
-  public String visit(LineComment lineComment) throws Exception{
+  public String visit(LineComment lineComment){
       // Split comments by new line and add `//` to each line.
-      return formatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+      return JavaFormatter.getInstance().format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
   }
 
-  public String visit(BlockComment blockComment) throws Exception{
+  public String visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    return formatter.format(String.format("%s%s%s", "/** ", sourceString, " */"));
+    return JavaFormatter.getInstance().format(String.format("%s%s%s", "/** ", sourceString, " */"));
   }
 
-  public String visit(JavaDocComment javaDocComment) throws Exception{
+  public String visit(JavaDocComment javaDocComment){
     String comment = javaDocComment.comment();
-    return formatter.format(comment);
+    return JavaFormatter.getInstance().format(comment);
   }
 
   /** =============================== OTHER =============================== */
