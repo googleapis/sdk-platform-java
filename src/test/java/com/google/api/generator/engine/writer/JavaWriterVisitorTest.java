@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectValue;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -94,6 +95,16 @@ public class JavaWriterVisitorTest {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
+  }
+
+  @Test 
+  public void writeNewObjectValue_withArgs(){
+      Reference reference = Reference.withClazz(Integer.class);
+      TypeNode type = TypeNode.withReference(reference);
+      ValueExpr valueExpr = ValueExpr.builder().setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build()).build();
+      NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+      newObjectValue.accept(writerVisitor);
+      assertEquals(writerVisitor.write(), "new Integer(123)");
   }
 
   /** =============================== EXPRESSIONS =============================== */

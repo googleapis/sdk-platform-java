@@ -24,6 +24,7 @@ public interface AstNodeVisitor {
 
   public void visit(AnnotationNode annotation);
 
+  public void visit(NewObjectValue newObjectValue);
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
