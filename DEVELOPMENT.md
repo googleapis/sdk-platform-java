@@ -29,7 +29,7 @@ below are temporary and better ones will be coming.
     ```sh
     PROTOC_INCLUDE_DIR=/usr/local/include/google/protobuf/
     GOOGLEAPIS_DIR=/usr/local/google/home/$USER/dev/googleapis
-    YOUR_PROTO_DIR=/usr/local/google/home/USER/dev/googleapis/google/showcase/v1beta
+    YOUR_PROTO_DIR=/usr/local/google/home/$USER/dev/googleapis/google/showcase/v1beta
     ```
 
 4.  Build this plugin.

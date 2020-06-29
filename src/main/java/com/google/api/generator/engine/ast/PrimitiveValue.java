@@ -29,11 +29,6 @@ public abstract class PrimitiveValue implements Value {
     return new AutoValue_PrimitiveValue.Builder();
   }
 
-  @Override
-  public String toString() {
-    return value();
-  }
-
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);

@@ -78,7 +78,7 @@ public class TryCatchStatementTest {
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
 
     assertThrows(
-        IllegalStateException.class,
+        NullPointerException.class,
         () -> {
           TryCatchStatement.builder()
               .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
