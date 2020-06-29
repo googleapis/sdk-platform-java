@@ -63,7 +63,7 @@ public abstract class AnnotationNode implements AstNode {
     public AnnotationNode build() {
       AnnotationNode annotation = autoBuild();
       Reference ref = annotation.type().reference();
-      Preconditions.checkState(ref != null, "Annotations must be an Object type");
+      Preconditions.checkNotNull(ref, "Annotations must be an Object type");
       return annotation;
     }
   }

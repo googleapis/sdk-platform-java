@@ -16,7 +16,6 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -33,9 +32,9 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TryCatchStatement;
-import com.google.api.generator.engine.ast.TypeMismatchException;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -48,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-import javax.lang.model.type.NullType;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,7 +62,7 @@ public class JavaWriterVisitorTest {
   public void writeIdentifier() {
     String idName = "foobar";
     IdentifierNode.builder().setName(idName).build().accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo(idName);
+    assertEquals(writerVisitor.write(), idName);
   }
 
   @Test
@@ -72,7 +70,7 @@ public class JavaWriterVisitorTest {
     TypeNode intType = TypeNode.INT;
     assertThat(intType).isNotNull();
     intType.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("int");
+    assertEquals(writerVisitor.write(), "int");
   }
 
   @Test
@@ -81,7 +79,7 @@ public class JavaWriterVisitorTest {
         TypeNode.builder().setTypeKind(TypeNode.TypeKind.BYTE).setIsArray(true).build();
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("byte[]");
+    assertEquals(writerVisitor.write(), "byte[]");
   }
 
   @Test
@@ -102,8 +100,8 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeStringObjectValue() {
     StringObjectValue s = StringObjectValue.builder().setValue("\"test\"").build();
-    assertThat(s.value()).isEqualTo("\"test\"");
-    assertThat(s.type()).isEqualTo(TypeNode.STRING);
+    assertEquals(s.value(), "\"test\"");
+    assertEquals(s.type(), TypeNode.STRING);
   }
 
   @Test
@@ -118,7 +116,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("String x = \"test\"");
+    assertEquals(writerVisitor.write(), "String x = \"test\"");
   }
 
   @Test
@@ -126,7 +124,7 @@ public class JavaWriterVisitorTest {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("3");
+    assertEquals(writerVisitor.write(), "3");
   }
 
   @Test
@@ -135,7 +133,7 @@ public class JavaWriterVisitorTest {
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("x");
+    assertEquals(writerVisitor.write(), "x");
   }
 
   @Test
@@ -150,7 +148,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("x");
+    assertEquals(writerVisitor.write(), "x");
   }
 
   @Test
@@ -159,7 +157,7 @@ public class JavaWriterVisitorTest {
     VariableExpr expr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
     expr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("int x");
+    assertEquals(writerVisitor.write(), "int x");
   }
 
   @Test
@@ -170,7 +168,7 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setVariable(variable).setIsFinal(true).setIsDecl(true).build();
 
     expr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("final boolean x");
+    assertEquals(writerVisitor.write(), "final boolean x");
   }
 
   @Test
@@ -185,7 +183,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("private int x");
+    assertEquals(writerVisitor.write(), "private int x");
   }
 
   @Test
@@ -202,9 +200,27 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("public static final boolean x");
+    assertEquals(writerVisitor.write(), "public static final boolean x");
   }
 
+  @Test
+  public void writeTernaryExpr_basic() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable conditionVariable = Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    
+    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
+    Value value2 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("4").build();
+    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
+
+    TernaryExpr ternaryExpr = TernaryExpr.builder().setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr).build();
+    ternaryExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
+  }
+  
   @Test
   public void writeAssignmentExpr_basicValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
@@ -218,7 +234,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("int x = 3");
+    assertEquals(writerVisitor.write(), "int x = 3");
   }
 
   @Test
@@ -240,7 +256,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("private static final int foobar = y");
+    assertEquals(writerVisitor.write(), "private static final int foobar = y");
   }
 
   @Test
@@ -256,7 +272,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("String x = null");
+    assertEquals(writerVisitor.write(), "String x = null");
   }
 
   @Test
@@ -265,7 +281,7 @@ public class JavaWriterVisitorTest {
         MethodInvocationExpr.builder().setMethodName("foobar").build();
 
     methodExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("foobar()");
+    assertEquals(writerVisitor.write(), "foobar()");
   }
 
   @Test
@@ -277,7 +293,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar()");
+    assertEquals(writerVisitor.write(), "SomeClass.foobar()");
   }
 
   @Test
@@ -319,10 +335,10 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(lhsVarExpr).setValueExpr(methodExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
-                + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
+    assertEquals(
+        writerVisitor.write(),
+        "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
+            + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
   }
 
   @Test
@@ -347,8 +363,8 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo("libraryClient.streamBooksCallable().doAnotherThing().call()");
+    assertEquals(
+        writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -362,7 +378,7 @@ public class JavaWriterVisitorTest {
     ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
 
     exprStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("SomeClass.foobar();\n");
+    assertEquals(writerVisitor.write(), "SomeClass.foobar();\n");
   }
 
   @Test
@@ -376,10 +392,9 @@ public class JavaWriterVisitorTest {
         WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
 
     whileStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            String.format(
-                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -393,9 +408,9 @@ public class JavaWriterVisitorTest {
         IfStatement.builder().setConditionExpr(condExpr).setBody(ifBody).build();
 
     ifStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test

@@ -138,9 +138,8 @@ public abstract class MethodDefinition implements AstNode {
       MethodDefinition method = autoBuild();
 
       if (!method.returnType().equals(TypeNode.VOID)) {
-        Preconditions.checkState(
-            method.returnExpr() != null,
-            "Method with non-void return type must have a return expression");
+        Preconditions.checkNotNull(
+            method.returnExpr(), "Method with non-void return type must have a return expression");
       }
 
       // Type-checking.
