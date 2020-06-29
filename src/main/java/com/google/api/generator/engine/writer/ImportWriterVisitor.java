@@ -231,18 +231,16 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
-      Class clazz = ref.clazz();
       // Don't need to import this.
-      if (clazz.getPackage().getName().equals(PKG_JAVA_LANG)
-          || clazz.getPackage().getName().equals(currentPackage)) {
+      if (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage)) {
         continue;
       }
 
-      if (clazz.getEnclosingClass() != null) {
+      if (ref.hasEnclosingClass()) {
         // This is a static import.
-        staticImports.add(clazz.getCanonicalName());
+        staticImports.add(ref.fullName());
       } else {
-        imports.add(clazz.getCanonicalName());
+        imports.add(ref.fullName());
       }
 
       references(ref.generics());

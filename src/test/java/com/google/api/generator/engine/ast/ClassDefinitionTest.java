@@ -62,8 +62,8 @@ public class ClassDefinitionTest {
         .setExtendsType(TypeNode.STRING)
         .setImplementsTypes(
             Arrays.asList(
-                TypeNode.withReference(Reference.withClazz(Cloneable.class)),
-                TypeNode.withReference(Reference.withClazz(Readable.class))))
+                TypeNode.withReference(ConcreteReference.withClazz(Cloneable.class)),
+                TypeNode.withReference(ConcreteReference.withClazz(Readable.class))))
         .build();
     // No exception thrown, we're good.
   }
@@ -192,7 +192,7 @@ public class ClassDefinitionTest {
 
   @Test
   public void invalidClassDefinition_extendsImplementsSameType() {
-    TypeNode cloneableType = TypeNode.withReference(Reference.withClazz(Cloneable.class));
+    TypeNode cloneableType = TypeNode.withReference(ConcreteReference.withClazz(Cloneable.class));
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -203,7 +203,8 @@ public class ClassDefinitionTest {
               .setExtendsType(cloneableType)
               .setImplementsTypes(
                   Arrays.asList(
-                      TypeNode.withReference(Reference.withClazz(Readable.class)), cloneableType))
+                      TypeNode.withReference(ConcreteReference.withClazz(Readable.class)),
+                      cloneableType))
               .build();
         });
   }

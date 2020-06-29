@@ -25,46 +25,50 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 
-public class ReferenceTest {
+public class ConcreteReferenceTest {
   @Test
-  public void basicReference() {
-    Reference reference = Reference.builder().setClazz(Integer.class).build();
+  public void basicConcreteReference() {
+    Reference reference = ConcreteReference.builder().setClazz(Integer.class).build();
     assertEquals(reference.name(), Integer.class.getSimpleName());
   }
 
   @Test
-  public void parameterizedReference() {
+  public void parameterizedConcreteReference() {
     Reference reference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(
                 Arrays.asList(
-                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Integer.class)))
             .build();
     assertEquals(reference.name(), "HashMap<String, Integer>");
+    assertEquals(reference.fullName(), "java.util.HashMap");
   }
 
   @Test
-  public void nestedParameterizedReference() {
+  public void nestedParameterizedConcreteReference() {
     Reference mapReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(
                 Arrays.asList(
-                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Integer.class)))
             .build();
     Reference outerMapReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(Arrays.asList(mapReference, mapReference))
             .build();
     Reference listReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(List.class)
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
     assertEquals(
         listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
+    assertEquals(listReference.fullName(), "java.util.List");
   }
 
   @Test
@@ -74,37 +78,38 @@ public class ReferenceTest {
     assertFalse(TypeNode.STRING.isSupertypeOrEquals(TypeNode.INT));
     assertFalse(TypeNode.INT.isSupertypeOrEquals(TypeNode.INT));
 
-    TypeNode mapType = TypeNode.withReference(Reference.withClazz(Map.class));
-    TypeNode hashMapType = TypeNode.withReference(Reference.withClazz(HashMap.class));
+    TypeNode mapType = TypeNode.withReference(ConcreteReference.withClazz(Map.class));
+    TypeNode hashMapType = TypeNode.withReference(ConcreteReference.withClazz(HashMap.class));
     assertTrue(mapType.isSupertypeOrEquals(hashMapType));
     assertFalse(hashMapType.isSupertypeOrEquals(mapType));
   }
 
   @Test
   public void isSupertype_nestedGenerics() {
-    Reference stringRef = Reference.withClazz(String.class);
+    Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode typeOne =
         TypeNode.withReference(
-            Reference.builder()
+            ConcreteReference.builder()
                 .setClazz(Map.class)
                 .setGenerics(
                     Arrays.asList(
                         stringRef,
-                        Reference.builder()
+                        ConcreteReference.builder()
                             .setClazz(List.class)
-                            .setGenerics(Arrays.asList(Reference.withClazz(Expr.class)))
+                            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Expr.class)))
                             .build()))
                 .build());
     TypeNode typeTwo =
         TypeNode.withReference(
-            Reference.builder()
+            ConcreteReference.builder()
                 .setClazz(HashMap.class)
                 .setGenerics(
                     Arrays.asList(
                         stringRef,
-                        Reference.builder()
+                        ConcreteReference.builder()
                             .setClazz(ArrayList.class)
-                            .setGenerics(Arrays.asList(Reference.withClazz(ValueExpr.class)))
+                            .setGenerics(
+                                Arrays.asList(ConcreteReference.withClazz(ValueExpr.class)))
                             .build()))
                 .build());
     assertTrue(typeOne.isSupertypeOrEquals(typeOne));
