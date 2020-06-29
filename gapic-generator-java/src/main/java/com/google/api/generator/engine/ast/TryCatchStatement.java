@@ -65,8 +65,8 @@ public abstract class TryCatchStatement implements Statement {
     public TryCatchStatement build() {
       TryCatchStatement tryCatchStatement = autoBuild();
       if (!tryCatchStatement.isSampleCode()) {
-        Preconditions.checkState(
-            tryCatchStatement.catchVariableExpr() != null,
+        Preconditions.checkNotNull(
+            tryCatchStatement.catchVariableExpr(),
             "Catch variable expression must be set for real, non-sample try-catch blocks.");
         Preconditions.checkState(
             tryCatchStatement.catchVariableExpr().isDecl(),

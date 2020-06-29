@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.IdentifierNode.InvalidIdentifierException;
@@ -113,6 +113,6 @@ public class IdentifierNodeTest {
   }
 
   private static void assertValidIdentifier(String idName) {
-    assertThat(IdentifierNode.builder().setName(idName).build().name()).isEqualTo(idName);
+    assertEquals(IdentifierNode.builder().setName(idName).build().name(), idName);
   }
 }
