@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -70,23 +71,30 @@ public class ImportWriterVisitorTest {
   public void writeAssignmentExprImports_staticAndNestedGenerics() {
     List<Reference> nestedSubGenerics =
         Arrays.asList(
-            Reference.withClazz(ClassDefinition.class), Reference.withClazz(AstNode.class));
+            ConcreteReference.withClazz(ClassDefinition.class),
+            ConcreteReference.withClazz(AstNode.class));
     Reference nestedGenericRef =
-        Reference.builder().setClazz(Map.Entry.class).setGenerics(nestedSubGenerics).build();
+        ConcreteReference.builder()
+            .setClazz(Map.Entry.class)
+            .setGenerics(nestedSubGenerics)
+            .build();
 
     List<Reference> subGenerics =
-        Arrays.asList(Reference.withClazz(AssignmentExpr.class), nestedGenericRef);
+        Arrays.asList(ConcreteReference.withClazz(AssignmentExpr.class), nestedGenericRef);
     Reference genericRef =
-        Reference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
+        ConcreteReference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
     Reference reference =
-        Reference.builder().setClazz(List.class).setGenerics(Arrays.asList(genericRef)).build();
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(genericRef))
+            .build();
     TypeNode type = TypeNode.withReference(reference);
     Variable variable = Variable.builder().setName("clazz").setType(type).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
     Reference returnReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(ArrayList.class)
             .setGenerics(Arrays.asList(genericRef))
             .build();
@@ -113,7 +121,7 @@ public class ImportWriterVisitorTest {
   }
 
   private static TypeNode createType(Class clazz) {
-    return TypeNode.withReference(Reference.withClazz(clazz));
+    return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
 
   private static String createLines(int numLines) {

@@ -24,7 +24,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void validTryCatchStatement_simple() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -39,7 +39,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void validTryCatchStatement_withResources() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -57,7 +57,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void validTryCatchStatement_sampleCode() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -72,7 +72,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void invalidTryCatchStatement_missingCatchVariable() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -88,7 +88,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void invalidTryCatchStatement_catchVariableNotDecl() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).build();
@@ -106,7 +106,7 @@ public class TryCatchStatementTest {
 
   @Test
   public void invalidTryCatchStatement_nonExceptionReference() {
-    Reference exceptionReference = Reference.withClazz(Integer.class);
+    Reference exceptionReference = ConcreteReference.withClazz(Integer.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).build();
