@@ -14,7 +14,6 @@
 
 package com.google.api.generator.engine.ast;
 
-import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
