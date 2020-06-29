@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -127,6 +128,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
     references(methodInvocationExpr.generics());
     expressions(methodInvocationExpr.arguments());
+  }
+
+  @Override
+  public void visit(AnonymousClassExpr anonymousClassExpr){
+    // Do nothing
   }
 
   /** =============================== STATEMENTS =============================== */

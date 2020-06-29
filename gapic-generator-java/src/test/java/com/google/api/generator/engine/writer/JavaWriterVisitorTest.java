@@ -18,6 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
@@ -365,6 +366,44 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_basic() {
+    Reference ref = Reference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).build();
+    anonymousClassExpr.accept(writerVisitor);
+    System.out.println(writerVisitor.write());
+    assertEquals(writerVisitor.write(), "new Runnable() {\n}");
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_withStatementsMethods() {
+    Reference ref = Reference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+
+    Variable variable = createVariable("s", TypeNode.STRING);
+    VariableExpr variableExpr = VariableExpr.builder().setScope(ScopeNode.PRIVATE).setIsDecl(true).setVariable(variable).build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
+    AssignmentExpr assignmentExpr = AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+    ExprStatement exprStatement = ExprStatement.withExpr(assignmentExpr);
+
+    MethodDefinition methodDefinition =
+    MethodDefinition.builder()
+        .setName("run")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setBody(
+            Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+        .build();
+    AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).setStatements(Arrays.asList(exprStatement)).setMethods(Arrays.asList(methodDefinition)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    System.out.println("write(): " + writerVisitor.write());
+    String expected = "new Runnable() {\nprivate String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
+    System.out.println("expected: "+expected);
+
+    assertEquals(writerVisitor.write(), expected);
   }
 
   /** =============================== STATEMENTS =============================== */
