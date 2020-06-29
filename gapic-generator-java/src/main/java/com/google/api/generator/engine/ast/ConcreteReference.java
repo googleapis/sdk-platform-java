@@ -15,13 +15,16 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import java.util.Collections;
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 @AutoValue
 public abstract class ConcreteReference implements Reference {
   @Override
-  public abstract List<Reference> generics();
+  public abstract ImmutableList<Reference> generics();
+
+  // Private.
+  abstract Class clazz();
 
   @Override
   public String name() {
@@ -85,17 +88,6 @@ public abstract class ConcreteReference implements Reference {
     return clazz().isAssignableFrom(((ConcreteReference) other).clazz());
   }
 
-  public static ConcreteReference withClazz(Class clazz) {
-    return builder().setClazz(clazz).build();
-  }
-
-  // Private.
-  abstract Class clazz();
-
-  public static Builder builder() {
-    return new AutoValue_ConcreteReference.Builder().setGenerics(Collections.emptyList());
-  }
-
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof ConcreteReference)) {
@@ -109,6 +101,14 @@ public abstract class ConcreteReference implements Reference {
   @Override
   public int hashCode() {
     return 17 * clazz().hashCode() + 31 * generics().hashCode();
+  }
+
+  public static ConcreteReference withClazz(Class clazz) {
+    return builder().setClazz(clazz).build();
+  }
+
+  public static Builder builder() {
+    return new AutoValue_ConcreteReference.Builder().setGenerics(ImmutableList.of());
   }
 
   @AutoValue.Builder

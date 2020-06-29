@@ -14,10 +14,10 @@
 
 package com.google.api.generator.engine.ast;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 public interface Reference {
-  List<Reference> generics();
+  ImmutableList<Reference> generics();
 
   String name();
 
