@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -35,6 +36,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -218,6 +221,24 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     rightParen();
   }
 
+  @Override 
+  public void visit(AnonymousClassExpr anonymousClassExpr){
+    buffer.append("new");
+    space();
+    buffer.append(anonymousClassExpr.type().reference().name());
+    buffer.append(LEFT_PAREN).append(RIGHT_PAREN);
+    space();
+    buffer.append(LEFT_BRACE).append(NEWLINE);
+    List<MethodDefinition> methods = anonymousClassExpr.methods();
+    List<Statement> statements = anonymousClassExpr.statements();
+    if(!statements.isEmpty()){
+      statements(statements);
+    }
+    if(!methods.isEmpty()){
+      methods(methods);
+    }
+    buffer.append(RIGHT_BRACE);
+  }
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
