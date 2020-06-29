@@ -10,10 +10,12 @@ TESTS = [
     "MethodDefinitionTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
+    "ReferenceTest",
     "TernaryExprTest",
     "TryCatchStatementTest",
     "VariableExprTest",
     "VariableTest",
+    "VaporReferenceTest",
 ]
 
 filegroup(
