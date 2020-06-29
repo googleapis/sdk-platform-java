@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
@@ -52,6 +53,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
   private static final String LEFT_PAREN = "(";
+  private static final String QUESTION_MARK = "?";
   private static final String RIGHT_ANGLE = ">";
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
@@ -125,7 +127,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== EXPRESSIONS =============================== */
   @Override
   public void visit(ValueExpr valueExpr) {
-    buffer.append(valueExpr.value().toString());
+    buffer.append(valueExpr.value().value());
   }
 
   @Override
@@ -155,6 +157,19 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
 
     variable.identifier().accept(this);
+  }
+
+  @Override
+  public void visit(TernaryExpr ternaryExpr){
+    ternaryExpr.conditionExpr().accept(this);
+    space();
+    buffer.append(QUESTION_MARK);
+    space();
+    ternaryExpr.thenExpr().accept(this);
+    space();
+    buffer.append(COLON);
+    space();
+    ternaryExpr.elseExpr().accept(this);
   }
 
   @Override

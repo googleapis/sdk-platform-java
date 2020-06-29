@@ -29,6 +29,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -101,6 +102,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ValueExpr valueExpr) {
     valueExpr.type().accept(this);
+  }
+
+  @Override
+  public void visit(TernaryExpr ternaryExpr) {
+    ternaryExpr.type().accept(this);
   }
 
   @Override
