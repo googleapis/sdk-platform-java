@@ -49,4 +49,13 @@ public class StringObjectValueTest {
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
+
+  @Test
+  public void writeStringObjectValue_specialCharacterComment() {
+    StringObjectValue valueSpecialChar =
+        StringObjectValue.withValue("Service comment may include special characters: <>&\"`'@");
+    String expected = "\"Service comment may include special characters: <>&\\\"`'@\"";
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
+    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
+  }
 }
