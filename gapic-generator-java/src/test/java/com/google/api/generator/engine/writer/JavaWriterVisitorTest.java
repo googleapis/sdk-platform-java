@@ -40,6 +40,7 @@ import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
@@ -737,6 +738,24 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_constructor() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodDefinition methodDefinition =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public LibrarySettings() {\n}\n");
   }
 
   @Test
