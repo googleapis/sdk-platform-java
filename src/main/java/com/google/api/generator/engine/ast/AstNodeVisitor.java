@@ -36,11 +36,11 @@ public interface AstNodeVisitor {
   public void visit(MethodInvocationExpr methodInvocationExpr);
 
   /** =============================== COMMENT =============================== */
-  public String visit(LineComment lineComment);
+  public void visit(LineComment lineComment);
 
-  public String visit(BlockComment blockComment);
+  public void visit(BlockComment blockComment);
 
-  public String visit(JavaDocComment javaDocComment);
+  public void visit(JavaDocComment javaDocComment);
 
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);

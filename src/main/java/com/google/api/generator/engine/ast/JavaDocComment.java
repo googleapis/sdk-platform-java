@@ -100,7 +100,7 @@ public abstract class JavaDocComment implements Comment {
     return String.join("\n", commentBody);
   }
 
-  public String accept(AstNodeVisitor visitor) {
-    return visitor.visit(this);
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 }
