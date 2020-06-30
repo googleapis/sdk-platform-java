@@ -180,16 +180,16 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   /** =============================== COMMENT =============================== */
 
   @Override
-  public String visit (LineComment lineComment){
-    return null;
+  public void visit (LineComment lineComment){
+    // Do nothing
   }
   @Override
-  public String visit (BlockComment blockComment){
-    return null;
+  public void visit (BlockComment blockComment){
+    // Do nothing
   }
   @Override
-  public String visit (JavaDocComment javaDocComment){
-    return null;
+  public void visit (JavaDocComment javaDocComment){
+    // Do nothing
   }
 
   /** =============================== OTHER =============================== */

@@ -343,18 +343,20 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== COMMENT =============================== */
-  public String visit(LineComment lineComment){
+  public void visit(LineComment lineComment){
       // Split comments by new line and add `//` to each line.
-      return JavaFormatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+      String formattedSource =  JavaFormatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+      buffer.append(formattedSource);
   }
 
-  public String visit(BlockComment blockComment){
+  public void visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
     String sourceString = blockComment.comment();
-    return JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
+    String formattedSource =  JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
+    buffer.append(formattedSource);
   }
 
-  public String visit(JavaDocComment javaDocComment){
+  public void visit(JavaDocComment javaDocComment){
     StringBuilder formattedJavaDocComment = new StringBuilder();
     formattedJavaDocComment.append(BLOCK_COMMENT_START + NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
@@ -362,7 +364,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       formattedJavaDocComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
     }
     formattedJavaDocComment.append(BLOCK_COMMENT_END);
-    return JavaFormatter.format(formattedJavaDocComment.toString());
+    buffer.append(JavaFormatter.format(formattedJavaDocComment.toString()));
   }
 
   /** =============================== OTHER =============================== */

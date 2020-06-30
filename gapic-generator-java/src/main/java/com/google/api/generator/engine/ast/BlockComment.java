@@ -35,7 +35,7 @@ public abstract class BlockComment implements Comment {
     public abstract BlockComment build();
   }
 
-  public String accept(AstNodeVisitor visitor) {
-    return visitor.visit(this);
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
   }
 }

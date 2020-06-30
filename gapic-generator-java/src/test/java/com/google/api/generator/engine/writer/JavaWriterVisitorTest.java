@@ -212,8 +212,8 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected = "/** this is a test comment */\n";
-    String formattedComment = blockComment.accept(writerVisitor);
-    assertThat(formattedComment).isEqualTo(expected);
+    blockComment.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo(expected);
   }
 
   @Test
@@ -221,8 +221,8 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected = "// this is a test comment\n";
-    String formattedComment = lineComment.accept(writerVisitor);
-    assertThat(formattedComment).isEqualTo(expected);
+    lineComment.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo(expected);
   }
 
   @Test
@@ -232,8 +232,8 @@ public class JavaWriterVisitorTest {
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected =
         "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
-    String formattedComment = lineComment.accept(writerVisitor);
-    assertThat(formattedComment).isEqualTo(expected);
+    lineComment.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo(expected);
   }
 
   @Test
@@ -244,17 +244,7 @@ public class JavaWriterVisitorTest {
     String paramDescription =  "The name of the shelf where books are published to.";
     String paragraph1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
     String paragraph2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
-
-    TryCatchStatement tryCatch =
-        TryCatchStatement.builder()
-            .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
-            .setTryBody(
-                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
-            .setIsSampleCode(true)
-            .build();
-
-    tryCatch.accept(writerVisitor);
-    String sampleCode = writerVisitor.write();
+    String sampleCode = createSampleCode();
     List<String> htmlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
     String throwType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
@@ -294,8 +284,8 @@ public class JavaWriterVisitorTest {
             + "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "* @deprecated Use the {@link ArchivedBookName} class instead.\n"
             + "*/\n";
-    String formattedComment = javaDocComment.accept(writerVisitor);
-    assertThat(formattedComment).isEqualTo(expected);
+    javaDocComment.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo(expected);
   }
   @Test
   public void writeTernaryExpr_basic() {
@@ -1126,5 +1116,20 @@ public class JavaWriterVisitorTest {
         .setCollectionExpr(collectionExpr)
         .setBody(body)
         .build();
+  }
+
+  private static String createSampleCode() {
+    JavaWriterVisitor writerVisitor = new JavaWriterVisitor();
+    TryCatchStatement tryCatch =
+    TryCatchStatement.builder()
+        .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
+        .setTryBody(
+            Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+        .setIsSampleCode(true)
+        .build();
+
+    tryCatch.accept(writerVisitor);
+    String sampleCode = writerVisitor.write();
+    return sampleCode;
   }
 }
