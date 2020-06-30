@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -136,6 +137,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ExprStatement exprStatement) {
     exprStatement.expression().accept(this);
+  }
+
+  @Override
+  public void visit(BlockStatement blockStatement) {
+    statements(blockStatement.body());
   }
 
   @Override

@@ -144,9 +144,18 @@ public abstract class MethodDefinition implements AstNode {
 
       // Type-checking.
       if (method.returnExpr() != null) {
-        Preconditions.checkState(
-            method.returnType().equals(method.returnExpr().type()),
-            "Method return type does not match the return expression type");
+        if (method.returnType().isPrimitiveType()) {
+          Preconditions.checkState(
+              method.returnExpr().type().isPrimitiveType()
+                  && method.returnType().equals((method.returnExpr().type())),
+              "Method primitive return type does not match the return expression type");
+
+        } else {
+          Preconditions.checkState(
+              !method.returnExpr().type().isPrimitiveType()
+                  && method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+              "Method reference return type is not a subtype of the return expression type");
+        }
       }
 
       for (VariableExpr varExpr : method.arguments()) {
