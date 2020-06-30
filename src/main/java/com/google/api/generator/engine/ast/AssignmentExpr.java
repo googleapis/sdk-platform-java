@@ -50,8 +50,7 @@ public abstract class AssignmentExpr implements Expr {
                   "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
         }
       } else {
-        if (rhsType != TypeNode.NULL
-            && !lhsType.reference().clazz().isAssignableFrom(rhsType.reference().clazz())) {
+        if (rhsType != TypeNode.NULL && !lhsType.isSupertypeOrEquals(rhsType)) {
           throw new TypeMismatchException(
               String.format(
                   "LHS type %s must be a supertype of the RHS type %s",
