@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -227,16 +228,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(WhileStatement whileStatement) {
-    buffer.append(WHILE);
-    space();
-    leftParen();
-    whileStatement.conditionExpr().accept(this);
-    rightParen();
-    space();
+  public void visit(BlockStatement blockStatement) {
+    if (blockStatement.isStatic()) {
+      buffer.append(STATIC);
+      space();
+    }
     leftBrace();
     newline();
-    statements(whileStatement.body());
+    statements(blockStatement.body());
     rightBrace();
     newline();
   }
@@ -301,6 +300,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     leftBrace();
     newline();
     statements(forStatement.body());
+    rightBrace();
+    newline();
+  }
+
+  @Override
+  public void visit(WhileStatement whileStatement) {
+    buffer.append(WHILE);
+    space();
+    leftParen();
+    whileStatement.conditionExpr().accept(this);
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(whileStatement.body());
     rightBrace();
     newline();
   }
