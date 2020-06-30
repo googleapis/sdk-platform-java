@@ -32,6 +32,27 @@ public abstract class Reference {
     return new AutoValue_Reference.Builder().setGenerics(Collections.emptyList());
   }
 
+  // Returns true if this is a supertype of the given Reference.
+  public boolean isSupertypeOrEquals(Reference other) {
+    if (generics().size() != other.generics().size()) {
+      return false;
+    }
+
+    if (!clazz().isAssignableFrom(other.clazz())) {
+      return false;
+    }
+
+    for (int i = 0; i < generics().size(); i++) {
+      Reference thisGeneric = generics().get(i);
+      Reference otherGeneric = other.generics().get(i);
+      if (!thisGeneric.isSupertypeOrEquals(otherGeneric)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public String name() {
     StringBuilder sb = new StringBuilder();
     sb.append(clazz().getSimpleName());
