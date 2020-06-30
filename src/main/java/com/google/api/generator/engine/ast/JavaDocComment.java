@@ -14,6 +14,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public abstract class JavaDocComment implements Comment {
   public abstract ImmutableList<String> comments();
 
   public static Builder builder() {
-    return new AutoValue_JavaDocComment.Builder().setDeprecated("");
+    return new AutoValue_JavaDocComment.Builder();
   }
 
   @AutoValue.Builder
@@ -93,7 +94,7 @@ public abstract class JavaDocComment implements Comment {
   @Override
   public String comment() {
     List<String> commentBody = comments().stream().collect(Collectors.toList());
-    if (deprecated().length() != 0) {
+    if (!Strings.isNullOrEmpty(deprecated())) {
       commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
     }
     return String.join("\n", commentBody);
