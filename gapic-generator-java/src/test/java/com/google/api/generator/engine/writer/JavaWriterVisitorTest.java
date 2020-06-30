@@ -246,7 +246,7 @@ public class JavaWriterVisitorTest {
     String paragraph1 = "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
     String paragraph2 = "The surface of this class includes several types of Java methods for each of the API's methods:";
     String sampleCode = createSampleCode();
-    List<String> htmlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
+    List<String> orderedlList = Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
     String throwType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
     JavaDocComment javaDocComment =
@@ -255,7 +255,7 @@ public class JavaWriterVisitorTest {
             .addParagraph(paragraph1)
             .addSampleCode(sampleCode)
             .addParagraph(paragraph2)
-            .addOrderedList(htmlList)
+            .addOrderedList(orderedlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
