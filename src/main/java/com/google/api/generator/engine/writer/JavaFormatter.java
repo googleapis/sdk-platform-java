@@ -23,9 +23,9 @@ public final class JavaFormatter {
 
   private JavaFormatter() {}
 
-  public static String format(String comment) {
+  public static String format(String sourceString) {
     try {
-      return FORMATTER.formatSource(comment);
+      return FORMATTER.formatSource(sourceString);
     } catch (FormatterException e) {
       throw new RuntimeException(String.format("The input resource can not be parsed %s", e));
     }

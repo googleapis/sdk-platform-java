@@ -38,7 +38,7 @@ public class JavaDocCommentTest {
         "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
     String paragraph2 =
         "The surface of this class includes several types of Java methods for each of the API's methods:";
-    List<String> htmlList =
+    List<String> orderedList =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
     String throwType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
@@ -47,7 +47,7 @@ public class JavaDocCommentTest {
             .addComment(content)
             .addParagraph(paragraph1)
             .addParagraph(paragraph2)
-            .addOrderedList(htmlList)
+            .addOrderedList(orderedList)
             .addParam(paramName, paramDescription)
             .setDeprecated(deprecatedText)
             .addThrowsText(throwType, throwsDescription)
