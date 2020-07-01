@@ -20,13 +20,16 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Before;
@@ -117,6 +120,50 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.AstNode;\n",
             "import com.google.api.generator.engine.ast.ClassDefinition;\n",
             "import java.util.ArrayList;\n",
+            "import java.util.List;\n\n"));
+  }
+
+  @Test
+  public void importFromVaporAndConcreteReferences() {
+    Reference mapReference =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(
+                Arrays.asList(
+                    VaporReference.builder().setName("String").setPakkage("java.lang").build(),
+                    ConcreteReference.withClazz(MethodDefinition.class)))
+            .build();
+    Reference outerMapReference =
+        VaporReference.builder()
+            .setName("HashMap")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(mapReference, mapReference))
+            .build();
+    Reference listReference =
+        VaporReference.builder()
+            .setName("List")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(outerMapReference))
+            .build();
+    assertEquals(
+        listReference.name(),
+        "List<HashMap<HashMap<String, MethodDefinition>, HashMap<String, MethodDefinition>>>");
+
+    TypeNode type = TypeNode.withReference(listReference);
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("foobar").setType(type).build())
+            .setIsDecl(true)
+            .build();
+
+    varExpr.accept(writerVisitor);
+
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "import com.google.api.generator.engine.ast.MethodDefinition;\n",
+            "import java.util.HashMap;\n",
             "import java.util.List;\n\n"));
   }
 
