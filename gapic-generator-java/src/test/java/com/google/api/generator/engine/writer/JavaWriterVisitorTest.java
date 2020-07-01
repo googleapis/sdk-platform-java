@@ -216,12 +216,12 @@ public class JavaWriterVisitorTest {
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected = "/** this is a test comment */\n";
     blockComment.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo(expected);
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test  
   public void writeBadBlockComment() {
-    String content = "A super long long long long long long long */ long long long long long long long comment that tests";
+    String content = "A super long long long long long long long */ long long long long long long long comment";
     assertThrows(RuntimeException.class, () -> {
         BlockComment blockComment = BlockComment.builder().setComment(content).build();
         blockComment.accept(writerVisitor);
@@ -234,7 +234,7 @@ public class JavaWriterVisitorTest {
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected = "// this is a test comment\n";
     lineComment.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo(expected);
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
@@ -245,7 +245,7 @@ public class JavaWriterVisitorTest {
     String expected =
         "// this is a long test comment with so many words, hello world, hello again, hello for 3 times,\n// blah, blah!\n";
     lineComment.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo(expected);
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
@@ -297,7 +297,7 @@ public class JavaWriterVisitorTest {
               "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
               "*/\n");
     javaDocComment.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo(expected);
+    assertEquals(writerVisitor.write(), expected);
   }
   @Test
   public void writeTernaryExpr_basic() {
@@ -320,7 +320,7 @@ public class JavaWriterVisitorTest {
             .setElseExpr(elseExpr)
             .build();
     ternaryExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
+    assertEquals(writerVisitor.write(), "condition ? 3 : 4");
   }
 
   @Test
@@ -685,8 +685,7 @@ public class JavaWriterVisitorTest {
         WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
 
     whileStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
+    assertEquals(writerVisitor.write(),
             String.format(
                 "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }

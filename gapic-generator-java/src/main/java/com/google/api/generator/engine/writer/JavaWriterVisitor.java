@@ -81,6 +81,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
+
   public JavaWriterVisitor() {}
 
   public void clear() {
@@ -365,8 +366,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   public void visit(BlockComment blockComment){
     // Split comments by new line and embrace the comment block with `/** */`.
-    String sourceString = blockComment.comment();
-    String formattedSource = JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceString, BLOCK_COMMENT_END));
+    String sourceComment = blockComment.comment();
+    String formattedSource = JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
     buffer.append(formattedSource);
   }
 
