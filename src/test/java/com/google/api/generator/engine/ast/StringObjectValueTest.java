@@ -50,4 +50,22 @@ public class StringObjectValueTest {
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
+
+  @Test
+  public void writeStringObjectValue_USPunctuation() {
+    StringObjectValue valueSpecialPunctuation =
+        StringObjectValue.withValue("US Punctuation, one of !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
+    String expected = "\"US Punctuation, one of !\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\"";
+    assertThat(valueSpecialPunctuation.value()).isEqualTo(expected);
+    assertThat(valueSpecialPunctuation.type()).isEqualTo(TypeNode.STRING);
+  }
+
+  @Test
+  public void writeStringObjectValue_htmlCharacterComment() {
+    StringObjectValue valueSpecialChar =
+        StringObjectValue.withValue("&nbsp; &#40 &#91 &ndash; &gt;:&lt;");
+    String expected = "\"&nbsp; &#40 &#91 &ndash; &gt;:&lt;\"";
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
+    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
+  }
 }
