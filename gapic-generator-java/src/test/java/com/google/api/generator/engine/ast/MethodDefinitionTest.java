@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -29,6 +30,38 @@ public class MethodDefinitionTest {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_subtyping() {
+    Reference stringRef = ConcreteReference.withClazz(String.class);
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
+    TypeNode actualReturnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ArrayList.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getSomeList")
+            .setReturnType(actualReturnType)
+            .build();
+
+    MethodDefinition.builder()
+        .setName("getAList")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(methodExpr)
         .build();
     // No exception thrown, we're good.
   }
@@ -110,6 +143,53 @@ public class MethodDefinitionTest {
               .setIsStatic(true)
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_objectPrimitiveTypeMismatch() {
+    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("foobar")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.STRING)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .setReturnExpr(valueExpr)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_mismatchedTypes() {
+    Reference stringRef = ConcreteReference.withClazz(String.class);
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getSomeList")
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("getAList")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .setReturnExpr(methodExpr)
               .build();
         });
   }

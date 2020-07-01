@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class MethodDefinition implements AstNode {
+  static final Reference RUNTIME_EXCEPTION_REFERENCE =
+      ConcreteReference.withClazz(RuntimeException.class);
   // Required.
   public abstract ScopeNode scope();
   // Required.
@@ -144,9 +146,18 @@ public abstract class MethodDefinition implements AstNode {
 
       // Type-checking.
       if (method.returnExpr() != null) {
-        Preconditions.checkState(
-            method.returnType().equals(method.returnExpr().type()),
-            "Method return type does not match the return expression type");
+        if (method.returnType().isPrimitiveType()) {
+          Preconditions.checkState(
+              method.returnExpr().type().isPrimitiveType()
+                  && method.returnType().equals((method.returnExpr().type())),
+              "Method primitive return type does not match the return expression type");
+
+        } else {
+          Preconditions.checkState(
+              !method.returnExpr().type().isPrimitiveType()
+                  && method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+              "Method reference return type is not a subtype of the return expression type");
+        }
       }
 
       for (VariableExpr varExpr : method.arguments()) {
@@ -161,7 +172,7 @@ public abstract class MethodDefinition implements AstNode {
             TypeNode.isExceptionType(exceptionType),
             String.format("Type %s is not an exception type", exceptionType.reference()));
         Preconditions.checkState(
-            !RuntimeException.class.isAssignableFrom(exceptionType.reference().clazz()),
+            !RUNTIME_EXCEPTION_REFERENCE.isAssignableFrom(exceptionType.reference()),
             String.format(
                 "RuntimeException type %s does not need to be thrown",
                 exceptionType.reference().name()));

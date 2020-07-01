@@ -21,6 +21,8 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class TypeNode implements AstNode {
+  static final Reference EXCEPTION_REFERENCE = ConcreteReference.withClazz(Exception.class);
+
   public enum TypeKind {
     BYTE,
     SHORT,
@@ -38,12 +40,12 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
   public static final TypeNode NULL =
-      withReference(Reference.withClazz(javax.lang.model.type.NullType.class));
-  public static final TypeNode STRING = withReference(Reference.withClazz(String.class));
+      withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
+  public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
   public static final TypeNode STRING_ARRAY =
       builder()
           .setTypeKind(TypeKind.OBJECT)
-          .setReference(Reference.withClazz(String.class))
+          .setReference(ConcreteReference.withClazz(String.class))
           .setIsArray(true)
           .build();
 
@@ -76,19 +78,27 @@ public abstract class TypeNode implements AstNode {
 
   public static TypeNode withExceptionClazz(Class clazz) {
     Preconditions.checkState(Exception.class.isAssignableFrom(clazz));
-    return withReference(Reference.withClazz(clazz));
+    return withReference(ConcreteReference.withClazz(clazz));
   }
 
   public static boolean isExceptionType(TypeNode type) {
-    return isReferenceType(type) && Exception.class.isAssignableFrom(type.reference().clazz());
+    return isReferenceType(type) && EXCEPTION_REFERENCE.isAssignableFrom(type.reference());
   }
 
   public static boolean isReferenceType(TypeNode type) {
-    return type.typeKind().equals(TypeKind.OBJECT) && type.reference() != null;
+    return !isPrimitiveType(type.typeKind())
+        && type.typeKind().equals(TypeKind.OBJECT)
+        && type.reference() != null;
   }
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public boolean isSupertypeOrEquals(TypeNode other) {
+    return !isPrimitiveType()
+        && !other.isPrimitiveType()
+        && reference().isSupertypeOrEquals(other.reference());
   }
 
   @Override
