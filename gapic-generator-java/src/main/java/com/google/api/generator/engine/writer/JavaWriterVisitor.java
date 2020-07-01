@@ -63,7 +63,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
   private static final String SEMICOLON = ";";
-  private static final String STAR = "*";
+  private static final String ASTERISK = "*";
 
   private static final String ABSTRACT = "abstract";
   private static final String CATCH = "catch";
@@ -375,7 +375,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
     for(String comment : commentLines){
-      sourceComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
+      sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
     }
     sourceComment.append(BLOCK_COMMENT_END);
     buffer.append(JavaFormatter.format(sourceComment.toString()));
