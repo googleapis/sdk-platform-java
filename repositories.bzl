@@ -26,7 +26,7 @@ def com_google_api_codegen_repositories():
             strip_repo_prefix = "maven.",
             artifact = _fix_bazel_artifact_format(artifact),
             server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-            licenses = ["notice", "reciprocal"]
+            licenses = ["notice", "reciprocal"],
         )
 
     # Import Bazel-only dependencies (Gradle version will import maven artifacts of same
@@ -34,7 +34,6 @@ def com_google_api_codegen_repositories():
     # properties file.
 
     _protobuf_version = PROPERTIES["version.com_google_protobuf"]
-
     _maybe(
         http_archive,
         name = "com_google_protobuf",
@@ -47,7 +46,7 @@ def com_google_api_codegen_repositories():
         name = "google_java_format_all_deps",
         artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:%s" % PROPERTIES["version.google_java_format"],
         server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"]
+        licenses = ["notice", "reciprocal"],
     )
 
     _maybe(
@@ -91,7 +90,7 @@ def com_google_api_codegen_repositories():
         name = "error_prone_annotations_maven",
         artifact = "com.google.errorprone:error_prone_annotations:2.3.2",
         server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"]
+        licenses = ["notice", "reciprocal"],
     )
 
     _maybe(
