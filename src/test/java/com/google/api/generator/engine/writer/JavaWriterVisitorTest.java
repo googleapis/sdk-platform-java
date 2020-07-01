@@ -258,8 +258,8 @@ public class JavaWriterVisitorTest {
             .addOrderedList(orderedlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
+            .setThrows(throwType, throwsDescription)
             .setDeprecated(deprecatedText)
-            .addThrowsText(throwType, throwsDescription)
             .build();
     String expected =
         "/**\n"

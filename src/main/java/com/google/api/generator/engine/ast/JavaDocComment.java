@@ -14,17 +14,12 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
-
-  @Nullable
-  public abstract String deprecated();
 
   public abstract ImmutableList<String> comments();
 
@@ -32,11 +27,18 @@ public abstract class JavaDocComment implements Comment {
     return new AutoValue_JavaDocComment.Builder();
   }
 
+  public static JavaDocComment withComment(String comment) {
+    return JavaDocComment.builder().addComment(comment).build();
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
-    public abstract Builder setDeprecated(String deprecatedText);
+    public Builder setDeprecated(String deprecatedText) {
+      commentsBuilder().add(String.format("%s %s", "@deprecated", deprecatedText));
+      return this;
+    }
 
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
@@ -49,7 +51,7 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    public Builder addThrowsText(String type, String description) {
+    public Builder setThrows(String type, String description) {
       String throwsText = String.format("%s %s %s", "@throws", type, description);
       commentsBuilder().add(throwsText);
       return this;
@@ -94,9 +96,6 @@ public abstract class JavaDocComment implements Comment {
   @Override
   public String comment() {
     List<String> commentBody = comments().stream().collect(Collectors.toList());
-    if (!Strings.isNullOrEmpty(deprecated())) {
-      commentBody.add(String.format("%s %s", "@deprecated", deprecated()));
-    }
     return String.join("\n", commentBody);
   }
 

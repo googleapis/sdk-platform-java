@@ -24,7 +24,7 @@ public class JavaDocCommentTest {
   @Test
   public void JavaDocComment_basic() {
     String content = "this is a test comment";
-    JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).build();
+    JavaDocComment javaDocComment = JavaDocComment.withComment(content);
     assertThat(javaDocComment.comment()).isEqualTo(content);
   }
 
@@ -49,8 +49,8 @@ public class JavaDocCommentTest {
             .addParagraph(paragraph2)
             .addOrderedList(orderedList)
             .addParam(paramName, paramDescription)
+            .setThrows(throwType, throwsDescription)
             .setDeprecated(deprecatedText)
-            .addThrowsText(throwType, throwsDescription)
             .build();
     String expected =
         "this is a test comment\n"

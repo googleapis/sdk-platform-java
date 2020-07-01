@@ -371,14 +371,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   public void visit(JavaDocComment javaDocComment){
-    StringBuilder formattedJavaDocComment = new StringBuilder();
-    formattedJavaDocComment.append(BLOCK_COMMENT_START + NEWLINE);
+    StringBuilder sourceComment = new StringBuilder();
+    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
     for(String comment : commentLines){
-      formattedJavaDocComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
+      sourceComment.append(String.format("%s %s%s", STAR, comment, NEWLINE));
     }
-    formattedJavaDocComment.append(BLOCK_COMMENT_END);
-    buffer.append(JavaFormatter.format(formattedJavaDocComment.toString()));
+    sourceComment.append(BLOCK_COMMENT_END);
+    buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
 
   /** =============================== OTHER =============================== */
