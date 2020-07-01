@@ -26,7 +26,7 @@ public abstract class AnnotationNode implements AstNode {
       AnnotationNode.builder().setType(annotationType(Deprecated.class)).build();
 
   private static TypeNode annotationType(Class clazz) {
-    return TypeNode.withReference(Reference.withClazz(clazz));
+    return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }
 
   public abstract TypeNode type();
