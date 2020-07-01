@@ -16,99 +16,115 @@ package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.junit.Test;
 
 public class ReferenceTest {
   @Test
-  public void basicReference() {
-    Reference reference = Reference.builder().setClazz(Integer.class).build();
-    assertEquals(reference.name(), Integer.class.getSimpleName());
-  }
-
-  @Test
-  public void parameterizedReference() {
-    Reference reference =
-        Reference.builder()
-            .setClazz(HashMap.class)
-            .setGenerics(
-                Arrays.asList(
-                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
-            .build();
-    assertEquals(reference.name(), "HashMap<String, Integer>");
-  }
-
-  @Test
-  public void nestedParameterizedReference() {
+  public void nestedGenerics_concreteReferenceOuter() {
     Reference mapReference =
-        Reference.builder()
-            .setClazz(HashMap.class)
+        VaporReference.builder()
+            .setName("HashMap")
+            .setPakkage("java.util")
             .setGenerics(
                 Arrays.asList(
-                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Integer.class)))
             .build();
     Reference outerMapReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(Arrays.asList(mapReference, mapReference))
             .build();
     Reference listReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(List.class)
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
     assertEquals(
         listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
+    assertEquals(listReference.fullName(), "java.util.List");
   }
 
   @Test
-  public void isSupertype_basic() {
-    assertTrue(TypeNode.STRING.isSupertypeOrEquals(TypeNode.STRING));
-    assertFalse(TypeNode.INT.isSupertypeOrEquals(TypeNode.STRING));
-    assertFalse(TypeNode.STRING.isSupertypeOrEquals(TypeNode.INT));
-    assertFalse(TypeNode.INT.isSupertypeOrEquals(TypeNode.INT));
-
-    TypeNode mapType = TypeNode.withReference(Reference.withClazz(Map.class));
-    TypeNode hashMapType = TypeNode.withReference(Reference.withClazz(HashMap.class));
-    assertTrue(mapType.isSupertypeOrEquals(hashMapType));
-    assertFalse(hashMapType.isSupertypeOrEquals(mapType));
+  public void nestedGenerics_vaporReferenceOuter() {
+    Reference mapReference =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(
+                Arrays.asList(
+                    VaporReference.builder().setName("String").setPakkage("java.lang").build(),
+                    ConcreteReference.withClazz(Integer.class)))
+            .build();
+    Reference outerMapReference =
+        VaporReference.builder()
+            .setName("HashMap")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(mapReference, mapReference))
+            .build();
+    Reference listReference =
+        VaporReference.builder()
+            .setName("List")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(outerMapReference))
+            .build();
+    assertEquals(
+        listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
+    assertEquals(listReference.fullName(), "java.util.List");
   }
 
   @Test
-  public void isSupertype_nestedGenerics() {
-    Reference stringRef = Reference.withClazz(String.class);
-    TypeNode typeOne =
-        TypeNode.withReference(
-            Reference.builder()
-                .setClazz(Map.class)
-                .setGenerics(
-                    Arrays.asList(
-                        stringRef,
-                        Reference.builder()
-                            .setClazz(List.class)
-                            .setGenerics(Arrays.asList(Reference.withClazz(Expr.class)))
-                            .build()))
-                .build());
-    TypeNode typeTwo =
-        TypeNode.withReference(
-            Reference.builder()
-                .setClazz(HashMap.class)
-                .setGenerics(
-                    Arrays.asList(
-                        stringRef,
-                        Reference.builder()
-                            .setClazz(ArrayList.class)
-                            .setGenerics(Arrays.asList(Reference.withClazz(ValueExpr.class)))
-                            .build()))
-                .build());
-    assertTrue(typeOne.isSupertypeOrEquals(typeOne));
-    assertTrue(typeOne.isSupertypeOrEquals(typeTwo));
-    assertFalse(typeTwo.isSupertypeOrEquals(typeOne));
+  public void mixedConcreteVaporReferenceEquals() {
+    Reference mapReferenceVaporOuter =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(
+                Arrays.asList(
+                    VaporReference.builder().setName("String").setPakkage("java.lang").build(),
+                    ConcreteReference.withClazz(Integer.class)))
+            .build();
+    Reference outerMapReferenceVaporOuter =
+        VaporReference.builder()
+            .setName("HashMap")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(mapReferenceVaporOuter, mapReferenceVaporOuter))
+            .build();
+    Reference listReferenceVaporOuter =
+        VaporReference.builder()
+            .setName("List")
+            .setPakkage("java.util")
+            .setGenerics(Arrays.asList(outerMapReferenceVaporOuter))
+            .build();
+
+    Reference mapReferenceConcreteOuter =
+        VaporReference.builder()
+            .setName("HashMap")
+            .setPakkage("java.util")
+            .setGenerics(
+                Arrays.asList(
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Integer.class)))
+            .build();
+    Reference outerMapReferenceConcreteOuter =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(mapReferenceConcreteOuter, mapReferenceConcreteOuter))
+            .build();
+    Reference listReferenceConcreteOuter =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(outerMapReferenceConcreteOuter))
+            .build();
+
+    assertEquals(listReferenceConcreteOuter, listReferenceConcreteOuter);
+
+    assertFalse(listReferenceConcreteOuter.equals(listReferenceVaporOuter));
+    assertFalse(listReferenceVaporOuter.equals(listReferenceConcreteOuter));
+
+    assertFalse(listReferenceConcreteOuter.isAssignableFrom(listReferenceVaporOuter));
+    assertFalse(listReferenceVaporOuter.isAssignableFrom(listReferenceConcreteOuter));
   }
 }
