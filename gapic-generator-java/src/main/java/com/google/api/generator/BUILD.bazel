@@ -33,6 +33,5 @@ java_library(
     deps = [
         "@com_google_guava_guava__com_google_api_codegen//jar",
         "@com_google_protobuf//:protobuf_java",
-        "@maven//:org_apache_commons_commons_lang3",
     ],
 )
