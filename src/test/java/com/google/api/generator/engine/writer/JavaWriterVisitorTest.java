@@ -16,7 +16,8 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
-
+import static org.junit.Assert.assertThrows;
+import java.lang.RuntimeException;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -216,6 +217,15 @@ public class JavaWriterVisitorTest {
     String expected = "/** this is a test comment */\n";
     blockComment.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo(expected);
+  }
+
+  @Test  
+  public void writeBadBlockComment() {
+    String content = "A super long long long long long long long */ long long long long long long long comment that tests";
+    assertThrows(RuntimeException.class, () -> {
+        BlockComment blockComment = BlockComment.builder().setComment(content).build();
+        blockComment.accept(writerVisitor);
+    });
   }
 
   @Test
