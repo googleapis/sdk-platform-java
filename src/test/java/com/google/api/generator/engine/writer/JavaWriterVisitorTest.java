@@ -383,7 +383,6 @@ public class JavaWriterVisitorTest {
     TypeNode type = TypeNode.withReference(ref);
     AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).build();
     anonymousClassExpr.accept(writerVisitor);
-    System.out.println(writerVisitor.write());
     assertEquals(writerVisitor.write(), "new Runnable() {\n}");
   }
 
@@ -408,10 +407,7 @@ public class JavaWriterVisitorTest {
         .build();
     AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).setStatements(Arrays.asList(exprStatement)).setMethods(Arrays.asList(methodDefinition)).build();
     anonymousClassExpr.accept(writerVisitor);
-    System.out.println("write(): " + writerVisitor.write());
     String expected = "new Runnable() {\nprivate String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
-    System.out.println("expected: "+expected);
-
     assertEquals(writerVisitor.write(), expected);
   }
 

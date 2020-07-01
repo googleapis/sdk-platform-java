@@ -15,12 +15,12 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import java.util.Collections;
 import java.util.List;
 
 @AutoValue
 public abstract class AnonymousClassExpr implements Expr {
-  @Override
   public abstract TypeNode type();
 
   public abstract List<MethodDefinition> methods();
@@ -41,14 +41,31 @@ public abstract class AnonymousClassExpr implements Expr {
 
     public abstract Builder setStatements(List<Statement> statements);
 
-    // abstract AnonymousClassExpr autoBuild();
+    public abstract AnonymousClassExpr autoBuild();
 
-    // public AnonymousClassExpr build() {
-    //     // some precondition checks
-    //     // do not have static class members
-    //     // variable expression statement must be final. eg: static final int x = 0;
-    // }
-    public abstract AnonymousClassExpr build();
+    public AnonymousClassExpr build() {
+      AnonymousClassExpr anonymousClassExpr = autoBuild();
+      Preconditions.checkState(
+          TypeNode.isReferenceType(anonymousClassExpr.type()),
+          "Anonymous class Expression must be reference types.");
+      List<MethodDefinition> methods = anonymousClassExpr.methods();
+      for (MethodDefinition method : methods) {
+        Preconditions.checkState(
+            !method.isStatic(), "Anonymous class should not have static methods.");
+      }
+      List<Statement> statements = anonymousClassExpr.statements();
+      for (Statement statement : statements) {
+        if (statement instanceof ExprStatement) {
+          Expr expr = ((ExprStatement) statement).expression();
+          if (expr instanceof VariableExpr) {
+            Preconditions.checkState(
+                ((VariableExpr) expr).isFinal(),
+                "Variable expression statement in Anonymous class must be final.");
+          }
+        }
+      }
+      return anonymousClassExpr;
+    }
   }
 
   @Override
