@@ -51,7 +51,7 @@ public class AssignmentExprTest {
     Variable variable =
         Variable.builder()
             .setName("x")
-            .setType(TypeNode.withReference(Reference.withClazz(List.class)))
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(List.class)))
             .build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -59,7 +59,7 @@ public class AssignmentExprTest {
     MethodInvocationExpr valueExpr =
         MethodInvocationExpr.builder()
             .setMethodName("getAList")
-            .setReturnType(TypeNode.withReference(Reference.withClazz(ArrayList.class)))
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
             .build();
 
     assertValidAssignmentExpr(variableExpr, valueExpr);
