@@ -3,6 +3,7 @@ package(default_visibility = ["//visibility:public"])
 TESTS = [
     "AssignmentExprTest",
     "ClassDefinitionTest",
+    "ConcreteReferenceTest",
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
@@ -15,6 +16,7 @@ TESTS = [
     "TryCatchStatementTest",
     "VariableExprTest",
     "VariableTest",
+    "VaporReferenceTest",
 ]
 
 filegroup(
