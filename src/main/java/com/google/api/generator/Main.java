@@ -42,6 +42,7 @@ public class Main {
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
     response
+        .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
         .addFileBuilder()
         .setName(request.getParameter() + "temp-gen.srcjar")
         .setContentBytes(output.toByteString());
