@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -378,6 +379,26 @@ public class PathTemplateTest {
   }
 
   @Test
+  public void complexResourcePathTemplateVariables() {
+    String pattern =
+        "projects/{foo}_{bar}/zones/{zone_a}-{zone_b}_{zone_c}/machines/{cell1}.{cell2}";
+    PathTemplate template = PathTemplate.create(pattern);
+    Set<String> variables = template.vars();
+    Truth.assertThat(variables)
+        .containsExactly("foo", "bar", "zone_a", "zone_b", "zone_c", "cell1", "cell2");
+
+    pattern = "projects/{foo}_{bar}/zones/*";
+    template = PathTemplate.create(pattern);
+    Map<String, String> match =
+        template.match("https://www.googleapis.com/compute/v1/projects/foo1_bar2/zones/azone");
+    Truth.assertThat(match).isNotNull();
+    Truth.assertThat(match.get("foo")).isEqualTo("foo1");
+    Truth.assertThat(match.get("bar")).isEqualTo("bar2");
+    variables = template.vars();
+    System.out.println("DEL: vars: " + variables);
+  }
+
+  @Test
   public void complexResourceBasicInvalidIds() {
     thrown.expect(ValidationException.class);
     PathTemplate.create("projects/*/zones/~{zone_a}");
@@ -573,6 +594,57 @@ public class PathTemplateTest {
     PathTemplate template = PathTemplate.createWithoutUrlEncoding("bar/*");
     String instance = template.instantiate(ImmutableMap.of("$0", "asdf:;`~,.<>[]!@#$%^&*()"));
     Truth.assertThat(instance).isEqualTo("bar/asdf:;`~,.<>[]!@#$%^&*()");
+  }
+
+  @Test
+  public void instantiateWithComplexResourceId_basic() {
+    PathTemplate template = PathTemplate.create("projects/{project}/zones/{zone_a}~{zone_b}");
+    String instance =
+        template.instantiate("project", "a/b/c", "zone_a", "apple", "zone_b", "baseball");
+    Truth.assertThat(instance).isEqualTo("projects/a%2Fb%2Fc/zones/apple~baseball");
+  }
+
+  @Test
+  public void instantiateWithComplexResourceId_mixedSeparators() {
+    PathTemplate template =
+        PathTemplate.create(
+            "projects/{project}/zones/{zone_a}~{zone_b}.{zone_c}-{zone_d}~{zone_e}");
+    String instance =
+        template.instantiate(
+            "project",
+            "a/b/c",
+            "zone_a",
+            "apple",
+            "zone_b",
+            "baseball/basketball",
+            "zone_c",
+            "cat/kitty",
+            "zone_d",
+            "dog/hound",
+            "zone_e",
+            "12345");
+    Truth.assertThat(instance)
+        .isEqualTo(
+            "projects/a%2Fb%2Fc/zones/apple~baseball%2Fbasketball.cat%2Fkitty-dog%2Fhound~12345");
+  }
+
+  @Test
+  public void instantiateWithComplexResourceId_mixedSeparatorsInParent() {
+    PathTemplate template =
+        PathTemplate.create("projects/{project_a}~{project_b}.{project_c}/zones/{zone_a}~{zone_b}");
+    String instance =
+        template.instantiate(
+            "project_a",
+            "a/b/c",
+            "project_b",
+            "foo",
+            "project_c",
+            "bar",
+            "zone_a",
+            "apple",
+            "zone_b",
+            "baseball");
+    Truth.assertThat(instance).isEqualTo("projects/a%2Fb%2Fc~foo.bar/zones/apple~baseball");
   }
 
   // Other

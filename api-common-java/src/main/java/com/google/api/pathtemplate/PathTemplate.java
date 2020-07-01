@@ -200,6 +200,11 @@ public class PathTemplate {
       return new AutoValue_PathTemplate_Segment(kind, value, "");
     }
 
+    /** Creates a segment of given kind, value, and complex separator. */
+    private static Segment create(SegmentKind kind, String value, String complexSeparator) {
+      return new AutoValue_PathTemplate_Segment(kind, value, complexSeparator);
+    }
+
     private static Segment wildcardCreate(String complexSeparator) {
       return new AutoValue_PathTemplate_Segment(
           SegmentKind.WILDCARD,
@@ -737,10 +742,13 @@ public class PathTemplate {
     boolean continueLast = true; // Whether to not append separator
     boolean skip = false; // Whether we are substituting a binding and segments shall be skipped.
     ListIterator<Segment> iterator = segments.listIterator();
+    String prevSeparator = "";
     while (iterator.hasNext()) {
       Segment seg = iterator.next();
       if (!skip && !continueLast) {
-        result.append(seg.separator());
+        String separator = prevSeparator.isEmpty() ? seg.separator() : prevSeparator;
+        result.append(separator);
+        prevSeparator = seg.complexSeparator().isEmpty() ? seg.separator() : seg.complexSeparator();
       }
       continueLast = false;
       switch (seg.kind()) {
@@ -1066,7 +1074,7 @@ public class PathTemplate {
           currIteratorIndex < separatorIndices.size()
               ? separatorIndices.get(currIteratorIndex)
               : "";
-      segments.add(Segment.create(SegmentKind.BINDING, subVarName));
+      segments.add(Segment.create(SegmentKind.BINDING, subVarName, complexDelimiter));
       segments.add(Segment.wildcardCreate(complexDelimiter));
       segments.add(Segment.END_BINDING);
       subVarName = null;
