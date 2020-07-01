@@ -19,6 +19,9 @@ import static com.google.common.truth.Truth.assertThat;
 import org.junit.Test;
 
 public class StringObjectValueTest {
+
+  private StringObjectValue valueSpecialChar;
+
   @Test
   public void writeStringObjectValue() {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
@@ -28,7 +31,7 @@ public class StringObjectValueTest {
 
   @Test
   public void writeStringObjectValue_escapeCharacter() {
-    StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n '");
+    valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n '");
     String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n '\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
@@ -36,7 +39,7 @@ public class StringObjectValueTest {
 
   @Test
   public void writeStringObjectValue_specialCharacter() {
-    StringObjectValue valueSpecialChar = StringObjectValue.withValue("Tom said: \"Hi!\"; \n");
+    valueSpecialChar = StringObjectValue.withValue("Tom said: \"Hi!\"; \n");
     String expected = "\"Tom said: \\\"Hi!\\\"; \\n\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
@@ -44,7 +47,7 @@ public class StringObjectValueTest {
 
   @Test
   public void writeStringObjectValue_specialCharacterComment() {
-    StringObjectValue valueSpecialChar =
+    valueSpecialChar =
         StringObjectValue.withValue("Service comment may include special characters: <>&\"`'@");
     String expected = "\"Service comment may include special characters: <>&\\\"`'@\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
@@ -53,17 +56,16 @@ public class StringObjectValueTest {
 
   @Test
   public void writeStringObjectValue_USPunctuation() {
-    StringObjectValue valueSpecialPunctuation =
+    valueSpecialChar =
         StringObjectValue.withValue("US Punctuation, one of !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
     String expected = "\"US Punctuation, one of !\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\"";
-    assertThat(valueSpecialPunctuation.value()).isEqualTo(expected);
-    assertThat(valueSpecialPunctuation.type()).isEqualTo(TypeNode.STRING);
+    assertThat(valueSpecialChar.value()).isEqualTo(expected);
+    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
 
   @Test
   public void writeStringObjectValue_htmlCharacterComment() {
-    StringObjectValue valueSpecialChar =
-        StringObjectValue.withValue("&nbsp; &#40 &#91 &ndash; &gt;:&lt;");
+    valueSpecialChar = StringObjectValue.withValue("&nbsp; &#40 &#91 &ndash; &gt;:&lt;");
     String expected = "\"&nbsp; &#40 &#91 &ndash; &gt;:&lt;\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
