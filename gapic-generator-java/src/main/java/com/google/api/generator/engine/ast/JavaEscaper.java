@@ -39,14 +39,8 @@ public class JavaEscaper {
     SpecialSequenceEscaper specialSequenceEscaper = new SpecialSequenceEscaper();
     try {
       return specialSequenceEscaper.escape(source);
-    } catch (NullPointerException e) {
-      throw new RuntimeException(String.format("Input String cannot be null %s", e));
     } catch (IllegalArgumentException e) {
-      throw new RuntimeException(
-          String.format(
-              "Input String contains badly formed UTF-16 or cannot be escaped for any other reason"
-                  + " %s",
-              e));
+      throw new FormatException(String.format("Input String can not be formatted: %s", e));
     }
   }
 }
