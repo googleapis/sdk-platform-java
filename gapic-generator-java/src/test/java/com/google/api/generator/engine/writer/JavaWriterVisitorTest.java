@@ -379,7 +379,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAnonymousClassExpr_basic() {
-    Reference ref = Reference.withClazz(Runnable.class);
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).build();
     anonymousClassExpr.accept(writerVisitor);
@@ -389,7 +389,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAnonymousClassExpr_withStatementsMethods() {
-    Reference ref = Reference.withClazz(Runnable.class);
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
 
     Variable variable = createVariable("s", TypeNode.STRING);
