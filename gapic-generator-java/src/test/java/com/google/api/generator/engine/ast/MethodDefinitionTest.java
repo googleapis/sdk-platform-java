@@ -36,13 +36,16 @@ public class MethodDefinitionTest {
 
   @Test
   public void validMethodDefinition_subtyping() {
-    Reference stringRef = Reference.withClazz(String.class);
+    Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
-            Reference.builder().setClazz(List.class).setGenerics(Arrays.asList(stringRef)).build());
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
     TypeNode actualReturnType =
         TypeNode.withReference(
-            Reference.builder()
+            ConcreteReference.builder()
                 .setClazz(ArrayList.class)
                 .setGenerics(Arrays.asList(stringRef))
                 .build());
@@ -164,10 +167,13 @@ public class MethodDefinitionTest {
 
   @Test
   public void invalidMethodDefinition_mismatchedTypes() {
-    Reference stringRef = Reference.withClazz(String.class);
+    Reference stringRef = ConcreteReference.withClazz(String.class);
     TypeNode returnType =
         TypeNode.withReference(
-            Reference.builder().setClazz(List.class).setGenerics(Arrays.asList(stringRef)).build());
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
 
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
