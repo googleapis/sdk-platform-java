@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static com.google.common.truth.Truth.assertThat;
+import static junit.framework.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ public class JavaDocCommentTest {
   public void JavaDocComment_basic() {
     String content = "this is a test comment";
     JavaDocComment javaDocComment = JavaDocComment.withComment(content);
-    assertThat(javaDocComment.comment()).isEqualTo(content);
+    assertEquals(javaDocComment.comment(), content);
   }
 
   @Test
@@ -64,6 +64,6 @@ public class JavaDocCommentTest {
             + "@param shelfName The name of the shelf where books are published to.\n"
             + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "@deprecated Use the {@link ArchivedBookName} class instead.";
-    assertThat(javaDocComment.comment()).isEqualTo(expected);
+    assertEquals(javaDocComment.comment(), expected);
   }
 }
