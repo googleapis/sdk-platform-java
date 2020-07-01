@@ -28,16 +28,8 @@ public class StringObjectValueTest {
 
   @Test
   public void writeStringObjectValue_escapeCharacter() {
-    StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n");
-    String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n\"";
-    assertThat(valueSpecialChar.value()).isEqualTo(expected);
-    assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
-  }
-
-  @Test
-  public void writeStringObjectValue_unicodeCharacter() {
-    StringObjectValue valueSpecialChar = StringObjectValue.withValue("one unicode: \uFFFF");
-    String expected = "\"one unicode: \\uFFFF\"";
+    StringObjectValue valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n '");
+    String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n '\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
     assertThat(valueSpecialChar.type()).isEqualTo(TypeNode.STRING);
   }
