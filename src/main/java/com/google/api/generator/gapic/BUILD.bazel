@@ -2,14 +2,18 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(
     name = "gapic_files",
-    srcs = [
+    srcs = glob(["*.java"]) + [
         "//src/main/java/com/google/api/generator/gapic/model:model_files",
+        "//src/main/java/com/google/api/generator/gapic/protoparser:protoparser_files",
     ],
 )
 
 java_library(
-    name = "engine",
-    runtime_deps = [
+    name = "gapic",
+    srcs = glob(["*.java"]),
+    deps = [
         "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/protoparser",
+        "@com_google_protobuf//:protobuf_java",
     ],
 )
