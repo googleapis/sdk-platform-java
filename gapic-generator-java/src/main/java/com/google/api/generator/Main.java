@@ -14,6 +14,7 @@
 
 package com.google.api.generator;
 
+import com.google.api.generator.gapic.Generator;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.protobuf.ByteString;
@@ -35,6 +36,14 @@ public class Main {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
 
+    Generator.generateGapic(request);
+
+    CodeGeneratorResponse response = doPlaceholderStuff(request);
+    response.writeTo(System.out);
+  }
+
+  private static CodeGeneratorResponse doPlaceholderStuff(CodeGeneratorRequest request)
+      throws IOException, DescriptorValidationException {
     ByteString.Output output = ByteString.newOutput();
     JarOutputStream jos = new JarOutputStream(output);
     generateCode(request, jos);
@@ -47,7 +56,7 @@ public class Main {
         .setName(request.getParameter() + "temp-gen.srcjar")
         .setContentBytes(output.toByteString());
 
-    response.build().writeTo(System.out);
+    return response.build();
   }
 
   private static void generateCode(CodeGeneratorRequest request, JarOutputStream jos)
