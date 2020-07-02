@@ -21,6 +21,7 @@ import java.util.List;
 
 @AutoValue
 public abstract class AnonymousClassExpr implements Expr {
+  @Override
   public abstract TypeNode type();
 
   public abstract List<MethodDefinition> methods();
