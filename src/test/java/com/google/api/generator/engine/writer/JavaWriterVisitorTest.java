@@ -392,7 +392,7 @@ public class JavaWriterVisitorTest {
     TypeNode type = TypeNode.withReference(ref);
 
     Variable variable = createVariable("s", TypeNode.STRING);
-    VariableExpr variableExpr = VariableExpr.builder().setScope(ScopeNode.PRIVATE).setIsDecl(true).setVariable(variable).build();
+    VariableExpr variableExpr = VariableExpr.builder().setScope(ScopeNode.PRIVATE).setIsDecl(true).setIsFinal(true).setVariable(variable).build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
     AssignmentExpr assignmentExpr = AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
     ExprStatement exprStatement = ExprStatement.withExpr(assignmentExpr);
@@ -407,7 +407,7 @@ public class JavaWriterVisitorTest {
         .build();
     AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).setStatements(Arrays.asList(exprStatement)).setMethods(Arrays.asList(methodDefinition)).build();
     anonymousClassExpr.accept(writerVisitor);
-    String expected = "new Runnable() {\nprivate String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
+    String expected = "new Runnable() {\nprivate final String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1084,7 +1084,7 @@ public class JavaWriterVisitorTest {
   }
 
   private static AssignmentExpr createAssignmentExpr(
-      String variableName, String value, TypeNode type) {
+    String variableName, String value, TypeNode type) {
     VariableExpr variableExpr = createVariableDeclExpr(variableName, type);
     Value val = PrimitiveValue.builder().setType(type).setValue(value).build();
     Expr valueExpr = ValueExpr.builder().setValue(val).build();

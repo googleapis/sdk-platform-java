@@ -61,6 +61,10 @@ public abstract class AnonymousClassExpr implements Expr {
             Preconditions.checkState(
                 ((VariableExpr) expr).isFinal(),
                 "Variable expression statement in Anonymous class must be final.");
+          } else if (expr instanceof AssignmentExpr) {
+            Preconditions.checkState(
+                ((AssignmentExpr) expr).variableExpr().isFinal(),
+                "Variable expression statement in Anonymous class must be final.");
           }
         }
       }
