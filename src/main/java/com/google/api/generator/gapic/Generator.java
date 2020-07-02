@@ -14,12 +14,21 @@
 
 package com.google.api.generator.gapic;
 
+import com.google.api.generator.gapic.composer.Composer;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
+import java.util.List;
 
 public class Generator {
-  // TODO(miraleung): Return a CodeGeneratorResponse.
-  public static void generateGapic(CodeGeneratorRequest request) {
-    Parser.parseServices(request);
+  public static CodeGeneratorResponse generateGapic(
+      CodeGeneratorRequest request, String outputFilePath) {
+    List<Service> services = Parser.parseServices(request);
+    List<GapicClass> clazzes = Composer.composeServiceClasses(services);
+    CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilePath);
+    return response;
   }
 }

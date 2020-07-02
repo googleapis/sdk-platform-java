@@ -12,8 +12,10 @@ java_library(
     name = "gapic",
     srcs = glob(["*.java"]),
     deps = [
+        "//src/main/java/com/google/api/generator/gapic/composer",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
+        "//src/main/java/com/google/api/generator/gapic/protowriter",
         "@com_google_protobuf//:protobuf_java",
     ],
 )
