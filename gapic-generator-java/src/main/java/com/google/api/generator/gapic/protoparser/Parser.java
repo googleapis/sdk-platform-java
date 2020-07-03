@@ -36,6 +36,28 @@ public class Parser {
 
   // TODO(miraleung): Caller should handle empty lists.
   public static List<Service> parseServices(CodeGeneratorRequest request) {
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    List<Service> services = new ArrayList<>();
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+
+      String pakkage = getPackage(fileDescriptor);
+      for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
+        // TODO(miraleung): Parse methods here too.
+        Service service =
+            Service.builder().setName(serviceDescriptor.getName()).setPakkage(pakkage).build();
+        services.add(service);
+      }
+    }
+
+    return services;
+  }
+
+  private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
     // Build the fileDescriptors map so that we can create the FDs for the filesToGenerate.
     Map<String, FileDescriptor> fileDescriptors = Maps.newHashMap();
     for (FileDescriptorProto fileDescriptorProto : request.getProtoFileList()) {
@@ -59,25 +81,7 @@ public class Parser {
 
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
-
-    List<Service> services = new ArrayList<>();
-    for (String fileToGenerate : request.getFileToGenerateList()) {
-      FileDescriptor fileDescriptor =
-          Preconditions.checkNotNull(
-              fileDescriptors.get(fileToGenerate),
-              "Missing file descriptor for [%s]",
-              fileToGenerate);
-      String pakkage = getPackage(fileDescriptor);
-
-      for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
-        // TODO(miraleung): Parse methods here too.
-        Service service =
-            Service.builder().setName(serviceDescriptor.getName()).setPakkage(pakkage).build();
-        services.add(service);
-      }
-    }
-
-    return services;
+    return fileDescriptors;
   }
 
   private static String getPackage(FileDescriptor fileDescriptor) {
