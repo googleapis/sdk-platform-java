@@ -20,6 +20,10 @@ import com.google.auto.value.AutoValue;
 public abstract class ValueExpr implements Expr {
   public abstract Value value();
 
+  public static ValueExpr withValue(Value value) {
+    return builder().setValue(value).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_ValueExpr.Builder();
   }

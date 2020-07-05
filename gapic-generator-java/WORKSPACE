@@ -25,10 +25,26 @@ load("//:repositories.bzl", "com_google_api_codegen_repositories")
 
 com_google_api_codegen_repositories()
 
+# gax-java
+"""
+load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
+
+com_google_api_gax_java_properties(
+    name = "com_google_api_gax_java_properties",
+    file = "@com_google_api_gax_java//:dependencies.properties",
+)
+
+load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_repositories")
+
+com_google_api_gax_java_repositories()
+"""
+
+# protobuf
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
+# Resource names plugin.
 load(
     "@com_google_protoc_java_resource_names_plugin//:repositories.bzl",
     "com_google_protoc_java_resource_names_plugin_repositories",
