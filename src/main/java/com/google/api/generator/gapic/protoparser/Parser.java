@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -21,6 +22,7 @@ import com.google.common.collect.Maps;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
@@ -47,9 +49,13 @@ public class Parser {
 
       String pakkage = getPackage(fileDescriptor);
       for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
-        // TODO(miraleung): Parse methods here too.
+        List<Method> methods = parseMethods(serviceDescriptor);
         Service service =
-            Service.builder().setName(serviceDescriptor.getName()).setPakkage(pakkage).build();
+            Service.builder()
+                .setName(serviceDescriptor.getName())
+                .setPakkage(pakkage)
+                .setMethods(methods)
+                .build();
         services.add(service);
       }
     }
@@ -92,5 +98,18 @@ public class Parser {
     Preconditions.checkNotNull(
         pakkage, String.format("Java package in file %s was null", fileDescriptor.getName()));
     return pakkage;
+  }
+
+  private static List<Method> parseMethods(ServiceDescriptor serviceDescriptor) {
+    List<Method> methods = new ArrayList<>();
+    for (MethodDescriptor methodDescriptor : serviceDescriptor.getMethods()) {
+      methods.add(
+          Method.builder()
+              .setName(methodDescriptor.getName())
+              .setInputTypeName(methodDescriptor.getInputType().getName())
+              .setOutputTypeName(methodDescriptor.getOutputType().getName())
+              .build());
+    }
+    return methods;
   }
 }

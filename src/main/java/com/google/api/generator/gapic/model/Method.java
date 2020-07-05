@@ -15,31 +15,29 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
-import java.util.List;
 
 @AutoValue
-public abstract class Service {
+public abstract class Method {
   public abstract String name();
 
-  public abstract String pakkage();
+  public abstract String inputTypeName();
 
-  public abstract ImmutableList<Method> methods();
+  public abstract String outputTypeName();
 
-  // TODO(miraleung): Get comments.
+  // TODO(miraleung): Parse annotations, comments.
 
   public static Builder builder() {
-    return new AutoValue_Service.Builder().setMethods(ImmutableList.of());
+    return new AutoValue_Method.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setName(String name);
 
-    public abstract Builder setPakkage(String pakkage);
+    public abstract Builder setInputTypeName(String name);
 
-    public abstract Builder setMethods(List<Method> methods);
+    public abstract Builder setOutputTypeName(String name);
 
-    public abstract Service build();
+    public abstract Method build();
   }
 }
