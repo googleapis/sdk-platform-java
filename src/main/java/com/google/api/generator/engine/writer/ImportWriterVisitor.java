@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -142,6 +143,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
+  public void visit(BlockStatement blockStatement) {
+    statements(blockStatement.body());
+  }
+
+  @Override
   public void visit(IfStatement ifStatement) {
     ifStatement.conditionExpr().accept(this);
     statements(ifStatement.body());
@@ -231,18 +237,16 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
-      Class clazz = ref.clazz();
       // Don't need to import this.
-      if (clazz.getPackage().getName().equals(PKG_JAVA_LANG)
-          || clazz.getPackage().getName().equals(currentPackage)) {
+      if (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage)) {
         continue;
       }
 
-      if (clazz.getEnclosingClass() != null) {
+      if (ref.hasEnclosingClass()) {
         // This is a static import.
-        staticImports.add(clazz.getCanonicalName());
+        staticImports.add(ref.fullName());
       } else {
-        imports.add(clazz.getCanonicalName());
+        imports.add(ref.fullName());
       }
 
       references(ref.generics());

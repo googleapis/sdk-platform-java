@@ -19,7 +19,9 @@ import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -33,8 +35,8 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
@@ -219,19 +221,25 @@ public class JavaWriterVisitorTest {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
-    Variable conditionVariable = Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
-    
+
     Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     Expr thenExpr = ValueExpr.builder().setValue(value1).build();
     Value value2 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("4").build();
     Expr elseExpr = ValueExpr.builder().setValue(value2).build();
 
-    TernaryExpr ternaryExpr = TernaryExpr.builder().setConditionExpr(conditionExpr).setThenExpr(thenExpr).setElseExpr(elseExpr).build();
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(elseExpr)
+            .build();
     ternaryExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
   }
-  
+
   @Test
   public void writeAssignmentExpr_basicValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
@@ -310,14 +318,15 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeMethodInvocationExpr_genericWithArgs() {
     Reference mapReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(
                 Arrays.asList(
-                    Reference.withClazz(String.class), Reference.withClazz(Integer.class)))
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Integer.class)))
             .build();
     Reference outerMapReference =
-        Reference.builder()
+        ConcreteReference.builder()
             .setClazz(HashMap.class)
             .setGenerics(Arrays.asList(mapReference, mapReference))
             .build();
@@ -330,8 +339,8 @@ public class JavaWriterVisitorTest {
             .setMethodName("foobar")
             .setGenerics(
                 Arrays.asList(
-                    Reference.withClazz(String.class),
-                    Reference.withClazz(Double.class),
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(Double.class),
                     outerMapReference))
             .setArguments(Arrays.asList(varExpr, varExpr, varExpr))
             .setExprReferenceExpr(varExpr)
@@ -393,19 +402,43 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeWhileStatement_simple() {
-    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
-    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
-    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
-    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+  public void writeBlockStatement_empty() {
+    BlockStatement blockStatement = BlockStatement.builder().build();
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "{\n}\n");
+  }
 
-    WhileStatement whileStatement =
-        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+  @Test
+  public void writeBlockStatement_simple() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    BlockStatement blockStatement =
+        BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
 
-    whileStatement.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
-        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "{\nSomeClass.foobar();\n}\n");
+  }
+
+  @Test
+  public void writeBlockStatement_static() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .build();
+    BlockStatement blockStatement =
+        BlockStatement.builder()
+            .setIsStatic(true)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(methodExpr), ExprStatement.withExpr(methodExpr)))
+            .build();
+
+    blockStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "static {\nSomeClass.foobar();\nSomeClass.foobar();\n}\n");
   }
 
   @Test
@@ -559,6 +592,23 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeWhileStatement_simple() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> whileBody = Arrays.asList(assignExprStatement, assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+
+    WhileStatement whileStatement =
+        WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
+
+    whileStatement.accept(writerVisitor);
+    assertThat(writerVisitor.write())
+        .isEqualTo(
+            String.format(
+                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
   public void writeForStatement() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
@@ -584,7 +634,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTryCatchStatement_simple() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -606,7 +656,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTryCatchStatement_withResources() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -636,7 +686,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTryCatchStatement_sampleCodeNoCatch() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -654,7 +704,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeTryCatchStatement_sampleCodeWithCatch() {
-    Reference exceptionReference = Reference.withClazz(IllegalArgumentException.class);
+    Reference exceptionReference = ConcreteReference.withClazz(IllegalArgumentException.class);
     TypeNode type = TypeNode.withReference(exceptionReference);
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(createVariable("e", type)).setIsDecl(true).build();
@@ -878,9 +928,9 @@ public class JavaWriterVisitorTest {
             .setExtendsType(TypeNode.STRING)
             .setImplementsTypes(
                 Arrays.asList(
-                    TypeNode.withReference(Reference.withClazz(Appendable.class)),
-                    TypeNode.withReference(Reference.withClazz(Cloneable.class)),
-                    TypeNode.withReference(Reference.withClazz(Readable.class))))
+                    TypeNode.withReference(ConcreteReference.withClazz(Appendable.class)),
+                    TypeNode.withReference(ConcreteReference.withClazz(Cloneable.class)),
+                    TypeNode.withReference(ConcreteReference.withClazz(Readable.class))))
             .build();
 
     classDef.accept(writerVisitor);
@@ -901,12 +951,14 @@ public class JavaWriterVisitorTest {
   public void writeClassDefinition_statementsAndMethods() {
     List<Reference> subGenerics =
         Arrays.asList(
-            Reference.withClazz(String.class), Reference.withClazz(MethodDefinition.class));
+            ConcreteReference.withClazz(String.class),
+            ConcreteReference.withClazz(MethodDefinition.class));
     Reference mapEntryReference =
-        Reference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
+        ConcreteReference.builder().setClazz(Map.Entry.class).setGenerics(subGenerics).build();
     List<Reference> generics =
-        Arrays.asList(Reference.withClazz(ClassDefinition.class), mapEntryReference);
-    Reference mapReference = Reference.builder().setClazz(Map.class).setGenerics(generics).build();
+        Arrays.asList(ConcreteReference.withClazz(ClassDefinition.class), mapEntryReference);
+    Reference mapReference =
+        ConcreteReference.builder().setClazz(Map.class).setGenerics(generics).build();
 
     List<Statement> statements =
         Arrays.asList(
@@ -914,7 +966,9 @@ public class JavaWriterVisitorTest {
                 VariableExpr.builder()
                     .setVariable(
                         createVariable(
-                            "x", TypeNode.withReference(Reference.withClazz(AssignmentExpr.class))))
+                            "x",
+                            TypeNode.withReference(
+                                ConcreteReference.withClazz(AssignmentExpr.class))))
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .build()),

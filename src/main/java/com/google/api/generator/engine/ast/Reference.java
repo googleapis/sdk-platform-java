@@ -14,62 +14,21 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.auto.value.AutoValue;
-import java.util.Collections;
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
-@AutoValue
-public abstract class Reference {
-  public abstract Class clazz();
+public interface Reference {
+  ImmutableList<Reference> generics();
 
-  public abstract List<Reference> generics();
+  String name();
 
-  public static Reference withClazz(Class clazz) {
-    return builder().setClazz(clazz).build();
-  }
+  String fullName();
 
-  public static Builder builder() {
-    return new AutoValue_Reference.Builder().setGenerics(Collections.emptyList());
-  }
+  boolean hasEnclosingClass();
 
-  public String name() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(clazz().getSimpleName());
-    if (!generics().isEmpty()) {
-      sb.append("<");
-      for (int i = 0; i < generics().size(); i++) {
-        Reference r = generics().get(i);
-        sb.append(r.name());
-        if (i < generics().size() - 1) {
-          sb.append(", ");
-        }
-      }
-      sb.append(">");
-    }
-    return sb.toString();
-  }
+  boolean isFromPackage(String pkg);
 
-  @Override
-  public boolean equals(Object o) {
-    if (!(o instanceof Reference)) {
-      return false;
-    }
+  // Returns true if this is a supertype of the given Reference.
+  boolean isSupertypeOrEquals(Reference other);
 
-    Reference ref = (Reference) o;
-    return clazz().equals(ref.clazz()) && generics().equals(ref.generics());
-  }
-
-  @Override
-  public int hashCode() {
-    return 17 * clazz().hashCode() + 31 * generics().hashCode();
-  }
-
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setClazz(Class clazz);
-
-    public abstract Builder setGenerics(List<Reference> clazzes);
-
-    public abstract Reference build();
-  }
+  boolean isAssignableFrom(Reference other);
 }
