@@ -29,7 +29,7 @@ filegroup(
     test_class = "com.google.api.generator.engine.ast.{0}".format(test_name),
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
-        "@com_google_guava_guava__com_google_api_codegen//jar",
+        "@com_google_guava_guava//jar",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
     ],

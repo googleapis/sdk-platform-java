@@ -77,7 +77,7 @@ public class Composer {
 
   /** ====================== MAIN CLASSES ==================== */
   private static GapicClass generateServiceClient(Service service) {
-    return generateGenericClass(Kind.MAIN, String.format("%sClient", service.name()), service);
+    return ServiceClientClassComposer.instance().generate(service);
   }
 
   private static GapicClass generateServiceSettings(Service service) {
