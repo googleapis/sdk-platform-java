@@ -12,20 +12,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 package com.google.api.generator.engine.ast;
-import static com.google.common.truth.Truth.assertThat;
+
+import static junit.framework.Assert.assertEquals;
 
 import java.awt.List;
 import java.util.Arrays;
+import java.util.Collections;
+import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
 public class NewObjectValueTest {
-    @Test
-    public void simpleNewObjectValue(){
-        Reference reference = Reference.builder().setClazz(List.class).setGenerics(Arrays.asList(Reference.withClazz(String.class)));
-        TypeNode type = TypeNode.withReference(reference);
-        NewObjectValue newObjectValue = NewObjectValue.builder().setType(type);
-        assertEquals(newObjectValue.type(), type);
-        assertEquals(newObjectValue.value(), "new List<String>()");
-    }
-    
+  @Test
+  public void simpleNewObjectValue() {
+    ConcreteReference reference =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Collections.emptyList())
+            .build();
+    TypeNode type = TypeNode.withReference(reference);
+    NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+    assertEquals(newObjectValue.type(), type);
+    System.out.println(newObjectValue.value());
+    assertEquals(newObjectValue.value(), "new List");
+  }
+
+  @Test
+  public void newObjectValue_generics() {
+    ConcreteReference reference =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(reference);
+    NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+    assertEquals(newObjectValue.type(), type);
+    assertEquals(newObjectValue.value(), "new List<String>");
+  }
+
+  @Test
+  public void newObjectValue_withArgs() {
+    ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
+    TypeNode type = TypeNode.withReference(reference);
+    ValueExpr valueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
+            .build();
+    NewObjectValue newObjectValue =
+        NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+    assertEquals(newObjectValue.type(), type);
+    assertEquals(newObjectValue.value(), "new Integer");
+  }
 }

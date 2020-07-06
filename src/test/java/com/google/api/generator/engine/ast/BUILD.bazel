@@ -8,6 +8,7 @@ TESTS = [
     "ForStatementTest",
     "IdentifierNodeTest",
     "MethodDefinitionTest",
+    "NewObjectValueTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",
