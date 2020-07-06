@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,12 +34,15 @@ public abstract class NewObjectValue implements ObjectValue {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setArguments(List<Expr> arguments);
-    // abstract NewObjectValue autobuild();
-    // public static Builder builder(){
 
-    //     // there should be reference in typeNode
-    // }
-    public abstract NewObjectValue build();
+    abstract NewObjectValue autoBuild();
+
+    public NewObjectValue build() {
+      NewObjectValue newObjectValue = autoBuild();
+      Preconditions.checkState(
+          TypeNode.isReferenceType(newObjectValue.type()), "New Objects must be reference types.");
+      return newObjectValue;
+    }
   }
 
   @Override

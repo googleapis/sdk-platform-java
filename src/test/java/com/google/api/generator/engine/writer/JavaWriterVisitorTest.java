@@ -101,7 +101,7 @@ public class JavaWriterVisitorTest {
 
   @Test 
   public void writeNewObjectValue_withArgs(){
-      Reference reference = Reference.withClazz(Integer.class);
+      ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
       TypeNode type = TypeNode.withReference(reference);
       ValueExpr valueExpr = ValueExpr.builder().setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build()).build();
       NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
