@@ -23,6 +23,7 @@ java_binary(
         "//src/main/java/com/google/api/generator",
         "@com_google_guava_guava__com_google_api_codegen",
         "@com_google_protobuf//:protobuf_java",
+        #"@com_google_protobuf_protobuf_java",
     ],
 )
 
