@@ -18,24 +18,28 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Nonnull;
 
 public class Composer {
-  public static List<GapicClass> composeServiceClasses(@Nonnull List<Service> services) {
+  public static List<GapicClass> composeServiceClasses(
+      @Nonnull List<Service> services, @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     for (Service service : services) {
-      clazzes.addAll(generateServiceClasses(service));
+      clazzes.addAll(generateServiceClasses(service, messageTypes));
     }
     return clazzes;
   }
 
-  public static List<GapicClass> generateServiceClasses(@Nonnull Service service) {
+  public static List<GapicClass> generateServiceClasses(
+      @Nonnull Service service, @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateStubClasses(service));
-    clazzes.addAll(generateClientSettingsClasses(service));
+    clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
@@ -49,9 +53,10 @@ public class Composer {
     return clazzes;
   }
 
-  public static List<GapicClass> generateClientSettingsClasses(Service service) {
+  public static List<GapicClass> generateClientSettingsClasses(
+      Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(generateServiceClient(service));
+    clazzes.add(generateServiceClient(service, messageTypes));
     clazzes.add(generateServiceSettings(service));
     return clazzes;
   }
@@ -76,8 +81,9 @@ public class Composer {
   }
 
   /** ====================== MAIN CLASSES ==================== */
-  private static GapicClass generateServiceClient(Service service) {
-    return ServiceClientClassComposer.instance().generate(service);
+  private static GapicClass generateServiceClient(
+      Service service, Map<String, Message> messageTypes) {
+    return ServiceClientClassComposer.instance().generate(service, messageTypes);
   }
 
   private static GapicClass generateServiceSettings(Service service) {
