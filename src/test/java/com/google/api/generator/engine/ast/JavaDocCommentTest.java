@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
 
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -29,15 +30,93 @@ public class JavaDocCommentTest {
   }
 
   @Test
+  public void createJavaDocComment_multipleComment() {
+    String comment1 = "This is a test comment.";
+    String comment2 = "This is unordered list.";
+    String comment3 = "This is ordered list.";
+    List<String> orderedList =
+        Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
+    List<String> unOrderedList =
+        Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(comment1)
+            .addComment(comment2)
+            .addUnorderedList(unOrderedList)
+            .addComment(comment3)
+            .addOrderedList(orderedList)
+            .build();
+    String expected =
+        "This is a test comment.\n"
+            + "This is unordered list.\n"
+            + "<ul>\n"
+            + "<li> A flattened method.\n"
+            + "<li> A request object method.\n"
+            + "<li> A callable method.\n"
+            + "</ul>\n"
+            + "This is ordered list.\n"
+            + "<ol>\n"
+            + "<li> A flattened method.\n"
+            + "<li> A request object method.\n"
+            + "<li> A callable method.\n"
+            + "</ol>";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
+  public void createJavaDocComment_multipleParams() {
+    String paramName1 = "shelfName";
+    String paramDescription1 = "The name of the shelf where books are published to.";
+    String paramName2 = "shelfId";
+    String paramDescription2 = "The shelfId of the shelf where books are published to.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addParam(paramName1, paramDescription1)
+            .addParam(paramName2, paramDescription2)
+            .build();
+    String expected =
+        "@param shelfName The name of the shelf where books are published to.\n"
+            + "@param shelfId The shelfId of the shelf where books are published to.";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
+  public void createJavaDocComment_sampleCode() {
+    String comment = "sample codes:";
+    StringObjectValue stringObjectValue =
+        StringObjectValue.withValue("project/{project}/shelfId/{shelfId}");
+    ValueExpr valueExpr = ValueExpr.builder().setValue(stringObjectValue).build();
+    VariableExpr expr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("resource").setType(TypeNode.STRING).build())
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(expr).setValueExpr(valueExpr).build();
+    JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
+    assignmentExpr.accept(javaWriterVisitor);
+    String sampleCode = javaWriterVisitor.write();
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
+    String expected =
+        "sample codes:\n"
+            + "<pre><code>\n"
+            + "resource = project/{project}/shelfId/{shelfId}\n"
+            + "</code></pre>";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
   public void createavaDocComment_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
     String paramDescription = "The name of the shelf where books are published to.";
     String paragraph1 =
-        "This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:";
+        "This class provides the ability to make remote calls to the backing service through"
+            + " method calls that map to API methods. Sample code to get started:";
     String paragraph2 =
-        "The surface of this class includes several types of Java methods for each of the API's methods:";
+        "The surface of this class includes several types of Java methods for each of the API's"
+            + " methods:";
     List<String> orderedList =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
     String throwType = "com.google.api.gax.rpc.ApiException";
@@ -54,8 +133,10 @@ public class JavaDocCommentTest {
             .build();
     String expected =
         "this is a test comment\n"
-            + "<p> This class provides the ability to make remote calls to the backing service through method calls that map to API methods. Sample code to get started:\n"
-            + "<p> The surface of this class includes several types of Java methods for each of the API's methods:\n"
+            + "<p> This class provides the ability to make remote calls to the backing service"
+            + " through method calls that map to API methods. Sample code to get started:\n"
+            + "<p> The surface of this class includes several types of Java methods for each of"
+            + " the API's methods:\n"
             + "<ol>\n"
             + "<li> A flattened method.\n"
             + "<li> A request object method.\n"
