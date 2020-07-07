@@ -22,14 +22,14 @@ import org.junit.Test;
 
 public class JavaDocCommentTest {
   @Test
-  public void JavaDocComment_basic() {
+  public void createJavaDocComment_basic() {
     String content = "this is a test comment";
     JavaDocComment javaDocComment = JavaDocComment.withComment(content);
     assertEquals(javaDocComment.comment(), content);
   }
 
   @Test
-  public void simpleJavaDocComment() {
+  public void createavaDocComment_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
