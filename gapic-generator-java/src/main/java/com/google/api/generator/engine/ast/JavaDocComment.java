@@ -11,6 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
@@ -45,7 +46,7 @@ public abstract class JavaDocComment implements Comment {
     protected abstract ImmutableList.Builder<String> commentsBuilder();
 
     public Builder setDeprecated(String deprecatedText) {
-      commentsBuilder().add(String.format("%s %s", "@deprecated", deprecatedText));
+      commentsBuilder().add(String.format("@deprecated %s", deprecatedText));
       return this;
     }
 
@@ -55,13 +56,13 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParam(String name, String description) {
-      String parameter = String.format("%s %s %s", "@param", name, description);
+      String parameter = String.format("@param %s %s", name, description);
       commentsBuilder().add(parameter);
       return this;
     }
 
     public Builder setThrows(String type, String description) {
-      String throwsText = String.format("%s %s %s", "@throws", type, description);
+      String throwsText = String.format("@throws %s %s", type, description);
       commentsBuilder().add(throwsText);
       return this;
     }
@@ -77,14 +78,14 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParagraph(String paragraph) {
-      commentsBuilder().add(String.format("%s %s", "<p>", paragraph));
+      commentsBuilder().add(String.format("<p> %s", paragraph));
       return this;
     }
 
     public Builder addOrderedList(List<String> oList) {
       commentsBuilder().add("<ol>");
       for (int i = 0; i < oList.size(); i++) {
-        commentsBuilder().add(String.format("%s %s", "<li>", oList.get(i)));
+        commentsBuilder().add(String.format("<li> %s", oList.get(i)));
       }
       commentsBuilder().add("</ol>");
       return this;
@@ -93,7 +94,7 @@ public abstract class JavaDocComment implements Comment {
     public Builder addUnorderedList(List<String> uList) {
       commentsBuilder().add("<ul>");
       for (int i = 0; i < uList.size(); i++) {
-        commentsBuilder().add(String.format("%s %s", "<li>", uList.get(i)));
+        commentsBuilder().add(String.format("<li> %s", uList.get(i)));
       }
       commentsBuilder().add("</ul>");
       return this;
