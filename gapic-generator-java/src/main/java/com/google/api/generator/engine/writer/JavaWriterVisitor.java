@@ -40,6 +40,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -380,9 +381,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     StringBuilder sourceComment = new StringBuilder();
     sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
-    for (String comment : commentLines) {
-      sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
-    }
+    Arrays.stream(commentLines)
+        .forEach(
+            comment -> {
+              sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
+            });
     sourceComment.append(BLOCK_COMMENT_END);
     buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
