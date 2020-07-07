@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import org.junit.Before;
@@ -107,6 +108,15 @@ public class JavaWriterVisitorTest {
       NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
       newObjectValue.accept(writerVisitor);
       assertEquals(writerVisitor.write(), "new Integer(123)");
+  }
+
+  @Test 
+  public void writeNewObjectValue_withGenerics(){
+      ConcreteReference reference = ConcreteReference.builder().setClazz(LinkedList.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class))).build();
+      TypeNode type = TypeNode.withReference(reference);
+      NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
+      newObjectValue.accept(writerVisitor);
+      assertEquals(writerVisitor.write(), "new LinkedList<Object>()");
   }
 
   /** =============================== EXPRESSIONS =============================== */
