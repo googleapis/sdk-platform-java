@@ -160,7 +160,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(TernaryExpr ternaryExpr){
+  public void visit(TernaryExpr ternaryExpr) {
     ternaryExpr.conditionExpr().accept(this);
     space();
     buffer.append(QUESTION_MARK);
