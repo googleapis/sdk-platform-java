@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,9 +71,11 @@ public abstract class JavaDocComment implements Comment {
     public Builder addSampleCode(String sampleCode) {
       commentsBuilder().add("<pre><code>");
       String[] sampleLines = sampleCode.split("\\r?\\n");
-      for (String sampleLine : sampleLines) {
-        commentsBuilder().add(sampleLine);
-      }
+      Arrays.stream(sampleLines)
+          .forEach(
+              line -> {
+                commentsBuilder().add(line);
+              });
       commentsBuilder().add("</code></pre>");
       return this;
     }
@@ -84,18 +87,22 @@ public abstract class JavaDocComment implements Comment {
 
     public Builder addOrderedList(List<String> oList) {
       commentsBuilder().add("<ol>");
-      for (int i = 0; i < oList.size(); i++) {
-        commentsBuilder().add(String.format("<li> %s", oList.get(i)));
-      }
+      oList.stream()
+          .forEach(
+              s -> {
+                commentsBuilder().add(String.format("<li> %s", s));
+              });
       commentsBuilder().add("</ol>");
       return this;
     }
 
     public Builder addUnorderedList(List<String> uList) {
       commentsBuilder().add("<ul>");
-      for (int i = 0; i < uList.size(); i++) {
-        commentsBuilder().add(String.format("<li> %s", uList.get(i)));
-      }
+      uList.stream()
+          .forEach(
+              s -> {
+                commentsBuilder().add(String.format("<li> %s", s));
+              });
       commentsBuilder().add("</ul>");
       return this;
     }
