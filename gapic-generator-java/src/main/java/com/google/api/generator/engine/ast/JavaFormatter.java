@@ -27,7 +27,13 @@ public final class JavaFormatter {
     try {
       return FORMATTER.formatSource(sourceString);
     } catch (FormatterException e) {
-      throw new RuntimeException(String.format("The input resource can not be parsed %s", e));
+      throw new FormatException(String.format("The input resource can not be parsed %s", e));
+    }
+  }
+
+  private static class FormatException extends RuntimeException {
+    public FormatException(String errorMessage) {
+      super(errorMessage);
     }
   }
 }
