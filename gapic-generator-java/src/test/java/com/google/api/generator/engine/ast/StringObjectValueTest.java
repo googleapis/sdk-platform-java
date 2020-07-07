@@ -15,7 +15,6 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
@@ -28,15 +27,6 @@ public class StringObjectValueTest {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
     assertThat(s.value()).isEqualTo("\"test\"");
     assertThat(s.type()).isEqualTo(TypeNode.STRING);
-  }
-
-  @Test
-  public void writeInvalieStringObjectValue() {
-    assertThrows(
-        NullPointerException.class,
-        () -> {
-          StringObjectValue.builder().setValue(null).build();
-        });
   }
 
   @Test
@@ -65,7 +55,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_USPunctuation() {
+  public void writeStringObjectValue_usPunctuation() {
     valueSpecialChar =
         StringObjectValue.withValue("US Punctuation, one of !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
     String expected = "\"US Punctuation, one of !\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\"";

@@ -263,6 +263,15 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeStringObjectValue_basic() {
+    Value value = StringObjectValue.withValue("test");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    valueExpr.accept(writerVisitor);
+    System.out.println(writerVisitor.write());
+    assertThat(writerVisitor.write()).isEqualTo("\"test\"");
+  }
+
+  @Test
   public void writeAssignmentExpr_stringObjectValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
