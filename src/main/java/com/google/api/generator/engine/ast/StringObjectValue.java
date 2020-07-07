@@ -40,7 +40,7 @@ public abstract class StringObjectValue implements ObjectValue {
     public abstract StringObjectValue autoBuild();
 
     public StringObjectValue build() {
-      String value = String.format("%s%s%s", "\"", JavaEscaper.escape(autoBuild().value()), "\"");
+      String value = String.format("\"%s\"", JavaEscaper.escape(autoBuild().value()));
       setValue(value);
       return autoBuild();
     }
