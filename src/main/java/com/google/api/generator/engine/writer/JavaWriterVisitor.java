@@ -166,7 +166,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(TernaryExpr ternaryExpr){
+  public void visit(TernaryExpr ternaryExpr) {
     ternaryExpr.conditionExpr().accept(this);
     space();
     buffer.append(QUESTION_MARK);
@@ -358,24 +358,28 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== COMMENT =============================== */
-  public void visit(LineComment lineComment){
-      // Split comments by new line and add `//` to each line.
-      String formattedSource =  JavaFormatter.format(String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
-      buffer.append(formattedSource);
-  }
-
-  public void visit(BlockComment blockComment){
-    // Split comments by new line and embrace the comment block with `/** */`.
-    String sourceComment = blockComment.comment();
-    String formattedSource = JavaFormatter.format(String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
+  public void visit(LineComment lineComment) {
+    // Split comments by new line and add `//` to each line.
+    String formattedSource =
+        JavaFormatter.format(
+            String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
     buffer.append(formattedSource);
   }
 
-  public void visit(JavaDocComment javaDocComment){
+  public void visit(BlockComment blockComment) {
+    // Split comments by new line and embrace the comment block with `/** */`.
+    String sourceComment = blockComment.comment();
+    String formattedSource =
+        JavaFormatter.format(
+            String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
+    buffer.append(formattedSource);
+  }
+
+  public void visit(JavaDocComment javaDocComment) {
     StringBuilder sourceComment = new StringBuilder();
     sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
     String[] commentLines = javaDocComment.comment().split("\\r?\\n");
-    for(String comment : commentLines){
+    for (String comment : commentLines) {
       sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
     }
     sourceComment.append(BLOCK_COMMENT_END);
