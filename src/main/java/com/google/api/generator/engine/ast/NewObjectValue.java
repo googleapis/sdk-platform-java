@@ -25,8 +25,18 @@ public abstract class NewObjectValue implements ObjectValue {
 
   public abstract List<Expr> arguments();
 
+  abstract boolean isGeneric();
+
   public static Builder builder() {
-    return new AutoValue_NewObjectValue.Builder().setArguments(Collections.emptyList());
+    return new AutoValue_NewObjectValue.Builder()
+        .setArguments(Collections.emptyList())
+        .setIsGeneric(false);
+  }
+
+  public static Builder genericBuilder() {
+    return new AutoValue_NewObjectValue.Builder()
+        .setArguments(Collections.emptyList())
+        .setIsGeneric(true);
   }
 
   @AutoValue.Builder
@@ -34,6 +44,8 @@ public abstract class NewObjectValue implements ObjectValue {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setArguments(List<Expr> arguments);
+
+    public abstract Builder setIsGeneric(boolean isGeneric);
 
     abstract NewObjectValue autoBuild();
 
@@ -49,6 +61,9 @@ public abstract class NewObjectValue implements ObjectValue {
   public String value() {
     StringBuilder value = new StringBuilder();
     value.append("new ").append(type().reference().name());
+    if (isGeneric() && type().reference().generics().isEmpty()) {
+      value.append("<>");
+    }
     return value.toString();
   }
 

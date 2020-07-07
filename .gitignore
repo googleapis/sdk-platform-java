@@ -11,3 +11,6 @@ bazel-testlogs
 # Vim.
 *.sw*
 *.vim
+
+# .vscode
+settings.json

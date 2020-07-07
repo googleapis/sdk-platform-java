@@ -29,10 +29,9 @@ public class NewObjectValueTest {
             .setGenerics(Collections.emptyList())
             .build();
     TypeNode type = TypeNode.withReference(reference);
-    NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+    NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
     assertEquals(newObjectValue.type(), type);
-    System.out.println(newObjectValue.value());
-    assertEquals(newObjectValue.value(), "new List");
+    assertEquals(newObjectValue.value(), "new List<>");
   }
 
   @Test
@@ -43,7 +42,7 @@ public class NewObjectValueTest {
             .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
             .build();
     TypeNode type = TypeNode.withReference(reference);
-    NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+    NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
     assertEquals(newObjectValue.type(), type);
     assertEquals(newObjectValue.value(), "new List<String>");
   }
