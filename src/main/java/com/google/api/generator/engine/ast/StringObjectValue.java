@@ -37,12 +37,12 @@ public abstract class StringObjectValue implements ObjectValue {
   public abstract static class Builder {
     public abstract Builder setValue(String value);
 
-    public abstract StringObjectValue autobuild();
+    public abstract StringObjectValue autoBuild();
 
     public StringObjectValue build() {
-      String value = String.format("%s%s%s", "\"", JavaEscaper.escape(autobuild().value()), "\"");
+      String value = String.format("%s%s%s", "\"", JavaEscaper.escape(autoBuild().value()), "\"");
       setValue(value);
-      return autobuild();
+      return autoBuild();
     }
   }
 }

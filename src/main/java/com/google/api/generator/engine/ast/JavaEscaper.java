@@ -18,10 +18,12 @@ import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
 public class JavaEscaper {
-  public static class SpecialSequenceEscaper extends Escaper {
+  private static final SpecialSequenceEscaper specialSequenceEscaper = new SpecialSequenceEscaper();
+
+  private static class SpecialSequenceEscaper extends Escaper {
     @Override
     public String escape(String sourceString) {
-      Escaper esc =
+      Escaper escaper =
           Escapers.builder()
               .addEscape('\t', "\\t")
               .addEscape('\b', "\\b")
@@ -31,16 +33,21 @@ public class JavaEscaper {
               .addEscape('"', "\\\"")
               .addEscape('\\', "\\\\")
               .build();
-      return esc.escape(sourceString);
+      return escaper.escape(sourceString);
     }
   }
 
   public static String escape(String source) {
-    SpecialSequenceEscaper specialSequenceEscaper = new SpecialSequenceEscaper();
     try {
       return specialSequenceEscaper.escape(source);
     } catch (IllegalArgumentException e) {
-      throw new FormatException(String.format("Input String can not be formatted: %s", e));
+      throw new EscaperException(String.format("Input String can not be formatted: %s", e));
+    }
+  }
+
+  private static class EscaperException extends RuntimeException {
+    public EscaperException(String errorMessage) {
+      super(errorMessage);
     }
   }
 }
