@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.JavaFormatter;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -223,7 +224,7 @@ public class JavaWriterVisitorTest {
     String content =
         "A super long long long long long long long */ long long long long long long long comment";
     assertThrows(
-        RuntimeException.class,
+        JavaFormatter.FormatException.class,
         () -> {
           BlockComment blockComment = BlockComment.builder().setComment(content).build();
           blockComment.accept(writerVisitor);
