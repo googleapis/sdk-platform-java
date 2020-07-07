@@ -99,7 +99,7 @@ public abstract class MethodInvocationExpr implements Expr {
     abstract MethodInvocationExpr autoBuild();
 
     public MethodInvocationExpr build() {
-      // IdentifierNdoe will validate the name.
+      // IdentifierNode will validate the name.
       IdentifierNode identifier = IdentifierNode.builder().setName(methodName()).build();
       setMethodIdentifier(identifier);
 
@@ -110,6 +110,11 @@ public abstract class MethodInvocationExpr implements Expr {
       }
 
       MethodInvocationExpr methodInvocationExpr = autoBuild();
+
+      Preconditions.checkState(
+          !methodInvocationExpr.type().equals(TypeNode.NULL),
+          "MethodInvocationExpr type can not be null");
+
       Preconditions.checkState(
           methodInvocationExpr.exprReferenceExpr() == null
               || methodInvocationExpr.staticReferenceIdentifier() == null,

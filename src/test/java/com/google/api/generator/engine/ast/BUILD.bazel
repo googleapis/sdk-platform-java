@@ -16,6 +16,7 @@ TESTS = [
     "VariableExprTest",
     "VariableTest",
     "VaporReferenceTest",
+    "MethodInvocationExprTest",
 ]
 
 filegroup(
