@@ -247,9 +247,11 @@ public class JavaWriterVisitorTest {
             + " times, blah, blah!";
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected =
-        "// this is a long test comment with so many words, hello world, hello again, hello for 3"
-            + " times,\n"
-            + "// blah, blah!\n";
+        String.format(
+            createLines(2),
+            "// this is a long test comment with so many words, hello world, hello again, hello"
+                + " for 3 times,\n",
+            "// blah, blah!\n");
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
