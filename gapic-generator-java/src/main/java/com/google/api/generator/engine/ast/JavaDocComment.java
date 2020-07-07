@@ -31,6 +31,15 @@ public abstract class JavaDocComment implements Comment {
     return JavaDocComment.builder().addComment(comment).build();
   }
 
+  @Override
+  public String comment() {
+    return String.join("\n", comments().stream().collect(Collectors.toList()));
+  }
+
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     protected abstract ImmutableList.Builder<String> commentsBuilder();
@@ -91,15 +100,5 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public abstract JavaDocComment build();
-  }
-
-  @Override
-  public String comment() {
-    List<String> commentBody = comments().stream().collect(Collectors.toList());
-    return String.join("\n", commentBody);
-  }
-
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }
