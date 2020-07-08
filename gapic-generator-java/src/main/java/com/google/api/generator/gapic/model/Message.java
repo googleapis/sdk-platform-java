@@ -14,19 +14,20 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 @AutoValue
 public abstract class Message {
-  // TODO(miraleung): Get nested messages and enums.
-
   public abstract String name();
 
   // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to
   // a specific field.
   public abstract ImmutableList<Field> fields();
+
+  public abstract TypeNode type();
 
   public static Builder builder() {
     return new AutoValue_Message.Builder();
@@ -37,6 +38,8 @@ public abstract class Message {
     public abstract Builder setName(String name);
 
     public abstract Builder setFields(List<Field> methods);
+
+    public abstract Builder setType(TypeNode type);
 
     public abstract Message build();
   }
