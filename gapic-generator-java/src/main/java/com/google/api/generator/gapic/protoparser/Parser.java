@@ -89,7 +89,7 @@ public class Parser {
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
     return messageDescriptor.getFields().stream()
-        .map(f -> Field.builder().setName(f.getName()).build())
+        .map(f -> FieldParser.parseField(f))
         .collect(Collectors.toList());
   }
 
