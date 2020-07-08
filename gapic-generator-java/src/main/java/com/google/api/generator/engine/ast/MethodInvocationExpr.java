@@ -113,7 +113,7 @@ public abstract class MethodInvocationExpr implements Expr {
 
       Preconditions.checkState(
           !methodInvocationExpr.type().equals(TypeNode.NULL),
-          "MethodInvocationExpr type can not be null");
+          "Methods cannot be invoked on null types.");
 
       Preconditions.checkState(
           methodInvocationExpr.exprReferenceExpr() == null
