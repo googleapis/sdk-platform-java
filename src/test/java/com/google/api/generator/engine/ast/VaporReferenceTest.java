@@ -43,6 +43,7 @@ public class VaporReferenceTest {
     assertEquals(ref.fullName(), String.format("%s.%s", pkg, name));
     assertFalse(ref.hasEnclosingClass());
     assertTrue(ref.isFromPackage(pkg));
+    // isStaticImport is automatically false for non-nested classes.
     assertFalse(ref.isFromPackage("com.google.example.library"));
     assertFalse(ref.isStaticImport());
   }
