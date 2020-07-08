@@ -24,6 +24,8 @@ public abstract class Message {
 
   public abstract String name();
 
+  // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to
+  // a specific field.
   public abstract ImmutableList<Field> fields();
 
   public static Builder builder() {
