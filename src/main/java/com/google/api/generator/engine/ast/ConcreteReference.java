@@ -20,28 +20,55 @@ import java.util.List;
 
 @AutoValue
 public abstract class ConcreteReference implements Reference {
-  @Override
-  public abstract ImmutableList<Reference> generics();
+  private static final String DOT = ".";
+  private static final String LEFT_ANGLE = "<";
+  private static final String RIGHT_ANGLE = ">";
+  private static final String COMMA = ", ";
 
   // Private.
   abstract Class clazz();
 
   @Override
+  public abstract ImmutableList<Reference> generics();
+
+  @Override
+  public abstract boolean isStaticImport();
+
+  @Override
   public String name() {
     StringBuilder sb = new StringBuilder();
+
+    if (hasEnclosingClass() && !isStaticImport()) {
+      sb.append(clazz().getEnclosingClass().getSimpleName());
+      sb.append(DOT);
+    }
+
     sb.append(clazz().getSimpleName());
     if (!generics().isEmpty()) {
-      sb.append("<");
+      sb.append(LEFT_ANGLE);
       for (int i = 0; i < generics().size(); i++) {
         Reference r = generics().get(i);
         sb.append(r.name());
         if (i < generics().size() - 1) {
-          sb.append(", ");
+          sb.append(COMMA);
         }
       }
-      sb.append(">");
+      sb.append(RIGHT_ANGLE);
     }
     return sb.toString();
+  }
+
+  @Override
+  public String pakkage() {
+    return clazz().getPackage().getName();
+  }
+
+  @Override
+  public String enclosingClassName() {
+    if (!hasEnclosingClass()) {
+      return null;
+    }
+    return clazz().getEnclosingClass().getSimpleName();
   }
 
   @Override
@@ -108,7 +135,9 @@ public abstract class ConcreteReference implements Reference {
   }
 
   public static Builder builder() {
-    return new AutoValue_ConcreteReference.Builder().setGenerics(ImmutableList.of());
+    return new AutoValue_ConcreteReference.Builder()
+        .setGenerics(ImmutableList.of())
+        .setIsStaticImport(false);
   }
 
   @AutoValue.Builder
@@ -117,6 +146,18 @@ public abstract class ConcreteReference implements Reference {
 
     public abstract Builder setGenerics(List<Reference> clazzes);
 
-    public abstract ConcreteReference build();
+    public abstract Builder setIsStaticImport(boolean isStaticImport);
+
+    public abstract ConcreteReference autoBuild();
+
+    // Private.
+    abstract Class clazz();
+
+    abstract boolean isStaticImport();
+
+    public ConcreteReference build() {
+      setIsStaticImport(clazz().getEnclosingClass() != null && isStaticImport());
+      return autoBuild();
+    }
   }
 }
