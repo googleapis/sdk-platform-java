@@ -16,7 +16,6 @@ package com.google.api.generator.engine.writer;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -30,7 +29,6 @@ import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
-import com.google.api.generator.engine.ast.JavaFormatter;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -218,18 +216,8 @@ public class JavaWriterVisitorTest {
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
-
-  @Test
-  public void writeBlockComment_unexpectedDelimiters() {
-    String content =
-        "A super long long long long long long long */ long long long long long long long comment";
-    assertThrows(
-        JavaFormatter.FormatException.class,
-        () -> {
-          BlockComment blockComment = BlockComment.builder().setComment(content).build();
-          blockComment.accept(writerVisitor);
-        });
-  }
+  // TODO(xiaozhenliu): add comment escaper for BlockComment/JavaDocComment classes and update unit
+  // tests here.
 
   @Test
   public void writeLineComment_basic() {
