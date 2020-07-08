@@ -34,6 +34,60 @@ public class VaporReferenceTest {
   }
 
   @Test
+  public void basic_isStaticImport() {
+    String pkg = "com.google.example.examples.library.v1";
+    String name = "Babbage";
+    Reference ref =
+        VaporReference.builder().setName(name).setPakkage(pkg).setIsStaticImport(true).build();
+    assertEquals(ref.name(), name);
+    assertEquals(ref.fullName(), String.format("%s.%s", pkg, name));
+    assertFalse(ref.hasEnclosingClass());
+    assertTrue(ref.isFromPackage(pkg));
+    // isStaticImport is automatically false for non-nested classes.
+    assertFalse(ref.isFromPackage("com.google.example.library"));
+    assertFalse(ref.isStaticImport());
+  }
+
+  @Test
+  public void basic_nested() {
+    String pkg = "com.google.example.examples.library.v1";
+    String name = "Charles";
+    String enclosingClassName = "Babbage";
+    Reference ref =
+        VaporReference.builder()
+            .setEnclosingClassName(enclosingClassName)
+            .setName(name)
+            .setPakkage(pkg)
+            .build();
+    assertEquals(ref.name(), String.format("%s.%s", enclosingClassName, name));
+    assertEquals(ref.fullName(), String.format("%s.%s.%s", pkg, enclosingClassName, name));
+    assertTrue(ref.hasEnclosingClass());
+    assertTrue(ref.isFromPackage(pkg));
+    assertFalse(ref.isFromPackage("com.google.example.library"));
+    assertFalse(ref.isStaticImport());
+  }
+
+  @Test
+  public void basic_nestedAndStaticImport() {
+    String pkg = "com.google.example.examples.library.v1";
+    String name = "Charles";
+    String enclosingClassName = "Babbage";
+    Reference ref =
+        VaporReference.builder()
+            .setEnclosingClassName(enclosingClassName)
+            .setName(name)
+            .setPakkage(pkg)
+            .setIsStaticImport(true)
+            .build();
+    assertEquals(ref.name(), name);
+    assertEquals(ref.fullName(), String.format("%s.%s.%s", pkg, enclosingClassName, name));
+    assertTrue(ref.hasEnclosingClass());
+    assertTrue(ref.isFromPackage(pkg));
+    assertFalse(ref.isFromPackage("com.google.example.library"));
+    assertTrue(ref.isStaticImport());
+  }
+
+  @Test
   public void concreteHierarchiesNotHandled() {
     String pkg = "java.io";
     String name = "IOException";
