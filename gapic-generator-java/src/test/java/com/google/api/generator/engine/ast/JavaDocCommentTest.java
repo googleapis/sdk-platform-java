@@ -30,7 +30,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_multipleComment() {
+  public void createJavaDocComment_multipleComments() {
     String comment1 = "This is a test comment.";
     String comment2 = "This is unordered list.";
     String comment3 = "This is ordered list.";
