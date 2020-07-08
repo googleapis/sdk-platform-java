@@ -19,8 +19,6 @@ import static org.junit.Assert.assertThrows;
 import java.util.Arrays;
 import java.util.List;
 import javax.lang.model.type.NullType;
-import javax.lang.model.type.TypeKind;
-import javax.validation.constraints.Null;
 import org.junit.Test;
 
 public class ClassDefinitionTest {
