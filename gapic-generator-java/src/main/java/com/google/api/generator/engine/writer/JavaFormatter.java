@@ -12,8 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.engine.writer;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 
@@ -31,7 +32,8 @@ public final class JavaFormatter {
     }
   }
 
-  public static class FormatException extends RuntimeException {
+  @VisibleForTesting
+  protected static class FormatException extends RuntimeException {
     public FormatException(String errorMessage) {
       super(errorMessage);
     }
