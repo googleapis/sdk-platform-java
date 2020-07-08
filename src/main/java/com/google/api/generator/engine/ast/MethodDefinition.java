@@ -140,7 +140,7 @@ public abstract class MethodDefinition implements AstNode {
       MethodDefinition method = autoBuild();
 
       Preconditions.checkState(
-          !method.returnType().equals(TypeNode.NULL), "Method returnType can not be null");
+          !method.returnType().equals(TypeNode.NULL), "Null is not a valid method return type");
 
       if (!method.returnType().equals(TypeNode.VOID)) {
         Preconditions.checkNotNull(
