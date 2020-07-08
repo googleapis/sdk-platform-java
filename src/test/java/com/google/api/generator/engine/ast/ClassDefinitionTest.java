@@ -18,6 +18,9 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
+import javax.lang.model.type.NullType;
+import javax.lang.model.type.TypeKind;
+import javax.validation.constraints.Null;
 import org.junit.Test;
 
 public class ClassDefinitionTest {
@@ -64,6 +67,19 @@ public class ClassDefinitionTest {
             Arrays.asList(
                 TypeNode.withReference(ConcreteReference.withClazz(Cloneable.class)),
                 TypeNode.withReference(ConcreteReference.withClazz(Readable.class))))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validClassDefinition_implementsNullType() {
+    ClassDefinition.builder()
+        .setPackageString("com.google.example.library.v1.stub")
+        .setName("LibraryServiceStub")
+        .setScope(ScopeNode.PUBLIC)
+        .setImplementsTypes(
+            Arrays.asList(
+                TypeNode.withReference(ConcreteReference.withClazz(NullType.class)), TypeNode.NULL))
         .build();
     // No exception thrown, we're good.
   }
@@ -156,6 +172,20 @@ public class ClassDefinitionTest {
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
               .setExtendsType(TypeNode.INT)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidClassDefinition_extendsNullType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setScope(ScopeNode.PUBLIC)
+              .setExtendsType(TypeNode.NULL)
               .build();
         });
   }
