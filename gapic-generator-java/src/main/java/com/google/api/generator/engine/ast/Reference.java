@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.common.collect.ImmutableList;
+import javax.annotation.Nullable;
 
 public interface Reference {
   ImmutableList<Reference> generics();
@@ -22,6 +23,14 @@ public interface Reference {
   String name();
 
   String fullName();
+
+  String pakkage();
+
+  @Nullable
+  String enclosingClassName();
+
+  // Valid only for nested classes.
+  boolean isStaticImport();
 
   boolean hasEnclosingClass();
 
