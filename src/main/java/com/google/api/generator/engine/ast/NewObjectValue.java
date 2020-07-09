@@ -25,8 +25,7 @@ public abstract class NewObjectValue implements ObjectValue {
 
   public abstract List<Expr> arguments();
 
-  // Private.
-  abstract boolean isGeneric();
+  public abstract boolean isGeneric();
 
   @Override
   public String value() {
@@ -70,6 +69,12 @@ public abstract class NewObjectValue implements ObjectValue {
       // Check the object is reference type.
       Preconditions.checkState(
           TypeNode.isReferenceType(newObjectValue.type()), "New Object must be reference types.");
+      // Check if there is a conflict between isGeneric() setting and generics() setting.
+      boolean noGenerics = newObjectValue.type().reference().generics().isEmpty();
+      Preconditions.checkState(
+          (newObjectValue.isGeneric() || noGenerics),
+          "Please call genericBuilder() if the new object is generic, else call builder() to build"
+              + " the object.");
       return newObjectValue;
     }
   }

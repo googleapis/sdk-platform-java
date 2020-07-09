@@ -14,10 +14,12 @@
 package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.awt.List;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import org.junit.Test;
 
 public class NewObjectValueTest {
@@ -59,5 +61,20 @@ public class NewObjectValueTest {
         NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
     assertEquals(newObjectValue.type(), type);
     assertEquals(newObjectValue.value(), "new Integer");
+  }
+
+  @Test
+  public void newObjectValue_conflictGenericSetting() {
+    ConcreteReference reference =
+        ConcreteReference.builder()
+            .setClazz(LinkedList.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(reference);
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+        });
   }
 }
