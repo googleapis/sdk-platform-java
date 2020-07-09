@@ -95,6 +95,26 @@ public class JavaDocCommentTest {
   }
 
   @Test
+  public void createJavaDocComment_ThrowsDeprecated() {
+    String throwType = "com.google.api.gax.rpc.ApiException";
+    String throwsDescription = "if the remote call fails.";
+    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .setThrows(throwType, throwsDescription)
+            .setDeprecated(deprecatedText)
+            .setThrows(throwType, throwsDescription)
+            .setDeprecated(deprecatedText)
+            .build();
+    String expected =
+        "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
+            + "@deprecated Use the {@link ArchivedBookName} class instead.\n"
+            + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
+            + "@deprecated Use the {@link ArchivedBookName} class instead.";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
   public void createavaDocComment_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
