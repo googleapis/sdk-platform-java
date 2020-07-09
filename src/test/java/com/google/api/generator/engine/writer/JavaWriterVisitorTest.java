@@ -99,7 +99,6 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== EXPRESSIONS =============================== */
-
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
