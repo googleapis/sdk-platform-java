@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.engine.escaper;
 
 import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
-public class JavaEscaper {
+public class StringValueEscaper {
   private static final SpecialSequenceEscaper specialSequenceEscaper = new SpecialSequenceEscaper();
 
   private static class SpecialSequenceEscaper extends Escaper {
@@ -41,13 +41,7 @@ public class JavaEscaper {
     try {
       return specialSequenceEscaper.escape(source);
     } catch (IllegalArgumentException e) {
-      throw new EscaperException(String.format("Input String can not be formatted: %s", e));
-    }
-  }
-
-  private static class EscaperException extends RuntimeException {
-    public EscaperException(String errorMessage) {
-      super(errorMessage);
+      throw new EscaperException(String.format("Input string can not be formatted: %s", e));
     }
   }
 }
