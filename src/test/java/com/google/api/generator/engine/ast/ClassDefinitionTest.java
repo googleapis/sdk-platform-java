@@ -70,19 +70,6 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_implementsNullType() {
-    ClassDefinition.builder()
-        .setPackageString("com.google.example.library.v1.stub")
-        .setName("LibraryServiceStub")
-        .setScope(ScopeNode.PUBLIC)
-        .setImplementsTypes(
-            Arrays.asList(
-                TypeNode.withReference(ConcreteReference.withClazz(NullType.class)), TypeNode.NULL))
-        .build();
-    // No exception thrown, we're good.
-  }
-
-  @Test
   public void validClassDefinition_statementsAndMethods() {
     List<Statement> statements =
         Arrays.asList(
@@ -119,6 +106,32 @@ public class ClassDefinitionTest {
         .setMethods(methods)
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void invalidClassDefinition_implementsNullType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setScope(ScopeNode.PUBLIC)
+              .setImplementsTypes(
+                  Arrays.asList(
+                      TypeNode.withReference(ConcreteReference.withClazz(NullType.class))))
+              .build();
+        });
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setScope(ScopeNode.PUBLIC)
+              .setImplementsTypes(Arrays.asList(TypeNode.NULL))
+              .build();
+        });
   }
 
   @Test
