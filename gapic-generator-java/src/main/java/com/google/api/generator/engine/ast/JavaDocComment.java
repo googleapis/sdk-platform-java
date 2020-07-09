@@ -31,6 +31,7 @@ public abstract class JavaDocComment implements Comment {
 
   @Override
   public String comment() {
+    // TODO(xiaozhenliu): call comment escaper here.
     return String.join("\n", comments().stream().collect(Collectors.toList()));
   }
 
