@@ -23,14 +23,14 @@ public class StringObjectValueTest {
   private StringObjectValue valueSpecialChar;
 
   @Test
-  public void writeStringObjectValue() {
+  public void createStringObjectValue_basic() {
     StringObjectValue s = StringObjectValue.builder().setValue("test").build();
     assertThat(s.value()).isEqualTo("\"test\"");
     assertThat(s.type()).isEqualTo(TypeNode.STRING);
   }
 
   @Test
-  public void writeStringObjectValue_escapeCharacter() {
+  public void createStringObjectValue_escapeCharacter() {
     valueSpecialChar = StringObjectValue.withValue("\" \t \\ \b \r \f \n '");
     String expected = "\"\\\" \\t \\\\ \\b \\r \\f \\n '\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
@@ -38,7 +38,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_specialCharacter() {
+  public void createStringObjectValue_specialCharacter() {
     valueSpecialChar = StringObjectValue.withValue("Tom said: \"Hi!\"; \n");
     String expected = "\"Tom said: \\\"Hi!\\\"; \\n\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
@@ -46,7 +46,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_specialCharacterComment() {
+  public void createStringObjectValue_specialCharacterComment() {
     valueSpecialChar =
         StringObjectValue.withValue("Service comment may include special characters: <>&\"`'@");
     String expected = "\"Service comment may include special characters: <>&\\\"`'@\"";
@@ -55,7 +55,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_usPunctuation() {
+  public void createStringObjectValue_usPunctuation() {
     valueSpecialChar =
         StringObjectValue.withValue("US Punctuation, one of !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
     String expected = "\"US Punctuation, one of !\\\"#$%&'()*+,-./:;<=>?@[\\\\]^_`{|}~\"";
@@ -64,7 +64,7 @@ public class StringObjectValueTest {
   }
 
   @Test
-  public void writeStringObjectValue_htmlCharacterComment() {
+  public void createStringObjectValue_htmlCharacterComment() {
     valueSpecialChar = StringObjectValue.withValue("&nbsp; &#40 &#91 &ndash; &gt;:&lt;");
     String expected = "\"&nbsp; &#40 &#91 &ndash; &gt;:&lt;\"";
     assertThat(valueSpecialChar.value()).isEqualTo(expected);
