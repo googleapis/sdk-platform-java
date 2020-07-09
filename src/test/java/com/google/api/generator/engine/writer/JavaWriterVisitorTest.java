@@ -216,8 +216,8 @@ public class JavaWriterVisitorTest {
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
-  // TODO(xiaozhenliu): add comment escaper for BlockComment/JavaDocComment classes and update unit
-  // tests here.
+  // TODO(xiaozhenliu): add comment escaper in BlockComment/JavaDocComment classes and add unit
+  // tests for them.
 
   @Test
   public void writeLineComment_basic() {

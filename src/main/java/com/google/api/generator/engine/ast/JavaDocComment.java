@@ -29,10 +29,6 @@ public abstract class JavaDocComment implements Comment {
     return new AutoValue_JavaDocComment.Builder();
   }
 
-  public static JavaDocComment withComment(String comment) {
-    return JavaDocComment.builder().addComment(comment).build();
-  }
-
   @Override
   public String comment() {
     return String.join("\n", comments().stream().collect(Collectors.toList()));
