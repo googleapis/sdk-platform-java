@@ -161,7 +161,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(TernaryExpr ternaryExpr){
+  public void visit(TernaryExpr ternaryExpr) {
     ternaryExpr.conditionExpr().accept(this);
     space();
     buffer.append(QUESTION_MARK);
@@ -220,22 +220,16 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     rightParen();
   }
 
-  @Override 
-  public void visit(AnonymousClassExpr anonymousClassExpr){
+  @Override
+  public void visit(AnonymousClassExpr anonymousClassExpr) {
     buffer.append("new");
     space();
     buffer.append(anonymousClassExpr.type().reference().name());
     buffer.append(LEFT_PAREN).append(RIGHT_PAREN);
     space();
     buffer.append(LEFT_BRACE).append(NEWLINE);
-    List<MethodDefinition> methods = anonymousClassExpr.methods();
-    List<Statement> statements = anonymousClassExpr.statements();
-    if(!statements.isEmpty()){
-      statements(statements);
-    }
-    if(!methods.isEmpty()){
-      methods(methods);
-    }
+    statements(anonymousClassExpr.statements());
+    methods(anonymousClassExpr.methods());
     buffer.append(RIGHT_BRACE);
   }
   /** =============================== STATEMENTS =============================== */

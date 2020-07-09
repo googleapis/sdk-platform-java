@@ -34,6 +34,11 @@ public abstract class AnonymousClassExpr implements Expr {
         .setStatements(Collections.emptyList());
   }
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
@@ -48,11 +53,10 @@ public abstract class AnonymousClassExpr implements Expr {
       AnonymousClassExpr anonymousClassExpr = autoBuild();
       Preconditions.checkState(
           TypeNode.isReferenceType(anonymousClassExpr.type()),
-          "Anonymous class Expression must be reference types.");
+          "Anonymous class expression must be reference types.");
       List<MethodDefinition> methods = anonymousClassExpr.methods();
       for (MethodDefinition method : methods) {
-        Preconditions.checkState(
-            !method.isStatic(), "Anonymous class should not have static methods.");
+        Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
       }
       List<Statement> statements = anonymousClassExpr.statements();
       for (Statement statement : statements) {
@@ -61,20 +65,15 @@ public abstract class AnonymousClassExpr implements Expr {
           if (expr instanceof VariableExpr) {
             Preconditions.checkState(
                 ((VariableExpr) expr).isFinal(),
-                "Variable expression statement in Anonymous class must be final.");
+                "Variable expression statement in anonymous class must be final.");
           } else if (expr instanceof AssignmentExpr) {
             Preconditions.checkState(
                 ((AssignmentExpr) expr).variableExpr().isFinal(),
-                "Variable expression statement in Anonymous class must be final.");
+                "Variable expression statement in anonymous class must be final.");
           }
         }
       }
       return anonymousClassExpr;
     }
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

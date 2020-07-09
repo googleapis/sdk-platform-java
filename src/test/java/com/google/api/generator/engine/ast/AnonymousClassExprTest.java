@@ -30,7 +30,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void InvalidAnonymousClass_noReference() {
+  public void invalidAnonymousClass_noReference() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -40,7 +40,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void InvalidAnonymousClass_staticMethod() {
+  public void invalidAnonymousClass_staticMethod() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     MethodDefinition method =
@@ -62,7 +62,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void InvalidAnonymousClass_finalVariableExpr() {
+  public void invalidAnonymousClass_finalVariableExpr() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     Variable variable = createVariable("s", TypeNode.STRING);
