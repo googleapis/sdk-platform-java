@@ -373,7 +373,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     String formattedSource =
         JavaFormatter.format(
             String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
-    // TODO(xiaozhenliu): call comment escaper here.
     buffer.append(formattedSource);
   }
 

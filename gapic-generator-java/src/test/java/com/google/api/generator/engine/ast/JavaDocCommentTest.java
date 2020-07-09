@@ -16,16 +16,16 @@ package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
 
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
 public class JavaDocCommentTest {
+  // TODO(xiaozhenliu): add escaping-related unit tests for JavaDocComment class.
   @Test
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";
-    JavaDocComment javaDocComment = JavaDocComment.withComment(content);
+    JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).build();
     assertEquals(javaDocComment.comment(), content);
   }
 
@@ -83,18 +83,7 @@ public class JavaDocCommentTest {
   @Test
   public void createJavaDocComment_sampleCode() {
     String comment = "sample codes:";
-    StringObjectValue stringObjectValue =
-        StringObjectValue.withValue("project/{project}/shelfId/{shelfId}");
-    ValueExpr valueExpr = ValueExpr.builder().setValue(stringObjectValue).build();
-    VariableExpr expr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("resource").setType(TypeNode.STRING).build())
-            .build();
-    AssignmentExpr assignmentExpr =
-        AssignmentExpr.builder().setVariableExpr(expr).setValueExpr(valueExpr).build();
-    JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
-    assignmentExpr.accept(javaWriterVisitor);
-    String sampleCode = javaWriterVisitor.write();
+    String sampleCode = "resource = project/{project}/shelfId/{shelfId}";
     JavaDocComment javaDocComment =
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
     String expected =

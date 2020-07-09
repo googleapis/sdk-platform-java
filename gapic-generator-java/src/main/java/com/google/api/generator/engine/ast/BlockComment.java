@@ -33,6 +33,7 @@ public abstract class BlockComment implements Comment {
     public abstract Builder setComment(String comment);
 
     public abstract BlockComment build();
+    // TODO(xiaozhenliu): call comment escaper for the block comment.
   }
 
   public void accept(AstNodeVisitor visitor) {
