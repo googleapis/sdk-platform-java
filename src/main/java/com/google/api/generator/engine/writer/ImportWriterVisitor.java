@@ -104,7 +104,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(NewObjectValue newObjectValue) {
-    // Nothing to do.
+    newObjectValue.type().accept(this);
   }
 
   /** =============================== EXPRESSIONS =============================== */

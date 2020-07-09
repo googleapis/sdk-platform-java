@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -31,6 +32,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,19 @@ public class ImportWriterVisitorTest {
   @Before
   public void setUp() {
     writerVisitor = new ImportWriterVisitor(CURRENT_PACKAGE);
+  }
+
+  @Test
+  public void writeNewObjectValueImports() {
+    ConcreteReference reference =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Collections.emptyList())
+            .build();
+    TypeNode type = TypeNode.withReference(reference);
+    NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
+    newObjectValue.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import java.util.List;\n\n");
   }
 
   @Test
