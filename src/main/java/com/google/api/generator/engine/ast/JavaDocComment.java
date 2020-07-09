@@ -53,14 +53,12 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParam(String name, String description) {
-      String parameter = String.format("@param %s %s", name, description);
-      commentsBuilder().add(parameter);
+      commentsBuilder().add(String.format("@param %s %s", name, description));
       return this;
     }
 
     public Builder setThrows(String type, String description) {
-      String throwsText = String.format("@throws %s %s", type, description);
-      commentsBuilder().add(throwsText);
+      commentsBuilder().add(String.format("@throws %s %s", type, description));
       return this;
     }
 
