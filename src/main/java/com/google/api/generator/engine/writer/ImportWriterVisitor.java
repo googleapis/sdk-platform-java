@@ -62,6 +62,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   public String write() {
+    // Clear out any imports duplicated across the static and non-static sets.
+    staticImports.stream().forEach(i -> imports.remove(i));
+
     StringBuffer sb = new StringBuffer();
     if (!staticImports.isEmpty()) {
       sb.append(
@@ -242,11 +245,15 @@ public class ImportWriterVisitor implements AstNodeVisitor {
         continue;
       }
 
-      if (ref.hasEnclosingClass()) {
+      if (ref.isStaticImport()) {
         // This is a static import.
         staticImports.add(ref.fullName());
       } else {
-        imports.add(ref.fullName());
+        if (ref.hasEnclosingClass()) {
+          imports.add(String.format("%s.%s", ref.pakkage(), ref.enclosingClassName()));
+        } else {
+          imports.add(ref.fullName());
+        }
       }
 
       references(ref.generics());

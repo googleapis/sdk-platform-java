@@ -30,6 +30,30 @@ public class ConcreteReferenceTest {
   public void basicConcreteReference() {
     Reference reference = ConcreteReference.builder().setClazz(Integer.class).build();
     assertEquals(reference.name(), Integer.class.getSimpleName());
+    assertFalse(reference.isStaticImport());
+  }
+
+  @Test
+  public void basicConcreteReference_setIsStaticImport() {
+    Reference reference =
+        ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
+    assertEquals(reference.name(), Integer.class.getSimpleName());
+    assertFalse(reference.isStaticImport());
+  }
+
+  @Test
+  public void basicConcreteReference_nested() {
+    Reference reference = ConcreteReference.builder().setClazz(Map.Entry.class).build();
+    assertEquals(reference.name(), "Map.Entry");
+    assertFalse(reference.isStaticImport());
+  }
+
+  @Test
+  public void basicConcreteReference_nestedAndStaticImport() {
+    Reference reference =
+        ConcreteReference.builder().setClazz(Map.Entry.class).setIsStaticImport(true).build();
+    assertEquals(reference.name(), Map.Entry.class.getSimpleName());
+    assertTrue(reference.isStaticImport());
   }
 
   @Test
