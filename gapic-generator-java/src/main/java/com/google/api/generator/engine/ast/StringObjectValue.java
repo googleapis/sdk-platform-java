@@ -41,7 +41,7 @@ public abstract class StringObjectValue implements ObjectValue {
     public abstract StringObjectValue autoBuild();
 
     public StringObjectValue build() {
-      // `\"` is added to the escaped string value for interpreting the string object correctly.
+      // `\"` is added to the escaped string value for interpreting it correctly in file.
       String value = String.format("\"%s\"", StringValueEscaper.escape(autoBuild().value()));
       setValue(value);
       return autoBuild();
