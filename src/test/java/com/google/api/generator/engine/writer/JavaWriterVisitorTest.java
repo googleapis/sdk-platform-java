@@ -47,8 +47,8 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import org.junit.Before;
@@ -100,23 +100,31 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
   }
 
-  @Test 
-  public void writeNewObjectValue_withArgs(){
-      ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
-      TypeNode type = TypeNode.withReference(reference);
-      ValueExpr valueExpr = ValueExpr.builder().setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build()).build();
-      NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
-      newObjectValue.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), "new Integer(123)");
+  @Test
+  public void writeNewObjectValue_withArgs() {
+    ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
+    TypeNode type = TypeNode.withReference(reference);
+    ValueExpr valueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
+            .build();
+    NewObjectValue newObjectValue =
+        NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+    newObjectValue.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new Integer(123)");
   }
 
-  @Test 
-  public void writeNewObjectValue_withGenerics(){
-      ConcreteReference reference = ConcreteReference.builder().setClazz(LinkedList.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class))).build();
-      TypeNode type = TypeNode.withReference(reference);
-      NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
-      newObjectValue.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), "new LinkedList<Object>()");
+  @Test
+  public void writeNewObjectValue_withGenerics() {
+    ConcreteReference reference =
+        ConcreteReference.builder()
+            .setClazz(LinkedList.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(reference);
+    NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
+    newObjectValue.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new LinkedList<Object>()");
   }
 
   /** =============================== EXPRESSIONS =============================== */

@@ -25,7 +25,22 @@ public abstract class NewObjectValue implements ObjectValue {
 
   public abstract List<Expr> arguments();
 
+  // Private.
   abstract boolean isGeneric();
+
+  @Override
+  public String value() {
+    StringBuilder value = new StringBuilder();
+    value.append("new ").append(type().reference().name());
+    if (isGeneric() && type().reference().generics().isEmpty()) {
+      value.append("<>");
+    }
+    return value.toString();
+  }
+
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
 
   public static Builder builder() {
     return new AutoValue_NewObjectValue.Builder()
@@ -45,29 +60,17 @@ public abstract class NewObjectValue implements ObjectValue {
 
     public abstract Builder setArguments(List<Expr> arguments);
 
-    public abstract Builder setIsGeneric(boolean isGeneric);
+    // Private.
+    abstract Builder setIsGeneric(boolean isGeneric);
 
     abstract NewObjectValue autoBuild();
 
     public NewObjectValue build() {
       NewObjectValue newObjectValue = autoBuild();
+      // Check the object is reference type.
       Preconditions.checkState(
-          TypeNode.isReferenceType(newObjectValue.type()), "New Objects must be reference types.");
+          TypeNode.isReferenceType(newObjectValue.type()), "New Object must be reference types.");
       return newObjectValue;
     }
-  }
-
-  @Override
-  public String value() {
-    StringBuilder value = new StringBuilder();
-    value.append("new ").append(type().reference().name());
-    if (isGeneric() && type().reference().generics().isEmpty()) {
-      value.append("<>");
-    }
-    return value.toString();
-  }
-
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

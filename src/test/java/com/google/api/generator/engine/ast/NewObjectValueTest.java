@@ -22,7 +22,7 @@ import org.junit.Test;
 
 public class NewObjectValueTest {
   @Test
-  public void simpleNewObjectValue() {
+  public void newObjectValue_basic() {
     ConcreteReference reference =
         ConcreteReference.builder()
             .setClazz(List.class)
