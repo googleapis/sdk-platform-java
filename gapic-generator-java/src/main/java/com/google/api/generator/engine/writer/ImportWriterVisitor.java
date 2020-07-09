@@ -132,7 +132,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(AnonymousClassExpr anonymousClassExpr){
+  public void visit(AnonymousClassExpr anonymousClassExpr) {
     // Do nothing
   }
 
