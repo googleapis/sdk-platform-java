@@ -128,8 +128,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(NewObjectValue newObjectValue) {
     buffer.append(newObjectValue.value()).append(LEFT_PAREN);
-    List<Expr> list = newObjectValue.arguments();
-    for (Expr expression : list) {
+    for (Expr expression : newObjectValue.arguments()) {
       expression.accept(this);
     }
     buffer.append(RIGHT_PAREN);
