@@ -14,15 +14,16 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Method {
   public abstract String name();
 
-  public abstract String inputTypeName();
+  public abstract TypeNode inputType();
 
-  public abstract String outputTypeName();
+  public abstract TypeNode outputType();
 
   // TODO(miraleung): Parse annotations, comments.
 
@@ -34,9 +35,9 @@ public abstract class Method {
   public abstract static class Builder {
     public abstract Builder setName(String name);
 
-    public abstract Builder setInputTypeName(String name);
+    public abstract Builder setInputType(TypeNode inputType);
 
-    public abstract Builder setOutputTypeName(String name);
+    public abstract Builder setOutputType(TypeNode outputType);
 
     public abstract Method build();
   }
