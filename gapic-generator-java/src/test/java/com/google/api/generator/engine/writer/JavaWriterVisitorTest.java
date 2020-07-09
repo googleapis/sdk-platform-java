@@ -1019,10 +1019,8 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(25),
+            createLines(23),
             "package com.google.example.library.v1.stub;\n",
-            "\n",
-            "import static java.util.Map.Entry;\n",
             "\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.ClassDefinition;\n",
@@ -1031,7 +1029,7 @@ public class JavaWriterVisitorTest {
             "\n",
             "public class LibraryServiceStub {\n",
             "private AssignmentExpr x;\n",
-            "protected Map<ClassDefinition, Entry<String, MethodDefinition>> y;\n",
+            "protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n",
             "public boolean open() {\n",
             "return true;\n",
             "}\n",
