@@ -12,13 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.model;
 
-import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.Service;
-import java.util.Map;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.auto.value.AutoValue;
 
-public interface ClassComposer {
-  GapicClass generate(Service service, Map<String, Message> messageTypes);
+@AutoValue
+public abstract class Field {
+  public abstract String name();
+
+  public abstract TypeNode type();
+
+  public static Builder builder() {
+    return new AutoValue_Field.Builder();
+  }
+
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setName(String name);
+
+    public abstract Builder setType(TypeNode type);
+
+    public abstract Field build();
+  }
 }
