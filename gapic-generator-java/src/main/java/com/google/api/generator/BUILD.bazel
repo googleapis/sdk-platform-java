@@ -31,6 +31,8 @@ java_library(
         ":generator_files",
     ],
     deps = [
+        "//src/main/java/com/google/api/generator/engine",
+        "//src/main/java/com/google/api/generator/gapic",
         "@com_google_guava_guava__com_google_api_codegen//jar",
         "@com_google_protobuf//:protobuf_java",
     ],
