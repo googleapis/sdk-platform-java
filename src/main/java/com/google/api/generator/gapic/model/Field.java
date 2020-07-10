@@ -14,12 +14,14 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Field {
-  // TODO(miraleung): Add type, label.
   public abstract String name();
+
+  public abstract TypeNode type();
 
   public static Builder builder() {
     return new AutoValue_Field.Builder();
@@ -28,6 +30,8 @@ public abstract class Field {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setName(String name);
+
+    public abstract Builder setType(TypeNode type);
 
     public abstract Field build();
   }

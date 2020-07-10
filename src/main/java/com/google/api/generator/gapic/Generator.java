@@ -28,8 +28,8 @@ import java.util.Map;
 public class Generator {
   public static CodeGeneratorResponse generateGapic(
       CodeGeneratorRequest request, String outputFilePath) {
-    List<Service> services = Parser.parseServices(request);
     Map<String, Message> messageTypes = Parser.parseMessages(request);
+    List<Service> services = Parser.parseServices(request, messageTypes);
     List<GapicClass> clazzes = Composer.composeServiceClasses(services, messageTypes);
     CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilePath);
     return response;
