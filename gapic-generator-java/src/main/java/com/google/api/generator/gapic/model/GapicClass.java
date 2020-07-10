@@ -14,26 +14,36 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class Service {
-  public abstract String name();
+public abstract class GapicClass {
+  // TODO(miraleung): Add enum for resource name classes.
+  public enum Kind {
+    MAIN,
+    STUB,
+    TEST
+  };
 
-  public abstract String pakkage();
+  public abstract Kind kind();
 
-  // TODO(miraleung): Add more attributes.
+  public abstract ClassDefinition classDefinition();
 
-  public static Builder builder() {
-    return new AutoValue_Service.Builder();
+  public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
+    return builder().setKind(kind).setClassDefinition(classDefinition).build();
+  }
+
+  static Builder builder() {
+    return new AutoValue_GapicClass.Builder();
   }
 
   @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setName(String name);
+  abstract static class Builder {
+    abstract Builder setKind(Kind kind);
 
-    public abstract Builder setPakkage(String pakkage);
+    abstract Builder setClassDefinition(ClassDefinition classDefinition);
 
-    public abstract Service build();
+    abstract GapicClass build();
   }
 }
