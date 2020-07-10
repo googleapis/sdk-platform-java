@@ -14,20 +14,25 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Parser {
   static class GapicParserException extends RuntimeException {
@@ -61,6 +66,31 @@ public class Parser {
     }
 
     return services;
+  }
+
+  public static Map<String, Message> parseMessages(CodeGeneratorRequest request) {
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, Message> messages = new HashMap<>();
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+      // TODO(miraleung): Get nested types.
+      for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
+        List<Field> fields = parseFields(messageDescriptor);
+        String messageName = messageDescriptor.getName();
+        messages.put(messageName, Message.builder().setName(messageName).setFields(fields).build());
+      }
+    }
+    return messages;
+  }
+
+  private static List<Field> parseFields(Descriptor messageDescriptor) {
+    return messageDescriptor.getFields().stream()
+        .map(f -> Field.builder().setName(f.getName()).build())
+        .collect(Collectors.toList());
   }
 
   private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
