@@ -21,18 +21,19 @@ public class StringValueEscaper {
   private static final SpecialSequenceEscaper specialSequenceEscaper = new SpecialSequenceEscaper();
 
   private static class SpecialSequenceEscaper extends Escaper {
+    private static final Escaper escaper =
+        Escapers.builder()
+            .addEscape('\t', "\\t")
+            .addEscape('\b', "\\b")
+            .addEscape('\n', "\\n")
+            .addEscape('\r', "\\r")
+            .addEscape('\f', "\\f")
+            .addEscape('"', "\\\"")
+            .addEscape('\\', "\\\\")
+            .build();
+
     @Override
     public String escape(String sourceString) {
-      Escaper escaper =
-          Escapers.builder()
-              .addEscape('\t', "\\t")
-              .addEscape('\b', "\\b")
-              .addEscape('\n', "\\n")
-              .addEscape('\r', "\\r")
-              .addEscape('\f', "\\f")
-              .addEscape('"', "\\\"")
-              .addEscape('\\', "\\\\")
-              .build();
       return escaper.escape(sourceString);
     }
   }
