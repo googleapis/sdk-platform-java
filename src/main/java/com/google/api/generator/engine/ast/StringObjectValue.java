@@ -14,8 +14,10 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.escaper.StringValueEscaper;
+import com.google.api.generator.engine.escaper.EscaperException;
 import com.google.auto.value.AutoValue;
+import com.google.common.escape.Escaper;
+import com.google.common.escape.Escapers;
 
 @AutoValue
 public abstract class StringObjectValue implements ObjectValue {
@@ -45,6 +47,33 @@ public abstract class StringObjectValue implements ObjectValue {
       String value = String.format("\"%s\"", StringValueEscaper.escape(autoBuild().value()));
       setValue(value);
       return autoBuild();
+    }
+  }
+
+  private static class StringValueEscaper {
+    private static final SpecialSequenceEscaper specialSequenceEscaper =
+        new SpecialSequenceEscaper();
+
+    private static class SpecialSequenceEscaper extends Escaper {
+      private static final Escaper escaper =
+          Escapers.builder()
+              .addEscape('\t', "\\t")
+              .addEscape('\b', "\\b")
+              .addEscape('\n', "\\n")
+              .addEscape('\r', "\\r")
+              .addEscape('\f', "\\f")
+              .addEscape('"', "\\\"")
+              .addEscape('\\', "\\\\")
+              .build();
+
+      @Override
+      public String escape(String sourceString) {
+        return escaper.escape(sourceString);
+      }
+    }
+
+    public static String escape(String source) throws EscaperException {
+      return specialSequenceEscaper.escape(source);
     }
   }
 }
