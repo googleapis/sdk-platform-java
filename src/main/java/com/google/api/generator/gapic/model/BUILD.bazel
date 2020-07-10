@@ -1,0 +1,15 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "model_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "model",
+    runtime_deps = [
+        "//src/main/java/com/google/api/generator:autovalue",
+        "@com_google_auto_value_auto_value//jar",
+        "@com_google_auto_value_auto_value_annotations//jar",
+    ],
+)

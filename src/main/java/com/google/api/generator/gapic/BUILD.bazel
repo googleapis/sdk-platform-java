@@ -1,0 +1,15 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "gapic_files",
+    srcs = [
+        "//src/main/java/com/google/api/generator/gapic/model:model_files",
+    ],
+)
+
+java_library(
+    name = "engine",
+    runtime_deps = [
+        "//src/main/java/com/google/api/generator/gapic/model",
+    ],
+)
