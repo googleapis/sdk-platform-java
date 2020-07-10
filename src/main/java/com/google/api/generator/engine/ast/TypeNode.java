@@ -38,6 +38,8 @@ public abstract class TypeNode implements AstNode {
 
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
   public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
+  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
