@@ -29,6 +29,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,7 +53,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service) {
+  public GapicClass generate(Service service, Map<String, Message> messageTypes) {
     String className = String.format("%sClient", service.name());
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
