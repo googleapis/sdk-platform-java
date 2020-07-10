@@ -21,6 +21,7 @@ public abstract class Service {
   public abstract String name();
 
   public abstract String pakkage();
+
   // TODO(miraleung): Add more attributes.
 
   public static Builder builder() {
