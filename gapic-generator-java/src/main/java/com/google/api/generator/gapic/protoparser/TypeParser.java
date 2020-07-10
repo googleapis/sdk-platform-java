@@ -18,21 +18,22 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
-import com.google.api.generator.gapic.model.Field;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor.JavaType;
+import com.google.protobuf.Descriptors.FileDescriptor;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
-public class FieldParser {
+public class TypeParser {
   // TODO(miraleung): Add a test.
   private static Reference REFERENCE_BYTE_STRING = ConcreteReference.withClazz(ByteString.class);
   private static TypeNode TYPE_NODE_BYTE_STRING = TypeNode.withReference(REFERENCE_BYTE_STRING);
@@ -59,12 +60,7 @@ public class FieldParser {
           .put(JavaType.BYTE_STRING, REFERENCE_BYTE_STRING)
           .build();
 
-  public static Field parseField(@Nonnull FieldDescriptor field) {
-    return Field.builder().setName(field.getName()).setType(parseType(field)).build();
-  }
-
-  @VisibleForTesting
-  static TypeNode parseType(FieldDescriptor field) {
+  public static TypeNode parseType(@Nonnull FieldDescriptor field) {
     if (field.isRepeated()) {
       return createListType(field);
     }
@@ -83,6 +79,20 @@ public class FieldParser {
     }
 
     return TypeNode.withReference(parseFieldReference(field));
+  }
+
+  public static TypeNode parseType(@Nonnull Descriptor messageDescriptor) {
+    return TypeNode.withReference(parseMessageReference(messageDescriptor));
+  }
+
+  public static String getPackage(FileDescriptor fileDescriptor) {
+    String pakkage = fileDescriptor.getOptions().getJavaPackage();
+    if (Strings.isNullOrEmpty(pakkage)) {
+      pakkage = fileDescriptor.getPackage();
+    }
+    Preconditions.checkNotNull(
+        pakkage, String.format("Java package in file %s was null", fileDescriptor.getName()));
+    return pakkage;
   }
 
   @VisibleForTesting
@@ -105,7 +115,7 @@ public class FieldParser {
   @VisibleForTesting
   static Reference parseMessageReference(@Nonnull Descriptor messageDescriptor) {
     // TODO(miraleung): Handle deeper levels of nesting.
-    String pakkage = messageDescriptor.getFile().getPackage();
+    String pakkage = getPackage(messageDescriptor.getFile());
     VaporReference.Builder messageReferenceBuilder =
         VaporReference.builder().setName(messageDescriptor.getName()).setPakkage(pakkage);
 
@@ -115,11 +125,16 @@ public class FieldParser {
       messageReferenceBuilder.setEnclosingClassName(enclosingClassName);
     }
     Reference messageReference = messageReferenceBuilder.build();
+    String protoPackage = messageDescriptor.getFile().getPackage();
     Preconditions.checkState(
-        messageReference.fullName().equals(messageDescriptor.getFullName()),
+        messageReference
+            .fullName()
+            .replace(pakkage, protoPackage)
+            .equals(messageDescriptor.getFullName()),
         String.format(
             "Parsed message name %s does not match actual name %s",
-            messageReference.fullName(), messageDescriptor.getFullName()));
+            messageReference.fullName().replace(pakkage, ""),
+            messageDescriptor.getFullName().replace(protoPackage, "")));
     return messageReference;
   }
 
@@ -128,7 +143,7 @@ public class FieldParser {
     // This is similar to parseMessageReference, but we make it a separate method because
     // EnumDescriptor and Descriptor are sibling types.
     // TODO(miraleung): Handle deeper levels of nesting.
-    String pakkage = enumDescriptor.getFile().getPackage();
+    String pakkage = getPackage(enumDescriptor.getFile());
     VaporReference.Builder enumReferenceBuilder =
         VaporReference.builder().setName(enumDescriptor.getName()).setPakkage(pakkage);
 
@@ -138,11 +153,16 @@ public class FieldParser {
       enumReferenceBuilder.setEnclosingClassName(enclosingClassName);
     }
     Reference enumReference = enumReferenceBuilder.build();
+    String protoPackage = enumDescriptor.getFile().getPackage();
     Preconditions.checkState(
-        enumReference.fullName().equals(enumDescriptor.getFullName()),
+        enumReference
+            .fullName()
+            .replace(pakkage, protoPackage)
+            .equals(enumDescriptor.getFullName()),
         String.format(
             "Parsed enum name %s does not match actual name %s",
-            enumReference.fullName(), enumDescriptor.getFullName()));
+            enumReference.fullName().replace(pakkage, ""),
+            enumDescriptor.getFullName().replace(protoPackage, "")));
     return enumReference;
   }
 
