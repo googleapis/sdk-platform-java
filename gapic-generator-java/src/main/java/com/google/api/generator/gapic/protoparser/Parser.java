@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -77,11 +79,20 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-      // TODO(miraleung): Get nested types.
+
+      String pakkage = getPackage(fileDescriptor);
       for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
         List<Field> fields = parseFields(messageDescriptor);
         String messageName = messageDescriptor.getName();
-        messages.put(messageName, Message.builder().setName(messageName).setFields(fields).build());
+        messages.put(
+            messageName,
+            Message.builder()
+                .setType(
+                    TypeNode.withReference(
+                        VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
+                .setName(messageName)
+                .setFields(fields)
+                .build());
       }
     }
     return messages;
