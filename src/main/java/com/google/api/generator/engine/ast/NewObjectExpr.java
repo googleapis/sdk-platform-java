@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 @AutoValue
-public abstract class NewObjectValue implements ObjectValue {
+public abstract class NewObjectExpr implements Expr {
   public abstract TypeNode type();
 
   public abstract List<Expr> arguments();
@@ -28,27 +28,18 @@ public abstract class NewObjectValue implements ObjectValue {
   public abstract boolean isGeneric();
 
   @Override
-  public String value() {
-    StringBuilder value = new StringBuilder();
-    value.append("new ").append(type().reference().name());
-    if (isGeneric() && type().reference().generics().isEmpty()) {
-      value.append("<>");
-    }
-    return value.toString();
-  }
-
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
   }
 
   public static Builder builder() {
-    return new AutoValue_NewObjectValue.Builder()
+    return new AutoValue_NewObjectExpr.Builder()
         .setArguments(Collections.emptyList())
         .setIsGeneric(false);
   }
 
   public static Builder genericBuilder() {
-    return new AutoValue_NewObjectValue.Builder()
+    return new AutoValue_NewObjectExpr.Builder()
         .setArguments(Collections.emptyList())
         .setIsGeneric(true);
   }
@@ -62,20 +53,20 @@ public abstract class NewObjectValue implements ObjectValue {
     // Private.
     abstract Builder setIsGeneric(boolean isGeneric);
 
-    abstract NewObjectValue autoBuild();
+    abstract NewObjectExpr autoBuild();
 
-    public NewObjectValue build() {
-      NewObjectValue newObjectValue = autoBuild();
+    public NewObjectExpr build() {
+      NewObjectExpr newObjectExpr = autoBuild();
       // Check the object is reference type.
       Preconditions.checkState(
-          TypeNode.isReferenceType(newObjectValue.type()), "New Object must be reference types.");
+          TypeNode.isReferenceType(newObjectExpr.type()), "New Object must be reference types.");
       // Check if there is a conflict between isGeneric() setting and generics() setting.
-      boolean noGenerics = newObjectValue.type().reference().generics().isEmpty();
+      boolean noGenerics = newObjectExpr.type().reference().generics().isEmpty();
       Preconditions.checkState(
-          (newObjectValue.isGeneric() || noGenerics),
+          (newObjectExpr.isGeneric() || noGenerics),
           "Please call genericBuilder() if the new object is generic, else call builder() to build"
               + " the object.");
-      return newObjectValue;
+      return newObjectExpr;
     }
   }
 }

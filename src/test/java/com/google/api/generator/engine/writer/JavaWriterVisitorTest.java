@@ -29,7 +29,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectValue;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -101,29 +101,29 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectValue_withArgs() {
+  public void writeNewObjectExpr_withArgs() {
     ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
     TypeNode type = TypeNode.withReference(reference);
     ValueExpr valueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
             .build();
-    NewObjectValue newObjectValue =
-        NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
-    newObjectValue.accept(writerVisitor);
+    NewObjectExpr newObjectExpr =
+    NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+    newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "new Integer(123)");
   }
 
   @Test
-  public void writeNewObjectValue_withGenerics() {
+  public void writeNewObjectExpr_withGenerics() {
     ConcreteReference reference =
         ConcreteReference.builder()
             .setClazz(LinkedList.class)
             .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
             .build();
     TypeNode type = TypeNode.withReference(reference);
-    NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
-    newObjectValue.accept(writerVisitor);
+    NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
+    newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "new LinkedList<Object>()");
   }
 

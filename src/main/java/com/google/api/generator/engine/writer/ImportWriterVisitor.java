@@ -26,7 +26,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectValue;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -103,8 +103,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(NewObjectValue newObjectValue) {
-    newObjectValue.type().accept(this);
+  public void visit (NewObjectExpr newObjectExpr) {
+    newObjectExpr.type().accept(this);
   }
 
   /** =============================== EXPRESSIONS =============================== */

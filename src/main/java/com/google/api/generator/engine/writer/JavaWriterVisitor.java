@@ -26,7 +26,7 @@ import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectValue;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -126,8 +126,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
-  public void visit(NewObjectValue newObjectValue) {
-    buffer.append(newObjectValue.value()).append(LEFT_PAREN);
+  public void visit(NewObjectExpr newObjectValue) {
+    buffer.append("new");
+    space();
+    buffer.append(newObjectValue.type().reference().name());
+    if(newObjectValue.isGeneric() && newObjectValue.type().reference().generics().isEmpty()) {
+      buffer.append("<>");
+    }
+    buffer.append(LEFT_PAREN);
     for (Expr expression : newObjectValue.arguments()) {
       expression.accept(this);
     }
