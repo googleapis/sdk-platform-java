@@ -14,12 +14,13 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -41,8 +42,8 @@ public class Parser {
     }
   }
 
-  // TODO(miraleung): Caller should handle empty lists.
-  public static List<Service> parseServices(CodeGeneratorRequest request) {
+  public static List<Service> parseServices(
+      CodeGeneratorRequest request, Map<String, Message> messageTypes) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -52,9 +53,9 @@ public class Parser {
               "Missing file descriptor for [%s]",
               fileToGenerate);
 
-      String pakkage = getPackage(fileDescriptor);
+      String pakkage = TypeParser.getPackage(fileDescriptor);
       for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
-        List<Method> methods = parseMethods(serviceDescriptor);
+        List<Method> methods = parseMethods(serviceDescriptor, messageTypes);
         Service service =
             Service.builder()
                 .setName(serviceDescriptor.getName())
@@ -77,11 +78,20 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-      // TODO(miraleung): Get nested types.
+
+      String pakkage = TypeParser.getPackage(fileDescriptor);
       for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
         List<Field> fields = parseFields(messageDescriptor);
         String messageName = messageDescriptor.getName();
-        messages.put(messageName, Message.builder().setName(messageName).setFields(fields).build());
+        messages.put(
+            messageName,
+            Message.builder()
+                .setType(
+                    TypeNode.withReference(
+                        VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
+                .setName(messageName)
+                .setFields(fields)
+                .build());
       }
     }
     return messages;
@@ -89,7 +99,7 @@ public class Parser {
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
     return messageDescriptor.getFields().stream()
-        .map(f -> Field.builder().setName(f.getName()).build())
+        .map(f -> Field.builder().setName(f.getName()).setType(TypeParser.parseType(f)).build())
         .collect(Collectors.toList());
   }
 
@@ -120,24 +130,15 @@ public class Parser {
     return fileDescriptors;
   }
 
-  private static String getPackage(FileDescriptor fileDescriptor) {
-    String pakkage = fileDescriptor.getOptions().getJavaPackage();
-    if (Strings.isNullOrEmpty(pakkage)) {
-      pakkage = fileDescriptor.getPackage();
-    }
-    Preconditions.checkNotNull(
-        pakkage, String.format("Java package in file %s was null", fileDescriptor.getName()));
-    return pakkage;
-  }
-
-  private static List<Method> parseMethods(ServiceDescriptor serviceDescriptor) {
+  private static List<Method> parseMethods(
+      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
     List<Method> methods = new ArrayList<>();
     for (MethodDescriptor methodDescriptor : serviceDescriptor.getMethods()) {
       methods.add(
           Method.builder()
               .setName(methodDescriptor.getName())
-              .setInputTypeName(methodDescriptor.getInputType().getName())
-              .setOutputTypeName(methodDescriptor.getOutputType().getName())
+              .setInputType(TypeParser.parseType(methodDescriptor.getInputType()))
+              .setOutputType(TypeParser.parseType(methodDescriptor.getOutputType()))
               .build());
     }
     return methods;
