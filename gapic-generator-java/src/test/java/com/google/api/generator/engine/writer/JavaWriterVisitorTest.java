@@ -266,7 +266,6 @@ public class JavaWriterVisitorTest {
     Value value = StringObjectValue.withValue("test");
     Expr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
-    System.out.println(writerVisitor.write());
     assertThat(writerVisitor.write()).isEqualTo("\"test\"");
   }
 
