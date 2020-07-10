@@ -136,7 +136,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(AnonymousClassExpr anonymousClassExpr) {
-    // Do nothing
+    anonymousClassExpr.type().accept(this);
+    methods(anonymousClassExpr.methods());
+    statements(anonymousClassExpr.statements());
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -263,6 +265,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void statements(List<Statement> statements) {
     for (Statement statement : statements) {
       statement.accept(this);
+    }
+  }
+
+  private void methods(List<MethodDefinition> methods) {
+    for (MethodDefinition method : methods) {
+      method.accept(this);
     }
   }
 
