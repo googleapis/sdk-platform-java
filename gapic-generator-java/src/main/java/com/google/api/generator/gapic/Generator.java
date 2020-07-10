@@ -12,22 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator;
+package com.google.api.generator.gapic;
 
-import com.google.api.generator.gapic.Generator;
-import com.google.protobuf.Descriptors.DescriptorValidationException;
-import com.google.protobuf.ExtensionRegistry;
+import com.google.api.generator.gapic.composer.Composer;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
-import java.io.IOException;
+import java.util.List;
 
-public class Main {
-  public static void main(String[] args)
-      throws IOException, InterruptedException, DescriptorValidationException {
-    ExtensionRegistry registry = ExtensionRegistry.newInstance();
-    CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
-    String outputFilePath = String.format("%stemp-gen.srcjar", request.getParameter());
-    CodeGeneratorResponse response = Generator.generateGapic(request, outputFilePath);
-    response.writeTo(System.out);
+public class Generator {
+  public static CodeGeneratorResponse generateGapic(
+      CodeGeneratorRequest request, String outputFilePath) {
+    List<Service> services = Parser.parseServices(request);
+    List<GapicClass> clazzes = Composer.composeServiceClasses(services);
+    CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilePath);
+    return response;
   }
 }
