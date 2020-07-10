@@ -44,36 +44,34 @@ public abstract class StringObjectValue implements ObjectValue {
 
     public StringObjectValue build() {
       // `\"` is added to the escaped string value for interpreting it correctly in file.
-      String value = String.format("\"%s\"", StringValueEscaper.escape(autoBuild().value()));
+      String value =
+          String.format("\"%s\"", StringValueEscaper.getInstance().escape(autoBuild().value()));
       setValue(value);
       return autoBuild();
     }
   }
 
-  private static class StringValueEscaper {
-    private static final SpecialSequenceEscaper specialSequenceEscaper =
-        new SpecialSequenceEscaper();
+  private static class StringValueEscaper extends Escaper {
+    private static final Escaper escaper =
+        Escapers.builder()
+            .addEscape('\t', "\\t")
+            .addEscape('\b', "\\b")
+            .addEscape('\n', "\\n")
+            .addEscape('\r', "\\r")
+            .addEscape('\f', "\\f")
+            .addEscape('"', "\\\"")
+            .addEscape('\\', "\\\\")
+            .build();
 
-    private static class SpecialSequenceEscaper extends Escaper {
-      private static final Escaper escaper =
-          Escapers.builder()
-              .addEscape('\t', "\\t")
-              .addEscape('\b', "\\b")
-              .addEscape('\n', "\\n")
-              .addEscape('\r', "\\r")
-              .addEscape('\f', "\\f")
-              .addEscape('"', "\\\"")
-              .addEscape('\\', "\\\\")
-              .build();
+    private StringValueEscaper() {}
 
-      @Override
-      public String escape(String sourceString) {
-        return escaper.escape(sourceString);
-      }
+    @Override
+    public String escape(String sourceString) throws EscaperException {
+      return escaper.escape(sourceString);
     }
 
-    public static String escape(String source) throws EscaperException {
-      return specialSequenceEscaper.escape(source);
+    public static Escaper getInstance() {
+      return escaper;
     }
   }
 }
