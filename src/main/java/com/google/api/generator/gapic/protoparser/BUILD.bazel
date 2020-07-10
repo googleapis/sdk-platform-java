@@ -1,0 +1,18 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "protoparser_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "protoparser",
+    srcs = [
+        ":protoparser_files",
+    ],
+    deps = [
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "@com_google_guava_guava//jar",
+        "@com_google_protobuf//:protobuf_java",
+    ],
+)
