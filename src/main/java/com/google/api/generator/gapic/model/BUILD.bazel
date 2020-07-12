@@ -1,18 +1,20 @@
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "writer_files",
+    name = "model_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "writer",
+    name = "model",
     srcs = [
-        ":writer_files",
+        ":model_files",
     ],
     deps = [
+        "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/ast",
-        "@google_java_format_all_deps//jar",
+        "@com_google_auto_value_auto_value//jar",
+        "@com_google_auto_value_auto_value_annotations//jar",
         "@com_google_guava_guava//jar",
     ],
 )
