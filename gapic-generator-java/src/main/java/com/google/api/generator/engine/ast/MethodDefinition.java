@@ -161,7 +161,7 @@ public abstract class MethodDefinition implements AstNode {
       if (isAbstract()) {
         Preconditions.checkState(
             !isFinal() && !isStatic() && !scope().equals(ScopeNode.PRIVATE),
-            "Abstract mehtods cannot be static, final, or private");
+            "Abstract methods cannot be static, final, or private");
       }
 
       // If this method overrides another, ensure that the Override annotaiton is the last one.
@@ -174,6 +174,9 @@ public abstract class MethodDefinition implements AstNode {
       Preconditions.checkState(
           !method.scope().equals(ScopeNode.LOCAL),
           "Method scope must be either public, protected, or private");
+      
+      Preconditions.checkState(
+          !method.returnType().equals(TypeNode.NULL), "Null is not a valid method return type");
 
       // Constructor checking.
       if (method.isConstructor()) {
@@ -195,6 +198,11 @@ public abstract class MethodDefinition implements AstNode {
           Preconditions.checkNotNull(
               method.returnExpr(),
               "Method with non-void return type must have a return expression");
+        }
+
+        if (!method.returnType().equals(TypeNode.VOID)) {
+          Preconditions.checkNotNull(
+              method.returnExpr(), "Method with non-void return type must have a return expression");
         }
 
         if (method.returnExpr() != null) {

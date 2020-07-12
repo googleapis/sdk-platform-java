@@ -405,6 +405,19 @@ public class MethodDefinitionTest {
         });
   }
 
+  @Test
+  public void invalidMethodDefinition_nullReturnType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("foobar")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.NULL)
+              .build();
+        });
+  }
+
   private static Variable createVariable(String variableName, TypeNode type) {
     return Variable.builder().setName(variableName).setType(type).build();
   }

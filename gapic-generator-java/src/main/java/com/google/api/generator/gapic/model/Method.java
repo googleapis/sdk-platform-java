@@ -12,36 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class ValueExpr implements Expr {
-  public abstract Value value();
+public abstract class Method {
+  public abstract String name();
 
-  public static ValueExpr withValue(Value value) {
-    return builder().setValue(value).build();
-  }
+  public abstract TypeNode inputType();
+
+  public abstract TypeNode outputType();
+
+  // TODO(miraleung): Parse annotations, comments.
 
   public static Builder builder() {
-    return new AutoValue_ValueExpr.Builder();
+    return new AutoValue_Method.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setValue(Value value);
+    public abstract Builder setName(String name);
 
-    public abstract ValueExpr build();
-  }
+    public abstract Builder setInputType(TypeNode inputType);
 
-  @Override
-  public TypeNode type() {
-    return value().type();
-  }
+    public abstract Builder setOutputType(TypeNode outputType);
 
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
+    public abstract Method build();
   }
 }

@@ -26,7 +26,7 @@ def com_google_api_codegen_repositories():
             strip_repo_prefix = "maven.",
             artifact = _fix_bazel_artifact_format(artifact),
             server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-            licenses = ["notice", "reciprocal"]
+            licenses = ["notice", "reciprocal"],
         )
 
     # Import Bazel-only dependencies (Gradle version will import maven artifacts of same
@@ -34,7 +34,6 @@ def com_google_api_codegen_repositories():
     # properties file.
 
     _protobuf_version = PROPERTIES["version.com_google_protobuf"]
-
     _maybe(
         http_archive,
         name = "com_google_protobuf",
@@ -47,7 +46,7 @@ def com_google_api_codegen_repositories():
         name = "google_java_format_all_deps",
         artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:%s" % PROPERTIES["version.google_java_format"],
         server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"]
+        licenses = ["notice", "reciprocal"],
     )
 
     _maybe(
@@ -77,7 +76,7 @@ def com_google_api_codegen_repositories():
     _maybe(
         native.bind,
         name = "guava",
-        actual = "@com_google_guava_guava__com_google_api_codegen//jar",
+        actual = "@com_google_guava_guava//jar",
     )
 
     _maybe(
@@ -91,13 +90,31 @@ def com_google_api_codegen_repositories():
         name = "error_prone_annotations_maven",
         artifact = "com.google.errorprone:error_prone_annotations:2.3.2",
         server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
-        licenses = ["notice", "reciprocal"]
+        licenses = ["notice", "reciprocal"],
     )
 
     _maybe(
         native.bind,
         name = "error_prone_annotations",
         actual = "@error_prone_annotations_maven//jar",
+    )
+
+    _api_common_java_version = PROPERTIES["version.com_google_api_common_java"]
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_api_common",
+        artifact = "com.google.api:api-common:%s" % _api_common_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
+    )
+
+    _gax_java_version = PROPERTIES["version.com_google_gax_java"]
+
+    # Use the Maven artifact because a full bazel-build requires pulling in many transitive deps.
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_gax_java",
+        artifact = "com.google.api:gax:%s" % _gax_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
