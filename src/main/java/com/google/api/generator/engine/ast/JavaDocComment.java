@@ -25,14 +25,33 @@ public abstract class JavaDocComment implements Comment {
 
   public abstract ImmutableList<String> comments();
 
+  public abstract ImmutableList<String> params();
+
+  public abstract String deprecated();
+
+  // Private.
+  abstract String throwType();
+
+  // Private.
+  abstract String throwDescription();
+
   public static Builder builder() {
-    return new AutoValue_JavaDocComment.Builder();
+    return new AutoValue_JavaDocComment.Builder().setDeprecated("").setThrows("", "");
   }
 
   @Override
   public String comment() {
     // TODO(xiaozhenliu): call comment escaper here.
-    return String.join("\n", comments().stream().collect(Collectors.toList()));
+    List<String> comment = comments().stream().collect(Collectors.toList());
+    // @param, @throws and @deprecated should always get printed at the end.
+    comment.addAll(params().stream().collect(Collectors.toList()));
+    if (!throwType().isEmpty()) {
+      comment.add(String.format("@throws %s %s", throwType(), throwDescription()));
+    }
+    if (!deprecated().isEmpty()) {
+      comment.add(String.format("@deprecated %s", deprecated()));
+    }
+    return String.join("\n", comment);
   }
 
   public void accept(AstNodeVisitor visitor) {
@@ -41,12 +60,16 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    protected abstract ImmutableList.Builder<String> commentsBuilder();
+    // Private.
+    abstract Builder setThrowType(String type);
+    // Private.
+    abstract Builder setThrowDescription(String type);
+    // Private.
+    abstract ImmutableList.Builder<String> commentsBuilder();
+    // Private.
+    abstract ImmutableList.Builder<String> paramsBuilder();
 
-    public Builder setDeprecated(String deprecatedText) {
-      commentsBuilder().add(String.format("@deprecated %s", deprecatedText));
-      return this;
-    }
+    public abstract Builder setDeprecated(String deprecatedText);
 
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
@@ -54,12 +77,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParam(String name, String description) {
-      commentsBuilder().add(String.format("@param %s %s", name, description));
-      return this;
-    }
-
-    public Builder setThrows(String type, String description) {
-      commentsBuilder().add(String.format("@throws %s %s", type, description));
+      paramsBuilder().add(String.format("@param %s %s", name, description));
       return this;
     }
 
@@ -99,6 +117,12 @@ public abstract class JavaDocComment implements Comment {
                 commentsBuilder().add(String.format("<li> %s", s));
               });
       commentsBuilder().add("</ul>");
+      return this;
+    }
+
+    public Builder setThrows(String type, String description) {
+      setThrowType(type);
+      setThrowDescription(description);
       return this;
     }
 
