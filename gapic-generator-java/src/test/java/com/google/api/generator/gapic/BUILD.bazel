@@ -1,0 +1,9 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "gapic_files",
+    srcs = [
+        "//src/test/java/com/google/api/generator/gapic/model:model_files",
+        "//src/test/java/com/google/api/generator/gapic/protoparser:protoparser_files",
+    ],
+)
