@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Method {
@@ -33,6 +34,13 @@ public abstract class Method {
   public abstract TypeNode inputType();
 
   public abstract TypeNode outputType();
+
+  @Nullable
+  public abstract LongrunningOperation lro();
+
+  public boolean hasLro() {
+    return lro() != null;
+  }
 
   // TODO(miraleung): Parse annotations, comments.
 
@@ -62,6 +70,8 @@ public abstract class Method {
     public abstract Builder setOutputType(TypeNode outputType);
 
     public abstract Builder setStream(Stream stream);
+
+    public abstract Builder setLro(LongrunningOperation lro);
 
     public abstract Method build();
   }
