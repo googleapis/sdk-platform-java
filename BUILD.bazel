@@ -7,6 +7,7 @@ load(
 JAVA_SRCS = [
     "//src/main/java/com/google/api/generator:generator_files",
     "//src/main/java/com/google/api/generator/engine:engine_files",
+    "//src/main/java/com/google/api/generator/gapic:gapic_files",
 ]
 
 TEST_SRCS = [
@@ -21,7 +22,8 @@ java_binary(
     main_class = "com.google.api.generator.Main",
     deps = [
         "//src/main/java/com/google/api/generator",
-        "@com_google_guava_guava__com_google_api_codegen",
+        "//src/main/java/com/google/api/generator/gapic",
+        "@com_google_guava_guava",
         "@com_google_protobuf//:protobuf_java",
     ],
 )

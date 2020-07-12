@@ -23,6 +23,11 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class VaporReference implements Reference {
+  private static final String DOT = ".";
+  private static final String LEFT_ANGLE = "<";
+  private static final String RIGHT_ANGLE = ">";
+  private static final String COMMA = ", ";
+
   @Override
   public abstract ImmutableList<Reference> generics();
 
@@ -30,12 +35,23 @@ public abstract class VaporReference implements Reference {
   public abstract String name();
 
   @Override
+  public abstract String pakkage();
+
+  @Nullable
+  @Override
+  public abstract String enclosingClassName();
+
+  @Override
   public String fullName() {
+    // TODO(unsupported): Nested classes with depth greater than 1.
     if (hasEnclosingClass()) {
       return String.format("%s.%s.%s", pakkage(), enclosingClassName(), plainName());
     }
     return String.format("%s.%s", pakkage(), plainName());
   }
+
+  @Override
+  public abstract boolean isStaticImport();
 
   @Override
   public boolean hasEnclosingClass() {
@@ -49,8 +65,8 @@ public abstract class VaporReference implements Reference {
 
   @Override
   public boolean isSupertypeOrEquals(Reference other) {
-    // Not handling this for VaporReference.
-    return false;
+    // Not handling more complex cases for VaporReference.
+    return equals(other);
   }
 
   @Override
@@ -59,13 +75,7 @@ public abstract class VaporReference implements Reference {
     return false;
   }
 
-  // Private.
-  abstract String pakkage();
-
   abstract String plainName();
-
-  @Nullable
-  abstract String enclosingClassName();
 
   @Override
   public boolean equals(Object o) {
@@ -90,7 +100,9 @@ public abstract class VaporReference implements Reference {
   }
 
   public static Builder builder() {
-    return new AutoValue_VaporReference.Builder().setGenerics(ImmutableList.of());
+    return new AutoValue_VaporReference.Builder()
+        .setGenerics(ImmutableList.of())
+        .setIsStaticImport(false);
   }
 
   @AutoValue.Builder
@@ -103,12 +115,19 @@ public abstract class VaporReference implements Reference {
 
     public abstract Builder setEnclosingClassName(String enclosingClassName);
 
+    public abstract Builder setIsStaticImport(boolean isStaticImport);
+
     // Private.
     abstract Builder setPlainName(String plainName);
 
     abstract String name();
 
     abstract ImmutableList<Reference> generics();
+
+    @Nullable
+    abstract String enclosingClassName();
+
+    abstract boolean isStaticImport();
 
     abstract VaporReference autoBuild();
 
@@ -119,18 +138,25 @@ public abstract class VaporReference implements Reference {
 
       setPlainName(name());
 
+      setIsStaticImport(enclosingClassName() != null && isStaticImport());
+
       StringBuilder sb = new StringBuilder();
+      if (enclosingClassName() != null && !isStaticImport()) {
+        sb.append(enclosingClassName());
+        sb.append(DOT);
+      }
+
       sb.append(name());
       if (!generics().isEmpty()) {
-        sb.append("<");
+        sb.append(LEFT_ANGLE);
         for (int i = 0; i < generics().size(); i++) {
           Reference r = generics().get(i);
           sb.append(r.name());
           if (i < generics().size() - 1) {
-            sb.append(", ");
+            sb.append(COMMA);
           }
         }
-        sb.append(">");
+        sb.append(RIGHT_ANGLE);
       }
       setName(sb.toString());
 

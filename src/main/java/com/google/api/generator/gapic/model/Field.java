@@ -12,32 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.model;
 
-import com.google.common.collect.ImmutableList;
-import javax.annotation.Nullable;
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.auto.value.AutoValue;
 
-public interface Reference {
-  ImmutableList<Reference> generics();
+@AutoValue
+public abstract class Field {
+  public abstract String name();
 
-  String name();
+  public abstract TypeNode type();
 
-  String fullName();
+  public static Builder builder() {
+    return new AutoValue_Field.Builder();
+  }
 
-  String pakkage();
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setName(String name);
 
-  @Nullable
-  String enclosingClassName();
+    public abstract Builder setType(TypeNode type);
 
-  // Valid only for nested classes.
-  boolean isStaticImport();
-
-  boolean hasEnclosingClass();
-
-  boolean isFromPackage(String pkg);
-
-  // Returns true if this is a supertype of the given Reference.
-  boolean isSupertypeOrEquals(Reference other);
-
-  boolean isAssignableFrom(Reference other);
+    public abstract Field build();
+  }
 }
