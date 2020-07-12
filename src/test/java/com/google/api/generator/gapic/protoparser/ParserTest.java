@@ -16,6 +16,8 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -23,6 +25,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
@@ -101,5 +104,39 @@ public class ParserTest {
     Method chatMethod = methods.get(3);
     assertEquals(chatMethod.name(), "Chat");
     assertEquals(chatMethod.stream(), Method.Stream.BIDI);
+  }
+
+  @Test
+  public void parseMethods_basicLro() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    List<Method> methods = Parser.parseMethods(echoService, messageTypes);
+    assertThat(methods.size()).isEqualTo(7);
+
+    // Methods should appear in the same order as in the protobuf file.
+    Method waitMethod = methods.get(5);
+    assertEquals(waitMethod.name(), "Wait");
+    assertTrue(waitMethod.hasLro());
+    TypeNode waitResponseType = messageTypes.get("WaitResponse").type();
+    TypeNode waitMetadataType = messageTypes.get("WaitMetadata").type();
+    assertThat(waitMethod.lro().responseType()).isEqualTo(waitResponseType);
+    assertThat(waitMethod.lro().metadataType()).isEqualTo(waitMetadataType);
+  }
+
+  @Test
+  public void parseMethods_lroMissingResponseType() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(5);
+    messageTypes.remove("WaitResponse");
+    assertThrows(
+        NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
+  }
+
+  @Test
+  public void parseMethods_lroMissingMetadataType() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(5);
+    messageTypes.remove("WaitMetadata");
+    assertThrows(
+        NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
   }
 }
