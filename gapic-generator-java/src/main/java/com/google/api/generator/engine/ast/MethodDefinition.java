@@ -174,7 +174,7 @@ public abstract class MethodDefinition implements AstNode {
       Preconditions.checkState(
           !method.scope().equals(ScopeNode.LOCAL),
           "Method scope must be either public, protected, or private");
-      
+
       Preconditions.checkState(
           !method.returnType().equals(TypeNode.NULL), "Null is not a valid method return type");
 
@@ -202,7 +202,8 @@ public abstract class MethodDefinition implements AstNode {
 
         if (!method.returnType().equals(TypeNode.VOID)) {
           Preconditions.checkNotNull(
-              method.returnExpr(), "Method with non-void return type must have a return expression");
+              method.returnExpr(),
+              "Method with non-void return type must have a return expression");
         }
 
         if (method.returnExpr() != null) {
