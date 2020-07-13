@@ -1,0 +1,13 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "utils_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "utils",
+    srcs = [
+        ":utils_files",
+    ],
+)

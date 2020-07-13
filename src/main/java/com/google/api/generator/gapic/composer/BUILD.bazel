@@ -12,9 +12,13 @@ java_library(
     ],
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic:longrunning_java_proto",
+        "//src/main/java/com/google/api/generator/gapic:status_java_proto",
         "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//jar",
         "@com_google_code_findbugs_jsr305//jar",
+        "@com_google_guava_guava//jar",
     ],
 )
