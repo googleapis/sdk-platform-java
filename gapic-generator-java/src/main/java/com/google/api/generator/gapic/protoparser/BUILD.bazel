@@ -6,14 +6,6 @@ filegroup(
 )
 
 java_proto_library(
-    name = "longrunning_java_proto",
-    visibility = ["//visibility:private"],
-    deps = [
-        "@com_google_googleapis//google/longrunning:operations_proto",
-    ],
-)
-
-java_proto_library(
     name = "client_java_proto",
     visibility = ["//visibility:private"],
     deps = [
@@ -28,8 +20,8 @@ java_library(
     ],
     deps = [
         ":client_java_proto",
-        ":longrunning_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic:longrunning_java_proto",
         "//src/main/java/com/google/api/generator/gapic/model",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_guava_guava//jar",
