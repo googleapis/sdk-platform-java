@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
-public abstract class ValueExpr implements Expr {
-  public abstract Value value();
+public abstract class Message {
+  public abstract String name();
 
-  @Override
-  public TypeNode type() {
-    return value().type();
-  }
+  // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to
+  // a specific field.
+  public abstract ImmutableList<Field> fields();
 
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
-
-  public static ValueExpr withValue(Value value) {
-    return builder().setValue(value).build();
-  }
+  public abstract TypeNode type();
 
   public static Builder builder() {
-    return new AutoValue_ValueExpr.Builder();
+    return new AutoValue_Message.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setValue(Value value);
+    public abstract Builder setName(String name);
 
-    public abstract ValueExpr build();
+    public abstract Builder setFields(List<Field> methods);
+
+    public abstract Builder setType(TypeNode type);
+
+    public abstract Message build();
   }
 }
