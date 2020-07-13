@@ -17,7 +17,7 @@ filegroup(
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
-        "@com_google_guava_guava__com_google_api_codegen//jar",
+        "@com_google_guava_guava//jar",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
     ],
