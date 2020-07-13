@@ -11,8 +11,8 @@ java_library(
         ":composer_files",
     ],
     deps = [
+        "//:longrunning_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/gapic:longrunning_java_proto",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/utils",

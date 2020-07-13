@@ -14,8 +14,15 @@
 
 package com.google.api.generator.gapic.utils;
 
+import com.google.common.base.CaseFormat;
+
 public class JavaStyle {
+  private static final String UNDERSCORE = "_";
+
   public static String toLowerCamelCase(String s) {
+    if (s.indexOf(UNDERSCORE) >= 0) {
+      s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
+    }
     return String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1));
   }
 }

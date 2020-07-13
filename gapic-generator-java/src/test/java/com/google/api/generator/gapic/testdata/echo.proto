@@ -77,7 +77,7 @@ service Echo {
   // streaming rpcs.
   rpc Chat(stream EchoRequest) returns (stream EchoResponse);
 
-  rpc ChatWithInfo(stream EchoRequest) returns (stream EchoResponse) {
+  rpc ChatAgain(stream EchoRequest) returns (stream EchoResponse) {
     option (google.api.method_signature) = "content";
   }
 
@@ -103,7 +103,7 @@ service Echo {
     };
   }
 
-  // This method will block (wait) for the requested amount of time 
+  // This method will block (wait) for the requested amount of time
   // and then return the response or error.
   // This method showcases how a client handles delays or retries.
   rpc Block(BlockRequest) returns (BlockResponse) {
@@ -122,6 +122,10 @@ enum Severity {
   CRITICAL = 3;
 }
 
+message Foobar {
+  string name = 1;
+  string info = 2;
+}
 
 // The request message used for the Echo, Collect and Chat methods.
 // If content or opt are set in this message then the request will succeed.
@@ -138,6 +142,8 @@ message EchoRequest {
 
   // The severity to be echoed by the server.
   Severity severity = 3;
+
+  Foobar foobar = 4;
 }
 
 // The response message for the Echo methods.
@@ -156,6 +162,8 @@ message ExpandRequest {
 
   // The error that is thrown after all words are sent on the stream.
   google.rpc.Status error = 2;
+
+  string info = 3;
 }
 
 // The request for the PagedExpand method.
@@ -232,3 +240,5 @@ message BlockResponse {
   // here.
   string content = 1;
 }
+
+
