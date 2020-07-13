@@ -10,7 +10,4 @@ java_library(
     srcs = [
         ":escaper_files",
     ],
-    deps = [
-        "@com_google_guava_guava//jar"
-    ],
 )
