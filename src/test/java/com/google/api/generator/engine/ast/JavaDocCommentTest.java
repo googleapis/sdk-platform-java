@@ -101,7 +101,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_ThrowsDeprecated() {
+  public void createJavaDocComment_throesDeprecated() {
     // No matter how many times or order `setThrows` and `setDeprecated` are called,
     // only one @throws and @deprecated will be printed.
     String throwType = "com.google.api.gax.rpc.ApiException";
