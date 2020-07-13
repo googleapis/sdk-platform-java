@@ -28,6 +28,7 @@ public abstract class ValueExpr implements Expr {
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
+  }
 
   public static ValueExpr withValue(Value value) {
     return builder().setValue(value).build();
