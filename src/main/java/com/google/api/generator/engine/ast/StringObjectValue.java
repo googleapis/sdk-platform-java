@@ -14,7 +14,6 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.escaper.EscaperException;
 import com.google.auto.value.AutoValue;
 import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
@@ -66,7 +65,7 @@ public abstract class StringObjectValue implements ObjectValue {
     private StringValueEscaper() {}
 
     @Override
-    public String escape(String sourceString) throws EscaperException {
+    public String escape(String sourceString) {
       return escaper.escape(sourceString);
     }
 
