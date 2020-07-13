@@ -119,13 +119,13 @@ public class JavaWriterVisitorTest {
     ConcreteReference mapRef =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
-            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(String.class)))
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(Integer.class)))
             .build();
     ConcreteReference listRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(mapRef)).build();
     TypeNode type = TypeNode.withReference(listRef);
     NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new List<HashMap<String, String>>()");
+    assertEquals(writerVisitor.write(), "new List<HashMap<String, Integer>>()");
   }
 
   /** =============================== EXPRESSIONS =============================== */
