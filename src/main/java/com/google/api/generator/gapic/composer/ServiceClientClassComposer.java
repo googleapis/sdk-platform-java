@@ -64,7 +64,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public class ServiceClientClassComposer implements ClassComposer {
-  private static ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
+  private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
+  private static final String DOT = ".";
 
   private ServiceClientClassComposer() {}
 
@@ -256,6 +257,30 @@ public class ServiceClientClassComposer implements ClassComposer {
     return javaMethods;
   }
 
+  private static TypeNode parseTypeFromArgumentName(
+      String argumentName, Message inputMessage, Map<String, Message> messageTypes) {
+    int dotIndex = argumentName.indexOf(DOT);
+    // TODO(miraleung): Fake out resource names here.
+    if (dotIndex < 1) {
+      Field field = inputMessage.fieldMap().get(argumentName);
+      Preconditions.checkNotNull(
+          field, String.format("Field %s not found, %s", argumentName, inputMessage.fieldMap()));
+      return field.type();
+    }
+    Preconditions.checkState(
+        dotIndex < argumentName.length() - 1,
+        String.format(
+            "Invalid argument name found: dot cannot be at the end of name %s", argumentName));
+    String firstFieldName = argumentName.substring(0, dotIndex);
+    String remainingArgumentName = argumentName.substring(dotIndex + 1);
+    // Must be a sub-message for a type's subfield to be valid.
+    Field firstField = inputMessage.fieldMap().get(firstFieldName);
+    TypeNode firstFieldType = firstField.type();
+    String firstFieldTypeName = firstFieldType.reference().name();
+    Message firstFieldMessage = messageTypes.get(firstFieldTypeName);
+    return parseTypeFromArgumentName(remainingArgumentName, firstFieldMessage, messageTypes);
+  }
+
   private static List<MethodDefinition> createMethodVariants(
       Method method, Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -264,16 +289,23 @@ public class ServiceClientClassComposer implements ClassComposer {
     TypeNode methodOutputType = method.outputType();
     String methodInputTypeName = methodInputType.reference().name();
 
+    Message inputMessage = messageTypes.get(methodInputTypeName);
+    Preconditions.checkNotNull(
+        inputMessage, String.format("Message %s not found", methodInputTypeName));
+
     for (List<String> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
           signature.stream()
               .map(
                   str -> {
-                    Message inputMessage = messageTypes.get(methodInputTypeName);
-                    Field field = inputMessage.fieldMap().get(str);
+                    TypeNode argumentType =
+                        parseTypeFromArgumentName(str, inputMessage, messageTypes);
+                    int lastDotIndex = str.lastIndexOf(DOT);
+                    String argumentName = str.substring(lastDotIndex + 1);
                     return VariableExpr.builder()
-                        .setVariable(Variable.builder().setName(str).setType(field.type()).build())
+                        .setVariable(
+                            Variable.builder().setName(argumentName).setType(argumentType).build())
                         .setIsDecl(true)
                         .build();
                   })
@@ -290,14 +322,18 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setMethodName("newBuilder")
               .setStaticReferenceName(methodInputTypeName)
               .build();
+      // TODO(miraleung): Handle nested arguments and setters here.
       for (String argument : signature) {
+        TypeNode argumentType = parseTypeFromArgumentName(argument, inputMessage, messageTypes);
+        int lastDotIndex = argument.lastIndexOf(DOT);
+        String argumentName = argument.substring(lastDotIndex + 1);
         String setterMethodName =
-            String.format("set%s%s", argument.substring(0, 1).toUpperCase(), argument.substring(1));
-        Message inputMessage = messageTypes.get(methodInputTypeName);
-        Field field = inputMessage.fieldMap().get(argument);
+            String.format(
+                "set%s%s", argumentName.substring(0, 1).toUpperCase(), argumentName.substring(1));
+
         VariableExpr argVar =
             VariableExpr.builder()
-                .setVariable(Variable.builder().setName(argument).setType(field.type()).build())
+                .setVariable(Variable.builder().setName(argumentName).setType(argumentType).build())
                 .build();
 
         newBuilderExpr =

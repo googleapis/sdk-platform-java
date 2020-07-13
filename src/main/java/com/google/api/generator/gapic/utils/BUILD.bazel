@@ -10,4 +10,7 @@ java_library(
     srcs = [
         ":utils_files",
     ],
+    deps = [
+        "@com_google_guava_guava//jar",
+    ],
 )
