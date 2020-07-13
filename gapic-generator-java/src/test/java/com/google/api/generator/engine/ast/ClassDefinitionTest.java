@@ -18,7 +18,6 @@ import static org.junit.Assert.assertThrows;
 
 import java.util.Arrays;
 import java.util.List;
-import javax.lang.model.type.NullType;
 import org.junit.Test;
 
 public class ClassDefinitionTest {
@@ -110,18 +109,6 @@ public class ClassDefinitionTest {
 
   @Test
   public void invalidClassDefinition_implementsNullType() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          ClassDefinition.builder()
-              .setPackageString("com.google.example.library.v1.stub")
-              .setName("LibraryServiceStub")
-              .setScope(ScopeNode.PUBLIC)
-              .setImplementsTypes(
-                  Arrays.asList(
-                      TypeNode.withReference(ConcreteReference.withClazz(NullType.class))))
-              .build();
-        });
     assertThrows(
         IllegalStateException.class,
         () -> {
