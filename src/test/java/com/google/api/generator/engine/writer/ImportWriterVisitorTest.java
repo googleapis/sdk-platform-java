@@ -50,15 +50,16 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports() {
-    ConcreteReference reference =
-        ConcreteReference.builder()
-            .setClazz(List.class)
-            .setGenerics(Collections.emptyList())
-            .build();
-    TypeNode type = TypeNode.withReference(reference);
+    ConcreteReference mapRef =
+    ConcreteReference.builder()
+        .setClazz(HashMap.class)
+        .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(String.class)))
+        .build();
+    ConcreteReference listRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(mapRef)).build();
+    TypeNode type = TypeNode.withReference(listRef);
     NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import java.util.List;\n\n");
+    assertEquals(writerVisitor.write(), "import java.util.HashMap;\nimport java.util.List;\n\n");
   }
 
   @Test

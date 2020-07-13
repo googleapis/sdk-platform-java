@@ -15,58 +15,39 @@
 package com.google.api.generator.engine.ast;
 
 public class NewObjectExprTest {
-  //   @Test
-  //   public void newObjectExpr_basic() {
-  //     ConcreteReference reference =
-  //         ConcreteReference.builder()
-  //             .setClazz(List.class)
-  //             .setGenerics(Collections.emptyList())
-  //             .build();
-  //     TypeNode type = TypeNode.withReference(reference);
-  //     NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
-  //     assertEquals(newObjectValue.type(), type);
-  //     assertEquals(newObjectValue.value(), "new List<>");
-  //   }
+    @Test
+    public void newObjectValue_generics() {
+      ConcreteReference ref = ConcreteReference.builder().setClazz(List.class).setGenerics(ConcreteReference.withClazz(String.class)).build();
+      TypeNode type = TypeNode.withReference(reference);
+      NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
+      assertEquals(newObjectExpr.type(), type);
+      // constructing `"new List<String>()"`, no exception should be thrown.
+    }
 
-  //   @Test
-  //   public void newObjectValue_generics() {
-  //     ConcreteReference reference =
-  //         ConcreteReference.builder()
-  //             .setClazz(List.class)
-  //             .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
-  //             .build();
-  //     TypeNode type = TypeNode.withReference(reference);
-  //     NewObjectValue newObjectValue = NewObjectValue.genericBuilder().setType(type).build();
-  //     assertEquals(newObjectValue.type(), type);
-  //     assertEquals(newObjectValue.value(), "new List<String>");
-  //   }
+    @Test
+    public void invalidNewObjectExpr_noReference() {
+    // New object expressions should be reference types.
+    assertThrows(
+       IllegalStateException.class,
+       () -> {
+           NewObjectExpr.builder().setType(TypeNode.INT).build();
+       });
+    }
 
-  //   @Test
-  //   public void newObjectValue_withArgs() {
-  //     ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
-  //     TypeNode type = TypeNode.withReference(reference);
-  //     ValueExpr valueExpr =
-  //         ValueExpr.builder()
-  //             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
-  //             .build();
-  //     NewObjectValue newObjectValue =
-  //         NewObjectValue.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
-  //     assertEquals(newObjectValue.type(), type);
-  //     assertEquals(newObjectValue.value(), "new Integer");
-  //   }
-
-  //   @Test
-  //   public void newObjectValue_conflictGenericSetting() {
-  //     ConcreteReference reference =
-  //         ConcreteReference.builder()
-  //             .setClazz(LinkedList.class)
-  //             .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
-  //             .build();
-  //     TypeNode type = TypeNode.withReference(reference);
-  //     assertThrows(
-  //         IllegalStateException.class,
-  //         () -> {
-  //           NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
-  //         });
-  //   }
+    @Test
+    public void invalidNewObjectValue_conflictGenericSetting() {
+      // if the generics() is set, but user calls builder() to build the object,
+      // instead of calling genericBuilder, error should be thrown.
+      ConcreteReference reference =
+          ConcreteReference.builder()
+              .setClazz(LinkedList.class)
+              .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
+              .build();
+      TypeNode type = TypeNode.withReference(reference);
+      assertThrows(
+          IllegalStateException.class,
+          () -> {
+            NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+          });
+    }
 }
