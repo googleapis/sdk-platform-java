@@ -76,7 +76,7 @@ def com_google_api_codegen_repositories():
     _maybe(
         native.bind,
         name = "guava",
-        actual = "@com_google_guava_guava__com_google_api_codegen//jar",
+        actual = "@com_google_guava_guava//jar",
     )
 
     _maybe(
@@ -97,6 +97,24 @@ def com_google_api_codegen_repositories():
         native.bind,
         name = "error_prone_annotations",
         actual = "@error_prone_annotations_maven//jar",
+    )
+
+    _api_common_java_version = PROPERTIES["version.com_google_api_common_java"]
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_api_common",
+        artifact = "com.google.api:api-common:%s" % _api_common_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
+    )
+
+    _gax_java_version = PROPERTIES["version.com_google_gax_java"]
+
+    # Use the Maven artifact because a full bazel-build requires pulling in many transitive deps.
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_gax_java",
+        artifact = "com.google.api:gax:%s" % _gax_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
