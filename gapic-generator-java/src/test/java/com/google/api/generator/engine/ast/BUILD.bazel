@@ -12,6 +12,7 @@ TESTS = [
     "PrimitiveValueTest",
     "ReferenceTest",
     "TernaryExprTest",
+    "ThrowExprTest",
     "TryCatchStatementTest",
     "VariableExprTest",
     "VariableTest",
