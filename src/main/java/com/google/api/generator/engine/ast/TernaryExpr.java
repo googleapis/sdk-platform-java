@@ -25,6 +25,16 @@ public abstract class TernaryExpr implements Expr {
 
   public abstract Expr elseExpr();
 
+  @Override
+  public TypeNode type() {
+    return thenExpr().type();
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_TernaryExpr.Builder();
   }
@@ -49,15 +59,5 @@ public abstract class TernaryExpr implements Expr {
           "Ternary condition must be a boolean expression.");
       return ternaryExpr;
     }
-  }
-
-  @Override
-  public TypeNode type() {
-    return thenExpr().type();
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }
