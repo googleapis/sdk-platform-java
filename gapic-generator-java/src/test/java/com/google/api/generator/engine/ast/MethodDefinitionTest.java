@@ -22,7 +22,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class MethodDefinitionTest {
-
   @Test
   public void validMethodDefinition_basic() {
     MethodDefinition.builder()
@@ -30,6 +29,60 @@ public class MethodDefinitionTest {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_basicWithReturnType() {
+    MethodDefinition.builder()
+        .setName("close")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.STRING)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("foobar")
+                .setReturnType(TypeNode.STRING)
+                .build())
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_throwInsteadOfReturnType() {
+    MethodDefinition.builder()
+        .setName("foobar")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.STRING)
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(createAssignmentExpr()),
+                ExprStatement.withExpr(
+                    ThrowExpr.builder()
+                        .setType(
+                            TypeNode.withReference(
+                                ConcreteReference.withClazz(NullPointerException.class)))
+                        .build())))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_voidThrowInsteadOfReturnType() {
+    MethodDefinition.builder()
+        .setName("foobar")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(createAssignmentExpr()),
+                ExprStatement.withExpr(
+                    ThrowExpr.builder()
+                        .setType(
+                            TypeNode.withReference(
+                                ConcreteReference.withClazz(NullPointerException.class)))
+                        .build())))
         .build();
     // No exception thrown, we're good.
   }
@@ -78,6 +131,20 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_constructor() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodDefinition.constructorBuilder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .build();
+  }
+
+  @Test
   public void validMethodDefinition_withArgumentsAndReturnExpr() {
     ValueExpr returnExpr =
         ValueExpr.builder()
@@ -117,6 +184,19 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void invalidMethodDefinition_noName() {
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.VOID)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .build();
+        });
+  }
+
+  @Test
   public void invalidMethodDefinition_runtimeException() {
     assertThrows(
         IllegalStateException.class,
@@ -143,6 +223,89 @@ public class MethodDefinitionTest {
               .setIsStatic(true)
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_localScope() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.LOCAL)
+              .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorOverride() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsOverride(true)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorFinalOrStatic() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsStatic(true)
+              .build();
+        });
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsFinal(true)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorHasReturnExpr() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder().setMethodName("getFoobar").setReturnType(returnType).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setReturnExpr(methodExpr)
+              .setIsOverride(true)
               .build();
         });
   }
@@ -253,7 +416,7 @@ public class MethodDefinitionTest {
   }
 
   @Test
-  public void invalidMethodDefinition_mismatchedReturnType() {
+  public void invalidMethodDefinition_mismatchedPrimitiveReturnType() {
     ValueExpr booleanValueExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build())
@@ -267,6 +430,44 @@ public class MethodDefinitionTest {
               .setReturnType(TypeNode.INT)
               .setReturnExpr(booleanValueExpr)
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_mismatchedObjectReturnType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.INTEGER)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .setReturnExpr(
+                  MethodInvocationExpr.builder()
+                      .setMethodName("foobar")
+                      .setReturnType(TypeNode.STRING)
+                      .build())
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_mismatchedPrimitiveToObjectReturnType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.INT)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .setReturnExpr(
+                  MethodInvocationExpr.builder()
+                      .setMethodName("foobar")
+                      .setReturnType(TypeNode.STRING)
+                      .build())
               .build();
         });
   }
@@ -304,6 +505,19 @@ public class MethodDefinitionTest {
               .setName("foobar")
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.NULL)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_missingReturnType() {
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("foobar")
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.STRING)
               .build();
         });
   }

@@ -108,6 +108,20 @@ public class ClassDefinitionTest {
   }
 
   @Test
+  public void invalidClassDefinition_implementsNullType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setScope(ScopeNode.PUBLIC)
+              .setImplementsTypes(Arrays.asList(TypeNode.NULL))
+              .build();
+        });
+  }
+
+  @Test
   public void invalidClassDefinition_outerClassMissingPackage() {
     assertThrows(
         NullPointerException.class,
@@ -156,6 +170,20 @@ public class ClassDefinitionTest {
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
               .setExtendsType(TypeNode.INT)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidClassDefinition_extendsNullType() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setScope(ScopeNode.PUBLIC)
+              .setExtendsType(TypeNode.NULL)
               .build();
         });
   }

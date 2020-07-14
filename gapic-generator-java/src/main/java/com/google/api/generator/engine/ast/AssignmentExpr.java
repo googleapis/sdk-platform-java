@@ -22,6 +22,16 @@ public abstract class AssignmentExpr implements Expr {
 
   public abstract Expr valueExpr();
 
+  @Override
+  public TypeNode type() {
+    return TypeNode.VOID;
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_AssignmentExpr.Builder();
   }
@@ -59,15 +69,5 @@ public abstract class AssignmentExpr implements Expr {
       }
       return assignmentExpr;
     }
-  }
-
-  @Override
-  public TypeNode type() {
-    return TypeNode.VOID;
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }
