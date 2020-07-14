@@ -37,6 +37,8 @@ public interface AstNodeVisitor {
 
   public void visit(CastExpr castExpr);
 
+  public void visit(ThrowExpr throwExpr);
+
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);
 
