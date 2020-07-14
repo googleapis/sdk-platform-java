@@ -14,39 +14,53 @@
 
 package com.google.api.generator.engine.ast;
 
-public class NewObjectExprTest {
-    @Test
-    public void newObjectValue_generics() {
-      ConcreteReference ref = ConcreteReference.builder().setClazz(List.class).setGenerics(ConcreteReference.withClazz(String.class)).build();
-      TypeNode type = TypeNode.withReference(reference);
-      NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
-      assertEquals(newObjectExpr.type(), type);
-      // constructing `"new List<String>()"`, no exception should be thrown.
-    }
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
-    @Test
-    public void invalidNewObjectExpr_noReference() {
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import org.junit.Test;
+
+public class NewObjectExprTest {
+  @Test
+  public void newObjectValue_generics() {
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
+    assertEquals(newObjectExpr.type(), type);
+    // constructing `"new List<String>()"`, no exception should be thrown.
+  }
+
+  @Test
+  public void invalidNewObjectExpr_noReference() {
     // New object expressions should be reference types.
     assertThrows(
-       IllegalStateException.class,
-       () -> {
-           NewObjectExpr.builder().setType(TypeNode.INT).build();
-       });
-    }
+        IllegalStateException.class,
+        () -> {
+          NewObjectExpr.builder().setType(TypeNode.INT).build();
+        });
+  }
 
-    @Test
-    public void validNewObjectValue_conflictGenericSetting() {
-      // if the generics() is set, but user calls builder() to build the object,
-      // instead of calling genericBuilder, we should set isGeneric for users.
-      ConcreteReference ref =
-          ConcreteReference.builder()
-              .setClazz(LinkedList.class)
-              .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
-              .build();
-      TypeNode type = TypeNode.withReference(ref);
-      NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
-      assertEquals(newObjectExpr.type(), type);
-      assertEquals(newObjectExpr.isGeneric(), true);
-      assertEquals(newObjectExpr.type().reference(), ref);
-    }
+  @Test
+  public void validNewObjectValue_conflictGenericSetting() {
+    // if the generics() is set, but user calls builder() to build the object,
+    // instead of calling genericBuilder, we should set isGeneric for users.
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(LinkedList.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    System.out.println("conflict settings");
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).build();
+
+    assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.isGeneric(), true);
+    assertEquals(newObjectExpr.type().reference(), ref);
+  }
 }
