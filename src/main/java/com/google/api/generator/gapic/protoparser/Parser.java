@@ -17,16 +17,21 @@ package com.google.api.generator.gapic.protoparser;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import com.google.longrunning.OperationInfo;
+import com.google.longrunning.OperationsProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
@@ -115,8 +120,31 @@ public class Parser {
                     .setInputType(TypeParser.parseType(md.getInputType()))
                     .setOutputType(TypeParser.parseType(md.getOutputType()))
                     .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
+                    .setLro(parseLro(md, messageTypes))
                     .build())
         .collect(Collectors.toList());
+  }
+
+  @VisibleForTesting
+  static LongrunningOperation parseLro(
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+    MethodOptions methodOptions = methodDescriptor.getOptions();
+    if (!methodOptions.hasExtension(OperationsProto.operationInfo)) {
+      return null;
+    }
+
+    OperationInfo lroInfo =
+        methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
+    String responseTypeName = lroInfo.getResponseType();
+    String metadataTypeName = lroInfo.getMetadataType();
+    Message responseMessage = messageTypes.get(responseTypeName);
+    Message metadataMessage = messageTypes.get(metadataTypeName);
+    Preconditions.checkNotNull(
+        responseMessage, String.format("LRO response message %s not found", responseTypeName));
+    Preconditions.checkNotNull(
+        metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
+
+    return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
