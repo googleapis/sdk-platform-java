@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
@@ -35,12 +36,16 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Parser {
+  // Collapses any whitespace between elements.
+  private static final String METHOD_SIGNATURE_DELIMITER = "\\s*,\\s*";
+
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
       super(errorMessage);
@@ -121,6 +126,7 @@ public class Parser {
                     .setOutputType(TypeParser.parseType(md.getOutputType()))
                     .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
                     .setLro(parseLro(md, messageTypes))
+                    .setMethodSignatures(parseMethodSignatures(md))
                     .build())
         .collect(Collectors.toList());
   }
@@ -145,6 +151,18 @@ public class Parser {
         metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
+  }
+
+  @VisibleForTesting
+  static List<List<String>> parseMethodSignatures(MethodDescriptor methodDescriptor) {
+    List<String> signatures =
+        methodDescriptor.getOptions().getExtension(ClientProto.methodSignature);
+    // Example from Expand in echo.proto:
+    // Input: ["content,error", "content,error,info"].
+    // Output: [["content", "error"], ["content", "error", "info"]].
+    return methodDescriptor.getOptions().getExtension(ClientProto.methodSignature).stream()
+        .map(signature -> Arrays.asList(signature.split(METHOD_SIGNATURE_DELIMITER)))
+        .collect(Collectors.toList());
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
