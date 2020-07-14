@@ -49,7 +49,9 @@ public abstract class ExprStatement implements Statement {
             variableExpr.isDecl(), "Expression variable statements must be declarations");
       } else {
         Preconditions.checkState(
-            (expr instanceof MethodInvocationExpr) || (expr instanceof AssignmentExpr),
+            (expr instanceof MethodInvocationExpr)
+                || (expr instanceof AssignmentExpr)
+                || (expr instanceof ThrowExpr),
             "Expression statements must be either a method invocation or assignment expression");
       }
       return exprStatement;

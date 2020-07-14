@@ -115,6 +115,8 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract boolean isStatic();
 
+    abstract ImmutableList<Statement> body();
+
     abstract ScopeNode scope();
 
     abstract MethodDefinition autoBuild();
@@ -142,7 +144,14 @@ public abstract class MethodDefinition implements AstNode {
       Preconditions.checkState(
           !method.returnType().equals(TypeNode.NULL), "Null is not a valid method return type");
 
-      if (!method.returnType().equals(TypeNode.VOID)) {
+      boolean isLastStatementThrowExpr = false;
+      Statement lastStatement;
+      if (!body().isEmpty()
+          && (lastStatement = body().get(body().size() - 1)) instanceof ExprStatement) {
+        isLastStatementThrowExpr =
+            ((ExprStatement) lastStatement).expression() instanceof ThrowExpr;
+      }
+      if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
         Preconditions.checkNotNull(
             method.returnExpr(), "Method with non-void return type must have a return expression");
       }
