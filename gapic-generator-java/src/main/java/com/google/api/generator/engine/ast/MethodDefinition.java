@@ -205,16 +205,17 @@ public abstract class MethodDefinition implements AstNode {
         }
         if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
           Preconditions.checkNotNull(
-              method.returnExpr(), "Method with non-void return type must have a return expression");
+              method.returnExpr(),
+              "Method with non-void return type must have a return expression");
         }
 
-        if (!method.returnType().equals(TypeNode.VOID)) {
+        if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
           Preconditions.checkNotNull(
               method.returnExpr(),
               "Method with non-void return type must have a return expression");
         }
 
-        if (method.returnExpr() != null) {
+        if (method.returnExpr() != null && !isLastStatementThrowExpr) {
           if (method.returnType().isPrimitiveType()) {
             Preconditions.checkState(
                 method.returnExpr().type().isPrimitiveType()
