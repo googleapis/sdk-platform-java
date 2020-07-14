@@ -63,21 +63,24 @@ public class Parser {
               "Missing file descriptor for [%s]",
               fileToGenerate);
 
-      String pakkage = TypeParser.getPackage(fileDescriptor);
-      List<Service> parsedServices =
-          fileDescriptor.getServices().stream()
-              .map(
-                  s ->
-                      Service.builder()
-                          .setName(s.getName())
-                          .setPakkage(pakkage)
-                          .setMethods(parseMethods(s, messageTypes))
-                          .build())
-              .collect(Collectors.toList());
-      services.addAll(parsedServices);
+      services.addAll(parseService(fileDescriptor, messageTypes));
     }
 
     return services;
+  }
+
+  public static List<Service> parseService(
+      FileDescriptor fileDescriptor, Map<String, Message> messageTypes) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return fileDescriptor.getServices().stream()
+        .map(
+            s ->
+                Service.builder()
+                    .setName(s.getName())
+                    .setPakkage(pakkage)
+                    .setMethods(parseMethods(s, messageTypes))
+                    .build())
+        .collect(Collectors.toList());
   }
 
   public static Map<String, Message> parseMessages(CodeGeneratorRequest request) {
@@ -94,8 +97,7 @@ public class Parser {
     return messages;
   }
 
-  @VisibleForTesting
-  static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
+  public static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
     return fileDescriptor.getMessageTypes().stream()
         .collect(
