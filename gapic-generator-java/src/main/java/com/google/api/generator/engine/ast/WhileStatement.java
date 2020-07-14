@@ -26,6 +26,11 @@ public abstract class WhileStatement implements Statement {
 
   public abstract ImmutableList<Statement> body();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_WhileStatement.Builder();
   }
@@ -45,10 +50,5 @@ public abstract class WhileStatement implements Statement {
           "While condition must be a boolean-typed expression");
       return whileStatement;
     }
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }
