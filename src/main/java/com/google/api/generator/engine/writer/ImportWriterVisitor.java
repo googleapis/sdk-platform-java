@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -131,6 +132,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
     references(methodInvocationExpr.generics());
     expressions(methodInvocationExpr.arguments());
+  }
+
+  @Override
+  public void visit(CastExpr castExpr) {
+    castExpr.type().accept(this);
+    castExpr.expr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

@@ -20,6 +20,7 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -375,6 +376,52 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeCastExpr_basic() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) str)");
+  }
+
+  @Test
+  public void writeCastExpr_methodInvocation() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(methodExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) SomeClass.foobar())");
+  }
+
+  @Test
+  public void writeCastExpr_nested() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr = CastExpr.builder().setType(TypeNode.STRING).setExpr(castExpr).build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((String) ((Object) str))");
+    String a = "foo";
+    String b = ((String) ((Object) a));
   }
 
   /** =============================== STATEMENTS =============================== */
