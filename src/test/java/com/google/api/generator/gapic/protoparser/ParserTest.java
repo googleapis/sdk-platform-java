@@ -78,12 +78,16 @@ public class ParserTest {
   public void parseMethods_basic() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     List<Method> methods = Parser.parseMethods(echoService, messageTypes);
-    assertThat(methods.size()).isEqualTo(7);
+    assertEquals(methods.size(), 8);
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
+    assertEquals(echoMethod.methodSignatures().size(), 3);
+    assertThat(echoMethod.methodSignatures().get(0)).containsExactly("content");
+    assertThat(echoMethod.methodSignatures().get(1)).containsExactly("error");
+    assertThat(echoMethod.methodSignatures().get(2)).containsExactly("content", "severity");
 
     Method expandMethod = methods.get(1);
     assertEquals(expandMethod.name(), "Expand");
@@ -96,6 +100,8 @@ public class ParserTest {
         TypeNode.withReference(
             VaporReference.builder().setName("EchoResponse").setPakkage(ECHO_PACKAGE).build()));
     assertEquals(expandMethod.stream(), Method.Stream.SERVER);
+    assertEquals(expandMethod.methodSignatures().size(), 1);
+    assertThat(expandMethod.methodSignatures().get(0)).containsExactly("content", "error");
 
     Method collectMethod = methods.get(2);
     assertEquals(collectMethod.name(), "Collect");
@@ -110,10 +116,10 @@ public class ParserTest {
   public void parseMethods_basicLro() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     List<Method> methods = Parser.parseMethods(echoService, messageTypes);
-    assertThat(methods.size()).isEqualTo(7);
+    assertEquals(methods.size(), 8);
 
     // Methods should appear in the same order as in the protobuf file.
-    Method waitMethod = methods.get(5);
+    Method waitMethod = methods.get(6);
     assertEquals(waitMethod.name(), "Wait");
     assertTrue(waitMethod.hasLro());
     TypeNode waitResponseType = messageTypes.get("WaitResponse").type();
@@ -123,20 +129,36 @@ public class ParserTest {
   }
 
   @Test
-  public void parseMethods_lroMissingResponseType() {
+  public void parseLro_missingResponseType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(5);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(6);
     messageTypes.remove("WaitResponse");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
   }
 
   @Test
-  public void parseMethods_lroMissingMetadataType() {
+  public void parseLro_missingMetadataType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(5);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(6);
     messageTypes.remove("WaitMetadata");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
+  }
+
+  @Test
+  public void parseMethodSignatures_empty() {
+    MethodDescriptor chatWithInfoMethodDescriptor = echoService.getMethods().get(5);
+    assertThat(Parser.parseMethodSignatures(chatWithInfoMethodDescriptor)).isEmpty();
+  }
+
+  @Test
+  public void parseMethodSignatures_basic() {
+    MethodDescriptor echoMethodDescriptor = echoService.getMethods().get(0);
+    List<List<String>> signatures = Parser.parseMethodSignatures(echoMethodDescriptor);
+    assertThat(signatures.size()).isEqualTo(3);
+    assertThat(signatures.get(0)).containsExactly("content");
+    assertThat(signatures.get(1)).containsExactly("error");
+    assertThat(signatures.get(2)).containsExactly("content", "severity");
   }
 }

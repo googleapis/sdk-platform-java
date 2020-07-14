@@ -44,6 +44,9 @@ service Echo {
       post: "/v1beta1/echo:echo"
       body: "*"
     };
+    option (google.api.method_signature) = "content";
+    option (google.api.method_signature) = "error";
+    option (google.api.method_signature) = "content,severity";
   }
 
   // This method split the given content into words and will pass each word back
@@ -66,12 +69,17 @@ service Echo {
       post: "/v1beta1/echo:collect"
       body: "*"
     };
+    option (google.api.method_signature) = "content";
   }
 
   // This method, upon receiving a request on the stream, the same content will
   // be passed  back on the stream. This method showcases bidirectional
   // streaming rpcs.
   rpc Chat(stream EchoRequest) returns (stream EchoResponse);
+
+  rpc ChatWithInfo(stream EchoRequest) returns (stream EchoResponse) {
+    option (google.api.method_signature) = "content";
+  }
 
   // This is similar to the Expand method but instead of returning a stream of
   // expanded words, this method returns a paged list of expanded words.
