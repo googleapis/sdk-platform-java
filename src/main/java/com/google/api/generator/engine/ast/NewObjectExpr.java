@@ -62,10 +62,9 @@ public abstract class NewObjectExpr implements Expr {
           TypeNode.isReferenceType(newObjectExpr.type()), "New object cannot be reference types.");
       // Check if there is a conflict between isGeneric() setting and generics() setting.
       boolean noGenerics = newObjectExpr.type().reference().generics().isEmpty();
-      Preconditions.checkState(
-          (newObjectExpr.isGeneric() || noGenerics),
-          "Please call genericBuilder() if the new object is generic, else call builder() to build"
-              + " the object.");
+      if (newObjectExpr.isGeneric() || noGenerics) {
+        setIsGeneric(true);
+      }
       return newObjectExpr;
     }
   }

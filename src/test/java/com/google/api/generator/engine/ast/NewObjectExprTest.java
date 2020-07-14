@@ -35,19 +35,18 @@ public class NewObjectExprTest {
     }
 
     @Test
-    public void invalidNewObjectValue_conflictGenericSetting() {
+    public void validNewObjectValue_conflictGenericSetting() {
       // if the generics() is set, but user calls builder() to build the object,
-      // instead of calling genericBuilder, error should be thrown.
-      ConcreteReference reference =
+      // instead of calling genericBuilder, we should set isGeneric for users.
+      ConcreteReference ref =
           ConcreteReference.builder()
               .setClazz(LinkedList.class)
               .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
               .build();
-      TypeNode type = TypeNode.withReference(reference);
-      assertThrows(
-          IllegalStateException.class,
-          () -> {
-            NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
-          });
+      TypeNode type = TypeNode.withReference(ref);
+      NewObjectValue newObjectValue = NewObjectValue.builder().setType(type).build();
+      assertEquals(newObjectExpr.type(), type);
+      assertEquals(newObjectExpr.isGeneric(), true);
+      assertEquals(newObjectExpr.type().reference(), ref);
     }
 }
