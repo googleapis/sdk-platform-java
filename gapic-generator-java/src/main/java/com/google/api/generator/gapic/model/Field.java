@@ -12,31 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class StringObjectValue implements ObjectValue {
-  public abstract String value();
+public abstract class Field {
+  public abstract String name();
 
-  @Override
-  public TypeNode type() {
-    return TypeNode.STRING;
-  }
+  public abstract TypeNode type();
 
   public static Builder builder() {
-    return new AutoValue_StringObjectValue.Builder();
-  }
-
-  public static StringObjectValue withValue(String value) {
-    return builder().setValue(value).build();
+    return new AutoValue_Field.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setValue(String value);
+    public abstract Builder setName(String name);
 
-    public abstract StringObjectValue build();
+    public abstract Builder setType(TypeNode type);
+
+    public abstract Field build();
   }
 }

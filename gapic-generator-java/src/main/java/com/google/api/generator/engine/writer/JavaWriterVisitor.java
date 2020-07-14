@@ -388,8 +388,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append(FINAL);
       space();
     }
-    methodDefinition.returnType().accept(this);
-    space();
+
+    if (!methodDefinition.isConstructor()) {
+      methodDefinition.returnType().accept(this);
+      space();
+    }
 
     // Method name.
     methodDefinition.methodIdentifier().accept(this);
