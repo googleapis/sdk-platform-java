@@ -12,31 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
-public abstract class StringObjectValue implements ObjectValue {
-  public abstract String value();
+public abstract class Service {
+  public abstract String name();
 
-  @Override
-  public TypeNode type() {
-    return TypeNode.STRING;
-  }
+  public abstract String pakkage();
+
+  public abstract ImmutableList<Method> methods();
+
+  // TODO(miraleung): Get comments.
 
   public static Builder builder() {
-    return new AutoValue_StringObjectValue.Builder();
-  }
-
-  public static StringObjectValue withValue(String value) {
-    return builder().setValue(value).build();
+    return new AutoValue_Service.Builder().setMethods(ImmutableList.of());
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setValue(String value);
+    public abstract Builder setName(String name);
 
-    public abstract StringObjectValue build();
+    public abstract Builder setPakkage(String pakkage);
+
+    public abstract Builder setMethods(List<Method> methods);
+
+    public abstract Service build();
   }
 }
