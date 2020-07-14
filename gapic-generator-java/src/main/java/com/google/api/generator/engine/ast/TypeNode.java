@@ -36,12 +36,17 @@ public abstract class TypeNode implements AstNode {
     VOID
   }
 
-  public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
-  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
+  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
+  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
+  public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
+  public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
+
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
+
   public static final TypeNode STRING_ARRAY =
       builder()
           .setTypeKind(TypeKind.OBJECT)
