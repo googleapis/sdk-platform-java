@@ -137,6 +137,8 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract boolean isStatic();
 
+    abstract ImmutableList<Statement> body();
+
     abstract boolean isConstructor();
 
     abstract ScopeNode scope();
@@ -194,19 +196,26 @@ public abstract class MethodDefinition implements AstNode {
             "Constructors for templated classes are not yet supported");
       } else {
         // Return type validation and checking.
-        if (!method.returnType().equals(TypeNode.VOID)) {
+        boolean isLastStatementThrowExpr = false;
+        Statement lastStatement;
+        if (!body().isEmpty()
+            && (lastStatement = body().get(body().size() - 1)) instanceof ExprStatement) {
+          isLastStatementThrowExpr =
+              ((ExprStatement) lastStatement).expression() instanceof ThrowExpr;
+        }
+        if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
           Preconditions.checkNotNull(
               method.returnExpr(),
               "Method with non-void return type must have a return expression");
         }
 
-        if (!method.returnType().equals(TypeNode.VOID)) {
+        if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
           Preconditions.checkNotNull(
               method.returnExpr(),
               "Method with non-void return type must have a return expression");
         }
 
-        if (method.returnExpr() != null) {
+        if (method.returnExpr() != null && !isLastStatementThrowExpr) {
           if (method.returnType().isPrimitiveType()) {
             Preconditions.checkState(
                 method.returnExpr().type().isPrimitiveType()
