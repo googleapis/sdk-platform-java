@@ -19,7 +19,16 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class Method {
+  public enum Stream {
+    NONE,
+    CLIENT,
+    SERVER,
+    BIDI
+  };
+
   public abstract String name();
+
+  public abstract Stream stream();
 
   public abstract TypeNode inputType();
 
@@ -28,7 +37,20 @@ public abstract class Method {
   // TODO(miraleung): Parse annotations, comments.
 
   public static Builder builder() {
-    return new AutoValue_Method.Builder();
+    return new AutoValue_Method.Builder().setStream(Stream.NONE);
+  }
+
+  public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {
+    if (!isClientStreaming && !isServerStreaming) {
+      return Stream.NONE;
+    }
+    if (isClientStreaming && isServerStreaming) {
+      return Stream.BIDI;
+    }
+    if (isClientStreaming) {
+      return Stream.CLIENT;
+    }
+    return Stream.SERVER;
   }
 
   @AutoValue.Builder
@@ -38,6 +60,8 @@ public abstract class Method {
     public abstract Builder setInputType(TypeNode inputType);
 
     public abstract Builder setOutputType(TypeNode outputType);
+
+    public abstract Builder setStream(Stream stream);
 
     public abstract Method build();
   }

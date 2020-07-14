@@ -20,13 +20,13 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
@@ -54,16 +54,17 @@ public class Parser {
               fileToGenerate);
 
       String pakkage = TypeParser.getPackage(fileDescriptor);
-      for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
-        List<Method> methods = parseMethods(serviceDescriptor, messageTypes);
-        Service service =
-            Service.builder()
-                .setName(serviceDescriptor.getName())
-                .setPakkage(pakkage)
-                .setMethods(methods)
-                .build();
-        services.add(service);
-      }
+      List<Service> parsedServices =
+          fileDescriptor.getServices().stream()
+              .map(
+                  s ->
+                      Service.builder()
+                          .setName(s.getName())
+                          .setPakkage(pakkage)
+                          .setMethods(parseMethods(s, messageTypes))
+                          .build())
+              .collect(Collectors.toList());
+      services.addAll(parsedServices);
     }
 
     return services;
@@ -78,23 +79,44 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-
-      String pakkage = TypeParser.getPackage(fileDescriptor);
-      for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
-        List<Field> fields = parseFields(messageDescriptor);
-        String messageName = messageDescriptor.getName();
-        messages.put(
-            messageName,
-            Message.builder()
-                .setType(
-                    TypeNode.withReference(
-                        VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
-                .setName(messageName)
-                .setFields(fields)
-                .build());
-      }
+      messages.putAll(parseMessages(fileDescriptor));
     }
     return messages;
+  }
+
+  @VisibleForTesting
+  static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return fileDescriptor.getMessageTypes().stream()
+        .collect(
+            Collectors.toMap(
+                md -> md.getName(),
+                md ->
+                    Message.builder()
+                        .setType(
+                            TypeNode.withReference(
+                                VaporReference.builder()
+                                    .setName(md.getName())
+                                    .setPakkage(pakkage)
+                                    .build()))
+                        .setName(md.getName())
+                        .setFields(parseFields(md))
+                        .build()));
+  }
+
+  @VisibleForTesting
+  static List<Method> parseMethods(
+      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
+    return serviceDescriptor.getMethods().stream()
+        .map(
+            md ->
+                Method.builder()
+                    .setName(md.getName())
+                    .setInputType(TypeParser.parseType(md.getInputType()))
+                    .setOutputType(TypeParser.parseType(md.getOutputType()))
+                    .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
+                    .build())
+        .collect(Collectors.toList());
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
@@ -128,19 +150,5 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     return fileDescriptors;
-  }
-
-  private static List<Method> parseMethods(
-      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
-    List<Method> methods = new ArrayList<>();
-    for (MethodDescriptor methodDescriptor : serviceDescriptor.getMethods()) {
-      methods.add(
-          Method.builder()
-              .setName(methodDescriptor.getName())
-              .setInputType(TypeParser.parseType(methodDescriptor.getInputType()))
-              .setOutputType(TypeParser.parseType(methodDescriptor.getOutputType()))
-              .build());
-    }
-    return methods;
   }
 }
