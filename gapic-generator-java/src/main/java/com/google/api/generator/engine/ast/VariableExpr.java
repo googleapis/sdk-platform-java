@@ -29,6 +29,19 @@ public abstract class VariableExpr implements Expr {
 
   public abstract boolean isFinal();
 
+  @Override
+  public TypeNode type() {
+    if (isDecl()) {
+      return TypeNode.VOID;
+    }
+    return variable().type();
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_VariableExpr.Builder()
         .setIsDecl(false)
@@ -52,18 +65,5 @@ public abstract class VariableExpr implements Expr {
     public abstract Builder setIsFinal(boolean isFinal);
 
     public abstract VariableExpr build();
-  }
-
-  @Override
-  public TypeNode type() {
-    if (isDecl()) {
-      return TypeNode.VOID;
-    }
-    return variable().type();
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

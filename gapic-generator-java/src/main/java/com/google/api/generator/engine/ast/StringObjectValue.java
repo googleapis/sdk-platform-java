@@ -20,17 +20,17 @@ import com.google.auto.value.AutoValue;
 public abstract class StringObjectValue implements ObjectValue {
   public abstract String value();
 
+  @Override
+  public TypeNode type() {
+    return TypeNode.STRING;
+  }
+
   public static Builder builder() {
     return new AutoValue_StringObjectValue.Builder();
   }
 
   public static StringObjectValue withValue(String value) {
     return builder().setValue(value).build();
-  }
-
-  @Override
-  public TypeNode type() {
-    return TypeNode.STRING;
   }
 
   @AutoValue.Builder
