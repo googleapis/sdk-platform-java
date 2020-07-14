@@ -78,6 +78,20 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_constructor() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodDefinition.constructorBuilder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .build();
+  }
+
+  @Test
   public void validMethodDefinition_withArgumentsAndReturnExpr() {
     ValueExpr returnExpr =
         ValueExpr.builder()
@@ -117,6 +131,19 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void invalidMethodDefinition_noName() {
+    assertThrows(
+        NullPointerException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.VOID)
+              .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+              .build();
+        });
+  }
+
+  @Test
   public void invalidMethodDefinition_runtimeException() {
     assertThrows(
         IllegalStateException.class,
@@ -143,6 +170,89 @@ public class MethodDefinitionTest {
               .setIsStatic(true)
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_localScope() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.builder()
+              .setName("close")
+              .setScope(ScopeNode.LOCAL)
+              .setReturnType(TypeNode.VOID)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorOverride() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsOverride(true)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorFinalOrStatic() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsStatic(true)
+              .build();
+        });
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setIsFinal(true)
+              .build();
+        });
+  }
+
+  @Test
+  public void invalidMethodDefinition_constructorHasReturnExpr() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder().setMethodName("getFoobar").setReturnType(returnType).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(returnType)
+              .setReturnExpr(methodExpr)
+              .setIsOverride(true)
               .build();
         });
   }
