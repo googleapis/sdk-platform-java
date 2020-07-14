@@ -20,6 +20,16 @@ import com.google.auto.value.AutoValue;
 public abstract class ValueExpr implements Expr {
   public abstract Value value();
 
+  @Override
+  public TypeNode type() {
+    return value().type();
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static ValueExpr withValue(Value value) {
     return builder().setValue(value).build();
   }
@@ -33,15 +43,5 @@ public abstract class ValueExpr implements Expr {
     public abstract Builder setValue(Value value);
 
     public abstract ValueExpr build();
-  }
-
-  @Override
-  public TypeNode type() {
-    return value().type();
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

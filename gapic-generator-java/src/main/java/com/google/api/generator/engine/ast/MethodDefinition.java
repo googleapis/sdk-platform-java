@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 public abstract class MethodDefinition implements AstNode {
   static final Reference RUNTIME_EXCEPTION_REFERENCE =
       ConcreteReference.withClazz(RuntimeException.class);
+
   // Required.
   public abstract ScopeNode scope();
   // Required.
@@ -46,6 +47,8 @@ public abstract class MethodDefinition implements AstNode {
 
   public abstract boolean isAbstract();
 
+  public abstract boolean isConstructor();
+
   public abstract ImmutableList<Statement> body();
 
   @Nullable
@@ -53,6 +56,7 @@ public abstract class MethodDefinition implements AstNode {
 
   abstract boolean isOverride();
 
+  @Nullable
   abstract String name();
 
   @Override
@@ -66,6 +70,20 @@ public abstract class MethodDefinition implements AstNode {
         .setIsAbstract(false)
         .setIsFinal(false)
         .setIsStatic(false)
+        .setIsConstructor(false)
+        .setAnnotations(Collections.emptyList())
+        .setThrowsExceptions(Collections.emptyList())
+        .setBody(Collections.emptyList())
+        .setIsOverride(false);
+  }
+
+  public static Builder constructorBuilder() {
+    return new AutoValue_MethodDefinition.Builder()
+        .setArguments(Collections.emptyList())
+        .setIsAbstract(false)
+        .setIsFinal(false)
+        .setIsStatic(false)
+        .setIsConstructor(true)
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -91,6 +109,8 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setIsAbstract(boolean isAbstract);
 
+    public abstract Builder setIsConstructor(boolean isConstructor);
+
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
@@ -107,6 +127,8 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract String name();
 
+    abstract TypeNode returnType();
+
     abstract boolean isOverride();
 
     abstract boolean isAbstract();
@@ -117,6 +139,8 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract ImmutableList<Statement> body();
 
+    abstract boolean isConstructor();
+
     abstract ScopeNode scope();
 
     abstract MethodDefinition autoBuild();
@@ -124,6 +148,14 @@ public abstract class MethodDefinition implements AstNode {
     abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
 
     public MethodDefinition build() {
+      if (isConstructor()) {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(returnType()), "Constructor must return an object type.");
+        setName(returnType().reference().name());
+      } else {
+        Preconditions.checkNotNull(name(), "Methods must have a name");
+      }
+
       IdentifierNode methodIdentifier = IdentifierNode.builder().setName(name()).build();
       setMethodIdentifier(methodIdentifier);
 
@@ -142,33 +174,59 @@ public abstract class MethodDefinition implements AstNode {
       MethodDefinition method = autoBuild();
 
       Preconditions.checkState(
+          !method.scope().equals(ScopeNode.LOCAL),
+          "Method scope must be either public, protected, or private");
+
+      Preconditions.checkState(
           !method.returnType().equals(TypeNode.NULL), "Null is not a valid method return type");
 
-      boolean isLastStatementThrowExpr = false;
-      Statement lastStatement;
-      if (!body().isEmpty()
-          && (lastStatement = body().get(body().size() - 1)) instanceof ExprStatement) {
-        isLastStatementThrowExpr =
-            ((ExprStatement) lastStatement).expression() instanceof ThrowExpr;
-      }
-      if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
-        Preconditions.checkNotNull(
-            method.returnExpr(), "Method with non-void return type must have a return expression");
-      }
+      // Constructor checking.
+      if (method.isConstructor()) {
+        Preconditions.checkState(
+            !method.isFinal() && !method.isStatic(), "Constructors cannot be static or final");
+        Preconditions.checkState(!method.isOverride(), "A constructor cannot override another");
+        Preconditions.checkState(
+            method.returnExpr() == null, "A constructor cannot have a return expression");
+        // Reference already checked at method name validation time.
+        // TODO(unsupported): Constructors for templated types. This would require changing the
+        // Reference API, which would be trivial. However, such constructors don't seem to be needed
+        // yet.
+        Preconditions.checkState(
+            method.returnType().reference().generics().isEmpty(),
+            "Constructors for templated classes are not yet supported");
+      } else {
+        // Return type validation and checking.
+        boolean isLastStatementThrowExpr = false;
+        Statement lastStatement;
+        if (!body().isEmpty()
+            && (lastStatement = body().get(body().size() - 1)) instanceof ExprStatement) {
+          isLastStatementThrowExpr =
+              ((ExprStatement) lastStatement).expression() instanceof ThrowExpr;
+        }
+        if (!method.returnType().equals(TypeNode.VOID) && !isLastStatementThrowExpr) {
+          Preconditions.checkNotNull(
+              method.returnExpr(), "Method with non-void return type must have a return expression");
+        }
 
-      // Type-checking.
-      if (method.returnExpr() != null) {
-        if (method.returnType().isPrimitiveType()) {
-          Preconditions.checkState(
-              method.returnExpr().type().isPrimitiveType()
-                  && method.returnType().equals((method.returnExpr().type())),
-              "Method primitive return type does not match the return expression type");
+        if (!method.returnType().equals(TypeNode.VOID)) {
+          Preconditions.checkNotNull(
+              method.returnExpr(),
+              "Method with non-void return type must have a return expression");
+        }
 
-        } else {
-          Preconditions.checkState(
-              !method.returnExpr().type().isPrimitiveType()
-                  && method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
-              "Method reference return type is not a subtype of the return expression type");
+        if (method.returnExpr() != null) {
+          if (method.returnType().isPrimitiveType()) {
+            Preconditions.checkState(
+                method.returnExpr().type().isPrimitiveType()
+                    && method.returnType().equals((method.returnExpr().type())),
+                "Method primitive return type does not match the return expression type");
+
+          } else {
+            Preconditions.checkState(
+                !method.returnExpr().type().isPrimitiveType()
+                    && method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+                "Method reference return type is not a subtype of the return expression type");
+          }
         }
       }
 
