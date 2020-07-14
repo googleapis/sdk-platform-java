@@ -22,6 +22,8 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
@@ -261,6 +263,26 @@ public class ImportWriterVisitorTest {
     ThrowExpr throwExpr = ThrowExpr.builder().setType(exceptionTypes).setMessage(message).build();
     throwExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import java.io.IOException;\n\n");
+  }
+
+  @Test
+  public void writeInstanceofExprImports_basic() {
+    TypeNode exprType = TypeNode.withReference(ConcreteReference.withClazz(Expr.class));
+    TypeNode assignExprType =
+        TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class));
+
+    Variable variable = Variable.builder().setName("x").setType(assignExprType).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    InstanceofExpr expr =
+        InstanceofExpr.builder().setExpr(variableExpr).setCheckType(exprType).build();
+    expr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n\n"));
   }
 
   private static TypeNode createType(Class clazz) {
