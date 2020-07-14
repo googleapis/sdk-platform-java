@@ -17,7 +17,10 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class Message {
@@ -29,6 +32,8 @@ public abstract class Message {
 
   public abstract TypeNode type();
 
+  public abstract ImmutableMap<String, Field> fieldMap();
+
   public static Builder builder() {
     return new AutoValue_Message.Builder();
   }
@@ -37,10 +42,19 @@ public abstract class Message {
   public abstract static class Builder {
     public abstract Builder setName(String name);
 
-    public abstract Builder setFields(List<Field> methods);
+    public abstract Builder setFields(List<Field> fields);
 
     public abstract Builder setType(TypeNode type);
 
-    public abstract Message build();
+    abstract Builder setFieldMap(Map<String, Field> fieldMap);
+
+    abstract ImmutableList<Field> fields();
+
+    abstract Message autoBuild();
+
+    public Message build() {
+      setFieldMap(fields().stream().collect(Collectors.toMap(f -> f.name(), f -> f)));
+      return autoBuild();
+    }
   }
 }

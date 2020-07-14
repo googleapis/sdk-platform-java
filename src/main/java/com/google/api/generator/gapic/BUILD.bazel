@@ -8,6 +8,17 @@ filegroup(
     ],
 )
 
+java_proto_library(
+    name = "status_java_proto",
+    visibility = [
+        "//src/main/java/com/google/api/generator/gapic:__subpackages__",
+        "//src/test/java/com/google/api/generator/gapic:__subpackages__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/rpc:status_proto",
+    ],
+)
+
 java_library(
     name = "gapic",
     srcs = glob(["*.java"]),
