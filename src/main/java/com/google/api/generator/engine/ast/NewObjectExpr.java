@@ -61,8 +61,6 @@ public abstract class NewObjectExpr implements Expr {
       Preconditions.checkState(
           TypeNode.isReferenceType(newObjectExpr.type()), "New object cannot be reference types.");
       // Check if there is a conflict between isGeneric() setting and generics() setting.
-      System.out.println("before setting: " + newObjectExpr.isGeneric());
-
       boolean noGenerics = newObjectExpr.type().reference().generics().isEmpty();
       if (!newObjectExpr.isGeneric() && !noGenerics) {
         setIsGeneric(true);
