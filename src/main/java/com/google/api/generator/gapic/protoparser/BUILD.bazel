@@ -5,12 +5,23 @@ filegroup(
     srcs = glob(["*.java"]),
 )
 
+java_proto_library(
+    name = "client_java_proto",
+    visibility = ["//visibility:private"],
+    deps = [
+        "@com_google_googleapis//google/api:client_proto",
+    ],
+)
+
 java_library(
     name = "protoparser",
     srcs = [
         ":protoparser_files",
     ],
     deps = [
+        "//:annotations_java_proto",
+        "//:client_java_proto",
+        "//:longrunning_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/gapic/model",
         "@com_google_code_findbugs_jsr305//jar",

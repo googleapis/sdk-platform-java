@@ -16,19 +16,17 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class TernaryExpr implements Expr {
-  public abstract Expr conditionExpr();
-
-  public abstract Expr thenExpr();
-
-  public abstract Expr elseExpr();
+public abstract class ThrowExpr implements Expr {
+  // TODO(miraleung): Refactor with StringObjectValue and possibly with NewObjectExpr.
 
   @Override
-  public TypeNode type() {
-    return thenExpr().type();
-  }
+  public abstract TypeNode type();
+
+  @Nullable
+  public abstract String message();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -36,28 +34,26 @@ public abstract class TernaryExpr implements Expr {
   }
 
   public static Builder builder() {
-    return new AutoValue_TernaryExpr.Builder();
+    return new AutoValue_ThrowExpr.Builder();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setConditionExpr(Expr conditionExpr);
+    public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setThenExpr(Expr thenExpression);
+    public abstract Builder setMessage(String message);
 
-    public abstract Builder setElseExpr(Expr elseExpression);
+    // Private.
+    abstract ThrowExpr autoBuild();
 
-    abstract TernaryExpr autoBuild();
-
-    public TernaryExpr build() {
-      TernaryExpr ternaryExpr = autoBuild();
+    public ThrowExpr build() {
+      // TODO(miraleung): Escaping message() and the corresponding tests will be done when we switch
+      // to StringObjectValue.
+      ThrowExpr throwExpr = autoBuild();
       Preconditions.checkState(
-          ternaryExpr.thenExpr().type().equals(ternaryExpr.elseExpr().type()),
-          "Second and third expressions should have the same type.");
-      Preconditions.checkState(
-          ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN),
-          "Ternary condition must be a boolean expression.");
-      return ternaryExpr;
+          TypeNode.isExceptionType(throwExpr.type()),
+          String.format("Type %s must be an exception type", throwExpr.type()));
+      return throwExpr;
     }
   }
 }
