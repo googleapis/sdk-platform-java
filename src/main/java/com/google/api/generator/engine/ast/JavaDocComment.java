@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
+  // Private accessors.
   abstract ImmutableList<String> comments();
 
   abstract ImmutableList<String> params();
