@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -37,10 +38,12 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
@@ -406,6 +409,35 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
   }
 
+  @Test
+  public void writeThrowExpr_basic() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException()");
+  }
+
+  @Test
+  public void writeThrowExpr_basicWithMessage() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    String message = "Some message asdf";
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeInstanceofExpr() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    InstanceofExpr instanceofExpr =
+        InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
+    instanceofExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x instanceof String");
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
@@ -767,6 +799,24 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_constructor() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodDefinition methodDefinition =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "public LibrarySettings() {\n}\n");
   }
 
   @Test
