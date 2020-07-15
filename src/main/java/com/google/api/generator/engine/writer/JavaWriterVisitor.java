@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -70,6 +71,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String FINAL = "final";
   private static final String FOR = "for";
   private static final String IF = "if";
+  private static final String INSTANCEOF = "instanceof";
   private static final String IMPLEMENTS = "implements";
   private static final String NEW = "new";
   private static final String RETURN = "return";
@@ -239,6 +241,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append(ESCAPED_QUOTE);
     }
     rightParen();
+  }
+
+  @Override
+  public void visit(InstanceofExpr instanceofExpr) {
+    instanceofExpr.expr().accept(this);
+    space();
+    buffer.append(INSTANCEOF);
+    space();
+    instanceofExpr.checkType().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
