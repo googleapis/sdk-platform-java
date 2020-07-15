@@ -31,7 +31,7 @@ public class NewObjectExprTest {
             .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
             .build();
     TypeNode type = TypeNode.withReference(ref);
-    NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     assertEquals(newObjectExpr.type(), type);
     // constructing `"new List<String>()"`, no exception should be thrown.
   }
@@ -42,7 +42,7 @@ public class NewObjectExprTest {
     assertThrows(
         IllegalStateException.class,
         () -> {
-          NewObjectExpr.builder().setType(TypeNode.INT).build();
+          NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.INT).build();
         });
   }
 
@@ -57,7 +57,7 @@ public class NewObjectExprTest {
             .build();
     TypeNode type = TypeNode.withReference(ref);
     System.out.println("conflict settings");
-    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).build();
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(false).setType(type).build();
 
     assertEquals(newObjectExpr.type(), type);
     assertEquals(newObjectExpr.isGeneric(), true);

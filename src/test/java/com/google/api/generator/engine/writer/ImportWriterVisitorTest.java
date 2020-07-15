@@ -57,7 +57,7 @@ public class ImportWriterVisitorTest {
         .build();
     ConcreteReference listRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(mapRef)).build();
     TypeNode type = TypeNode.withReference(listRef);
-    NewObjectExpr newObjectExpr = NewObjectExpr.genericBuilder().setType(type).build();
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import java.util.HashMap;\nimport java.util.List;\n\n");
   }

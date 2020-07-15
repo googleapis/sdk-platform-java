@@ -38,20 +38,13 @@ public abstract class NewObjectExpr implements Expr {
         .setIsGeneric(false);
   }
 
-  public static Builder genericBuilder() {
-    return new AutoValue_NewObjectExpr.Builder()
-        .setArguments(Collections.emptyList())
-        .setIsGeneric(true);
-  }
-
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setArguments(List<Expr> arguments);
 
-    // Private.
-    abstract Builder setIsGeneric(boolean isGeneric);
+    public abstract Builder setIsGeneric(boolean isGeneric);
 
     abstract NewObjectExpr autoBuild();
 
