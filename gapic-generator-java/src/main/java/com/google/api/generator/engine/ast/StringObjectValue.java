@@ -39,7 +39,7 @@ public abstract class StringObjectValue implements ObjectValue {
   public abstract static class Builder {
     public abstract Builder setValue(String value);
 
-    // Private accessor.
+    // Private accessors.
     abstract String value();
 
     public abstract StringObjectValue autoBuild();
