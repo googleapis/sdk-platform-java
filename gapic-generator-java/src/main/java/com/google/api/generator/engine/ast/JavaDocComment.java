@@ -22,36 +22,21 @@ import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
+  abstract ImmutableList<String> comments();
 
-  public abstract ImmutableList<String> comments();
+  abstract ImmutableList<String> params();
 
-  public abstract ImmutableList<String> params();
-
-  public abstract String deprecated();
-
-  // Private.
   abstract String throwType();
 
-  // Private.
   abstract String throwDescription();
+
+  abstract String deprecated();
+
+  @Override
+  public abstract String comment();
 
   public static Builder builder() {
     return new AutoValue_JavaDocComment.Builder().setDeprecated("").setThrows("", "");
-  }
-
-  @Override
-  public String comment() {
-    // TODO(xiaozhenliu): call comment escaper here.
-    List<String> comment = comments().stream().collect(Collectors.toList());
-    // @param, @throws and @deprecated should always get printed at the end.
-    comment.addAll(params().stream().collect(Collectors.toList()));
-    if (!throwType().isEmpty()) {
-      comment.add(String.format("@throws %s %s", throwType(), throwDescription()));
-    }
-    if (!deprecated().isEmpty()) {
-      comment.add(String.format("@deprecated %s", deprecated()));
-    }
-    return String.join("\n", comment);
   }
 
   public void accept(AstNodeVisitor visitor) {
@@ -60,16 +45,36 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    // Private.
+    // Private accessors.
     abstract Builder setThrowType(String type);
-    // Private.
+
     abstract Builder setThrowDescription(String type);
-    // Private.
+
     abstract ImmutableList.Builder<String> commentsBuilder();
-    // Private.
+
     abstract ImmutableList.Builder<String> paramsBuilder();
 
+    abstract String throwType();
+
+    abstract String throwDescription();
+
+    abstract String deprecated();
+
+    abstract ImmutableList<String> comments();
+
+    abstract ImmutableList<String> params();
+
+    abstract Builder setComment(String comment);
+
+    abstract JavaDocComment autoBuild();
+
     public abstract Builder setDeprecated(String deprecatedText);
+
+    public Builder setThrows(String type, String description) {
+      setThrowType(type);
+      setThrowDescription(description);
+      return this;
+    }
 
     public Builder addComment(String comment) {
       commentsBuilder().add(comment);
@@ -120,12 +125,19 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
-    public Builder setThrows(String type, String description) {
-      setThrowType(type);
-      setThrowDescription(description);
-      return this;
+    public JavaDocComment build() {
+      // TODO(xiaozhenliu): call comment escaper here.
+      List<String> comment = comments().stream().collect(Collectors.toList());
+      // @param, @throws and @deprecated should always get printed at the end.
+      comment.addAll(params().stream().collect(Collectors.toList()));
+      if (!throwType().isEmpty()) {
+        comment.add(String.format("@throws %s %s", throwType(), throwDescription()));
+      }
+      if (!deprecated().isEmpty()) {
+        comment.add(String.format("@deprecated %s", deprecated()));
+      }
+      setComment(String.join("\n", comment));
+      return autoBuild();
     }
-
-    public abstract JavaDocComment build();
   }
 }
