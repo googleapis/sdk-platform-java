@@ -39,12 +39,14 @@ public abstract class StringObjectValue implements ObjectValue {
   public abstract static class Builder {
     public abstract Builder setValue(String value);
 
+    // Private accessor.
+    abstract String value();
+
     public abstract StringObjectValue autoBuild();
 
     public StringObjectValue build() {
       // `\"` is added to the escaped string value for interpreting it correctly in file.
-      String value =
-          String.format("\"%s\"", StringValueEscaper.getInstance().escape(autoBuild().value()));
+      String value = String.format("\"%s\"", StringValueEscaper.escaper.escape(value()));
       setValue(value);
       return autoBuild();
     }
@@ -67,10 +69,6 @@ public abstract class StringObjectValue implements ObjectValue {
     @Override
     public String escape(String sourceString) {
       return escaper.escape(sourceString);
-    }
-
-    public static Escaper getInstance() {
-      return escaper;
     }
   }
 }
