@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
@@ -376,6 +377,25 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeThrowExpr_basic() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException()");
+  }
+
+  @Test
+  public void writeThrowExpr_basicWithMessage() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    String message = "Some message asdf";
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
   }
 
   /** =============================== STATEMENTS =============================== */

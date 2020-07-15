@@ -50,6 +50,8 @@ public abstract class VariableExpr implements Expr {
         .setScope(ScopeNode.LOCAL);
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setVariable(Variable variable);
