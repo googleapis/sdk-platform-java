@@ -208,6 +208,55 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_basicReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_basicReferenceWithModifiersSet() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(variableExpr)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_nestedReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder().setName("someStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("anotherStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("lengthField").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+  }
+
+  @Test
   public void writeTernaryExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();

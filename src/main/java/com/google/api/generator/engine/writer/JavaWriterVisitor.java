@@ -141,6 +141,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     TypeNode type = variable.type();
     ScopeNode scope = variableExpr.scope();
 
+    // VariableExpr will handle isDecl and exprReferenceExpr edge cases.
     if (variableExpr.isDecl()) {
       if (!scope.equals(ScopeNode.LOCAL)) {
         scope.accept(this);
@@ -159,6 +160,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       type.accept(this);
       space();
+    } else if (variableExpr.exprReferenceExpr() != null) {
+      variableExpr.exprReferenceExpr().accept(this);
+      buffer.append(DOT);
     }
 
     variable.identifier().accept(this);
