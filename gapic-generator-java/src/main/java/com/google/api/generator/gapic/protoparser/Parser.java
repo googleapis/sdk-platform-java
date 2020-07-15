@@ -14,15 +14,21 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
+import com.google.longrunning.OperationInfo;
+import com.google.longrunning.OperationsProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FileDescriptor;
@@ -30,12 +36,16 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Parser {
+  // Collapses any whitespace between elements.
+  private static final String METHOD_SIGNATURE_DELIMITER = "\\s*,\\s*";
+
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
       super(errorMessage);
@@ -53,20 +63,24 @@ public class Parser {
               "Missing file descriptor for [%s]",
               fileToGenerate);
 
-      String pakkage = TypeParser.getPackage(fileDescriptor);
-      for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
-        List<Method> methods = parseMethods(serviceDescriptor, messageTypes);
-        Service service =
-            Service.builder()
-                .setName(serviceDescriptor.getName())
-                .setPakkage(pakkage)
-                .setMethods(methods)
-                .build();
-        services.add(service);
-      }
+      services.addAll(parseService(fileDescriptor, messageTypes));
     }
 
     return services;
+  }
+
+  public static List<Service> parseService(
+      FileDescriptor fileDescriptor, Map<String, Message> messageTypes) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return fileDescriptor.getServices().stream()
+        .map(
+            s ->
+                Service.builder()
+                    .setName(s.getName())
+                    .setPakkage(pakkage)
+                    .setMethods(parseMethods(s, messageTypes))
+                    .build())
+        .collect(Collectors.toList());
   }
 
   public static Map<String, Message> parseMessages(CodeGeneratorRequest request) {
@@ -78,23 +92,79 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-
-      String pakkage = TypeParser.getPackage(fileDescriptor);
-      for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
-        List<Field> fields = parseFields(messageDescriptor);
-        String messageName = messageDescriptor.getName();
-        messages.put(
-            messageName,
-            Message.builder()
-                .setType(
-                    TypeNode.withReference(
-                        VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
-                .setName(messageName)
-                .setFields(fields)
-                .build());
-      }
+      messages.putAll(parseMessages(fileDescriptor));
     }
     return messages;
+  }
+
+  public static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return fileDescriptor.getMessageTypes().stream()
+        .collect(
+            Collectors.toMap(
+                md -> md.getName(),
+                md ->
+                    Message.builder()
+                        .setType(
+                            TypeNode.withReference(
+                                VaporReference.builder()
+                                    .setName(md.getName())
+                                    .setPakkage(pakkage)
+                                    .build()))
+                        .setName(md.getName())
+                        .setFields(parseFields(md))
+                        .build()));
+  }
+
+  @VisibleForTesting
+  static List<Method> parseMethods(
+      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
+    return serviceDescriptor.getMethods().stream()
+        .map(
+            md ->
+                Method.builder()
+                    .setName(md.getName())
+                    .setInputType(TypeParser.parseType(md.getInputType()))
+                    .setOutputType(TypeParser.parseType(md.getOutputType()))
+                    .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
+                    .setLro(parseLro(md, messageTypes))
+                    .setMethodSignatures(parseMethodSignatures(md))
+                    .build())
+        .collect(Collectors.toList());
+  }
+
+  @VisibleForTesting
+  static LongrunningOperation parseLro(
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+    MethodOptions methodOptions = methodDescriptor.getOptions();
+    if (!methodOptions.hasExtension(OperationsProto.operationInfo)) {
+      return null;
+    }
+
+    OperationInfo lroInfo =
+        methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
+    String responseTypeName = lroInfo.getResponseType();
+    String metadataTypeName = lroInfo.getMetadataType();
+    Message responseMessage = messageTypes.get(responseTypeName);
+    Message metadataMessage = messageTypes.get(metadataTypeName);
+    Preconditions.checkNotNull(
+        responseMessage, String.format("LRO response message %s not found", responseTypeName));
+    Preconditions.checkNotNull(
+        metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
+
+    return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
+  }
+
+  @VisibleForTesting
+  static List<List<String>> parseMethodSignatures(MethodDescriptor methodDescriptor) {
+    List<String> signatures =
+        methodDescriptor.getOptions().getExtension(ClientProto.methodSignature);
+    // Example from Expand in echo.proto:
+    // Input: ["content,error", "content,error,info"].
+    // Output: [["content", "error"], ["content", "error", "info"]].
+    return methodDescriptor.getOptions().getExtension(ClientProto.methodSignature).stream()
+        .map(signature -> Arrays.asList(signature.split(METHOD_SIGNATURE_DELIMITER)))
+        .collect(Collectors.toList());
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
@@ -128,19 +198,5 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     return fileDescriptors;
-  }
-
-  private static List<Method> parseMethods(
-      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
-    List<Method> methods = new ArrayList<>();
-    for (MethodDescriptor methodDescriptor : serviceDescriptor.getMethods()) {
-      methods.add(
-          Method.builder()
-              .setName(methodDescriptor.getName())
-              .setInputType(TypeParser.parseType(methodDescriptor.getInputType()))
-              .setOutputType(TypeParser.parseType(methodDescriptor.getOutputType()))
-              .build());
-    }
-    return methods;
   }
 }
