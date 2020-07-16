@@ -29,15 +29,15 @@ public abstract class AnonymousClassExpr implements Expr {
 
   public abstract ImmutableList<Statement> statements();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_AnonymousClassExpr.Builder()
         .setMethods(Collections.emptyList())
         .setStatements(Collections.emptyList());
-  }
-
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 
   @AutoValue.Builder
@@ -57,13 +57,11 @@ public abstract class AnonymousClassExpr implements Expr {
           TypeNode.isReferenceType(anonymousClassExpr.type()),
           "Anonymous class expression should be reference types.");
       // 2. static methods are not allowed in anonymous class.
-      List<MethodDefinition> methods = anonymousClassExpr.methods();
-      for (MethodDefinition method : methods) {
+      for (MethodDefinition method : anonymousClassExpr.methods()) {
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
       }
       // 3. static variable expression is not allowed unless it is final.
-      List<Statement> statements = anonymousClassExpr.statements();
-      for (Statement statement : statements) {
+      for (Statement statement : anonymousClassExpr.statements()) {
         if (statement instanceof ExprStatement) {
           Expr expr = ((ExprStatement) statement).expression();
           if (expr instanceof VariableExpr) {
