@@ -17,15 +17,79 @@ package com.google.api.generator.engine.ast;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
+import com.google.common.base.Function;
 import java.util.Arrays;
 import org.junit.Test;
 
 public class AnonymousClassExprTest {
   @Test
-  public void basicAnonymousClass() {
+  public void validAnonymousClass_basic() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
-    AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).build();
+    AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
+    ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setName("run")
+            .setBody(Arrays.asList(statement))
+            .build();
+
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
+  }
+
+  @Test
+  public void validAnonymousClass_genericAndVariableExpr() {
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(Function.class)
+            .setGenerics(
+                Arrays.asList(
+                    ConcreteReference.withClazz(String.class),
+                    ConcreteReference.withClazz(String.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    // String x;
+    VariableExpr variableExpr = createVariableDeclExpr("x", TypeNode.STRING);
+    ExprStatement statement = ExprStatement.withExpr(variableExpr);
+    // static final String s = "constant";
+    VariableExpr variableExpr_staticFinal =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("s").setType(TypeNode.STRING).build())
+            .setIsDecl(true)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(variableExpr_staticFinal)
+            .setValueExpr(
+                ValueExpr.builder().setValue(StringObjectValue.withValue("constant")).build())
+            .build();
+    ExprStatement statement_staticFinal = ExprStatement.withExpr(assignmentExpr);
+    VariableExpr arg = createVariableDeclExpr("arg", TypeNode.STRING);
+    VariableExpr returnExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("arg").setType(TypeNode.STRING).build())
+            .build();
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.STRING)
+            .setArguments(Arrays.asList(arg))
+            .setName("apply")
+            .setBody(Arrays.asList(statement, statement_staticFinal))
+            .setReturnExpr(returnExpr)
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(type)
+            .setStatements(Arrays.asList(statement))
+            .setMethods(Arrays.asList(method))
+            .build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
   }
 
@@ -62,21 +126,14 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void invalidAnonymousClass_finalVariableExpr() {
+  public void invalidAnonymousClass_staticVariableExpr() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     Variable variable = createVariable("s", TypeNode.STRING);
+    // static string s;
     VariableExpr variableExpr =
-        VariableExpr.builder()
-            .setScope(ScopeNode.PRIVATE)
-            .setIsDecl(true)
-            .setVariable(variable)
-            .build();
-    ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
-    AssignmentExpr assignmentExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-    ExprStatement exprStatement = ExprStatement.withExpr(assignmentExpr);
-
+        VariableExpr.builder().setIsDecl(true).setIsStatic(true).setVariable(variable).build();
+    ExprStatement exprStatement = ExprStatement.withExpr(variableExpr);
     assertThrows(
         IllegalStateException.class,
         () -> {
