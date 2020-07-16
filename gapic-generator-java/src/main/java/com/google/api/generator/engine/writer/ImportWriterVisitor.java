@@ -25,12 +25,14 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -139,6 +141,17 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     anonymousClassExpr.type().accept(this);
     methods(anonymousClassExpr.methods());
     statements(anonymousClassExpr.statements());
+  }
+  
+  @Override
+  public void visit(ThrowExpr throwExpr) {
+    throwExpr.type().accept(this);
+  }
+
+  @Override
+  public void visit(InstanceofExpr instanceofExpr) {
+    instanceofExpr.expr().accept(this);
+    instanceofExpr.checkType().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

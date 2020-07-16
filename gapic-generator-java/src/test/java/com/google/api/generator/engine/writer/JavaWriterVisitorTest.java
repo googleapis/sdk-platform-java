@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
@@ -37,6 +38,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
@@ -101,28 +103,6 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== EXPRESSIONS =============================== */
-  @Test
-  public void writeStringObjectValue() {
-    StringObjectValue s = StringObjectValue.builder().setValue("\"test\"").build();
-    assertEquals(s.value(), "\"test\"");
-    assertEquals(s.type(), TypeNode.STRING);
-  }
-
-  @Test
-  public void writeStringObjectValue_assignmentExpr() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Value value = StringObjectValue.withValue("\"test\"");
-    Expr valueExpr = ValueExpr.builder().setValue(value).build();
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "String x = \"test\"");
-  }
-
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
@@ -286,6 +266,29 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeStringObjectValue_basic() {
+    Value value = StringObjectValue.withValue("test");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    valueExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"test\"");
+  }
+
+  @Test
+  public void writeAssignmentExpr_stringObjectValue() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = StringObjectValue.withValue("Hi! World. \n");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
+  }
+
+  @Test
   public void writeMethodInvocationExpr_basic() {
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder().setMethodName("foobar").build();
@@ -434,8 +437,37 @@ public class JavaWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        "new Runnable() {\nprivate static final String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
+        "new Runnable() {\nprivate static final String s = \"foo\";\npublic void run() {\nint x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
+  }
+  
+  @Test
+  public void writeThrowExpr_basic() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException()");
+  }
+
+  @Test
+  public void writeThrowExpr_basicWithMessage() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    String message = "Some message asdf";
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeInstanceofExpr() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    InstanceofExpr instanceofExpr =
+        InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
+    instanceofExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
   /** =============================== STATEMENTS =============================== */
