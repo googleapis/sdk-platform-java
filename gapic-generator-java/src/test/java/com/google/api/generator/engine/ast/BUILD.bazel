@@ -7,6 +7,7 @@ TESTS = [
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
+    "InstanceofExprTest",
     "MethodDefinitionTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
