@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.common.collect.ImmutableList;
+import java.util.List;
 import javax.annotation.Nullable;
 
 public interface Reference {
@@ -40,4 +41,6 @@ public interface Reference {
   boolean isSupertypeOrEquals(Reference other);
 
   boolean isAssignableFrom(Reference other);
+
+  Reference copyAndSetGenerics(List<Reference> generics);
 }

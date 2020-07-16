@@ -43,6 +43,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
+  public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));

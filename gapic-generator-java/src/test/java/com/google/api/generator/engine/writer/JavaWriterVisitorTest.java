@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
@@ -37,6 +38,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Value;
@@ -423,6 +425,35 @@ public class JavaWriterVisitorTest {
     String expected =
         "new Runnable() {\nprivate final String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
+  }
+  
+  @Test
+  public void writeThrowExpr_basic() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException()");
+  }
+
+  @Test
+  public void writeThrowExpr_basicWithMessage() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    String message = "Some message asdf";
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeInstanceofExpr() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    InstanceofExpr instanceofExpr =
+        InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
+    instanceofExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
   /** =============================== STATEMENTS =============================== */
