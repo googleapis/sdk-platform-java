@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
@@ -39,6 +40,7 @@ public class AnonymousClassExprTest {
     AnonymousClassExpr anonymousClassExpr =
         AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
+    assertEquals(anonymousClassExpr.type(), type);
   }
 
   @Test
@@ -91,6 +93,7 @@ public class AnonymousClassExprTest {
             .setMethods(Arrays.asList(method))
             .build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
+    assertEquals(anonymousClassExpr.type(), type);
   }
 
   @Test
@@ -153,19 +156,14 @@ public class AnonymousClassExprTest {
     return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
   }
 
-  private static Variable createVariable(String variableName, TypeNode type) {
-    return Variable.builder().setName(variableName).setType(type).build();
-  }
-
   private static VariableExpr createVariableDeclExpr(String variableName, TypeNode type) {
-    return createVariableExpr(variableName, type, true);
-  }
-
-  private static VariableExpr createVariableExpr(
-      String variableName, TypeNode type, boolean isDecl) {
     return VariableExpr.builder()
         .setVariable(createVariable(variableName, type))
-        .setIsDecl(isDecl)
+        .setIsDecl(true)
         .build();
+  }
+
+  private static Variable createVariable(String variableName, TypeNode type) {
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 }
