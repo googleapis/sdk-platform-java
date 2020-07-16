@@ -34,6 +34,10 @@ public interface AstNodeVisitor {
   public void visit(AssignmentExpr assignmentExpr);
 
   public void visit(MethodInvocationExpr methodInvocationExpr);
+    
+  public void visit(ThrowExpr throwExpr);
+
+  public void visit(InstanceofExpr instanceofExpr);
 
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);

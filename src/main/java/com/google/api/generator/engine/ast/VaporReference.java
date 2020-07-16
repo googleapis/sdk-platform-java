@@ -99,11 +99,19 @@ public abstract class VaporReference implements Reference {
     return hash;
   }
 
+  @Override
+  public Reference copyAndSetGenerics(List<Reference> generics) {
+    return toBuilder().setGenerics(generics).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_VaporReference.Builder()
         .setGenerics(ImmutableList.of())
         .setIsStaticImport(false);
   }
+
+  // Private.
+  abstract Builder toBuilder();
 
   @AutoValue.Builder
   public abstract static class Builder {

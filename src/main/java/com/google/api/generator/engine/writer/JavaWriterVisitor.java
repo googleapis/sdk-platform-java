@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -32,6 +33,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
@@ -39,6 +41,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.common.base.Strings;
+
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -55,6 +59,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String BLOCK_COMMENT_START = "/**";
   private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
+  private static final String ESCAPED_QUOTE = "\"";
   private static final String EQUALS = "=";
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
@@ -74,9 +79,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String FINAL = "final";
   private static final String FOR = "for";
   private static final String IF = "if";
+  private static final String INSTANCEOF = "instanceof";
   private static final String IMPLEMENTS = "implements";
+  private static final String NEW = "new";
   private static final String RETURN = "return";
   private static final String STATIC = "static";
+  private static final String THROW = "throw";
   private static final String THROWS = "throws";
   private static final String TRY = "try";
   private static final String WHILE = "while";
@@ -224,6 +232,32 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
     }
     rightParen();
+  }
+
+  @Override
+  public void visit(ThrowExpr throwExpr) {
+    buffer.append(THROW);
+    space();
+    buffer.append(NEW);
+    space();
+    throwExpr.type().accept(this);
+    leftParen();
+    if (!Strings.isNullOrEmpty(throwExpr.message())) {
+      // TODO(miraleung): Update this when we use StringObjectValue.
+      buffer.append(ESCAPED_QUOTE);
+      buffer.append(throwExpr.message());
+      buffer.append(ESCAPED_QUOTE);
+    }
+    rightParen();
+  }
+
+  @Override
+  public void visit(InstanceofExpr instanceofExpr) {
+    instanceofExpr.expr().accept(this);
+    space();
+    buffer.append(INSTANCEOF);
+    space();
+    instanceofExpr.checkType().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

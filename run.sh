@@ -72,6 +72,7 @@ fi
 
 # Run protoc.
 protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" \
+    -I="${FLAGS_googleapis}/google/longrunning" \
     --plugin=bazel-bin/protoc-gen-gapic-java ${FLAGS_protos}/*.proto \
     --gapic-java_out="${FLAGS_out}" \
     --experimental_allow_proto3_optional
