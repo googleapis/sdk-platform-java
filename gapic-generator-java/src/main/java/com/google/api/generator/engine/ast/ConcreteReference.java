@@ -130,6 +130,11 @@ public abstract class ConcreteReference implements Reference {
     return 17 * clazz().hashCode() + 31 * generics().hashCode();
   }
 
+  @Override
+  public Reference copyAndSetGenerics(List<Reference> generics) {
+    return toBuilder().setGenerics(generics).build();
+  }
+
   public static ConcreteReference withClazz(Class clazz) {
     return builder().setClazz(clazz).build();
   }
@@ -139,6 +144,9 @@ public abstract class ConcreteReference implements Reference {
         .setGenerics(ImmutableList.of())
         .setIsStaticImport(false);
   }
+
+  // Private.
+  abstract Builder toBuilder();
 
   @AutoValue.Builder
   public abstract static class Builder {
