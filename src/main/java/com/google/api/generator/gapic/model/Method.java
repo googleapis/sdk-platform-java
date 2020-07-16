@@ -16,19 +16,56 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Method {
+  public enum Stream {
+    NONE,
+    CLIENT,
+    SERVER,
+    BIDI
+  };
+
   public abstract String name();
+
+  public abstract Stream stream();
 
   public abstract TypeNode inputType();
 
   public abstract TypeNode outputType();
 
+  @Nullable
+  public abstract LongrunningOperation lro();
+
+  // Example from Expand in echo.proto: [["content", "error"], ["content", "error", "info"]].
+  public abstract ImmutableList<List<String>> methodSignatures();
+
+  public boolean hasLro() {
+    return lro() != null;
+  }
+
   // TODO(miraleung): Parse annotations, comments.
 
   public static Builder builder() {
-    return new AutoValue_Method.Builder();
+    return new AutoValue_Method.Builder()
+        .setStream(Stream.NONE)
+        .setMethodSignatures(ImmutableList.of());
+  }
+
+  public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {
+    if (!isClientStreaming && !isServerStreaming) {
+      return Stream.NONE;
+    }
+    if (isClientStreaming && isServerStreaming) {
+      return Stream.BIDI;
+    }
+    if (isClientStreaming) {
+      return Stream.CLIENT;
+    }
+    return Stream.SERVER;
   }
 
   @AutoValue.Builder
@@ -38,6 +75,12 @@ public abstract class Method {
     public abstract Builder setInputType(TypeNode inputType);
 
     public abstract Builder setOutputType(TypeNode outputType);
+
+    public abstract Builder setStream(Stream stream);
+
+    public abstract Builder setLro(LongrunningOperation lro);
+
+    public abstract Builder setMethodSignatures(List<List<String>> methodSignatures);
 
     public abstract Method build();
   }
