@@ -380,12 +380,24 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAnonymousClassExpr_basic() {
-    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
-    TypeNode type = TypeNode.withReference(ref);
-    AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder().setType(type).build();
-    anonymousClassExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new Runnable() {\n}");
-  }
+      ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+      TypeNode type = TypeNode.withReference(ref);
+      AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
+      ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
+      MethodDefinition method =
+          MethodDefinition.builder()
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(TypeNode.VOID)
+              .setName("run")
+              .setBody(Arrays.asList(statement))
+              .build();
+  
+      AnonymousClassExpr anonymousClassExpr =
+          AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+      anonymousClassExpr.accept(writerVisitor);
+      System.out.println(writerVisitor.write());
+      assertEquals(writerVisitor.write(), "new Runnable() {\npublic void run() {\nboolean foobar = false;\n}\n}");
+    }
 
   @Test
   public void writeAnonymousClassExpr_withStatementsMethods() {
@@ -398,6 +410,7 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PRIVATE)
             .setIsDecl(true)
             .setIsFinal(true)
+            .setIsStatic(true)
             .setVariable(variable)
             .build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
@@ -421,7 +434,7 @@ public class JavaWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        "new Runnable() {\nprivate final String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
+        "new Runnable() {\nprivate static final String s = foo;\npublic void run() {\nint x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
   }
 
