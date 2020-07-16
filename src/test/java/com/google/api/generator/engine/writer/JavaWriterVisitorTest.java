@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
@@ -396,6 +397,16 @@ public class JavaWriterVisitorTest {
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
     throwExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeInstanceofExpr() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    InstanceofExpr instanceofExpr =
+        InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
+    instanceofExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
   /** =============================== STATEMENTS =============================== */
