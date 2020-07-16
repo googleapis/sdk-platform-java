@@ -18,22 +18,34 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.common.base.Function;
+
+import java.lang.ProcessBuilder.Redirect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.print.DocFlavor.STRING;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -249,6 +261,45 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import java.util.HashMap;\n",
             "import java.util.List;\n\n"));
+  }
+
+  @Test
+  public void writeAnonymousClassExprImports(){
+    ConcreteReference stringListRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class))).build();    
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(Function.class)
+            .setGenerics(
+                Arrays.asList(
+                    stringListRef,
+                    ConcreteReference.withClazz(Integer.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    // HashMap<String, Integer> map;
+    ConcreteReference mapRef = ConcreteReference.builder().setClazz(HashMap.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(Integer.class))).build();
+    VariableExpr mapExpr = VariableExpr.builder().setVariable(Variable.builder().setName("map").setType(TypeNode.withReference(mapRef)).build()).setIsDecl(true).build();
+    ExprStatement exprStatement = ExprStatement.withExpr(mapExpr);
+    VariableExpr arg = VariableExpr.builder().setVariable(Variable.builder().setName("arg").setType(TypeNode.withReference(stringListRef)).build()).setIsDecl(true).build();
+    ValueExpr returnExpr =
+    ValueExpr.builder()
+        .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
+        .build();
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.INT)
+            .setArguments(Arrays.asList(arg))
+            .setReturnExpr(returnExpr)
+            .setName("apply")
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(type)
+            .setMethods(Arrays.asList(method))
+            .setStatements(Arrays.asList(exprStatement))
+            .build();
+    anonymousClassExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), String.format(createLines(3),  "import com.google.common.base.Function;\n", "import java.util.HashMap;\n", "import java.util.List;\n\n"));
   }
 
   private static TypeNode createType(Class clazz) {
