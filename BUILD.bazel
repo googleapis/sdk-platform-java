@@ -12,7 +12,63 @@ JAVA_SRCS = [
 
 TEST_SRCS = [
     "//src/test/java/com/google/api/generator/engine:engine_files",
+    "//src/test/java/com/google/api/generator/gapic:gapic_files",
 ]
+
+# ============= Proto wrappers =================
+java_proto_library(
+    name = "annotations_java_proto",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@com_google_googleapis//google/api:annotations_proto",
+    ],
+)
+
+java_proto_library(
+    name = "client_java_proto",
+    visibility = [
+        "//src/main/java/com/google/api/generator:__subpackages__",
+        "//src/test/java/com/google/api/generator:__subpackages__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:client_proto",
+    ],
+)
+
+java_proto_library(
+    name = "field_behavior_java_proto",
+    visibility = [
+        "//src/main/java/com/google/api/generator:__subpackages__",
+        "//src/test/java/com/google/api/generator:__subpackages__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:field_behavior_proto",
+    ],
+)
+
+java_proto_library(
+    name = "resource_java_proto",
+    visibility = [
+        "//src/main/java/com/google/api/generator:__subpackages__",
+        "//src/test/java/com/google/api/generator:__subpackages__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:resource_proto",
+    ],
+)
+
+java_proto_library(
+    name = "longrunning_java_proto",
+    visibility = [
+        "//src/main/java/com/google/api/generator:__subpackages__",
+        "//src/test/java/com/google/api/generator:__subpackages__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/longrunning:operations_proto",
+    ],
+)
+
+# ============= Binary targets ================
 
 java_binary(
     name = "protoc-gen-gapic-java",
@@ -21,6 +77,11 @@ java_binary(
     ],
     main_class = "com.google.api.generator.Main",
     deps = [
+        ":annotations_java_proto",
+        ":client_java_proto",
+        ":field_behavior_java_proto",
+        ":longrunning_java_proto",
+        ":resource_java_proto",
         "//src/main/java/com/google/api/generator",
         "//src/main/java/com/google/api/generator/gapic",
         "@com_google_guava_guava",

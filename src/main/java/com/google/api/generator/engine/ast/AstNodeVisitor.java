@@ -37,6 +37,10 @@ public interface AstNodeVisitor {
 
   public void visit(AnonymousClassExpr anonymousClassExpr);
 
+  public void visit(ThrowExpr throwExpr);
+
+  public void visit(InstanceofExpr instanceofExpr);
+
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);
 
