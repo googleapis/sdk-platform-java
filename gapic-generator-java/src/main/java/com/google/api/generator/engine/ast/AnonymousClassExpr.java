@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,9 +25,9 @@ public abstract class AnonymousClassExpr implements Expr {
   @Override
   public abstract TypeNode type();
 
-  public abstract List<MethodDefinition> methods();
+  public abstract ImmutableList<MethodDefinition> methods();
 
-  public abstract List<Statement> statements();
+  public abstract ImmutableList<Statement> statements();
 
   public static Builder builder() {
     return new AutoValue_AnonymousClassExpr.Builder()
@@ -51,29 +52,37 @@ public abstract class AnonymousClassExpr implements Expr {
 
     public AnonymousClassExpr build() {
       AnonymousClassExpr anonymousClassExpr = autoBuild();
+      // 1. the anonymous class expression should be reference types.
       Preconditions.checkState(
           TypeNode.isReferenceType(anonymousClassExpr.type()),
-          "Anonymous class expression must be reference types.");
+          "Anonymous class expression should be reference types.");
+      // 2. static methods are not allowed in anonymous class.
       List<MethodDefinition> methods = anonymousClassExpr.methods();
       for (MethodDefinition method : methods) {
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
       }
+      // 3. static variable expression is not allowed unless it is final.
       List<Statement> statements = anonymousClassExpr.statements();
       for (Statement statement : statements) {
         if (statement instanceof ExprStatement) {
           Expr expr = ((ExprStatement) statement).expression();
           if (expr instanceof VariableExpr) {
             Preconditions.checkState(
-                ((VariableExpr) expr).isFinal(),
-                "Variable expression statement in anonymous class must be final.");
+                validVariableExpr(expr),
+                "Anonymous class cannot have static variable expression unless it is final.");
           } else if (expr instanceof AssignmentExpr) {
             Preconditions.checkState(
-                ((AssignmentExpr) expr).variableExpr().isFinal(),
-                "Variable expression statement in anonymous class must be final.");
+                validVariableExpr(((AssignmentExpr) expr).variableExpr()),
+                "Anonymous class cannot have static variable expression in assignment expression"
+                    + " unless it is final.");
           }
         }
       }
       return anonymousClassExpr;
+    }
+
+    private boolean validVariableExpr(Expr expr) {
+      return !((VariableExpr) expr).isStatic() || ((VariableExpr) expr).isFinal();
     }
   }
 }
