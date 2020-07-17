@@ -392,14 +392,14 @@ public class JavaWriterVisitorTest {
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(TypeNode.VOID)
               .setName("run")
+              .setIsOverride(true)
               .setBody(Arrays.asList(statement))
               .build();
   
       AnonymousClassExpr anonymousClassExpr =
           AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
       anonymousClassExpr.accept(writerVisitor);
-      System.out.println(writerVisitor.write());
-      assertEquals(writerVisitor.write(), "new Runnable() {\npublic void run() {\nboolean foobar = false;\n}\n}");
+      assertEquals(writerVisitor.write(), "new Runnable() {\n@Override\npublic void run() {\nboolean foobar = false;\n}\n}");
     }
 
   @Test
@@ -424,6 +424,7 @@ public class JavaWriterVisitorTest {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
             .setName("run")
+            .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setBody(
@@ -437,7 +438,7 @@ public class JavaWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        "new Runnable() {\nprivate static final String s = \"foo\";\npublic void run() {\nint x = 3;\n}\n}";
+        "new Runnable() {\nprivate static final String s = \"foo\";\n@Override\npublic void run() {\nint x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
   }
   
