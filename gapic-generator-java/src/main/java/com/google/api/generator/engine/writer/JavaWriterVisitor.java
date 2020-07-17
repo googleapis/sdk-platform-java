@@ -413,8 +413,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(JavaDocComment javaDocComment) {
     StringBuilder sourceComment = new StringBuilder();
     sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
-    String[] commentLines = javaDocComment.comment().split("\\r?\\n");
-    Arrays.stream(commentLines)
+    Arrays.stream(javaDocComment.comment().split("\\r?\\n"))
         .forEach(
             comment -> {
               sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
