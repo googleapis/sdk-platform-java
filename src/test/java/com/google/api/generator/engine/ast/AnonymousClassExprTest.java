@@ -34,6 +34,7 @@ public class AnonymousClassExprTest {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setName("run")
+            .setIsOverride(true)
             .setBody(Arrays.asList(statement))
             .build();
 
@@ -84,6 +85,7 @@ public class AnonymousClassExprTest {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.STRING)
             .setArguments(Arrays.asList(arg))
+            .setIsOverride(true)
             .setName("apply")
             .setReturnExpr(returnExpr)
             .build();
@@ -116,6 +118,7 @@ public class AnonymousClassExprTest {
             .setName("run")
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
+            .setIsOverride(true)
             .setIsStatic(true)
             .setBody(
                 Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
