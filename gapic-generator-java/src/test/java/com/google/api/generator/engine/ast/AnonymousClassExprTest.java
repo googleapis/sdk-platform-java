@@ -85,13 +85,12 @@ public class AnonymousClassExprTest {
             .setReturnType(TypeNode.STRING)
             .setArguments(Arrays.asList(arg))
             .setName("apply")
-            .setBody(Arrays.asList(statement, statement_staticFinal))
             .setReturnExpr(returnExpr)
             .build();
     AnonymousClassExpr anonymousClassExpr =
         AnonymousClassExpr.builder()
             .setType(type)
-            .setStatements(Arrays.asList(statement))
+            .setStatements(Arrays.asList(statement, statement_staticFinal))
             .setMethods(Arrays.asList(method))
             .build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));

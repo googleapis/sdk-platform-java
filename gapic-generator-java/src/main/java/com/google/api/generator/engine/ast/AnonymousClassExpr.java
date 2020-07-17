@@ -29,6 +29,7 @@ public abstract class AnonymousClassExpr implements Expr {
 
   public abstract ImmutableList<Statement> statements();
 
+  // TODO(unsupported): nested class is not supported.
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
