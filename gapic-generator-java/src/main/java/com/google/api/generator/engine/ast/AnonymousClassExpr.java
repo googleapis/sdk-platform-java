@@ -55,7 +55,7 @@ public abstract class AnonymousClassExpr implements Expr {
       // 1. the anonymous class expression should be reference types.
       Preconditions.checkState(
           TypeNode.isReferenceType(anonymousClassExpr.type()),
-          "Anonymous class expression should be reference types.");
+          "Anonymous class expression must be reference types.");
       // 2. static methods are not allowed in anonymous class.
       for (MethodDefinition method : anonymousClassExpr.methods()) {
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
@@ -66,7 +66,7 @@ public abstract class AnonymousClassExpr implements Expr {
           Expr expr = ((ExprStatement) statement).expression();
           if (expr instanceof VariableExpr) {
             Preconditions.checkState(
-                validVariableExpr(expr),
+                validVariableExpr((VariableExpr) expr),
                 "Anonymous class cannot have static variable expression unless it is final.");
           } else if (expr instanceof AssignmentExpr) {
             Preconditions.checkState(
@@ -79,8 +79,8 @@ public abstract class AnonymousClassExpr implements Expr {
       return anonymousClassExpr;
     }
 
-    private boolean validVariableExpr(Expr expr) {
-      return !((VariableExpr) expr).isStatic() || ((VariableExpr) expr).isFinal();
+    private boolean validVariableExpr(VariableExpr expr) {
+      return !expr.isStatic() || expr.isFinal();
     }
   }
 }

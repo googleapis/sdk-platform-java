@@ -45,6 +45,7 @@ public class AnonymousClassExprTest {
 
   @Test
   public void validAnonymousClass_genericAndVariableExpr() {
+    // new Function<String, String>()
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(Function.class)
@@ -77,6 +78,7 @@ public class AnonymousClassExprTest {
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.STRING).build())
             .build();
+    // public String apply(String arg){\n return arg;\n}
     MethodDefinition method =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
