@@ -35,19 +35,19 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    String throwType = null;
-    String throwDescription = null;
+    String throwsType = null;
+    String throwsDescription = null;
     String deprecated = null;
-    List<String> paramsBuilder = new ArrayList<>();
-    List<String> commentsBuilder = new ArrayList<>();
-    // set complete and consolidated comment.
+    List<String> paramsList = new ArrayList<>();
+    List<String> componentsList = new ArrayList<>();
+    // Private accessor, set complete and consolidated comment.
     abstract Builder setComment(String comment);
 
     abstract JavaDocComment autoBuild();
 
     public Builder setThrows(String type, String description) {
-      throwType = type;
-      throwDescription = description;
+      throwsType = type;
+      throwsDescription = description;
       return this;
     }
 
@@ -57,65 +57,64 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParam(String name, String description) {
-      paramsBuilder.add(String.format("@param %s %s", name, description));
+      paramsList.add(String.format("@param %s %s", name, description));
       return this;
     }
 
     public Builder addComment(String comment) {
-      commentsBuilder.add(comment);
+      componentsList.add(comment);
       return this;
     }
 
     public Builder addSampleCode(String sampleCode) {
-      commentsBuilder.add("<pre><code>");
-      String[] sampleLines = sampleCode.split("\\r?\\n");
-      Arrays.stream(sampleLines)
+      componentsList.add("<pre><code>");
+      Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                commentsBuilder.add(line);
+                componentsList.add(line);
               });
-      commentsBuilder.add("</code></pre>");
+      componentsList.add("</code></pre>");
       return this;
     }
 
     public Builder addParagraph(String paragraph) {
-      commentsBuilder.add(String.format("<p> %s", paragraph));
+      componentsList.add(String.format("<p> %s", paragraph));
       return this;
     }
 
     public Builder addOrderedList(List<String> oList) {
-      commentsBuilder.add("<ol>");
+      componentsList.add("<ol>");
       oList.stream()
           .forEach(
               s -> {
-                commentsBuilder.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", s));
               });
-      commentsBuilder.add("</ol>");
+      componentsList.add("</ol>");
       return this;
     }
 
     public Builder addUnorderedList(List<String> uList) {
-      commentsBuilder.add("<ul>");
+      componentsList.add("<ul>");
       uList.stream()
           .forEach(
               s -> {
-                commentsBuilder.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", s));
               });
-      commentsBuilder.add("</ul>");
+      componentsList.add("</ul>");
       return this;
     }
 
     public JavaDocComment build() {
       // TODO(xiaozhenliu): call comment escaper here.
       // @param, @throws and @deprecated should always get printed at the end.
-      commentsBuilder.addAll(paramsBuilder);
-      if (!Strings.isNullOrEmpty(throwType)) {
-        commentsBuilder.add(String.format("@throws %s %s", throwType, throwDescription));
+      componentsList.addAll(paramsList);
+      if (!Strings.isNullOrEmpty(throwsType)) {
+        componentsList.add(String.format("@throws %s %s", throwsType, throwsDescription));
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
-        commentsBuilder.add(String.format("@deprecated %s", deprecated));
+        componentsList.add(String.format("@deprecated %s", deprecated));
       }
-      setComment(String.join("\n", commentsBuilder));
+      setComment(String.join("\n", componentsList));
       return autoBuild();
     }
   }
