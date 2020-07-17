@@ -172,6 +172,21 @@ public final class ApiFutures {
                   }
                 })));
   }
+
+  @BetaApi
+  public static <V> ApiFuture<List<V>> successfulAsList(
+      Iterable<? extends ApiFuture<? extends V>> futures) {
+    return new ListenableFutureToApiFuture<>(
+        Futures.successfulAsList(
+            Iterables.transform(
+                futures,
+                new Function<ApiFuture<? extends V>, ListenableFuture<? extends V>>() {
+                  public ListenableFuture<? extends V> apply(ApiFuture<? extends V> apiFuture) {
+                    return listenableFutureForApiFuture(apiFuture);
+                  }
+                })));
+  }
+
   /*
    * @deprecated Use {@linkplain #transformAsync(ApiFuture, ApiFunction, Executor) the
    * overload that requires an executor}. For identical behavior, pass {@link

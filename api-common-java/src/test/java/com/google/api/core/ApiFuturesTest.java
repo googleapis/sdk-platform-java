@@ -155,6 +155,17 @@ public class ApiFuturesTest {
   }
 
   @Test
+  public void successfulAllAsList() throws Exception {
+    SettableApiFuture<Integer> inputFuture1 = SettableApiFuture.<Integer>create();
+    SettableApiFuture<Integer> inputFuture2 = SettableApiFuture.<Integer>create();
+    ApiFuture<List<Integer>> listFuture =
+        ApiFutures.successfulAsList(ImmutableList.of(inputFuture1, inputFuture2));
+    inputFuture1.set(1);
+    inputFuture2.setException(new Exception());
+    assertThat(listFuture.get()).containsExactly(1, null).inOrder();
+  }
+
+  @Test
   public void testTransformAsync() throws Exception {
     ApiFuture<Integer> inputFuture = ApiFutures.immediateFuture(0);
     ApiFuture<Integer> outputFuture =
