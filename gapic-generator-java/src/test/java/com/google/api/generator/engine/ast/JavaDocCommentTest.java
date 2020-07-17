@@ -48,29 +48,27 @@ public class JavaDocCommentTest {
     // Add methods, like `addComment()`, should add components at any place,
     // and they will get printed in order.
     String comment1 = "This is a test comment.";
-    String comment2 = "This is unordered list.";
-    String comment3 = "This is ordered list.";
-    List<String> orderedList =
-        Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
-    List<String> unOrderedList =
+    String comment2 = "This is an unordered list.";
+    String comment3 = "This is an ordered list.";
+    List<String> list =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment(comment1)
             .addComment(comment2)
-            .addUnorderedList(unOrderedList)
+            .addUnorderedList(list)
             .addComment(comment3)
-            .addOrderedList(orderedList)
+            .addOrderedList(list)
             .build();
     String expected =
         "This is a test comment.\n"
-            + "This is unordered list.\n"
+            + "This is an unordered list.\n"
             + "<ul>\n"
             + "<li> A flattened method.\n"
             + "<li> A request object method.\n"
             + "<li> A callable method.\n"
             + "</ul>\n"
-            + "This is ordered list.\n"
+            + "This is an ordered list.\n"
             + "<ol>\n"
             + "<li> A flattened method.\n"
             + "<li> A request object method.\n"
@@ -101,12 +99,12 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_throesDeprecated() {
+  public void createJavaDocComment_throwsAndDeprecated() {
     // No matter how many times or order `setThrows` and `setDeprecated` are called,
     // only one @throws and @deprecated will be printed.
-    String throwType = "com.google.api.gax.rpc.ApiException";
+    String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
-    String throwType_print = "java.lang.RuntimeException";
+    String throwsType_print = "java.lang.RuntimeException";
     String throwsDescription_print = "if the remote call fails.";
 
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
@@ -114,9 +112,9 @@ public class JavaDocCommentTest {
 
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .setThrows(throwType, throwsDescription)
+            .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
-            .setThrows(throwType_print, throwsDescription_print)
+            .setThrows(throwsType_print, throwsDescription_print)
             .setDeprecated(deprecatedText_print)
             .build();
     String expected =
@@ -145,12 +143,12 @@ public class JavaDocCommentTest {
             + " methods:";
     List<String> orderedList =
         Arrays.asList("A flattened method.", "A request object method.", "A callable method.");
-    String throwType = "com.google.api.gax.rpc.ApiException";
+    String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .setDeprecated(deprecatedText)
-            .setThrows(throwType, throwsDescription)
+            .setThrows(throwsType, throwsDescription)
             .addParam(paramName1, paramDescription1)
             .addComment(content)
             .addParagraph(paragraph1)

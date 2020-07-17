@@ -240,7 +240,7 @@ public class JavaWriterVisitorTest {
     String sampleCode = createSampleCode();
     List<String> orderedlList =
         Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
-    String throwType = "com.google.api.gax.rpc.ApiException";
+    String throwsType = "com.google.api.gax.rpc.ApiException";
     String throwsDescription = "if the remote call fails.";
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -251,7 +251,7 @@ public class JavaWriterVisitorTest {
             .addOrderedList(orderedlList)
             .addSampleCode(sampleCode)
             .addParam(paramName, paramDescription)
-            .setThrows(throwType, throwsDescription)
+            .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
             .build();
     String expected =
@@ -1247,7 +1247,6 @@ public class JavaWriterVisitorTest {
             .build();
 
     tryCatch.accept(writerVisitor);
-    String sampleCode = writerVisitor.write();
-    return sampleCode;
+    return writerVisitor.write();
   }
 }
