@@ -15,26 +15,17 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
 @AutoValue
-public abstract class VariableExpr implements Expr {
-  public abstract Variable variable();
+public abstract class InstanceofExpr implements Expr {
+  public abstract Expr expr();
 
-  /** Variable declaration fields. */
-  public abstract boolean isDecl();
-
-  public abstract ScopeNode scope();
-
-  public abstract boolean isStatic();
-
-  public abstract boolean isFinal();
+  public abstract TypeNode checkType();
 
   @Override
   public TypeNode type() {
-    if (isDecl()) {
-      return TypeNode.VOID;
-    }
-    return variable().type();
+    return TypeNode.BOOLEAN;
   }
 
   @Override
@@ -43,27 +34,23 @@ public abstract class VariableExpr implements Expr {
   }
 
   public static Builder builder() {
-    return new AutoValue_VariableExpr.Builder()
-        .setIsDecl(false)
-        .setIsFinal(false)
-        .setIsStatic(false)
-        .setScope(ScopeNode.LOCAL);
+    return new AutoValue_InstanceofExpr.Builder();
   }
-
-  public abstract Builder toBuilder();
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setVariable(Variable variable);
+    public abstract Builder setExpr(Expr expr);
 
-    public abstract Builder setIsDecl(boolean isDecl);
+    public abstract Builder setCheckType(TypeNode checkType);
 
-    public abstract Builder setScope(ScopeNode scope);
+    abstract InstanceofExpr autoBuild();
 
-    public abstract Builder setIsStatic(boolean isStatic);
-
-    public abstract Builder setIsFinal(boolean isFinal);
-
-    public abstract VariableExpr build();
+    public InstanceofExpr build() {
+      InstanceofExpr instanceofExpr = autoBuild();
+      Preconditions.checkState(
+          TypeNode.isReferenceType(instanceofExpr.checkType()),
+          "Instanceof can only check reference types");
+      return instanceofExpr;
+    }
   }
 }
