@@ -35,6 +35,7 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    // The lack of a getter for these local variables in the external class is WAI.
     String throwsType = null;
     String throwsDescription = null;
     String deprecated = null;
