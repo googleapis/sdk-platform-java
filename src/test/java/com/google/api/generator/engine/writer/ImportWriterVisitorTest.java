@@ -33,10 +33,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-<<<<<<< HEAD
-
-=======
->>>>>>> 7b3e2502af9a117129d974cc90b5d1fcab358c18
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
