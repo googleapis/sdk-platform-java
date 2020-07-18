@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -28,6 +29,8 @@ import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
@@ -187,6 +190,103 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeBlockComment_basic() {
+    String content = "this is a test comment";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected = "/** this is a test comment */\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+  // TODO(xiaozhenliu): add comment escaper in BlockComment/JavaDocComment classes and add unit
+  // tests for them.
+
+  @Test
+  public void writeLineComment_basic() {
+    String content = "this is a test comment";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected = "// this is a test comment\n";
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_longLine() {
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3"
+            + " times, blah, blah!";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(2),
+            "// this is a long test comment with so many words, hello world, hello again, hello"
+                + " for 3 times,\n",
+            "// blah, blah!\n");
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeJavaDocComment_allComponents() {
+    String content = "this is a test comment";
+    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    String paramName = "shelfName";
+    String paramDescription = "The name of the shelf where books are published to.";
+    String paragraph1 =
+        "This class provides the ability to make remote calls to the backing service through"
+            + " method calls that map to API methods. Sample code to get started:";
+    String paragraph2 =
+        "The surface of this class includes several types of Java methods for each of the API's"
+            + " methods:";
+    String sampleCode = createSampleCode();
+    List<String> orderedlList =
+        Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
+    String throwsType = "com.google.api.gax.rpc.ApiException";
+    String throwsDescription = "if the remote call fails.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(content)
+            .addParagraph(paragraph1)
+            .addSampleCode(sampleCode)
+            .addParagraph(paragraph2)
+            .addOrderedList(orderedlList)
+            .addSampleCode(sampleCode)
+            .addParam(paramName, paramDescription)
+            .setThrows(throwsType, throwsDescription)
+            .setDeprecated(deprecatedText)
+            .build();
+    String expected =
+        String.format(
+            createLines(23),
+            "/**\n",
+            "* this is a test comment\n",
+            "* <p> This class provides the ability to make remote calls to the backing service"
+                + " through method calls that map to API methods. Sample code to get started:\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* <p> The surface of this class includes several types of Java methods for each of"
+                + " the API's methods:\n",
+            "* <ol>\n",
+            "* <li> A flattened method.\n",
+            "* <li>  A request object method.\n",
+            "* <li> A callable method.\n",
+            "* </ol>\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* @param shelfName The name of the shelf where books are published to.\n",
+            "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
+            "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
+            "*/\n");
+    javaDocComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
   public void writeTernaryExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
@@ -207,7 +307,7 @@ public class JavaWriterVisitorTest {
             .setElseExpr(elseExpr)
             .build();
     ternaryExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
+    assertEquals(writerVisitor.write(), "condition ? 3 : 4");
   }
 
   @Test
@@ -624,10 +724,9 @@ public class JavaWriterVisitorTest {
         WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
 
     whileStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            String.format(
-                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -1135,5 +1234,19 @@ public class JavaWriterVisitorTest {
         .setCollectionExpr(collectionExpr)
         .setBody(body)
         .build();
+  }
+
+  private static String createSampleCode() {
+    JavaWriterVisitor writerVisitor = new JavaWriterVisitor();
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .setIsSampleCode(true)
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    return writerVisitor.write();
   }
 }
