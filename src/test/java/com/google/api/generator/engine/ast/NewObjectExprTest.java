@@ -24,7 +24,9 @@ import org.junit.Test;
 
 public class NewObjectExprTest {
   @Test
-  public void newObjectValue_generics() {
+  public void validNewObjectValue_generics() {
+    // isGeneric() true, generics() is not empty.
+    // constructing `"new List<String>()"`, no exception should be thrown.
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -33,7 +35,50 @@ public class NewObjectExprTest {
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     assertEquals(newObjectExpr.type(), type);
+  }
+
+  @Test
+  public void validNewObjectExpr_conflictGenericSetting() {
+    // isGeneric() is false, but generics() is not empty
+    // it’s still valid, we will set isGeneric() as true for the users.
     // constructing `"new List<String>()"`, no exception should be thrown.
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).build();
+    assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.type().reference(), ref);
+    assertEquals(newObjectExpr.isGeneric(), true);
+  }
+
+  @Test
+  public void validNewObjectExpr_notGenericWithArgs() {
+    // isGeneric() is false, and generics() is empty
+    // constructing “new Integer(123) “ no exception should be thrown
+    ConcreteReference ref = ConcreteReference.builder().setClazz(Integer.class).build();
+    TypeNode type = TypeNode.withReference(ref);
+    PrimitiveValue value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+    assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.type().reference(), ref);
+    assertEquals(newObjectExpr.isGeneric(), false);
+  }
+
+  @Test
+  public void validNewObjectExpr_emptyGeneric() {
+    // isGeneric() is true, but generics() is empty
+    // constructing “new LinedList<>()” no exception should be thrown
+    ConcreteReference ref = ConcreteReference.builder().setClazz(LinkedList.class).build();
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).setIsGeneric(true).build();
+    assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.type().reference(), ref);
+    assertEquals(newObjectExpr.isGeneric(), true);
   }
 
   @Test
@@ -44,23 +89,5 @@ public class NewObjectExprTest {
         () -> {
           NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.INT).build();
         });
-  }
-
-  @Test
-  public void validNewObjectValue_conflictGenericSetting() {
-    // if the generics() is set, but user calls builder() to build the object,
-    // instead of calling genericBuilder, we should set isGeneric for users.
-    ConcreteReference ref =
-        ConcreteReference.builder()
-            .setClazz(LinkedList.class)
-            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Object.class)))
-            .build();
-    TypeNode type = TypeNode.withReference(ref);
-    System.out.println("conflict settings");
-    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(false).setType(type).build();
-
-    assertEquals(newObjectExpr.type(), type);
-    assertEquals(newObjectExpr.isGeneric(), true);
-    assertEquals(newObjectExpr.type().reference(), ref);
   }
 }

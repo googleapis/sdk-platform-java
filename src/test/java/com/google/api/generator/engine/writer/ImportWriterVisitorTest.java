@@ -30,6 +30,8 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -49,17 +51,27 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports() {
-    ConcreteReference mapRef =
-    ConcreteReference.builder()
-        .setClazz(HashMap.class)
-        .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(String.class)))
-        .build();
+  public void writeNewObjectExprImports_generics() {
+      // new List<HashMap<String, String>>()
+    ConcreteReference mapRef = ConcreteReference.builder().setClazz(HashMap.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(String.class))).build();
     ConcreteReference listRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(mapRef)).build();
     TypeNode type = TypeNode.withReference(listRef);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import java.util.HashMap;\nimport java.util.List;\n\n");
+  }
+
+  @Test
+  public void writeNewObjectExprImports_withVariableArgs() {
+      // new IOException(message, cause)
+      TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class)); 
+    Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
+    Variable cause = Variable.builder().setName("cause").setType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class))).build();
+    VariableExpr causeExpr = VariableExpr.builder().setVariable(cause).build();
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(msgExpr, causeExpr)).build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import java.io.IOException;\n\n");
   }
 
   @Test

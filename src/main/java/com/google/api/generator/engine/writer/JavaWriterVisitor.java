@@ -134,8 +134,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append("<>");
     }
     buffer.append(LEFT_PAREN);
-    for (Expr expression : newObjectValue.arguments()) {
-      expression.accept(this);
+    List<Expr> args = newObjectValue.arguments();
+    for (int i = 0; i < args.size(); i++) {
+      args.get(i).accept(this);
+      if(i < args.size() - 1){
+        buffer.append(COMMA);
+        space();
+      }
     }
     buffer.append(RIGHT_PAREN);
   }

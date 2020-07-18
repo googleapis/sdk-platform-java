@@ -50,10 +50,12 @@ public abstract class NewObjectExpr implements Expr {
 
     public NewObjectExpr build() {
       NewObjectExpr newObjectExpr = autoBuild();
-      // Check the object is reference type.
+      // 1. New object expression should be reference type.
       Preconditions.checkState(
-          TypeNode.isReferenceType(newObjectExpr.type()), "New object cannot be reference types.");
-      // Check if there is a conflict between isGeneric() setting and generics() setting.
+          TypeNode.isReferenceType(newObjectExpr.type()),
+          "New object expression should be reference types.");
+      // 2. Edge case: isGeneric is false, but type().generics() is not empty
+      // we will set isGeneric to be true for the users.
       boolean noGenerics = newObjectExpr.type().reference().generics().isEmpty();
       if (!newObjectExpr.isGeneric() && !noGenerics) {
         setIsGeneric(true);
