@@ -278,7 +278,7 @@ public class ImportWriterVisitorTest {
                     ConcreteReference.withClazz(Integer.class)))
             .build();
     TypeNode type = TypeNode.withReference(ref);
-    // HashMap<String, Integer> map;
+    // [Constructing] HashMap<String, Integer> map;
     ConcreteReference mapRef = ConcreteReference.builder().setClazz(HashMap.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(Integer.class))).build();
     VariableExpr mapExpr = VariableExpr.builder().setVariable(Variable.builder().setName("map").setType(TypeNode.withReference(mapRef)).build()).setIsDecl(true).build();
     ExprStatement exprStatement = ExprStatement.withExpr(mapExpr);

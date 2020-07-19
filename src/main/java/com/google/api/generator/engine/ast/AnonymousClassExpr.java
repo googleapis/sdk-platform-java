@@ -53,15 +53,15 @@ public abstract class AnonymousClassExpr implements Expr {
 
     public AnonymousClassExpr build() {
       AnonymousClassExpr anonymousClassExpr = autoBuild();
-      // 1. the anonymous class expression should be reference types.
+      // 1. The anonymous class expression should be reference types.
       Preconditions.checkState(
           TypeNode.isReferenceType(anonymousClassExpr.type()),
           "Anonymous class expression must be reference types.");
-      // 2. static methods are not allowed in anonymous class.
+      // 2. Static methods are not allowed in anonymous class.
       for (MethodDefinition method : anonymousClassExpr.methods()) {
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
       }
-      // 3. static variable expression is not allowed unless it is final.
+      // 3. Static variable expression is not allowed unless it is final.
       for (Statement statement : anonymousClassExpr.statements()) {
         if (statement instanceof ExprStatement) {
           Expr expr = ((ExprStatement) statement).expression();

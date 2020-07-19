@@ -46,7 +46,7 @@ public class AnonymousClassExprTest {
 
   @Test
   public void validAnonymousClass_genericAndVariableExpr() {
-    // new Function<String, String>()
+    // [Constructing] new Function<String, String>()
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(Function.class)
@@ -56,10 +56,10 @@ public class AnonymousClassExprTest {
                     ConcreteReference.withClazz(String.class)))
             .build();
     TypeNode type = TypeNode.withReference(ref);
-    // String x;
+    // [Constructing] String x;
     VariableExpr variableExpr = createVariableDeclExpr("x", TypeNode.STRING);
     ExprStatement statement = ExprStatement.withExpr(variableExpr);
-    // static final String s = "constant";
+    // [Constructing] static final String s = "constant";
     VariableExpr variableExpr_staticFinal =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("s").setType(TypeNode.STRING).build())
@@ -79,7 +79,7 @@ public class AnonymousClassExprTest {
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("arg").setType(TypeNode.STRING).build())
             .build();
-    // public String apply(String arg){\n return arg;\n}
+    // [Constructing] public String apply(String arg){\n return arg;\n}
     MethodDefinition method =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
@@ -137,7 +137,7 @@ public class AnonymousClassExprTest {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     Variable variable = createVariable("s", TypeNode.STRING);
-    // static string s;
+    // [Constructing] static string s;
     VariableExpr variableExpr =
         VariableExpr.builder().setIsDecl(true).setIsStatic(true).setVariable(variable).build();
     ExprStatement exprStatement = ExprStatement.withExpr(variableExpr);

@@ -399,7 +399,7 @@ public class JavaWriterVisitorTest {
       AnonymousClassExpr anonymousClassExpr =
           AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
       anonymousClassExpr.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), "new Runnable() {\n@Override\npublic void run() {\nboolean foobar = false;\n}\n}");
+      assertEquals(writerVisitor.write(), "new Runnable() {\n" + "@Override\npublic void run() {\n" + "boolean foobar = false;\n}\n}");
     }
 
   @Test
@@ -438,7 +438,7 @@ public class JavaWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        "new Runnable() {\nprivate static final String s = \"foo\";\n@Override\npublic void run() {\nint x = 3;\n}\n}";
+        "new Runnable() {\n" + "private static final String s = \"foo\";\n" + "@Override\npublic void run() {\n" + "int x = 3;\n}\n}";
     assertEquals(writerVisitor.write(), expected);
   }
   
