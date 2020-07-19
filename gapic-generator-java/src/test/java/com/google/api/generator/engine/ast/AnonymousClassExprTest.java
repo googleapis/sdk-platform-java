@@ -133,6 +133,30 @@ public class AnonymousClassExprTest {
   }
 
   @Test
+  public void invalidAnonymousClass_explicitConstructor() {
+    TypeNode returnType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("LibrarySettings")
+                .setPakkage("com.google.example.library.v1")
+                .build());
+    MethodDefinition method =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          AnonymousClassExpr anonymousClassExpr =
+              AnonymousClassExpr.builder()
+                  .setType(returnType)
+                  .setMethods(Arrays.asList(method))
+                  .build();
+        });
+  }
+
+  @Test
   public void invalidAnonymousClass_staticVariableExpr() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);

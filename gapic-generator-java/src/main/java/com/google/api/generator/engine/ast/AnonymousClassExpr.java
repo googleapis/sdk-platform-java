@@ -57,9 +57,13 @@ public abstract class AnonymousClassExpr implements Expr {
       Preconditions.checkState(
           TypeNode.isReferenceType(anonymousClassExpr.type()),
           "Anonymous class expression must be reference types.");
-      // 2. Static methods are not allowed in anonymous class.
       for (MethodDefinition method : anonymousClassExpr.methods()) {
+        // 2. Static methods are not allowed in anonymous class.
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
+        // 3. Anonymous class cannot have explicit constructors.
+        Preconditions.checkState(
+            !method.name().equals(anonymousClassExpr.type().reference().name()),
+            "Anonymous class cannot have explicit constructors.");
       }
       // 3. Static variable expression is not allowed unless it is final.
       for (Statement statement : anonymousClassExpr.statements()) {
