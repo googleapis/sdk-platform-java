@@ -229,15 +229,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(AnonymousClassExpr anonymousClassExpr) {
-    buffer.append("new");
+    buffer.append(NEW);
     space();
-    buffer.append(anonymousClassExpr.type().reference().name());
-    buffer.append(LEFT_PAREN).append(RIGHT_PAREN);
+    anonymousClassExpr.type().accept(this);
+    leftParen();
+    rightParen();
     space();
-    buffer.append(LEFT_BRACE).append(NEWLINE);
+    leftBrace();
+    newline();
     statements(anonymousClassExpr.statements());
     methods(anonymousClassExpr.methods());
-    buffer.append(RIGHT_BRACE);
+    rightBrace();
   }
   
   @Override
