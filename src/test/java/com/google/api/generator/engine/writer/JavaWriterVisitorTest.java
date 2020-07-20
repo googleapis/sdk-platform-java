@@ -593,6 +593,7 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.withReference(methodDefinitionRef))
             .setArguments(Arrays.asList(arg))
+            .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
             .setReturnExpr(returnArg)
             .setName("apply")
             .build();
@@ -601,8 +602,9 @@ public class JavaWriterVisitorTest {
     anonymousClassExpr.accept(writerVisitor);
     String expected =
         String.format(
-            createLines(4),
+            createLines(5),
             "new Function<List<IOException>, MethodDefinition>() {\n",
+            "@Override\n",
             "public MethodDefinition apply(List<IOException> arg) {\n",
             "return returnArg;\n",
             "}\n}");
