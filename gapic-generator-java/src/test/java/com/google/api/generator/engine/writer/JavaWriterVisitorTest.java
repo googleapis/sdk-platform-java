@@ -593,7 +593,7 @@ public class JavaWriterVisitorTest {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.withReference(methodDefinitionRef))
             .setArguments(Arrays.asList(arg))
-            .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
+            .setIsOverride(true)
             .setReturnExpr(returnArg)
             .setName("apply")
             .build();
