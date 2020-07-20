@@ -324,7 +324,6 @@ public class ImportWriterVisitorTest {
             .setStatements(Arrays.asList(exprStatement))
             .build();
     anonymousClassExpr.accept(writerVisitor);
-    System.out.println("write: " + writerVisitor.write());
     assertEquals(
         writerVisitor.write(),
         String.format(

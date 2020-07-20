@@ -137,7 +137,7 @@ public class AnonymousClassExprTest {
     TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(Runnable.class));
     TypeNode returnType =
         TypeNode.withReference(
-            VaporReference.builder().setName("Runnable").setPakkage("java.lang.Runnable").build());
+            VaporReference.builder().setName("Runnable").setPakkage("java.lang").build());
     MethodDefinition method =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PUBLIC)
