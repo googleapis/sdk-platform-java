@@ -17,6 +17,7 @@ package com.google.api.generator.engine.writer;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
@@ -25,6 +26,8 @@ import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
@@ -198,6 +201,21 @@ public class ImportWriterVisitor implements AstNodeVisitor {
             + " try-catch block");
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
+  }
+  /** =============================== COMMENT =============================== */
+  @Override
+  public void visit(LineComment lineComment) {
+    // Do nothing
+  }
+
+  @Override
+  public void visit(BlockComment blockComment) {
+    // Do nothing
+  }
+
+  @Override
+  public void visit(JavaDocComment javaDocComment) {
+    // Do nothing
   }
 
   /** =============================== OTHER =============================== */
