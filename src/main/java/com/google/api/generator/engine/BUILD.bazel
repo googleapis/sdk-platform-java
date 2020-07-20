@@ -6,6 +6,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/engine/ast:ast_files",
         "//src/main/java/com/google/api/generator/engine/escaper:escaper_files",
         "//src/main/java/com/google/api/generator/engine/lexicon:lexicon_files",
+        "//src/main/java/com/google/api/generator/engine/writer:writer_files",
     ],
 )
 
