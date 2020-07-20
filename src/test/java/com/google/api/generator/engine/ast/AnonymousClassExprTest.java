@@ -100,7 +100,7 @@ public class AnonymousClassExprTest {
   }
 
   @Test
-  public void invalidAnonymousClass_noReference() {
+  public void invalidAnonymousClass_primitiveType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
