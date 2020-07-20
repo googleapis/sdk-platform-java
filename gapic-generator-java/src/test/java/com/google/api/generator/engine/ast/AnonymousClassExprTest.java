@@ -134,12 +134,10 @@ public class AnonymousClassExprTest {
 
   @Test
   public void invalidAnonymousClass_explicitConstructor() {
+    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(Runnable.class));
     TypeNode returnType =
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName("LibrarySettings")
-                .setPakkage("com.google.example.library.v1")
-                .build());
+            VaporReference.builder().setName("Runnable").setPakkage("java.lang.Runnable").build());
     MethodDefinition method =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PUBLIC)
@@ -149,10 +147,7 @@ public class AnonymousClassExprTest {
         IllegalStateException.class,
         () -> {
           AnonymousClassExpr anonymousClassExpr =
-              AnonymousClassExpr.builder()
-                  .setType(returnType)
-                  .setMethods(Arrays.asList(method))
-                  .build();
+              AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
         });
   }
 

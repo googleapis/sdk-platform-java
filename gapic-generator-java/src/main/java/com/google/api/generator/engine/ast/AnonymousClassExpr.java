@@ -62,8 +62,7 @@ public abstract class AnonymousClassExpr implements Expr {
         Preconditions.checkState(!method.isStatic(), "Anonymous class cannot have static methods.");
         // 3. Anonymous class cannot have explicit constructors.
         Preconditions.checkState(
-            !method.name().equals(anonymousClassExpr.type().reference().name()),
-            "Anonymous class cannot have explicit constructors.");
+            !method.isConstructor(), "Anonymous class cannot have explicit constructors.");
       }
       // 3. Static variable expression is not allowed unless it is final.
       for (Statement statement : anonymousClassExpr.statements()) {
