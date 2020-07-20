@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
@@ -26,6 +27,8 @@ import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -40,6 +43,8 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Strings;
+
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +57,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private static final String COLON = ":";
   private static final String COMMA = ",";
+  private static final String BLOCK_COMMENT_START = "/**";
+  private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
   private static final String ESCAPED_QUOTE = "\"";
   private static final String EQUALS = "=";
@@ -63,6 +70,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String RIGHT_BRACE = "}";
   private static final String RIGHT_PAREN = ")";
   private static final String SEMICOLON = ";";
+  private static final String ASTERISK = "*";
 
   private static final String ABSTRACT = "abstract";
   private static final String CATCH = "catch";
@@ -398,6 +406,36 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       rightBrace();
     }
     newline();
+  }
+
+  /** =============================== COMMENT =============================== */
+  public void visit(LineComment lineComment) {
+    // Split comments by new line and add `//` to each line.
+    String formattedSource =
+        JavaFormatter.format(
+            String.format("// %s", String.join("\n//", lineComment.comment().split("\\r?\\n"))));
+    buffer.append(formattedSource);
+  }
+
+  public void visit(BlockComment blockComment) {
+    // Split comments by new line and embrace the comment block with `/** */`.
+    String sourceComment = blockComment.comment();
+    String formattedSource =
+        JavaFormatter.format(
+            String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
+    buffer.append(formattedSource);
+  }
+
+  public void visit(JavaDocComment javaDocComment) {
+    StringBuilder sourceComment = new StringBuilder();
+    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
+    Arrays.stream(javaDocComment.comment().split("\\r?\\n"))
+        .forEach(
+            comment -> {
+              sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
+            });
+    sourceComment.append(BLOCK_COMMENT_END);
+    buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
 
   /** =============================== OTHER =============================== */

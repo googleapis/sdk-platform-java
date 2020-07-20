@@ -9,6 +9,7 @@ TESTS = [
     "ForStatementTest",
     "IdentifierNodeTest",
     "InstanceofExprTest",
+    "JavaDocCommentTest",
     "MethodDefinitionTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
