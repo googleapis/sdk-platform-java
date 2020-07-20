@@ -145,7 +145,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     methods(anonymousClassExpr.methods());
     statements(anonymousClassExpr.statements());
   }
-  
+
   @Override
   public void visit(ThrowExpr throwExpr) {
     throwExpr.type().accept(this);
