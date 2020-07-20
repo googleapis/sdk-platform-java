@@ -484,24 +484,30 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeAnonymousClassExpr_basic() {
-      ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
-      TypeNode type = TypeNode.withReference(ref);
-      AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
-      ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
-      MethodDefinition method =
-          MethodDefinition.builder()
-              .setScope(ScopeNode.PUBLIC)
-              .setReturnType(TypeNode.VOID)
-              .setName("run")
-              .setIsOverride(true)
-              .setBody(Arrays.asList(statement))
-              .build();
-  
-      AnonymousClassExpr anonymousClassExpr =
-          AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
-      anonymousClassExpr.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), String.format(createLines(3), "new Runnable() {\n", "@Override\npublic void run() {\n", "boolean foobar = false;\n}\n}"));
-    }
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
+    ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setName("run")
+            .setIsOverride(true)
+            .setBody(Arrays.asList(statement))
+            .build();
+
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "new Runnable() {\n",
+            "@Override\npublic void run() {\n",
+            "boolean foobar = false;\n}\n}"));
+  }
 
   @Test
   public void writeAnonymousClassExpr_withStatementsMethods() {
@@ -538,29 +544,50 @@ public class JavaWriterVisitorTest {
             .setMethods(Arrays.asList(methodDefinition))
             .build();
     anonymousClassExpr.accept(writerVisitor);
-    String expected = String.format(createLines(4), "new Runnable() {\n", "private static final String s = \"foo\";\n", "@Override\npublic void run() {\n", "int x = 3;\n}\n}");
+    String expected =
+        String.format(
+            createLines(4),
+            "new Runnable() {\n",
+            "private static final String s = \"foo\";\n",
+            "@Override\npublic void run() {\n",
+            "int x = 3;\n}\n}");
     assertEquals(writerVisitor.write(), expected);
   }
-  
 
   @Test
-  public void writeAnonymousClassExpr_generics(){
+  public void writeAnonymousClassExpr_generics() {
     // [Constructing] Function<List<IOException>, MethodDefinition>
-    ConcreteReference exceptionListRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class))).build();    
+    ConcreteReference exceptionListRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class)))
+            .build();
     ConcreteReference methodDefinitionRef = ConcreteReference.withClazz(MethodDefinition.class);
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(Function.class)
-            .setGenerics(
-                Arrays.asList(
-                    exceptionListRef,
-                    methodDefinitionRef))
+            .setGenerics(Arrays.asList(exceptionListRef, methodDefinitionRef))
             .build();
     TypeNode type = TypeNode.withReference(ref);
     // [Constructing] an input argument whose type is `List<IOException>`
-    VariableExpr arg = VariableExpr.builder().setVariable(Variable.builder().setName("arg").setType(TypeNode.withReference(exceptionListRef)).build()).setIsDecl(true).build();
+    VariableExpr arg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("arg")
+                    .setType(TypeNode.withReference(exceptionListRef))
+                    .build())
+            .setIsDecl(true)
+            .build();
     // [Constructing] a return variable expression whose type is `MethodDefinition`
-    VariableExpr returnArg = VariableExpr.builder().setVariable(Variable.builder().setName("returnArg").setType(TypeNode.withReference(methodDefinitionRef)).build()).build();
+    VariableExpr returnArg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("returnArg")
+                    .setType(TypeNode.withReference(methodDefinitionRef))
+                    .build())
+            .build();
     MethodDefinition method =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
@@ -570,16 +597,15 @@ public class JavaWriterVisitorTest {
             .setName("apply")
             .build();
     AnonymousClassExpr anonymousClassExpr =
-        AnonymousClassExpr.builder()
-            .setType(type)
-            .setMethods(Arrays.asList(method))
-            .build();
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     anonymousClassExpr.accept(writerVisitor);
-    String expected = String.format(createLines(4), 
-    "new Function<List<IOException>, MethodDefinition>() {\n",
-    "public MethodDefinition apply(List<IOException> arg) {\n", 
-    "return returnArg;\n",
-    "}\n}");
+    String expected =
+        String.format(
+            createLines(4),
+            "new Function<List<IOException>, MethodDefinition>() {\n",
+            "public MethodDefinition apply(List<IOException> arg) {\n",
+            "return returnArg;\n",
+            "}\n}");
     assertEquals(writerVisitor.write(), expected);
   }
 
