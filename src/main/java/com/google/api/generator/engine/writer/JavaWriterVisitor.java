@@ -42,7 +42,6 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Strings;
-
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
