@@ -34,13 +34,13 @@ public class JavaDocCommentTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment("Service comment may include special characters: <>&\"`'@")
-            .addComment("title: GetBigBook: 'War and Peace'")
-            .addComment("This is an unexpected block end */")
+            .addParagraph("title: GetBigBook: 'War and Peace'")
+            .setThrows("RunTimeException", "This is an unexpected block end */")
             .build();
     String expected =
         "Service comment may include special characters: <>&\"`'@\n"
-            + "title: GetBigBook: 'War and Peace'\n"
-            + "This is an unexpected block end * /";
+            + "<p> title: GetBigBook: 'War and Peace'\n"
+            + "@throws RunTimeException This is an unexpected block end * /";
     assertEquals(javaDocComment.comment(), expected);
   }
 

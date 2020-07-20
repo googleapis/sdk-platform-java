@@ -200,7 +200,8 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockComment_specialChar() {
-    // `"` won't be escaped because it comment won't be surrounded by extra `"` like string object.
+    // `"` won't be escaped because BlockComment won't be surrounded by extra `"` like string
+    // object.
     String content = "Testing special characters: \b\t\n\r\"`'?/\\ */<><>,.[]{}|-_!@#$%^()";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
@@ -311,9 +312,9 @@ public class JavaWriterVisitorTest {
   public void writeJavaDocComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addComment("Service comment may include special characters: <>&\"`'@")
-            .addComment("title: GetBigBook: 'War and Peace'")
-            .addComment("This is an unexpected block end */")
+            .addParagraph("Service comment may include special characters: <>&\"`'@")
+            .addParagraph("title: GetBigBook: 'War and Peace'")
+            .setThrows("Exception", "This is an unexpected block end */")
             .addComment(
                 "RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.")
             .build();
@@ -321,10 +322,10 @@ public class JavaWriterVisitorTest {
         String.format(
             createLines(6),
             "/**\n",
-            "Service comment may include special characters: <>&\"`'@\n",
-            "title: GetBigBook: 'War and Peace'\n",
-            "This is an unexpected block end * /\n",
+            "<p> Service comment may include special characters: <>&\"`'@\n",
+            "<p> title: GetBigBook: 'War and Peace'\n",
             "RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
+            "@throws Exception This is an unexpected block end * /\n",
             "*/");
   }
 
