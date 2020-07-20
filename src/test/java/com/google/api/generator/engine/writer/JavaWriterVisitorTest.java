@@ -47,6 +47,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -399,7 +400,7 @@ public class JavaWriterVisitorTest {
       AnonymousClassExpr anonymousClassExpr =
           AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
       anonymousClassExpr.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), "new Runnable() {\n" + "@Override\npublic void run() {\n" + "boolean foobar = false;\n}\n}");
+      assertEquals(writerVisitor.write(), String.format(createLines(3), "new Runnable() {\n", "@Override\npublic void run() {\n", "boolean foobar = false;\n}\n}"));
     }
 
   @Test
@@ -437,11 +438,51 @@ public class JavaWriterVisitorTest {
             .setMethods(Arrays.asList(methodDefinition))
             .build();
     anonymousClassExpr.accept(writerVisitor);
-    String expected =
-        "new Runnable() {\n" + "private static final String s = \"foo\";\n" + "@Override\npublic void run() {\n" + "int x = 3;\n}\n}";
+    String expected = String.format(createLines(4), "new Runnable() {\n", "private static final String s = \"foo\";\n", "@Override\npublic void run() {\n", "int x = 3;\n}\n}");
     assertEquals(writerVisitor.write(), expected);
   }
   
+
+  @Test
+  public void writeAnonymousClassExpr_generics(){
+    // [Constructing] Function<List<IOException>, MethodDefinition>
+    ConcreteReference exceptionListRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class))).build();    
+    ConcreteReference methodDefinitionRef = ConcreteReference.withClazz(MethodDefinition.class);
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(Function.class)
+            .setGenerics(
+                Arrays.asList(
+                    exceptionListRef,
+                    methodDefinitionRef))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    // [Constructing] an input argument whose type is `List<IOException>`
+    VariableExpr arg = VariableExpr.builder().setVariable(Variable.builder().setName("arg").setType(TypeNode.withReference(exceptionListRef)).build()).setIsDecl(true).build();
+    // [Constructing] a return variable expression whose type is `MethodDefinition`
+    VariableExpr returnArg = VariableExpr.builder().setVariable(Variable.builder().setName("returnArg").setType(TypeNode.withReference(methodDefinitionRef)).build()).build();
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.withReference(methodDefinitionRef))
+            .setArguments(Arrays.asList(arg))
+            .setReturnExpr(returnArg)
+            .setName("apply")
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(type)
+            .setMethods(Arrays.asList(method))
+            .build();
+    anonymousClassExpr.accept(writerVisitor);
+    String expected = String.format(createLines(4), 
+    "new Function<List<IOException>, MethodDefinition>() {\n",
+    "public MethodDefinition apply(List<IOException> arg) {\n", 
+    "return returnArg;\n",
+    "}\n}");
+    assertEquals(writerVisitor.write(), expected);
+  }
+
   @Test
   public void writeThrowExpr_basic() {
     TypeNode npeType =

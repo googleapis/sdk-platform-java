@@ -268,31 +268,32 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeAnonymousClassExprImports(){
-    ConcreteReference stringListRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class))).build();    
+    // [Constructing] Function<List<IOException>, MethodDefinition>
+    ConcreteReference exceptionListRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class))).build();    
+    ConcreteReference methodDefinitionRef = ConcreteReference.withClazz(MethodDefinition.class);
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(Function.class)
             .setGenerics(
                 Arrays.asList(
-                    stringListRef,
-                    ConcreteReference.withClazz(Integer.class)))
+                    exceptionListRef,
+                    methodDefinitionRef))
             .build();
     TypeNode type = TypeNode.withReference(ref);
     // [Constructing] HashMap<String, Integer> map;
     ConcreteReference mapRef = ConcreteReference.builder().setClazz(HashMap.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), ConcreteReference.withClazz(Integer.class))).build();
     VariableExpr mapExpr = VariableExpr.builder().setVariable(Variable.builder().setName("map").setType(TypeNode.withReference(mapRef)).build()).setIsDecl(true).build();
     ExprStatement exprStatement = ExprStatement.withExpr(mapExpr);
-    VariableExpr arg = VariableExpr.builder().setVariable(Variable.builder().setName("arg").setType(TypeNode.withReference(stringListRef)).build()).setIsDecl(true).build();
-    ValueExpr returnExpr =
-    ValueExpr.builder()
-        .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
-        .build();
+    // [Constructing] an input argument whose type is `List<IOException>`
+    VariableExpr arg = VariableExpr.builder().setVariable(Variable.builder().setName("arg").setType(TypeNode.withReference(exceptionListRef)).build()).setIsDecl(true).build();
+    // [Constructing] a return variable expression whose type is `MethodDefinition`
+    VariableExpr returnArg = VariableExpr.builder().setVariable(Variable.builder().setName("returnArg").setType(TypeNode.withReference(methodDefinitionRef)).build()).build();
     MethodDefinition method =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
-            .setReturnType(TypeNode.INT)
+            .setReturnType(TypeNode.withReference(methodDefinitionRef))
             .setArguments(Arrays.asList(arg))
-            .setReturnExpr(returnExpr)
+            .setReturnExpr(returnArg)
             .setName("apply")
             .build();
     AnonymousClassExpr anonymousClassExpr =
@@ -302,7 +303,13 @@ public class ImportWriterVisitorTest {
             .setStatements(Arrays.asList(exprStatement))
             .build();
     anonymousClassExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), String.format(createLines(3),  "import com.google.common.base.Function;\n", "import java.util.HashMap;\n", "import java.util.List;\n\n"));
+    System.out.println("write: " + writerVisitor.write());
+    assertEquals(writerVisitor.write(), String.format(createLines(5), 
+    "import com.google.api.generator.engine.ast.MethodDefinition;\n",
+    "import com.google.common.base.Function;\n", 
+    "import java.io.IOException;\n",
+    "import java.util.HashMap;\n", 
+    "import java.util.List;\n\n"));
   }
 
   @Test
