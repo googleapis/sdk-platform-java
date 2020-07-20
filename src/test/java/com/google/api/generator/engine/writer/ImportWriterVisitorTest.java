@@ -53,7 +53,7 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_generics() {
-    // new List<HashMap<String, String>>()
+    // [Constructing] new HashMap<List<String>, IOException>>(int initialCapacity, float loadFactor)
     ConcreteReference mapRef =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
