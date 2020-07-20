@@ -236,6 +236,7 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
     variableExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+  }
 
   public void writeBlockComment_basic() {
     String content = "this is a test comment";
