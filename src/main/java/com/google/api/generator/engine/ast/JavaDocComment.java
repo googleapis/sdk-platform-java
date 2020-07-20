@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.engine.escaper.CommentEscaper;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
@@ -114,6 +115,9 @@ public abstract class JavaDocComment implements Comment {
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
+      }
+      for (int i = 0; i < componentsList.size(); i++) {
+        componentsList.set(i, CommentEscaper.escape(componentsList.get(i)));
       }
       setComment(String.join("\n", componentsList));
       return autoBuild();
