@@ -53,7 +53,6 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -108,41 +107,59 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeNewObjectExpr_basic() {
-      // isGeneric() is true, no generics in reference.
-      ConcreteReference ref = ConcreteReference.withClazz(List.class);
-      TypeNode type = TypeNode.withReference(ref);
-      NewObjectExpr newObjectExpr =  NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
-      newObjectExpr.accept(writerVisitor);
-      assertEquals(writerVisitor.write(), "new List<>()");
+    // isGeneric() is true, no generics in reference.
+    ConcreteReference ref = ConcreteReference.withClazz(List.class);
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new List<>()");
   }
-  
+
   @Test
   public void writeNewObjectExpr_withArgs() {
     // isGeneric() is false, no generics in type.
     ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
     TypeNode type = TypeNode.withReference(reference);
-    ValueExpr valueExpr = ValueExpr.builder().setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build()).build();
-    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+    ValueExpr valueExpr =
+        ValueExpr.builder()
+            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
+            .build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "new Integer(123)");
   }
 
   @Test
   public void writeNewObjectExpr_withGenerics() {
-    ConcreteReference listRef = ConcreteReference.builder().setClazz(List.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class))).build();
-    ConcreteReference mapRef = ConcreteReference.builder().setClazz(HashMap.class).setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), listRef)).build();
+    ConcreteReference listRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+            .build();
+    ConcreteReference mapRef =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), listRef))
+            .build();
     TypeNode type = TypeNode.withReference(mapRef);
     MethodInvocationExpr methodExpr =
-    MethodInvocationExpr.builder()
-        .setMethodName("foobar")
-        .setReturnType(TypeNode.INT)
-        .setStaticReferenceName("SomeClass")
-        .build();
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.INT)
+            .setStaticReferenceName("SomeClass")
+            .build();
     Variable num = Variable.builder().setName("num").setType(TypeNode.FLOAT).build();
     VariableExpr numExpr = VariableExpr.builder().setVariable(num).build();
-    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).setArguments(Arrays.asList(methodExpr, numExpr)).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(type)
+            .setArguments(Arrays.asList(methodExpr, numExpr))
+            .build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)");
+    assertEquals(
+        writerVisitor.write(), "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)");
   }
 
   /** =============================== EXPRESSIONS =============================== */

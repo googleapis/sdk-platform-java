@@ -144,14 +144,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append("new");
     space();
     buffer.append(newObjectValue.type().reference().name());
-    if(newObjectValue.isGeneric() && newObjectValue.type().reference().generics().isEmpty()) {
+    if (newObjectValue.isGeneric() && newObjectValue.type().reference().generics().isEmpty()) {
       buffer.append("<>");
     }
     buffer.append(LEFT_PAREN);
     List<Expr> args = newObjectValue.arguments();
     for (int i = 0; i < args.size(); i++) {
       args.get(i).accept(this);
-      if(i < args.size() - 1){
+      if (i < args.size() - 1) {
         buffer.append(COMMA);
         space();
       }
