@@ -199,7 +199,8 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_speciaChar() {
+  public void writeBlockComment_specialChar() {
+    // `"` won't be escaped because it comment won't be surrounded by extra `"` like string object.
     String content = "Testing special characters: \b\t\n\r\"`'?/\\ */<><>,.[]{}|-_!@#$%^()";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =

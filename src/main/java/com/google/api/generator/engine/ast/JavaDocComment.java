@@ -107,7 +107,6 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public JavaDocComment build() {
-      // TODO(xiaozhenliu): call comment escaper here.
       // @param, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
@@ -116,6 +115,8 @@ public abstract class JavaDocComment implements Comment {
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
       }
+      // Escape component in list one by one, because we will join the components by `\n`
+      // `\n` will be taken as escape character by the comment escaper.
       for (int i = 0; i < componentsList.size(); i++) {
         componentsList.set(i, CommentEscaper.escape(componentsList.get(i)));
       }

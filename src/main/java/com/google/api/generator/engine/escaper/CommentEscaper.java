@@ -18,7 +18,7 @@ import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
 public class CommentEscaper {
-  public static class SpecialEscaper extends Escaper {
+  private static class SpecialEscaper extends Escaper {
     private static final Escaper escaper =
         Escapers.builder()
             .addEscape('\t', "\\t")
@@ -33,6 +33,7 @@ public class CommentEscaper {
 
     @Override
     public String escape(String sourceString) {
+      // Replace unexpected block end `*/` with `* /`.
       return escaper.escape(sourceString.replace("*/", "* /"));
     }
   }

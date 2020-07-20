@@ -33,15 +33,15 @@ public abstract class BlockComment implements Comment {
   public abstract static class Builder {
     public abstract Builder setComment(String comment);
 
+    // Private accessor.
+    abstract String comment();
+
     public abstract BlockComment autoBuild();
 
     public BlockComment build() {
-      BlockComment blockComment = autoBuild();
-      setComment(CommentEscaper.escape(blockComment.comment()));
+      setComment(CommentEscaper.escape(comment()));
       return autoBuild();
     }
-
-    // TODO(xiaozhenliu): call comment escaper for the block comment.
   }
 
   public void accept(AstNodeVisitor visitor) {
