@@ -503,9 +503,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(3),
+            createLines(4),
             "new Runnable() {\n",
-            "@Override\npublic void run() {\n",
+            "@Override\n",
+            "public void run() {\n",
             "boolean foobar = false;\n}\n}"));
   }
 
@@ -513,7 +514,7 @@ public class JavaWriterVisitorTest {
   public void writeAnonymousClassExpr_withStatementsMethods() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
-
+    // [Constructing] private static final String s = "foo";
     Variable variable = createVariable("s", TypeNode.STRING);
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -546,10 +547,11 @@ public class JavaWriterVisitorTest {
     anonymousClassExpr.accept(writerVisitor);
     String expected =
         String.format(
-            createLines(4),
+            createLines(5),
             "new Runnable() {\n",
             "private static final String s = \"foo\";\n",
-            "@Override\npublic void run() {\n",
+            "@Override\n",
+            "public void run() {\n",
             "int x = 3;\n}\n}");
     assertEquals(writerVisitor.write(), expected);
   }

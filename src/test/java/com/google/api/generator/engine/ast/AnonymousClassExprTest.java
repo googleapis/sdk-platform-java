@@ -156,7 +156,7 @@ public class AnonymousClassExprTest {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
     Variable variable = createVariable("s", TypeNode.STRING);
-    // [Constructing] static string s;
+    // [Constructing] static String s;
     VariableExpr variableExpr =
         VariableExpr.builder().setIsDecl(true).setIsStatic(true).setVariable(variable).build();
     ExprStatement exprStatement = ExprStatement.withExpr(variableExpr);
