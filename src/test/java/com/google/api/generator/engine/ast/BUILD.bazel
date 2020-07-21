@@ -4,6 +4,7 @@ TESTS = [
     "AnonymousClassExprTest",
     "AssignmentExprTest",
     "ClassDefinitionTest",
+    "CommentStatementTest",
     "ConcreteReferenceTest",
     "ExprStatementTest",
     "ForStatementTest",

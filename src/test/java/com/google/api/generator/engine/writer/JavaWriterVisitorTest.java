@@ -23,6 +23,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -285,6 +286,38 @@ public class JavaWriterVisitorTest {
             "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeCommentStatement_allComponenets() {
+    // LineComments should be grouped together, and comments should be in the order of
+    // LineComments -> JavaDocComment -> BlockComment
+    CommentStatement commentStatement =
+        CommentStatement.builder()
+            .addLineComment(createLineComment("AUTO-GENERATED DOCUMENTATION AND METHOD"))
+            .setBlockComment(
+                createBlockComment(
+                    "Returns the object with the settings used for calls to myMethod."))
+            .setJavaDocComment(createJavaDocComment())
+            .addLineComment(createLineComment("NEXT_MAJOR_VER: remove 'throws Exception'"))
+            .build();
+    commentStatement.accept(writerVisitor);
+    String expected =
+        String.format(
+            createLines(12),
+            "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
+            "// NEXT_MAJOR_VER: remove 'throws Exception'\n\n",
+            "/**\n",
+            "* Parses the book from the given fully-qualified path which represents a shelf_book resource.\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* @deprecated Use the {@link ShelfBookName} class instead.\n",
+            "*/\n\n",
+            "/** Returns the object with the settings used for calls to myMethod. */\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1381,5 +1414,24 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
+  }
+
+  private LineComment createLineComment(String comment) {
+    return LineComment.withComment(comment);
+  }
+
+  private BlockComment createBlockComment(String comment) {
+    return BlockComment.withComment(comment);
+  }
+
+  private JavaDocComment createJavaDocComment() {
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(
+                "Parses the book from the given fully-qualified path which represents a shelf_book resource.")
+            .setDeprecated("Use the {@link ShelfBookName} class instead.")
+            .addSampleCode(createSampleCode())
+            .build();
+    return javaDocComment;
   }
 }

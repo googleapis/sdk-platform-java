@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -220,6 +221,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(JavaDocComment javaDocComment) {
+    // Do nothing
+  }
+
+  @Override
+  public void visit(CommentStatement commentStatement) {
     // Do nothing
   }
 

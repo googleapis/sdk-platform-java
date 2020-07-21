@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -435,6 +436,19 @@ public class JavaWriterVisitor implements AstNodeVisitor {
             });
     sourceComment.append(BLOCK_COMMENT_END);
     buffer.append(JavaFormatter.format(sourceComment.toString()));
+  }
+
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    // LineComment should be printed first if any, and followed by JavaDocComment
+    // and BlockComment if any.
+    for (LineComment lineComment : commentStatement.lineComments()) {
+      lineComment.accept(this);
+    }
+    newline();
+    commentStatement.javaDocComment().accept(this);
+    newline();
+    commentStatement.blockComment().accept(this);
   }
 
   /** =============================== OTHER =============================== */
