@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -139,6 +140,13 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
     references(methodInvocationExpr.generics());
     expressions(methodInvocationExpr.arguments());
+  }
+
+  @Override
+  public void visit(AnonymousClassExpr anonymousClassExpr) {
+    anonymousClassExpr.type().accept(this);
+    methods(anonymousClassExpr.methods());
+    statements(anonymousClassExpr.statements());
   }
 
   @Override
@@ -291,6 +299,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void statements(List<Statement> statements) {
     for (Statement statement : statements) {
       statement.accept(this);
+    }
+  }
+
+  private void methods(List<MethodDefinition> methods) {
+    for (MethodDefinition method : methods) {
+      method.accept(this);
     }
   }
 

@@ -5,5 +5,6 @@ filegroup(
     srcs = [
         "//src/test/java/com/google/api/generator/engine/ast:ast_files",
         "//src/test/java/com/google/api/generator/engine/lexicon:lexicon_files",
+        "//src/test/java/com/google/api/generator/engine/writer:writer_files",
     ],
 )
