@@ -17,7 +17,9 @@ package com.google.api.generator.engine.ast;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.Test;
@@ -82,7 +84,38 @@ public class NewObjectExprTest {
   }
 
   @Test
-  public void invalidNewObjectExpr_noReference() {
+  public void validNewObjectExpr_genericsAndArgs() {
+    // isGeneric() is true, generic() is not empty, and argument list is not empty.
+    // [Constructing] new HashMap<List<String>, IOException>>(int initialCapacity, float loadFactor)
+    ConcreteReference listRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build();
+    ConcreteReference mapRef =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(IOException.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(mapRef);
+    Variable initialCapacity =
+        Variable.builder().setName("initialCapacity").setType(TypeNode.INT).build();
+    VariableExpr initCapacityExpr = VariableExpr.builder().setVariable(initialCapacity).build();
+    Variable loadFactor = Variable.builder().setName("loadFactor").setType(TypeNode.FLOAT).build();
+    VariableExpr loadFactorExpr = VariableExpr.builder().setVariable(loadFactor).build();
+
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(type)
+            .setArguments(Arrays.asList(initCapacityExpr, loadFactorExpr))
+            .build();
+    assertEquals(TypeNode.isReferenceType(newObjectExpr.type()), true);
+    assertEquals(newObjectExpr.type(), type);
+  }
+
+  @Test
+  public void invalidNewObjectExpr_primitiveType() {
     // New object expressions should be reference types.
     assertThrows(
         IllegalStateException.class,

@@ -118,22 +118,29 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExpr_withArgs() {
+  public void writeNewObjectExpr_withMethodExprArgs() {
     // isGeneric() is false, no generics in type.
-    ConcreteReference reference = ConcreteReference.withClazz(Integer.class);
-    TypeNode type = TypeNode.withReference(reference);
-    ValueExpr valueExpr =
-        ValueExpr.builder()
-            .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build())
+    // [Constructing] new IOException(message, cause())
+    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
+    MethodInvocationExpr causeExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("cause")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
             .build();
     NewObjectExpr newObjectExpr =
-        NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
+        NewObjectExpr.builder()
+            .setType(type)
+            .setArguments(Arrays.asList(msgExpr, causeExpr))
+            .build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new Integer(123)");
+    assertEquals(writerVisitor.write(), "new IOException(message, cause())");
   }
 
   @Test
   public void writeNewObjectExpr_withGenerics() {
+    // isGeneric() is true and generics() is not empty.
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
