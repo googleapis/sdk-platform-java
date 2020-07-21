@@ -14,33 +14,6 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.common.collect.ImmutableList;
-import java.util.List;
-import javax.annotation.Nullable;
-
-public interface Reference {
-  ImmutableList<Reference> generics();
-
-  String name();
-
-  String fullName();
-
-  String pakkage();
-
-  @Nullable
-  String enclosingClassName();
-
-  // Valid only for nested classes.
-  boolean isStaticImport();
-
-  boolean hasEnclosingClass();
-
-  boolean isFromPackage(String pkg);
-
-  // Returns true if this is a supertype of the given Reference.
-  boolean isSupertypeOrEquals(Reference other);
-
-  boolean isAssignableFrom(Reference other);
-
-  Reference copyAndSetGenerics(List<Reference> generics);
+public interface Comment {
+  public String comment();
 }

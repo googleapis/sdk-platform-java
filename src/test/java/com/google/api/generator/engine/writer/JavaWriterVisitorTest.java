@@ -18,7 +18,9 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -28,6 +30,9 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
@@ -46,6 +51,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -102,28 +108,6 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== EXPRESSIONS =============================== */
-  @Test
-  public void writeStringObjectValue() {
-    StringObjectValue s = StringObjectValue.builder().setValue("\"test\"").build();
-    assertEquals(s.value(), "\"test\"");
-    assertEquals(s.type(), TypeNode.STRING);
-  }
-
-  @Test
-  public void writeStringObjectValue_assignmentExpr() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Value value = StringObjectValue.withValue("\"test\"");
-    Expr valueExpr = ValueExpr.builder().setValue(value).build();
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "String x = \"test\"");
-  }
-
   @Test
   public void writeValueExpr() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
@@ -209,6 +193,152 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_basicReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_basicReferenceWithModifiersSet() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(variableExpr)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_nestedReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder().setName("someStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("anotherStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("lengthField").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+  }
+
+  @Test
+  public void writeBlockComment_basic() {
+    String content = "this is a test comment";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected = "/** this is a test comment */\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+  // TODO(xiaozhenliu): add comment escaper in BlockComment/JavaDocComment classes and add unit
+  // tests for them.
+
+  @Test
+  public void writeLineComment_basic() {
+    String content = "this is a test comment";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected = "// this is a test comment\n";
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_longLine() {
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3"
+            + " times, blah, blah!";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(2),
+            "// this is a long test comment with so many words, hello world, hello again, hello"
+                + " for 3 times,\n",
+            "// blah, blah!\n");
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeJavaDocComment_allComponents() {
+    String content = "this is a test comment";
+    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    String paramName = "shelfName";
+    String paramDescription = "The name of the shelf where books are published to.";
+    String paragraph1 =
+        "This class provides the ability to make remote calls to the backing service through"
+            + " method calls that map to API methods. Sample code to get started:";
+    String paragraph2 =
+        "The surface of this class includes several types of Java methods for each of the API's"
+            + " methods:";
+    String sampleCode = createSampleCode();
+    List<String> orderedlList =
+        Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
+    String throwsType = "com.google.api.gax.rpc.ApiException";
+    String throwsDescription = "if the remote call fails.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(content)
+            .addParagraph(paragraph1)
+            .addSampleCode(sampleCode)
+            .addParagraph(paragraph2)
+            .addOrderedList(orderedlList)
+            .addSampleCode(sampleCode)
+            .addParam(paramName, paramDescription)
+            .setThrows(throwsType, throwsDescription)
+            .setDeprecated(deprecatedText)
+            .build();
+    String expected =
+        String.format(
+            createLines(23),
+            "/**\n",
+            "* this is a test comment\n",
+            "* <p> This class provides the ability to make remote calls to the backing service"
+                + " through method calls that map to API methods. Sample code to get started:\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* <p> The surface of this class includes several types of Java methods for each of"
+                + " the API's methods:\n",
+            "* <ol>\n",
+            "* <li> A flattened method.\n",
+            "* <li>  A request object method.\n",
+            "* <li> A callable method.\n",
+            "* </ol>\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* @param shelfName The name of the shelf where books are published to.\n",
+            "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
+            "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
+            "*/\n");
+    javaDocComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
   public void writeTernaryExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
@@ -229,7 +359,7 @@ public class JavaWriterVisitorTest {
             .setElseExpr(elseExpr)
             .build();
     ternaryExpr.accept(writerVisitor);
-    assertThat(writerVisitor.write()).isEqualTo("condition ? 3 : 4");
+    assertEquals(writerVisitor.write(), "condition ? 3 : 4");
   }
 
   @Test
@@ -284,6 +414,29 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "String x = null");
+  }
+
+  @Test
+  public void writeStringObjectValue_basic() {
+    Value value = StringObjectValue.withValue("test");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    valueExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"test\"");
+  }
+
+  @Test
+  public void writeAssignmentExpr_stringObjectValue() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = StringObjectValue.withValue("Hi! World. \n");
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+
+    assignExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("String x = \"Hi! World. \\n\"");
   }
 
   @Test
@@ -424,6 +577,137 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeAnonymousClassExpr_basic() {
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
+    ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setName("run")
+            .setIsOverride(true)
+            .setBody(Arrays.asList(statement))
+            .build();
+
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(4),
+            "new Runnable() {\n",
+            "@Override\n",
+            "public void run() {\n",
+            "boolean foobar = false;\n}\n}"));
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_withStatementsMethods() {
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    // [Constructing] private static final String s = "foo";
+    Variable variable = createVariable("s", TypeNode.STRING);
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setScope(ScopeNode.PRIVATE)
+            .setIsDecl(true)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .setVariable(variable)
+            .build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+    ExprStatement exprStatement = ExprStatement.withExpr(assignmentExpr);
+
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("run")
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(type)
+            .setStatements(Arrays.asList(exprStatement))
+            .setMethods(Arrays.asList(methodDefinition))
+            .build();
+    anonymousClassExpr.accept(writerVisitor);
+    String expected =
+        String.format(
+            createLines(5),
+            "new Runnable() {\n",
+            "private static final String s = \"foo\";\n",
+            "@Override\n",
+            "public void run() {\n",
+            "int x = 3;\n}\n}");
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_generics() {
+    // [Constructing] Function<List<IOException>, MethodDefinition>
+    ConcreteReference exceptionListRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class)))
+            .build();
+    ConcreteReference methodDefinitionRef = ConcreteReference.withClazz(MethodDefinition.class);
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(Function.class)
+            .setGenerics(Arrays.asList(exceptionListRef, methodDefinitionRef))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    // [Constructing] an input argument whose type is `List<IOException>`
+    VariableExpr arg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("arg")
+                    .setType(TypeNode.withReference(exceptionListRef))
+                    .build())
+            .setIsDecl(true)
+            .build();
+    // [Constructing] a return variable expression whose type is `MethodDefinition`
+    VariableExpr returnArg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("returnArg")
+                    .setType(TypeNode.withReference(methodDefinitionRef))
+                    .build())
+            .build();
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.withReference(methodDefinitionRef))
+            .setArguments(Arrays.asList(arg))
+            .setIsOverride(true)
+            .setReturnExpr(returnArg)
+            .setName("apply")
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    String expected =
+        String.format(
+            createLines(5),
+            "new Function<List<IOException>, MethodDefinition>() {\n",
+            "@Override\n",
+            "public MethodDefinition apply(List<IOException> arg) {\n",
+            "return returnArg;\n",
+            "}\n}");
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
   public void writeThrowExpr_basic() {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
@@ -440,6 +724,16 @@ public class JavaWriterVisitorTest {
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
     throwExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeInstanceofExpr() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    InstanceofExpr instanceofExpr =
+        InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
+    instanceofExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -657,10 +951,9 @@ public class JavaWriterVisitorTest {
         WhileStatement.builder().setConditionExpr(condExpr).setBody(whileBody).build();
 
     whileStatement.accept(writerVisitor);
-    assertThat(writerVisitor.write())
-        .isEqualTo(
-            String.format(
-                "%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -1168,5 +1461,19 @@ public class JavaWriterVisitorTest {
         .setCollectionExpr(collectionExpr)
         .setBody(body)
         .build();
+  }
+
+  private static String createSampleCode() {
+    JavaWriterVisitor writerVisitor = new JavaWriterVisitor();
+    TryCatchStatement tryCatch =
+        TryCatchStatement.builder()
+            .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
+            .setTryBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .setIsSampleCode(true)
+            .build();
+
+    tryCatch.accept(writerVisitor);
+    return writerVisitor.write();
   }
 }

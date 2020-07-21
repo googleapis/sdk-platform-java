@@ -15,12 +15,13 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
 public class VariableExprTest {
   @Test
-  public void createVariableExpr_basic() {
+  public void validVariableExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThat(variableExpr.variable()).isEqualTo(variable);
@@ -32,7 +33,7 @@ public class VariableExprTest {
   }
 
   @Test
-  public void createVariableExpr_withFields() {
+  public void validVariableExpr_withFields() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
         VariableExpr.builder()
@@ -50,12 +51,69 @@ public class VariableExprTest {
   }
 
   @Test
-  public void createVariableExpr_declaration() {
+  public void validVariableExpr_declaration() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
     assertThat(variableExpr.variable()).isEqualTo(variable);
     assertThat(variableExpr.type()).isEqualTo(TypeNode.VOID);
     assertThat(variableExpr.isDecl()).isTrue();
+  }
+
+  @Test
+  public void validVariableExpr_reference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validVariableExpr_referenceWithModifiersSet() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    VariableExpr.builder()
+        .setVariable(subVariable)
+        .setExprReferenceExpr(variableExpr)
+        .setIsStatic(true)
+        .setIsFinal(true)
+        .setScope(ScopeNode.PUBLIC)
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void invalidVariableExpr_referencePrimitiveType() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(subVariable)
+                .setExprReferenceExpr(variableExpr)
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_referenceAndDecl() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(subVariable)
+                .setIsDecl(true)
+                .setExprReferenceExpr(variableExpr)
+                .build());
   }
 }

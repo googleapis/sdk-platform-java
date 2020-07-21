@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "AnonymousClassExprTest",
     "AssignmentExprTest",
     "CastExprTest",
     "ClassDefinitionTest",
@@ -8,10 +9,13 @@ TESTS = [
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
+    "InstanceofExprTest",
+    "JavaDocCommentTest",
     "MethodDefinitionTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "StringObjectValueTest",
     "TernaryExprTest",
     "ThrowExprTest",
     "TryCatchStatementTest",

@@ -14,33 +14,29 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.common.collect.ImmutableList;
-import java.util.List;
-import javax.annotation.Nullable;
+import com.google.auto.value.AutoValue;
 
-public interface Reference {
-  ImmutableList<Reference> generics();
+@AutoValue
+public abstract class LineComment implements Comment {
+  @Override
+  public abstract String comment();
 
-  String name();
+  public static Builder builder() {
+    return new AutoValue_LineComment.Builder();
+  }
 
-  String fullName();
+  public static LineComment withComment(String comment) {
+    return LineComment.builder().setComment(comment).build();
+  }
 
-  String pakkage();
+  @AutoValue.Builder
+  public abstract static class Builder {
+    public abstract Builder setComment(String comment);
 
-  @Nullable
-  String enclosingClassName();
+    public abstract LineComment build();
+  }
 
-  // Valid only for nested classes.
-  boolean isStaticImport();
-
-  boolean hasEnclosingClass();
-
-  boolean isFromPackage(String pkg);
-
-  // Returns true if this is a supertype of the given Reference.
-  boolean isSupertypeOrEquals(Reference other);
-
-  boolean isAssignableFrom(Reference other);
-
-  Reference copyAndSetGenerics(List<Reference> generics);
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
 }

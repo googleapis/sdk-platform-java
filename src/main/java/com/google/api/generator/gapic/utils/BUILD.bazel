@@ -1,18 +1,16 @@
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "writer_files",
+    name = "utils_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "writer",
+    name = "utils",
     srcs = [
-        ":writer_files",
+        ":utils_files",
     ],
     deps = [
-        "//src/main/java/com/google/api/generator/engine/ast",
         "@com_google_guava_guava//jar",
-        "@google_java_format_all_deps//jar",
     ],
 )
