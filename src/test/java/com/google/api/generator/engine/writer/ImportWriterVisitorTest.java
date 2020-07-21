@@ -330,6 +330,7 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import com.google.api.generator.engine.ast.VariableExpr;\n\n"));
+  }
 
   @Test
   public void writeAnonymousClassExprImports() {
