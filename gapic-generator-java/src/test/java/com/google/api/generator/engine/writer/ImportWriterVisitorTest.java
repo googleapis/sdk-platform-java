@@ -260,6 +260,79 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExprImports_basic() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(1), "import com.google.api.generator.engine.ast.Expr;\n\n"));
+  }
+
+  @Test
+  public void writeVariableExprImports_reference() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder()
+            .setName("assignExpr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+            .build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n\n"));
+  }
+
+  @Test
+  public void writeVariableExprImports_nestedReference() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder()
+            .setName("assignExpr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+            .build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable =
+        Variable.builder()
+            .setName("anotherExpr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(VariableExpr.class)))
+            .build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import com.google.api.generator.engine.ast.VariableExpr;\n\n"));
+  }
+
+  @Test
   public void writeAnonymousClassExprImports() {
     // [Constructing] Function<List<IOException>, MethodDefinition>
     ConcreteReference exceptionListRef =
