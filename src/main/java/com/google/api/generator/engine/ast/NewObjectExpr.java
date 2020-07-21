@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 public abstract class NewObjectExpr implements Expr {
   public abstract TypeNode type();
 
-  public abstract List<Expr> arguments();
+  public abstract ImmutableList<Expr> arguments();
 
   public abstract boolean isGeneric();
 
@@ -46,18 +47,20 @@ public abstract class NewObjectExpr implements Expr {
 
     public abstract Builder setIsGeneric(boolean isGeneric);
 
+    // Private accessor.
+    abstract TypeNode type();
+
+    abstract boolean isGeneric();
+
     abstract NewObjectExpr autoBuild();
 
     public NewObjectExpr build() {
-      NewObjectExpr newObjectExpr = autoBuild();
       // 1. New object expression should be reference type.
       Preconditions.checkState(
-          TypeNode.isReferenceType(newObjectExpr.type()),
-          "New object expression should be reference types.");
+          TypeNode.isReferenceType(type()), "New object expression should be reference types.");
       // 2. Edge case: isGeneric is false, but type().generics() is not empty
-      // we will set isGeneric to be true for the users.
-      boolean noGenerics = newObjectExpr.type().reference().generics().isEmpty();
-      if (!newObjectExpr.isGeneric() && !noGenerics) {
+      // We will set isGeneric to be true for the users.
+      if (!isGeneric() && !type().reference().generics().isEmpty()) {
         setIsGeneric(true);
       }
       return autoBuild();

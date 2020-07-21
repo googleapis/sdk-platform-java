@@ -93,22 +93,31 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_methodExprArg() {
-    // [Constructing] new IOException(message, cause())
-    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    // [Constructing] new IOException(message, cause(mapArg))
+    TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    TypeNode mapType = TypeNode.withReference(ConcreteReference.withClazz(HashMap.class));
+    VariableExpr mapExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("mapArg").setType(mapType).build())
+            .build();
     VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
     MethodInvocationExpr causeExpr =
         MethodInvocationExpr.builder()
             .setMethodName("cause")
+            .setArguments(Arrays.asList(mapExpr))
             .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
             .build();
     NewObjectExpr newObjectExpr =
         NewObjectExpr.builder()
-            .setType(type)
+            .setType(exceptionType)
             .setArguments(Arrays.asList(msgExpr, causeExpr))
             .build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import java.io.IOException;\n\n");
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2), "import java.io.IOException;\n", "import java.util.HashMap;\n\n"));
   }
 
   @Test
