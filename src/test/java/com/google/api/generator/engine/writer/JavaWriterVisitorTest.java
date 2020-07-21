@@ -290,6 +290,35 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeCommentStatement_lineComments() {
+    // Only line comments are in the comment statement.
+    // TODO(xiaozhenliu) use special characters here to test comment escaper.
+    CommentStatement commentStatement =
+        CommentStatement.builder()
+            .addLineComment(
+                createLineComment(
+                    "DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\""))
+            .addLineComment(createLineComment("sample-metadata:"))
+            .addLineComment(createLineComment("title: GetBigBook: 'War and Peace'"))
+            .addLineComment(createLineComment("description: Testing calling forms"))
+            .addLineComment(
+                createLineComment(
+                    "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\"]"))
+            .build();
+    String expected =
+        String.format(
+            createLines(6),
+            "// DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\"\n",
+            "// sample-metadata:\n",
+            "// title: GetBigBook: 'War and Peace'\n",
+            "// description: Testing calling forms\n",
+            "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n",
+            "// \"Novel\"]\n");
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
   public void writeCommentStatement_allComponenets() {
     // LineComments should be grouped together, and comments should be in the order of
     // LineComments -> JavaDocComment -> BlockComment
@@ -307,7 +336,7 @@ public class JavaWriterVisitorTest {
         String.format(
             createLines(12),
             "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
-            "// NEXT_MAJOR_VER: remove 'throws Exception'\n\n",
+            "// NEXT_MAJOR_VER: remove 'throws Exception'\n",
             "/**\n",
             "* Parses the book from the given fully-qualified path which represents a shelf_book resource.\n",
             "* <pre><code>\n",
@@ -316,7 +345,7 @@ public class JavaWriterVisitorTest {
             "* }\n",
             "* </code></pre>\n",
             "* @deprecated Use the {@link ShelfBookName} class instead.\n",
-            "*/\n\n",
+            "*/\n",
             "/** Returns the object with the settings used for calls to myMethod. */\n");
     assertEquals(writerVisitor.write(), expected);
   }

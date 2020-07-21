@@ -445,10 +445,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     for (LineComment lineComment : commentStatement.lineComments()) {
       lineComment.accept(this);
     }
-    newline();
-    commentStatement.javaDocComment().accept(this);
-    newline();
-    commentStatement.blockComment().accept(this);
+    if (commentStatement.javaDocComment() != null) {
+      commentStatement.javaDocComment().accept(this);
+    }
+    if (commentStatement.blockComment() != null) {
+      commentStatement.blockComment().accept(this);
+    }
   }
 
   /** =============================== OTHER =============================== */

@@ -30,7 +30,7 @@ public class CommentStatementTest {
             .addLineComment(createLineComment("description: Testing calling forms"))
             .addLineComment(
                 createLineComment(
-                    "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']"))
+                    "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\"]']"))
             .build();
   }
 
