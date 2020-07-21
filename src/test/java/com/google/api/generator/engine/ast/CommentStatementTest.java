@@ -19,8 +19,7 @@ import org.junit.Test;
 public class CommentStatementTest {
   @Test
   public void validCommentStatement_lineComments() {
-    // Real test case: Only line comments are in the comment statement and they have special
-    // characters.
+    // Real test case: Only line comments are in the comment statement.
     CommentStatement commentStatement =
         CommentStatement.builder()
             .addLineComment(
