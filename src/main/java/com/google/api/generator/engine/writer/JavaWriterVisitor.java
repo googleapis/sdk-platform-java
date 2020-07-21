@@ -145,6 +145,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(NEW);
     space();
     newObjectValue.type().accept(this);
+    // If isGeneric() is true, but generic list is empty, we will append `<>` to the buffer.
     if (newObjectValue.isGeneric() && newObjectValue.type().reference().generics().isEmpty()) {
       buffer.append(LEFT_ANGLE).append(RIGHT_ANGLE);
     }

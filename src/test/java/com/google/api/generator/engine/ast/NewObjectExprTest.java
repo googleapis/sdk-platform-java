@@ -26,9 +26,9 @@ import org.junit.Test;
 
 public class NewObjectExprTest {
   @Test
-  public void validNewObjectValue_generics() {
-    // isGeneric() true, generics() is not empty.
-    // constructing `"new List<String>()"`, no exception should be thrown.
+  public void validNewObjectValue_basic() {
+    // IsGeneric() is true and generics() is not empty.
+    // [Constructing] `new List<String>()`, no exception should be thrown.
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -37,13 +37,14 @@ public class NewObjectExprTest {
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.isGeneric(), true);
   }
 
   @Test
-  public void validNewObjectExpr_conflictGenericSetting() {
-    // isGeneric() is false, but generics() is not empty
-    // it’s still valid, we will set isGeneric() as true for the users.
-    // constructing `"new List<String>()"`, no exception should be thrown.
+  public void validNewObjectExpr_edgeCase() {
+    // IsGeneric() is false, but generics() is not empty.
+    // The expression is still valid, we will set isGeneric() as true for the users.
+    // [Constructing] `new List<String>()`, no exception should be thrown.
     ConcreteReference ref =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -52,14 +53,13 @@ public class NewObjectExprTest {
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).build();
     assertEquals(newObjectExpr.type(), type);
-    assertEquals(newObjectExpr.type().reference(), ref);
     assertEquals(newObjectExpr.isGeneric(), true);
   }
 
   @Test
-  public void validNewObjectExpr_notGenericWithArgs() {
-    // isGeneric() is false, and generics() is empty
-    // constructing “new Integer(123) “ no exception should be thrown
+  public void validNewObjectExpr_noGenericWithArgs() {
+    // IsGeneric() is false, and generics() is empty.
+    // [Constructing] `new Integer(123)` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(Integer.class).build();
     TypeNode type = TypeNode.withReference(ref);
     PrimitiveValue value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("123").build();
@@ -67,26 +67,24 @@ public class NewObjectExprTest {
     NewObjectExpr newObjectExpr =
         NewObjectExpr.builder().setType(type).setArguments(Arrays.asList(valueExpr)).build();
     assertEquals(newObjectExpr.type(), type);
-    assertEquals(newObjectExpr.type().reference(), ref);
     assertEquals(newObjectExpr.isGeneric(), false);
   }
 
   @Test
   public void validNewObjectExpr_emptyGeneric() {
-    // isGeneric() is true, but generics() is empty
-    // constructing “new LinedList<>()” no exception should be thrown
+    // IsGeneric() is true, but generics() is empty.
+    // [Constructing] `new LinedList<>()` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(LinkedList.class).build();
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).setIsGeneric(true).build();
     assertEquals(newObjectExpr.type(), type);
-    assertEquals(newObjectExpr.type().reference(), ref);
     assertEquals(newObjectExpr.isGeneric(), true);
   }
 
   @Test
   public void validNewObjectExpr_genericsAndArgs() {
-    // isGeneric() is true, generic() is not empty, and argument list is not empty.
-    // [Constructing] new HashMap<List<String>, IOException>>(int initialCapacity, float loadFactor)
+    // IsGeneric() is true, generics() is not empty, and argument list is also not empty.
+    // [Constructing] `new HashMap<List<String>, IOException>>(initialCapacity, loadFactor)`.
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -110,8 +108,8 @@ public class NewObjectExprTest {
             .setType(type)
             .setArguments(Arrays.asList(initCapacityExpr, loadFactorExpr))
             .build();
-    assertEquals(TypeNode.isReferenceType(newObjectExpr.type()), true);
     assertEquals(newObjectExpr.type(), type);
+    assertEquals(newObjectExpr.isGeneric(), true);
   }
 
   @Test
