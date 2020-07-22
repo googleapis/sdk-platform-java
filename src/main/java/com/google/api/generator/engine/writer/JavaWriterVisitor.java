@@ -287,7 +287,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       rightAngle();
     }
     leftParen();
-    ;
     int numArguments = newObjectExpr.arguments().size();
     for (int i = 0; i < numArguments; i++) {
       newObjectExpr.arguments().get(i).accept(this);

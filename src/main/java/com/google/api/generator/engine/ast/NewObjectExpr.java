@@ -49,7 +49,7 @@ public abstract class NewObjectExpr implements Expr {
 
     // Private accessor.
     abstract TypeNode type();
-
+    // Private accessor.
     abstract boolean isGeneric();
 
     abstract NewObjectExpr autoBuild();
@@ -58,7 +58,7 @@ public abstract class NewObjectExpr implements Expr {
       Preconditions.checkState(
           TypeNode.isReferenceType(type()), "New object expression should be reference types.");
       Preconditions.checkState(
-          !type().equals(TypeNode.NULL), "New object expression canonot be null type.");
+          !type().equals(TypeNode.NULL), "New object expression cannot be null type.");
       // type().generics() is not empty, so we will set isGeneric() to be true.
       if (!isGeneric() && !type().reference().generics().isEmpty()) {
         setIsGeneric(true);
