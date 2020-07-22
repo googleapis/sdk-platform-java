@@ -109,7 +109,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeNewObjectExpr_basic() {
-    // IsGeneric() is true, but generics() is empty.
+    // isGeneric() is true, but generics() is empty.
     ConcreteReference ref = ConcreteReference.withClazz(List.class);
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
@@ -119,7 +119,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeNewObjectExpr_withMethodExprArgs() {
-    // IsGeneric() is false, and generics() is empty.
+    // isGeneric() is false, and generics() is empty.
     // [Constructing] `new IOException(message, cause())` where `cause()` is a method invocation.
     TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
@@ -140,7 +140,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeNewObjectExpr_withGenericsAndArgs() {
-    // IsGeneric() is true and generics() is not empty.
+    // isGeneric() is true and generics() is not empty.
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
