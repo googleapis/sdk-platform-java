@@ -3,6 +3,7 @@ package(default_visibility = ["//visibility:public"])
 TESTS = [
     "AnonymousClassExprTest",
     "AssignmentExprTest",
+    "CastExprTest",
     "ClassDefinitionTest",
     "ConcreteReferenceTest",
     "ExprStatementTest",
