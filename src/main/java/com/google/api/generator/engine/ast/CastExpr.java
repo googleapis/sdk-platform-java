@@ -43,11 +43,26 @@ public abstract class CastExpr implements Expr {
 
     public CastExpr build() {
       CastExpr castExpr = autoBuild();
+      TypeNode castType = castExpr.type();
+      TypeNode exprType = castExpr.expr().type();
       Preconditions.checkState(
-          TypeNode.isReferenceType(castExpr.type()), "Casting can only be done to reference types");
-      Preconditions.checkState(
-          TypeNode.isReferenceType(castExpr.expr().type()),
-          "Casting can only be done on reference types");
+          !castType.equals(TypeNode.VOID) && !exprType.equals(TypeNode.VOID),
+          "Casting cannot be done on or to void types");
+
+      // Only numeric types can be casted around.
+      if (castType.isPrimitiveType() && exprType.isPrimitiveType()) {
+        // Check that the types are either both booleans or both not booleans.
+        // TODO(xiaozhenliu): This is one of the places where we need to check the equality of boxed
+        // and primitive types.
+        Preconditions.checkState(
+            !(castType.equals(TypeNode.BOOLEAN) ^ exprType.equals(TypeNode.BOOLEAN)),
+            "Numeric and boolean types are not inter-castable");
+      } else {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(castExpr.type())
+                && TypeNode.isReferenceType(castExpr.expr().type()),
+            "Reference types can only be casted to reference types");
+      }
       return castExpr;
     }
   }

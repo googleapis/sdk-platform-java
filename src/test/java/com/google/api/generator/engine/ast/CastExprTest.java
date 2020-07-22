@@ -31,14 +31,55 @@ public class CastExprTest {
   }
 
   @Test
-  public void invalidCastExpr_castToPrimitive() {
+  public void validCastExpr_basicPrimitiveSame() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.LONG).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.LONG).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void validCastExpr_basicPrimitiveBoolean() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.BOOLEAN).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void validCastExpr_basicPrimitiveNarrowing() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.LONG).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.INT).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+
+    variable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
+    variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.FLOAT).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+
+  }
+
+  @Test
+  public void validCastExpr_basicPrimitiveWidening() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.LONG).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+    variable = Variable.builder().setName("x").setType(TypeNode.FLOAT).build();
+    variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.DOUBLE).setExpr(variableExpr).build();
+    // No exception thrown, so we succeeded.
+
+  }
+
+  @Test
+  public void invalidCastExpr_castObjectToPrimitive() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          CastExpr.builder().setType(TypeNode.INT).setExpr(variableExpr).build();
-        });
+        () -> CastExpr.builder().setType(TypeNode.INT).setExpr(variableExpr).build());
   }
 
   @Test
@@ -47,11 +88,28 @@ public class CastExprTest {
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThrows(
         IllegalStateException.class,
-        () -> {
-          CastExpr.builder()
-              .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
-              .setExpr(variableExpr)
-              .build();
-        });
+        () ->
+            CastExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+                .setExpr(variableExpr)
+                .build());
+  }
+
+  @Test
+  public void invalidCastExpr_castBooleanToNumeric() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> CastExpr.builder().setType(TypeNode.INT).setExpr(variableExpr).build());
+  }
+
+  @Test
+  public void invalidCastExpr_castNumericToBoolean() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> CastExpr.builder().setType(TypeNode.BOOLEAN).setExpr(variableExpr).build());
   }
 }
