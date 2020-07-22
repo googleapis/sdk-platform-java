@@ -17,7 +17,6 @@ package com.google.api.generator.engine.ast;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -84,7 +83,7 @@ public class NewObjectExprTest {
   @Test
   public void validNewObjectExpr_genericsAndArgs() {
     // isGeneric() is true, generics() is not empty, and argument list is also not empty.
-    // [Constructing] `new HashMap<List<String>, IOException>>(initialCapacity, loadFactor)`.
+    // [Constructing] `new HashMap<List<String>, Integer>>(initialCapacity, loadFactor)`.
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -93,7 +92,7 @@ public class NewObjectExprTest {
     ConcreteReference mapRef =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
-            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(IOException.class)))
+            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(Integer.class)))
             .build();
     TypeNode type = TypeNode.withReference(mapRef);
     Variable initialCapacity =

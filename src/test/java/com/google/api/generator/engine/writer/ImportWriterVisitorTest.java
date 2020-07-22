@@ -56,8 +56,20 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeNewObjectExprImports_basic() {
+    // [Constructing] new ArrayList<>()
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import java.util.ArrayList;\n\n");
+  }
+
+  @Test
   public void writeNewObjectExprImports_genericsAndVariableArgs() {
-    // [Constructing] new HashMap<List<String>, IOException>>(int initialCapacity, float loadFactor)
+    // [Constructing] new HashMap<List<String>, Integer>>(int initialCapacity, float loadFactor)
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -66,7 +78,7 @@ public class ImportWriterVisitorTest {
     ConcreteReference mapRef =
         ConcreteReference.builder()
             .setClazz(HashMap.class)
-            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(IOException.class)))
+            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(Integer.class)))
             .build();
     TypeNode type = TypeNode.withReference(mapRef);
     Variable initialCapacity =
@@ -84,11 +96,7 @@ public class ImportWriterVisitorTest {
     newObjectExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        String.format(
-            createLines(3),
-            "import java.io.IOException;\n",
-            "import java.util.HashMap;\n",
-            "import java.util.List;\n\n"));
+        String.format(createLines(2), "import java.util.HashMap;\n", "import java.util.List;\n\n"));
   }
 
   @Test
