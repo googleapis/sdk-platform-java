@@ -16,6 +16,9 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -33,6 +36,14 @@ public abstract class VariableExpr implements Expr {
   public abstract boolean isStatic();
 
   public abstract boolean isFinal();
+
+  // Please use this only in conjunction with methods.
+  // Supports only parameterized types like Map<K, V>.
+  // TODO(unsupported): Fully generic arguments, e.g. foobar(K key, V value).
+  public abstract ImmutableList<IdentifierNode> templateIdentifiers();
+
+  // Private.
+  abstract ImmutableList<String> templateNames();
 
   @Override
   public TypeNode type() {
@@ -52,7 +63,8 @@ public abstract class VariableExpr implements Expr {
         .setIsDecl(false)
         .setIsFinal(false)
         .setIsStatic(false)
-        .setScope(ScopeNode.LOCAL);
+        .setScope(ScopeNode.LOCAL)
+        .setTemplateNames(ImmutableList.of());
   }
 
   public abstract Builder toBuilder();
@@ -72,9 +84,22 @@ public abstract class VariableExpr implements Expr {
 
     public abstract Builder setIsFinal(boolean isFinal);
 
+    // This should be used only for method arguments.
+    public abstract Builder setTemplateNames(List<String> names);
+
+    // Private.
+    abstract Builder setTemplateIdentifiers(List<IdentifierNode> identifiers);
+
+    abstract ImmutableList<String> templateNames();
+
     abstract VariableExpr autoBuild();
 
     public VariableExpr build() {
+      setTemplateIdentifiers(
+          templateNames().stream()
+              .map(n -> IdentifierNode.withName(n))
+              .collect(Collectors.toList()));
+
       VariableExpr variableExpr = autoBuild();
       if (variableExpr.isDecl() || variableExpr.exprReferenceExpr() != null) {
         Preconditions.checkState(

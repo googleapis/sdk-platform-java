@@ -1216,6 +1216,48 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeMethodDefinition_templatedReturnTypeAndArguments() {
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateNames(Arrays.asList("K", "V"))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateNames(Arrays.asList("T", "V"))
+                .build());
+
+    TypeNode returnType = TypeNode.withReference(mapRef);
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setTemplateNames(Arrays.asList("T", "K", "V"))
+            .setReturnTemplateNames(Arrays.asList("K", "V"))
+            .setArguments(arguments)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(returnType)
+                    .build())
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "public <T,K,V> Map<T,K> close(Map<K,V> x, Map<T,V> y) {\n",
+            "return foobar();\n",
+            "}\n"));
+  }
+
+  @Test
   public void writeClassDefinition_basic() {
     ClassDefinition classDef =
         ClassDefinition.builder()
