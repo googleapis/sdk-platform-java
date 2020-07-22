@@ -55,11 +55,11 @@ public abstract class NewObjectExpr implements Expr {
     abstract NewObjectExpr autoBuild();
 
     public NewObjectExpr build() {
-      // 1. New object expression should be reference type.
       Preconditions.checkState(
           TypeNode.isReferenceType(type()), "New object expression should be reference types.");
-      // 2. Edge case: isGeneric is false, but type().generics() is not empty
-      // We will set isGeneric to be true for the users.
+      Preconditions.checkState(
+          !type().equals(TypeNode.NULL), "New object expression canonot be null type.");
+      // type().generics() is not empty, so we will set isGeneric() to be true.
       if (!isGeneric() && !type().reference().generics().isEmpty()) {
         setIsGeneric(true);
       }

@@ -140,27 +140,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
   }
 
-  @Override
-  public void visit(NewObjectExpr newObjectValue) {
-    buffer.append(NEW);
-    space();
-    newObjectValue.type().accept(this);
-    // If isGeneric() is true, but generic list is empty, we will append `<>` to the buffer.
-    if (newObjectValue.isGeneric() && newObjectValue.type().reference().generics().isEmpty()) {
-      buffer.append(LEFT_ANGLE).append(RIGHT_ANGLE);
-    }
-    buffer.append(LEFT_PAREN);
-    int size = newObjectValue.arguments().size();
-    for (int i = 0; i < size; i++) {
-      newObjectValue.arguments().get(i).accept(this);
-      if (i < size - 1) {
-        buffer.append(COMMA);
-        space();
-      }
-    }
-    buffer.append(RIGHT_PAREN);
-  }
-
   /** =============================== EXPRESSIONS =============================== */
   @Override
   public void visit(ValueExpr valueExpr) {
@@ -295,6 +274,29 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(INSTANCEOF);
     space();
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(NewObjectExpr newObjectExpr) {
+    buffer.append(NEW);
+    space();
+    newObjectExpr.type().accept(this);
+    // If isGeneric() is true, but generic list is empty, we will append `<>` to the buffer.
+    if (newObjectExpr.isGeneric() && newObjectExpr.type().reference().generics().isEmpty()) {
+      leftAngle();
+      rightAngle();
+    }
+    leftParen();
+    ;
+    int numArguments = newObjectExpr.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      newObjectExpr.arguments().get(i).accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(COMMA);
+        space();
+      }
+    }
+    rightParen();
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -670,6 +672,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void rightBrace() {
     buffer.append(RIGHT_BRACE);
+  }
+
+  private void rightAngle() {
+    buffer.append(RIGHT_ANGLE);
+  }
+
+  private void leftAngle() {
+    buffer.append(LEFT_ANGLE);
   }
 
   private void semicolon() {

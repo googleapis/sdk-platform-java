@@ -27,7 +27,7 @@ import org.junit.Test;
 public class NewObjectExprTest {
   @Test
   public void validNewObjectValue_basic() {
-    // IsGeneric() is true and generics() is not empty.
+    // isGeneric() is true and generics() is not empty.
     // [Constructing] `new List<String>()`, no exception should be thrown.
     ConcreteReference ref =
         ConcreteReference.builder()
@@ -42,7 +42,7 @@ public class NewObjectExprTest {
 
   @Test
   public void validNewObjectExpr_edgeCase() {
-    // IsGeneric() is false, but generics() is not empty.
+    // isGeneric() is false, but generics() is not empty.
     // The expression is still valid, we will set isGeneric() as true for the users.
     // [Constructing] `new List<String>()`, no exception should be thrown.
     ConcreteReference ref =
@@ -58,7 +58,7 @@ public class NewObjectExprTest {
 
   @Test
   public void validNewObjectExpr_noGenericWithArgs() {
-    // IsGeneric() is false, and generics() is empty.
+    // isGeneric() is false, and generics() is empty.
     // [Constructing] `new Integer(123)` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(Integer.class).build();
     TypeNode type = TypeNode.withReference(ref);
@@ -72,8 +72,8 @@ public class NewObjectExprTest {
 
   @Test
   public void validNewObjectExpr_emptyGeneric() {
-    // IsGeneric() is true, but generics() is empty.
-    // [Constructing] `new LinedList<>()` no exception should be thrown.
+    // isGeneric() is true, but generics() is empty.
+    // [Constructing] `new LinkedList<>()` no exception should be thrown.
     ConcreteReference ref = ConcreteReference.builder().setClazz(LinkedList.class).build();
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setType(type).setIsGeneric(true).build();
@@ -83,7 +83,7 @@ public class NewObjectExprTest {
 
   @Test
   public void validNewObjectExpr_genericsAndArgs() {
-    // IsGeneric() is true, generics() is not empty, and argument list is also not empty.
+    // isGeneric() is true, generics() is not empty, and argument list is also not empty.
     // [Constructing] `new HashMap<List<String>, IOException>>(initialCapacity, loadFactor)`.
     ConcreteReference listRef =
         ConcreteReference.builder()
@@ -119,6 +119,16 @@ public class NewObjectExprTest {
         IllegalStateException.class,
         () -> {
           NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.INT).build();
+        });
+  }
+
+  @Test
+  public void invalidNewObjectExpr_nullType() {
+    // New object expressions cannot be null type.
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.NULL).build();
         });
   }
 }

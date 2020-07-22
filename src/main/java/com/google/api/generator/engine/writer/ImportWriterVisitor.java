@@ -108,12 +108,6 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     annotation.type().accept(this);
   }
 
-  @Override
-  public void visit(NewObjectExpr newObjectExpr) {
-    newObjectExpr.type().accept(this);
-    expressions(newObjectExpr.arguments());
-  }
-
   /** =============================== EXPRESSIONS =============================== */
   @Override
   public void visit(ValueExpr valueExpr) {
@@ -162,6 +156,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(InstanceofExpr instanceofExpr) {
     instanceofExpr.expr().accept(this);
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(NewObjectExpr newObjectExpr) {
+    newObjectExpr.type().accept(this);
+    expressions(newObjectExpr.arguments());
   }
 
   /** =============================== STATEMENTS =============================== */

@@ -24,7 +24,6 @@ public interface AstNodeVisitor {
 
   public void visit(AnnotationNode annotation);
 
-  public void visit(NewObjectExpr newObjectExpr);
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
@@ -41,6 +40,8 @@ public interface AstNodeVisitor {
   public void visit(ThrowExpr throwExpr);
 
   public void visit(InstanceofExpr instanceofExpr);
+
+  public void visit(NewObjectExpr newObjectExpr);
 
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);
