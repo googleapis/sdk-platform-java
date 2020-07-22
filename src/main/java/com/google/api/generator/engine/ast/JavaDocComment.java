@@ -20,6 +20,7 @@ import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
@@ -117,9 +118,8 @@ public abstract class JavaDocComment implements Comment {
       }
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.
-      for (int i = 0; i < componentsList.size(); i++) {
-        componentsList.set(i, CommentEscaper.escape(componentsList.get(i)));
-      }
+      componentsList =
+          componentsList.stream().map(c -> CommentEscaper.escape(c)).collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
     }

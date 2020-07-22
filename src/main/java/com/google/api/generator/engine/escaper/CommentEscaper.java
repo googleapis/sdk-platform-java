@@ -19,6 +19,9 @@ import com.google.common.escape.Escapers;
 
 public class CommentEscaper {
   private static class SpecialEscaper extends Escaper {
+    // Handle escape characters for the comments here,
+    // else JavaFormmater cannot properly format the string comment.
+    // `"` is overlooked because the comments will not be surrounded by `"`.
     private static final Escaper escaper =
         Escapers.builder()
             .addEscape('\t', "\\t")
