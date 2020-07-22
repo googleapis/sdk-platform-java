@@ -30,7 +30,7 @@ public abstract class MethodInvocationExpr implements Expr {
   public abstract Expr exprReferenceExpr();
 
   @Nullable
-  public abstract IdentifierNode staticReferenceIdentifier();
+  public abstract TypeNode staticReferenceType();
 
   public abstract List<Expr> arguments();
 
@@ -38,9 +38,6 @@ public abstract class MethodInvocationExpr implements Expr {
 
   // Private.
   abstract String methodName();
-
-  // Private.
-  abstract String staticReferenceName();
 
   public boolean isGeneric() {
     return !generics().isEmpty();
@@ -61,7 +58,6 @@ public abstract class MethodInvocationExpr implements Expr {
   public static Builder builder() {
     return new AutoValue_MethodInvocationExpr.Builder()
         .setReturnType(TypeNode.VOID)
-        .setStaticReferenceName("")
         .setGenerics(Collections.emptyList())
         .setArguments(Collections.emptyList());
   }
@@ -80,9 +76,7 @@ public abstract class MethodInvocationExpr implements Expr {
     public abstract Builder setExprReferenceExpr(Expr exprReference);
 
     // Optional, but cannot co-exist with an expression reference.
-    public abstract Builder setStaticReferenceName(String staticReferenceName);
-
-    abstract String staticReferenceName();
+    public abstract Builder setStaticReferenceType(TypeNode type);
 
     // Optional.
     public abstract Builder setArguments(List<Expr> arguments);
@@ -90,11 +84,8 @@ public abstract class MethodInvocationExpr implements Expr {
     // Optional.
     public abstract Builder setGenerics(List<Reference> generics);
 
-    // Private.
+    // Private setter.
     abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
-
-    // Private.
-    abstract Builder setStaticReferenceIdentifier(IdentifierNode staticReferenceIdentifier);
 
     abstract MethodInvocationExpr autoBuild();
 
@@ -103,13 +94,13 @@ public abstract class MethodInvocationExpr implements Expr {
       IdentifierNode identifier = IdentifierNode.builder().setName(methodName()).build();
       setMethodIdentifier(identifier);
 
-      if (!staticReferenceName().isEmpty()) {
-        IdentifierNode staticReferenceIdentifier =
-            IdentifierNode.builder().setName(staticReferenceName()).build();
-        setStaticReferenceIdentifier(staticReferenceIdentifier);
-      }
-
       MethodInvocationExpr methodInvocationExpr = autoBuild();
+
+      if (methodInvocationExpr.staticReferenceType() != null) {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(methodInvocationExpr.staticReferenceType()),
+            "Static references can only be made on object types");
+      }
 
       Preconditions.checkState(
           !methodInvocationExpr.type().equals(TypeNode.NULL),
@@ -117,7 +108,7 @@ public abstract class MethodInvocationExpr implements Expr {
 
       Preconditions.checkState(
           methodInvocationExpr.exprReferenceExpr() == null
-              || methodInvocationExpr.staticReferenceIdentifier() == null,
+              || methodInvocationExpr.staticReferenceType() == null,
           "Only the expression reference or the static reference can be set, not both");
 
       return methodInvocationExpr;

@@ -62,10 +62,17 @@ public class ImportWriterVisitorTest {
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr valueExpr =
         MethodInvocationExpr.builder()
             .setMethodName("createClass")
-            .setStaticReferenceName(ClassDefinition.class.getSimpleName())
+            .setStaticReferenceType(someType)
             .setReturnType(createType(ClassDefinition.class))
             .build();
 
@@ -76,9 +83,10 @@ public class ImportWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(2),
+            createLines(3),
             "import com.google.api.generator.engine.ast.AstNode;\n",
-            "import com.google.api.generator.engine.ast.ClassDefinition;\n\n"));
+            "import com.google.api.generator.engine.ast.ClassDefinition;\n",
+            "import com.google.api.some.pakkage.SomeClass;\n\n"));
   }
 
   @Test

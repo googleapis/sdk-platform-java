@@ -136,6 +136,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(MethodInvocationExpr methodInvocationExpr) {
     methodInvocationExpr.returnType().accept(this);
+    if (methodInvocationExpr.staticReferenceType() != null) {
+      methodInvocationExpr.staticReferenceType().accept(this);
+    }
     if (methodInvocationExpr.exprReferenceExpr() != null) {
       methodInvocationExpr.exprReferenceExpr().accept(this);
     }
