@@ -20,6 +20,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -235,6 +236,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         space();
       }
     }
+    rightParen();
+  }
+
+  @Override
+  public void visit(CastExpr castExpr) {
+    leftParen();
+    leftParen();
+    castExpr.type().accept(this);
+    rightParen();
+    space();
+    castExpr.expr().accept(this);
     rightParen();
   }
 

@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertTrue;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -213,6 +214,25 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.AstNode;\n",
             "import java.util.Map;\n\n"));
+  }
+
+  @Test
+  public void writeCastExprImports() {
+    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class));
+    Variable variable = Variable.builder().setName("expr").setType(type).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setExpr(variableExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n\n"));
   }
 
   @Test
