@@ -50,6 +50,8 @@ public interface AstNodeVisitor {
 
   public void visit(JavaDocComment javaDocComment);
 
+  public void visit(MultiLineComment multiLineComment);
+
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);
 

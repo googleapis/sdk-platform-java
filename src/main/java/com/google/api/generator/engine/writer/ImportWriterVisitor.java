@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.MultiLineComment;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -230,6 +231,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(JavaDocComment javaDocComment) {
+    // Do nothing
+  }
+
+  @Override
+  public void visit(MultiLineComment multiLineComment) {
     // Do nothing
   }
 

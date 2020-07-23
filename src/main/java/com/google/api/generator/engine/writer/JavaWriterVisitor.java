@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.MultiLineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -59,6 +60,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String COMMA = ",";
   private static final String BLOCK_COMMENT_START = "/**";
   private static final String BLOCK_COMMENT_END = "*/";
+  private static final String MultiLine_COMMENT_START = "/*";
   private static final String DOT = ".";
   private static final String ESCAPED_QUOTE = "\"";
   private static final String EQUALS = "=";
@@ -445,6 +447,18 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     StringBuilder sourceComment = new StringBuilder();
     sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
     Arrays.stream(javaDocComment.comment().split("\\r?\\n"))
+        .forEach(
+            comment -> {
+              sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
+            });
+    sourceComment.append(BLOCK_COMMENT_END);
+    buffer.append(JavaFormatter.format(sourceComment.toString()));
+  }
+
+  public void visit(MultiLineComment multiLineComment) {
+    StringBuilder sourceComment = new StringBuilder();
+    sourceComment.append(MultiLine_COMMENT_START).append(NEWLINE);
+    Arrays.stream(multiLineComment.comment().split("\\r?\\n"))
         .forEach(
             comment -> {
               sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
