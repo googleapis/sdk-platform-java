@@ -290,9 +290,19 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeCommentStatement_blockComments() {
+    // Only line comments are in the comment statement.
+    CommentStatement commentStatement =
+        CommentStatement.builder()
+            .setBlockComment(createBlockComment("this is a block comment"))
+            .build();
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "/** this is a block comment */\n");
+  }
+
+  @Test
   public void writeCommentStatement_lineComments() {
     // Only line comments are in the comment statement.
-    // TODO(xiaozhenliu) use special characters here to test comment escaper.
     CommentStatement commentStatement =
         CommentStatement.builder()
             .addLineComment(
@@ -317,6 +327,7 @@ public class JavaWriterVisitorTest {
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
+  // TODO(xiaozhenliu) use special characters here to test comment escaper.
 
   @Test
   public void writeCommentStatement_allComponenets() {
