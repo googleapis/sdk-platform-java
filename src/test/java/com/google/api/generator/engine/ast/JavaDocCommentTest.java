@@ -35,12 +35,12 @@ public class JavaDocCommentTest {
         JavaDocComment.builder()
             .addComment("Service comment may include special characters: <>\t\b\r&\"\n`'@")
             .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("RunTimeException", "This is an unexpected block end */")
+            .setThrows("RunTimeException", "This may throw an exception")
             .build();
     String expected =
         "Service comment may include special characters: <>\\t\\b\\r&\"\\n`'@\n"
             + "<p> title: GetBigBook: 'War and Peace'\n"
-            + "@throws RunTimeException This is an unexpected block end * /";
+            + "@throws RunTimeException This may throw an exception";
     assertEquals(javaDocComment.comment(), expected);
   }
 

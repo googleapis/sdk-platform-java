@@ -19,9 +19,9 @@ import com.google.common.escape.Escapers;
 
 public class CommentEscaper {
   private static class SpecialEscaper extends Escaper {
-    // Handle escape characters for the comments here,
-    // else JavaFormmater cannot properly format the string comment.
-    // `"` is overlooked because the comments will not be surrounded by `"`.
+    // Handle escape characters (https://docs.oracle.com/javase/tutorial/java/data/characters.html)
+    // for the comments here, else JavaFormmater cannot properly format the string comment.
+    // `"` and `'` is overlooked because the comments will not be surrounded by `"` or `'`.
     private static final Escaper escaper =
         Escapers.builder()
             .addEscape('\t', "\\t")
@@ -36,8 +36,8 @@ public class CommentEscaper {
 
     @Override
     public String escape(String sourceString) {
-      // Replace unexpected block end `*/` with `* /`.
-      return escaper.escape(sourceString.replace("*/", "* /"));
+      // TODO(xiaozhenliu): add HTML escaper.
+      return escaper.escape(sourceString);
     }
   }
 
