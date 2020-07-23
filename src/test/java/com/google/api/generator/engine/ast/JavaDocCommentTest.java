@@ -21,7 +21,7 @@ import java.util.List;
 import org.junit.Test;
 
 public class JavaDocCommentTest {
-  // TODO(xiaozhenliu): add escaping-related unit tests for JavaDocComment class.
+  // TODO(xiaozhenliu): add HTML escaping-related unit tests for JavaDocComment class.
   @Test
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";
@@ -33,12 +33,12 @@ public class JavaDocCommentTest {
   public void createJavaDocComment_specialCharacter() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addComment("Service comment may include special characters: <>\t\b\r&\"\n`'@")
+            .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@")
             .addParagraph("title: GetBigBook: 'War and Peace'")
             .setThrows("RunTimeException", "This may throw an exception")
             .build();
     String expected =
-        "Service comment may include special characters: <>\\t\\b\\r&\"\\n`'@\n"
+        "Service comment may include special characters: \\\\ \\t\\b\\r&\"\\f\\n`'@\n"
             + "<p> title: GetBigBook: 'War and Peace'\n"
             + "@throws RunTimeException This may throw an exception";
     assertEquals(javaDocComment.comment(), expected);
