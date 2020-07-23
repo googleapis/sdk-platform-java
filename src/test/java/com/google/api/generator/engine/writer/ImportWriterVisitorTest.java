@@ -466,8 +466,55 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.Expr;\n\n"));
   }
 
+  @Test
+  public void writeMethodDefinitionImports_templatedMixedNamesAndTypes() {
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(
+                    Arrays.asList(
+                        "K",
+                        TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class))))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("T", "V"))
+                .build());
+
+    TypeNode returnType = TypeNode.withReference(mapRef);
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setTemplateNames(Arrays.asList("T", "K", "V"))
+            .setReturnTemplateNames(Arrays.asList("K", "V"))
+            .setArguments(arguments)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(returnType)
+                    .build())
+            .build();
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import java.util.Map;\n\n"));
+  }
+
   private static TypeNode createType(Class clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
+  }
+
+  private static Variable createVariable(String variableName, TypeNode type) {
+    return Variable.builder().setName(variableName).setType(type).build();
   }
 
   private static String createLines(int numLines) {

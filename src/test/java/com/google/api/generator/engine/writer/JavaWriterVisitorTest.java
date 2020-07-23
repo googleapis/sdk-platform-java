@@ -1303,12 +1303,12 @@ public class JavaWriterVisitorTest {
             VariableExpr.builder()
                 .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("K", "V"))
+                .setTemplateObjects(Arrays.asList("K", TypeNode.STRING))
                 .build(),
             VariableExpr.builder()
                 .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("T", "V"))
+                .setTemplateObjects(Arrays.asList("T", "V"))
                 .build());
 
     TypeNode returnType = TypeNode.withReference(mapRef);
@@ -1332,7 +1332,7 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             createLines(3),
-            "public <T,K,V> Map<T,K> close(Map<K,V> x, Map<T,V> y) {\n",
+            "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
             "return foobar();\n",
             "}\n"));
   }
