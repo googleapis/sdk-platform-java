@@ -21,7 +21,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class JavaDocCommentTest {
-  // TODO(xiaozhenliu): add HTML escaping-related unit tests for JavaDocComment class.
   @Test
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";

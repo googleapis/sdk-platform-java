@@ -41,6 +41,9 @@ public class CommentEscaper {
   }
 
   private static class HtmlEscaper extends Escaper {
+    // Based on the observation of the generated java files, we escape the following
+    // four characters by html escaper. We do not directly use HtmlEscapers here because
+    // it escapes`<>&\"'` as specified by HTML 4.01
     private static final Escaper escaper =
         Escapers.builder()
             .addEscape('<', "&lt;")
@@ -64,7 +67,9 @@ public class CommentEscaper {
   public static String htmlEscaper(String source) {
     return new HtmlEscaper().escape(source);
   }
-
+  // Escape all special characters at the same time, it will be called
+  // in Line/Block Comment classes since they will not add extra special
+  // characters like `<>*` in the comment.
   public static String escape(String source) {
     return specialCharEscape(htmlEscaper(source));
   }
