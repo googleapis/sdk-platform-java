@@ -18,9 +18,11 @@ import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -49,6 +51,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -187,6 +190,55 @@ public class JavaWriterVisitorTest {
 
     expr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "public static final boolean x");
+  }
+
+  @Test
+  public void writeVariableExpr_basicReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_basicReferenceWithModifiersSet() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(variableExpr)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_nestedReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder().setName("someStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("anotherStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("lengthField").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
   }
 
   @Test
@@ -520,6 +572,181 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeCastExpr_basic() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) str)");
+  }
+
+  @Test
+  public void writeCastExpr_methodInvocation() {
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceName("SomeClass")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(methodExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) SomeClass.foobar())");
+  }
+
+  @Test
+  public void writeCastExpr_nested() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr = CastExpr.builder().setType(TypeNode.STRING).setExpr(castExpr).build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((String) ((Object) str))");
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_basic() {
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    AssignmentExpr assignmentExpr = createAssignmentExpr("foobar", "false", TypeNode.BOOLEAN);
+    ExprStatement statement = ExprStatement.withExpr(assignmentExpr);
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setName("run")
+            .setIsOverride(true)
+            .setBody(Arrays.asList(statement))
+            .build();
+
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(4),
+            "new Runnable() {\n",
+            "@Override\n",
+            "public void run() {\n",
+            "boolean foobar = false;\n}\n}"));
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_withStatementsMethods() {
+    ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
+    TypeNode type = TypeNode.withReference(ref);
+    // [Constructing] private static final String s = "foo";
+    Variable variable = createVariable("s", TypeNode.STRING);
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setScope(ScopeNode.PRIVATE)
+            .setIsDecl(true)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .setVariable(variable)
+            .build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(StringObjectValue.withValue("foo")).build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+    ExprStatement exprStatement = ExprStatement.withExpr(assignmentExpr);
+
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("run")
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(type)
+            .setStatements(Arrays.asList(exprStatement))
+            .setMethods(Arrays.asList(methodDefinition))
+            .build();
+    anonymousClassExpr.accept(writerVisitor);
+    String expected =
+        String.format(
+            createLines(5),
+            "new Runnable() {\n",
+            "private static final String s = \"foo\";\n",
+            "@Override\n",
+            "public void run() {\n",
+            "int x = 3;\n}\n}");
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeAnonymousClassExpr_generics() {
+    // [Constructing] Function<List<IOException>, MethodDefinition>
+    ConcreteReference exceptionListRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(IOException.class)))
+            .build();
+    ConcreteReference methodDefinitionRef = ConcreteReference.withClazz(MethodDefinition.class);
+    ConcreteReference ref =
+        ConcreteReference.builder()
+            .setClazz(Function.class)
+            .setGenerics(Arrays.asList(exceptionListRef, methodDefinitionRef))
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    // [Constructing] an input argument whose type is `List<IOException>`
+    VariableExpr arg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("arg")
+                    .setType(TypeNode.withReference(exceptionListRef))
+                    .build())
+            .setIsDecl(true)
+            .build();
+    // [Constructing] a return variable expression whose type is `MethodDefinition`
+    VariableExpr returnArg =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setName("returnArg")
+                    .setType(TypeNode.withReference(methodDefinitionRef))
+                    .build())
+            .build();
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.withReference(methodDefinitionRef))
+            .setArguments(Arrays.asList(arg))
+            .setIsOverride(true)
+            .setReturnExpr(returnArg)
+            .setName("apply")
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
+    anonymousClassExpr.accept(writerVisitor);
+    String expected =
+        String.format(
+            createLines(5),
+            "new Function<List<IOException>, MethodDefinition>() {\n",
+            "@Override\n",
+            "public MethodDefinition apply(List<IOException> arg) {\n",
+            "return returnArg;\n",
+            "}\n}");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test

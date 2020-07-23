@@ -15,10 +15,15 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class VariableExpr implements Expr {
   public abstract Variable variable();
+
+  @Nullable
+  public abstract Expr exprReferenceExpr();
 
   /** Variable declaration fields. */
   public abstract boolean isDecl();
@@ -56,6 +61,9 @@ public abstract class VariableExpr implements Expr {
   public abstract static class Builder {
     public abstract Builder setVariable(Variable variable);
 
+    // Optional, but cannot co-exist with a variable declaration.
+    public abstract Builder setExprReferenceExpr(Expr exprReference);
+
     public abstract Builder setIsDecl(boolean isDecl);
 
     public abstract Builder setScope(ScopeNode scope);
@@ -64,6 +72,21 @@ public abstract class VariableExpr implements Expr {
 
     public abstract Builder setIsFinal(boolean isFinal);
 
-    public abstract VariableExpr build();
+    abstract VariableExpr autoBuild();
+
+    public VariableExpr build() {
+      VariableExpr variableExpr = autoBuild();
+      if (variableExpr.isDecl() || variableExpr.exprReferenceExpr() != null) {
+        Preconditions.checkState(
+            variableExpr.isDecl() ^ (variableExpr.exprReferenceExpr() != null),
+            "Variable references cannot be declared");
+      }
+      if (variableExpr.exprReferenceExpr() != null) {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(variableExpr.exprReferenceExpr().type()),
+            "Variables can only be referenced from object types");
+      }
+      return variableExpr;
+    }
   }
 }

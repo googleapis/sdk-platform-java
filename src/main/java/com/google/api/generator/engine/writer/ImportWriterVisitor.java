@@ -15,10 +15,12 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -120,6 +122,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(VariableExpr variableExpr) {
     variableExpr.variable().type().accept(this);
+    if (variableExpr.exprReferenceExpr() != null) {
+      variableExpr.exprReferenceExpr().accept(this);
+    }
   }
 
   @Override
@@ -136,6 +141,19 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
     references(methodInvocationExpr.generics());
     expressions(methodInvocationExpr.arguments());
+  }
+
+  @Override
+  public void visit(CastExpr castExpr) {
+    castExpr.type().accept(this);
+    castExpr.expr().accept(this);
+  }
+
+  @Override
+  public void visit(AnonymousClassExpr anonymousClassExpr) {
+    anonymousClassExpr.type().accept(this);
+    methods(anonymousClassExpr.methods());
+    statements(anonymousClassExpr.statements());
   }
 
   @Override
@@ -288,6 +306,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void statements(List<Statement> statements) {
     for (Statement statement : statements) {
       statement.accept(this);
+    }
+  }
+
+  private void methods(List<MethodDefinition> methods) {
+    for (MethodDefinition method : methods) {
+      method.accept(this);
     }
   }
 

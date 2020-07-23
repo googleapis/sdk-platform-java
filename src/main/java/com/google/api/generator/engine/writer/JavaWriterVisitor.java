@@ -15,10 +15,12 @@
 package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -150,6 +152,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     TypeNode type = variable.type();
     ScopeNode scope = variableExpr.scope();
 
+    // VariableExpr will handle isDecl and exprReferenceExpr edge cases.
     if (variableExpr.isDecl()) {
       if (!scope.equals(ScopeNode.LOCAL)) {
         scope.accept(this);
@@ -168,6 +171,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       type.accept(this);
       space();
+    } else if (variableExpr.exprReferenceExpr() != null) {
+      variableExpr.exprReferenceExpr().accept(this);
+      buffer.append(DOT);
     }
 
     variable.identifier().accept(this);
@@ -231,6 +237,32 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
     }
     rightParen();
+  }
+
+  @Override
+  public void visit(CastExpr castExpr) {
+    leftParen();
+    leftParen();
+    castExpr.type().accept(this);
+    rightParen();
+    space();
+    castExpr.expr().accept(this);
+    rightParen();
+  }
+
+  @Override
+  public void visit(AnonymousClassExpr anonymousClassExpr) {
+    buffer.append(NEW);
+    space();
+    anonymousClassExpr.type().accept(this);
+    leftParen();
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(anonymousClassExpr.statements());
+    methods(anonymousClassExpr.methods());
+    rightBrace();
   }
 
   @Override

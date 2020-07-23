@@ -35,6 +35,10 @@ public interface AstNodeVisitor {
 
   public void visit(MethodInvocationExpr methodInvocationExpr);
 
+  public void visit(CastExpr castExpr);
+
+  public void visit(AnonymousClassExpr anonymousClassExpr);
+
   public void visit(ThrowExpr throwExpr);
 
   public void visit(InstanceofExpr instanceofExpr);
