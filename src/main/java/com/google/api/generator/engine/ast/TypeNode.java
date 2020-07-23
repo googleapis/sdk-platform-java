@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import java.util.HashMap;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -37,13 +38,34 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
-  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
+  public static final TypeNode BYTE = builder().setTypeKind(TypeKind.BYTE).build();
+  public static final TypeNode CHAR = builder().setTypeKind(TypeKind.CHAR).build();
   public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
-  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
+  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
+  public static final TypeNode SHORT = builder().setTypeKind(TypeKind.SHORT).build();
+  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
+
+  public static final TypeNode BOOLEAN_WRAPPER =
+      withReference(ConcreteReference.withClazz(Boolean.class));
+  public static final TypeNode BYTE_WRAPPER =
+      withReference(ConcreteReference.withClazz(Byte.class));
+  public static final TypeNode CHARACTER =
+      withReference(ConcreteReference.withClazz(Character.class));
+  public static final TypeNode FLOAT_WRAPPER =
+      withReference(ConcreteReference.withClazz(Float.class));
+  public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
+  public static final TypeNode LONG_WRAPPER =
+      withReference(ConcreteReference.withClazz(Long.class));
+  public static final TypeNode SHORT_WRAPPER =
+      withReference(ConcreteReference.withClazz(Short.class));
+  public static final TypeNode DOUBLE_WRAPPER =
+      withReference(ConcreteReference.withClazz(Double.class));
+
+  public static final HashMap<TypeNode, TypeNode> primitiveWrapperMap = createPrimitiveWrapperMap();
+
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
-  public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
@@ -150,5 +172,18 @@ public abstract class TypeNode implements AstNode {
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
+  }
+
+  private static HashMap<TypeNode, TypeNode> createPrimitiveWrapperMap() {
+    HashMap<TypeNode, TypeNode> map = new HashMap<>();
+    map.put(INT, INTEGER);
+    map.put(BOOLEAN, BOOLEAN_WRAPPER);
+    map.put(BYTE, BYTE_WRAPPER);
+    map.put(CHAR, CHARACTER);
+    map.put(FLOAT, FLOAT_WRAPPER);
+    map.put(LONG, LONG_WRAPPER);
+    map.put(SHORT, SHORT_WRAPPER);
+    map.put(DOUBLE, DOUBLE_WRAPPER);
+    return map;
   }
 }
