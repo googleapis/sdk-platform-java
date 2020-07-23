@@ -67,6 +67,7 @@ public class Composer {
       Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
