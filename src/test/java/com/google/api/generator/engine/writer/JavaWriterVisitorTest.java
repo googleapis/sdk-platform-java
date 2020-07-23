@@ -252,10 +252,10 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\<>&*/@";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\&lt;&gt;&amp;&#42;/@ */\n";
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -288,11 +288,11 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`<>&*\b\t\n\r\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
         "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+            + "// \"Novel\\\\\"`&lt;&gt;&amp;&#42;\\b\\t\\n\\r\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -362,19 +362,19 @@ public class JavaWriterVisitorTest {
   public void writeJavaDocComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addParagraph("Service comment may include special characters: &\"`'@")
+            .addParagraph("Service comment may include special characters: <>&\"`'@")
             .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("Exception", "This may throw an exception")
-            .addComment("RPC method comment may include special characters: \"`'{@literal @}.")
+            .setThrows("Exception", "This is unexpeted end */")
+            .addComment("RPC method comment may include special characters: <>&\"`'{@literal @}.")
             .build();
     String expected =
         String.format(
             createLines(6),
             "/**\n",
-            "* <p> Service comment may include special characters: &\"`'@\n",
+            "* <p> Service comment may include special characters: &lt;&gt;&amp;\"`'@\n",
             "* <p> title: GetBigBook: 'War and Peace'\n",
-            "* RPC method comment may include special characters: \"`'{@literal @}.\n",
-            "* @throws Exception This may throw an exception\n",
+            "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
+            "* @throws Exception This is unexpeted end &#42;/\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);

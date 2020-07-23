@@ -55,21 +55,25 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder setDeprecated(String deprecatedText) {
-      deprecated = deprecatedText;
+      deprecated = CommentEscaper.htmlEscaper(deprecatedText);
       return this;
     }
 
     public Builder addParam(String name, String description) {
-      paramsList.add(String.format("@param %s %s", name, description));
+      paramsList.add(
+          String.format(
+              "@param %s %s",
+              CommentEscaper.htmlEscaper(name), CommentEscaper.htmlEscaper(description)));
       return this;
     }
 
     public Builder addComment(String comment) {
-      componentsList.add(comment);
+      componentsList.add(CommentEscaper.htmlEscaper(comment));
       return this;
     }
 
     public Builder addSampleCode(String sampleCode) {
+      sampleCode = CommentEscaper.htmlEscaper(sampleCode);
       componentsList.add("<pre><code>");
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
@@ -81,6 +85,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParagraph(String paragraph) {
+      paragraph = CommentEscaper.htmlEscaper(paragraph);
       componentsList.add(String.format("<p> %s", paragraph));
       return this;
     }
@@ -90,7 +95,7 @@ public abstract class JavaDocComment implements Comment {
       oList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", CommentEscaper.htmlEscaper(s)));
               });
       componentsList.add("</ol>");
       return this;
@@ -101,7 +106,7 @@ public abstract class JavaDocComment implements Comment {
       uList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", CommentEscaper.htmlEscaper(s)));
               });
       componentsList.add("</ul>");
       return this;
@@ -111,15 +116,19 @@ public abstract class JavaDocComment implements Comment {
       // @param, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
-        componentsList.add(String.format("@throws %s %s", throwsType, throwsDescription));
+        componentsList.add(
+            CommentEscaper.htmlEscaper(
+                String.format("@throws %s %s", throwsType, throwsDescription)));
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
-        componentsList.add(String.format("@deprecated %s", deprecated));
+        componentsList.add(CommentEscaper.htmlEscaper(String.format("@deprecated %s", deprecated)));
       }
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.
       componentsList =
-          componentsList.stream().map(c -> CommentEscaper.escape(c)).collect(Collectors.toList());
+          componentsList.stream()
+              .map(c -> CommentEscaper.specialCharEscape(c))
+              .collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
     }

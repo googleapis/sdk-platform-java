@@ -18,7 +18,7 @@ import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
 public class CommentEscaper {
-  private static class SpecialEscaper extends Escaper {
+  private static class SpecialCharEscaper extends Escaper {
     // Handle escape characters (https://docs.oracle.com/javase/tutorial/java/data/characters.html)
     // for the comments here, else JavaFormmater cannot properly format the string comment.
     // `"` and `'` are overlooked because the comments will not be surrounded by `"` or `'`.
@@ -32,7 +32,7 @@ public class CommentEscaper {
             .addEscape('\\', "\\\\")
             .build();
 
-    private SpecialEscaper() {}
+    private SpecialCharEscaper() {}
 
     @Override
     public String escape(String sourceString) {
@@ -40,8 +40,32 @@ public class CommentEscaper {
     }
   }
 
+  private static class HtmlEscaper extends Escaper {
+    private static final Escaper escaper =
+        Escapers.builder()
+            .addEscape('<', "&lt;")
+            .addEscape('>', "&gt;")
+            .addEscape('&', "&amp;")
+            .addEscape('*', "&#42;")
+            .build();
+
+    private HtmlEscaper() {}
+
+    @Override
+    public String escape(String sourceString) {
+      return escaper.escape(sourceString);
+    }
+  }
+
+  public static String specialCharEscape(String source) {
+    return new SpecialCharEscaper().escape(source);
+  }
+
+  public static String htmlEscaper(String source) {
+    return new HtmlEscaper().escape(source);
+  }
+
   public static String escape(String source) {
-    // TODO(xiaozhenliu): add HTML escaper.
-    return new SpecialEscaper().escape(source);
+    return specialCharEscape(htmlEscaper(source));
   }
 }
