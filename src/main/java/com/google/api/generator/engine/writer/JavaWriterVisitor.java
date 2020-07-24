@@ -736,14 +736,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(RIGHT_BRACE);
   }
 
-  private void rightAngle() {
-    buffer.append(RIGHT_ANGLE);
-  }
-
-  private void leftAngle() {
-    buffer.append(LEFT_ANGLE);
-  }
-
   private void semicolon() {
     buffer.append(SEMICOLON);
   }

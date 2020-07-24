@@ -153,11 +153,18 @@ public class JavaWriterVisitorTest {
             .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), listRef))
             .build();
     TypeNode type = TypeNode.withReference(mapRef);
+
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
             .setReturnType(TypeNode.INT)
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     Variable num = Variable.builder().setName("num").setType(TypeNode.FLOAT).build();
     VariableExpr numExpr = VariableExpr.builder().setVariable(num).build();
