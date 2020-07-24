@@ -59,7 +59,7 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_basic() {
-    // [Constructing] new ArrayList<>()
+    // [Constructing] `new ArrayList<>()`
     NewObjectExpr newObjectExpr =
         NewObjectExpr.builder()
             .setIsGeneric(true)
@@ -70,8 +70,8 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeNewObjectExprImports_arg() {
-    // [Constructing] real use case in baseline: `new FileOutputStream(File file)`
+  public void writeNewObjectExprImports_withArgs() {
+    // [Constructing] `new FileOutputStream(File file)` where argument needs to be imported.
     ConcreteReference fileOutputStreamRef = ConcreteReference.withClazz(FileOutputStream.class);
     ConcreteReference fileRef = ConcreteReference.withClazz(File.class);
     Variable fileVar =
@@ -92,7 +92,7 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_genericsAndVariableArgs() {
-    // [Constructing] new HashMap<List<String>, Integer>>(int initialCapacity, float loadFactor)
+    // [Constructing] `new HashMap<List<String>, Integer>>(int initialCapacity, float loadFactor)`
     ConcreteReference listRef =
         ConcreteReference.builder()
             .setClazz(List.class)
@@ -124,7 +124,8 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_methodExprArg() {
-    // [Constructing] new IOException(message, cause(mapArg))
+    // [Constructing] `new IOException(message, cause(mapArg))` where `cause(mapArg)` is a method
+    // invocation with a `HashMap` argument.
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
     TypeNode mapType = TypeNode.withReference(ConcreteReference.withClazz(HashMap.class));

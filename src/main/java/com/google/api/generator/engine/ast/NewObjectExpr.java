@@ -60,8 +60,7 @@ public abstract class NewObjectExpr implements Expr {
       Preconditions.checkState(
           !type().equals(TypeNode.NULL), "New object expression cannot be null type.");
       // Only the case when generics() is empty and isGeneric() is false, we set isGeneric() to
-      // false.
-      // Otherwise, isGeneric() should be true.
+      // false. Otherwise, isGeneric() should be true.
       setIsGeneric(isGeneric() || !type().reference().generics().isEmpty());
       return autoBuild();
     }
