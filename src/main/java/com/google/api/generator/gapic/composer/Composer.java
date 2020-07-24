@@ -38,15 +38,16 @@ public class Composer {
   public static List<GapicClass> generateServiceClasses(
       @Nonnull Service service, @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(generateStubClasses(service));
+    clazzes.addAll(generateStubClasses(service, messageTypes));
     clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
 
-  public static List<GapicClass> generateStubClasses(Service service) {
+  public static List<GapicClass> generateStubClasses(
+      Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(generateStubService(service));
+    clazzes.add(generateStubServiceStub(service, messageTypes));
     clazzes.add(generateStubServiceSettings(service));
     clazzes.add(generateStubGrpcServiceCallableFactory(service));
     clazzes.add(generateStubGrpcServiceStub(service));
@@ -62,8 +63,9 @@ public class Composer {
   }
 
   /** ====================== STUB CLASSES ==================== */
-  private static GapicClass generateStubService(Service service) {
-    return generateGenericClass(Kind.STUB, String.format("%sStub", service.name()), service);
+  private static GapicClass generateStubServiceStub(
+      Service service, Map<String, Message> messageTypes) {
+    return ServiceStubClassComposer.instance().generate(service, messageTypes);
   }
 
   private static GapicClass generateStubServiceSettings(Service service) {
