@@ -492,10 +492,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeMethodInvocationExpr_staticRef() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
 
     methodExpr.accept(writerVisitor);
@@ -589,10 +596,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeCastExpr_methodInvocation() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .setReturnType(TypeNode.STRING)
             .build();
     CastExpr castExpr =
@@ -781,10 +795,17 @@ public class JavaWriterVisitorTest {
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
 
@@ -801,10 +822,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_simple() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
@@ -815,10 +843,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_static() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder()
