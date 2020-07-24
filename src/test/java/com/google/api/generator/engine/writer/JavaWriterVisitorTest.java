@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -257,6 +258,55 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_basicReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_basicReferenceWithModifiersSet() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable = Variable.builder().setName("length").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(variableExpr)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setIsStatic(true)
+            .build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.length");
+  }
+
+  @Test
+  public void writeVariableExpr_nestedReference() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+
+    Variable subVariable =
+        Variable.builder().setName("someStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("anotherStringField").setType(TypeNode.STRING).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    subVariable = Variable.builder().setName("lengthField").setType(TypeNode.INT).build();
+    variableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+  }
+
+  @Test
   public void writeBlockComment_basic() {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
@@ -264,8 +314,16 @@ public class JavaWriterVisitorTest {
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
-  // TODO(xiaozhenliu): add comment escaper in BlockComment/JavaDocComment classes and add unit
-  // tests for them.
+
+  @Test
+  public void writeBlockComment_specialChar() {
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
 
   @Test
   public void writeLineComment_basic() {
@@ -288,6 +346,18 @@ public class JavaWriterVisitorTest {
             "// this is a long test comment with so many words, hello world, hello again, hello"
                 + " for 3 times,\n",
             "// blah, blah!\n");
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_specialChar() {
+    String content =
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+    LineComment lineComment = LineComment.withComment(content);
+    String expected =
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -348,6 +418,28 @@ public class JavaWriterVisitorTest {
             "* @param shelfName The name of the shelf where books are published to.\n",
             "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
+            "*/\n");
+    javaDocComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeJavaDocComment_specialChar() {
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addParagraph("Service comment may include special characters: &\"`'@")
+            .addParagraph("title: GetBigBook: 'War and Peace'")
+            .setThrows("Exception", "This may throw an exception")
+            .addComment("RPC method comment may include special characters: \"`'{@literal @}.")
+            .build();
+    String expected =
+        String.format(
+            createLines(6),
+            "/**\n",
+            "* <p> Service comment may include special characters: &\"`'@\n",
+            "* <p> title: GetBigBook: 'War and Peace'\n",
+            "* RPC method comment may include special characters: \"`'{@literal @}.\n",
+            "* @throws Exception This may throw an exception\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
@@ -465,10 +557,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeMethodInvocationExpr_staticRef() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
 
     methodExpr.accept(writerVisitor);
@@ -545,6 +644,57 @@ public class JavaWriterVisitorTest {
     methodExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+  }
+
+  @Test
+  public void writeCastExpr_basic() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) str)");
+  }
+
+  @Test
+  public void writeCastExpr_methodInvocation() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setStaticReferenceType(someType)
+            .setReturnType(TypeNode.STRING)
+            .build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(methodExpr)
+            .build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((Object) SomeClass.foobar())");
+  }
+
+  @Test
+  public void writeCastExpr_nested() {
+    Variable variable = Variable.builder().setType(TypeNode.STRING).setName("str").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr castExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(varExpr)
+            .build();
+    castExpr = CastExpr.builder().setType(TypeNode.STRING).setExpr(castExpr).build();
+    castExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "((String) ((Object) str))");
   }
 
   @Test
@@ -710,10 +860,17 @@ public class JavaWriterVisitorTest {
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
 
@@ -730,10 +887,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_simple() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
@@ -744,10 +908,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_static() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder()
@@ -1228,6 +1399,48 @@ public class JavaWriterVisitorTest {
             "}\n",
             "boolean foobar = false;\n",
             "return 3;\n",
+            "}\n"));
+  }
+
+  @Test
+  public void writeMethodDefinition_templatedReturnTypeAndArguments() {
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateNames(Arrays.asList("K", "V"))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateNames(Arrays.asList("T", "V"))
+                .build());
+
+    TypeNode returnType = TypeNode.withReference(mapRef);
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setTemplateNames(Arrays.asList("T", "K", "V"))
+            .setReturnTemplateNames(Arrays.asList("K", "V"))
+            .setArguments(arguments)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(returnType)
+                    .build())
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "public <T,K,V> Map<T,K> close(Map<K,V> x, Map<T,V> y) {\n",
+            "return foobar();\n",
             "}\n"));
   }
 

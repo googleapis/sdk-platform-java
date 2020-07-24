@@ -75,7 +75,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(Service service, Map<String, Message> messageTypes) {
-    Map<String, TypeNode> types = createTypes(service);
+    Map<String, TypeNode> types = createTypes(service, messageTypes);
     String className = String.format("%sClient", service.name());
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
@@ -167,7 +167,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     MethodInvocationExpr newBuilderExpr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
-            .setStaticReferenceName(settingsName)
+            .setStaticReferenceType(types.get(settingsName))
             .build();
     MethodInvocationExpr buildExpr =
         MethodInvocationExpr.builder()
@@ -246,7 +246,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE) && !method.hasLro()) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes));
+        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroAsyncMethod(service.name(), method, types));
@@ -282,7 +282,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes) {
+      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -320,7 +320,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       MethodInvocationExpr newBuilderExpr =
           MethodInvocationExpr.builder()
               .setMethodName("newBuilder")
-              .setStaticReferenceName(methodInputTypeName)
+              .setStaticReferenceType(types.get(methodInputTypeName))
               .build();
       // TODO(miraleung): Handle nested arguments and setters here.
       for (String argument : signature) {
@@ -611,10 +611,12 @@ public class ServiceClientClassComposer implements ClassComposer {
     return methods;
   }
 
-  private static Map<String, TypeNode> createTypes(Service service) {
+  private static Map<String, TypeNode> createTypes(
+      Service service, Map<String, Message> messageTypes) {
     Map<String, TypeNode> types = new HashMap<>();
     types.putAll(createConcreteTypes());
     types.putAll(createVaporTypes(service));
+    types.putAll(createProtoMessageTypes(service.pakkage(), messageTypes));
     return types;
   }
 
@@ -679,6 +681,21 @@ public class ServiceClientClassComposer implements ClassComposer {
                 .setPakkage("com.google.longrunning")
                 .build()));
     return types;
+  }
+
+  private static Map<String, TypeNode> createProtoMessageTypes(
+      String pakkage, Map<String, Message> messageTypes) {
+    // Vapor message types.
+    return messageTypes.entrySet().stream()
+        .collect(
+            Collectors.toMap(
+                e -> e.getValue().name(),
+                e ->
+                    TypeNode.withReference(
+                        VaporReference.builder()
+                            .setName(e.getValue().name())
+                            .setPakkage(pakkage)
+                            .build())));
   }
 
   private static Variable createVariable(String name, TypeNode type) {
