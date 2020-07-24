@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.engine.escaper.CommentEscaper;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -32,8 +33,15 @@ public abstract class BlockComment implements Comment {
   public abstract static class Builder {
     public abstract Builder setComment(String comment);
 
-    public abstract BlockComment build();
-    // TODO(xiaozhenliu): call comment escaper for the block comment.
+    // Private accessor.
+    abstract String comment();
+
+    public abstract BlockComment autoBuild();
+
+    public BlockComment build() {
+      setComment(CommentEscaper.escape(comment()));
+      return autoBuild();
+    }
   }
 
   public void accept(AstNodeVisitor visitor) {
