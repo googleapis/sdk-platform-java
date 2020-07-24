@@ -33,7 +33,7 @@ public class CommentEscaper {
             .build();
 
     private SpecialCharEscaper() {}
-
+    
     @Override
     public String escape(String sourceString) {
       return escaper.escape(sourceString);
