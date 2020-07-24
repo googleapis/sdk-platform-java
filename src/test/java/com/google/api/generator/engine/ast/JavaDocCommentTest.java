@@ -30,6 +30,8 @@ public class JavaDocCommentTest {
 
   @Test
   public void createJavaDocComment_specialCharacter() {
+    // Check that we handle special characters correctly which includes escape characters,
+    // html escape characters and unexpected block end `*/`.
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@*/")
