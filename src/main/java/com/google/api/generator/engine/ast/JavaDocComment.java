@@ -65,7 +65,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addComment(String comment) {
-      componentsList.add(CommentEscaper.htmlEscaper(comment));
+      componentsList.add(CommentEscaper.htmlEscape(comment));
       return this;
     }
 
@@ -74,7 +74,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(CommentEscaper.htmlEscaper(line));
+                componentsList.add(CommentEscaper.htmlEscape(line));
               });
       componentsList.add("</code></pre>");
       return this;

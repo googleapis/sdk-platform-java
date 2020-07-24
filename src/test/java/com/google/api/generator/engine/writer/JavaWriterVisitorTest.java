@@ -252,9 +252,10 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\/";
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected = "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\/ */\n";
+    String expected =
+        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }

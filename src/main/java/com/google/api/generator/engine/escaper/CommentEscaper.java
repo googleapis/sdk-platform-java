@@ -66,7 +66,7 @@ public class CommentEscaper {
     return new SpecialCharEscaper().escape(source);
   }
 
-  public static String htmlEscaper(String source) {
+  public static String htmlEscape(String source) {
     return new HtmlEscaper().escape(source);
   }
 }
