@@ -19,6 +19,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -51,6 +52,16 @@ public abstract class MethodDefinition implements AstNode {
 
   public abstract ImmutableList<Statement> body();
 
+  // Please use VariableExpr for templating individual arguments.
+  public abstract ImmutableList<IdentifierNode> templateIdentifiers();
+
+  public abstract ImmutableList<IdentifierNode> returnTemplateIdentifiers();
+
+  // Private accessors.
+  abstract ImmutableList<String> templateNames();
+
+  abstract ImmutableList<String> returnTemplateNames();
+
   @Nullable
   public abstract Expr returnExpr();
 
@@ -74,7 +85,9 @@ public abstract class MethodDefinition implements AstNode {
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
-        .setIsOverride(false);
+        .setIsOverride(false)
+        .setTemplateNames(ImmutableList.of())
+        .setReturnTemplateNames(ImmutableList.of());
   }
 
   public static Builder constructorBuilder() {
@@ -87,7 +100,9 @@ public abstract class MethodDefinition implements AstNode {
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
-        .setIsOverride(false);
+        .setIsOverride(false)
+        .setTemplateNames(ImmutableList.of())
+        .setReturnTemplateNames(ImmutableList.of());
   }
 
   @AutoValue.Builder
@@ -121,6 +136,17 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setIsOverride(boolean isOverride);
 
+    public abstract Builder setTemplateNames(List<String> names);
+
+    public abstract Builder setReturnTemplateNames(List<String> names);
+
+    // Private.
+    abstract Builder setTemplateIdentifiers(List<IdentifierNode> identifiers);
+
+    abstract Builder setReturnTemplateIdentifiers(List<IdentifierNode> identifiers);
+
+    abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
+
     // Private accessors.
 
     abstract ImmutableList.Builder<AnnotationNode> annotationsBuilder();
@@ -145,9 +171,34 @@ public abstract class MethodDefinition implements AstNode {
 
     abstract MethodDefinition autoBuild();
 
-    abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
+    abstract ImmutableList<String> templateNames();
+
+    abstract ImmutableList<String> returnTemplateNames();
 
     public MethodDefinition build() {
+      // Handle templates.
+      setTemplateIdentifiers(
+          templateNames().stream()
+              .map(n -> IdentifierNode.withName(n))
+              .collect(Collectors.toList()));
+
+      if (!returnTemplateNames().isEmpty()) {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(returnType()), "Primitive return types cannot be templated");
+      }
+      setReturnTemplateIdentifiers(
+          returnTemplateNames().stream()
+              .map(
+                  n -> {
+                    Preconditions.checkState(
+                        templateNames().contains(n),
+                        String.format(
+                            "Return template name %s not found in method template names", n));
+                    return IdentifierNode.withName(n);
+                  })
+              .collect(Collectors.toList()));
+
+      // Constructor checks.
       if (isConstructor()) {
         Preconditions.checkState(
             TypeNode.isReferenceType(returnType()), "Constructor must return an object type.");
