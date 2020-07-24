@@ -220,8 +220,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (methodInvocationExpr.exprReferenceExpr() != null) {
       methodInvocationExpr.exprReferenceExpr().accept(this);
       buffer.append(DOT);
-    } else if (methodInvocationExpr.staticReferenceIdentifier() != null) {
-      methodInvocationExpr.staticReferenceIdentifier().accept(this);
+    } else if (methodInvocationExpr.staticReferenceType() != null) {
+      methodInvocationExpr.staticReferenceType().accept(this);
       buffer.append(DOT);
     }
 
