@@ -60,7 +60,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String COMMA = ",";
   private static final String BLOCK_COMMENT_START = "/**";
   private static final String BLOCK_COMMENT_END = "*/";
-  private static final String MultiLine_COMMENT_START = "/*";
+  private static final String MULTILINE_COMMENT_START = "/*";
   private static final String DOT = ".";
   private static final String ESCAPED_QUOTE = "\"";
   private static final String EQUALS = "=";
@@ -457,7 +457,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   public void visit(MultiLineComment multiLineComment) {
     StringBuilder sourceComment = new StringBuilder();
-    sourceComment.append(MultiLine_COMMENT_START).append(NEWLINE);
+    sourceComment.append(MULTILINE_COMMENT_START).append(NEWLINE);
     Arrays.stream(multiLineComment.comment().split("\\r?\\n"))
         .forEach(
             comment -> {

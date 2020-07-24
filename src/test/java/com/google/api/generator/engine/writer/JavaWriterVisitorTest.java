@@ -410,17 +410,16 @@ public class JavaWriterVisitorTest {
   public void writeMultiLineComment_sampleImports() {
     MultiLineComment multiLineComment =
         MultiLineComment.builder()
-            .addComment("Please include the following imports to run this sample.\n")
+            .addComment("Please include the following imports to run this sample.")
             .addComment("import com.google.api.gax.rpc.ApiStreamObserver;")
             .addComment("import com.google.example.library.v1.DiscussBookRequest;")
             .addComment("import com.google.example.library.v1.LibraryClient;")
             .build();
     String expected =
         String.format(
-            createLines(7),
+            createLines(6),
             "/*\n",
             "* Please include the following imports to run this sample.\n",
-            "*\n",
             "* import com.google.api.gax.rpc.ApiStreamObserver;\n",
             "* import com.google.example.library.v1.DiscussBookRequest;\n",
             "* import com.google.example.library.v1.LibraryClient;\n",
@@ -428,7 +427,25 @@ public class JavaWriterVisitorTest {
     multiLineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
-  // TODO(xiaozhenliu): add escape related unit test for multiLineComment class.
+
+  @Test
+  public void writeMultiLineComment_specialChar() {
+    // TODO(xiaozhenliu): enable the check after html escaper is in place.
+    MultiLineComment multiLineComment =
+        MultiLineComment.builder()
+            .addComment("This may contain special characters like \t\b\r\n\f\"")
+            // .addComment("Also */ or <> & which should be handled by htmlEscaper.")
+            .build();
+    multiLineComment.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "/*\n",
+            "* This may contain special characters like \\t\\b\\r\\n\\f\"\n",
+            // "* Also &#42;/ or &lt;&gt; &amp; which should be handled by htmlEscaper.",
+            "*/\n"));
+  }
 
   @Test
   public void writeTernaryExpr_basic() {

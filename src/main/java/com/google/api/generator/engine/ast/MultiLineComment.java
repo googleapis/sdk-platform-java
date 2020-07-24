@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.engine.escaper.CommentEscaper;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
@@ -33,11 +34,14 @@ public abstract class MultiLineComment implements Comment {
 
   public static final MultiLineComment APACHE_LICENSE =
       MultiLineComment.builder()
-          .addComment("Copyright 2020 Google LLC\n")
+          .addComment("Copyright 2020 Google LLC")
+          .addComment("")
           .addComment("Licensed under the Apache License, Version 2.0 (the \"License\");")
           .addComment("you may not use this file except in compliance with the License.")
-          .addComment("You may obtain a copy of the License at\n")
-          .addComment("    https://www.apache.org/licenses/LICENSE-2.0\n")
+          .addComment("You may obtain a copy of the License at")
+          .addComment("")
+          .addComment("    https://www.apache.org/licenses/LICENSE-2.0")
+          .addComment("")
           .addComment("Unless required by applicable law or agreed to in writing, software")
           .addComment("distributed under the License is distributed on an \"AS IS\" BASIS,")
           .addComment("WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.")
@@ -55,8 +59,7 @@ public abstract class MultiLineComment implements Comment {
     abstract ImmutableList.Builder<String> commentsBuilder();
 
     public Builder addComment(String comment) {
-      // TODO(xiaozhenliu) call escaper here in case there are special characters in comment.
-      commentsBuilder().add(comment);
+      commentsBuilder().add(CommentEscaper.escape(comment));
       return this;
     }
 
