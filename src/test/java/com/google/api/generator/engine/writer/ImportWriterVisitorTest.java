@@ -37,6 +37,8 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.common.base.Function;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +67,27 @@ public class ImportWriterVisitorTest {
             .build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import java.util.ArrayList;\n\n");
+  }
+
+  @Test
+  public void writeNewObjectExprImports_arg() {
+    // [Constructing] real use case in baseline: `new FileOutputStream(File file)`
+    ConcreteReference fileOutputStreamRef = ConcreteReference.withClazz(FileOutputStream.class);
+    ConcreteReference fileRef = ConcreteReference.withClazz(File.class);
+    Variable fileVar =
+        Variable.builder().setName("file").setType(TypeNode.withReference(fileRef)).build();
+    VariableExpr fileExpr = VariableExpr.builder().setVariable(fileVar).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setType(TypeNode.withReference(fileOutputStreamRef))
+            .setArguments(Arrays.asList(fileExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    System.out.println(writerVisitor.write());
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2), "import java.io.File;\n", "import java.io.FileOutputStream;\n\n"));
   }
 
   @Test
