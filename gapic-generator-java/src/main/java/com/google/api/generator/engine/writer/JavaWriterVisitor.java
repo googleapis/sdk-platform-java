@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String SPACE = " ";
@@ -170,6 +171,18 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
 
       type.accept(this);
+      if (!variableExpr.templateIdentifiers().isEmpty()) {
+        leftAngle();
+        IntStream.range(0, variableExpr.templateIdentifiers().size())
+            .forEach(
+                i -> {
+                  variableExpr.templateIdentifiers().get(i).accept(this);
+                  if (i < variableExpr.templateIdentifiers().size() - 1) {
+                    buffer.append(COMMA);
+                  }
+                });
+        rightAngle();
+      }
       space();
     } else if (variableExpr.exprReferenceExpr() != null) {
       variableExpr.exprReferenceExpr().accept(this);
@@ -213,7 +226,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
 
     if (methodInvocationExpr.isGeneric()) {
-      buffer.append(LEFT_ANGLE);
+      leftAngle();
       int numGenerics = methodInvocationExpr.generics().size();
       for (int i = 0; i < numGenerics; i++) {
         buffer.append(methodInvocationExpr.generics().get(i).name());
@@ -222,7 +235,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
           space();
         }
       }
-      buffer.append(RIGHT_ANGLE);
+      rightAngle();
     }
 
     methodInvocationExpr.methodIdentifier().accept(this);
@@ -463,8 +476,22 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     methodDefinition.scope().accept(this);
     space();
 
-    // Modifiers.
+    // Templates, if any.
+    if (!methodDefinition.templateIdentifiers().isEmpty()) {
+      leftAngle();
+      IntStream.range(0, methodDefinition.templateIdentifiers().size())
+          .forEach(
+              i -> {
+                methodDefinition.templateIdentifiers().get(i).accept(this);
+                if (i < methodDefinition.templateIdentifiers().size() - 1) {
+                  buffer.append(COMMA);
+                }
+              });
+      rightAngle();
+      space();
+    }
 
+    // Modifiers.
     if (methodDefinition.isAbstract()) {
       buffer.append(ABSTRACT);
       space();
@@ -480,6 +507,18 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     if (!methodDefinition.isConstructor()) {
       methodDefinition.returnType().accept(this);
+      if (!methodDefinition.returnTemplateIdentifiers().isEmpty()) {
+        leftAngle();
+        IntStream.range(0, methodDefinition.returnTemplateIdentifiers().size())
+            .forEach(
+                i -> {
+                  methodDefinition.templateIdentifiers().get(i).accept(this);
+                  if (i < methodDefinition.returnTemplateIdentifiers().size() - 1) {
+                    buffer.append(COMMA);
+                  }
+                });
+        rightAngle();
+      }
       space();
     }
 
@@ -656,6 +695,14 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void rightParen() {
     buffer.append(RIGHT_PAREN);
+  }
+
+  private void leftAngle() {
+    buffer.append(LEFT_ANGLE);
+  }
+
+  private void rightAngle() {
+    buffer.append(RIGHT_ANGLE);
   }
 
   private void leftBrace() {
