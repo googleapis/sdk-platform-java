@@ -81,7 +81,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParagraph(String paragraph) {
-      componentsList.add(String.format("<p> %s", CommentEscaper.htmlEscaper(paragraph)));
+      componentsList.add(String.format("<p> %s", paragraph));
       return this;
     }
 
@@ -90,7 +90,7 @@ public abstract class JavaDocComment implements Comment {
       oList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", CommentEscaper.htmlEscaper(s)));
+                componentsList.add(String.format("<li> %s", s));
               });
       componentsList.add("</ol>");
       return this;
@@ -101,7 +101,7 @@ public abstract class JavaDocComment implements Comment {
       uList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", CommentEscaper.htmlEscaper(s)));
+                componentsList.add(String.format("<li> %s", s));
               });
       componentsList.add("</ul>");
       return this;
@@ -109,17 +109,12 @@ public abstract class JavaDocComment implements Comment {
 
     public JavaDocComment build() {
       // @param, @throws and @deprecated should always get printed at the end.
-      componentsList.addAll(
-          paramsList.stream()
-              .map(param -> CommentEscaper.htmlEscaper(param))
-              .collect(Collectors.toList()));
+      componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
-        componentsList.add(
-            CommentEscaper.htmlEscaper(
-                String.format("@throws %s %s", throwsType, throwsDescription)));
+        componentsList.add(String.format("@throws %s %s", throwsType, throwsDescription));
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
-        componentsList.add(CommentEscaper.htmlEscaper(String.format("@deprecated %s", deprecated)));
+        componentsList.add(String.format("@deprecated %s", deprecated));
       }
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.

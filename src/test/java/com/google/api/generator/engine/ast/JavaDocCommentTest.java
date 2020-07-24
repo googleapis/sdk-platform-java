@@ -32,14 +32,19 @@ public class JavaDocCommentTest {
   public void createJavaDocComment_specialCharacter() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@")
+            .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@*/")
             .addParagraph("title: GetBigBook: <War and Peace>")
-            .setThrows("Exception", "This is an unexpected end */")
+            .addSampleCode(
+                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+            .setThrows("Exception", "This is an exception.")
             .build();
     String expected =
-        "Service comment may include special characters: \\\\ \\t\\b\\r&amp;\"\\f\\n`'@\n"
-            + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
-            + "@throws Exception This is an unexpected end &#42;/";
+        "Service comment may include special characters: \\\\ \\t\\b\\r&amp;\"\\f\\n`'{@literal @}&#42;/\n"
+            + "<p> title: GetBigBook: <War and Peace>\n"
+            + "<pre><code>\n"
+            + "ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n"
+            + "</code></pre>\n"
+            + "@throws Exception This is an exception.";
     assertEquals(javaDocComment.comment(), expected);
   }
 

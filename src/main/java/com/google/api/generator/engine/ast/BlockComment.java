@@ -39,7 +39,7 @@ public abstract class BlockComment implements Comment {
     public abstract BlockComment autoBuild();
 
     public BlockComment build() {
-      setComment(CommentEscaper.escape(comment()));
+      setComment(CommentEscaper.specialCharEscape(comment()));
       return autoBuild();
     }
   }

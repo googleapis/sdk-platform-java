@@ -252,10 +252,9 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\<>&*/@";
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\/";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\&lt;&gt;&amp;&#42;/@ */\n";
+    String expected = "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\/ */\n";
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -288,11 +287,11 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`<>&*\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
         "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`&lt;&gt;&amp;&#42;\\b\\t\\n\\r\"]']\n";
+            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -362,23 +361,33 @@ public class JavaWriterVisitorTest {
   public void writeJavaDocComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
+            .addComment(
+                "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
+            .addComment("named `bookShelves/*`")
+            .addSampleCode(
+                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
             .addOrderedList(
                 Arrays.asList(
-                    "Service comment may include special characters: <>&\"`'@",
-                    "title: GetBigBook: 'War and Peace'"))
-            .setDeprecated("This is unexpeted end */")
-            .addComment("RPC method comment may include special characters: <>&\"`'{@literal @}.")
+                    "A \"flattened\" method.",
+                    "A \"request object\" method.",
+                    "A \"callable\" method."))
+            .addComment("RPC method comment may include special characters: <>&\"`'@.")
             .build();
     String expected =
         String.format(
-            createLines(8),
+            createLines(13),
             "/**\n",
+            "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
+            "* named `bookShelves/&#42;`\n",
+            "* <pre><code>\n",
+            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* </code></pre>\n",
             "* <ol>\n",
-            "* <li> Service comment may include special characters: &lt;&gt;&amp;\"`'@\n",
-            "* <li> title: GetBigBook: 'War and Peace'\n",
+            "* <li> A \"flattened\" method.\n",
+            "* <li> A \"request object\" method.\n",
+            "* <li> A \"callable\" method.\n",
             "* </ol>\n",
             "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
-            "* @deprecated This is unexpeted end &#42;/\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);

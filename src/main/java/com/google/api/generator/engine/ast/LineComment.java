@@ -39,7 +39,7 @@ public abstract class LineComment implements Comment {
     public abstract LineComment autoBuild();
 
     public LineComment build() {
-      setComment(CommentEscaper.escape(comment()));
+      setComment(CommentEscaper.specialCharEscape(comment()));
       return autoBuild();
     }
   }
