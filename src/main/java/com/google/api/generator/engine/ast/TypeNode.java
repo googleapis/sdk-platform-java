@@ -40,11 +40,11 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
   public static final TypeNode BYTE = builder().setTypeKind(TypeKind.BYTE).build();
   public static final TypeNode CHAR = builder().setTypeKind(TypeKind.CHAR).build();
+  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
   public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
   public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
   public static final TypeNode SHORT = builder().setTypeKind(TypeKind.SHORT).build();
-  public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
 
   public static final TypeNode BOOLEAN_WRAPPER =
       withReference(ConcreteReference.withClazz(Boolean.class));
@@ -52,6 +52,8 @@ public abstract class TypeNode implements AstNode {
       withReference(ConcreteReference.withClazz(Byte.class));
   public static final TypeNode CHARACTER =
       withReference(ConcreteReference.withClazz(Character.class));
+  public static final TypeNode DOUBLE_WRAPPER =
+      withReference(ConcreteReference.withClazz(Double.class));
   public static final TypeNode FLOAT_WRAPPER =
       withReference(ConcreteReference.withClazz(Float.class));
   public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
@@ -59,10 +61,8 @@ public abstract class TypeNode implements AstNode {
       withReference(ConcreteReference.withClazz(Long.class));
   public static final TypeNode SHORT_WRAPPER =
       withReference(ConcreteReference.withClazz(Short.class));
-  public static final TypeNode DOUBLE_WRAPPER =
-      withReference(ConcreteReference.withClazz(Double.class));
 
-  public static final HashMap<TypeNode, TypeNode> primitiveWrapperMap = createPrimitiveWrapperMap();
+  public static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -174,7 +174,7 @@ public abstract class TypeNode implements AstNode {
     return !typeKind.equals(TypeKind.OBJECT);
   }
 
-  private static HashMap<TypeNode, TypeNode> createPrimitiveWrapperMap() {
+  private static HashMap<TypeNode, TypeNode> createBoxedTypeMap() {
     HashMap<TypeNode, TypeNode> map = new HashMap<>();
     map.put(INT, INTEGER);
     map.put(BOOLEAN, BOOLEAN_WRAPPER);
