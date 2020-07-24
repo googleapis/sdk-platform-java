@@ -40,7 +40,7 @@ public class CommentEscaper {
     }
   }
   // HtmlEscaper is separately defined from SpecialCharEscaper even if they extend the same Escaper,
-  // because HtmlEscaper would be called by JavaDocComment for each component.
+  // because HtmlEscaper would be called independently by JavaDocComment for each component.
   private static class HtmlEscaper extends Escaper {
     // Based on the observation of the generated java files, we escape the following
     // four characters by html escaper. We do not directly use guava HtmlEscapers here because
