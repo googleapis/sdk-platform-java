@@ -71,7 +71,7 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_withArgs() {
-    // [Constructing] `new FileOutputStream(File file)` where argument needs to be imported.
+    // [Constructing] `new FileOutputStream(File file)` and the argument needs to be imported.
     ConcreteReference fileOutputStreamRef = ConcreteReference.withClazz(FileOutputStream.class);
     ConcreteReference fileRef = ConcreteReference.withClazz(File.class);
     Variable fileVar =
@@ -124,7 +124,7 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeNewObjectExprImports_methodExprArg() {
-    // [Constructing] `new IOException(message, cause(mapArg))` where `cause(mapArg)` is a method
+    // [Constructing] `new IOException(message, cause(mapArg))` and `cause(mapArg)` is a method
     // invocation with a `HashMap` argument.
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();

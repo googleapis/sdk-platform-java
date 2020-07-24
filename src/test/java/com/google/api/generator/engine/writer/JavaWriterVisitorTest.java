@@ -120,7 +120,7 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeNewObjectExpr_withMethodExprArgs() {
     // isGeneric() is false, and generics() is empty.
-    // [Constructing] `new IOException(message, cause())` where `cause()` is a method invocation.
+    // [Constructing] `new IOException(message, cause())` and `cause()` is a method invocation.
     TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
     VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
