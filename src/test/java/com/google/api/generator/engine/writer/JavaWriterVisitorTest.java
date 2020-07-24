@@ -360,7 +360,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeJavaDocComment_specialChar() {
-    // Only comments and sample codes in JavaDocComment needs this escaper.
+    // Only comments and sample codes in JavaDocComment need this escaper.
     // <p> <ol> <li> <ul> are hard-coded in monolith generator, which do not need escaping.
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
