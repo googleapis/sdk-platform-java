@@ -146,8 +146,6 @@ public abstract class ClassDefinition implements AstNode {
       // Check implemented interface types.
       for (TypeNode implType : classDef.implementsTypes()) {
         Preconditions.checkState(
-            !implType.equals(TypeNode.NULL), "Classes cannot implement null type");
-        Preconditions.checkState(
             TypeNode.isReferenceType(implType), "Classes cannot implement non-reference types");
       }
 

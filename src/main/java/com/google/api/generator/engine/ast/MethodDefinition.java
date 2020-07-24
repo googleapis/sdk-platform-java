@@ -152,8 +152,6 @@ public abstract class MethodDefinition implements AstNode {
         Preconditions.checkState(
             TypeNode.isReferenceType(returnType()), "Constructor must return an object type.");
         setName(returnType().reference().name());
-      } else {
-        Preconditions.checkNotNull(name(), "Methods must have a name");
       }
 
       IdentifierNode methodIdentifier = IdentifierNode.builder().setName(name()).build();
