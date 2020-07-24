@@ -58,15 +58,9 @@ public abstract class CastExpr implements Expr {
       } else if (castType.isPrimitiveType() || exprType.isPrimitiveType()) {
         // Check that if one type is primitive, and the other is its wrapper class type.
         // For example: `Integer` and `int` they can be castable.
-        if (castType.isPrimitiveType()) {
-          Preconditions.checkState(
-              TypeNode.BOXED_TYPE_MAP.get(castType).equals(exprType),
-              "Primitive types can only be cast to their corresponding boxed types.");
-        } else {
-          Preconditions.checkState(
-              TypeNode.BOXED_TYPE_MAP.get(exprType).equals(castType),
-              "Boxed primitive types can only be cast to their corresponding primitive types.");
-        }
+        Preconditions.checkState(
+            TypeNode.boxedPrimitiveEquality(castType, exprType),
+            "Primitive types can only be cast to their corresponding boxed types.");
       }
       return castExpr;
     }

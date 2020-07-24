@@ -62,7 +62,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode SHORT_WRAPPER =
       withReference(ConcreteReference.withClazz(Short.class));
 
-  public static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -117,6 +117,15 @@ public abstract class TypeNode implements AstNode {
     return !isPrimitiveType(type.typeKind())
         && type.typeKind().equals(TypeKind.OBJECT)
         && type.reference() != null;
+  }
+
+  public static boolean boxedPrimitiveEquality(TypeNode type1, TypeNode type2) {
+    if (type2.isPrimitiveType()) {
+      TypeNode type = type1;
+      type1 = type2;
+      type2 = type;
+    }
+    return type2.equals(BOXED_TYPE_MAP.get(type1));
   }
 
   public boolean isPrimitiveType() {
