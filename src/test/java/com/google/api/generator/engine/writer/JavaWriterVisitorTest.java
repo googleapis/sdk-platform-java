@@ -383,7 +383,7 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeCommentStatement_blockComment() {
-    // Only block comment are in the comment statement.
+    // Only block comment is in the comment statement.
     CommentStatement commentStatement =
         CommentStatement.builder()
             .setBlockComment(createBlockComment("this is a block comment"))
