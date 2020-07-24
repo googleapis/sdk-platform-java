@@ -362,19 +362,23 @@ public class JavaWriterVisitorTest {
   public void writeJavaDocComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addParagraph("Service comment may include special characters: <>&\"`'@")
-            .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("Exception", "This is unexpeted end */")
+            .addOrderedList(
+                Arrays.asList(
+                    "Service comment may include special characters: <>&\"`'@",
+                    "title: GetBigBook: 'War and Peace'"))
+            .setDeprecated("This is unexpeted end */")
             .addComment("RPC method comment may include special characters: <>&\"`'{@literal @}.")
             .build();
     String expected =
         String.format(
-            createLines(6),
+            createLines(8),
             "/**\n",
-            "* <p> Service comment may include special characters: &lt;&gt;&amp;\"`'@\n",
-            "* <p> title: GetBigBook: 'War and Peace'\n",
+            "* <ol>\n",
+            "* <li> Service comment may include special characters: &lt;&gt;&amp;\"`'@\n",
+            "* <li> title: GetBigBook: 'War and Peace'\n",
+            "* </ol>\n",
             "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
-            "* @throws Exception This is unexpeted end &#42;/\n",
+            "* @deprecated This is unexpeted end &#42;/\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);

@@ -39,11 +39,12 @@ public class CommentEscaper {
       return escaper.escape(sourceString);
     }
   }
-
+  // HtmlEscaper is separately defined from SpecialCharEscaper even if they extend the same Escaper,
+  // because HtmlEscaper would be called by JavaDocComment for each component.
   private static class HtmlEscaper extends Escaper {
     // Based on the observation of the generated java files, we escape the following
-    // four characters by html escaper. We do not directly use HtmlEscapers here because
-    // it escapes`<>&\"'` as specified by HTML 4.01
+    // four characters by html escaper. We do not directly use guava HtmlEscapers here because
+    // it only escapes`<>&\"'` as specified by HTML 4.01.
     private static final Escaper escaper =
         Escapers.builder()
             .addEscape('<', "&lt;")
