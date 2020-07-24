@@ -50,8 +50,6 @@ public interface AstNodeVisitor {
 
   public void visit(JavaDocComment javaDocComment);
 
-  public void visit(CommentStatement commentStatement);
-
   /** =============================== STATEMENTS =============================== */
   public void visit(ExprStatement exprStatement);
 
@@ -64,6 +62,8 @@ public interface AstNodeVisitor {
   public void visit(WhileStatement whileStatement);
 
   public void visit(TryCatchStatement tryCatchStatement);
+
+  public void visit(CommentStatement commentStatement);
 
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);

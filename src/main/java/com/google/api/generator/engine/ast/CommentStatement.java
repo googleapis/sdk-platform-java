@@ -40,9 +40,10 @@ public abstract class CommentStatement implements Statement {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    // Optional. Comment statement can be purely JavaDocComment, BlockComment or LineComment.
+    // Comment statement can be purely JavaDocComment, BlockComment or LineComment.
     // LineComments can be multiple, while there should be only one JavaDocComment and BlockComment.
     // The order of the comments should be LineComments -> JavaComment -> BlockComment
+    // Optional.
     public abstract Builder setJavaDocComment(JavaDocComment javaDocComment);
     // Optional.
     public abstract Builder setBlockComment(BlockComment blockComment);

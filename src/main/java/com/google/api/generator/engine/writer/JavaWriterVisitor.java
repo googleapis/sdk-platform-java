@@ -424,6 +424,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
   }
 
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    // LineComment should be printed first if any, and followed by JavaDocComment
+    // and BlockComment if any.
+    for (LineComment lineComment : commentStatement.lineComments()) {
+      lineComment.accept(this);
+    }
+    if (commentStatement.javaDocComment() != null) {
+      commentStatement.javaDocComment().accept(this);
+    }
+    if (commentStatement.blockComment() != null) {
+      commentStatement.blockComment().accept(this);
+    }
+  }
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment) {
     // Split comments by new line and add `//` to each line.
@@ -452,21 +467,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
             });
     sourceComment.append(BLOCK_COMMENT_END);
     buffer.append(JavaFormatter.format(sourceComment.toString()));
-  }
-
-  @Override
-  public void visit(CommentStatement commentStatement) {
-    // LineComment should be printed first if any, and followed by JavaDocComment
-    // and BlockComment if any.
-    for (LineComment lineComment : commentStatement.lineComments()) {
-      lineComment.accept(this);
-    }
-    if (commentStatement.javaDocComment() != null) {
-      commentStatement.javaDocComment().accept(this);
-    }
-    if (commentStatement.blockComment() != null) {
-      commentStatement.blockComment().accept(this);
-    }
   }
 
   /** =============================== OTHER =============================== */

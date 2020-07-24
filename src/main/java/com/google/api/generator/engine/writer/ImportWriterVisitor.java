@@ -218,6 +218,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
   }
+
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    // Do nothing
+  }
+
   /** =============================== COMMENT =============================== */
   @Override
   public void visit(LineComment lineComment) {
@@ -231,11 +237,6 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(JavaDocComment javaDocComment) {
-    // Do nothing
-  }
-
-  @Override
-  public void visit(CommentStatement commentStatement) {
     // Do nothing
   }
 
