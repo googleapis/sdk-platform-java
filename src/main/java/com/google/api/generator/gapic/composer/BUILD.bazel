@@ -19,6 +19,7 @@ java_library(
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_grpc//jar",
         "@com_google_api_gax_java//jar",
+        "@com_google_api_gax_grpc//jar",
         "@com_google_code_findbugs_jsr305//jar",
         "@com_google_guava_guava//jar",
     ],
