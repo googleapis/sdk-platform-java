@@ -59,7 +59,7 @@ public class Composer {
       Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(ServiceClientClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(generateServiceSettings(service));
+    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
@@ -75,11 +75,6 @@ public class Composer {
   private static GapicClass generateStubServiceSettings(Service service) {
     return generateGenericClass(
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
-  }
-
-  /** ====================== MAIN CLASSES ==================== */
-  private static GapicClass generateServiceSettings(Service service) {
-    return generateGenericClass(Kind.MAIN, String.format("%sSettings", service.name()), service);
   }
 
   /** ====================== HELPERS ==================== */
