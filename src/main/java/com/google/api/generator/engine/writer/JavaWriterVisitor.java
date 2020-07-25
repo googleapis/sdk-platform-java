@@ -653,6 +653,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     classes(classDefinition.nestedClasses());
 
     rightBrace();
+
+    // We should have valid Java by now, so format it.
+    if (!classDefinition.isNested()) {
+      buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
+    }
   }
 
   /** =============================== PRIVATE HELPERS =============================== */

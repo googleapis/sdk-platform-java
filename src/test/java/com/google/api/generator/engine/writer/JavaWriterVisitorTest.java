@@ -1392,11 +1392,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(4),
+            createLines(3),
             "package com.google.example.library.v1.stub;\n",
             "\n",
-            "public class LibraryServiceStub {\n",
-            "}"));
+            "public class LibraryServiceStub {}\n"));
   }
 
   @Test
@@ -1422,14 +1421,13 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(6),
+            createLines(5),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "@Deprecated\n",
             "@SuppressWarnings(\"all\")\n",
             "public final class LibraryServiceStub extends String implements Appendable,"
-                + " Cloneable, Readable {\n",
-            "}"));
+                + " Cloneable, Readable {}\n"));
   }
 
   @Test
@@ -1521,21 +1519,21 @@ public class JavaWriterVisitorTest {
             "import java.util.Map;\n",
             "\n",
             "public class LibraryServiceStub {\n",
-            "private AssignmentExpr x;\n",
-            "protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "public void close() {\n",
-            "boolean foobar = false;\n",
-            "}\n",
+            "  private AssignmentExpr x;\n",
+            "  protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n\n",
+            "  public boolean open() {\n",
+            "    return true;\n",
+            "  }\n\n",
+            "  public void close() {\n",
+            "    boolean foobar = false;\n",
+            "  }\n",
             "\n",
-            "private static class IAmANestedClass {\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "}\n",
-            "}"));
+            "  private static class IAmANestedClass {\n",
+            "    public boolean open() {\n",
+            "      return true;\n",
+            "    }\n",
+            "  }\n",
+            "}\n"));
   }
 
   private static String createLines(int numLines) {
