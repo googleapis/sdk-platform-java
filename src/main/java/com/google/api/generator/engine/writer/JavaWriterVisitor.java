@@ -328,7 +328,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     }
     rightParen();
   }
-  
+
   @Override
   public void visit(EnumRefExpr enumRefExpr) {
     enumRefExpr.type().accept(this);

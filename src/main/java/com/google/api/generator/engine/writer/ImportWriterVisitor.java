@@ -178,7 +178,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     newObjectExpr.type().accept(this);
     expressions(newObjectExpr.arguments());
   }
-  
+
   @Override
   public void visit(EnumRefExpr enumRefExpr) {
     enumRefExpr.type().accept(this);
