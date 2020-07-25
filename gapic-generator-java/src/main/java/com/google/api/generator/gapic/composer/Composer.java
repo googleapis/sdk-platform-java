@@ -49,7 +49,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(generateStubServiceStub(service, messageTypes));
     clazzes.add(generateStubServiceSettings(service));
-    clazzes.add(generateStubGrpcServiceCallableFactory(service));
+    clazzes.add(generateStubGrpcServiceCallableFactory(service, messageTypes));
     clazzes.add(generateStubGrpcServiceStub(service));
     return clazzes;
   }
@@ -73,9 +73,9 @@ public class Composer {
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
   }
 
-  private static GapicClass generateStubGrpcServiceCallableFactory(Service service) {
-    return generateGenericClass(
-        Kind.STUB, String.format("Grpc%sCallableFactory", service.name()), service);
+  private static GapicClass generateStubGrpcServiceCallableFactory(
+      Service service, Map<String, Message> messageTypes) {
+    return GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes);
   }
 
   private static GapicClass generateStubGrpcServiceStub(Service service) {

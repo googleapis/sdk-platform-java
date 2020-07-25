@@ -117,6 +117,14 @@ def com_google_api_codegen_repositories():
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_gax_grpc",
+        artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
+    )
+
+
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
     if not name.startswith(strip_repo_prefix):
         return
