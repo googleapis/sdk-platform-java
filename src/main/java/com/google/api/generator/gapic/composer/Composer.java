@@ -82,11 +82,6 @@ public class Composer {
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
   }
 
-  private static GapicClass generateStubGrpcServiceCallableFactory(
-      Service service, Map<String, Message> messageTypes) {
-    return GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes);
-  }
-
   /** ====================== MAIN CLASSES ==================== */
   private static GapicClass generateServiceClient(
       Service service, Map<String, Message> messageTypes) {
