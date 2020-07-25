@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -303,6 +304,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(INSTANCEOF);
     space();
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(EnumRefExpr enumRefExpr) {
+    enumRefExpr.type().accept(this);
+    buffer.append(DOT);
+    enumRefExpr.identifier().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
