@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
@@ -464,6 +465,31 @@ public class ImportWriterVisitorTest {
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.Expr;\n\n"));
+  }
+
+  @Test
+  public void writeEnumRefExprImports_basic() {
+    TypeNode enumType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(TypeNode.TypeKind.class)
+                .setIsStaticImport(true)
+                .build());
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        "import static com.google.api.generator.engine.ast.TypeNode.TypeKind;\n\n");
+  }
+
+  @Test
+  public void writeEnumRefExprImports_nested() {
+    TypeNode enumType =
+        TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.TypeNode;\n\n");
   }
 
   @Test

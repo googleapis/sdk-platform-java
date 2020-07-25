@@ -6,6 +6,7 @@ TESTS = [
     "CastExprTest",
     "ClassDefinitionTest",
     "ConcreteReferenceTest",
+    "EnumRefExprTest",
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
