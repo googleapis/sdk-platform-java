@@ -40,6 +40,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateStubClasses(service, messageTypes));
     clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
+    clazzes.addAll(generateMocksAndTestClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
@@ -59,6 +60,13 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(generateServiceClient(service, messageTypes));
     clazzes.add(generateServiceSettings(service));
+    return clazzes;
+  }
+
+  public static List<GapicClass> generateMocksAndTestClasses(
+      Service service, Map<String, Message> messageTypes) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 

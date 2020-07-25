@@ -60,6 +60,10 @@ public abstract class VariableExpr implements Expr {
     visitor.visit(this);
   }
 
+  public static VariableExpr withVariable(Variable variable) {
+    return builder().setVariable(variable).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_VariableExpr.Builder()
         .setIsDecl(false)
