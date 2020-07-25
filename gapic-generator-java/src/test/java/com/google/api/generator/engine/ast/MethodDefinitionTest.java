@@ -210,12 +210,12 @@ public class MethodDefinitionTest {
             VariableExpr.builder()
                 .setVariable(createVariable("x", TypeNode.withReference(listRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("K"))
+                .setTemplateObjects(Arrays.asList("K"))
                 .build(),
             VariableExpr.builder()
                 .setVariable(createVariable("y", TypeNode.withReference(listRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("V"))
+                .setTemplateObjects(Arrays.asList("V"))
                 .build());
 
     TypeNode returnType = TypeNode.withReference(ConcreteReference.withClazz(Map.class));

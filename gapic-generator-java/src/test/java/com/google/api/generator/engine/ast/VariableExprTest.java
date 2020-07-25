@@ -97,9 +97,41 @@ public class VariableExprTest {
             .build();
     VariableExpr.builder()
         .setVariable(variable)
-        .setTemplateNames(Arrays.asList("RequestT", "ResponseT"))
+        .setTemplateObjects(Arrays.asList("RequestT", "ResponseT"))
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validVariableExpr_templatedArgNameAndTypeInMethod() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+            .build();
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setTemplateObjects(Arrays.asList("RequestT", TypeNode.STRING))
+            .build();
+    assertThat(varExpr.templateNodes())
+        .containsExactly(IdentifierNode.withName("RequestT"), TypeNode.STRING);
+  }
+
+  @Test
+  public void invalidVariableExpr_templatedArgInMethodHasNonStringNonTypeNodeObject() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(variable)
+                .setTemplateObjects(Arrays.asList("RequestT", new Integer(123), TypeNode.STRING))
+                .build());
   }
 
   @Test
@@ -110,7 +142,7 @@ public class VariableExprTest {
         () ->
             VariableExpr.builder()
                 .setVariable(variable)
-                .setTemplateNames(Arrays.asList("RequestT", "123T"))
+                .setTemplateObjects(Arrays.asList("RequestT", "123T"))
                 .build());
   }
 

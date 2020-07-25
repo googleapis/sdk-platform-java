@@ -125,6 +125,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     if (variableExpr.exprReferenceExpr() != null) {
       variableExpr.exprReferenceExpr().accept(this);
     }
+    variableExpr.templateNodes().stream().forEach(n -> n.accept(this));
   }
 
   @Override

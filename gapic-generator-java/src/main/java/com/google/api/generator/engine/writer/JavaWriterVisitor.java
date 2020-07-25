@@ -171,14 +171,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
 
       type.accept(this);
-      if (!variableExpr.templateIdentifiers().isEmpty()) {
+      if (!variableExpr.templateNodes().isEmpty()) {
         leftAngle();
-        IntStream.range(0, variableExpr.templateIdentifiers().size())
+        IntStream.range(0, variableExpr.templateNodes().size())
             .forEach(
                 i -> {
-                  variableExpr.templateIdentifiers().get(i).accept(this);
-                  if (i < variableExpr.templateIdentifiers().size() - 1) {
+                  variableExpr.templateNodes().get(i).accept(this);
+                  if (i < variableExpr.templateNodes().size() - 1) {
                     buffer.append(COMMA);
+                    space();
                   }
                 });
         rightAngle();
@@ -485,6 +486,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
                 methodDefinition.templateIdentifiers().get(i).accept(this);
                 if (i < methodDefinition.templateIdentifiers().size() - 1) {
                   buffer.append(COMMA);
+                  space();
                 }
               });
       rightAngle();
@@ -512,9 +514,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         IntStream.range(0, methodDefinition.returnTemplateIdentifiers().size())
             .forEach(
                 i -> {
-                  methodDefinition.templateIdentifiers().get(i).accept(this);
+                  methodDefinition.returnTemplateIdentifiers().get(i).accept(this);
                   if (i < methodDefinition.returnTemplateIdentifiers().size() - 1) {
                     buffer.append(COMMA);
+                    space();
                   }
                 });
         rightAngle();
