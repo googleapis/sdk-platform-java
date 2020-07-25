@@ -124,7 +124,7 @@ def com_google_api_codegen_repositories():
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
-    # gRPC
+    # gRPC.
     _io_grpc_version = PROPERTIES["version.io_grpc_java"]
     _maybe(
         http_archive,
