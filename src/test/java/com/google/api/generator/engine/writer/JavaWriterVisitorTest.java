@@ -580,7 +580,7 @@ public class JavaWriterVisitorTest {
   public void writeCastExpr_primitiveAndBoxedType() {
     Variable variable = Variable.builder().setType(TypeNode.CHAR).setName("charVariable").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
-    CastExpr castExpr = CastExpr.builder().setType(TypeNode.CHARACTER).setExpr(varExpr).build();
+    CastExpr castExpr = CastExpr.builder().setType(TypeNode.CHAR_OBJECT).setExpr(varExpr).build();
     castExpr =
         CastExpr.builder()
             .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))

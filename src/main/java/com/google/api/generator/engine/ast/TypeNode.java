@@ -46,20 +46,19 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
   public static final TypeNode SHORT = builder().setTypeKind(TypeKind.SHORT).build();
 
-  public static final TypeNode BOOLEAN_WRAPPER =
+  public static final TypeNode BOOLEAN_OBJECT =
       withReference(ConcreteReference.withClazz(Boolean.class));
-  public static final TypeNode BYTE_WRAPPER =
-      withReference(ConcreteReference.withClazz(Byte.class));
-  public static final TypeNode CHARACTER =
+  public static final TypeNode BYTE_OBJECT = withReference(ConcreteReference.withClazz(Byte.class));
+  public static final TypeNode CHAR_OBJECT =
       withReference(ConcreteReference.withClazz(Character.class));
-  public static final TypeNode DOUBLE_WRAPPER =
+  public static final TypeNode DOUBLE_OBJECT =
       withReference(ConcreteReference.withClazz(Double.class));
-  public static final TypeNode FLOAT_WRAPPER =
+  public static final TypeNode FLOAT_OBJECT =
       withReference(ConcreteReference.withClazz(Float.class));
-  public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
-  public static final TypeNode LONG_WRAPPER =
-      withReference(ConcreteReference.withClazz(Long.class));
-  public static final TypeNode SHORT_WRAPPER =
+  public static final TypeNode INT_OBJECT =
+      withReference(ConcreteReference.withClazz(Integer.class));
+  public static final TypeNode LONG_OBJECT = withReference(ConcreteReference.withClazz(Long.class));
+  public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
 
   private static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
@@ -119,7 +118,7 @@ public abstract class TypeNode implements AstNode {
         && type.reference() != null;
   }
 
-  public static boolean boxedPrimitiveEquality(TypeNode type1, TypeNode type2) {
+  public static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
     if (type2.isPrimitiveType()) {
       TypeNode type = type1;
       type1 = type2;
@@ -185,14 +184,14 @@ public abstract class TypeNode implements AstNode {
 
   private static HashMap<TypeNode, TypeNode> createBoxedTypeMap() {
     HashMap<TypeNode, TypeNode> map = new HashMap<>();
-    map.put(INT, INTEGER);
-    map.put(BOOLEAN, BOOLEAN_WRAPPER);
-    map.put(BYTE, BYTE_WRAPPER);
-    map.put(CHAR, CHARACTER);
-    map.put(FLOAT, FLOAT_WRAPPER);
-    map.put(LONG, LONG_WRAPPER);
-    map.put(SHORT, SHORT_WRAPPER);
-    map.put(DOUBLE, DOUBLE_WRAPPER);
+    map.put(INT, INT_OBJECT);
+    map.put(BOOLEAN, BOOLEAN_OBJECT);
+    map.put(BYTE, BYTE_OBJECT);
+    map.put(CHAR, CHAR_OBJECT);
+    map.put(FLOAT, FLOAT_OBJECT);
+    map.put(LONG, LONG_OBJECT);
+    map.put(SHORT, SHORT_OBJECT);
+    map.put(DOUBLE, DOUBLE_OBJECT);
     return map;
   }
 }
