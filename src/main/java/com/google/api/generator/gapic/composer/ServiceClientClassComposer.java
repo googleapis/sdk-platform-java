@@ -164,10 +164,13 @@ public class ServiceClientClassComposer implements ClassComposer {
     String thisClientName = String.format("%sClient", service.name());
     String settingsName = String.format("%sSettings", service.name());
 
+    TypeNode settingsType = types.get(settingsName);
+    Preconditions.checkNotNull(settingsType, String.format("Type %s not found", settingsName));
+
     MethodInvocationExpr newBuilderExpr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
-            .setStaticReferenceType(types.get(settingsName))
+            .setStaticReferenceType(settingsType)
             .build();
     MethodInvocationExpr buildExpr =
         MethodInvocationExpr.builder()
@@ -317,10 +320,11 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setVariable(Variable.builder().setName("request").setType(methodInputType).build())
               .setIsDecl(true)
               .build();
+
       MethodInvocationExpr newBuilderExpr =
           MethodInvocationExpr.builder()
               .setMethodName("newBuilder")
-              .setStaticReferenceType(types.get(methodInputTypeName))
+              .setStaticReferenceType(methodInputType)
               .build();
       // TODO(miraleung): Handle nested arguments and setters here.
       for (String argument : signature) {
