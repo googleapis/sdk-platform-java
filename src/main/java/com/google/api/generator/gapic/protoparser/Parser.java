@@ -78,6 +78,7 @@ public class Parser {
                 Service.builder()
                     .setName(s.getName())
                     .setPakkage(pakkage)
+                    .setProtoPakkage(fileDescriptor.getPackage())
                     .setMethods(parseMethods(s, messageTypes))
                     .build())
         .collect(Collectors.toList());
@@ -129,6 +130,7 @@ public class Parser {
                     .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
                     .setLro(parseLro(md, messageTypes))
                     .setMethodSignatures(parseMethodSignatures(md))
+                    .setIsPaged(parseIsPaged(md, messageTypes))
                     .build())
         .collect(Collectors.toList());
   }
@@ -153,6 +155,16 @@ public class Parser {
         metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
+  }
+
+  @VisibleForTesting
+  static boolean parseIsPaged(
+      MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
+    Message inputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
+    Message outputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
+    return inputMessage.fieldMap().containsKey("page_size")
+        || inputMessage.fieldMap().containsKey("page_token")
+        || outputMessage.fieldMap().containsKey("next_page_token");
   }
 
   @VisibleForTesting

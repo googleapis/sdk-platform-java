@@ -37,6 +37,8 @@ public abstract class Method {
 
   public abstract TypeNode outputType();
 
+  public abstract boolean isPaged();
+
   @Nullable
   public abstract LongrunningOperation lro();
 
@@ -52,7 +54,8 @@ public abstract class Method {
   public static Builder builder() {
     return new AutoValue_Method.Builder()
         .setStream(Stream.NONE)
-        .setMethodSignatures(ImmutableList.of());
+        .setMethodSignatures(ImmutableList.of())
+        .setIsPaged(false);
   }
 
   public static Stream toStream(boolean isClientStreaming, boolean isServerStreaming) {
@@ -81,6 +84,8 @@ public abstract class Method {
     public abstract Builder setLro(LongrunningOperation lro);
 
     public abstract Builder setMethodSignatures(List<List<String>> methodSignatures);
+
+    public abstract Builder setIsPaged(boolean isPaged);
 
     public abstract Method build();
   }

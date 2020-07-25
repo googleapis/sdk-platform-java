@@ -16,6 +16,9 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -34,6 +37,16 @@ public abstract class VariableExpr implements Expr {
 
   public abstract boolean isFinal();
 
+  // Please use this only in conjunction with methods.
+  // Supports only parameterized types like Map<K, V>.
+  // TODO(unsupported): Fully generic arguments, e.g. foobar(K key, V value).
+  // This list can contain only IdentifierNode or TypeNode.
+  public abstract ImmutableList<AstNode> templateNodes();
+
+  // Private.
+  // Can either contain String or TypeNode objects.
+  abstract ImmutableList<Object> templateObjects();
+
   @Override
   public TypeNode type() {
     if (isDecl()) {
@@ -47,12 +60,17 @@ public abstract class VariableExpr implements Expr {
     visitor.visit(this);
   }
 
+  public static VariableExpr withVariable(Variable variable) {
+    return builder().setVariable(variable).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_VariableExpr.Builder()
         .setIsDecl(false)
         .setIsFinal(false)
         .setIsStatic(false)
-        .setScope(ScopeNode.LOCAL);
+        .setScope(ScopeNode.LOCAL)
+        .setTemplateObjects(ImmutableList.of());
   }
 
   public abstract Builder toBuilder();
@@ -72,9 +90,31 @@ public abstract class VariableExpr implements Expr {
 
     public abstract Builder setIsFinal(boolean isFinal);
 
+    // This should be used only for method arguments.
+    public abstract Builder setTemplateObjects(List<Object> objects);
+
+    // Private.
+    abstract Builder setTemplateNodes(List<AstNode> nodes);
+
+    abstract ImmutableList<Object> templateObjects();
+
     abstract VariableExpr autoBuild();
 
     public VariableExpr build() {
+      setTemplateNodes(
+          templateObjects().stream()
+              .map(
+                  o -> {
+                    Preconditions.checkState(
+                        o instanceof String || o instanceof TypeNode,
+                        "Template objects can only be Strings or Typenodes");
+                    if (o instanceof String) {
+                      return (AstNode) IdentifierNode.withName((String) o);
+                    }
+                    return (AstNode) o;
+                  })
+              .collect(Collectors.toList()));
+
       VariableExpr variableExpr = autoBuild();
       if (variableExpr.isDecl() || variableExpr.exprReferenceExpr() != null) {
         Preconditions.checkState(

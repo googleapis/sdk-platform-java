@@ -30,6 +30,11 @@ load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
+# gRPC.
+load("@io_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories()
+
 # Resource names plugin.
 load(
     "@com_google_protoc_java_resource_names_plugin//:repositories.bzl",

@@ -117,6 +117,22 @@ def com_google_api_codegen_repositories():
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
+    _maybe(
+        jvm_maven_import_external,
+        name = "com_google_api_gax_grpc",
+        artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
+    )
+
+    # gRPC.
+    _io_grpc_version = PROPERTIES["version.io_grpc_java"]
+    _maybe(
+        http_archive,
+        name = "io_grpc_java",
+        urls = ["https://github.com/grpc/grpc-java/archive/v%s.zip" % _io_grpc_version],
+        strip_prefix = "grpc-java-%s" % _io_grpc_version,
+    )
+
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
     if not name.startswith(strip_repo_prefix):
         return
