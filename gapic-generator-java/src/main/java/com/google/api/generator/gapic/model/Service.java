@@ -24,6 +24,8 @@ public abstract class Service {
 
   public abstract String pakkage();
 
+  public abstract String protoPakkage();
+
   public abstract ImmutableList<Method> methods();
 
   // TODO(miraleung): Get comments.
@@ -37,6 +39,8 @@ public abstract class Service {
     public abstract Builder setName(String name);
 
     public abstract Builder setPakkage(String pakkage);
+
+    public abstract Builder setProtoPakkage(String pakkage);
 
     public abstract Builder setMethods(List<Method> methods);
 
