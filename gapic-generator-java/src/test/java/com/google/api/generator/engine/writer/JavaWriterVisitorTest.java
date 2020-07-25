@@ -289,11 +289,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -536,6 +541,7 @@ public class JavaWriterVisitorTest {
                 Arrays.asList(
                     ConcreteReference.withClazz(String.class),
                     ConcreteReference.withClazz(Double.class),
+                    TypeNode.WILDCARD_REFERENCE,
                     outerMapReference))
             .setArguments(Arrays.asList(varExpr, varExpr, varExpr))
             .setExprReferenceExpr(varExpr)
@@ -552,7 +558,7 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
+        "final String someStr = anArg.<String, Double, ?, HashMap<HashMap<String, Integer>,"
             + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
   }
 
