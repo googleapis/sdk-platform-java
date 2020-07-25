@@ -93,11 +93,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
+  private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
 
   public JavaWriterVisitor() {}
 
   public void clear() {
     buffer.setLength(0);
+    importWriterVisitor.clear();
   }
 
   public String write() {
@@ -592,15 +594,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ClassDefinition classDefinition) {
     if (!classDefinition.isNested()) {
+      importWriterVisitor.initialize(
+          classDefinition.packageString(), classDefinition.classIdentifier().name());
       buffer.append(String.format("package %s;", classDefinition.packageString()));
       newline();
       newline();
     }
 
-    ImportWriterVisitor importWriterVisitor =
-        new ImportWriterVisitor(classDefinition.packageString());
     classDefinition.accept(importWriterVisitor);
-    buffer.append(importWriterVisitor.write());
+    if (!classDefinition.isNested()) {
+      buffer.append(importWriterVisitor.write());
+    }
 
     // Annotations, if any.
     annotations(classDefinition.annotations());
