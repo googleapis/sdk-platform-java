@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -126,6 +127,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     if (variableExpr.exprReferenceExpr() != null) {
       variableExpr.exprReferenceExpr().accept(this);
     }
+    variableExpr.templateNodes().stream().forEach(n -> n.accept(this));
   }
 
   @Override
@@ -175,6 +177,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(NewObjectExpr newObjectExpr) {
     newObjectExpr.type().accept(this);
     expressions(newObjectExpr.arguments());
+  }
+  
+  @Override
+  public void visit(EnumRefExpr enumRefExpr) {
+    enumRefExpr.type().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

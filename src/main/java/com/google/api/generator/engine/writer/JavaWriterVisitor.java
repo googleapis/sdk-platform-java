@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -172,14 +173,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
 
       type.accept(this);
-      if (!variableExpr.templateIdentifiers().isEmpty()) {
+      if (!variableExpr.templateNodes().isEmpty()) {
         leftAngle();
-        IntStream.range(0, variableExpr.templateIdentifiers().size())
+        IntStream.range(0, variableExpr.templateNodes().size())
             .forEach(
                 i -> {
-                  variableExpr.templateIdentifiers().get(i).accept(this);
-                  if (i < variableExpr.templateIdentifiers().size() - 1) {
+                  variableExpr.templateNodes().get(i).accept(this);
+                  if (i < variableExpr.templateNodes().size() - 1) {
                     buffer.append(COMMA);
+                    space();
                   }
                 });
         rightAngle();
@@ -325,6 +327,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       }
     }
     rightParen();
+  }
+  
+  @Override
+  public void visit(EnumRefExpr enumRefExpr) {
+    enumRefExpr.type().accept(this);
+    buffer.append(DOT);
+    enumRefExpr.identifier().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -508,6 +517,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
                 methodDefinition.templateIdentifiers().get(i).accept(this);
                 if (i < methodDefinition.templateIdentifiers().size() - 1) {
                   buffer.append(COMMA);
+                  space();
                 }
               });
       rightAngle();
@@ -535,9 +545,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         IntStream.range(0, methodDefinition.returnTemplateIdentifiers().size())
             .forEach(
                 i -> {
-                  methodDefinition.templateIdentifiers().get(i).accept(this);
+                  methodDefinition.returnTemplateIdentifiers().get(i).accept(this);
                   if (i < methodDefinition.returnTemplateIdentifiers().size() - 1) {
                     buffer.append(COMMA);
+                    space();
                   }
                 });
         rightAngle();
@@ -673,6 +684,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     classes(classDefinition.nestedClasses());
 
     rightBrace();
+
+    // We should have valid Java by now, so format it.
+    if (!classDefinition.isNested()) {
+      buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
+    }
   }
 
   /** =============================== PRIVATE HELPERS =============================== */

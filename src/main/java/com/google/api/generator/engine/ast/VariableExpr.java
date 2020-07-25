@@ -40,10 +40,12 @@ public abstract class VariableExpr implements Expr {
   // Please use this only in conjunction with methods.
   // Supports only parameterized types like Map<K, V>.
   // TODO(unsupported): Fully generic arguments, e.g. foobar(K key, V value).
-  public abstract ImmutableList<IdentifierNode> templateIdentifiers();
+  // This list can contain only IdentifierNode or TypeNode.
+  public abstract ImmutableList<AstNode> templateNodes();
 
   // Private.
-  abstract ImmutableList<String> templateNames();
+  // Can either contain String or TypeNode objects.
+  abstract ImmutableList<Object> templateObjects();
 
   @Override
   public TypeNode type() {
@@ -58,13 +60,17 @@ public abstract class VariableExpr implements Expr {
     visitor.visit(this);
   }
 
+  public static VariableExpr withVariable(Variable variable) {
+    return builder().setVariable(variable).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_VariableExpr.Builder()
         .setIsDecl(false)
         .setIsFinal(false)
         .setIsStatic(false)
         .setScope(ScopeNode.LOCAL)
-        .setTemplateNames(ImmutableList.of());
+        .setTemplateObjects(ImmutableList.of());
   }
 
   public abstract Builder toBuilder();
@@ -85,19 +91,28 @@ public abstract class VariableExpr implements Expr {
     public abstract Builder setIsFinal(boolean isFinal);
 
     // This should be used only for method arguments.
-    public abstract Builder setTemplateNames(List<String> names);
+    public abstract Builder setTemplateObjects(List<Object> objects);
 
     // Private.
-    abstract Builder setTemplateIdentifiers(List<IdentifierNode> identifiers);
+    abstract Builder setTemplateNodes(List<AstNode> nodes);
 
-    abstract ImmutableList<String> templateNames();
+    abstract ImmutableList<Object> templateObjects();
 
     abstract VariableExpr autoBuild();
 
     public VariableExpr build() {
-      setTemplateIdentifiers(
-          templateNames().stream()
-              .map(n -> IdentifierNode.withName(n))
+      setTemplateNodes(
+          templateObjects().stream()
+              .map(
+                  o -> {
+                    Preconditions.checkState(
+                        o instanceof String || o instanceof TypeNode,
+                        "Template objects can only be Strings or Typenodes");
+                    if (o instanceof String) {
+                      return (AstNode) IdentifierNode.withName((String) o);
+                    }
+                    return (AstNode) o;
+                  })
               .collect(Collectors.toList()));
 
       VariableExpr variableExpr = autoBuild();

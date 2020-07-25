@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -864,6 +865,29 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
+  @Test
+  public void writeEnumRefExpr_basic() {
+    TypeNode enumType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(TypeNode.TypeKind.class)
+                .setIsStaticImport(true)
+                .build());
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "TypeKind.VOID");
+  }
+
+  @Test
+  public void writeEnumRefExpr_nested() {
+    TypeNode enumType =
+        TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
@@ -1417,12 +1441,12 @@ public class JavaWriterVisitorTest {
             VariableExpr.builder()
                 .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("K", "V"))
+                .setTemplateObjects(Arrays.asList("K", TypeNode.STRING))
                 .build(),
             VariableExpr.builder()
                 .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
                 .setIsDecl(true)
-                .setTemplateNames(Arrays.asList("T", "V"))
+                .setTemplateObjects(Arrays.asList("T", "V"))
                 .build());
 
     TypeNode returnType = TypeNode.withReference(mapRef);
@@ -1446,7 +1470,7 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             createLines(3),
-            "public <T,K,V> Map<T,K> close(Map<K,V> x, Map<T,V> y) {\n",
+            "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
             "return foobar();\n",
             "}\n"));
   }
@@ -1464,11 +1488,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(4),
+            createLines(3),
             "package com.google.example.library.v1.stub;\n",
             "\n",
-            "public class LibraryServiceStub {\n",
-            "}"));
+            "public class LibraryServiceStub {}\n"));
   }
 
   @Test
@@ -1494,14 +1517,13 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(6),
+            createLines(5),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "@Deprecated\n",
             "@SuppressWarnings(\"all\")\n",
             "public final class LibraryServiceStub extends String implements Appendable,"
-                + " Cloneable, Readable {\n",
-            "}"));
+                + " Cloneable, Readable {}\n"));
   }
 
   @Test
@@ -1593,21 +1615,21 @@ public class JavaWriterVisitorTest {
             "import java.util.Map;\n",
             "\n",
             "public class LibraryServiceStub {\n",
-            "private AssignmentExpr x;\n",
-            "protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "public void close() {\n",
-            "boolean foobar = false;\n",
-            "}\n",
+            "  private AssignmentExpr x;\n",
+            "  protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n\n",
+            "  public boolean open() {\n",
+            "    return true;\n",
+            "  }\n\n",
+            "  public void close() {\n",
+            "    boolean foobar = false;\n",
+            "  }\n",
             "\n",
-            "private static class IAmANestedClass {\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "}\n",
-            "}"));
+            "  private static class IAmANestedClass {\n",
+            "    public boolean open() {\n",
+            "      return true;\n",
+            "    }\n",
+            "  }\n",
+            "}\n"));
   }
 
   private static String createLines(int numLines) {
