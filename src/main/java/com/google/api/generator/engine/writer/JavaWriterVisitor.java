@@ -448,13 +448,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(CommentStatement commentStatement) {
-    if (commentStatement.comment() instanceof LineComment) {
-      visit((LineComment) commentStatement.comment());
-    } else if (commentStatement.comment() instanceof BlockComment) {
-      visit((BlockComment) commentStatement.comment());
-    } else {
-      visit((JavaDocComment) commentStatement.comment());
-    }
+    commentStatement.comment().accept(this);
   }
 
   /** =============================== COMMENT =============================== */

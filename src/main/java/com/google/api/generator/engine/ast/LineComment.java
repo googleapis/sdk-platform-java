@@ -22,6 +22,11 @@ public abstract class LineComment implements Comment {
   @Override
   public abstract String comment();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_LineComment.Builder();
   }
@@ -42,9 +47,5 @@ public abstract class LineComment implements Comment {
       setComment(CommentEscaper.escape(comment()));
       return autoBuild();
     }
-  }
-
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

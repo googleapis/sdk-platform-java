@@ -21,6 +21,11 @@ import com.google.auto.value.AutoValue;
 public abstract class BlockComment implements Comment {
   public abstract String comment();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   public static Builder builder() {
     return new AutoValue_BlockComment.Builder();
   }
@@ -42,9 +47,5 @@ public abstract class BlockComment implements Comment {
       setComment(CommentEscaper.escape(comment()));
       return autoBuild();
     }
-  }
-
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
   }
 }

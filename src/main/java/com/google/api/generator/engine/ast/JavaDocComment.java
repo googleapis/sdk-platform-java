@@ -31,6 +31,7 @@ public abstract class JavaDocComment implements Comment {
     return new AutoValue_JavaDocComment.Builder();
   }
 
+  @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
   }
