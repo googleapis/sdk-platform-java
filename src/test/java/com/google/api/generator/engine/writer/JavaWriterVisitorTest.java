@@ -391,7 +391,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeCommentStatement_lineComments() {
+  public void writeCommentStatement_lineComment() {
     LineComment lineComment =
         LineComment.withComment(
             "DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\")");
@@ -1657,14 +1657,6 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
-  }
-
-  private LineComment createLineComment(String comment) {
-    return LineComment.withComment(comment);
-  }
-
-  private BlockComment createBlockComment(String comment) {
-    return BlockComment.withComment(comment);
   }
 
   private JavaDocComment createJavaDocComment() {
