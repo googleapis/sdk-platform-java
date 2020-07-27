@@ -22,6 +22,8 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class TypeNode implements AstNode {
   static final Reference EXCEPTION_REFERENCE = ConcreteReference.withClazz(Exception.class);
+  public static final Reference WILDCARD_REFERENCE =
+      ConcreteReference.withClazz(ReferenceWildcard.class);
 
   public enum TypeKind {
     BYTE,
@@ -47,6 +49,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
+  public static final TypeNode VOID_OBJECT = withReference(ConcreteReference.withClazz(Void.class));
 
   public static final TypeNode STRING_ARRAY =
       builder()
@@ -94,7 +97,8 @@ public abstract class TypeNode implements AstNode {
   public static boolean isReferenceType(TypeNode type) {
     return !isPrimitiveType(type.typeKind())
         && type.typeKind().equals(TypeKind.OBJECT)
-        && type.reference() != null;
+        && type.reference() != null
+        && !type.equals(TypeNode.NULL);
   }
 
   public boolean isPrimitiveType() {

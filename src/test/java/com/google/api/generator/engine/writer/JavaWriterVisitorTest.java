@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -35,6 +36,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -105,6 +107,77 @@ public class JavaWriterVisitorTest {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
+  }
+
+  @Test
+  public void writeNewObjectExpr_basic() {
+    // isGeneric() is true, but generics() is empty.
+    ConcreteReference ref = ConcreteReference.withClazz(List.class);
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new List<>()");
+  }
+
+  @Test
+  public void writeNewObjectExpr_withMethodExprArgs() {
+    // isGeneric() is false, and generics() is empty.
+    // [Constructing] `new IOException(message, cause())` and `cause()` is a method invocation.
+    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
+    MethodInvocationExpr causeExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("cause")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+            .build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setType(type)
+            .setArguments(Arrays.asList(msgExpr, causeExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new IOException(message, cause())");
+  }
+
+  @Test
+  public void writeNewObjectExpr_withGenericsAndArgs() {
+    // isGeneric() is true and generics() is not empty.
+    ConcreteReference listRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+            .build();
+    ConcreteReference mapRef =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), listRef))
+            .build();
+    TypeNode type = TypeNode.withReference(mapRef);
+
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.INT)
+            .setStaticReferenceType(someType)
+            .build();
+    Variable num = Variable.builder().setName("num").setType(TypeNode.FLOAT).build();
+    VariableExpr numExpr = VariableExpr.builder().setVariable(num).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(type)
+            .setArguments(Arrays.asList(methodExpr, numExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(), "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)");
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -288,11 +361,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -508,10 +586,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeMethodInvocationExpr_staticRef() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
 
     methodExpr.accept(writerVisitor);
@@ -544,6 +629,7 @@ public class JavaWriterVisitorTest {
                 Arrays.asList(
                     ConcreteReference.withClazz(String.class),
                     ConcreteReference.withClazz(Double.class),
+                    TypeNode.WILDCARD_REFERENCE,
                     outerMapReference))
             .setArguments(Arrays.asList(varExpr, varExpr, varExpr))
             .setExprReferenceExpr(varExpr)
@@ -560,7 +646,7 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
+        "final String someStr = anArg.<String, Double, ?, HashMap<HashMap<String, Integer>,"
             + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
   }
 
@@ -605,10 +691,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeCastExpr_methodInvocation() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .setReturnType(TypeNode.STRING)
             .build();
     CastExpr castExpr =
@@ -794,13 +887,43 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "x instanceof String");
   }
 
+  @Test
+  public void writeEnumRefExpr_basic() {
+    TypeNode enumType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(TypeNode.TypeKind.class)
+                .setIsStaticImport(true)
+                .build());
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "TypeKind.VOID");
+  }
+
+  @Test
+  public void writeEnumRefExpr_nested() {
+    TypeNode enumType =
+        TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
+    EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
+    enumRefExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
 
@@ -817,10 +940,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_simple() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
@@ -831,10 +961,17 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeBlockStatement_static() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.some.pakkage")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     BlockStatement blockStatement =
         BlockStatement.builder()
@@ -1319,6 +1456,48 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeMethodDefinition_templatedReturnTypeAndArguments() {
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("K", TypeNode.STRING))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(mapRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("T", "V"))
+                .build());
+
+    TypeNode returnType = TypeNode.withReference(mapRef);
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("close")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setTemplateNames(Arrays.asList("T", "K", "V"))
+            .setReturnTemplateNames(Arrays.asList("K", "V"))
+            .setArguments(arguments)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setMethodName("foobar")
+                    .setReturnType(returnType)
+                    .build())
+            .build();
+
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
+            "return foobar();\n",
+            "}\n"));
+  }
+
+  @Test
   public void writeClassDefinition_basic() {
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -1331,11 +1510,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(4),
+            createLines(3),
             "package com.google.example.library.v1.stub;\n",
             "\n",
-            "public class LibraryServiceStub {\n",
-            "}"));
+            "public class LibraryServiceStub {}\n"));
   }
 
   @Test
@@ -1361,14 +1539,13 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(6),
+            createLines(5),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "@Deprecated\n",
             "@SuppressWarnings(\"all\")\n",
             "public final class LibraryServiceStub extends String implements Appendable,"
-                + " Cloneable, Readable {\n",
-            "}"));
+                + " Cloneable, Readable {}\n"));
   }
 
   @Test
@@ -1460,21 +1637,21 @@ public class JavaWriterVisitorTest {
             "import java.util.Map;\n",
             "\n",
             "public class LibraryServiceStub {\n",
-            "private AssignmentExpr x;\n",
-            "protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "public void close() {\n",
-            "boolean foobar = false;\n",
-            "}\n",
+            "  private AssignmentExpr x;\n",
+            "  protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n\n",
+            "  public boolean open() {\n",
+            "    return true;\n",
+            "  }\n\n",
+            "  public void close() {\n",
+            "    boolean foobar = false;\n",
+            "  }\n",
             "\n",
-            "private static class IAmANestedClass {\n",
-            "public boolean open() {\n",
-            "return true;\n",
-            "}\n",
-            "}\n",
-            "}"));
+            "  private static class IAmANestedClass {\n",
+            "    public boolean open() {\n",
+            "      return true;\n",
+            "    }\n",
+            "  }\n",
+            "}\n"));
   }
 
   private static String createLines(int numLines) {
