@@ -52,11 +52,13 @@ import org.junit.Test;
 
 public class ImportWriterVisitorTest {
   private static final String CURRENT_PACKAGE = "com.google.api.generator.engine.foobar";
+  private static final String CURRENT_CLASS = "SomeClass";
   private ImportWriterVisitor writerVisitor;
 
   @Before
   public void setUp() {
-    writerVisitor = new ImportWriterVisitor(CURRENT_PACKAGE);
+    writerVisitor = new ImportWriterVisitor();
+    writerVisitor.initialize(CURRENT_PACKAGE, CURRENT_CLASS);
   }
 
   @Test
