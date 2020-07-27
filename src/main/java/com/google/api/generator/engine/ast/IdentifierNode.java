@@ -35,6 +35,10 @@ public abstract class IdentifierNode implements AstNode {
 
   public abstract String name();
 
+  public static IdentifierNode withName(String name) {
+    return builder().setName(name).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_IdentifierNode.Builder();
   }
