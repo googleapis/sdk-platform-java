@@ -120,4 +120,14 @@ public class NewObjectExprTest {
           NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.INT).build();
         });
   }
+
+  @Test
+  public void invalidNewObjectExpr_nullType() {
+    // New object expressions cannot be null type.
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.NULL).build();
+        });
+  }
 }
