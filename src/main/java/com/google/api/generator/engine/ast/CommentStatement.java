@@ -15,19 +15,14 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.collect.ImmutableList;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class CommentStatement implements Statement {
+  public abstract Comment comment();
 
-  public abstract ImmutableList<LineComment> lineComments();
-
-  @Nullable
-  public abstract JavaDocComment javaDocComment();
-
-  @Nullable
-  public abstract BlockComment blockComment();
+  public static CommentStatement withComment(Comment comment) {
+    return builder().setComment(comment).build();
+  }
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -40,20 +35,7 @@ public abstract class CommentStatement implements Statement {
 
   @AutoValue.Builder
   public abstract static class Builder {
-
-    public abstract ImmutableList.Builder<LineComment> lineCommentsBuilder();
-    // Comment statement can be purely JavaDocComment, BlockComment or LineComment.
-    // LineComments can be multiple, while there should be only one JavaDocComment and BlockComment.
-    // The order of the comments should be LineComments -> JavaComment -> BlockComment
-    // Optional.
-    public abstract Builder setJavaDocComment(JavaDocComment javaDocComment);
-    // Optional.
-    public abstract Builder setBlockComment(BlockComment blockComment);
-    // Optional.
-    public Builder addLineComment(LineComment lineComment) {
-      lineCommentsBuilder().add(lineComment);
-      return this;
-    }
+    public abstract Builder setComment(Comment comment);
 
     public abstract CommentStatement build();
   }

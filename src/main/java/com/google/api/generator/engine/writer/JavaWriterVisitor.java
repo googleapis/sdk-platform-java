@@ -426,16 +426,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(CommentStatement commentStatement) {
-    // LineComment should be printed first if any, and followed by JavaDocComment
-    // and BlockComment if any.
-    for (LineComment lineComment : commentStatement.lineComments()) {
-      lineComment.accept(this);
-    }
-    if (commentStatement.javaDocComment() != null) {
-      commentStatement.javaDocComment().accept(this);
-    }
-    if (commentStatement.blockComment() != null) {
-      commentStatement.blockComment().accept(this);
+    if (commentStatement.comment() instanceof LineComment) {
+      visit((LineComment) commentStatement.comment());
+    } else if (commentStatement.comment() instanceof BlockComment) {
+      visit((BlockComment) commentStatement.comment());
+    } else {
+      visit((JavaDocComment) commentStatement.comment());
     }
   }
 

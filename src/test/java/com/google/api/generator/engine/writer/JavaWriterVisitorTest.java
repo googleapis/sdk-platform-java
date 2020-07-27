@@ -383,62 +383,32 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeCommentStatement_blockComment() {
-    // Only block comment is in the comment statement.
-    CommentStatement commentStatement =
-        CommentStatement.builder()
-            .setBlockComment(createBlockComment("this is a block comment"))
-            .build();
+    BlockComment blockComment = BlockComment.withComment("this is a block comment");
+    CommentStatement commentStatement = CommentStatement.withComment(blockComment);
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "/** this is a block comment */\n");
   }
 
   @Test
   public void writeCommentStatement_lineComments() {
-    // Only line comments are in the comment statement.
-    CommentStatement commentStatement =
-        CommentStatement.builder()
-            .addLineComment(
-                createLineComment(
-                    "DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\""))
-            .addLineComment(createLineComment("sample-metadata:"))
-            .addLineComment(createLineComment("title: GetBigBook: 'War and Peace'"))
-            .addLineComment(createLineComment("description: Testing calling forms"))
-            .addLineComment(
-                createLineComment(
-                    "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\"]"))
-            .build();
+    LineComment lineComment =
+        LineComment.withComment(
+            "DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\")");
+    CommentStatement commentStatement = CommentStatement.withComment(lineComment);
     String expected =
-        String.format(
-            createLines(6),
-            "// DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\"\n",
-            "// sample-metadata:\n",
-            "// title: GetBigBook: 'War and Peace'\n",
-            "// description: Testing calling forms\n",
-            "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n",
-            "// \"Novel\"]\n");
+        "// DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\")\n";
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
-  public void writeCommentStatement_allComponenets() {
-    // LineComments should be grouped together, and comments should be in the order of
-    // LineComments -> JavaDocComment -> BlockComment
-    CommentStatement commentStatement =
-        CommentStatement.builder()
-            .addLineComment(createLineComment("AUTO-GENERATED DOCUMENTATION AND METHOD"))
-            .setBlockComment(
-                createBlockComment(
-                    "Returns the object with the settings used for calls to myMethod."))
-            .setJavaDocComment(createJavaDocComment())
-            .addLineComment(createLineComment("NEXT_MAJOR_VER: remove 'throws Exception'"))
-            .build();
+  public void writeCommentStatement_javaDocComment() {
+    JavaDocComment javaDocComment = createJavaDocComment();
+    CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
     commentStatement.accept(writerVisitor);
     String expected =
         String.format(
-            createLines(12),
-            "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
-            "// NEXT_MAJOR_VER: remove 'throws Exception'\n",
+            createLines(9),
             "/**\n",
             "* Parses the book from the given fully-qualified path which represents a shelf_book resource.\n",
             "* <pre><code>\n",
@@ -447,8 +417,7 @@ public class JavaWriterVisitorTest {
             "* }\n",
             "* </code></pre>\n",
             "* @deprecated Use the {@link ShelfBookName} class instead.\n",
-            "*/\n",
-            "/** Returns the object with the settings used for calls to myMethod. */\n");
+            "*/\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
