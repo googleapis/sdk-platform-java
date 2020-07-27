@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -38,6 +39,8 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.common.base.Function;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +59,101 @@ public class ImportWriterVisitorTest {
   public void setUp() {
     writerVisitor = new ImportWriterVisitor();
     writerVisitor.initialize(CURRENT_PACKAGE, CURRENT_CLASS);
+  }
+
+  @Test
+  public void writeNewObjectExprImports_basic() {
+    // [Constructing] `new ArrayList<>()`
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import java.util.ArrayList;\n\n");
+  }
+
+  @Test
+  public void writeNewObjectExprImports_withArgs() {
+    // [Constructing] `new FileOutputStream(File file)` and the argument needs to be imported.
+    ConcreteReference fileOutputStreamRef = ConcreteReference.withClazz(FileOutputStream.class);
+    ConcreteReference fileRef = ConcreteReference.withClazz(File.class);
+    Variable fileVar =
+        Variable.builder().setName("file").setType(TypeNode.withReference(fileRef)).build();
+    VariableExpr fileExpr = VariableExpr.builder().setVariable(fileVar).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setType(TypeNode.withReference(fileOutputStreamRef))
+            .setArguments(Arrays.asList(fileExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    System.out.println(writerVisitor.write());
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2), "import java.io.File;\n", "import java.io.FileOutputStream;\n\n"));
+  }
+
+  @Test
+  public void writeNewObjectExprImports_genericsAndVariableArgs() {
+    // [Constructing] `new HashMap<List<String>, Integer>>(int initialCapacity, float loadFactor)`
+    ConcreteReference listRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build();
+    ConcreteReference mapRef =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(listRef, ConcreteReference.withClazz(Integer.class)))
+            .build();
+    TypeNode type = TypeNode.withReference(mapRef);
+    Variable initialCapacity =
+        Variable.builder().setName("initialCapacity").setType(TypeNode.INT).build();
+    VariableExpr initCapacityExpr = VariableExpr.builder().setVariable(initialCapacity).build();
+    Variable loadFactor = Variable.builder().setName("loadFactor").setType(TypeNode.FLOAT).build();
+    VariableExpr loadFactorExpr = VariableExpr.builder().setVariable(loadFactor).build();
+
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(type)
+            .setArguments(Arrays.asList(initCapacityExpr, loadFactorExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(2), "import java.util.HashMap;\n", "import java.util.List;\n\n"));
+  }
+
+  @Test
+  public void writeNewObjectExprImports_methodExprArg() {
+    // [Constructing] `new IOException(message, cause(mapArg))` and `cause(mapArg)` is a method
+    // invocation with a `HashMap` argument.
+    TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    TypeNode mapType = TypeNode.withReference(ConcreteReference.withClazz(HashMap.class));
+    VariableExpr mapExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("mapArg").setType(mapType).build())
+            .build();
+    VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
+    MethodInvocationExpr causeExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("cause")
+            .setArguments(Arrays.asList(mapExpr))
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+            .build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setType(exceptionType)
+            .setArguments(Arrays.asList(msgExpr, causeExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2), "import java.io.IOException;\n", "import java.util.HashMap;\n\n"));
   }
 
   @Test

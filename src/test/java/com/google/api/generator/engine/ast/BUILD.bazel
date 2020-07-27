@@ -13,6 +13,7 @@ TESTS = [
     "InstanceofExprTest",
     "JavaDocCommentTest",
     "MethodDefinitionTest",
+    "NewObjectExprTest",
     "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",

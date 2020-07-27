@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -306,6 +307,28 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(INSTANCEOF);
     space();
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(NewObjectExpr newObjectExpr) {
+    buffer.append(NEW);
+    space();
+    newObjectExpr.type().accept(this);
+    // If isGeneric() is true, but generic list is empty, we will append `<>` to the buffer.
+    if (newObjectExpr.isGeneric() && newObjectExpr.type().reference().generics().isEmpty()) {
+      leftAngle();
+      rightAngle();
+    }
+    leftParen();
+    int numArguments = newObjectExpr.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      newObjectExpr.arguments().get(i).accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(COMMA);
+        space();
+      }
+    }
+    rightParen();
   }
 
   @Override
