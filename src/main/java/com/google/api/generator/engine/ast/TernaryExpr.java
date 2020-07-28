@@ -29,6 +29,13 @@ public abstract class TernaryExpr implements Expr {
   public TypeNode type() {
     return thenExpr().type();
   }
+  // This method is added because if thenExpr and elseExpr are boxed/primitive type equals,
+  // for example `condition ? intVar : integerVar` thenExpr and elseExpr will have different types.
+  // Boxed type can be castable/assigned to primitive type and reference type, and primitive type
+  // is castable/assigned to boxed type, or other numeric primitive type.
+  public TypeNode elseType() {
+    return elseExpr().type();
+  }
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -51,8 +58,10 @@ public abstract class TernaryExpr implements Expr {
 
     public TernaryExpr build() {
       TernaryExpr ternaryExpr = autoBuild();
+      TypeNode thenType = ternaryExpr.thenExpr().type();
+      TypeNode elseType = ternaryExpr.elseExpr().type();
       Preconditions.checkState(
-          ternaryExpr.thenExpr().type().equals(ternaryExpr.elseExpr().type()),
+          thenType.equals(elseType) || TypeNode.isBoxedTypeEquals(thenType, elseType),
           "Second and third expressions should have the same type.");
       Preconditions.checkState(
           ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN),
