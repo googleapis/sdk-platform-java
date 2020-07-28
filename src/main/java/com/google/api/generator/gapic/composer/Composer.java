@@ -60,6 +60,8 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(ServiceClientClassComposer.instance().generate(service, messageTypes));
     clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
+    // DEMO.
+    clazzes.add(DemoClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 

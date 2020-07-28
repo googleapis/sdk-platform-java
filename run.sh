@@ -16,7 +16,7 @@ DEFINE_string --alias=g googleapis '' 'Path to the googleapis directory.'
 
 # Optional flags.
 DEFINE_bool --alias=c use_cached false 'If true, does not rebuild the plugin.'
-DEFINE_string --alias=o out '/tmp/test' 'Output directory'
+DEFINE_string --alias=o out '/tmp/demo' 'Output directory'
 
 gbash::init_google "$@"
 
