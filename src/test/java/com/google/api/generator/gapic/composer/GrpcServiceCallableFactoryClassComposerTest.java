@@ -149,5 +149,4 @@ public class GrpcServiceCallableFactoryClassComposerTest {
           + "        grpcCallSettings, callSettings, clientContext);\n"
           + "  }\n"
           + "}\n";
->>>>>>> 1fe7c8001d7f1419d77cc6c635d9070fd0261f8a
 }

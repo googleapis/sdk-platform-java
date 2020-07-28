@@ -16,14 +16,22 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
+import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.ApiStreamObserver;
+import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -32,6 +40,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
@@ -42,7 +51,12 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
+import com.google.protobuf.AbstractMessage;
+import com.google.protobuf.Any;
+import io.grpc.Status;
+import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,19 +64,31 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.annotation.Generated;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class ServiceClientTestClassComposer implements ClassComposer {
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
   private static final String CLASS_NAME_PATTERN = "%sClientTest";
   private static final String CLIENT_VAR_NAME = "client";
+  private static final String GRPC_TESTING_PACKAGE = "com.google.api.gax.grpc.testing";
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_VAR_NAME_PATTERN = "mock%s";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
+  private static final String STUB_SETTINGS_PATTERN = "%sSettings";
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
@@ -82,7 +108,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     String className = String.format("%sClientTest", service.name());
     GapicClass.Kind kind = Kind.MAIN;
 
-    Map<String, VariableExpr> classMemberVars = createClassMemberVarExprs(service, types);
+    Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -122,7 +148,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
   private static List<Statement> createClassMemberFieldDecls(
       Map<String, VariableExpr> classMemberVarExprs) {
-    return classMemberVarExprs.entrySet().stream()
+    return classMemberVarExprs.values().stream()
         .map(
             v ->
                 ExprStatement.withExpr(
@@ -207,7 +233,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     Expr startServiceHelperExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(serviceHelperVarExpr)
-            .setName("start")
+            .setMethodName("start")
             .build();
 
     return MethodDefinition.builder()
@@ -234,7 +260,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         .setName("stopServer")
         .setBody(
             Arrays.asList(
-                ExprSratement.withExpr(
+                ExprStatement.withExpr(
                     MethodInvocationExpr.builder()
                         .setExprReferenceExpr(classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME))
                         .setMethodName("stop")
@@ -267,33 +293,40 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     TypeNode settingsType = types.get(getServiceSettingsClassName(service.name()));
     VariableExpr localSettingsVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setName(settings).setType(settingsType).build());
+            Variable.builder().setName("settings").setType(settingsType).build());
 
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
             .setMethodName("newBuilder")
             .build();
-    BiFunction<String, Expr, MethodInvocationExpr> methodBuilderFn =
-        (mName, argExpr) ->
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(settingsBuilderExpr)
-                .setArguments(Arrays.asList(argExpr))
-                .build();
+    Function<Expr, BiFunction<String, Expr, MethodInvocationExpr>> methodBuilderFn =
+        methodExpr ->
+            (mName, argExpr) ->
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(methodExpr)
+                    .setMethodName(mName)
+                    .setArguments(Arrays.asList(argExpr))
+                    .build();
     settingsBuilderExpr =
-        methodBuilderFn.apply(
-            "setTransportChannelProvider", classMemberVarExprs.get(CHANNEL_PROVIDER_VAR_NAME));
+        methodBuilderFn
+            .apply(settingsBuilderExpr)
+            .apply(
+                "setTransportChannelProvider", classMemberVarExprs.get(CHANNEL_PROVIDER_VAR_NAME));
     settingsBuilderExpr =
-        methodBuilderFn.apply(
-            "setCredentialsProvider",
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(staticTypes.get("NoCredentialsProvider"))
-                .setMethodNAme("create")
-                .build());
+        methodBuilderFn
+            .apply(settingsBuilderExpr)
+            .apply(
+                "setCredentialsProvider",
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(staticTypes.get("NoCredentialsProvider"))
+                    .setMethodName("create")
+                    .build());
     settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(settingsBuilderExpr)
             .setMethodName("build")
+            .setReturnType(localSettingsVarExpr.type())
             .build();
 
     Expr initLocalSettingsExpr =
@@ -304,16 +337,17 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     Expr initClientExpr =
         AssignmentExpr.builder()
-            .setVariableExpr(classMemberVarExprs.get(CLIENT_VAR_NAME))
+            .setVariableExpr(clientVarExpr)
             .setValueExpr(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(types.get(getClientClassName(service.name())))
                     .setMethodName("create")
                     .setArguments(Arrays.asList(localSettingsVarExpr))
+                    .setReturnType(clientVarExpr.type())
                     .build())
             .build();
 
-    return MethodDefinition.bulder()
+    return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("Before"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
@@ -326,7 +360,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
                     initLocalSettingsExpr,
                     initClientExpr)
                 .stream()
-                .map(e -> ExprSratement.withExpr(e))
+                .map(e -> ExprStatement.withExpr(e))
                 .collect(Collectors.toList()))
         .build();
   }
@@ -343,7 +377,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             Arrays.asList(TypeNode.withReference(ConcreteReference.withClazz(Exception.class))))
         .setBody(
             Arrays.asList(
-                ExprSratement.withExpr(
+                ExprStatement.withExpr(
                     MethodInvocationExpr.builder()
                         .setExprReferenceExpr(classMemberVarExprs.get(CLIENT_VAR_NAME))
                         .setMethodName("close")
@@ -381,14 +415,11 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             BidiStreamingCallable.class,
             ExecutionException.class,
             GaxGrpcProperties.class,
+            Generated.class,
             IOException.class,
             InvalidArgumentException.class,
             List.class,
             Lists.class,
-            LocalChannelProvider.class,
-            MockGrpcService.class,
-            MockServiceHelper.class,
-            MockStreamObserver.class,
             NoCredentialsProvider.class,
             Operation.class,
             ServerStreamingCallable.class,
@@ -397,11 +428,30 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             StatusRuntimeException.class,
             Test.class,
             UUID.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    Map<String, TypeNode> staticTypes =
+        concreteClazzes.stream()
+            .collect(
+                Collectors.toMap(
+                    c -> c.getSimpleName(),
+                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+
+    staticTypes.putAll(
+        Arrays.asList(
+                "LocalChannelProvider",
+                "MockGrpcService",
+                "MockServiceHelper",
+                "MockStreamObserver")
+            .stream()
+            .collect(
+                Collectors.toMap(
+                    n -> n,
+                    n ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(n)
+                                .setPakkage(GRPC_TESTING_PACKAGE)
+                                .build()))));
+    return staticTypes;
   }
 
   private static Map<String, TypeNode> createDefaultMethodNamesToTypes() {
@@ -456,10 +506,9 @@ public class ServiceClientTestClassComposer implements ClassComposer {
                     p ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(
-                                    String.format(p, service.name())
-                                        .setPakkage(service.pakkage())
-                                        .build())))));
+                                .setName(String.format(p, service.name()))
+                                .setPakkage(service.pakkage())
+                                .build()))));
 
     // Pagination types.
     types.putAll(
