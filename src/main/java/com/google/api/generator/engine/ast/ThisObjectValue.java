@@ -47,7 +47,7 @@ public abstract class ThisObjectValue implements ObjectValue {
       Preconditions.checkState(
           TypeNode.isReferenceType(thisObjectValue.type()), "this can only refer to object types");
       Preconditions.checkState(
-          !TypeNode.isJavaLang(thisObjectValue.type()),
+          !TypeNode.isJavaLangObject(thisObjectValue.type()),
           "The class type should belongs to custom object");
       return thisObjectValue;
     }
