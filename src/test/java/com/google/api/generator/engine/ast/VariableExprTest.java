@@ -17,6 +17,8 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import org.junit.Test;
 
 public class VariableExprTest {
@@ -84,6 +86,64 @@ public class VariableExprTest {
         .setScope(ScopeNode.PUBLIC)
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validVariableExpr_templatedArgInMethod() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+            .build();
+    VariableExpr.builder()
+        .setVariable(variable)
+        .setTemplateObjects(Arrays.asList("RequestT", "ResponseT"))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validVariableExpr_templatedArgNameAndTypeInMethod() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+            .build();
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setTemplateObjects(Arrays.asList("RequestT", TypeNode.STRING))
+            .build();
+    assertThat(varExpr.templateNodes())
+        .containsExactly(IdentifierNode.withName("RequestT"), TypeNode.STRING);
+  }
+
+  @Test
+  public void invalidVariableExpr_templatedArgInMethodHasNonStringNonTypeNodeObject() {
+    Variable variable =
+        Variable.builder()
+            .setName("x")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
+            .build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(variable)
+                .setTemplateObjects(Arrays.asList("RequestT", new Integer(123), TypeNode.STRING))
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_badTemplateName() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    assertThrows(
+        IdentifierNode.InvalidIdentifierException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(variable)
+                .setTemplateObjects(Arrays.asList("RequestT", "123T"))
+                .build());
   }
 
   @Test

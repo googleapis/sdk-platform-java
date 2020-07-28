@@ -37,6 +37,22 @@ public class MethodInvocationExprTest {
   }
 
   @Test
+  public void validBuildMethodInvocationExpr_staticReference() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    MethodInvocationExpr.builder()
+        .setMethodName("foobar")
+        .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+        .setStaticReferenceType(someType)
+        .setReturnType(TypeNode.STRING)
+        .build();
+  }
+
+  @Test
   public void invalidBuildMethodInvocationExpr_nullReturnType() {
     assertThrows(
         IllegalStateException.class,
@@ -50,6 +66,12 @@ public class MethodInvocationExprTest {
 
   @Test
   public void invalidBuildMethodInvocationExpr_staticAndExprBoth() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -58,7 +80,7 @@ public class MethodInvocationExprTest {
           MethodInvocationExpr.builder()
               .setMethodName("foobar")
               .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
-              .setStaticReferenceName("someClass")
+              .setStaticReferenceType(someType)
               .setExprReferenceExpr(varExpr)
               .setReturnType(TypeNode.STRING)
               .build();

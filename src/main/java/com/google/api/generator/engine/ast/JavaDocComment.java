@@ -14,11 +14,14 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.engine.escaper.HtmlEscaper;
+import com.google.api.generator.engine.escaper.MetacharEscaper;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
@@ -63,7 +66,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addComment(String comment) {
-      componentsList.add(comment);
+      componentsList.add(HtmlEscaper.escaper(comment));
       return this;
     }
 
@@ -72,7 +75,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(line);
+                componentsList.add(HtmlEscaper.escaper(line));
               });
       componentsList.add("</code></pre>");
       return this;
@@ -106,7 +109,6 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public JavaDocComment build() {
-      // TODO(xiaozhenliu): call comment escaper here.
       // @param, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
@@ -115,6 +117,10 @@ public abstract class JavaDocComment implements Comment {
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
       }
+      // Escape component in list one by one, because we will join the components by `\n`
+      // `\n` will be taken as escape character by the comment escaper.
+      componentsList =
+          componentsList.stream().map(c -> MetacharEscaper.escaper(c)).collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
     }

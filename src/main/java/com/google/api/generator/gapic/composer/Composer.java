@@ -40,6 +40,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateStubClasses(service, messageTypes));
     clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
+    clazzes.addAll(generateMocksAndTestClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
@@ -47,49 +48,33 @@ public class Composer {
   public static List<GapicClass> generateStubClasses(
       Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(generateStubServiceStub(service, messageTypes));
+    clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
     clazzes.add(generateStubServiceSettings(service));
-    clazzes.add(generateStubGrpcServiceCallableFactory(service));
-    clazzes.add(generateStubGrpcServiceStub(service));
+    clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(GrpcServiceStubClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
   public static List<GapicClass> generateClientSettingsClasses(
       Service service, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(generateServiceClient(service, messageTypes));
-    clazzes.add(generateServiceSettings(service));
+    clazzes.add(ServiceClientClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
+    return clazzes;
+  }
+
+  public static List<GapicClass> generateMocksAndTestClasses(
+      Service service, Map<String, Message> messageTypes) {
+    List<GapicClass> clazzes = new ArrayList<>();
+    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
   /** ====================== STUB CLASSES ==================== */
-  private static GapicClass generateStubServiceStub(
-      Service service, Map<String, Message> messageTypes) {
-    return ServiceStubClassComposer.instance().generate(service, messageTypes);
-  }
-
   private static GapicClass generateStubServiceSettings(Service service) {
     return generateGenericClass(
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
-  }
-
-  private static GapicClass generateStubGrpcServiceCallableFactory(Service service) {
-    return generateGenericClass(
-        Kind.STUB, String.format("Grpc%sCallableFactory", service.name()), service);
-  }
-
-  private static GapicClass generateStubGrpcServiceStub(Service service) {
-    return generateGenericClass(Kind.STUB, String.format("Grpc%sStub", service.name()), service);
-  }
-
-  /** ====================== MAIN CLASSES ==================== */
-  private static GapicClass generateServiceClient(
-      Service service, Map<String, Message> messageTypes) {
-    return ServiceClientClassComposer.instance().generate(service, messageTypes);
-  }
-
-  private static GapicClass generateServiceSettings(Service service) {
-    return generateGenericClass(Kind.MAIN, String.format("%sSettings", service.name()), service);
   }
 
   /** ====================== HELPERS ==================== */

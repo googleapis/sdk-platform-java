@@ -48,7 +48,7 @@ public class Writer {
       String code = codeWriter.write();
       codeWriter.clear();
 
-      String path = getPath(clazz.packageString());
+      String path = getPath(clazz.packageString(), clazz.classIdentifier().name());
       String className = clazz.classIdentifier().name();
       JarEntry jarEntry = new JarEntry(String.format("%s/%s.java", path, className));
       try {
@@ -78,8 +78,12 @@ public class Writer {
     return response.build();
   }
 
-  private static String getPath(String pakkage) {
+  private static String getPath(String pakkage, String className) {
+    String path = pakkage.replaceAll("\\.", "/");
+    if (className.substring(0, 3).equals("Mock") || className.endsWith("Test")) {
+      path = "test/" + path;
+    }
     // TODO(miraleung): Add path for resource name classes.
-    return pakkage.replaceAll("\\.", "/");
+    return path;
   }
 }

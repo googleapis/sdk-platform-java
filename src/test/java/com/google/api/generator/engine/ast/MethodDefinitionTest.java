@@ -19,6 +19,7 @@ import static org.junit.Assert.assertThrows;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class MethodDefinitionTest {
@@ -181,6 +182,130 @@ public class MethodDefinitionTest {
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(InterruptedException.class)))
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_templateBasic() {
+    TypeNode returnType = TypeNode.withReference(ConcreteReference.withClazz(Map.class));
+    MethodDefinition.builder()
+        .setName("close")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setTemplateNames(Arrays.asList("T", "K", "V"))
+        .setReturnTemplateNames(Arrays.asList("K", "V"))
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("foobar")
+                .setReturnType(returnType)
+                .build())
+        .build();
+  }
+
+  @Test
+  public void validMethodDefinition_templateOnArguments() {
+    Reference listRef = ConcreteReference.withClazz(List.class);
+    List<VariableExpr> arguments =
+        Arrays.asList(
+            VariableExpr.builder()
+                .setVariable(createVariable("x", TypeNode.withReference(listRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("K"))
+                .build(),
+            VariableExpr.builder()
+                .setVariable(createVariable("y", TypeNode.withReference(listRef)))
+                .setIsDecl(true)
+                .setTemplateObjects(Arrays.asList("V"))
+                .build());
+
+    TypeNode returnType = TypeNode.withReference(ConcreteReference.withClazz(Map.class));
+    MethodDefinition.builder()
+        .setName("close")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setTemplateNames(Arrays.asList("T", "K", "V"))
+        .setArguments(arguments)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("foobar")
+                .setReturnType(returnType)
+                .build())
+        .build();
+  }
+
+  @Test
+  public void validMethodDefinition_primitiveReturnTypeWithoutTemplates() {
+    // Not valid Java. Please change this test if you are trying to prevent this case.
+    MethodDefinition.builder()
+        .setName("close")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setTemplateNames(Arrays.asList("T", "K", "V"))
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .build();
+  }
+
+  @Test
+  public void invalidMethodDefinition_badTemplateName() {
+    assertThrows(
+        IdentifierNode.InvalidIdentifierException.class,
+        () ->
+            MethodDefinition.builder()
+                .setName("close")
+                .setScope(ScopeNode.PUBLIC)
+                .setReturnType(TypeNode.VOID)
+                .setTemplateNames(Arrays.asList("T", "K", "false"))
+                .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .build());
+  }
+
+  @Test
+  public void invalidMethodDefinition_primitiveReturnType() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            MethodDefinition.builder()
+                .setName("close")
+                .setScope(ScopeNode.PUBLIC)
+                .setReturnType(TypeNode.VOID)
+                .setTemplateNames(Arrays.asList("T", "K", "V"))
+                .setReturnTemplateNames(Arrays.asList("K", "V"))
+                .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .build());
+  }
+
+  @Test
+  public void invalidMethodDefinition_emptyTemplatesOnMethod() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            MethodDefinition.builder()
+                .setName("close")
+                .setScope(ScopeNode.PUBLIC)
+                .setReturnType(TypeNode.VOID)
+                .setReturnTemplateNames(Arrays.asList("K", "V"))
+                .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .setThrowsExceptions(
+                    Arrays.asList(TypeNode.withExceptionClazz(InterruptedException.class)))
+                .build());
+  }
+
+  @Test
+  public void invalidMethodDefinition_returnTemplatesNotPresent() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            MethodDefinition.builder()
+                .setName("close")
+                .setScope(ScopeNode.PUBLIC)
+                .setReturnType(TypeNode.VOID)
+                .setTemplateNames(Arrays.asList("T", "K", "V"))
+                .setReturnTemplateNames(Arrays.asList("K", "R"))
+                .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+                .setThrowsExceptions(
+                    Arrays.asList(TypeNode.withExceptionClazz(InterruptedException.class)))
+                .build());
   }
 
   @Test

@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -32,6 +33,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -56,15 +58,17 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private final Set<String> staticImports = new TreeSet<>();
   private final Set<String> imports = new TreeSet<>();
 
-  private final String currentPackage;
-
-  public ImportWriterVisitor(String currentPackage) {
-    this.currentPackage = currentPackage;
-  }
+  private String currentPackage;
+  private String currentClassName;
 
   public void clear() {
     staticImports.clear();
     imports.clear();
+  }
+
+  public void initialize(String currentPackage, String currentClassName) {
+    this.currentPackage = currentPackage;
+    this.currentClassName = currentClassName;
   }
 
   public String write() {
@@ -125,6 +129,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     if (variableExpr.exprReferenceExpr() != null) {
       variableExpr.exprReferenceExpr().accept(this);
     }
+    variableExpr.templateNodes().stream().forEach(n -> n.accept(this));
   }
 
   @Override
@@ -136,6 +141,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(MethodInvocationExpr methodInvocationExpr) {
     methodInvocationExpr.returnType().accept(this);
+    if (methodInvocationExpr.staticReferenceType() != null) {
+      methodInvocationExpr.staticReferenceType().accept(this);
+    }
     if (methodInvocationExpr.exprReferenceExpr() != null) {
       methodInvocationExpr.exprReferenceExpr().accept(this);
     }
@@ -165,6 +173,17 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(InstanceofExpr instanceofExpr) {
     instanceofExpr.expr().accept(this);
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(NewObjectExpr newObjectExpr) {
+    newObjectExpr.type().accept(this);
+    expressions(newObjectExpr.arguments());
+  }
+
+  @Override
+  public void visit(EnumRefExpr enumRefExpr) {
+    enumRefExpr.type().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -284,7 +303,13 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
       // Don't need to import this.
-      if (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage)) {
+      if ((!ref.isStaticImport()
+              && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage)))
+          || ref.equals(TypeNode.WILDCARD_REFERENCE)) {
+        continue;
+      }
+
+      if (ref.isStaticImport() && ref.enclosingClassName().equals(currentClassName)) {
         continue;
       }
 

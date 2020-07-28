@@ -23,10 +23,17 @@ public class ExprStatementTest {
 
   @Test
   public void validMethodExprStatement() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("foobar")
-            .setStaticReferenceName("SomeClass")
+            .setStaticReferenceType(someType)
             .build();
     assertValidExprStatement(methodExpr);
   }
