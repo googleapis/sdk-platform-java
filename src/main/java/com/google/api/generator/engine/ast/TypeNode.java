@@ -105,7 +105,7 @@ public abstract class TypeNode implements AstNode {
     return isPrimitiveType(typeKind());
   }
 
-  public static boolean isJavaLang(TypeNode type) {
+  public static boolean isJavaLangObject(TypeNode type) {
     return type.reference().fullName().startsWith("java.lang");
   }
 
