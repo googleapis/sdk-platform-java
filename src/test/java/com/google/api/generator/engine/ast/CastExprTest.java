@@ -74,6 +74,48 @@ public class CastExprTest {
   }
 
   @Test
+  public void validCastExpr_castBoxedTypeToPrimitive() {
+    PrimitiveValue intValue = PrimitiveValue.builder().setValue("3").setType(TypeNode.INT).build();
+    ValueExpr valueExpr = ValueExpr.withValue(intValue);
+    CastExpr expr = CastExpr.builder().setType(TypeNode.INT_OBJECT).setExpr(valueExpr).build();
+  }
+
+  @Test
+  public void validCastExpr_castPrimitiveToBoxedType() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.DOUBLE_OBJECT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr expr = CastExpr.builder().setType(TypeNode.DOUBLE).setExpr(variableExpr).build();
+  }
+
+  @Test
+  public void validCastExpr_nestedPrimitiveBoxedType() {
+    // [Constructing] ((Object) ((Float) x))
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.FLOAT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr expr = CastExpr.builder().setType(TypeNode.FLOAT_OBJECT).setExpr(variableExpr).build();
+    CastExpr nestedExpr =
+        CastExpr.builder()
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+            .setExpr(expr)
+            .build();
+  }
+
+  @Test
+  public void invalidCastExpr_nestedPrimitiveBoxedType() {
+    // [Constructing] ((Object) ((float) x))
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.FLOAT_OBJECT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr expr = CastExpr.builder().setType(TypeNode.FLOAT).setExpr(variableExpr).build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            CastExpr.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
+                .setExpr(expr)
+                .build());
+  }
+
+  @Test
   public void invalidCastExpr_castObjectToPrimitive() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();

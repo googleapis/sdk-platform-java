@@ -123,10 +123,12 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
+    // If both of type1 and type2 are primitive/reference type, return false.
+    if (type1.isPrimitiveType() == type2.isPrimitiveType()) {
+      return false;
+    }
     if (type2.isPrimitiveType()) {
-      TypeNode type = type1;
-      type1 = type2;
-      type2 = type;
+      return type1.equals(BOXED_TYPE_MAP.get(type2));
     }
     return type2.equals(BOXED_TYPE_MAP.get(type1));
   }

@@ -60,7 +60,7 @@ public abstract class CastExpr implements Expr {
         // For example: `Integer` and `int` they can be castable.
         Preconditions.checkState(
             TypeNode.isBoxedTypeEquals(castType, exprType),
-            "Primitive types can only be cast to their corresponding boxed types.");
+            "Primitive types can only be cast to their corresponding boxed types and vice versa.");
       }
       return castExpr;
     }
