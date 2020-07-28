@@ -438,21 +438,37 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeJavaDocComment_specialChar() {
+    // Only comments and sample codes in JavaDocComment need this escaper.
+    // <p> <ol> <li> <ul> are hard-coded in monolith generator, which do not need escaping.
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addParagraph("Service comment may include special characters: &\"`'@")
-            .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("Exception", "This may throw an exception")
-            .addComment("RPC method comment may include special characters: \"`'{@literal @}.")
+            .addComment(
+                "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
+            .addComment("named `bookShelves/*`")
+            .addSampleCode(
+                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+            .addOrderedList(
+                Arrays.asList(
+                    "A \"flattened\" method.",
+                    "A \"request object\" method.",
+                    "A \"callable\" method."))
+            .addComment("RPC method comment may include special characters: <>&\"`'@.")
             .build();
     String expected =
         String.format(
-            createLines(6),
+            createLines(13),
             "/**\n",
-            "* <p> Service comment may include special characters: &\"`'@\n",
-            "* <p> title: GetBigBook: 'War and Peace'\n",
-            "* RPC method comment may include special characters: \"`'{@literal @}.\n",
-            "* @throws Exception This may throw an exception\n",
+            "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
+            "* named `bookShelves/&#42;`\n",
+            "* <pre><code>\n",
+            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* </code></pre>\n",
+            "* <ol>\n",
+            "* <li> A \"flattened\" method.\n",
+            "* <li> A \"request object\" method.\n",
+            "* <li> A \"callable\" method.\n",
+            "* </ol>\n",
+            "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
