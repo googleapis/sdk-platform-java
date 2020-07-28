@@ -57,6 +57,7 @@ public class DemoClassComposerTest {
           + "\n"
           + "import com.google.api.gax.core.BackgroundResource;\n"
           + "import com.google.longrunning.stub.GrpcOperationsStub;\n"
+          + "import java.util.concurrent.ThreadLocalRandom;\n"
           + "import javax.annotation.Generated;\n"
           + "\n"
           + "@Generated(\"by gapic-generator-java\")\n"
@@ -64,6 +65,9 @@ public class DemoClassComposerTest {
           + "  private final BackgroundResource backgroundResources;\n"
           + "  private final GrpcOperationsStub operationsStub;\n"
           + "\n"
-          + "  public void EchoFoobar() {}\n"
+          + "  public int foobar(int max) {\n"
+          + "    int x = ThreadLocalRandom.current().nextInt(0, max);\n"
+          + "    return x;\n"
+          + "  }\n"
           + "}\n";
 }

@@ -25,13 +25,18 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
+import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -49,6 +54,7 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -126,15 +132,54 @@ public class DemoClassComposer implements ClassComposer {
   private static List<MethodDefinition> createClassMethods(
       Service service, Map<String, TypeNode> types, Map<String, VariableExpr> classMemberVarExprs) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.add(createFoobarMethod(service));
+    javaMethods.add(createFoobarMethod());
     return javaMethods;
   }
 
-  private static MethodDefinition createFoobarMethod(Service service) {
+  private static MethodDefinition createFoobarMethod() {
+
+    VariableExpr xVarExpr =
+        VariableExpr.withVariable(Variable.builder().setName("x").setType(TypeNode.INT).build());
+
+    VariableExpr xDeclVarExpr = xVarExpr.toBuilder().setIsDecl(true).build();
+
+    TypeNode threadLocalRandomType =
+        TypeNode.withReference(ConcreteReference.withClazz(ThreadLocalRandom.class));
+
+    // nextInt method arguments.
+    Expr zeroExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    VariableExpr maxVarExpr =
+        VariableExpr.withVariable(Variable.builder().setName("max").setType(TypeNode.INT).build());
+
+    List<Expr> methodArguments = Arrays.asList(zeroExpr, maxVarExpr);
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(threadLocalRandomType)
+            .setMethodName("current")
+            .build();
+    methodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(methodExpr)
+            .setMethodName("nextInt")
+            .setArguments(methodArguments)
+            .setReturnType(TypeNode.INT)
+            .build();
+
+    // Building "int x = ThreadLocalRandom.current().nextInt(mn, mx);"
+    Expr assignExpr =
+        AssignmentExpr.builder().setVariableExpr(xDeclVarExpr).setValueExpr(methodExpr).build();
+    List<Statement> body = Arrays.asList(ExprStatement.withExpr(assignExpr));
+
+    VariableExpr maxArgExpr = maxVarExpr.toBuilder().setIsDecl(true).build();
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
-        .setReturnType(TypeNode.VOID)
-        .setName(String.format("%sFoobar", service.name()))
+        .setReturnType(TypeNode.INT)
+        .setName("foobar")
+        .setArguments(Arrays.asList(maxArgExpr))
+        .setBody(body)
+        .setReturnExpr(xVarExpr)
         .build();
   }
 
