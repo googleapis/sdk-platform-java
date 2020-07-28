@@ -101,6 +101,42 @@ public class AssignmentExprTest {
     assertInvalidAssignmentExpr(variableExpr, valueExpr);
   }
 
+  @Test
+  public void writeAssignmentExpr_primitiveToBoxedType() {
+    // [Constructing] `Integer x = (int) 3`
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT_OBJECT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+
+    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    Expr valueExpr = ValueExpr.builder().setValue(value).build();
+    assertValidAssignmentExpr(variableExpr, valueExpr);
+  }
+
+  @Test
+  public void writeAssignmentExpr_boxedToPrimitiveType() {
+    // [Constructing] `double x = (Double y)`
+    Variable lvariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
+    VariableExpr lvariableExpr =
+        VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
+
+    Variable rvariable = Variable.builder().setName("y").setType(TypeNode.DOUBLE_OBJECT).build();
+    VariableExpr rvariableExpr = VariableExpr.builder().setVariable(rvariable).build();
+    assertValidAssignmentExpr(lvariableExpr, rvariableExpr);
+  }
+
+  @Test
+  public void writeAssignmentExpr_invalidBoxedPrimitiveType() {
+    // [Constructing] `double x = (Integer) y`
+    Variable lvariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
+    VariableExpr lvariableExpr =
+        VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
+
+    Variable rvariable = Variable.builder().setName("y").setType(TypeNode.INT_OBJECT).build();
+    VariableExpr rvariableExpr = VariableExpr.builder().setVariable(rvariable).build();
+    assertInvalidAssignmentExpr(lvariableExpr, rvariableExpr);
+  }
+
   private static void assertInvalidAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
     assertThrows(
         TypeMismatchException.class,
