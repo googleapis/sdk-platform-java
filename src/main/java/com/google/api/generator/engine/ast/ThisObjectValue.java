@@ -32,8 +32,8 @@ public abstract class ThisObjectValue implements ObjectValue {
           "this can only refer to object types"
       );
       Preconditions.checkState(
-          !thisObjectValue.type().equals(TypeNode.NULL),
-          "this can not refer to null type."
+          !TypeNode.isJavaLang(thisObjectValue.type()),
+          "The class type should belongs to custom object"
       );
       return thisObjectValue;
     }

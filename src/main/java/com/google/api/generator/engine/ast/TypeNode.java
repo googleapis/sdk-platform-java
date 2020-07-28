@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import java.lang.reflect.Type;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -103,6 +104,10 @@ public abstract class TypeNode implements AstNode {
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public static boolean isJavaLang(TypeNode type) {
+    return type.reference().fullName().startsWith("java.lang");
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
