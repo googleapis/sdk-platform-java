@@ -60,7 +60,8 @@ public abstract class CastExpr implements Expr {
       } else {
         Preconditions.checkState(
             TypeNode.isReferenceType(castExpr.type())
-                && TypeNode.isReferenceType(castExpr.expr().type()),
+                && (castExpr.expr().type().equals(TypeNode.NULL)
+                    || TypeNode.isReferenceType(castExpr.expr().type())),
             "Reference types can only be casted to reference types");
       }
       return castExpr;
