@@ -44,6 +44,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -1636,6 +1637,56 @@ public class JavaWriterVisitorTest {
             "    }\n",
             "  }\n",
             "}\n"));
+  }
+
+  @Test
+  public void writeMethodReturnThisObjectValue() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    MethodDefinition methodDefinition =
+        MethodDefinition.builder()
+            .setName("apply")
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.withReference(ref))
+            .setReturnExpr(
+                ValueExpr.builder().setValue(ThisObjectValue.withType(classType)).build())
+            .build();
+    methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format("public Student apply() {\n" + "return this;\n" + "}\n"));
+  }
+
+  @Test
+  public void writeExprStatementForThisObjectValue() {
+    // Example of ThisObjectValue access its fields
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    ThisObjectValue thisObjectValue = ThisObjectValue.withType(classType);
+    ValueExpr thisValueExpr = ValueExpr.withValue(thisObjectValue);
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("id").setType(TypeNode.STRING).build())
+            .build();
+    Variable subVariable = Variable.builder().setName("name").setType(TypeNode.STRING).build();
+    VariableExpr thisVariableExpr =
+        VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(thisValueExpr).build();
+
+    // Example of ThisObjectValue invoke its method with arguments
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setExprReferenceExpr(ValueExpr.withValue(thisObjectValue))
+            .setArguments(Arrays.asList(varExpr))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(thisVariableExpr).setValueExpr(methodExpr).build();
+
+    assignmentExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("this.name = this.getName(id)");
   }
 
   private static String createLines(int numLines) {
