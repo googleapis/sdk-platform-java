@@ -20,10 +20,11 @@ import java.util.List;
 
 @AutoValue
 public abstract class ConcreteReference implements Reference {
+  private static final String COMMA = ", ";
   private static final String DOT = ".";
   private static final String LEFT_ANGLE = "<";
   private static final String RIGHT_ANGLE = ">";
-  private static final String COMMA = ", ";
+  private static final String QUESTION_MARK = "?";
 
   // Private.
   abstract Class clazz();
@@ -37,13 +38,15 @@ public abstract class ConcreteReference implements Reference {
   @Override
   public String name() {
     StringBuilder sb = new StringBuilder();
-
-    if (hasEnclosingClass() && !isStaticImport()) {
-      sb.append(clazz().getEnclosingClass().getSimpleName());
-      sb.append(DOT);
+    if (this.equals(TypeNode.WILDCARD_REFERENCE)) {
+      sb.append(QUESTION_MARK);
+    } else {
+      if (hasEnclosingClass() && !isStaticImport()) {
+        sb.append(clazz().getEnclosingClass().getSimpleName());
+        sb.append(DOT);
+      }
+      sb.append(clazz().getSimpleName());
     }
-
-    sb.append(clazz().getSimpleName());
     if (!generics().isEmpty()) {
       sb.append(LEFT_ANGLE);
       for (int i = 0; i < generics().size(); i++) {

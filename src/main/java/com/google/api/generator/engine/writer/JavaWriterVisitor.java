@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -92,11 +93,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
+  private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
 
   public JavaWriterVisitor() {}
 
   public void clear() {
     buffer.setLength(0);
+    importWriterVisitor.clear();
   }
 
   public String write() {
@@ -303,6 +306,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(INSTANCEOF);
     space();
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(EnumRefExpr enumRefExpr) {
+    enumRefExpr.type().accept(this);
+    buffer.append(DOT);
+    enumRefExpr.identifier().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -584,15 +594,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ClassDefinition classDefinition) {
     if (!classDefinition.isNested()) {
+      importWriterVisitor.initialize(
+          classDefinition.packageString(), classDefinition.classIdentifier().name());
       buffer.append(String.format("package %s;", classDefinition.packageString()));
       newline();
       newline();
     }
 
-    ImportWriterVisitor importWriterVisitor =
-        new ImportWriterVisitor(classDefinition.packageString());
     classDefinition.accept(importWriterVisitor);
-    buffer.append(importWriterVisitor.write());
+    if (!classDefinition.isNested()) {
+      buffer.append(importWriterVisitor.write());
+    }
 
     // Annotations, if any.
     annotations(classDefinition.annotations());
@@ -653,6 +665,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     classes(classDefinition.nestedClasses());
 
     rightBrace();
+
+    // We should have valid Java by now, so format it.
+    if (!classDefinition.isNested()) {
+      buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
+    }
   }
 
   /** =============================== PRIVATE HELPERS =============================== */

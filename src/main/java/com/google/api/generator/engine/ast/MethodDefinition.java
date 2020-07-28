@@ -75,6 +75,8 @@ public abstract class MethodDefinition implements AstNode {
     visitor.visit(this);
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_MethodDefinition.Builder()
         .setArguments(Collections.emptyList())
