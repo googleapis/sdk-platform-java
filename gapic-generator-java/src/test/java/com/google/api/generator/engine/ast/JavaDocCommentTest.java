@@ -21,7 +21,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class JavaDocCommentTest {
-  // TODO(xiaozhenliu): add HTML escaping-related unit tests for JavaDocComment class.
   @Test
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";
@@ -31,16 +30,23 @@ public class JavaDocCommentTest {
 
   @Test
   public void createJavaDocComment_specialCharacter() {
+    // Check that we handle special characters correctly which includes escape characters,
+    // html escape characters and unexpected block end `*/`.
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@")
-            .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("RunTimeException", "This may throw an exception")
+            .addComment("Service comment may include special characters: \\ \t\b\r&\"\f\n`'@*/")
+            .addParagraph("title: GetBigBook: <War and Peace>")
+            .addSampleCode(
+                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+            .setThrows("Exception", "This is an exception.")
             .build();
     String expected =
-        "Service comment may include special characters: \\\\ \\t\\b\\r&\"\\f\\n`'@\n"
-            + "<p> title: GetBigBook: 'War and Peace'\n"
-            + "@throws RunTimeException This may throw an exception";
+        "Service comment may include special characters: \\\\ \\t\\b\\r&amp;\"\\f\\n`'{@literal @}&#42;/\n"
+            + "<p> title: GetBigBook: <War and Peace>\n"
+            + "<pre><code>\n"
+            + "ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n"
+            + "</code></pre>\n"
+            + "@throws Exception This is an exception.";
     assertEquals(javaDocComment.comment(), expected);
   }
 
