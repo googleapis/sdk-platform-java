@@ -74,14 +74,14 @@ public class CastExprTest {
   }
 
   @Test
-  public void validCastExpr_castBoxedTypeToPrimitive() {
+  public void validCastExpr_castPrimitiveToBoxedType() {
     PrimitiveValue intValue = PrimitiveValue.builder().setValue("3").setType(TypeNode.INT).build();
     ValueExpr valueExpr = ValueExpr.withValue(intValue);
     CastExpr expr = CastExpr.builder().setType(TypeNode.INT_OBJECT).setExpr(valueExpr).build();
   }
 
   @Test
-  public void validCastExpr_castPrimitiveToBoxedType() {
+  public void validCastExpr_castBoxedTypeToPrimitive() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.DOUBLE_OBJECT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     CastExpr expr = CastExpr.builder().setType(TypeNode.DOUBLE).setExpr(variableExpr).build();
@@ -89,10 +89,11 @@ public class CastExprTest {
 
   @Test
   public void validCastExpr_nestedPrimitiveBoxedType() {
-    // [Constructing] ((Object) ((Float) x))
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.FLOAT).build();
+    // [Constructing] ((Object) ((Boolean) x))
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
-    CastExpr expr = CastExpr.builder().setType(TypeNode.FLOAT_OBJECT).setExpr(variableExpr).build();
+    CastExpr expr =
+        CastExpr.builder().setType(TypeNode.BOOLEAN_OBJECT).setExpr(variableExpr).build();
     CastExpr nestedExpr =
         CastExpr.builder()
             .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
