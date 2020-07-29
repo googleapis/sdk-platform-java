@@ -515,39 +515,6 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentExpr_castExpr() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-
-    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
-    Expr valueExpr = ValueExpr.builder().setValue(value).build();
-
-    CastExpr castExpr = CastExpr.builder().setExpr(valueExpr).setType(TypeNode.INT_OBJECT).build();
-
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(castExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "int x = ((Integer) 3)");
-  }
-
-  @Test
-  public void writeAssignmentExpr_primitiveToBoxedType() {
-    Variable lvariable = Variable.builder().setName("x").setType(TypeNode.INT_OBJECT).build();
-    VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
-    Variable rvariable = Variable.builder().setName("intValue").setType(TypeNode.INT).build();
-    VariableExpr valueExpr = VariableExpr.builder().setVariable(rvariable).build();
-
-    AssignmentExpr assignExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
-
-    assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "Integer x = intValue");
-  }
-
-  @Test
   public void writeAssignmentExpr_varToVar() {
     Variable variable = Variable.builder().setName("foobar").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
