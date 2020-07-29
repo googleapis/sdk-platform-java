@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
@@ -24,9 +24,8 @@ public class TypeNodeTest {
   public void isBoxedTypeEquals() {
     assertTrue(TypeNode.isBoxedTypeEquals(TypeNode.INT, TypeNode.INT_OBJECT));
     assertTrue(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.DOUBLE));
-    assertEquals(TypeNode.isBoxedTypeEquals(TypeNode.BOOLEAN_OBJECT, TypeNode.SHORT), false);
-    assertEquals(
-        TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.BOOLEAN_OBJECT), false);
-    assertEquals(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE, TypeNode.FLOAT), false);
+    assertFalse(TypeNode.isBoxedTypeEquals(TypeNode.BOOLEAN_OBJECT, TypeNode.SHORT));
+    assertFalse(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.BOOLEAN_OBJECT));
+    assertFalse(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE, TypeNode.FLOAT));
   }
 }
