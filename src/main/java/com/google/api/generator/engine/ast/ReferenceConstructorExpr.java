@@ -22,8 +22,6 @@ import java.util.List;
 
 @AutoValue
 public abstract class ReferenceConstructorExpr implements Expr {
-  private static final String PKG_JAVA_LANG = "java.lang";
-
   public enum KeywordKind {
     THIS,
     SUPER
