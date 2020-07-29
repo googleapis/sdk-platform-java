@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -63,7 +64,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
 
-  private static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -188,8 +189,8 @@ public abstract class TypeNode implements AstNode {
     return !typeKind.equals(TypeKind.OBJECT);
   }
 
-  private static HashMap<TypeNode, TypeNode> createBoxedTypeMap() {
-    HashMap<TypeNode, TypeNode> map = new HashMap<>();
+  private static Map<TypeNode, TypeNode> createBoxedTypeMap() {
+    Map<TypeNode, TypeNode> map = new HashMap<>();
     map.put(INT, INT_OBJECT);
     map.put(BOOLEAN, BOOLEAN_OBJECT);
     map.put(BYTE, BYTE_OBJECT);

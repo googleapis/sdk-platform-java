@@ -15,14 +15,15 @@
 package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 
 public class TypeNodeTest {
   @Test
   public void isBoxedTypeEquals() {
-    assertEquals(TypeNode.isBoxedTypeEquals(TypeNode.INT, TypeNode.INT_OBJECT), true);
-    assertEquals(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.DOUBLE), true);
+    assertTrue(TypeNode.isBoxedTypeEquals(TypeNode.INT, TypeNode.INT_OBJECT));
+    assertTrue(TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.DOUBLE));
     assertEquals(TypeNode.isBoxedTypeEquals(TypeNode.BOOLEAN_OBJECT, TypeNode.SHORT), false);
     assertEquals(
         TypeNode.isBoxedTypeEquals(TypeNode.DOUBLE_OBJECT, TypeNode.BOOLEAN_OBJECT), false);
