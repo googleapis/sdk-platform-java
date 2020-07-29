@@ -14,7 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.escaper.CommentEscaper;
+import com.google.api.generator.engine.escaper.HtmlEscaper;
+import com.google.api.generator.engine.escaper.MetacharEscaper;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addComment(String comment) {
-      componentsList.add(comment);
+      componentsList.add(HtmlEscaper.escaper(comment));
       return this;
     }
 
@@ -75,7 +76,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(line);
+                componentsList.add(HtmlEscaper.escaper(line));
               });
       componentsList.add("</code></pre>");
       return this;
@@ -120,7 +121,7 @@ public abstract class JavaDocComment implements Comment {
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.
       componentsList =
-          componentsList.stream().map(c -> CommentEscaper.escape(c)).collect(Collectors.toList());
+          componentsList.stream().map(c -> MetacharEscaper.escaper(c)).collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
     }

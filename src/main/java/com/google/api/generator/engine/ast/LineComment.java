@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.escaper.CommentEscaper;
+import com.google.api.generator.engine.escaper.MetacharEscaper;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -44,7 +44,7 @@ public abstract class LineComment implements Comment {
     public abstract LineComment autoBuild();
 
     public LineComment build() {
-      setComment(CommentEscaper.escape(comment()));
+      setComment(MetacharEscaper.escaper(comment()));
       return autoBuild();
     }
   }

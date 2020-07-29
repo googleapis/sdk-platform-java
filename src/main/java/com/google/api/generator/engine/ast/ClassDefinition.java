@@ -134,8 +134,6 @@ public abstract class ClassDefinition implements AstNode {
       // Check abstract extended type.
       if (classDef.extendsType() != null) {
         Preconditions.checkState(
-            !classDef.extendsType().equals(TypeNode.NULL), "Classes cannot extend null type.");
-        Preconditions.checkState(
             TypeNode.isReferenceType(classDef.extendsType()),
             "Classes cannot extend non-reference types");
         Preconditions.checkState(
@@ -145,8 +143,6 @@ public abstract class ClassDefinition implements AstNode {
 
       // Check implemented interface types.
       for (TypeNode implType : classDef.implementsTypes()) {
-        Preconditions.checkState(
-            !implType.equals(TypeNode.NULL), "Classes cannot implement null type");
         Preconditions.checkState(
             TypeNode.isReferenceType(implType), "Classes cannot implement non-reference types");
       }
