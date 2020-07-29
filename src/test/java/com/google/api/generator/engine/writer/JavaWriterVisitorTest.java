@@ -243,6 +243,7 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
   }
 
+  /** =============================== COMMENT =============================== */
   @Test
   public void writeBlockCommentStatement_basic() {
     String content = "this is a test comment";
