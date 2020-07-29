@@ -244,11 +244,84 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_basic() {
+  public void writeBlockCommentStatement_basic() {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(blockComment);
     String expected = "/** this is a test comment */\n";
-    blockComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineCommentStatement_basic() {
+    String content = "this is a test comment";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(lineComment);
+    String expected = "// this is a test comment\n";
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeJavaDocCommentStatement_allComponents() {
+    String content = "this is a test comment";
+    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
+    String paramName = "shelfName";
+    String paramDescription = "The name of the shelf where books are published to.";
+    String paragraph1 =
+        "This class provides the ability to make remote calls to the backing service through"
+            + " method calls that map to API methods. Sample code to get started:";
+    String paragraph2 =
+        "The surface of this class includes several types of Java methods for each of the API's"
+            + " methods:";
+    String sampleCode = createSampleCode();
+    List<String> orderedlList =
+        Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
+    String throwsType = "com.google.api.gax.rpc.ApiException";
+    String throwsDescription = "if the remote call fails.";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment(content)
+            .addParagraph(paragraph1)
+            .addSampleCode(sampleCode)
+            .addParagraph(paragraph2)
+            .addOrderedList(orderedlList)
+            .addSampleCode(sampleCode)
+            .addParam(paramName, paramDescription)
+            .setThrows(throwsType, throwsDescription)
+            .setDeprecated(deprecatedText)
+            .build();
+    CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
+    String expected =
+        String.format(
+            createLines(23),
+            "/**\n",
+            "* this is a test comment\n",
+            "* <p> This class provides the ability to make remote calls to the backing service"
+                + " through method calls that map to API methods. Sample code to get started:\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* <p> The surface of this class includes several types of Java methods for each of"
+                + " the API's methods:\n",
+            "* <ol>\n",
+            "* <li> A flattened method.\n",
+            "* <li>  A request object method.\n",
+            "* <li> A callable method.\n",
+            "* </ol>\n",
+            "* <pre><code>\n",
+            "* try (boolean condition = false) {\n",
+            "* int x = 3;\n",
+            "* }\n",
+            "* </code></pre>\n",
+            "* @param shelfName The name of the shelf where books are published to.\n",
+            "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
+            "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
+            "*/\n");
+    commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -259,15 +332,6 @@ public class JavaWriterVisitorTest {
     String expected =
         "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
     blockComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeLineComment_basic() {
-    String content = "this is a test comment";
-    LineComment lineComment = LineComment.builder().setComment(content).build();
-    String expected = "// this is a test comment\n";
-    lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -300,67 +364,6 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeJavaDocComment_allComponents() {
-    String content = "this is a test comment";
-    String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
-    String paramName = "shelfName";
-    String paramDescription = "The name of the shelf where books are published to.";
-    String paragraph1 =
-        "This class provides the ability to make remote calls to the backing service through"
-            + " method calls that map to API methods. Sample code to get started:";
-    String paragraph2 =
-        "The surface of this class includes several types of Java methods for each of the API's"
-            + " methods:";
-    String sampleCode = createSampleCode();
-    List<String> orderedlList =
-        Arrays.asList("A flattened method.", " A request object method.", "A callable method.");
-    String throwsType = "com.google.api.gax.rpc.ApiException";
-    String throwsDescription = "if the remote call fails.";
-    JavaDocComment javaDocComment =
-        JavaDocComment.builder()
-            .addComment(content)
-            .addParagraph(paragraph1)
-            .addSampleCode(sampleCode)
-            .addParagraph(paragraph2)
-            .addOrderedList(orderedlList)
-            .addSampleCode(sampleCode)
-            .addParam(paramName, paramDescription)
-            .setThrows(throwsType, throwsDescription)
-            .setDeprecated(deprecatedText)
-            .build();
-    String expected =
-        String.format(
-            createLines(23),
-            "/**\n",
-            "* this is a test comment\n",
-            "* <p> This class provides the ability to make remote calls to the backing service"
-                + " through method calls that map to API methods. Sample code to get started:\n",
-            "* <pre><code>\n",
-            "* try (boolean condition = false) {\n",
-            "* int x = 3;\n",
-            "* }\n",
-            "* </code></pre>\n",
-            "* <p> The surface of this class includes several types of Java methods for each of"
-                + " the API's methods:\n",
-            "* <ol>\n",
-            "* <li> A flattened method.\n",
-            "* <li>  A request object method.\n",
-            "* <li> A callable method.\n",
-            "* </ol>\n",
-            "* <pre><code>\n",
-            "* try (boolean condition = false) {\n",
-            "* int x = 3;\n",
-            "* }\n",
-            "* </code></pre>\n",
-            "* @param shelfName The name of the shelf where books are published to.\n",
-            "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
-            "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
-            "*/\n");
-    javaDocComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
   public void writeJavaDocComment_specialChar() {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -379,46 +382,6 @@ public class JavaWriterVisitorTest {
             "* @throws Exception This may throw an exception\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeCommentStatement_blockComment() {
-    BlockComment blockComment = BlockComment.withComment("this is a block comment");
-    CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    commentStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "/** this is a block comment */\n");
-  }
-
-  @Test
-  public void writeCommentStatement_lineComment() {
-    LineComment lineComment =
-        LineComment.withComment(
-            "DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\")");
-    CommentStatement commentStatement = CommentStatement.withComment(lineComment);
-    String expected =
-        "// DO NOT EDIT! This is a generated sample (\"LongRunningRequestAsync\",  \"hopper\")\n";
-    commentStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeCommentStatement_javaDocComment() {
-    JavaDocComment javaDocComment = createJavaDocComment();
-    CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
-    commentStatement.accept(writerVisitor);
-    String expected =
-        String.format(
-            createLines(9),
-            "/**\n",
-            "* Parses the book from the given fully-qualified path which represents a shelf_book resource.\n",
-            "* <pre><code>\n",
-            "* try (boolean condition = false) {\n",
-            "* int x = 3;\n",
-            "* }\n",
-            "* </code></pre>\n",
-            "* @deprecated Use the {@link ShelfBookName} class instead.\n",
-            "*/\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1657,16 +1620,5 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
-  }
-
-  private JavaDocComment createJavaDocComment() {
-    JavaDocComment javaDocComment =
-        JavaDocComment.builder()
-            .addComment(
-                "Parses the book from the given fully-qualified path which represents a shelf_book resource.")
-            .setDeprecated("Use the {@link ShelfBookName} class instead.")
-            .addSampleCode(createSampleCode())
-            .build();
-    return javaDocComment;
   }
 }
