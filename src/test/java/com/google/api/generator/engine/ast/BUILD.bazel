@@ -5,7 +5,6 @@ TESTS = [
     "AssignmentExprTest",
     "CastExprTest",
     "ClassDefinitionTest",
-    "CommentStatementTest",
     "ConcreteReferenceTest",
     "EnumRefExprTest",
     "ExprStatementTest",
