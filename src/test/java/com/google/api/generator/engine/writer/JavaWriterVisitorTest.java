@@ -43,6 +43,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -1652,6 +1653,36 @@ public class JavaWriterVisitorTest {
             "    }\n",
             "  }\n",
             "}\n"));
+  }
+
+  @Test
+  public void writeSuperObjectValue_asscessFieldAndInvokeMethod() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    SuperObjectValue superObjectValue = SuperObjectValue.withType(classType);
+    ValueExpr superValueExpr = ValueExpr.withValue(superObjectValue);
+    Variable subVariable = Variable.builder().setName("name").setType(TypeNode.STRING).build();
+    VariableExpr superVariableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(superValueExpr)
+            .build();
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setExprReferenceExpr(ValueExpr.withValue(superObjectValue))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(superVariableExpr)
+            .setValueExpr(methodExpr)
+            .build();
+
+    assignmentExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("super.name = super.getName()");
   }
 
   private static String createLines(int numLines) {
