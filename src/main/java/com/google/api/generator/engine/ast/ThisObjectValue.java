@@ -20,7 +20,6 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class ThisObjectValue implements ObjectValue {
   private static final String THIS_VALUE = "this";
-  private static final String PKG_JAVA_LANG = "java.lang";
 
   public abstract TypeNode type();
 
@@ -38,18 +37,15 @@ public abstract class ThisObjectValue implements ObjectValue {
   }
 
   @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setType(TypeNode type);
+  abstract static class Builder {
+    abstract Builder setType(TypeNode type);
 
-    public abstract ThisObjectValue autoBuild();
+    abstract ThisObjectValue autoBuild();
 
-    public ThisObjectValue build() {
+    private ThisObjectValue build() {
       ThisObjectValue thisObjectValue = autoBuild();
       Preconditions.checkState(
           TypeNode.isReferenceType(thisObjectValue.type()), "this can only refer to object types");
-      Preconditions.checkState(
-          !thisObjectValue.type().reference().isFromPackage(PKG_JAVA_LANG),
-          "The class type should belongs to custom object");
       return thisObjectValue;
     }
   }

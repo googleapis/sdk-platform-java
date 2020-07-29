@@ -1656,7 +1656,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodReturnThisObjectValue() {
+  public void writeThisObjectValue_methodReturn() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -1675,8 +1675,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeExprStatementForThisObjectValue() {
-    // Example of ThisObjectValue access its fields
+  public void writeThisObjectValue_accessFieldAndInvokeMethod() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
@@ -1690,7 +1689,6 @@ public class JavaWriterVisitorTest {
     VariableExpr thisVariableExpr =
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(thisValueExpr).build();
 
-    // Example of ThisObjectValue invoke its method with arguments
     MethodInvocationExpr methodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("getName")
