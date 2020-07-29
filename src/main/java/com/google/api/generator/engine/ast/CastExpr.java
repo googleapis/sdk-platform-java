@@ -61,6 +61,12 @@ public abstract class CastExpr implements Expr {
         Preconditions.checkState(
             TypeNode.isBoxedTypeEquals(castType, exprType),
             "Primitive types can only be cast to their corresponding boxed types and vice versa.");
+      } else {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(castExpr.type())
+                && (castExpr.expr().type().equals(TypeNode.NULL)
+                    || TypeNode.isReferenceType(castExpr.expr().type())),
+            "Reference types can only be casted to reference types");
       }
       return castExpr;
     }
