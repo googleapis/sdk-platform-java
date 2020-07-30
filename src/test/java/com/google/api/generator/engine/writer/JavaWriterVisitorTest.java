@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
@@ -106,6 +107,77 @@ public class JavaWriterVisitorTest {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
+  }
+
+  @Test
+  public void writeNewObjectExpr_basic() {
+    // isGeneric() is true, but generics() is empty.
+    ConcreteReference ref = ConcreteReference.withClazz(List.class);
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new List<>()");
+  }
+
+  @Test
+  public void writeNewObjectExpr_withMethodExprArgs() {
+    // isGeneric() is false, and generics() is empty.
+    // [Constructing] `new IOException(message, cause())` and `cause()` is a method invocation.
+    TypeNode type = TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
+    Variable message = Variable.builder().setName("message").setType(TypeNode.STRING).build();
+    VariableExpr msgExpr = VariableExpr.builder().setVariable(message).build();
+    MethodInvocationExpr causeExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("cause")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+            .build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setType(type)
+            .setArguments(Arrays.asList(msgExpr, causeExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "new IOException(message, cause())");
+  }
+
+  @Test
+  public void writeNewObjectExpr_withGenericsAndArgs() {
+    // isGeneric() is true and generics() is not empty.
+    ConcreteReference listRef =
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+            .build();
+    ConcreteReference mapRef =
+        ConcreteReference.builder()
+            .setClazz(HashMap.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class), listRef))
+            .build();
+    TypeNode type = TypeNode.withReference(mapRef);
+
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.INT)
+            .setStaticReferenceType(someType)
+            .build();
+    Variable num = Variable.builder().setName("num").setType(TypeNode.FLOAT).build();
+    VariableExpr numExpr = VariableExpr.builder().setVariable(num).build();
+    NewObjectExpr newObjectExpr =
+        NewObjectExpr.builder()
+            .setIsGeneric(true)
+            .setType(type)
+            .setArguments(Arrays.asList(methodExpr, numExpr))
+            .build();
+    newObjectExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(), "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)");
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -289,11 +361,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -361,21 +438,37 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeJavaDocComment_specialChar() {
+    // Only comments and sample codes in JavaDocComment need this escaper.
+    // <p> <ol> <li> <ul> are hard-coded in monolith generator, which do not need escaping.
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addParagraph("Service comment may include special characters: &\"`'@")
-            .addParagraph("title: GetBigBook: 'War and Peace'")
-            .setThrows("Exception", "This may throw an exception")
-            .addComment("RPC method comment may include special characters: \"`'{@literal @}.")
+            .addComment(
+                "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
+            .addComment("named `bookShelves/*`")
+            .addSampleCode(
+                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+            .addOrderedList(
+                Arrays.asList(
+                    "A \"flattened\" method.",
+                    "A \"request object\" method.",
+                    "A \"callable\" method."))
+            .addComment("RPC method comment may include special characters: <>&\"`'@.")
             .build();
     String expected =
         String.format(
-            createLines(6),
+            createLines(13),
             "/**\n",
-            "* <p> Service comment may include special characters: &\"`'@\n",
-            "* <p> title: GetBigBook: 'War and Peace'\n",
-            "* RPC method comment may include special characters: \"`'{@literal @}.\n",
-            "* @throws Exception This may throw an exception\n",
+            "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
+            "* named `bookShelves/&#42;`\n",
+            "* <pre><code>\n",
+            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* </code></pre>\n",
+            "* <ol>\n",
+            "* <li> A \"flattened\" method.\n",
+            "* <li> A \"request object\" method.\n",
+            "* <li> A \"callable\" method.\n",
+            "* </ol>\n",
+            "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
@@ -536,6 +629,7 @@ public class JavaWriterVisitorTest {
                 Arrays.asList(
                     ConcreteReference.withClazz(String.class),
                     ConcreteReference.withClazz(Double.class),
+                    TypeNode.WILDCARD_REFERENCE,
                     outerMapReference))
             .setArguments(Arrays.asList(varExpr, varExpr, varExpr))
             .setExprReferenceExpr(varExpr)
@@ -552,7 +646,7 @@ public class JavaWriterVisitorTest {
     assignExpr.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        "final String someStr = anArg.<String, Double, HashMap<HashMap<String, Integer>,"
+        "final String someStr = anArg.<String, Double, ?, HashMap<HashMap<String, Integer>,"
             + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
   }
 

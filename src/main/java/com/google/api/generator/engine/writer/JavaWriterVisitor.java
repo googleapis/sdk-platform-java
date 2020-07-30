@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -93,11 +94,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
+  private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
 
   public JavaWriterVisitor() {}
 
   public void clear() {
     buffer.setLength(0);
+    importWriterVisitor.clear();
   }
 
   public String write() {
@@ -304,6 +307,28 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     buffer.append(INSTANCEOF);
     space();
     instanceofExpr.checkType().accept(this);
+  }
+
+  @Override
+  public void visit(NewObjectExpr newObjectExpr) {
+    buffer.append(NEW);
+    space();
+    newObjectExpr.type().accept(this);
+    // If isGeneric() is true, but generic list is empty, we will append `<>` to the buffer.
+    if (newObjectExpr.isGeneric() && newObjectExpr.type().reference().generics().isEmpty()) {
+      leftAngle();
+      rightAngle();
+    }
+    leftParen();
+    int numArguments = newObjectExpr.arguments().size();
+    for (int i = 0; i < numArguments; i++) {
+      newObjectExpr.arguments().get(i).accept(this);
+      if (i < numArguments - 1) {
+        buffer.append(COMMA);
+        space();
+      }
+    }
+    rightParen();
   }
 
   @Override
@@ -592,15 +617,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ClassDefinition classDefinition) {
     if (!classDefinition.isNested()) {
+      importWriterVisitor.initialize(
+          classDefinition.packageString(), classDefinition.classIdentifier().name());
       buffer.append(String.format("package %s;", classDefinition.packageString()));
       newline();
       newline();
     }
 
-    ImportWriterVisitor importWriterVisitor =
-        new ImportWriterVisitor(classDefinition.packageString());
     classDefinition.accept(importWriterVisitor);
-    buffer.append(importWriterVisitor.write());
+    if (!classDefinition.isNested()) {
+      buffer.append(importWriterVisitor.write());
+    }
 
     // Annotations, if any.
     annotations(classDefinition.annotations());
