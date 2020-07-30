@@ -123,17 +123,6 @@ public abstract class TypeNode implements AstNode {
         && !type.equals(TypeNode.NULL);
   }
 
-  public static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
-    // If both of type1 and type2 are primitive/reference type, return false.
-    if (type1.isPrimitiveType() == type2.isPrimitiveType()) {
-      return false;
-    }
-    if (type2.isPrimitiveType()) {
-      return type1.equals(BOXED_TYPE_MAP.get(type2));
-    }
-    return type2.equals(BOXED_TYPE_MAP.get(type1));
-  }
-
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
   }
@@ -157,9 +146,10 @@ public abstract class TypeNode implements AstNode {
     }
 
     TypeNode type = (TypeNode) o;
-    return typeKind().equals(type.typeKind())
-        && (isArray() == type.isArray())
-        && Objects.equals(reference(), type.reference());
+    return isBoxedTypeEquals(type, this)
+        || typeKind().equals(type.typeKind())
+            && (isArray() == type.isArray())
+            && Objects.equals(reference(), type.reference());
   }
 
   @Override
@@ -169,6 +159,17 @@ public abstract class TypeNode implements AstNode {
       hash += 23 * reference().hashCode();
     }
     return hash;
+  }
+
+  private static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
+    // If both of type1 and type2 are primitive/reference type, return false.
+    if (type1.isPrimitiveType() == type2.isPrimitiveType()) {
+      return false;
+    }
+    if (type2.isPrimitiveType()) {
+      return type1.equals(BOXED_TYPE_MAP.get(type2));
+    }
+    return type2.equals(BOXED_TYPE_MAP.get(type1));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
