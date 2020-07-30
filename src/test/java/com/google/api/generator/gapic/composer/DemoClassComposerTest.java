@@ -57,6 +57,8 @@ public class DemoClassComposerTest {
           + "\n"
           + "import com.google.api.gax.core.BackgroundResource;\n"
           + "import com.google.longrunning.stub.GrpcOperationsStub;\n"
+          + "import java.util.ArrayList;\n"
+          + "import java.util.List;\n"
           + "import java.util.concurrent.ThreadLocalRandom;\n"
           + "import javax.annotation.Generated;\n"
           + "\n"
@@ -68,6 +70,11 @@ public class DemoClassComposerTest {
           + "  public int foobar(int max) {\n"
           + "    int x = ThreadLocalRandom.current().nextInt(0, max);\n"
           + "    return x;\n"
+          + "  }\n"
+          + "\n"
+          + "  public List<Integer> pickFoobarNumber(int high) {\n"
+          + "    List<Integer> aList = new ArrayList<Integer>();\n"
+          + "    return aList;\n"
           + "  }\n"
           + "}\n";
 }

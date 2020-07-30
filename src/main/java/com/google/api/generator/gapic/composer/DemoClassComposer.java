@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -133,7 +134,49 @@ public class DemoClassComposer implements ClassComposer {
       Service service, Map<String, TypeNode> types, Map<String, VariableExpr> classMemberVarExprs) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(createFoobarMethod());
+    javaMethods.add(createThreeMethod());
     return javaMethods;
+  }
+
+  private static MethodDefinition createThreeMethod() {
+    String methodName = "pickFoobarNumber";
+    VariableExpr highVarExpr =
+        VariableExpr.withVariable(Variable.builder().setName("high").setType(TypeNode.INT).build());
+
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+                .build());
+    TypeNode arrayListType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ArrayList.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+                .build());
+
+    VariableExpr aListVarExpr =
+        VariableExpr.withVariable(Variable.builder().setName("aList").setType(returnType).build());
+    NewObjectExpr newArrayListExpr =
+        NewObjectExpr.builder().setType(arrayListType).setIsGeneric(true).build();
+
+    AssignmentExpr assignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(aListVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(newArrayListExpr)
+            .build();
+
+    MethodDefinition methodDef =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setName(methodName)
+            .setArguments(Arrays.asList(highVarExpr.toBuilder().setIsDecl(true).build()))
+            .setBody(Arrays.asList(ExprStatement.withExpr(assignExpr)))
+            .setReturnExpr(aListVarExpr)
+            .build();
+    return methodDef;
   }
 
   private static MethodDefinition createFoobarMethod() {
