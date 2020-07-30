@@ -80,7 +80,7 @@ public class Writer {
 
   private static String getPath(String pakkage, String className) {
     String path = pakkage.replaceAll("\\.", "/");
-    if (className.substring(0, 3).equals("Mock") || className.endsWith("Test")) {
+    if (className.startsWith("Mock") || className.endsWith("Test")) {
       path = "test/" + path;
     }
     // TODO(miraleung): Add path for resource name classes.

@@ -25,5 +25,6 @@ java_library(
         "@io_grpc_java//api",
         "@io_grpc_java//protobuf",
         "@io_grpc_java//stub",
+        "@junit_junit//jar",
     ],
 )
