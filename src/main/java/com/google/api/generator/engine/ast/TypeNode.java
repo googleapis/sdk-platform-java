@@ -166,7 +166,8 @@ public abstract class TypeNode implements AstNode {
 
   private boolean isBoxedTypeEquals(TypeNode other) {
     // If both types are primitive/reference type, return false.
-    if (isPrimitiveType() == other.isPrimitiveType()) {
+    // Array of boxed/primitive type is not considered equal.
+    if (isPrimitiveType() == other.isPrimitiveType() || isArray() || other.isArray()) {
       return false;
     }
     if (other.isPrimitiveType()) {
