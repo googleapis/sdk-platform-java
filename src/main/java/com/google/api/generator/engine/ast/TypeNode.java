@@ -146,10 +146,7 @@ public abstract class TypeNode implements AstNode {
     }
 
     TypeNode type = (TypeNode) o;
-    return isBoxedTypeEquals(type, this)
-        || typeKind().equals(type.typeKind())
-            && (isArray() == type.isArray())
-            && Objects.equals(reference(), type.reference());
+    return strictEquals(type) || isBoxedTypeEquals(type);
   }
 
   @Override
@@ -161,16 +158,22 @@ public abstract class TypeNode implements AstNode {
     return hash;
   }
 
-  private static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
-    // If both of type1 and type2 are primitive/reference type, return false.
-    if (type1.isPrimitiveType() == type2.isPrimitiveType()
-        || (type1.isArray() != type2.isArray())) {
+  private boolean strictEquals(TypeNode other) {
+    return typeKind().equals(other.typeKind())
+        && (isArray() == other.isArray())
+        && Objects.equals(reference(), other.reference());
+  }
+
+  private boolean isBoxedTypeEquals(TypeNode other) {
+    // If both types are primitive/reference type, return false.
+    // If one type is an array, but the other is not, return false.
+    if (isPrimitiveType() == other.isPrimitiveType() || (isArray() != other.isArray())) {
       return false;
     }
-    if (type2.isPrimitiveType()) {
-      return Objects.equals(type1.reference(), BOXED_TYPE_MAP.get(type2.typeKind()));
+    if (other.isPrimitiveType()) {
+      return Objects.equals(reference(), BOXED_TYPE_MAP.get(other.typeKind()));
     }
-    return Objects.equals(type2.reference(), BOXED_TYPE_MAP.get(type1.typeKind()));
+    return Objects.equals(other.reference(), BOXED_TYPE_MAP.get(typeKind()));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
@@ -190,7 +193,8 @@ public abstract class TypeNode implements AstNode {
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
   }
-
+  // Here we create a map with TypeKind as key and Reference as value, because it can
+  // help us compare the case `int[]` and `Integer[]` easily which are also boxed/primitive equals.
   private static Map<TypeKind, Reference> createBoxedTypeMap() {
     Map<TypeKind, Reference> map = new HashMap<>();
     map.put(TypeKind.INT, ConcreteReference.withClazz(Integer.class));
