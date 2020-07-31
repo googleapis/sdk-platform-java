@@ -29,12 +29,12 @@ public abstract class CommentStatement implements Statement {
     visitor.visit(this);
   }
 
-  public static Builder builder() {
+  static Builder builder() {
     return new AutoValue_CommentStatement.Builder();
   }
 
   @AutoValue.Builder
-  public abstract static class Builder {
+  abstract static class Builder {
     public abstract Builder setComment(Comment comment);
 
     public abstract CommentStatement build();
