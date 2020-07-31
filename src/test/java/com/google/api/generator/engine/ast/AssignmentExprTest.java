@@ -115,7 +115,7 @@ public class AssignmentExprTest {
 
   @Test
   public void writeAssignmentExpr_boxedToPrimitiveType() {
-    // [Constructing] `double x = (Double y)`
+    // [Constructing] `double x = (Double) y`
     Variable lvariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
     VariableExpr lvariableExpr =
         VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
