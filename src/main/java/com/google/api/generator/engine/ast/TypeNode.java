@@ -64,7 +64,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
 
-  private static final Map<TypeKind, Reference> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -166,14 +166,13 @@ public abstract class TypeNode implements AstNode {
 
   private boolean isBoxedTypeEquals(TypeNode other) {
     // If both types are primitive/reference type, return false.
-    // If one type is an array, but the other is not, return false.
-    if (isPrimitiveType() == other.isPrimitiveType() || (isArray() != other.isArray())) {
+    if (isPrimitiveType() == other.isPrimitiveType()) {
       return false;
     }
     if (other.isPrimitiveType()) {
-      return Objects.equals(reference(), BOXED_TYPE_MAP.get(other.typeKind()));
+      return Objects.equals(this, BOXED_TYPE_MAP.get(other));
     }
-    return Objects.equals(other.reference(), BOXED_TYPE_MAP.get(typeKind()));
+    return Objects.equals(other, BOXED_TYPE_MAP.get(this));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
@@ -193,18 +192,17 @@ public abstract class TypeNode implements AstNode {
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
   }
-  // Here we create a map with TypeKind as key and Reference as value, because it can
-  // help us compare the case `int[]` and `Integer[]` easily which are also boxed/primitive equals.
-  private static Map<TypeKind, Reference> createBoxedTypeMap() {
-    Map<TypeKind, Reference> map = new HashMap<>();
-    map.put(TypeKind.INT, ConcreteReference.withClazz(Integer.class));
-    map.put(TypeKind.BOOLEAN, ConcreteReference.withClazz(Boolean.class));
-    map.put(TypeKind.BYTE, ConcreteReference.withClazz(Byte.class));
-    map.put(TypeKind.CHAR, ConcreteReference.withClazz(Character.class));
-    map.put(TypeKind.FLOAT, ConcreteReference.withClazz(Float.class));
-    map.put(TypeKind.LONG, ConcreteReference.withClazz(Long.class));
-    map.put(TypeKind.SHORT, ConcreteReference.withClazz(Short.class));
-    map.put(TypeKind.DOUBLE, ConcreteReference.withClazz(Double.class));
+
+  private static Map<TypeNode, TypeNode> createBoxedTypeMap() {
+    Map<TypeNode, TypeNode> map = new HashMap<>();
+    map.put(TypeNode.INT, TypeNode.INT_OBJECT);
+    map.put(TypeNode.BOOLEAN, TypeNode.BOOLEAN_OBJECT);
+    map.put(TypeNode.BYTE, TypeNode.BYTE_OBJECT);
+    map.put(TypeNode.CHAR, TypeNode.CHAR_OBJECT);
+    map.put(TypeNode.FLOAT, TypeNode.FLOAT_OBJECT);
+    map.put(TypeNode.LONG, TypeNode.LONG_OBJECT);
+    map.put(TypeNode.SHORT, TypeNode.SHORT_OBJECT);
+    map.put(TypeNode.DOUBLE, TypeNode.DOUBLE_OBJECT);
     return map;
   }
 }

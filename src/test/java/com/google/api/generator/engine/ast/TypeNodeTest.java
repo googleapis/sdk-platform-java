@@ -23,6 +23,17 @@ import java.util.List;
 import org.junit.Test;
 
 public class TypeNodeTest {
+  private static final TypeNode INT_ARRAY =
+      TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
+  private static final TypeNode INTEGER_ARRAY =
+      TypeNode.builder()
+          .setIsArray(true)
+          .setReference(ConcreteReference.withClazz(Integer.class))
+          .setTypeKind(TypeKind.OBJECT)
+          .build();
+  private static final TypeNode BOOLEAN_ARRAY =
+      TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
+
   @Test
   public void equals_basic() {
     assertFalse(TypeNode.DOUBLE.equals(TypeKind.DOUBLE));
@@ -41,18 +52,9 @@ public class TypeNodeTest {
 
   @Test
   public void equals_arrayType() {
-    TypeNode intArray = TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
-    TypeNode integerArray =
-        TypeNode.builder()
-            .setIsArray(true)
-            .setReference(ConcreteReference.withClazz(Integer.class))
-            .setTypeKind(TypeKind.OBJECT)
-            .build();
-    TypeNode booleanArray =
-        TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
-    assertFalse(TypeNode.INT.equals(intArray));
-    assertTrue(integerArray.equals(intArray));
-    assertFalse(booleanArray.equals(intArray));
+    assertFalse(TypeNode.INT.equals(INT_ARRAY));
+    assertFalse(INTEGER_ARRAY.equals(INT_ARRAY));
+    assertFalse(BOOLEAN_ARRAY.equals(INT_ARRAY));
   }
 
   @Test
