@@ -21,6 +21,7 @@ import com.google.common.base.Preconditions;
 public abstract class ThisObjectValue implements ObjectValue {
   private static final String THIS_VALUE = "this";
 
+  @Override
   public abstract TypeNode type();
 
   @Override

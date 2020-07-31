@@ -32,7 +32,7 @@ public class ThisObjectValueTest {
   }
 
   @Test
-  public void invalidThisObjectValue_NonReferenceType() {
+  public void invalidThisObjectValue_nonReferenceType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -41,7 +41,7 @@ public class ThisObjectValueTest {
   }
 
   @Test
-  public void invalidThisObjectValue_NullType() {
+  public void invalidThisObjectValue_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
