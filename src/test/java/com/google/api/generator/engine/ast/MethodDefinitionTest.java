@@ -26,6 +26,7 @@ public class MethodDefinitionTest {
   @Test
   public void validMethodDefinition_basic() {
     MethodDefinition.builder()
+        .setCommentStatements(createCommentStatements())
         .setName("close")
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
@@ -660,5 +661,15 @@ public class MethodDefinitionTest {
     Expr valueExpr = VariableExpr.builder().setVariable(anotherVariable).build();
 
     return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+  }
+
+  private static List<CommentStatement> createCommentStatements() {
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("Constructs an instance of GrpcMyProtoStub, using the given settings.")
+            .addComment(
+                "This is protected so that it is easy to make a subclass, but otherwise, the static factory methods should be preferred.")
+            .build();
+    return new ArrayList<>(Arrays.asList(CommentStatement.withComment(javaDocComment)));
   }
 }

@@ -34,7 +34,9 @@ public abstract class MethodDefinition implements AstNode {
   // Required.
   public abstract IdentifierNode methodIdentifier();
 
-  // TODO(xiahzhenliu): Add a Nullable JavaDoc here.
+  @Nullable
+  public abstract ImmutableList<CommentStatement> commentStatements();
+
   public abstract ImmutableList<AnnotationNode> annotations();
 
   // Using a list helps with determinism in unit tests.
@@ -84,6 +86,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(false)
+        .setCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -99,6 +102,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(true)
+        .setCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -114,6 +118,8 @@ public abstract class MethodDefinition implements AstNode {
     public abstract Builder setReturnType(TypeNode type);
 
     public abstract Builder setName(String name);
+
+    public abstract Builder setCommentStatements(List<CommentStatement> commentStatements);
 
     public Builder setAnnotations(List<AnnotationNode> annotations) {
       annotationsBuilder().addAll(annotations);

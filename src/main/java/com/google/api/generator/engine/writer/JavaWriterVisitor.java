@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -509,6 +510,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== OTHER =============================== */
   @Override
   public void visit(MethodDefinition methodDefinition) {
+    // Comments, if any.
+    statements(methodDefinition.commentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(methodDefinition.annotations());
 
