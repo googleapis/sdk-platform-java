@@ -33,7 +33,7 @@ public class SuperObjectValueTest {
   }
 
   @Test
-  public void invalidSuperObjectValue_NonReferenceType() {
+  public void invalidSuperObjectValue_nonReferenceType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
@@ -42,7 +42,7 @@ public class SuperObjectValueTest {
   }
 
   @Test
-  public void invalidSuperObjectValue_NullType() {
+  public void invalidSuperObjectValue_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
