@@ -42,9 +42,16 @@ public class TypeNodeTest {
   @Test
   public void equals_arrayType() {
     TypeNode intArray = TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
+    TypeNode integerArray =
+        TypeNode.builder()
+            .setIsArray(true)
+            .setReference(ConcreteReference.withClazz(Integer.class))
+            .setTypeKind(TypeKind.OBJECT)
+            .build();
     TypeNode booleanArray =
         TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
     assertFalse(TypeNode.INT.equals(intArray));
+    // assertTrue(integerArray.equals(intArray));
     assertFalse(booleanArray.equals(intArray));
   }
 

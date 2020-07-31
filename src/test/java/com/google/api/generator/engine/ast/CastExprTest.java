@@ -99,6 +99,20 @@ public class CastExprTest {
   }
 
   @Test
+  public void validCastExpr_booleanToBoxedType() {
+    PrimitiveValue intValue = PrimitiveValue.builder().setValue("3").setType(TypeNode.INT).build();
+    ValueExpr valueExpr = ValueExpr.withValue(intValue);
+    CastExpr.builder().setType(TypeNode.INT_OBJECT).setExpr(valueExpr).build();
+  }
+
+  @Test
+  public void validCastExpr_castBooleanToPrimitive() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.DOUBLE_OBJECT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    CastExpr.builder().setType(TypeNode.DOUBLE).setExpr(variableExpr).build();
+  }
+
+  @Test
   public void invalidCastExpr_castObjectToPrimitive() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
