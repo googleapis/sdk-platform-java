@@ -54,7 +54,7 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
-  public void invalidReferenceConstructorExpr_NullType() {
+  public void invalidReferenceConstructorExpr_nullType() {
     assertThrows(
         IllegalStateException.class,
         () -> {
