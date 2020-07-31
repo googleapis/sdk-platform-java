@@ -21,6 +21,7 @@ import com.google.common.base.Preconditions;
 public abstract class SuperObjectValue implements ObjectValue {
   private static final String SUPER_VALUE = "super";
 
+  @Override
   public abstract TypeNode type();
 
   @Override
