@@ -18,6 +18,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -65,5 +66,15 @@ public class TypeNodeTest {
                 .build());
     assertFalse(intList.equals(list));
     assertFalse(intList.equals(charList));
+  }
+
+  @Test
+  public void isSupertypeOrEquals_basic() {
+    // assertFalse(TypeNode.DOUBLE.isSupertypeOrEquals(TypeNode.DOUBLE));
+    // assertFalse(TypeNode.INT.isSupertypeOrEquals(TypeNode.INT_OBJECT));
+    TypeNode list = TypeNode.withReference(ConcreteReference.withClazz(List.class));
+    TypeNode arrayList = TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class));
+
+    assertTrue(list.isSupertypeOrEquals(arrayList));
   }
 }

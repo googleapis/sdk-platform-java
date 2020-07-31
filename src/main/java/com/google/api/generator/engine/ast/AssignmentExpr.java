@@ -60,10 +60,12 @@ public abstract class AssignmentExpr implements Expr {
                   "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
         }
       } else {
-        if (rhsType != TypeNode.NULL && !lhsType.isSupertypeOrEquals(rhsType)) {
+        if (!lhsType.equals(rhsType)
+            && rhsType != TypeNode.NULL
+            && !lhsType.isSupertypeOrEquals(rhsType)) {
           throw new TypeMismatchException(
               String.format(
-                  "LHS type %s must be a supertype of the RHS type %s",
+                  "LHS type %s must be a supertype of the RHS type %s, else they have to be boxed and primitive type equals.",
                   lhsType.reference().name(), rhsType.reference().name()));
         }
       }
