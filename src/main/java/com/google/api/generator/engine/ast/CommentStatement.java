@@ -29,7 +29,7 @@ public abstract class CommentStatement implements Statement {
     visitor.visit(this);
   }
 
-  static Builder builder() {
+  private static Builder builder() {
     return new AutoValue_CommentStatement.Builder();
   }
 
