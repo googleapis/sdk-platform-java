@@ -51,7 +51,7 @@ public class TypeNodeTest {
     TypeNode booleanArray =
         TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
     assertFalse(TypeNode.INT.equals(intArray));
-    // assertTrue(integerArray.equals(intArray));
+    assertTrue(integerArray.equals(intArray));
     assertFalse(booleanArray.equals(intArray));
   }
 
