@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class MethodDefinitionTest {
   @Test
-  public void validMethodDefinition_basic() {
+  public void validMethodDefinition_basicWithComments() {
     MethodDefinition.builder()
         .setCommentStatements(createCommentStatements())
         .setName("close")
