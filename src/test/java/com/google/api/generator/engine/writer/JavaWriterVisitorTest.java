@@ -1704,7 +1704,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeSuperObjectValue_asscessFieldAndInvokeMethod() {
+  public void writeSuperObjectValue_accessFieldAndInvokeMethod() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
     TypeNode classType = TypeNode.withReference(ref);
