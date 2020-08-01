@@ -1687,8 +1687,9 @@ public class JavaWriterVisitorTest {
         ReferenceConstructorExpr.superBuilder().setType(classType).build();
     referenceConstructorExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("super()");
+  }
 
-  @Test  
+  @Test
   public void writeThisObjectValue_methodReturn() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
