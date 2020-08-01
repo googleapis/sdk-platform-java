@@ -46,7 +46,8 @@ public abstract class ThisObjectValue implements ObjectValue {
     private ThisObjectValue build() {
       ThisObjectValue thisObjectValue = autoBuild();
       Preconditions.checkState(
-          TypeNode.isReferenceType(thisObjectValue.type()), "The \"this\" object can only refer to object types");
+          TypeNode.isReferenceType(thisObjectValue.type()),
+          "The \"this\" object can only refer to object types");
       return thisObjectValue;
     }
   }
