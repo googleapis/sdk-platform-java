@@ -26,6 +26,7 @@ TESTS = [
     "VaporReferenceTest",
     "MethodInvocationExprTest",
     "ReferenceConstructorExprTest",
+    "ThisObjectValueTest",
 ]
 
 filegroup(
