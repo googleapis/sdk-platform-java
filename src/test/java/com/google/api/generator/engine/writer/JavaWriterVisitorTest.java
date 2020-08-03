@@ -986,11 +986,11 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_simple() {
+  public void writeIfStatement_simpleBooleanObject() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
-    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN_OBJECT);
 
     IfStatement ifStatement =
         IfStatement.builder().setConditionExpr(condExpr).setBody(ifBody).build();

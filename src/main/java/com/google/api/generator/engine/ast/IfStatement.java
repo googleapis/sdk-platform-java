@@ -65,7 +65,7 @@ public abstract class IfStatement implements Statement {
       IfStatement ifStatement = autoBuild();
       Preconditions.checkState(
           ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN),
-          "If-condition must be a boolean-typed expression");
+          "If-condition must be a boolean/Boolean-typed expression");
       return ifStatement;
     }
   }
