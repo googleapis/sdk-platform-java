@@ -67,6 +67,8 @@ public interface AstNodeVisitor {
 
   public void visit(TryCatchStatement tryCatchStatement);
 
+  public void visit(CommentStatement commentStatement);
+
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);
 

@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
@@ -315,69 +316,29 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
   }
 
+  /** =============================== COMMENT =============================== */
   @Test
-  public void writeBlockComment_basic() {
+  public void writeBlockCommentStatement_basic() {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(blockComment);
     String expected = "/** this is a test comment */\n";
-    blockComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
-  public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
-    BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
-    blockComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeLineComment_basic() {
+  public void writeLineCommentStatement_basic() {
     String content = "this is a test comment";
     LineComment lineComment = LineComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(lineComment);
     String expected = "// this is a test comment\n";
-    lineComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
-  public void writeLineComment_longLine() {
-    String content =
-        "this is a long test comment with so many words, hello world, hello again, hello for 3"
-            + " times, blah, blah!";
-    LineComment lineComment = LineComment.builder().setComment(content).build();
-    String expected =
-        String.format(
-            createLines(2),
-            "// this is a long test comment with so many words, hello world, hello again, hello"
-                + " for 3 times,\n",
-            "// blah, blah!\n");
-    lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeLineComment_specialChar() {
-    String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
-            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
-            + "\"]']";
-    LineComment lineComment = LineComment.withComment(content);
-    String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
-            + " [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n"
-            + "\\r"
-            + "\"]']\n";
-    lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeJavaDocComment_allComponents() {
+  public void writeJavaDocCommentStatement_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
@@ -405,6 +366,7 @@ public class JavaWriterVisitorTest {
             .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
             .build();
+    CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
     String expected =
         String.format(
             createLines(23),
@@ -433,7 +395,45 @@ public class JavaWriterVisitorTest {
             "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
             "*/\n");
-    javaDocComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeBlockComment_specialChar() {
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_longLine() {
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3"
+            + " times, blah, blah!";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(2),
+            "// this is a long test comment with so many words, hello world, hello again, hello"
+                + " for 3 times,\n",
+            "// blah, blah!\n");
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_specialChar() {
+    String content =
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+    LineComment lineComment = LineComment.withComment(content);
+    String expected =
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+    lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
