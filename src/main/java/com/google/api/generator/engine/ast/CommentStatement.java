@@ -14,8 +14,29 @@
 
 package com.google.api.generator.engine.ast;
 
-public interface Comment {
-  public String comment();
+import com.google.auto.value.AutoValue;
 
-  public void accept(AstNodeVisitor visitor);
+@AutoValue
+public abstract class CommentStatement implements Statement {
+  public abstract Comment comment();
+
+  public static CommentStatement withComment(Comment comment) {
+    return builder().setComment(comment).build();
+  }
+
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
+  private static Builder builder() {
+    return new AutoValue_CommentStatement.Builder();
+  }
+
+  @AutoValue.Builder
+  abstract static class Builder {
+    public abstract Builder setComment(Comment comment);
+
+    public abstract CommentStatement build();
+  }
 }
