@@ -28,8 +28,8 @@ public class ClassDefinitionTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment("Base stub class for Google Example Library API.")
-            .addParam(
-                "", "This class is for advanced usage and reflects the underlying API directly.")
+            .addParagraph(
+                "This class is for advanced usage and reflects the underlying API directly.")
             .build();
     ClassDefinition.builder()
         .setCommentStatements(
