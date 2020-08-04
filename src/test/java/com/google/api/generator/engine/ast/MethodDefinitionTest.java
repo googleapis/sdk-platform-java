@@ -664,16 +664,12 @@ public class MethodDefinitionTest {
   }
 
   private static List<CommentStatement> createCommentStatements() {
-    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND METHOD");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
             .addComment("Constructs an instance of GrpcMyProtoStub, using the given settings.")
             .addComment(
                 "This is protected so that it is easy to make a subclass, but otherwise, the static factory methods should be preferred.")
             .build();
-    return new ArrayList<>(
-        Arrays.asList(
-            CommentStatement.withComment(javaDocComment),
-            CommentStatement.withComment(lineComment)));
+    return new ArrayList<>(Arrays.asList(CommentStatement.withComment(javaDocComment)));
   }
 }
