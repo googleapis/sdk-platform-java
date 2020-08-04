@@ -48,6 +48,10 @@ public abstract class AnnotationNode implements AstNode {
         .build();
   }
 
+  public static AnnotationNode withType(TypeNode type) {
+    return builder().setType(type).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_AnnotationNode.Builder();
   }

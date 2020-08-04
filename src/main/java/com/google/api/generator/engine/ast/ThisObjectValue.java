@@ -15,28 +15,40 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
 @AutoValue
-public abstract class CommentStatement implements Statement {
-  public abstract Comment comment();
-
-  public static CommentStatement withComment(Comment comment) {
-    return builder().setComment(comment).build();
-  }
+public abstract class ThisObjectValue implements ObjectValue {
+  private static final String THIS_VALUE = "this";
 
   @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
+  public abstract TypeNode type();
+
+  @Override
+  public String value() {
+    return THIS_VALUE;
+  }
+
+  public static ThisObjectValue withType(TypeNode type) {
+    return builder().setType(type).build();
   }
 
   private static Builder builder() {
-    return new AutoValue_CommentStatement.Builder();
+    return new AutoValue_ThisObjectValue.Builder();
   }
 
   @AutoValue.Builder
   abstract static class Builder {
-    public abstract Builder setComment(Comment comment);
+    abstract Builder setType(TypeNode type);
 
-    public abstract CommentStatement build();
+    abstract ThisObjectValue autoBuild();
+
+    private ThisObjectValue build() {
+      ThisObjectValue thisObjectValue = autoBuild();
+      Preconditions.checkState(
+          TypeNode.isReferenceType(thisObjectValue.type()),
+          "The \"this\" object can only refer to object types");
+      return thisObjectValue;
+    }
   }
 }
