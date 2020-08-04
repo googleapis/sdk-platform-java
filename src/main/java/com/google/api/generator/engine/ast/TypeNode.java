@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.Map;
@@ -158,16 +159,18 @@ public abstract class TypeNode implements AstNode {
     return hash;
   }
 
-  private boolean strictEquals(TypeNode other) {
+  @VisibleForTesting
+  boolean strictEquals(TypeNode other) {
     return typeKind().equals(other.typeKind())
         && (isArray() == other.isArray())
         && Objects.equals(reference(), other.reference());
   }
 
-  private boolean isBoxedTypeEquals(TypeNode other) {
+  @VisibleForTesting
+  boolean isBoxedTypeEquals(TypeNode other) {
     // If both types are primitive/reference type, return false.
     // Array of boxed/primitive type is not considered equal.
-    if (isPrimitiveType() == other.isPrimitiveType() || isArray() || other.isArray()) {
+    if (isArray() || other.isArray()) {
       return false;
     }
     if (other.isPrimitiveType()) {

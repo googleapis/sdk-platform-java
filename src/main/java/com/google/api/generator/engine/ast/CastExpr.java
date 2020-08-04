@@ -58,9 +58,9 @@ public abstract class CastExpr implements Expr {
       } else {
         Preconditions.checkState(
             castExpr.type().equals(castExpr.expr().type())
-                || TypeNode.isReferenceType(castExpr.type())
+                || (TypeNode.isReferenceType(castExpr.type())
                     && (castExpr.expr().type().equals(TypeNode.NULL)
-                        || TypeNode.isReferenceType(castExpr.expr().type())),
+                        || TypeNode.isReferenceType(castExpr.expr().type()))),
             "Boxed type and primitive type are inter-castable, otherwise reference types can only be casted to reference types or null type.");
       }
       return castExpr;
