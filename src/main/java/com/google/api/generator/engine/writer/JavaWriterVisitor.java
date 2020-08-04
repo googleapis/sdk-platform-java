@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -634,13 +635,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       buffer.append(importWriterVisitor.write());
     }
-
+    // Comments, if any.
+    statements(classDefinition.commentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(classDefinition.annotations());
-
-    // Comments, if any.
-    // TODO(xiaozhenliu): Uncomment / update the lines below.
-    // statements(classDefinition.comments());
 
     classDefinition.scope().accept(this);
     space();

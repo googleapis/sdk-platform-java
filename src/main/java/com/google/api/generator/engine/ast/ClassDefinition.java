@@ -34,7 +34,8 @@ public abstract class ClassDefinition implements AstNode {
   public abstract boolean isNested();
 
   // Optional.
-  // TODO(xiaozhenliu): Add a default-empty list of CommentStatements here.
+  public abstract ImmutableList<CommentStatement> commentStatements();
+
   public abstract ImmutableList<AnnotationNode> annotations();
 
   // Using a list helps with determinism in unit tests.
@@ -65,6 +66,7 @@ public abstract class ClassDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_ClassDefinition.Builder()
+        .setCommentStatements(Collections.emptyList())
         .setIsNested(false)
         .setIsFinal(false)
         .setIsStatic(false)
@@ -78,6 +80,8 @@ public abstract class ClassDefinition implements AstNode {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setCommentStatements(List<CommentStatement> commentStatements);
+
     public abstract Builder setScope(ScopeNode scope);
 
     public abstract Builder setPackageString(String pkg);
