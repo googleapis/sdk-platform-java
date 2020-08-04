@@ -1436,7 +1436,7 @@ public class JavaWriterVisitorTest {
                     TypeNode.withExceptionClazz(InterruptedException.class)))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
-            .setCommentStatements(
+            .setHeaderCommentStatements(
                 Arrays.asList(
                     CommentStatement.withComment(lineComment),
                     CommentStatement.withComment(javaDocComment)))

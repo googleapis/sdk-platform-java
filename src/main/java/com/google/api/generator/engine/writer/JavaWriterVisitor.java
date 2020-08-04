@@ -511,7 +511,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(MethodDefinition methodDefinition) {
     // Comments, if any.
-    statements(methodDefinition.commentStatements().stream().collect(Collectors.toList()));
+    statements(methodDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(methodDefinition.annotations());
 

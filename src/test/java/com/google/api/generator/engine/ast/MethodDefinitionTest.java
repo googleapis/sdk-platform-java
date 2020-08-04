@@ -26,7 +26,7 @@ public class MethodDefinitionTest {
   @Test
   public void validMethodDefinition_basicWithComments() {
     MethodDefinition.builder()
-        .setCommentStatements(createCommentStatements())
+        .setHeaderCommentStatements(createCommentStatements())
         .setName("close")
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)

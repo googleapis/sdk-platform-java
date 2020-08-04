@@ -35,7 +35,7 @@ public abstract class MethodDefinition implements AstNode {
   public abstract IdentifierNode methodIdentifier();
 
   @Nullable
-  public abstract ImmutableList<CommentStatement> commentStatements();
+  public abstract ImmutableList<CommentStatement> headerCommentStatements();
 
   public abstract ImmutableList<AnnotationNode> annotations();
 
@@ -86,7 +86,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(false)
-        .setCommentStatements(Collections.emptyList())
+        .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -102,7 +102,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(true)
-        .setCommentStatements(Collections.emptyList())
+        .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -119,7 +119,8 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setName(String name);
 
-    public abstract Builder setCommentStatements(List<CommentStatement> commentStatements);
+    public abstract Builder setHeaderCommentStatements(
+        List<CommentStatement> headeCommentStatements);
 
     public Builder setAnnotations(List<AnnotationNode> annotations) {
       annotationsBuilder().addAll(annotations);
