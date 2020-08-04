@@ -160,14 +160,15 @@ public abstract class TypeNode implements AstNode {
   }
 
   @VisibleForTesting
-  protected boolean strictEquals(TypeNode other) {
+  boolean strictEquals(TypeNode other) {
     return typeKind().equals(other.typeKind())
         && (isArray() == other.isArray())
         && Objects.equals(reference(), other.reference());
   }
 
   @VisibleForTesting
-  protected boolean isBoxedTypeEquals(TypeNode other) {
+  boolean isBoxedTypeEquals(TypeNode other) {
+    // If both types are primitive/reference type, return false.
     // Array of boxed/primitive type is not considered equal.
     if (isArray() || other.isArray()) {
       return false;
