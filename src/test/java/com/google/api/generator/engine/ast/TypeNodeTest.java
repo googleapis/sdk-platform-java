@@ -88,5 +88,4 @@ public class TypeNodeTest {
     assertFalse(TypeNode.CHAR.equals(TypeNode.NULL));
     assertFalse(INTEGER_ARRAY.equals(INT_ARRAY));
   }
-
 }
