@@ -21,6 +21,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -115,6 +116,20 @@ public class Parser {
                         .setName(md.getName())
                         .setFields(parseFields(md))
                         .build()));
+  }
+
+  public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+      resourceNames.putAll(ResourceNameParser.parseResourceNames(fileDescriptor));
+    }
+    return resourceNames;
   }
 
   @VisibleForTesting
