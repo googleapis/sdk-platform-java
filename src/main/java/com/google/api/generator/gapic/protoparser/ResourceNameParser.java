@@ -36,13 +36,14 @@ import java.util.Set;
 public class ResourceNameParser {
   /** Returns a map of resource types (strings) to ResourceName POJOs. */
   public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
-    Map<String, ResourceName> resourceNames = parseFileResourceNames(fileDescriptor);
+    Map<String, ResourceName> resourceNames = parseResourceNamesFromFile(fileDescriptor);
     String pakkage = TypeParser.getPackage(fileDescriptor);
-    resourceNames.putAll(parseResourceNameFromMessages(fileDescriptor.getMessageTypes(), pakkage));
+    resourceNames.putAll(parseResourceNamesFromMessages(fileDescriptor.getMessageTypes(), pakkage));
     return resourceNames;
   }
 
-  private static Map<String, ResourceName> parseFileResourceNames(FileDescriptor fileDescriptor) {
+  @VisibleForTesting
+  static Map<String, ResourceName> parseResourceNamesFromFile(FileDescriptor fileDescriptor) {
     Map<String, ResourceName> typeStringToResourceNames = new HashMap<>();
     FileOptions fileOptions = fileDescriptor.getOptions();
     if (fileOptions.getExtensionCount(ResourceProto.resourceDefinition) <= 0) {
@@ -63,7 +64,8 @@ public class ResourceNameParser {
     return typeStringToResourceNames;
   }
 
-  private static Map<String, ResourceName> parseResourceNameFromMessages(
+  @VisibleForTesting
+  static Map<String, ResourceName> parseResourceNamesFromMessages(
       List<Descriptor> messageTypeDescriptors, String pakkage) {
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (Descriptor messageTypeDescriptor : messageTypeDescriptors) {
@@ -77,12 +79,22 @@ public class ResourceNameParser {
     return resourceNames;
   }
 
-  private static Optional<ResourceName> parseResourceNameFromMessageType(
+  @VisibleForTesting
+  static Optional<ResourceName> parseResourceNameFromMessageType(
       Descriptor messageTypeDescriptor, String pakkage) {
     MessageOptions messageOptions = messageTypeDescriptor.getOptions();
-    return messageOptions.hasExtension(ResourceProto.resource)
-        ? createResourceName(messageOptions.getExtension(ResourceProto.resource), pakkage)
-        : Optional.empty();
+    if (!messageOptions.hasExtension(ResourceProto.resource)) {
+      return Optional.empty();
+    }
+
+    // aip.dev/4231.
+    Preconditions.checkNotNull(
+        messageTypeDescriptor.findFieldByName(ResourceNameConstants.NAME_FIELD_NAME),
+        String.format(
+            "Message %s has a resource annotation but no \"name\" field",
+            messageTypeDescriptor.getName()));
+
+    return createResourceName(messageOptions.getExtension(ResourceProto.resource), pakkage);
   }
 
   private static Optional<ResourceName> createResourceName(

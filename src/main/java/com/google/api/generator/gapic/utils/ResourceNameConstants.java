@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.utils;
 
 public class ResourceNameConstants {
-  public static final String WILDCARD_PATTERN = "*";
   public static final String DELETED_TOPIC_LITERAL = "_deleted-topic_";
+  public static final String NAME_FIELD_NAME = "name";
+  public static final String WILDCARD_PATTERN = "*";
 }

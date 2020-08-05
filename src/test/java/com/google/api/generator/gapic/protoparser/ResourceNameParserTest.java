@@ -22,9 +22,12 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
+import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.testgapic.v1beta1.BadMessageResnameDefProto;
 import com.google.testgapic.v1beta1.LockerProto;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.Before;
@@ -35,18 +38,19 @@ public class ResourceNameParserTest {
 
   private ServiceDescriptor lockerService;
   private FileDescriptor lockerServiceFileDescriptor;
-  private Map<String, ResourceName> typeStringsToResourceNames;
 
   @Before
   public void setUp() {
     lockerServiceFileDescriptor = LockerProto.getDescriptor();
     lockerService = lockerServiceFileDescriptor.getServices().get(0);
-    typeStringsToResourceNames = ResourceNameParser.parseResourceNames(lockerServiceFileDescriptor);
-    assertEquals(4, typeStringsToResourceNames.size());
   }
 
   @Test
   public void parseResourceNames_basicOnePattern() {
+    Map<String, ResourceName> typeStringsToResourceNames =
+        ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
+    assertEquals(3, typeStringsToResourceNames.size());
+
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudbilling.googleapis.com/BillingAccount");
     assertEquals(1, resourceName.patterns().size());
@@ -58,6 +62,10 @@ public class ResourceNameParserTest {
 
   @Test
   public void parseResourceNames_basicTwoPatterns() {
+    Map<String, ResourceName> typeStringsToResourceNames =
+        ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
+    assertEquals(3, typeStringsToResourceNames.size());
+
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
     assertEquals(2, resourceName.patterns().size());
@@ -70,6 +78,10 @@ public class ResourceNameParserTest {
 
   @Test
   public void parseResourceNames_deletedTopic() {
+    Map<String, ResourceName> typeStringsToResourceNames =
+        ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
+    assertEquals(3, typeStringsToResourceNames.size());
+
     ResourceName resourceName = typeStringsToResourceNames.get("pubsub.googleapis.com/Topic");
     assertEquals(1, resourceName.patterns().size());
     assertEquals(ResourceNameConstants.DELETED_TOPIC_LITERAL, resourceName.patterns().get(0));
@@ -80,6 +92,12 @@ public class ResourceNameParserTest {
 
   @Test
   public void parseResourceNames_messageResourceDefinition() {
+    String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
+    List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
+    Map<String, ResourceName> typeStringsToResourceNames =
+        ResourceNameParser.parseResourceNamesFromMessages(messageDescriptors, pakkage);
+    assertEquals(1, typeStringsToResourceNames.size());
+
     ResourceName resourceName = typeStringsToResourceNames.get("testgapic.googleapis.com/Document");
     assertEquals(2, resourceName.patterns().size());
     assertThat(resourceName.patterns()).contains("folders/{folder}/documents/{document}");
@@ -87,6 +105,29 @@ public class ResourceNameParserTest {
     assertEquals("document", resourceName.variableName());
     assertEquals("testgapic.googleapis.com/Document", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+  }
+
+  @Test
+  public void parseResourceNames_messageWithoutResourceDefinition() {
+    String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
+    List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
+    Descriptor folderMessageDescriptor = messageDescriptors.get(1);
+    assertEquals("Folder", folderMessageDescriptor.getName());
+    Optional<ResourceName> resourceNameOpt =
+        ResourceNameParser.parseResourceNameFromMessageType(folderMessageDescriptor, pakkage);
+    assertFalse(resourceNameOpt.isPresent());
+  }
+
+  @Test
+  public void parseResourceNames_badMessageResourceNameDefinitionMissingNameField() {
+    FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
+    List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
+    Descriptor messageDescriptor = messageDescriptors.get(0);
+    String pakkage = TypeParser.getPackage(protoFileDescriptor);
+
+    assertThrows(
+        NullPointerException.class,
+        () -> ResourceNameParser.parseResourceNameFromMessageType(messageDescriptor, pakkage));
   }
 
   @Test

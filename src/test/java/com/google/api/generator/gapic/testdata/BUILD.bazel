@@ -23,6 +23,7 @@ proto_library(
 proto_library(
     name = "testgapic_proto",
     srcs = [
+        "bad_message_resname_def.proto",
         "locker.proto",
     ],
     deps = [
