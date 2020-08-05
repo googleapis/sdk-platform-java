@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -236,6 +237,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
   }
+
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    // Do nothing
+  }
+
   /** =============================== COMMENT =============================== */
   @Override
   public void visit(LineComment lineComment) {
