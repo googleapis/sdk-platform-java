@@ -34,7 +34,7 @@ public abstract class ClassDefinition implements AstNode {
   public abstract boolean isNested();
 
   // Optional.
-  public abstract ImmutableList<CommentStatement> commentStatements();
+  public abstract ImmutableList<CommentStatement> headerCommentStatements();
 
   public abstract ImmutableList<AnnotationNode> annotations();
 
@@ -66,7 +66,7 @@ public abstract class ClassDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_ClassDefinition.Builder()
-        .setCommentStatements(Collections.emptyList())
+        .setHeaderCommentStatements(Collections.emptyList())
         .setIsNested(false)
         .setIsFinal(false)
         .setIsStatic(false)
@@ -80,7 +80,8 @@ public abstract class ClassDefinition implements AstNode {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setCommentStatements(List<CommentStatement> commentStatements);
+    public abstract Builder setHeaderCommentStatements(
+        List<CommentStatement> headerCommentStatements);
 
     public abstract Builder setScope(ScopeNode scope);
 

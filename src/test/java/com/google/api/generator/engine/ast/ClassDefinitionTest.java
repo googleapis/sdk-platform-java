@@ -32,7 +32,7 @@ public class ClassDefinitionTest {
                 "This class is for advanced usage and reflects the underlying API directly.")
             .build();
     ClassDefinition.builder()
-        .setCommentStatements(
+        .setHeaderCommentStatements(
             Arrays.asList(
                 CommentStatement.withComment(lineComment),
                 CommentStatement.withComment(javaDocComment)))

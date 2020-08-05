@@ -1554,7 +1554,7 @@ public class JavaWriterVisitorTest {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
-            .addComment("class to configure an instance of {@link LibraryServiceStub}.")
+            .addComment("Class to configure an instance of {@link LibraryServiceStub}.")
             .addParagraph("The default instance has everything set to sensible defaults:")
             .addUnorderedList(
                 Arrays.asList(
@@ -1629,7 +1629,7 @@ public class JavaWriterVisitorTest {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.example.library.v1.stub")
-            .setCommentStatements(
+            .setHeaderCommentStatements(
                 Arrays.asList(
                     CommentStatement.withComment(lineComment),
                     CommentStatement.withComment(javaDocComment)))
@@ -1653,7 +1653,7 @@ public class JavaWriterVisitorTest {
             "\n",
             "// AUTO-GENERATED DOCUMENTATION AND CLASS\n",
             "/**\n",
-            " * class to configure an instance of {{@literal @}link LibraryServiceStub}.\n",
+            " * Class to configure an instance of {{@literal @}link LibraryServiceStub}.\n",
             " *\n",
             " * <p>The default instance has everything set to sensible defaults:\n",
             " *\n",
