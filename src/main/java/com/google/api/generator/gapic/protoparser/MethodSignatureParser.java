@@ -55,12 +55,18 @@ public class MethodSignatureParser {
       for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
         List<TypeNode> argumentTypePath =
             new ArrayList<>(parseTypeFromArgumentName(argumentName, inputMessage, messageTypes));
-        int lastIndex = argumentTypePath.size() - 1;
-        TypeNode argumentType = argumentTypePath.get(lastIndex);
-        argumentTypePath.remove(lastIndex);
+
+        int dotLastIndex = argumentName.lastIndexOf(DOT);
+        String actualArgumentName =
+            dotLastIndex < 0 ? argumentName : argumentName.substring(dotLastIndex + 1);
+
+        int typeLastIndex = argumentTypePath.size() - 1;
+        TypeNode argumentType = argumentTypePath.get(typeLastIndex);
+        argumentTypePath.remove(typeLastIndex);
+
         arguments.add(
             MethodArgument.builder()
-                .setName(argumentName)
+                .setName(actualArgumentName)
                 .setType(argumentType)
                 .setNestedTypes(argumentTypePath)
                 .build());
