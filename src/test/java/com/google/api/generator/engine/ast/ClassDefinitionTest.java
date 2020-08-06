@@ -22,9 +22,20 @@ import org.junit.Test;
 
 public class ClassDefinitionTest {
   @Test
-  public void validClassDefinition_basic() {
+  public void validClassDefinition_basicWithComments() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("Base stub class for Google Example Library API.")
+            .addParagraph(
+                "This class is for advanced usage and reflects the underlying API directly.")
+            .build();
     ClassDefinition.builder()
         .setFileHeader(createFileHeader())
+        .setHeaderCommentStatements(
+            Arrays.asList(
+                CommentStatement.withComment(lineComment),
+                CommentStatement.withComment(javaDocComment)))
         .setPackageString("com.google.example.library.v1.stub")
         .setName("LibraryServiceStub")
         .setScope(ScopeNode.PUBLIC)

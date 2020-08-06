@@ -1554,7 +1554,18 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_statementsAndMethods() {
+  public void writeClassDefinition_commentsStatementsAndMethods() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("Class to configure an instance of {@link LibraryServiceStub}.")
+            .addParagraph("The default instance has everything set to sensible defaults:")
+            .addUnorderedList(
+                Arrays.asList(
+                    "The default service address (library-example.googleapis.com) and default port (1234) are used.",
+                    "Credentials are acquired automatically through Application Default Credentials.",
+                    "Retries are configured for idempotent methods but not for non-idempotent methods."))
+            .build();
     List<Reference> subGenerics =
         Arrays.asList(
             ConcreteReference.withClazz(String.class),
@@ -1623,6 +1634,10 @@ public class JavaWriterVisitorTest {
         ClassDefinition.builder()
             .setFileHeader(createFileHeader())
             .setPackageString("com.google.example.library.v1.stub")
+            .setHeaderCommentStatements(
+                Arrays.asList(
+                    CommentStatement.withComment(lineComment),
+                    CommentStatement.withComment(javaDocComment)))
             .setName("LibraryServiceStub")
             .setScope(ScopeNode.PUBLIC)
             .setStatements(statements)
@@ -1631,10 +1646,9 @@ public class JavaWriterVisitorTest {
             .build();
 
     classDef.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
+    String expected =
         String.format(
-            createLines(24),
+            createLines(37),
             "// Apache License\n\n",
             "package com.google.example.library.v1.stub;\n",
             "\n",
@@ -1643,6 +1657,19 @@ public class JavaWriterVisitorTest {
             "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import java.util.Map;\n",
             "\n",
+            "// AUTO-GENERATED DOCUMENTATION AND CLASS\n",
+            "/**\n",
+            " * Class to configure an instance of {{@literal @}link LibraryServiceStub}.\n",
+            " *\n",
+            " * <p>The default instance has everything set to sensible defaults:\n",
+            " *\n",
+            " * <ul>\n",
+            " *   <li>The default service address (library-example.googleapis.com) and default port (1234) are\n",
+            " *       used.\n",
+            " *   <li>Credentials are acquired automatically through Application Default Credentials.\n",
+            " *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.\n",
+            " * </ul>\n",
+            " */\n",
             "public class LibraryServiceStub {\n",
             "  private AssignmentExpr x;\n",
             "  protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n\n",
@@ -1658,7 +1685,8 @@ public class JavaWriterVisitorTest {
             "      return true;\n",
             "    }\n",
             "  }\n",
-            "}\n"));
+            "}\n");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test

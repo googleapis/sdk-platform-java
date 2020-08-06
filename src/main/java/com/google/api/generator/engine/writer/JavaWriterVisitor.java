@@ -637,13 +637,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       buffer.append(importWriterVisitor.write());
     }
-
+    // Header comments, if any.
+    statements(classDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(classDefinition.annotations());
-
-    // Comments, if any.
-    // TODO(xiaozhenliu): Uncomment / update the lines below.
-    // statements(classDefinition.comments());
 
     classDefinition.scope().accept(this);
     space();
