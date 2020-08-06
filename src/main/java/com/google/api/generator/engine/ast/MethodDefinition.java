@@ -34,7 +34,6 @@ public abstract class MethodDefinition implements AstNode {
   // Required.
   public abstract IdentifierNode methodIdentifier();
 
-  @Nullable
   public abstract ImmutableList<CommentStatement> headerCommentStatements();
 
   public abstract ImmutableList<AnnotationNode> annotations();
