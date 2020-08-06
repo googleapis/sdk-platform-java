@@ -16,17 +16,21 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
-public abstract class Field {
+public abstract class MethodArgument {
   public abstract String name();
 
   public abstract TypeNode type();
 
-  public abstract boolean isRepeated();
+  // Records the path of nested types in descending order, excluding type() (which would have
+  // appeared as the last element).
+  public abstract ImmutableList<TypeNode> nestedTypes();
 
   public static Builder builder() {
-    return new AutoValue_Field.Builder().setIsRepeated(false);
+    return new AutoValue_MethodArgument.Builder().setNestedTypes(ImmutableList.of());
   }
 
   @AutoValue.Builder
@@ -35,8 +39,8 @@ public abstract class Field {
 
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setIsRepeated(boolean isRepeated);
+    public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
 
-    public abstract Field build();
+    public abstract MethodArgument build();
   }
 }

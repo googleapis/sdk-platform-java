@@ -42,8 +42,9 @@ public abstract class Method {
   @Nullable
   public abstract LongrunningOperation lro();
 
-  // Example from Expand in echo.proto: [["content", "error"], ["content", "error", "info"]].
-  public abstract ImmutableList<List<String>> methodSignatures();
+  // Example from Expand in echo.proto: Thet TypeNodes that map to
+  // [["content", "error"], ["content", "error", "info"]].
+  public abstract ImmutableList<List<MethodArgument>> methodSignatures();
 
   public boolean hasLro() {
     return lro() != null;
@@ -83,7 +84,7 @@ public abstract class Method {
 
     public abstract Builder setLro(LongrunningOperation lro);
 
-    public abstract Builder setMethodSignatures(List<List<String>> methodSignatures);
+    public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
 
     public abstract Builder setIsPaged(boolean isPaged);
 
