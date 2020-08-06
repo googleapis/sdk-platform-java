@@ -623,6 +623,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ClassDefinition classDefinition) {
     if (!classDefinition.isNested()) {
+      // classDefinition.fileHeader().accept(this);
       importWriterVisitor.initialize(
           classDefinition.packageString(), classDefinition.classIdentifier().name());
       buffer.append(String.format("package %s;", classDefinition.packageString()));
