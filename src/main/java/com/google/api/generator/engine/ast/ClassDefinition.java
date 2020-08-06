@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ClassDefinition implements AstNode {
-  // Required for outer classes
+  // Required for outer classes.
   @Nullable
   public abstract ImmutableList<CommentStatement> fileHeader();
   // Required.
@@ -127,7 +127,7 @@ public abstract class ClassDefinition implements AstNode {
 
       ClassDefinition classDef = autoBuild();
 
-      // Only nested classes can forego having a package or file header.
+      // Only nested classes can forego having a package and file header.
       if (!classDef.isNested()) {
         Preconditions.checkNotNull(classDef.fileHeader(), "Outer classes must have a file header.");
         Preconditions.checkNotNull(

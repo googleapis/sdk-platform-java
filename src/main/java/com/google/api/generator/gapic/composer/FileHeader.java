@@ -17,16 +17,13 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileHeader {
-  private static final List<CommentStatement> APACHE_LICENSE = create();
+  public static final List<CommentStatement> APACHE_LICENSE = createApacheLicense();
 
-  public static List<CommentStatement> createApacheLicense() {
-    return APACHE_LICENSE;
-  }
-
-  private static List<CommentStatement> create() {
+  private static List<CommentStatement> createApacheLicense() {
     String[] fileHeadeStrings = {
       "Copyright 2020 Google LLC",
       "",
@@ -43,10 +40,12 @@ public class FileHeader {
       "limitations under the License."
     };
 
-    List<CommentStatement> fileHeader = new ArrayList<>();
-    for (String s : fileHeadeStrings) {
-      fileHeader.add(CommentStatement.withComment(LineComment.withComment(s)));
-    }
-    return fileHeader;
+    List<CommentStatement> apacheFileHeader = new ArrayList<>();
+    Arrays.stream(fileHeadeStrings)
+        .forEach(
+            s -> {
+              apacheFileHeader.add(CommentStatement.withComment(LineComment.withComment(s)));
+            });
+    return apacheFileHeader;
   }
 }
