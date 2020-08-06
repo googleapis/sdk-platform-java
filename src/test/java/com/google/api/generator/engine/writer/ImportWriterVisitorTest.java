@@ -87,7 +87,6 @@ public class ImportWriterVisitorTest {
             .setArguments(Arrays.asList(fileExpr))
             .build();
     newObjectExpr.accept(writerVisitor);
-    System.out.println(writerVisitor.write());
     assertEquals(
         writerVisitor.write(),
         String.format(

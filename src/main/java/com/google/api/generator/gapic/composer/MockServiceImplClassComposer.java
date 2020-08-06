@@ -98,7 +98,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(FileHeader.create())
+            .setFileHeader(FileHeader.createApacheLicense())
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)

@@ -50,7 +50,6 @@ public class MockServiceImplClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    System.out.println(visitor.write());
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
   }
 

@@ -20,7 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHeader {
-  public static List<CommentStatement> create() {
+  private static final List<CommentStatement> APACHE_LICENSE = create();
+
+  public static List<CommentStatement> createApacheLicense() {
+      return APACHE_LICENSE;
+  }
+
+  private static List<CommentStatement> create() {
     String[] fileHeadeStrings = {
       "Copyright 2020 Google LLC",
       "",

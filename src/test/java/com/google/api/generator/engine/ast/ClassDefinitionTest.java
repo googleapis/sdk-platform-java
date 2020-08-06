@@ -21,6 +21,7 @@ import java.util.List;
 import org.junit.Test;
 
 public class ClassDefinitionTest {
+
   @Test
   public void validClassDefinition_basicWithComments() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
