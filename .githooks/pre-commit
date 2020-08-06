@@ -76,6 +76,19 @@ if [ -x /usr/lib/git-core/google_hook ]; then
   /usr/lib/git-core/google_hook pre-commit "$@"
 fi
 
+# Check Java format.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Running Java linter..."
+  bazel build //:google_java_format_verification
+  FORMAT_STATUS=$?
+  if [ $FORMAT_STATUS != 0 ]
+  then
+    echo_error "Linting failed." "Please run :google_java_format and try again."
+    exit 1
+  fi
+fi
+
 # Check that everything builds, but only if there are Java or Bazel changes.
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
 then
@@ -97,19 +110,6 @@ then
   if [ $TEST_STATUS != 0 ]
   then
     echo_error "Tests failed." "Please fix them and try again."
-    exit 1
-  fi
-fi
-
-# Check Java format.
-if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
-then
-  echo_status "Running Java linter..."
-  bazel build //:google_java_format_verification
-  FORMAT_STATUS=$?
-  if [ $FORMAT_STATUS != 0 ]
-  then
-    echo_error "Linting failed." "Please run :google_java_format and try again."
     exit 1
   fi
 fi
