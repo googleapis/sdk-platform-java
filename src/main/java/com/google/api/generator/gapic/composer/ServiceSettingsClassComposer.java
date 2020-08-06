@@ -91,6 +91,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setFileHeader(FileHeader.create())
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)

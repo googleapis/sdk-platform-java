@@ -64,6 +64,7 @@ public class ServiceStubClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setFileHeader(FileHeader.create())
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
             .setIsAbstract(true)

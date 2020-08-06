@@ -85,6 +85,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setFileHeader(FileHeader.create())
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
             .setImplementsTypes(createClassImplements(types))

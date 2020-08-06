@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -623,7 +624,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ClassDefinition classDefinition) {
     if (!classDefinition.isNested()) {
-      // classDefinition.fileHeader().accept(this);
+      statements(classDefinition.fileHeader().stream().collect(Collectors.toList()));
+      newline();
       importWriterVisitor.initialize(
           classDefinition.packageString(), classDefinition.classIdentifier().name());
       buffer.append(String.format("package %s;", classDefinition.packageString()));
