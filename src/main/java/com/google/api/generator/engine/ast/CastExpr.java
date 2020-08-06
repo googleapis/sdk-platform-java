@@ -56,12 +56,13 @@ public abstract class CastExpr implements Expr {
             !(castType.equals(TypeNode.BOOLEAN) ^ exprType.equals(TypeNode.BOOLEAN)),
             "Numeric and boolean types are not inter-castable");
       } else {
-        boolean exprType_referenceOrNull =
+        boolean isExprTypeReferenceOrNull =
             exprType.equals(TypeNode.NULL) || TypeNode.isReferenceType(exprType);
-        boolean validReferenceTypeCast =
-            TypeNode.isReferenceType(castType) && exprType_referenceOrNull;
+        boolean isValidReferenceTypeCast =
+            TypeNode.isReferenceType(castType) && isExprTypeReferenceOrNull;
+        boolean isValidPrimitiveTypeCast = castType.equals(exprType);
         Preconditions.checkState(
-            castType.equals(exprType) || validReferenceTypeCast,
+            isValidPrimitiveTypeCast || isValidReferenceTypeCast,
             "Boxed type and primitive type are inter-castable, otherwise reference types can only be casted to reference types or null type.");
       }
       return castExpr;
