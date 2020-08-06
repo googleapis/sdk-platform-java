@@ -1794,7 +1794,7 @@ public class JavaWriterVisitorTest {
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
   }
-  
+
   // Create a simple line comment to stand for the Apache License header.
   private static List<CommentStatement> createFileHeader() {
     return Arrays.asList(CommentStatement.withComment(LineComment.withComment("Apache License")));
