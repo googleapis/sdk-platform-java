@@ -375,9 +375,8 @@ public class ClassDefinitionTest {
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
         .build();
   }
-
+  // Create a simple line comment to stand for the Apache License header.
   private static List<CommentStatement> createFileHeader() {
-    LineComment lineComment = LineComment.withComment("Apache License");
-    return Arrays.asList(CommentStatement.withComment(lineComment));
+    return Arrays.asList(CommentStatement.withComment(LineComment.withComment("Apache License")));
   }
 }
