@@ -670,6 +670,6 @@ public class MethodDefinitionTest {
             .addComment(
                 "This is protected so that it is easy to make a subclass, but otherwise, the static factory methods should be preferred.")
             .build();
-    return new ArrayList<>(Arrays.asList(CommentStatement.withComment(javaDocComment)));
+    return Arrays.asList(CommentStatement.withComment(javaDocComment));
   }
 }
