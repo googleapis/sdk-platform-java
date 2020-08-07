@@ -19,12 +19,16 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 // TODO(miraleung): Add tests for this class. Currently exercised in integration tests.
 public class MethodSignatureParser {
@@ -34,8 +38,11 @@ public class MethodSignatureParser {
   /** Parses a list of method signature annotations out of an RPC. */
   public static List<List<MethodArgument>> parseMethodSignatures(
       MethodDescriptor methodDescriptor,
+      String servicePackage,
       TypeNode methodInputType,
-      Map<String, Message> messageTypes) {
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     List<String> stringSigs =
         methodDescriptor.getOptions().getExtension(ClientProto.methodSignature);
 
@@ -44,6 +51,7 @@ public class MethodSignatureParser {
       return signatures;
     }
 
+    Map<String, ResourceName> patternsToResourceNames = createPatternResourceNameMap(resourceNames);
     String methodInputTypeName = methodInputType.reference().name();
     Message inputMessage = messageTypes.get(methodInputTypeName);
 
@@ -54,7 +62,15 @@ public class MethodSignatureParser {
       List<MethodArgument> arguments = new ArrayList<>();
       for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
         List<TypeNode> argumentTypePath =
-            new ArrayList<>(parseTypeFromArgumentName(argumentName, inputMessage, messageTypes));
+            new ArrayList<>(
+                parseTypeFromArgumentName(
+                    argumentName,
+                    servicePackage,
+                    inputMessage,
+                    messageTypes,
+                    resourceNames,
+                    patternsToResourceNames,
+                    outputArgResourceNames));
 
         int dotLastIndex = argumentName.lastIndexOf(DOT);
         String actualArgumentName =
@@ -77,14 +93,32 @@ public class MethodSignatureParser {
   }
 
   private static List<TypeNode> parseTypeFromArgumentName(
-      String argumentName, Message inputMessage, Map<String, Message> messageTypes) {
-    return parseTypeFromArgumentName(argumentName, inputMessage, messageTypes, new ArrayList<>());
+      String argumentName,
+      String servicePackage,
+      Message inputMessage,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Map<String, ResourceName> patternsToResourceNames,
+      Set<ResourceName> outputArgResourceNames) {
+    return parseTypeFromArgumentName(
+        argumentName,
+        servicePackage,
+        inputMessage,
+        messageTypes,
+        resourceNames,
+        patternsToResourceNames,
+        outputArgResourceNames,
+        new ArrayList<>());
   }
 
   private static List<TypeNode> parseTypeFromArgumentName(
       String argumentName,
+      String servicePackage,
       Message inputMessage,
       Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Map<String, ResourceName> patternsToResourceNames,
+      Set<ResourceName> outputArgResourceNames,
       List<TypeNode> typeAcc) {
     int dotIndex = argumentName.indexOf(DOT);
     // TODO(miraleung): Fake out resource names here.
@@ -103,6 +137,17 @@ public class MethodSignatureParser {
 
     // Must be a sub-message for a type's subfield to be valid.
     Field firstField = inputMessage.fieldMap().get(firstFieldName);
+    if (firstField.hasResourceReference()) {
+      List<ResourceName> resourceNameArgs =
+          ResourceReferenceParser.parseResourceNames(
+              firstField.resourceReference(),
+              servicePackage,
+              resourceNames,
+              patternsToResourceNames);
+      outputArgResourceNames.addAll(resourceNameArgs);
+      return resourceNameArgs.stream().map(r -> r.type()).collect(Collectors.toList());
+    }
+
     Preconditions.checkState(
         !firstField.isRepeated(),
         String.format("Cannot descend into repeated field %s", firstField.name()));
@@ -122,6 +167,24 @@ public class MethodSignatureParser {
     List<TypeNode> newAcc = new ArrayList<>(typeAcc);
     newAcc.add(firstFieldType);
     return parseTypeFromArgumentName(
-        remainingArgumentName, firstFieldMessage, messageTypes, newAcc);
+        remainingArgumentName,
+        servicePackage,
+        firstFieldMessage,
+        messageTypes,
+        resourceNames,
+        patternsToResourceNames,
+        outputArgResourceNames,
+        newAcc);
+  }
+
+  private static Map<String, ResourceName> createPatternResourceNameMap(
+      Map<String, ResourceName> resourceNames) {
+    Map<String, ResourceName> patternsToResourceNames = new HashMap<>();
+    for (ResourceName resourceName : resourceNames.values()) {
+      for (String pattern : resourceName.patterns()) {
+        patternsToResourceNames.put(pattern, resourceName);
+      }
+    }
+    return patternsToResourceNames;
   }
 }

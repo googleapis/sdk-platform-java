@@ -47,8 +47,10 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Parser {
@@ -65,16 +67,22 @@ public class Parser {
     Map<String, Message> messages = parseMessages(request);
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
-    List<Service> services = parseServices(request, messages);
+    Set<ResourceName> outputArgResourceNames = new HashSet<>();
+    List<Service> services =
+        parseServices(request, messages, resourceNames, outputArgResourceNames);
     return GapicContext.builder()
         .setServices(services)
         .setMessages(messages)
         .setResourceNames(resourceNames)
+        .setHelperResourceNames(outputArgResourceNames)
         .build();
   }
 
   public static List<Service> parseServices(
-      CodeGeneratorRequest request, Map<String, Message> messageTypes) {
+      CodeGeneratorRequest request,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -84,14 +92,18 @@ public class Parser {
               "Missing file descriptor for [%s]",
               fileToGenerate);
 
-      services.addAll(parseService(fileDescriptor, messageTypes));
+      services.addAll(
+          parseService(fileDescriptor, messageTypes, resourceNames, outputArgResourceNames));
     }
 
     return services;
   }
 
   public static List<Service> parseService(
-      FileDescriptor fileDescriptor, Map<String, Message> messageTypes) {
+      FileDescriptor fileDescriptor,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
     return fileDescriptor.getServices().stream()
         .map(
@@ -100,7 +112,9 @@ public class Parser {
                     .setName(s.getName())
                     .setPakkage(pakkage)
                     .setProtoPakkage(fileDescriptor.getPackage())
-                    .setMethods(parseMethods(s, messageTypes))
+                    .setMethods(
+                        parseMethods(
+                            s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
                     .build())
         .collect(Collectors.toList());
   }
@@ -168,14 +182,23 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-      resourceNames.putAll(ResourceNameParser.parseResourceNames(fileDescriptor));
+      resourceNames.putAll(parseResourceNames(fileDescriptor));
     }
     return resourceNames;
   }
 
+  // Convenience wrapper for package-external unit tests.
+  public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
+    return ResourceNameParser.parseResourceNames(fileDescriptor);
+  }
+
   @VisibleForTesting
   static List<Method> parseMethods(
-      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
+      ServiceDescriptor serviceDescriptor,
+      String servicePackage,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     return serviceDescriptor.getMethods().stream()
         .map(
             md -> {
@@ -187,7 +210,13 @@ public class Parser {
                   .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
                   .setLro(parseLro(md, messageTypes))
                   .setMethodSignatures(
-                      MethodSignatureParser.parseMethodSignatures(md, inputType, messageTypes))
+                      MethodSignatureParser.parseMethodSignatures(
+                          md,
+                          servicePackage,
+                          inputType,
+                          messageTypes,
+                          resourceNames,
+                          outputArgResourceNames))
                   .setIsPaged(parseIsPaged(md, messageTypes))
                   .build();
             })

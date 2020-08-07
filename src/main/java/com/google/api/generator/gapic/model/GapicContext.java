@@ -17,8 +17,10 @@ package com.google.api.generator.gapic.model;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @AutoValue
 public abstract class GapicContext {
@@ -29,6 +31,8 @@ public abstract class GapicContext {
   public abstract ImmutableMap<String, ResourceName> resourceNames();
 
   public abstract ImmutableList<Service> services();
+
+  public abstract ImmutableSet<ResourceName> helperResourceNames();
 
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder();
@@ -41,6 +45,8 @@ public abstract class GapicContext {
     public abstract Builder setResourceNames(Map<String, ResourceName> resourceNames);
 
     public abstract Builder setServices(List<Service> services);
+
+    public abstract Builder setHelperResourceNames(Set<ResourceName> helperResourceNames);
 
     public abstract GapicContext build();
   }
