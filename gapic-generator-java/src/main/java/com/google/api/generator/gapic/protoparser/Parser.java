@@ -19,6 +19,7 @@ import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -55,6 +56,21 @@ public class Parser {
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
+  }
+
+  public static GapicContext parse(CodeGeneratorRequest request) {
+    // Keep message and resource name parsing separate for cleaner logic.
+    // While this takes an extra pass through the protobufs, the extra time is relatively trivial
+    // and is worth the larger reduced maintenance cost.
+    Map<String, Message> messages = parseMessages(request);
+    Map<String, ResourceName> resourceNames = parseResourceNames(request);
+    messages = updateResourceNamesInMessages(messages, resourceNames.values());
+    List<Service> services = parseServices(request, messages);
+    return GapicContext.builder()
+        .setServices(services)
+        .setMessages(messages)
+        .setResourceNames(resourceNames)
+        .build();
   }
 
   public static List<Service> parseServices(
