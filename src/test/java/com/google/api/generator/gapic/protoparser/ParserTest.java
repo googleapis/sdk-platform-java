@@ -240,24 +240,4 @@ public class ParserTest {
   private static Reference createStatusReference() {
     return VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build();
   }
-
-  @Test
-  public void parseMessagesAndResourceNames_update() {
-    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
-    Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
-
-    Message documentMessage = messageTypes.get("Document");
-    assertFalse(documentMessage.hasResource());
-    Message folderMessage = messageTypes.get("Folder");
-    assertFalse(folderMessage.hasResource());
-
-    Map<String, ResourceName> resourceNames =
-        ResourceNameParser.parseResourceNames(lockerServiceFileDescriptor);
-    messageTypes = Parser.updateResourceNamesInMessages(messageTypes, resourceNames.values());
-
-    documentMessage = messageTypes.get("Document");
-    assertTrue(documentMessage.hasResource());
-    folderMessage = messageTypes.get("Folder");
-    assertFalse(folderMessage.hasResource());
-  }
 }
