@@ -21,6 +21,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Message {
@@ -34,6 +35,17 @@ public abstract class Message {
 
   public abstract ImmutableMap<String, Field> fieldMap();
 
+  // The resource name annotation (and definition) in this message. Optional.
+  // Expected dto be empty for messages that have no such definition.
+  @Nullable
+  public abstract ResourceName resource();
+
+  public abstract Builder toBuilder();
+
+  public boolean hasResource() {
+    return resource() != null;
+  }
+
   public static Builder builder() {
     return new AutoValue_Message.Builder();
   }
@@ -45,6 +57,8 @@ public abstract class Message {
     public abstract Builder setFields(List<Field> fields);
 
     public abstract Builder setType(TypeNode type);
+
+    public abstract Builder setResource(ResourceName resource);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 

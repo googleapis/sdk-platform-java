@@ -58,6 +58,8 @@ public class ResourceNameParserTest {
     assertEquals("billing_account", resourceName.variableName());
     assertEquals("cloudbilling.googleapis.com/BillingAccount", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+    assertFalse(resourceName.hasParentMessageName());
+    assertThat(resourceName.parentMessageName()).isNull();
   }
 
   @Test
@@ -74,6 +76,7 @@ public class ResourceNameParserTest {
     assertEquals("folder", resourceName.variableName());
     assertEquals("cloudresourcemanager.googleapis.com/Folder", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+    assertFalse(resourceName.hasParentMessageName());
   }
 
   @Test
@@ -88,6 +91,7 @@ public class ResourceNameParserTest {
     assertEquals(ResourceNameConstants.DELETED_TOPIC_LITERAL, resourceName.variableName());
     assertEquals("pubsub.googleapis.com/Topic", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+    assertFalse(resourceName.hasParentMessageName());
   }
 
   @Test
@@ -105,6 +109,9 @@ public class ResourceNameParserTest {
     assertEquals("document", resourceName.variableName());
     assertEquals("testgapic.googleapis.com/Document", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+
+    assertTrue(resourceName.hasParentMessageName());
+    assertEquals("Document", resourceName.parentMessageName());
   }
 
   @Test
