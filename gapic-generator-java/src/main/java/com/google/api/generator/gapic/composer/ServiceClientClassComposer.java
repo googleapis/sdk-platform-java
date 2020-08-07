@@ -32,9 +32,11 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -50,6 +52,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
 import com.google.rpc.Status;
@@ -305,15 +308,37 @@ public class ServiceClientClassComposer implements ClassComposer {
         TypeNode argumentType = argument.type();
         String setterMethodName = String.format("set%s", JavaStyle.toUpperCamelCase(argumentName));
 
-        VariableExpr argVar =
-            VariableExpr.builder()
-                .setVariable(Variable.builder().setName(argumentName).setType(argumentType).build())
-                .build();
+        Expr argVarExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setName(argumentName).setType(argumentType).build());
+
+        if (argument.isResourceNameHelper()) {
+          MethodInvocationExpr isNullCheckExpr =
+              MethodInvocationExpr.builder()
+                  .setStaticReferenceType(types.get("Strings"))
+                  .setMethodName("isNullOrEmpty")
+                  .setArguments(Arrays.asList(argVarExpr))
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build();
+          Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+          MethodInvocationExpr toStringExpr =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(argVarExpr)
+                  .setMethodName("toString")
+                  .setReturnType(TypeNode.STRING)
+                  .build();
+          argVarExpr =
+              TernaryExpr.builder()
+                  .setConditionExpr(isNullCheckExpr)
+                  .setThenExpr(nullExpr)
+                  .setElseExpr(toStringExpr)
+                  .build();
+        }
 
         newBuilderExpr =
             MethodInvocationExpr.builder()
                 .setMethodName(setterMethodName)
-                .setArguments(Arrays.asList(argVar))
+                .setArguments(Arrays.asList(argVarExpr))
                 .setExprReferenceExpr(newBuilderExpr)
                 .build();
       }
@@ -612,6 +637,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             OperationCallable.class,
             ServerStreamingCallable.class,
             Status.class,
+            Strings.class,
             TimeUnit.class,
             UnaryCallable.class);
     return concreteClazzes.stream()
