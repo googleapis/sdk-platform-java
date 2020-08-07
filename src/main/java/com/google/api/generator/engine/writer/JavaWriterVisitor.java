@@ -34,6 +34,8 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.OperationExpr;
+import com.google.api.generator.engine.ast.OperatorNode;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -143,6 +145,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       buffer.append(String.format("(\"%s\")", annotation.description()));
     }
     newline();
+  }
+
+  @Override
+  public void visit(OperatorNode operator) {
+    buffer.append(operator.toString());
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -336,6 +343,32 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     enumRefExpr.type().accept(this);
     buffer.append(DOT);
     enumRefExpr.identifier().accept(this);
+  }
+
+  @Override
+  public void visit(OperationExpr operationExpr) {
+    OperatorNode operatorNode = operationExpr.operator();
+    if (OperatorNode.isUnaryOperator(operatorNode)) {
+      if (OperatorNode.isRightUnaryOperator(operatorNode)) {
+        operationExpr.expressions().get(0).accept(this);
+        operatorNode.accept(this);
+      } else {
+        operatorNode.accept(this);
+        operationExpr.expressions().get(0).accept(this);
+      }
+    } else {
+      IntStream.range(0, operationExpr.expressions().size())
+          .forEach(
+              i -> {
+                operationExpr.expressions().get(i).accept(this);
+                if ( i < operationExpr.expressions().size() - 1) {
+                  space();
+                  operationExpr.operator().accept(this);
+                  space();
+                }
+              }
+          );
+    }
   }
 
   /** =============================== STATEMENTS =============================== */

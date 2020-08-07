@@ -38,6 +38,8 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.OperationExpr;
+import com.google.api.generator.engine.ast.OperatorNode;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -1701,6 +1703,45 @@ public class JavaWriterVisitorTest {
 
     assignmentExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("this.name = this.getName(id)");
+  }
+
+  @Test
+  public void writeOperationExpr_multipleAddition() {
+    ValueExpr valueExpr1 = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build());
+    ValueExpr valueExpr2 = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
+    ValueExpr valueExpr3 = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("7").build());
+    OperationExpr operationExpr = OperationExpr.builder().setOperator(OperatorNode.ADDITION).setExpressions(Arrays.asList(valueExpr1, valueExpr2,valueExpr3)).build();
+    operationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("3 + 5 + 7");
+  }
+
+  @Test
+  public void writeOperationExpr_logicalNotAndLogicalAnd() {
+    MethodInvocationExpr methodInvocationExpr = MethodInvocationExpr.builder().setMethodName("isEmpty").setReturnType(TypeNode.BOOLEAN).build();
+    OperationExpr logicalNotOperationExpr = OperationExpr.builder().setOperator(OperatorNode.LOGICAL_NOT).setExpressions(Arrays.asList(methodInvocationExpr)).build();
+    VariableExpr variableExpr = VariableExpr.withVariable(Variable.builder().setType(TypeNode.BOOLEAN).setName("isGood").build());
+    OperationExpr logicalAndOperationExpr = OperationExpr.builder().setOperator(OperatorNode.LOGICAL_AND).setExpressions(Arrays.asList(logicalNotOperationExpr, variableExpr)).build();
+
+    logicalAndOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("!isEmpty() && isGood");
+  }
+
+  @Test
+  public void writeOperationExpr_rightIncrement() {
+    VariableExpr variableExpr = VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());
+    OperationExpr rightIncrementOperationExpr = OperationExpr.builder().setOperator(OperatorNode.RIGHT_INCREMENT).setExpressions(Arrays.asList(variableExpr)).build();
+    rightIncrementOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("i++");
+  }
+
+  @Test
+  public void writeOperationExpr_leftShift() {
+    ValueExpr valueExpr1 = ValueExpr.withValue(PrimitiveValue.builder().setValue("5").setType(TypeNode.INT).build());
+    ValueExpr valueExpr2 = ValueExpr.withValue(PrimitiveValue.builder().setValue("2").setType(TypeNode.INT).build());
+    OperationExpr leftShiftOperationExpr = OperationExpr.builder().setOperator(OperatorNode.LEFT_SHIFT).setExpressions(Arrays.asList(valueExpr1, valueExpr2)).build();
+
+    leftShiftOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("5 << 2");
   }
 
   private static String createLines(int numLines) {

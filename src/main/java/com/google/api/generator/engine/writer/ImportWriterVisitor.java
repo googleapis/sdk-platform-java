@@ -34,6 +34,8 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.OperationExpr;
+import com.google.api.generator.engine.ast.OperatorNode;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -112,6 +114,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     annotation.type().accept(this);
   }
 
+  @Override
+  public void visit(OperatorNode operator) {
+    // Nothing to do.
+  }
+
   /** =============================== EXPRESSIONS =============================== */
   @Override
   public void visit(ValueExpr valueExpr) {
@@ -184,6 +191,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(EnumRefExpr enumRefExpr) {
     enumRefExpr.type().accept(this);
+  }
+
+  @Override
+  public void visit(OperationExpr operationExpr) {
+    operationExpr.type().accept(this);
+    expressions(operationExpr.expressions());
   }
 
   /** =============================== STATEMENTS =============================== */

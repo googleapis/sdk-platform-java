@@ -24,6 +24,8 @@ public interface AstNodeVisitor {
 
   public void visit(AnnotationNode annotation);
 
+  public void visit(OperatorNode operator);
+
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
@@ -46,6 +48,8 @@ public interface AstNodeVisitor {
   public void visit(NewObjectExpr newObjectExpr);
 
   public void visit(EnumRefExpr enumRefExpr);
+
+  public void visit(OperationExpr operationExpr);
 
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);
