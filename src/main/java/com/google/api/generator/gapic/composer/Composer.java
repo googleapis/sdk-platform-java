@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
@@ -26,11 +27,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 public class Composer {
-  public static List<GapicClass> composeServiceClasses(
-      @Nonnull List<Service> services, @Nonnull Map<String, Message> messageTypes) {
+  public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    for (Service service : services) {
-      clazzes.addAll(generateServiceClasses(service, messageTypes));
+    for (Service service : context.services()) {
+      clazzes.addAll(generateServiceClasses(service, context.messages()));
     }
     return clazzes;
   }

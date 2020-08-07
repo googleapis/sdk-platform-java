@@ -16,21 +16,18 @@ package com.google.api.generator.gapic;
 
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.util.List;
-import java.util.Map;
 
 public class Generator {
   public static CodeGeneratorResponse generateGapic(
       CodeGeneratorRequest request, String outputFilePath) {
-    Map<String, Message> messageTypes = Parser.parseMessages(request);
-    List<Service> services = Parser.parseServices(request, messageTypes);
-    List<GapicClass> clazzes = Composer.composeServiceClasses(services, messageTypes);
+    GapicContext context = Parser.parse(request);
+    List<GapicClass> clazzes = Composer.composeServiceClasses(context);
     CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilePath);
     return response;
   }
