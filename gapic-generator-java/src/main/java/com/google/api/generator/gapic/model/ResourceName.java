@@ -16,6 +16,8 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
@@ -45,6 +47,8 @@ public abstract class ResourceName {
   // The Java TypeNode of the resource name helper class to generate.
   public abstract TypeNode type();
 
+  public abstract boolean isOnlyWildcard();
+
   // The message in which this resource was defined. Optional.
   // This is expected to be empty for file-level definitions.
   @Nullable
@@ -55,7 +59,27 @@ public abstract class ResourceName {
   }
 
   public static Builder builder() {
-    return new AutoValue_ResourceName.Builder();
+
+    return new AutoValue_ResourceName.Builder().setIsOnlyWildcard(false);
+  }
+
+  public static ResourceName createWildcard(String resourceTypeString, String pakkage) {
+    String placeholderVarName =
+        JavaStyle.toLowerCamelCase(
+            resourceTypeString.substring(resourceTypeString.indexOf(SLASH) + 1));
+    return builder()
+        .setVariableName(placeholderVarName)
+        .setPakkage(pakkage)
+        .setResourceTypeString(resourceTypeString)
+        .setPatterns(ImmutableList.of(ResourceNameConstants.WILDCARD_PATTERN))
+        .setIsOnlyWildcard(true)
+        .setType(
+            TypeNode.withReference(
+                VaporReference.builder()
+                    .setName("ResourceName")
+                    .setPakkage("com.google.api.resourcenames")
+                    .build()))
+        .build();
   }
 
   @Override
@@ -98,22 +122,32 @@ public abstract class ResourceName {
 
     public abstract Builder setParentMessageName(String parentMessageName);
 
-    // Private setter.
+    // Private setters.
     abstract Builder setType(TypeNode type);
+
+    abstract Builder setIsOnlyWildcard(boolean isOnlyWildcard);
 
     // Private accessors.
     abstract String pakkage();
 
     abstract String resourceTypeString();
 
+    abstract boolean isOnlyWildcard();
+
     // Private.
     abstract ResourceName autoBuild();
 
     public ResourceName build() {
-      String typeName = resourceTypeString().substring(resourceTypeString().lastIndexOf(SLASH) + 1);
-      setType(
-          TypeNode.withReference(
-              VaporReference.builder().setName(typeName).setPakkage(pakkage()).build()));
+      if (!isOnlyWildcard()) {
+        String typeName =
+            resourceTypeString().substring(resourceTypeString().lastIndexOf(SLASH) + 1);
+        setType(
+            TypeNode.withReference(
+                VaporReference.builder()
+                    .setName(String.format("%sName", typeName))
+                    .setPakkage(pakkage())
+                    .build()));
+      }
       return autoBuild();
     }
   }

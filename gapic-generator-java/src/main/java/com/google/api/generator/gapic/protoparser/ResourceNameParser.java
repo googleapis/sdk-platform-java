@@ -116,7 +116,7 @@ public class ResourceNameParser {
             protoResource.getType()));
 
     if (patterns.size() == 1 && patterns.get(0).equals(ResourceNameConstants.WILDCARD_PATTERN)) {
-      return Optional.empty();
+      return Optional.of(ResourceName.createWildcard(protoResource.getType(), pakkage));
     }
 
     // Assuming that both patterns end with the same variable name.
