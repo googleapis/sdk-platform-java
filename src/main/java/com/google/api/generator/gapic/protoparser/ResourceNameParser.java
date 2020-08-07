@@ -107,6 +107,7 @@ public class ResourceNameParser {
 
   private static Optional<ResourceName> createResourceName(
       ResourceDescriptor protoResource, String pakkage, String parentMessageName) {
+
     // We may need to modify this list.
     List<String> patterns = new ArrayList<>(protoResource.getPatternList());
     Preconditions.checkState(
