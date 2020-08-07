@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.protoparser;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
@@ -24,10 +25,12 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -160,5 +163,25 @@ public class ParserTest {
     assertThat(signatures.get(0)).containsExactly("content");
     assertThat(signatures.get(1)).containsExactly("error");
     assertThat(signatures.get(2)).containsExactly("content", "severity");
+  }
+
+  @Test
+  public void parseMessagesAndResourceNames_update() {
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
+
+    Message documentMessage = messageTypes.get("Document");
+    assertFalse(documentMessage.hasResource());
+    Message folderMessage = messageTypes.get("Folder");
+    assertFalse(folderMessage.hasResource());
+
+    Map<String, ResourceName> resourceNames =
+        ResourceNameParser.parseResourceNames(lockerServiceFileDescriptor);
+    messageTypes = Parser.updateResourceNamesInMessages(messageTypes, resourceNames.values());
+
+    documentMessage = messageTypes.get("Document");
+    assertTrue(documentMessage.hasResource());
+    folderMessage = messageTypes.get("Folder");
+    assertFalse(folderMessage.hasResource());
   }
 }

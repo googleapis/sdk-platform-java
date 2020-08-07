@@ -94,11 +94,20 @@ public class ResourceNameParser {
             "Message %s has a resource annotation but no \"name\" field",
             messageTypeDescriptor.getName()));
 
-    return createResourceName(messageOptions.getExtension(ResourceProto.resource), pakkage);
+    return createResourceName(
+        messageOptions.getExtension(ResourceProto.resource),
+        pakkage,
+        messageTypeDescriptor.getName());
   }
 
   private static Optional<ResourceName> createResourceName(
       ResourceDescriptor protoResource, String pakkage) {
+    return createResourceName(protoResource, pakkage, null);
+  }
+
+  private static Optional<ResourceName> createResourceName(
+      ResourceDescriptor protoResource, String pakkage, String parentMessageName) {
+
     // We may need to modify this list.
     List<String> patterns = new ArrayList<>(protoResource.getPatternList());
     Preconditions.checkState(
@@ -133,6 +142,7 @@ public class ResourceNameParser {
             .setPakkage(pakkage)
             .setResourceTypeString(protoResource.getType())
             .setPatterns(patterns)
+            .setParentMessageName(parentMessageName)
             .build());
   }
 

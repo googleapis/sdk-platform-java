@@ -38,6 +38,7 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,6 +117,27 @@ public class Parser {
                         .setName(md.getName())
                         .setFields(parseFields(md))
                         .build()));
+  }
+
+  /**
+   * Populates ResourceName objects in Message POJOs.
+   *
+   * @param messageTypes A map of the message type name (as in the protobuf) to Message POJOs.
+   * @param resourceNames A list of ResourceName POJOs.
+   * @return The updated messageTypes map.
+   */
+  public static Map<String, Message> updateResourceNamesInMessages(
+      Map<String, Message> messageTypes, Collection<ResourceName> resources) {
+    Map<String, Message> updatedMessages = new HashMap<>(messageTypes);
+    for (ResourceName resource : resources) {
+      if (!resource.hasParentMessageName()) {
+        continue;
+      }
+      String messageKey = resource.parentMessageName();
+      Message messageToUpdate = updatedMessages.get(messageKey);
+      updatedMessages.put(messageKey, messageToUpdate.toBuilder().setResource(resource).build());
+    }
+    return updatedMessages;
   }
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {

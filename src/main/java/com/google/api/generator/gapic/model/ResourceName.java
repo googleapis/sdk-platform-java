@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.model;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ResourceName {
@@ -35,6 +36,15 @@ public abstract class ResourceName {
   // A list of patterns such as projects/{project}/locations/{location}/resources/{this_resource}.
   public abstract ImmutableList<String> patterns();
 
+  // The message in which this resource was defined. Optional.
+  // This is expected to be empty for file-level definitions.
+  @Nullable
+  public abstract String parentMessageName();
+
+  public boolean hasParentMessageName() {
+    return parentMessageName() != null;
+  }
+
   public static Builder builder() {
     return new AutoValue_ResourceName.Builder();
   }
@@ -48,6 +58,8 @@ public abstract class ResourceName {
     public abstract Builder setResourceTypeString(String resourceTypeString);
 
     public abstract Builder setPatterns(List<String> patterns);
+
+    public abstract Builder setParentMessageName(String parentMessageName);
 
     public abstract ResourceName build();
   }
