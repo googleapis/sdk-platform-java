@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -228,6 +229,48 @@ public class ParserTest {
     assertTrue(documentMessage.hasResource());
     folderMessage = messageTypes.get("Folder");
     assertFalse(folderMessage.hasResource());
+  }
+
+  @Test
+  public void parseMessages_fieldsHaveResourceReferences() {
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(lockerServiceFileDescriptor);
+
+    // Child type.
+    Message message = messageTypes.get("CreateFolderRequest");
+    Field field = message.fieldMap().get("parent");
+    assertTrue(field.hasResourceReference());
+    ResourceReference resourceReference = field.resourceReference();
+    assertEquals(
+        "cloudresourcemanager.googleapis.com/Folder", resourceReference.resourceTypeString());
+    assertTrue(resourceReference.isChildType());
+
+    // Type.
+    message = messageTypes.get("GetFolderRequest");
+    field = message.fieldMap().get("name");
+    assertTrue(field.hasResourceReference());
+    resourceReference = field.resourceReference();
+    assertEquals(
+        "cloudresourcemanager.googleapis.com/Folder", resourceReference.resourceTypeString());
+    assertFalse(resourceReference.isChildType());
+
+    // Non-RPC-specific message.
+    message = messageTypes.get("Folder");
+    field = message.fieldMap().get("name");
+    assertTrue(field.hasResourceReference());
+    resourceReference = field.resourceReference();
+    assertEquals(
+        "cloudresourcemanager.googleapis.com/Folder", resourceReference.resourceTypeString());
+    assertFalse(resourceReference.isChildType());
+
+    // No explicit resource_reference annotation on the field, and the resource annotation is in the
+    // message.
+    message = messageTypes.get("Document");
+    field = message.fieldMap().get("name");
+    assertTrue(field.hasResourceReference());
+    resourceReference = field.resourceReference();
+    assertEquals("testgapic.googleapis.com/Document", resourceReference.resourceTypeString());
+    assertFalse(resourceReference.isChildType());
   }
 
   private void assertMethodArgumentEquals(

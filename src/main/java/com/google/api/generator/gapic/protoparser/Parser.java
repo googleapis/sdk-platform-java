@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ResourceDescriptor;
+import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
@@ -21,16 +23,22 @@ import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
+import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.DescriptorProtos.MessageOptions;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -204,14 +212,42 @@ public class Parser {
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
     return messageDescriptor.getFields().stream()
-        .map(
-            f ->
-                Field.builder()
-                    .setName(f.getName())
-                    .setType(TypeParser.parseType(f))
-                    .setIsRepeated(f.isRepeated())
-                    .build())
+        .map(f -> parseField(f, messageDescriptor))
         .collect(Collectors.toList());
+  }
+
+  private static Field parseField(FieldDescriptor fieldDescriptor, Descriptor messageDescriptor) {
+    FieldOptions fieldOptions = fieldDescriptor.getOptions();
+    MessageOptions messageOptions = messageDescriptor.getOptions();
+    ResourceReference resourceReference = null;
+    if (fieldOptions.hasExtension(ResourceProto.resourceReference)) {
+      com.google.api.ResourceReference protoResourceReference =
+          fieldOptions.getExtension(ResourceProto.resourceReference);
+      // Assumes only one of type or child_type is set.
+      String typeString = protoResourceReference.getType();
+      String childTypeString = protoResourceReference.getChildType();
+      Preconditions.checkState(
+          !Strings.isNullOrEmpty(typeString) ^ !Strings.isNullOrEmpty(childTypeString),
+          String.format(
+              "Exactly one of type or child_type must be set for resource_reference in field %s",
+              fieldDescriptor.getName()));
+      boolean isChildType = !Strings.isNullOrEmpty(childTypeString);
+      resourceReference =
+          isChildType
+              ? ResourceReference.withChildType(childTypeString)
+              : ResourceReference.withType(typeString);
+    } else if (fieldDescriptor.getName().equals(ResourceNameConstants.NAME_FIELD_NAME)
+        && messageOptions.hasExtension(ResourceProto.resource)) {
+      ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
+      resourceReference = ResourceReference.withType(protoResource.getType());
+    }
+
+    return Field.builder()
+        .setName(fieldDescriptor.getName())
+        .setType(TypeParser.parseType(fieldDescriptor))
+        .setIsRepeated(fieldDescriptor.isRepeated())
+        .setResourceReference(resourceReference)
+        .build();
   }
 
   private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
