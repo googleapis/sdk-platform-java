@@ -21,6 +21,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +30,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public class ResourceReferenceParser {
+  private static final String EMPTY_STRING = "";
+  private static final String LEFT_BRACE = "{";
+  private static final String RIGHT_BRACE = "}";
   private static final String SLASH = "/";
 
   public static List<ResourceName> parseResourceNames(
@@ -42,7 +46,7 @@ public class ResourceReferenceParser {
         String.format(
             "No resource definition found for reference with type %s",
             resourceReference.resourceTypeString()));
-    if (!resourceReference.isChildType()) {
+    if (!resourceReference.isChildType() || resourceName.isOnlyWildcard()) {
       return Arrays.asList(resourceName);
     }
 
@@ -81,13 +85,37 @@ public class ResourceReferenceParser {
     }
 
     String[] tokens = parentPattern.split(SLASH);
-    String lastToken = tokens[tokens.length - 1];
+    int numTokens = tokens.length;
+    String lastToken = tokens[numTokens - 1];
     Set<String> variableNames = PathTemplate.create(parentPattern).vars();
     String parentVariableName = null;
+    // Try the extracting from the conventional pattern first.
+    // E.g. Profile is the parent of users/{user}/profiles/{profile}/blurbs/{blurb}.
     for (String variableName : variableNames) {
       if (lastToken.contains(variableName)) {
         parentVariableName = variableName;
       }
+    }
+
+    // TODO(miraleung): Add unit tests that exercise these edge cases.
+    // Check unconventional patterns.
+    // Assume that non-slash separators will only ever appear in the last component of a patetrn.
+    // That is, they will not appear in the parent components under consideration.
+    if (Strings.isNullOrEmpty(parentVariableName)) {
+      String lowerTypeName =
+          resourceTypeString.substring(resourceTypeString.indexOf(SLASH) + 1).toLowerCase();
+      // Check for the parent of users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}.
+      // We're curerntly at users/{user}/profile/blurbs.
+      if ((lastToken.endsWith("s") || lastToken.contains(lowerTypeName)) && numTokens > 2) {
+        // Not the singleton we're looking for, back up.
+        parentVariableName = tokens[numTokens - 2];
+      } else {
+        // Check for the parent of users/{user}/profile/blurbs/{blurb}.
+        // We're curerntly at users/{user}/profile.
+        parentVariableName = lastToken;
+      }
+      parentVariableName =
+          parentVariableName.replace(LEFT_BRACE, EMPTY_STRING).replace(RIGHT_BRACE, EMPTY_STRING);
     }
     Preconditions.checkNotNull(
         parentVariableName,

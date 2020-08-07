@@ -69,7 +69,10 @@ public class ResourceReferenceParserTest {
     assertEquals(resourceNamePackage, parentResourceName.pakkage());
     assertEquals(
         TypeNode.withReference(
-            VaporReference.builder().setName("Project").setPakkage(resourceNamePackage).build()),
+            VaporReference.builder()
+                .setName("ProjectName")
+                .setPakkage(resourceNamePackage)
+                .build()),
         parentResourceName.type());
     assertEquals(patternsToResourceNames.get(parentPattern), parentResourceName);
   }
