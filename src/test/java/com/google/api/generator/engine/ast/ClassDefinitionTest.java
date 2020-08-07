@@ -23,7 +23,7 @@ import org.junit.Test;
 public class ClassDefinitionTest {
 
   @Test
-  public void validClassDefinition_basicWithComments() {
+  public void validClassDefinition_basicWithCommentsAndHeader() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -65,7 +65,6 @@ public class ClassDefinitionTest {
   @Test
   public void validClassDefinition_withAnnotationsExtendsAndImplements() {
     ClassDefinition.builder()
-        .setFileHeader(createFileHeader())
         .setPackageString("com.google.example.library.v1.stub")
         .setName("LibraryServiceStub")
         .setScope(ScopeNode.PUBLIC)
@@ -110,7 +109,6 @@ public class ClassDefinitionTest {
     List<MethodDefinition> methods = Arrays.asList(method, method);
 
     ClassDefinition.builder()
-        .setFileHeader(createFileHeader())
         .setPackageString("com.google.example.library.v1.stub")
         .setName("LibraryServiceStub")
         .setIsFinal(true)
@@ -127,24 +125,10 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
               .setImplementsTypes(Arrays.asList(TypeNode.NULL))
-              .build();
-        });
-  }
-
-  @Test
-  public void invalidClassDefinition_outerClassMissingFileHeader() {
-    assertThrows(
-        NullPointerException.class,
-        () -> {
-          ClassDefinition.builder()
-              .setPackageString("com.google.example.library.v1.stub")
-              .setName("LibraryServiceStub")
-              .setScope(ScopeNode.PUBLIC)
               .build();
         });
   }
@@ -155,7 +139,6 @@ public class ClassDefinitionTest {
         NullPointerException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
               .build();
@@ -168,7 +151,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setIsStatic(true)
@@ -183,7 +165,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PRIVATE)
@@ -197,7 +178,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -212,7 +192,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -227,7 +206,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setIsAbstract(true)
@@ -244,7 +222,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -260,7 +237,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -290,7 +266,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -313,7 +288,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)
@@ -329,7 +303,6 @@ public class ClassDefinitionTest {
         IllegalStateException.class,
         () -> {
           ClassDefinition.builder()
-              .setFileHeader(createFileHeader())
               .setPackageString("com.google.example.library.v1.stub")
               .setName("LibraryServiceStub")
               .setScope(ScopeNode.PUBLIC)

@@ -55,21 +55,7 @@ public class ServiceSettingsClassComposerTest {
 
   // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
   private static final String EXPECTED_CLASS_STRING =
-      "// Copyright 2020 Google LLC\n"
-          + "//\n"
-          + "// Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-          + "// you may not use this file except in compliance with the License.\n"
-          + "// You may obtain a copy of the License at\n"
-          + "//\n"
-          + "//      http://www.apache.org/licenses/LICENSE-2.0\n"
-          + "//\n"
-          + "// Unless required by applicable law or agreed to in writing, software\n"
-          + "// distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-          + "// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
-          + "// See the License for the specific language governing permissions and\n"
-          + "// limitations under the License.\n"
-          + "\n"
-          + "package com.google.showcase.v1beta1;\n"
+      "package com.google.showcase.v1beta1;\n"
           + "\n"
           + "import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;\n"
           + "\n"

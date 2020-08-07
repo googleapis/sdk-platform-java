@@ -1499,7 +1499,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_basic() {
+  public void writeClassDefinition_basicWithFileHeader() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setFileHeader(createFileHeader())
@@ -1523,7 +1523,6 @@ public class JavaWriterVisitorTest {
   public void writeClassDefinition_withAnnotationsExtendsAndImplements() {
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(createFileHeader())
             .setPackageString("com.google.example.library.v1.stub")
             .setName("LibraryServiceStub")
             .setScope(ScopeNode.PUBLIC)
@@ -1543,8 +1542,7 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(6),
-            "// Apache License\n\n",
+            createLines(5),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "@Deprecated\n",
@@ -1632,7 +1630,6 @@ public class JavaWriterVisitorTest {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(createFileHeader())
             .setPackageString("com.google.example.library.v1.stub")
             .setHeaderCommentStatements(
                 Arrays.asList(
@@ -1648,8 +1645,7 @@ public class JavaWriterVisitorTest {
     classDef.accept(writerVisitor);
     String expected =
         String.format(
-            createLines(37),
-            "// Apache License\n\n",
+            createLines(36),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",

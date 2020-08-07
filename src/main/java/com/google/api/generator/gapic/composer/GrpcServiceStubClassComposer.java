@@ -135,7 +135,6 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(FileHeader.APACHE_LICENSE)
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
