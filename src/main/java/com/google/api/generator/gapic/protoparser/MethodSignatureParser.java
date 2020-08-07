@@ -20,7 +20,9 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,59 +58,89 @@ public class MethodSignatureParser {
     Message inputMessage = messageTypes.get(methodInputTypeName);
 
     // Example from Expand in echo.proto:
-    // Input: ["content,error", "content,error,info"].
-    // Output: [["content", "error"], ["content", "error", "info"]].
+    // stringSigs: ["content,error", "content,error,info"].
     for (String stringSig : stringSigs) {
-      List<MethodArgument> arguments = new ArrayList<>();
-      for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
-        List<TypeNode> argumentTypePath =
-            new ArrayList<>(
-                parseTypeFromArgumentName(
-                    argumentName,
-                    servicePackage,
-                    inputMessage,
-                    messageTypes,
-                    resourceNames,
-                    patternsToResourceNames,
-                    outputArgResourceNames));
+      List<String> argumentNames = new ArrayList<>();
+      Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();
 
+      // stringSig.split: ["content", "error"].
+      for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
+        // For resource names, this will be empty.
+        List<TypeNode> argumentTypePathAcc = new ArrayList<>();
+        // There should be more than one type returned only when we encounter a reousrce name.
+        List<TypeNode> argumentTypes =
+            parseTypeFromArgumentName(
+                argumentName,
+                servicePackage,
+                inputMessage,
+                messageTypes,
+                resourceNames,
+                patternsToResourceNames,
+                argumentTypePathAcc,
+                outputArgResourceNames);
         int dotLastIndex = argumentName.lastIndexOf(DOT);
         String actualArgumentName =
             dotLastIndex < 0 ? argumentName : argumentName.substring(dotLastIndex + 1);
-
-        int typeLastIndex = argumentTypePath.size() - 1;
-        TypeNode argumentType = argumentTypePath.get(typeLastIndex);
-        argumentTypePath.remove(typeLastIndex);
-
-        arguments.add(
-            MethodArgument.builder()
-                .setName(actualArgumentName)
-                .setType(argumentType)
-                .setNestedTypes(argumentTypePath)
-                .build());
+        argumentNames.add(actualArgumentName);
+        argumentNameToOverloads.put(
+            actualArgumentName,
+            argumentTypes.stream()
+                .map(
+                    type ->
+                        MethodArgument.builder()
+                            .setName(actualArgumentName)
+                            .setType(type)
+                            .setIsResourceNameHelper(
+                                argumentTypes.size() > 1 && !type.equals(TypeNode.STRING))
+                            .setNestedTypes(argumentTypePathAcc)
+                            .build())
+                .collect(Collectors.toList()));
       }
-      signatures.add(arguments);
+      signatures.addAll(flattenMethodSignatureVariants(argumentNames, argumentNameToOverloads));
     }
     return signatures;
   }
 
-  private static List<TypeNode> parseTypeFromArgumentName(
-      String argumentName,
-      String servicePackage,
-      Message inputMessage,
-      Map<String, Message> messageTypes,
-      Map<String, ResourceName> resourceNames,
-      Map<String, ResourceName> patternsToResourceNames,
-      Set<ResourceName> outputArgResourceNames) {
-    return parseTypeFromArgumentName(
-        argumentName,
-        servicePackage,
-        inputMessage,
-        messageTypes,
-        resourceNames,
-        patternsToResourceNames,
-        outputArgResourceNames,
-        new ArrayList<>());
+  @VisibleForTesting
+  static List<List<MethodArgument>> flattenMethodSignatureVariants(
+      List<String> argumentNames, Map<String, List<MethodArgument>> argumentNameToOverloads) {
+    Preconditions.checkState(
+        argumentNames.size() == argumentNameToOverloads.size(),
+        String.format(
+            "Cardinality of argument names %s do not match that of overloaded types %s",
+            argumentNames, argumentNameToOverloads));
+    for (String name : argumentNames) {
+      Preconditions.checkNotNull(
+          argumentNameToOverloads.get(name),
+          String.format("No corresponding overload types found for argument %s", name));
+    }
+    return flattenMethodSignatureVariants(argumentNames, argumentNameToOverloads, 0);
+  }
+
+  private static List<List<MethodArgument>> flattenMethodSignatureVariants(
+      List<String> argumentNames,
+      Map<String, List<MethodArgument>> argumentNameToOverloads,
+      int depth) {
+    List<List<MethodArgument>> methodArgs = new ArrayList<>();
+    if (depth >= argumentNames.size() - 1) {
+      for (MethodArgument methodArg : argumentNameToOverloads.get(argumentNames.get(depth))) {
+        methodArgs.add(Lists.newArrayList(methodArg));
+      }
+      return methodArgs;
+    }
+
+    List<List<MethodArgument>> subsequentArgs =
+        flattenMethodSignatureVariants(argumentNames, argumentNameToOverloads, depth + 1);
+    for (MethodArgument methodArg : argumentNameToOverloads.get(argumentNames.get(depth))) {
+      for (List<MethodArgument> subsequentArg : subsequentArgs) {
+        // Use a new list to avoid appending all subsequent elements (in upcoming loop iterations)
+        // to the same list.
+        List<MethodArgument> appendedArgs = new ArrayList<>(subsequentArg);
+        appendedArgs.add(0, methodArg);
+        methodArgs.add(appendedArgs);
+      }
+    }
+    return methodArgs;
   }
 
   private static List<TypeNode> parseTypeFromArgumentName(
@@ -118,16 +150,33 @@ public class MethodSignatureParser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Map<String, ResourceName> patternsToResourceNames,
-      Set<ResourceName> outputArgResourceNames,
-      List<TypeNode> typeAcc) {
+      List<TypeNode> argumentTypePathAcc,
+      Set<ResourceName> outputArgResourceNames) {
+
     int dotIndex = argumentName.indexOf(DOT);
-    // TODO(miraleung): Fake out resource names here.
     if (dotIndex < 1) {
       Field field = inputMessage.fieldMap().get(argumentName);
       Preconditions.checkNotNull(
-          field, String.format("Field %s not found, %s", argumentName, inputMessage.fieldMap()));
-      return Arrays.asList(field.type());
+          field,
+          String.format(
+              "Field %s not found from input message %s values %s",
+              argumentName, inputMessage.name(), inputMessage.fieldMap().keySet()));
+      if (!field.hasResourceReference()) {
+        return Arrays.asList(field.type());
+      }
+
+      // Parse the resource name tyeps.
+      List<ResourceName> resourceNameArgs =
+          ResourceReferenceParser.parseResourceNames(
+              field.resourceReference(), servicePackage, resourceNames, patternsToResourceNames);
+      outputArgResourceNames.addAll(resourceNameArgs);
+      List<TypeNode> allFieldTypes = new ArrayList<>();
+      allFieldTypes.add(TypeNode.STRING);
+      allFieldTypes.addAll(
+          resourceNameArgs.stream().map(r -> r.type()).collect(Collectors.toList()));
+      return allFieldTypes;
     }
+
     Preconditions.checkState(
         dotIndex < argumentName.length() - 1,
         String.format(
@@ -137,16 +186,6 @@ public class MethodSignatureParser {
 
     // Must be a sub-message for a type's subfield to be valid.
     Field firstField = inputMessage.fieldMap().get(firstFieldName);
-    if (firstField.hasResourceReference()) {
-      List<ResourceName> resourceNameArgs =
-          ResourceReferenceParser.parseResourceNames(
-              firstField.resourceReference(),
-              servicePackage,
-              resourceNames,
-              patternsToResourceNames);
-      outputArgResourceNames.addAll(resourceNameArgs);
-      return resourceNameArgs.stream().map(r -> r.type()).collect(Collectors.toList());
-    }
 
     Preconditions.checkState(
         !firstField.isRepeated(),
@@ -164,8 +203,7 @@ public class MethodSignatureParser {
         String.format(
             "Message type %s for field reference %s invalid", firstFieldTypeName, firstFieldName));
 
-    List<TypeNode> newAcc = new ArrayList<>(typeAcc);
-    newAcc.add(firstFieldType);
+    argumentTypePathAcc.add(firstFieldType);
     return parseTypeFromArgumentName(
         remainingArgumentName,
         servicePackage,
@@ -173,8 +211,8 @@ public class MethodSignatureParser {
         messageTypes,
         resourceNames,
         patternsToResourceNames,
-        outputArgResourceNames,
-        newAcc);
+        argumentTypePathAcc,
+        outputArgResourceNames);
   }
 
   private static Map<String, ResourceName> createPatternResourceNameMap(

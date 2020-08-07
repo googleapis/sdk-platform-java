@@ -20,6 +20,8 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -49,7 +51,7 @@ public class ResourceNameParserTest {
   public void parseResourceNames_basicOnePattern() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
-    assertEquals(3, typeStringsToResourceNames.size());
+    assertEquals(4, typeStringsToResourceNames.size());
 
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudbilling.googleapis.com/BillingAccount");
@@ -60,13 +62,14 @@ public class ResourceNameParserTest {
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
     assertFalse(resourceName.hasParentMessageName());
     assertThat(resourceName.parentMessageName()).isNull();
+    assertFalse(resourceName.isOnlyWildcard());
   }
 
   @Test
   public void parseResourceNames_basicTwoPatterns() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
-    assertEquals(3, typeStringsToResourceNames.size());
+    assertEquals(4, typeStringsToResourceNames.size());
 
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
@@ -77,13 +80,37 @@ public class ResourceNameParserTest {
     assertEquals("cloudresourcemanager.googleapis.com/Folder", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
     assertFalse(resourceName.hasParentMessageName());
+    assertFalse(resourceName.isOnlyWildcard());
+  }
+
+  @Test
+  public void parseResourceNames_wildcard() {
+    Map<String, ResourceName> typeStringsToResourceNames =
+        ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
+    assertEquals(4, typeStringsToResourceNames.size());
+
+    ResourceName resourceName =
+        typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
+    assertEquals(ResourceNameConstants.WILDCARD_PATTERN, resourceName.patterns().get(0));
+    assertEquals("anything", resourceName.variableName());
+    assertEquals("cloudresourcemanager.googleapis.com/Anything", resourceName.resourceTypeString());
+    assertEquals(MAIN_PACKAGE, resourceName.pakkage());
+    assertFalse(resourceName.hasParentMessageName());
+    assertTrue(resourceName.isOnlyWildcard());
+    assertEquals(
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ResourceName")
+                .setPakkage("com.google.api.resourcenames")
+                .build()),
+        resourceName.type());
   }
 
   @Test
   public void parseResourceNames_deletedTopic() {
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromFile(lockerServiceFileDescriptor);
-    assertEquals(3, typeStringsToResourceNames.size());
+    assertEquals(4, typeStringsToResourceNames.size());
 
     ResourceName resourceName = typeStringsToResourceNames.get("pubsub.googleapis.com/Topic");
     assertEquals(1, resourceName.patterns().size());
@@ -92,6 +119,7 @@ public class ResourceNameParserTest {
     assertEquals("pubsub.googleapis.com/Topic", resourceName.resourceTypeString());
     assertEquals(MAIN_PACKAGE, resourceName.pakkage());
     assertFalse(resourceName.hasParentMessageName());
+    assertFalse(resourceName.isOnlyWildcard());
   }
 
   @Test

@@ -60,6 +60,11 @@ public class ParserTest {
   public void parseMessages_basic() {
     // TODO(miraleung): Add more tests for oneofs and other message-parsing edge cases.
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+
+    Message echoRequestMessage = messageTypes.get("EchoRequest");
+    Field echoRequestNameField = echoRequestMessage.fieldMap().get("name");
+    assertTrue(echoRequestNameField.hasResourceReference());
+
     String echoResponseName = "EchoResponse";
     Field echoResponseContentField =
         Field.builder().setName("content").setType(TypeNode.STRING).build();
@@ -101,7 +106,7 @@ public class ParserTest {
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
-    assertEquals(methodSignatures.size(), 3);
+    assertEquals(7, methodSignatures.size());
 
     Method expandMethod = methods.get(1);
     assertEquals(expandMethod.name(), "Expand");
@@ -213,7 +218,7 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             outputResourceNames);
-    assertEquals(methodSignatures.size(), 3);
+    assertEquals(7, methodSignatures.size());
 
     // Signature contents: ["content"].
     List<MethodArgument> methodArgs = methodSignatures.get(0);
@@ -240,6 +245,21 @@ public class ParserTest {
             VaporReference.builder().setName("Severity").setPakkage(ECHO_PACKAGE).build()),
         ImmutableList.of(),
         argument);
+
+    // Signature contents: ["name"], String variant.
+    methodArgs = methodSignatures.get(3);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
+
+    // Signature contents: ["name"], resource helper variant.
+    methodArgs = methodSignatures.get(4);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    TypeNode foobarNameType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FoobarName").setPakkage(ECHO_PACKAGE).build());
+    assertMethodArgumentEquals("name", foobarNameType, ImmutableList.of(), argument);
   }
 
   @Test

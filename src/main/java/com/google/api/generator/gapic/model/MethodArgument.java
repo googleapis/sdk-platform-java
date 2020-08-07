@@ -29,8 +29,13 @@ public abstract class MethodArgument {
   // appeared as the last element).
   public abstract ImmutableList<TypeNode> nestedTypes();
 
+  // Returns true if this is a resource name helper tyep.
+  public abstract boolean isResourceNameHelper();
+
   public static Builder builder() {
-    return new AutoValue_MethodArgument.Builder().setNestedTypes(ImmutableList.of());
+    return new AutoValue_MethodArgument.Builder()
+        .setNestedTypes(ImmutableList.of())
+        .setIsResourceNameHelper(false);
   }
 
   @AutoValue.Builder
@@ -40,6 +45,8 @@ public abstract class MethodArgument {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
+
+    public abstract Builder setIsResourceNameHelper(boolean isResourceNameHelper);
 
     public abstract MethodArgument build();
   }
