@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
@@ -71,7 +72,63 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr() {
+  public void validTernaryExpr_objectAndNull() {
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
+            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+            .setElseExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .build();
+    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+  }
+
+  @Test
+  public void validTernaryExpr_nullAndObject() {
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
+            .setThenExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+            .build();
+    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+  }
+
+  @Test
+  public void validTernaryExpr_superAndSubtype() {
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
+            .setThenExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
+            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+            .build();
+    assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
+  }
+
+  @Test
+  public void validTernaryExpr_subAndSupertype() {
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
+            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+            .setElseExpr(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
+            .build();
+    assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
+  }
+
+  @Test
+  public void invalidTernaryExpr_mismatchedPrimitiveTypes() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
@@ -92,5 +149,51 @@ public class TernaryExprTest {
               .setElseExpr(elseExpr)
               .build();
         });
+  }
+
+  @Test
+  public void invalidTernaryExpr_incompatibleThenElsePrimitiveTypes() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            TernaryExpr.builder()
+                .setConditionExpr(
+                    ValueExpr.withValue(
+                        PrimitiveValue.builder()
+                            .setType(TypeNode.BOOLEAN)
+                            .setValue("false")
+                            .build()))
+                .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+                .setElseExpr(
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName("anObject")
+                            .setType(TypeNode.STRING_ARRAY)
+                            .build()))
+                .build());
+  }
+
+  @Test
+  public void invalidTernaryExpr_incompatibleThenElseObjectTypes() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            TernaryExpr.builder()
+                .setConditionExpr(
+                    ValueExpr.withValue(
+                        PrimitiveValue.builder()
+                            .setType(TypeNode.BOOLEAN)
+                            .setValue("false")
+                            .build()))
+                .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+                .setElseExpr(
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName("anObject")
+                            .setType(
+                                TypeNode.withReference(
+                                    ConcreteReference.withClazz(Exception.class)))
+                            .build()))
+                .build());
   }
 }

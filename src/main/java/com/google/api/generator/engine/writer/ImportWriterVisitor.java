@@ -121,7 +121,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(TernaryExpr ternaryExpr) {
-    ternaryExpr.type().accept(this);
+    ternaryExpr.conditionExpr().accept(this);
+    ternaryExpr.thenExpr().accept(this);
+    ternaryExpr.elseExpr().accept(this);
   }
 
   @Override
