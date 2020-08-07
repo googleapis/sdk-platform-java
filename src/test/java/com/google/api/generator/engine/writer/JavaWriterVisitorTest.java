@@ -1513,7 +1513,7 @@ public class JavaWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             createLines(4),
-            "// Apache License\n\n",
+            "/** Apache License */\n",
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "public class LibraryServiceStub {}\n"));
@@ -1791,8 +1791,8 @@ public class JavaWriterVisitorTest {
     return writerVisitor.write();
   }
 
-  // Create a simple line comment to stand for the Apache License header.
+  // Create a simple block comment to stand for the Apache License header.
   private static List<CommentStatement> createFileHeader() {
-    return Arrays.asList(CommentStatement.withComment(LineComment.withComment("Apache License")));
+    return Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   }
 }
