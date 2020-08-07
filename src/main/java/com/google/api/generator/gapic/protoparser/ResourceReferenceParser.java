@@ -117,6 +117,7 @@ public class ResourceReferenceParser {
       parentVariableName =
           parentVariableName.replace(LEFT_BRACE, EMPTY_STRING).replace(RIGHT_BRACE, EMPTY_STRING);
     }
+
     Preconditions.checkNotNull(
         parentVariableName,
         String.format("Could not parse variable name from pattern %s", parentPattern));
