@@ -3,6 +3,7 @@ package(default_visibility = ["//visibility:public"])
 filegroup(
     name = "gapic_files",
     srcs = glob(["*.java"]) + [
+        "//src/test/java/com/google/api/generator/gapic/composer:composer_files",
         "//src/main/java/com/google/api/generator/gapic/model:model_files",
         "//src/main/java/com/google/api/generator/gapic/protoparser:protoparser_files",
     ],
