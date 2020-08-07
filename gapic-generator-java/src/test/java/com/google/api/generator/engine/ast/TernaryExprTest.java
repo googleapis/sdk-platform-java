@@ -46,7 +46,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_ObjectType() {
+  public void validTernaryExpr_objectType() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
