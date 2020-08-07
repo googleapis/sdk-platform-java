@@ -58,6 +58,10 @@ public abstract class ResourceName {
     return parentMessageName() != null;
   }
 
+  public String resourceTypeName() {
+    return resourceTypeString().substring(resourceTypeString().indexOf(SLASH) + 1);
+  }
+
   public static Builder builder() {
     return new AutoValue_ResourceName.Builder().setIsOnlyWildcard(false);
   }

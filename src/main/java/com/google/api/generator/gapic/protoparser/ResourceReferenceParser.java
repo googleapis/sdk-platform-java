@@ -24,6 +24,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -52,6 +53,7 @@ public class ResourceReferenceParser {
 
     // Create a parent ResourceName for each pattern.
     List<ResourceName> parentResourceNames = new ArrayList<>();
+    Set<String> resourceTypeStrings = new HashSet<>();
     for (String pattern : resourceName.patterns()) {
       Optional<ResourceName> parentResourceNameOpt =
           parseParentResourceName(
@@ -60,8 +62,12 @@ public class ResourceReferenceParser {
               resourceName.pakkage(),
               resourceName.resourceTypeString(),
               patternsToResourceNames);
-      if (parentResourceNameOpt.isPresent()) {
-        parentResourceNames.add(parentResourceNameOpt.get());
+      // Prevent duplicates.
+      if (parentResourceNameOpt.isPresent()
+          && !resourceTypeStrings.contains(parentResourceNameOpt.get().resourceTypeString())) {
+        ResourceName parentResourceName = parentResourceNameOpt.get();
+        parentResourceNames.add(parentResourceName);
+        resourceTypeStrings.add(parentResourceName.resourceTypeString());
       }
     }
     return parentResourceNames;
