@@ -14,22 +14,8 @@
 
 package com.google.api.generator.gapic.utils;
 
-import com.google.common.base.CaseFormat;
-
-public class JavaStyle {
-  private static final String UNDERSCORE = "_";
-
-  public static String toLowerCamelCase(String s) {
-    if (s.indexOf(UNDERSCORE) >= 0) {
-      s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
-    }
-    return String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1));
-  }
-
-  public static String toUpperCamelCase(String s) {
-    if (s.indexOf(UNDERSCORE) >= 0) {
-      s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
-    }
-    return String.format("%s%s", s.substring(0, 1).toUpperCase(), s.substring(1));
-  }
+public class ResourceNameConstants {
+  public static final String DELETED_TOPIC_LITERAL = "_deleted-topic_";
+  public static final String NAME_FIELD_NAME = "name";
+  public static final String WILDCARD_PATTERN = "*";
 }
