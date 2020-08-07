@@ -36,8 +36,10 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -84,7 +86,12 @@ public class ParserTest {
   @Test
   public void parseMethods_basic() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Method> methods = Parser.parseMethods(echoService, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Method> methods =
+        Parser.parseMethods(
+            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+
     assertEquals(methods.size(), 8);
 
     // Methods should appear in the same order as in the protobuf file.
@@ -131,7 +138,12 @@ public class ParserTest {
   @Test
   public void parseMethods_basicLro() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Method> methods = Parser.parseMethods(echoService, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Method> methods =
+        Parser.parseMethods(
+            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+
     assertEquals(methods.size(), 8);
 
     // Methods should appear in the same order as in the protobuf file.
@@ -168,9 +180,20 @@ public class ParserTest {
     MethodDescriptor chatWithInfoMethodDescriptor = echoService.getMethods().get(5);
     TypeNode inputType = TypeParser.parseType(chatWithInfoMethodDescriptor.getInputType());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+
+    List<Method> methods =
+        Parser.parseMethods(
+            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
-                chatWithInfoMethodDescriptor, inputType, messageTypes))
+                chatWithInfoMethodDescriptor,
+                ECHO_PACKAGE,
+                inputType,
+                messageTypes,
+                resourceNames,
+                outputResourceNames))
         .isEmpty();
   }
 
@@ -179,9 +202,17 @@ public class ParserTest {
     MethodDescriptor echoMethodDescriptor = echoService.getMethods().get(0);
     TypeNode inputType = TypeParser.parseType(echoMethodDescriptor.getInputType());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
 
     List<List<MethodArgument>> methodSignatures =
-        MethodSignatureParser.parseMethodSignatures(echoMethodDescriptor, inputType, messageTypes);
+        MethodSignatureParser.parseMethodSignatures(
+            echoMethodDescriptor,
+            ECHO_PACKAGE,
+            inputType,
+            messageTypes,
+            resourceNames,
+            outputResourceNames);
     assertEquals(methodSignatures.size(), 3);
 
     // Signature contents: ["content"].

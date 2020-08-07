@@ -14,20 +14,26 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ResourceName {
+  static final String SLASH = "/";
+
   // The original binding variable name.
   // This should be in lower_snake_case in the proto, and expected to be surrounded by braces.
   // Example: In projects/{project}/billingAccounts/billing_account, the variable name would be
   // "billing_account."
   public abstract String variableName();
 
-  // The Java package where the resource name was defined.
+  // The Java package of the project, or that of a subpackage where the resource name was defined.
+  // That is, resource names defined outside of this project will still have the project's package.
   public abstract String pakkage();
 
   // The resource type.
@@ -35,6 +41,9 @@ public abstract class ResourceName {
 
   // A list of patterns such as projects/{project}/locations/{location}/resources/{this_resource}.
   public abstract ImmutableList<String> patterns();
+
+  // The Java TypeNode of the resource name helper class to generate.
+  public abstract TypeNode type();
 
   // The message in which this resource was defined. Optional.
   // This is expected to be empty for file-level definitions.
@@ -49,6 +58,34 @@ public abstract class ResourceName {
     return new AutoValue_ResourceName.Builder();
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof ResourceName)) {
+      return false;
+    }
+
+    ResourceName other = (ResourceName) o;
+    return variableName().equals(other.variableName())
+        && pakkage().equals(other.pakkage())
+        && resourceTypeString().equals(other.resourceTypeString())
+        && patterns().equals(other.patterns())
+        && Objects.equals(parentMessageName(), other.parentMessageName())
+        && Objects.equals(type(), other.type());
+  }
+
+  @Override
+  public int hashCode() {
+    int parentMessageNameHashCode =
+        parentMessageName() == null ? 0 : parentMessageName().hashCode();
+    int typeHashCode = type() == null ? 0 : type().hashCode();
+    return 17 * variableName().hashCode()
+        + 19 * pakkage().hashCode()
+        + 23 * resourceTypeString().hashCode()
+        + 31 * patterns().hashCode()
+        + 37 * parentMessageNameHashCode
+        + 41 * typeHashCode;
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setVariableName(String variableName);
@@ -61,6 +98,23 @@ public abstract class ResourceName {
 
     public abstract Builder setParentMessageName(String parentMessageName);
 
-    public abstract ResourceName build();
+    // Private setter.
+    abstract Builder setType(TypeNode type);
+
+    // Private accessors.
+    abstract String pakkage();
+
+    abstract String resourceTypeString();
+
+    // Private.
+    abstract ResourceName autoBuild();
+
+    public ResourceName build() {
+      String typeName = resourceTypeString().substring(resourceTypeString().lastIndexOf(SLASH) + 1);
+      setType(
+          TypeNode.withReference(
+              VaporReference.builder().setName(typeName).setPakkage(pakkage()).build()));
+      return autoBuild();
+    }
   }
 }
