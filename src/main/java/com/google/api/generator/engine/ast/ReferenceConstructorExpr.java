@@ -56,6 +56,7 @@ public abstract class ReferenceConstructorExpr implements Expr {
 
     public abstract Builder setArguments(List<Expr> arguments);
 
+    // private.
     abstract Builder setKeywordKind(KeywordKind keywordKind);
 
     abstract ReferenceConstructorExpr autoBuild();
