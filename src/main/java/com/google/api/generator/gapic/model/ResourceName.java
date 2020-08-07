@@ -59,6 +59,7 @@ public abstract class ResourceName {
   }
 
   public static Builder builder() {
+
     return new AutoValue_ResourceName.Builder().setIsOnlyWildcard(false);
   }
 
