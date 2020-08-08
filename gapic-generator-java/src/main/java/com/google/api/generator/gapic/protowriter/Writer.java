@@ -83,7 +83,10 @@ public class Writer {
     if (className.startsWith("Mock") || className.endsWith("Test")) {
       path = "test/" + path;
     }
-    // TODO(miraleung): Add path for resource name classes.
+    // Resource name helpers go into the protobuf package.
+    if (className.endsWith("Name")) {
+      path = "proto/" + path;
+    }
     return path;
   }
 }
