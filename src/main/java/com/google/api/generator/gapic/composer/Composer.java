@@ -102,6 +102,7 @@ public class Composer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setFileHeader(ApacheLicenseComposer.APACHE_LICENSE)
             .setPackageString(pakkage)
             .setName(name)
             .setScope(ScopeNode.PUBLIC)

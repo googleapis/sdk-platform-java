@@ -1511,8 +1511,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(4),
-            "/** Apache License */\n",
+            createLines(6),
+            "/*\n",
+            " * Apache License\n",
+            " */\n\n",
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "public class LibraryServiceStub {}\n"));
