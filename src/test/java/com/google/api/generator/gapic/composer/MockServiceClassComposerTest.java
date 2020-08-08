@@ -19,13 +19,16 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +46,11 @@ public class MockServiceClassComposerTest {
   @Test
   public void generateServiceClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Service> services = Parser.parseService(echoFileDescriptor, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
     Service echoProtoService = services.get(0);
     GapicClass clazz = MockServiceClassComposer.instance().generate(echoProtoService, messageTypes);
 

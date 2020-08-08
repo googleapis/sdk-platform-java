@@ -32,24 +32,27 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
 import com.google.rpc.Status;
@@ -65,7 +68,6 @@ import javax.annotation.Generated;
 
 public class ServiceClientClassComposer implements ClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
-  private static final String DOT = ".";
 
   private ServiceClientClassComposer() {}
 
@@ -260,30 +262,6 @@ public class ServiceClientClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static TypeNode parseTypeFromArgumentName(
-      String argumentName, Message inputMessage, Map<String, Message> messageTypes) {
-    int dotIndex = argumentName.indexOf(DOT);
-    // TODO(miraleung): Fake out resource names here.
-    if (dotIndex < 1) {
-      Field field = inputMessage.fieldMap().get(argumentName);
-      Preconditions.checkNotNull(
-          field, String.format("Field %s not found, %s", argumentName, inputMessage.fieldMap()));
-      return field.type();
-    }
-    Preconditions.checkState(
-        dotIndex < argumentName.length() - 1,
-        String.format(
-            "Invalid argument name found: dot cannot be at the end of name %s", argumentName));
-    String firstFieldName = argumentName.substring(0, dotIndex);
-    String remainingArgumentName = argumentName.substring(dotIndex + 1);
-    // Must be a sub-message for a type's subfield to be valid.
-    Field firstField = inputMessage.fieldMap().get(firstFieldName);
-    TypeNode firstFieldType = firstField.type();
-    String firstFieldTypeName = firstFieldType.reference().name();
-    Message firstFieldMessage = messageTypes.get(firstFieldTypeName);
-    return parseTypeFromArgumentName(remainingArgumentName, firstFieldMessage, messageTypes);
-  }
-
   private static List<MethodDefinition> createMethodVariants(
       Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -296,22 +274,20 @@ public class ServiceClientClassComposer implements ClassComposer {
     Preconditions.checkNotNull(
         inputMessage, String.format("Message %s not found", methodInputTypeName));
 
-    for (List<String> signature : method.methodSignatures()) {
+    for (List<MethodArgument> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
           signature.stream()
               .map(
-                  str -> {
-                    TypeNode argumentType =
-                        parseTypeFromArgumentName(str, inputMessage, messageTypes);
-                    int lastDotIndex = str.lastIndexOf(DOT);
-                    String argumentName = str.substring(lastDotIndex + 1);
-                    return VariableExpr.builder()
-                        .setVariable(
-                            Variable.builder().setName(argumentName).setType(argumentType).build())
-                        .setIsDecl(true)
-                        .build();
-                  })
+                  methodArg ->
+                      VariableExpr.builder()
+                          .setVariable(
+                              Variable.builder()
+                                  .setName(JavaStyle.toLowerCamelCase(methodArg.name()))
+                                  .setType(methodArg.type())
+                                  .build())
+                          .setIsDecl(true)
+                          .build())
               .collect(Collectors.toList());
 
       // Request proto builder.
@@ -326,24 +302,43 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setMethodName("newBuilder")
               .setStaticReferenceType(methodInputType)
               .build();
-      // TODO(miraleung): Handle nested arguments and setters here.
-      for (String argument : signature) {
-        TypeNode argumentType = parseTypeFromArgumentName(argument, inputMessage, messageTypes);
-        int lastDotIndex = argument.lastIndexOf(DOT);
-        String argumentName = argument.substring(lastDotIndex + 1);
-        String setterMethodName =
-            String.format(
-                "set%s%s", argumentName.substring(0, 1).toUpperCase(), argumentName.substring(1));
+      // TODO(miraleung): Handle nested arguments and descending setters here.
+      for (MethodArgument argument : signature) {
+        String argumentName = JavaStyle.toLowerCamelCase(argument.name());
+        TypeNode argumentType = argument.type();
+        String setterMethodName = String.format("set%s", JavaStyle.toUpperCamelCase(argumentName));
 
-        VariableExpr argVar =
-            VariableExpr.builder()
-                .setVariable(Variable.builder().setName(argumentName).setType(argumentType).build())
-                .build();
+        Expr argVarExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setName(argumentName).setType(argumentType).build());
+
+        if (argument.isResourceNameHelper()) {
+          MethodInvocationExpr isNullCheckExpr =
+              MethodInvocationExpr.builder()
+                  .setStaticReferenceType(types.get("Strings"))
+                  .setMethodName("isNullOrEmpty")
+                  .setArguments(Arrays.asList(argVarExpr))
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build();
+          Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+          MethodInvocationExpr toStringExpr =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(argVarExpr)
+                  .setMethodName("toString")
+                  .setReturnType(TypeNode.STRING)
+                  .build();
+          argVarExpr =
+              TernaryExpr.builder()
+                  .setConditionExpr(isNullCheckExpr)
+                  .setThenExpr(nullExpr)
+                  .setElseExpr(toStringExpr)
+                  .build();
+        }
 
         newBuilderExpr =
             MethodInvocationExpr.builder()
                 .setMethodName(setterMethodName)
-                .setArguments(Arrays.asList(argVar))
+                .setArguments(Arrays.asList(argVarExpr))
                 .setExprReferenceExpr(newBuilderExpr)
                 .build();
       }
@@ -642,6 +637,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             OperationCallable.class,
             ServerStreamingCallable.class,
             Status.class,
+            Strings.class,
             TimeUnit.class,
             UnaryCallable.class);
     return concreteClazzes.stream()
