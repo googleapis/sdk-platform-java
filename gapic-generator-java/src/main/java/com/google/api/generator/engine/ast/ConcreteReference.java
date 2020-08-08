@@ -91,19 +91,18 @@ public abstract class ConcreteReference implements Reference {
 
   @Override
   public boolean isSupertypeOrEquals(Reference other) {
-    if (generics().size() != other.generics().size()) {
-      return false;
-    }
-
+    // Don't check generics for cases like "List<String> foo = new ArrayList<>();
     if (!isAssignableFrom(other)) {
       return false;
     }
 
-    for (int i = 0; i < generics().size(); i++) {
-      Reference thisGeneric = generics().get(i);
-      Reference otherGeneric = other.generics().get(i);
-      if (!thisGeneric.isSupertypeOrEquals(otherGeneric)) {
-        return false;
+    if (generics().size() == other.generics().size()) {
+      for (int i = 0; i < generics().size(); i++) {
+        Reference thisGeneric = generics().get(i);
+        Reference otherGeneric = other.generics().get(i);
+        if (!thisGeneric.isSupertypeOrEquals(otherGeneric)) {
+          return false;
+        }
       }
     }
 
