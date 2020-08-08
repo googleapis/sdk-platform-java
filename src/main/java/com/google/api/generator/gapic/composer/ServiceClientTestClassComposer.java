@@ -38,6 +38,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -189,15 +190,10 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     VariableExpr mockServiceVarExpr =
         classMemberVarExprs.get(getMockServiceVarName(service.name()));
     VariableExpr serviceHelperVarExpr = classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME);
-    // TODO(miraleung): Actually intantiate this.
     Expr initMockServiceExpr =
         AssignmentExpr.builder()
             .setVariableExpr(mockServiceVarExpr)
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setMethodName("newMockTodo")
-                    .setReturnType(mockServiceVarExpr.type())
-                    .build())
+            .setValueExpr(NewObjectExpr.builder().setType(mockServiceVarExpr.type()).build())
             .build();
 
     MethodInvocationExpr firstArg =
@@ -218,15 +214,14 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setMethodName("asList")
             .setArguments(Arrays.asList(mockServiceVarExpr))
             .build();
-    // TODO(miraleung): Actually intantiate this.
+
     Expr initServiceHelperExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serviceHelperVarExpr)
             .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setMethodName("newMockServiceHelperTodo")
+                NewObjectExpr.builder()
+                    .setType(serviceHelperVarExpr.type())
                     .setArguments(Arrays.asList(firstArg, secondArg))
-                    .setReturnType(serviceHelperVarExpr.type())
                     .build())
             .build();
 

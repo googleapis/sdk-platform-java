@@ -19,13 +19,16 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +46,11 @@ public class ServiceClientClassComposerTest {
   @Test
   public void generateServiceClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Service> services = Parser.parseService(echoFileDescriptor, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
     Service echoProtoService = services.get(0);
     GapicClass clazz =
         ServiceClientClassComposer.instance().generate(echoProtoService, messageTypes);
@@ -64,6 +71,8 @@ public class ServiceClientClassComposerTest {
           + "import com.google.api.gax.rpc.OperationCallable;\n"
           + "import com.google.api.gax.rpc.ServerStreamingCallable;\n"
           + "import com.google.api.gax.rpc.UnaryCallable;\n"
+          + "import com.google.api.resourcenames.ResourceName;\n"
+          + "import com.google.common.base.Strings;\n"
           + "import com.google.longrunning.Operation;\n"
           + "import com.google.longrunning.OperationsClient;\n"
           + "import com.google.rpc.Status;\n"
@@ -107,6 +116,32 @@ public class ServiceClientClassComposerTest {
           + "  public final EchoResponse echo(String content, Severity severity) {\n"
           + "    EchoRequest request =\n"
           + "        EchoRequest.newBuilder().setContent(content).setSeverity(severity).build();\n"
+          + "    return echo(request);\n"
+          + "  }\n"
+          + "\n"
+          + "  public final EchoResponse echo(String name) {\n"
+          + "    EchoRequest request = EchoRequest.newBuilder().setName(name).build();\n"
+          + "    return echo(request);\n"
+          + "  }\n"
+          + "\n"
+          + "  public final EchoResponse echo(FoobarName name) {\n"
+          + "    EchoRequest request =\n"
+          + "        EchoRequest.newBuilder()\n"
+          + "            .setName(Strings.isNullOrEmpty(name) ? null : name.toString())\n"
+          + "            .build();\n"
+          + "    return echo(request);\n"
+          + "  }\n"
+          + "\n"
+          + "  public final EchoResponse echo(String parent) {\n"
+          + "    EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();\n"
+          + "    return echo(request);\n"
+          + "  }\n"
+          + "\n"
+          + "  public final EchoResponse echo(ResourceName parent) {\n"
+          + "    EchoRequest request =\n"
+          + "        EchoRequest.newBuilder()\n"
+          + "            .setParent(Strings.isNullOrEmpty(parent) ? null : parent.toString())\n"
+          + "            .build();\n"
           + "    return echo(request);\n"
           + "  }\n"
           + "\n"
