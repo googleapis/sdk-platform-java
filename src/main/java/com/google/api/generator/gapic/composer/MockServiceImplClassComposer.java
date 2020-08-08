@@ -525,8 +525,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
                         .setExprReferenceExpr(responseObserverVarExpr)
                         .build())))
         .setElseBody(
-            // TODO(miraleung): Pass a new IllegalArgumentException into
-            // responseObserver.onError().
             Arrays.asList(
                 ExprStatement.withExpr(
                     MethodInvocationExpr.builder()
