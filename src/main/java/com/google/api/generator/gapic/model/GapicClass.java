@@ -23,7 +23,8 @@ public abstract class GapicClass {
   public enum Kind {
     MAIN,
     STUB,
-    TEST
+    TEST,
+    PROTO
   };
 
   public abstract Kind kind();
