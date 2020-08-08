@@ -186,6 +186,7 @@ public class MethodSignatureParser {
 
     // Must be a sub-message for a type's subfield to be valid.
     Field firstField = inputMessage.fieldMap().get(firstFieldName);
+
     Preconditions.checkState(
         !firstField.isRepeated(),
         String.format("Cannot descend into repeated field %s", firstField.name()));
