@@ -54,6 +54,7 @@ public class ResourceReferenceParser {
     // Create a parent ResourceName for each pattern.
     List<ResourceName> parentResourceNames = new ArrayList<>();
     Set<String> resourceTypeStrings = new HashSet<>();
+
     for (String pattern : resourceName.patterns()) {
       Optional<ResourceName> parentResourceNameOpt =
           parseParentResourceName(
@@ -68,6 +69,7 @@ public class ResourceReferenceParser {
         ResourceName parentResourceName = parentResourceNameOpt.get();
         parentResourceNames.add(parentResourceName);
         resourceTypeStrings.add(parentResourceName.resourceTypeString());
+
       }
     }
     return parentResourceNames;
@@ -123,6 +125,7 @@ public class ResourceReferenceParser {
       parentVariableName =
           parentVariableName.replace(LEFT_BRACE, EMPTY_STRING).replace(RIGHT_BRACE, EMPTY_STRING);
     }
+
     Preconditions.checkNotNull(
         parentVariableName,
         String.format("Could not parse variable name from pattern %s", parentPattern));
