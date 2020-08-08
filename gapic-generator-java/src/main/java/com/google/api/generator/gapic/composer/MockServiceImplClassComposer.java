@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -186,7 +187,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createSetResponsesMethod(Service service) {
-    // TODO(miraleung): Re-instantiate the fields here.
     VariableExpr responsesArgVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -490,6 +490,14 @@ public class MockServiceImplClassComposer implements ClassComposer {
     }
 
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(Exception.class));
+    Expr newExceptionExpr =
+        NewObjectExpr.builder()
+            .setType(
+                TypeNode.withReference(ConcreteReference.withClazz(IllegalArgumentException.class)))
+            .setArguments(
+                Arrays.asList(
+                    ValueExpr.withValue(StringObjectValue.withValue("Unrecognized response type"))))
+            .build();
 
     return IfStatement.builder()
         .setConditionExpr(
@@ -524,6 +532,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
                     MethodInvocationExpr.builder()
                         .setMethodName("onError")
                         .setExprReferenceExpr(responseObserverVarExpr)
+                        .setArguments(Arrays.asList(newExceptionExpr))
                         .build())))
         .build();
   }
