@@ -169,4 +169,13 @@ public class CastExprTest {
         IllegalStateException.class,
         () -> CastExpr.builder().setType(TypeNode.BOOLEAN).setExpr(variableExpr).build());
   }
+
+  @Test
+  public void invalidCastExpr_castToVoidType() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.VOID_OBJECT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> CastExpr.builder().setType(TypeNode.VOID).setExpr(variableExpr).build());
+  }
 }
