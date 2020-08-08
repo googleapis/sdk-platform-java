@@ -322,7 +322,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = "/** this is a test comment */\n";
+    String expected = "/*\n" + "* this is a test comment\n" + "*/\n";
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -400,11 +400,10 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+  public void writeBlockComment_multipleLine() {
+    String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+    String expected = "/*\n" + "* Apache License\n" + "* This is a test file header\n" + "*/\n";
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
