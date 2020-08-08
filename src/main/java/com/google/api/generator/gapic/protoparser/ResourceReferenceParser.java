@@ -69,7 +69,6 @@ public class ResourceReferenceParser {
         ResourceName parentResourceName = parentResourceNameOpt.get();
         parentResourceNames.add(parentResourceName);
         resourceTypeStrings.add(parentResourceName.resourceTypeString());
-
       }
     }
     return parentResourceNames;
