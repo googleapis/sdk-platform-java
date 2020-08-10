@@ -29,6 +29,7 @@ public abstract class SuperObjectValue implements ObjectValue {
     return SUPER_VALUE;
   }
 
+  // Note: This is the type of "super" object, and not the child type of the supertype.
   public static SuperObjectValue withType(TypeNode type) {
     return builder().setType(type).build();
   }
