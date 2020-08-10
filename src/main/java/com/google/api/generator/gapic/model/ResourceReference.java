@@ -14,37 +14,35 @@
 
 package com.google.api.generator.gapic.model;
 
-import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
-public abstract class GapicClass {
-  // TODO(miraleung): Add enum for resource name classes.
-  public enum Kind {
-    MAIN,
-    STUB,
-    TEST,
-    PROTO
-  };
+public abstract class ResourceReference {
 
-  public abstract Kind kind();
+  public abstract String resourceTypeString();
 
-  public abstract ClassDefinition classDefinition();
+  public abstract boolean isChildType();
 
-  public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
-    return builder().setKind(kind).setClassDefinition(classDefinition).build();
+  public static ResourceReference withType(String resourceTypeString) {
+    return builder().setResourceTypeString(resourceTypeString).setIsChildType(false).build();
   }
 
+  public static ResourceReference withChildType(String resourceTypeString) {
+    return builder().setResourceTypeString(resourceTypeString).setIsChildType(true).build();
+  }
+
+  // Private.
   static Builder builder() {
-    return new AutoValue_GapicClass.Builder();
+    return new AutoValue_ResourceReference.Builder();
   }
 
+  // Private.
   @AutoValue.Builder
   abstract static class Builder {
-    abstract Builder setKind(Kind kind);
+    abstract Builder setResourceTypeString(String resourceTypeString);
 
-    abstract Builder setClassDefinition(ClassDefinition classDefinition);
+    abstract Builder setIsChildType(boolean isChildType);
 
-    abstract GapicClass build();
+    abstract ResourceReference build();
   }
 }

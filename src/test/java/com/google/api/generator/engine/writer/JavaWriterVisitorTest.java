@@ -1399,7 +1399,15 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_withAnnotationsAndThrows() {
+  public void writeMethodDefinition_withCommentsAnnotationsAndThrows() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND METHOD");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("This is an override method called `close()`")
+            .addParam("valOne", "string type")
+            .addParam("valTwo", "boolean type")
+            .addComment("The return value is int 3.")
+            .build();
     ValueExpr returnExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -1429,6 +1437,10 @@ public class JavaWriterVisitorTest {
                     TypeNode.withExceptionClazz(InterruptedException.class)))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
+            .setHeaderCommentStatements(
+                Arrays.asList(
+                    CommentStatement.withComment(lineComment),
+                    CommentStatement.withComment(javaDocComment)))
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED))
@@ -1440,10 +1452,16 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
+    String expected =
         String.format(
-            createLines(10),
+            createLines(17),
+            "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
+            "/**\n",
+            "* This is an override method called `close()`\n",
+            "* The return value is int 3.\n",
+            "* @param valOne string type\n",
+            "* @param valTwo boolean type\n",
+            "*/\n",
             "@SuppressWarnings(\"all\")\n",
             "@Deprecated\n",
             "@Override\n",
@@ -1454,7 +1472,8 @@ public class JavaWriterVisitorTest {
             "}\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n"));
+            "}\n");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test

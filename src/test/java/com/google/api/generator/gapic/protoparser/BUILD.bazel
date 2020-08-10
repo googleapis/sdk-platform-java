@@ -1,7 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "MethodSignatureParserTest",
     "ParserTest",
+    "ResourceNameParserTest",
+    "ResourceReferenceParserTest",
 ]
 
 filegroup(
@@ -16,9 +19,12 @@ filegroup(
     deps = [
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic:status_java_proto",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
+        "//src/main/java/com/google/api/generator/gapic/utils",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+        "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",

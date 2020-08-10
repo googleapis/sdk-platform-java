@@ -16,25 +16,26 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
-import javax.annotation.Nullable;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 
 @AutoValue
-public abstract class Field {
+public abstract class MethodArgument {
   public abstract String name();
 
   public abstract TypeNode type();
 
-  public abstract boolean isRepeated();
+  // Records the path of nested types in descending order, excluding type() (which would have
+  // appeared as the last element).
+  public abstract ImmutableList<TypeNode> nestedTypes();
 
-  @Nullable
-  public abstract ResourceReference resourceReference();
-
-  public boolean hasResourceReference() {
-    return type().equals(TypeNode.STRING) && resourceReference() != null;
-  }
+  // Returns true if this is a resource name helper tyep.
+  public abstract boolean isResourceNameHelper();
 
   public static Builder builder() {
-    return new AutoValue_Field.Builder().setIsRepeated(false);
+    return new AutoValue_MethodArgument.Builder()
+        .setNestedTypes(ImmutableList.of())
+        .setIsResourceNameHelper(false);
   }
 
   @AutoValue.Builder
@@ -43,10 +44,10 @@ public abstract class Field {
 
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setIsRepeated(boolean isRepeated);
+    public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
 
-    public abstract Builder setResourceReference(ResourceReference resourceReference);
+    public abstract Builder setIsResourceNameHelper(boolean isResourceNameHelper);
 
-    public abstract Field build();
+    public abstract MethodArgument build();
   }
 }

@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -41,6 +42,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.common.base.Function;
+import com.google.common.base.Strings;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -156,6 +158,45 @@ public class ImportWriterVisitorTest {
         writerVisitor.write(),
         String.format(
             createLines(2), "import java.io.IOException;\n", "import java.util.HashMap;\n\n"));
+  }
+
+  @Test
+  public void writeTernaryExprImports() {
+    MethodInvocationExpr conditionExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setMethodName("isExpr")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    MethodInvocationExpr thenExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
+            .setMethodName("isNullOrEmpty")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    MethodInvocationExpr elseExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(TypeNode.class)))
+            .setMethodName("isPrimitiveType")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(elseExpr)
+            .build();
+    ternaryExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(3),
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import com.google.api.generator.engine.ast.TypeNode;\n",
+            "import com.google.common.base.Strings;\n\n"));
   }
 
   @Test
