@@ -1,6 +1,5 @@
 package com.google.api.generator.engine.ast;
 
-
 import com.google.common.collect.ImmutableSet;
 
 public class OperatorNode implements AstNode {
@@ -28,30 +27,36 @@ public class OperatorNode implements AstNode {
     LEFT_SHIFT,
   }
 
-  private final static ImmutableSet<OperatorKind> RELATIONAL_SET = ImmutableSet.of(
-      OperatorKind.GREATER_THAN,
-      OperatorKind.GREATER_THAN_OR_EQUAL_TO,
-      OperatorKind.LESS_THAN,
-      OperatorKind.LESS_THAN_OR_EQUAL_TO,
-      OperatorKind.EQUAL_TO,
-      OperatorKind.NOT_EQUAL_TO
-  );
-  private final static ImmutableSet<OperatorKind> Left_UNARY_SET = ImmutableSet.of(
-      OperatorKind.UNARY_PLUS,
-      OperatorKind.UNARY_MINOR,
-      OperatorKind.INCREMENT,
-      OperatorKind.DECREMENT,
-      OperatorKind.LOGICAL_NOT
-  );
-
-  private final static ImmutableSet<OperatorKind> RIGHT_UNARY_SET = ImmutableSet.of(
-      OperatorKind.RIGHT_DECREMENT,
-      OperatorKind.RIGHT_INCREMENT
-  );
-  private final static ImmutableSet<OperatorKind> BITWISE_SET = ImmutableSet.of(
-      OperatorKind.LEFT_SHIFT
-  );
   private final OperatorKind operatorKind;
+
+  private static final ImmutableSet<OperatorKind> RELATIONAL_OPERATORS =
+      ImmutableSet.of(
+          OperatorKind.GREATER_THAN,
+          OperatorKind.GREATER_THAN_OR_EQUAL_TO,
+          OperatorKind.LESS_THAN,
+          OperatorKind.LESS_THAN_OR_EQUAL_TO,
+          OperatorKind.EQUAL_TO,
+          OperatorKind.NOT_EQUAL_TO);
+  private static final ImmutableSet<OperatorKind> Left_UNARY_OPERATORS =
+      ImmutableSet.of(
+          OperatorKind.UNARY_PLUS,
+          OperatorKind.UNARY_MINOR,
+          OperatorKind.INCREMENT,
+          OperatorKind.DECREMENT,
+          OperatorKind.LOGICAL_NOT);
+
+  private static final ImmutableSet<OperatorKind> POSTFIX_UNARY_OPERATORS =
+      ImmutableSet.of(OperatorKind.RIGHT_DECREMENT, OperatorKind.RIGHT_INCREMENT);
+  private static final ImmutableSet<OperatorKind> BITWISE_OPERATORS =
+      ImmutableSet.of(OperatorKind.LEFT_SHIFT);
+
+  private static final ImmutableSet<OperatorKind> ARITHMETIC_OPERATORS =
+      ImmutableSet.of(
+          OperatorKind.ADDITION,
+          OperatorKind.SUBTRACTION,
+          OperatorKind.MULTIPLICATION,
+          OperatorKind.DIVISION,
+          OperatorKind.MODULUS);
 
   public OperatorNode(OperatorKind operatorKind) {
     this.operatorKind = operatorKind;
@@ -67,13 +72,13 @@ public class OperatorNode implements AstNode {
   public String toString() {
     switch (operatorKind) {
       case ADDITION:
-        case UNARY_PLUS:
+      case UNARY_PLUS:
         return "+";
       case SUBTRACTION:
       case UNARY_MINOR:
         return "-";
       case MULTIPLICATION:
-        return  "*";
+        return "*";
       case DIVISION:
         return "/";
       case MODULUS:
@@ -129,18 +134,23 @@ public class OperatorNode implements AstNode {
   }
 
   public static Boolean isRelationalOperator(OperatorNode operatorNode) {
-    return RELATIONAL_SET.contains(operatorNode.operatorKind);
+    return RELATIONAL_OPERATORS.contains(operatorNode.operatorKind);
   }
 
   public static Boolean isUnaryOperator(OperatorNode operatorNode) {
-    return Left_UNARY_SET.contains(operatorNode.operatorKind) || RIGHT_UNARY_SET.contains(operatorNode.operatorKind);
+    return Left_UNARY_OPERATORS.contains(operatorNode.operatorKind)
+        || POSTFIX_UNARY_OPERATORS.contains(operatorNode.operatorKind);
   }
 
   public static Boolean isBitwiseOperator(OperatorNode operatorNode) {
-    return BITWISE_SET.contains(operatorNode.operatorKind);
+    return BITWISE_OPERATORS.contains(operatorNode.operatorKind);
   }
 
-  public static Boolean isRightUnaryOperator(OperatorNode operatorNode) {
-    return RIGHT_UNARY_SET.contains(operatorNode.operatorKind);
+  public static Boolean isPostfixUnaryOperator(OperatorNode operatorNode) {
+    return POSTFIX_UNARY_OPERATORS.contains(operatorNode.operatorKind);
+  }
+
+  public static Boolean isArithmeticOperator(OperatorNode operatorNode) {
+    return ARITHMETIC_OPERATORS.contains(operatorNode.operatorKind);
   }
 }

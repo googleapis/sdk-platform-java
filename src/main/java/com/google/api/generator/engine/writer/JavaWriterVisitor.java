@@ -349,7 +349,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(OperationExpr operationExpr) {
     OperatorNode operatorNode = operationExpr.operator();
     if (OperatorNode.isUnaryOperator(operatorNode)) {
-      if (OperatorNode.isRightUnaryOperator(operatorNode)) {
+      if (OperatorNode.isPostfixUnaryOperator(operatorNode)) {
         operationExpr.expressions().get(0).accept(this);
         operatorNode.accept(this);
       } else {
@@ -361,13 +361,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
           .forEach(
               i -> {
                 operationExpr.expressions().get(i).accept(this);
-                if ( i < operationExpr.expressions().size() - 1) {
+                if (i < operationExpr.expressions().size() - 1) {
                   space();
                   operationExpr.operator().accept(this);
                   space();
                 }
-              }
-          );
+              });
     }
   }
 

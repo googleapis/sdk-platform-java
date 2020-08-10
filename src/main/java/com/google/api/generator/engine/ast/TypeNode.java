@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableSet;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -109,6 +110,13 @@ public abstract class TypeNode implements AstNode {
     return !isPrimitiveType()
         && !other.isPrimitiveType()
         && reference().isSupertypeOrEquals(other.reference());
+  }
+
+  public static boolean isNumberType(TypeNode typeNode) {
+    ImmutableSet<TypeNode> numberTypeKinds =
+        ImmutableSet.of(
+            TypeNode.INT, TypeNode.DOUBLE, TypeNode.INTEGER, TypeNode.LONG, TypeNode.FLOAT);
+    return numberTypeKinds.contains(typeNode);
   }
 
   @Override
