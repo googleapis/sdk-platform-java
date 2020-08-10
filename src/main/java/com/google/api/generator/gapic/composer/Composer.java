@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.ApacheLicense;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,7 +103,7 @@ public class Composer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(ApacheLicenseComposer.APACHE_LICENSE)
+            .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
             .setPackageString(pakkage)
             .setName(name)
             .setScope(ScopeNode.PUBLIC)

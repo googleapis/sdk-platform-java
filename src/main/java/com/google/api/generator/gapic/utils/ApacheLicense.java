@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.utils;
 
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
 import java.util.Arrays;
 import java.util.List;
 
-public class ApacheLicenseComposer {
+public class ApacheLicense {
   private static final String fileHeadeString =
       "Copyright 2020 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
@@ -32,6 +32,6 @@ public class ApacheLicenseComposer {
           + "See the License for the specific language governing permissions and\n"
           + "limitations under the License.";
 
-  public static final List<CommentStatement> APACHE_LICENSE =
+  public static final List<CommentStatement> APACHE_LICENSE_COMMENT_STATEMENT =
       Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeadeString)));;
 }
