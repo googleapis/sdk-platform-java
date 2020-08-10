@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -66,6 +67,7 @@ import javax.annotation.Generated;
 
 public class GrpcServiceStubClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "Grpc%sStub";
+  private static final String GRPC_SERVICE_CALLABLE_FACTORY_PATTERN = "Grpc%sCallableFactory";
   private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
@@ -391,14 +393,9 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                     Arrays.asList(
                         TypeNode.withReference(ConcreteReference.withClazz(IOException.class))));
 
-    // TODO(miraleung): Actually instantiate the class.
     Function<List<Expr>, Expr> instantiatorExprFn =
         argList ->
-            MethodInvocationExpr.builder()
-                .setMethodName("newGrpcEchoStub")
-                .setArguments(argList)
-                .setReturnType(creatorMethodReturnType)
-                .build();
+            NewObjectExpr.builder().setType(creatorMethodReturnType).setArguments(argList).build();
 
     TypeNode stubSettingsType = types.get(String.format(STUB_SETTINGS_PATTERN, serviceName));
     VariableExpr settingsVarExpr =
@@ -510,9 +507,12 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                             Arrays.asList(
                                 settingsVarExpr,
                                 clientContextVarExpr,
-                                MethodInvocationExpr.builder()
-                                    // TODO(miraleung): Actually instantiate  the callable factory.
-                                    .setMethodName("newGrpcEchoCallableFactory")
+                                NewObjectExpr.builder()
+                                    .setType(
+                                        types.get(
+                                            String.format(
+                                                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN,
+                                                service.name())))
                                     .build()))
                         .setReturnType(thisClassType)
                         .build())));
@@ -599,11 +599,9 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         AssignmentExpr.builder()
             .setVariableExpr(backgroundResourcesVarExpr)
             .setValueExpr(
-                MethodInvocationExpr.builder()
-                    // TODO(miraleung): Initialize this instead.
-                    .setMethodName("newBackgroundResourceAggregation")
+                NewObjectExpr.builder()
+                    .setType(staticTypes.get("BackgroundResourceAggregation"))
                     .setArguments(Arrays.asList(getBackgroundResourcesMethodExpr))
-                    .setReturnType(backgroundResourcesVarExpr.type())
                     .build())
             .build());
 
@@ -857,7 +855,12 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createDynamicTypes(Service service, String stubPakkage) {
     Map<String, TypeNode> types = new HashMap<>();
     types.putAll(
-        Arrays.asList(CLASS_NAME_PATTERN, STUB_SETTINGS_PATTERN, STUB_PATTERN).stream()
+        Arrays.asList(
+                CLASS_NAME_PATTERN,
+                STUB_SETTINGS_PATTERN,
+                STUB_PATTERN,
+                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN)
+            .stream()
             .collect(
                 Collectors.toMap(
                     p -> String.format(p, service.name()),
