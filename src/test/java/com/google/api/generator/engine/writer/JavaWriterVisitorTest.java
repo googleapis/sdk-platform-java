@@ -268,6 +268,24 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_scopedStaticFinalVolatileDecl() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr expr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setIsVolatile(true)
+            .build();
+
+    expr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "private static final volatile boolean x");
+  }
+
+  @Test
   public void writeVariableExpr_basicReference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
@@ -428,11 +446,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -447,7 +470,8 @@ public class JavaWriterVisitorTest {
                 "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
             .addComment("named `bookShelves/*`")
             .addSampleCode(
-                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+                "ApiFuture<Shelf> future ="
+                    + " libraryClient.createShelfCallable().futureCall(request);")
             .addOrderedList(
                 Arrays.asList(
                     "A \"flattened\" method.",
@@ -462,7 +486,8 @@ public class JavaWriterVisitorTest {
             "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
             "* named `bookShelves/&#42;`\n",
             "* <pre><code>\n",
-            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* ApiFuture&lt;Shelf&gt; future ="
+                + " libraryClient.createShelfCallable().futureCall(request);\n",
             "* </code></pre>\n",
             "* <ol>\n",
             "* <li> A \"flattened\" method.\n",
@@ -1577,9 +1602,12 @@ public class JavaWriterVisitorTest {
             .addParagraph("The default instance has everything set to sensible defaults:")
             .addUnorderedList(
                 Arrays.asList(
-                    "The default service address (library-example.googleapis.com) and default port (1234) are used.",
-                    "Credentials are acquired automatically through Application Default Credentials.",
-                    "Retries are configured for idempotent methods but not for non-idempotent methods."))
+                    "The default service address (library-example.googleapis.com) and default port"
+                        + " (1234) are used.",
+                    "Credentials are acquired automatically through Application Default"
+                        + " Credentials.",
+                    "Retries are configured for idempotent methods but not for non-idempotent"
+                        + " methods."))
             .build();
     List<Reference> subGenerics =
         Arrays.asList(
@@ -1677,10 +1705,13 @@ public class JavaWriterVisitorTest {
             " * <p>The default instance has everything set to sensible defaults:\n",
             " *\n",
             " * <ul>\n",
-            " *   <li>The default service address (library-example.googleapis.com) and default port (1234) are\n",
+            " *   <li>The default service address (library-example.googleapis.com) and default"
+                + " port (1234) are\n",
             " *       used.\n",
-            " *   <li>Credentials are acquired automatically through Application Default Credentials.\n",
-            " *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.\n",
+            " *   <li>Credentials are acquired automatically through Application Default"
+                + " Credentials.\n",
+            " *   <li>Retries are configured for idempotent methods but not for non-idempotent"
+                + " methods.\n",
             " * </ul>\n",
             " */\n",
             "public class LibraryServiceStub {\n",
