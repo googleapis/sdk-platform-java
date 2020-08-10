@@ -172,7 +172,7 @@ public class CastExprTest {
 
   @Test
   public void invalidCastExpr_castToVoidType() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.VOID_OBJECT).build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     assertThrows(
         IllegalStateException.class,
