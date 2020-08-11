@@ -85,7 +85,7 @@ public class Composer {
   }
 
   /** ====================== STUB CLASSES ==================== */
-  protected static GapicClass generateStubServiceSettings(Service service) {
+  private static GapicClass generateStubServiceSettings(Service service) {
     return generateGenericClass(
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
   }
