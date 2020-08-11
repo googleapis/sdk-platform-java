@@ -11,7 +11,7 @@ java_library(
         ":utils_files",
     ],
     deps = [
-        "@com_google_guava_guava//jar",
         "//src/main/java/com/google/api/generator/engine/ast",
+        "@com_google_guava_guava//jar",
     ],
 )

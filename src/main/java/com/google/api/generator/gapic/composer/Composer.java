@@ -22,8 +22,6 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.utils.ApacheLicense;
-import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +85,6 @@ public class Composer {
   }
 
   /** ====================== STUB CLASSES ==================== */
-  @VisibleForTesting
   protected static GapicClass generateStubServiceSettings(Service service) {
     return generateGenericClass(
         Kind.STUB, String.format("%sStubSettings", service.name()), service);
@@ -103,7 +100,6 @@ public class Composer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
             .setPackageString(pakkage)
             .setName(name)
             .setScope(ScopeNode.PUBLIC)

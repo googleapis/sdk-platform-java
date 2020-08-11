@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.gapic.utils.ApacheLicense;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -33,6 +34,15 @@ public abstract class GapicClass {
 
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();
+  }
+
+  public GapicClass addApacheLicense() {
+    ClassDefinition classWithHeader =
+        classDefinition()
+            .toBuilder()
+            .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
+            .build();
+    return create(kind(), classWithHeader);
   }
 
   static Builder builder() {

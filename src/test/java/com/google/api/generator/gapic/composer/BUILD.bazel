@@ -1,7 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
-    "ComposerTest",
     "GrpcServiceCallableFactoryClassComposerTest",
     "GrpcServiceStubClassComposerTest",
     "MockServiceClassComposerTest",

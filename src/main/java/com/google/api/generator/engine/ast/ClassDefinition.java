@@ -81,6 +81,8 @@ public abstract class ClassDefinition implements AstNode {
         .setNestedClasses(Collections.emptyList());
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setFileHeader(List<CommentStatement> fileHeader);

@@ -33,5 +33,5 @@ public class ApacheLicense {
           + "limitations under the License.";
 
   public static final List<CommentStatement> APACHE_LICENSE_COMMENT_STATEMENT =
-      Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeadeString)));;
+      Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeadeString)));
 }

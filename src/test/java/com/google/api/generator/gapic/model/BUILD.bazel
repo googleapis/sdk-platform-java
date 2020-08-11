@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "GapicClassTest",
     "MethodTest",
 ]
 
@@ -16,6 +17,8 @@ filegroup(
     deps = [
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/main/java/com/google/api/generator/engine/ast",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
     ],

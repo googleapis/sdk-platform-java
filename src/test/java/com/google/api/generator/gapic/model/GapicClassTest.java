@@ -12,50 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.model;
 
 import static junit.framework.Assert.assertEquals;
 
+import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.model.Message;
-import com.google.api.generator.gapic.model.ResourceName;
-import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.Parser;
-import com.google.protobuf.Descriptors.FileDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.showcase.v1beta1.EchoOuterClass;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import org.junit.Before;
+import com.google.api.generator.gapic.model.GapicClass.Kind;
 import org.junit.Test;
 
-public class ComposerTest {
-  private ServiceDescriptor echoService;
-  private FileDescriptor echoFileDescriptor;
-
-  @Before
-  public void setUp() {
-    echoFileDescriptor = EchoOuterClass.getDescriptor();
-    echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-  }
-
+public class GapicClassTest {
   @Test
-  public void generateStubServiceSettings() {
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-
-    List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
-    Service echoProtoService = services.get(0);
+  public void gapicClass_addApacheLicense() {
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.showcase.v1beta1.stub")
+            .setName("EchoStubSettings")
+            .setScope(ScopeNode.PUBLIC)
+            .build();
+    GapicClass gapicClassWithHeader = GapicClass.create(Kind.TEST, classDef).addApacheLicense();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
-    Composer.generateStubServiceSettings(echoProtoService).classDefinition().accept(visitor);
-    System.out.println(visitor.write());
-    System.out.println(EXPECTED_CLASS_STRING);
-
+    gapicClassWithHeader.classDefinition().accept(visitor);
     assertEquals(visitor.write(), EXPECTED_CLASS_STRING);
   }
 
