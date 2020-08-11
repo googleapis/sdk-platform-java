@@ -41,6 +41,7 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -1701,6 +1702,39 @@ public class JavaWriterVisitorTest {
             "  }\n",
             "}\n");
     assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeReferenceConstructorExpr_thisConstructorWithArguments() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    VariableExpr idVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("id").setType(TypeNode.STRING).build())
+            .build();
+    VariableExpr nameVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("name").setType(TypeNode.STRING).build())
+            .build();
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.thisBuilder()
+            .setArguments(Arrays.asList(idVarExpr, nameVarExpr))
+            .setType(classType)
+            .build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("this(id, name)");
+  }
+
+  @Test
+  public void writeReferenceConstructorExpr_superConstructorWithNoArguments() {
+    VaporReference ref =
+        VaporReference.builder().setName("Parent").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.superBuilder().setType(classType).build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("super()");
   }
 
   @Test
