@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -28,6 +29,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -70,12 +72,12 @@ public class ResourceNameHelperClassComposer {
 
   public GapicClass generate(ResourceName resourceName) {
     List<List<String>> tokenHierarchies = parseTokenHierarchy(resourceName.patterns());
+    Map<String, TypeNode> types = createDynamicTypes(resourceName, tokenHierarchies);
     List<VariableExpr> templateFinalVarExprs = createTemplateClassMembers(tokenHierarchies);
-    List<VariableExpr> patternTokenVarExprs = createPatternTokenClassMembers(tokenHierarchies);
+    Map<String, VariableExpr> patternTokenVarExprs =
+        createPatternTokenClassMembers(tokenHierarchies);
 
-    String className =
-        String.format(
-            CLASS_NAME_PATTERN, JavaStyle.toUpperCamelCase(resourceName.resourceTypeName()));
+    String className = getThisClassName(resourceName);
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(resourceName.pakkage())
@@ -89,6 +91,13 @@ public class ResourceNameHelperClassComposer {
                     patternTokenVarExprs,
                     resourceName.patterns(),
                     tokenHierarchies))
+            .setMethods(
+                createClassMethods(
+                    resourceName,
+                    templateFinalVarExprs,
+                    patternTokenVarExprs,
+                    tokenHierarchies,
+                    types))
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
@@ -118,7 +127,7 @@ public class ResourceNameHelperClassComposer {
         .collect(Collectors.toList());
   }
 
-  private static List<VariableExpr> createPatternTokenClassMembers(
+  private static Map<String, VariableExpr> createPatternTokenClassMembers(
       List<List<String>> tokenHierarchies) {
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     return tokenSet.stream()
@@ -126,12 +135,12 @@ public class ResourceNameHelperClassComposer {
             t ->
                 VariableExpr.withVariable(
                     Variable.builder().setName(t).setType(TypeNode.STRING).build()))
-        .collect(Collectors.toList());
+        .collect(Collectors.toMap(v -> v.variable().identifier().name(), v -> v));
   }
 
   private static List<Statement> createClassStatements(
       List<VariableExpr> templateFinalVarExprs,
-      List<VariableExpr> patternTokenVarExprs,
+      Map<String, VariableExpr> patternTokenVarExprs,
       List<String> patterns,
       List<List<String>> tokenHierarchies) {
     List<Expr> memberVars = new ArrayList<>();
@@ -180,8 +189,91 @@ public class ResourceNameHelperClassComposer {
 
     // Private per-token string variables.
     memberVars.addAll(
-        patternTokenVarExprs.stream().map(v -> toDeclFn.apply(v)).collect(Collectors.toList()));
+        patternTokenVarExprs.values().stream()
+            .map(v -> toDeclFn.apply(v))
+            .collect(Collectors.toList()));
     return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  private static List<MethodDefinition> createClassMethods(
+      ResourceName resourceName,
+      List<VariableExpr> templateFinalVarExprs,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.addAll(
+        createConstructorMethods(
+            resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
+    return javaMethods;
+  }
+
+  private static List<MethodDefinition> createConstructorMethods(
+      ResourceName resourceName,
+      List<VariableExpr> templateFinalVarExprs,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    String thisClassName = getThisClassName(resourceName);
+    TypeNode thisClassType = types.get(thisClassName);
+
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    MethodDefinition deprecatedCtor =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PRIVATE)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
+            .setReturnType(thisClassType)
+            .build();
+    javaMethods.add(deprecatedCtor);
+
+    for (int i = 0; i < tokenHierarchies.size(); i++) {
+      List<String> tokens = tokenHierarchies.get(i);
+      List<Expr> bodyExprs = new ArrayList<>();
+      TypeNode argType = i == 0 ? types.get("Builder") : types.get(getBuilderTypeName(tokens));
+      VariableExpr builderArgExpr =
+          VariableExpr.withVariable(Variable.builder().setName("builder").setType(argType).build());
+      for (String token : tokens) {
+        MethodInvocationExpr checkNotNullExpr =
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Preconditions"))
+                .setMethodName("checkNotNull")
+                .setReturnType(TypeNode.STRING)
+                .setArguments(
+                    Arrays.asList(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(builderArgExpr)
+                            .setMethodName(
+                                String.format("get%s", JavaStyle.toUpperCamelCase(token)))
+                            .build()))
+                .build();
+        bodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(patternTokenVarExprs.get(token))
+                .setValueExpr(checkNotNullExpr)
+                .build());
+      }
+      AssignmentExpr pathTemplateAssignExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(FIXED_CLASS_VARS.get("pathTemplate"))
+              .setValueExpr(templateFinalVarExprs.get(i))
+              .build();
+      bodyExprs.add(pathTemplateAssignExpr);
+      javaMethods.add(
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PRIVATE)
+              .setReturnType(thisClassType)
+              .setArguments(Arrays.asList(builderArgExpr.toBuilder().setIsDecl(true).build()))
+              .setBody(
+                  bodyExprs.stream()
+                      .map(e -> ExprStatement.withExpr(e))
+                      .collect(Collectors.toList()))
+              .build());
+    }
+
+    return javaMethods;
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
@@ -205,6 +297,44 @@ public class ResourceNameHelperClassComposer {
                 c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 
+  private static Map<String, TypeNode> createDynamicTypes(
+      ResourceName resourceName, List<List<String>> tokenHierarchies) {
+    String thisClassName = getThisClassName(resourceName);
+    Map<String, TypeNode> dynamicTypes = new HashMap<>();
+    dynamicTypes.put(
+        thisClassName,
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(thisClassName)
+                .setPakkage(resourceName.pakkage())
+                .build()));
+    dynamicTypes.put(
+        "Builder",
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Builder")
+                .setPakkage(resourceName.pakkage())
+                .setEnclosingClassName(thisClassName)
+                .build()));
+
+    if (tokenHierarchies.size() > 1) {
+      dynamicTypes.putAll(
+          tokenHierarchies.subList(1, tokenHierarchies.size()).stream()
+              .map(ts -> getBuilderTypeName(ts))
+              .collect(
+                  Collectors.toMap(
+                      s -> s,
+                      s ->
+                          TypeNode.withReference(
+                              VaporReference.builder()
+                                  .setName(s)
+                                  .setPakkage(resourceName.pakkage())
+                                  .setEnclosingClassName(thisClassName)
+                                  .build()))));
+    }
+    return dynamicTypes;
+  }
+
   private static Map<String, VariableExpr> createFixedClassMemberVariables() {
     Map<String, TypeNode> memberVars = new HashMap<>();
     Reference stringRef = ConcreteReference.withClazz(String.class);
@@ -221,6 +351,15 @@ public class ResourceNameHelperClassComposer {
     return memberVars.entrySet().stream()
         .map(e -> Variable.builder().setName(e.getKey()).setType(e.getValue()).build())
         .collect(Collectors.toMap(v -> v.identifier().name(), v -> VariableExpr.withVariable(v)));
+  }
+
+  private static String getThisClassName(ResourceName resourceName) {
+    return String.format(
+        CLASS_NAME_PATTERN, JavaStyle.toUpperCamelCase(resourceName.resourceTypeName()));
+  }
+
+  private static String getBuilderTypeName(List<String> tokens) {
+    return String.format("%sBuilder", concatToUpperSnakeCaseName(tokens));
   }
 
   @VisibleForTesting
