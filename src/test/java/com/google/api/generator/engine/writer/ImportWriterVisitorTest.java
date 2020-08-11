@@ -716,7 +716,7 @@ public class ImportWriterVisitorTest {
             "import com.google.example.v1.Student;\n",
             "import java.util.stream.LongStream;\n\n"));
   }
-  
+
   @Test
   public void writeSuperObjectValueImports() {
     VaporReference ref =
