@@ -212,6 +212,10 @@ public class ResourceNameHelperClassComposer {
             resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
     javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
+    javaMethods.addAll(
+        createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+    javaMethods.addAll(
+        createFormatCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     return javaMethods;
   }
 
@@ -356,6 +360,115 @@ public class ResourceNameHelperClassComposer {
                         Arrays.asList(ValueExpr.withValue(ThisObjectValue.withType(thisClassType))))
                     .build())
             .build());
+    return javaMethods;
+  }
+
+  private static List<MethodDefinition> createOfCreatorMethods(
+      ResourceName resourceName,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    return createOfOrFormatMethodHelper(
+        resourceName, patternTokenVarExprs, tokenHierarchies, types, /*isFormatMethod=*/ false);
+  }
+
+  private static List<MethodDefinition> createFormatCreatorMethods(
+      ResourceName resourceName,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    return createOfOrFormatMethodHelper(
+        resourceName, patternTokenVarExprs, tokenHierarchies, types, /*isFormatMethod=*/ true);
+  }
+
+  private static List<MethodDefinition> createOfOrFormatMethodHelper(
+      ResourceName resourceName,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types,
+      boolean isFormatMethod) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    String methodNameFormat = isFormatMethod ? "format%s" : "of%s";
+    String newBuilderMethodNameFormat = "new%s";
+    String setMethodNameFormat = "set%s";
+    String buildMethodName = "build";
+    String toStringMethodName = "toString";
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("BetaApi"))
+            .setDescription(
+                String.format(
+                    "The static %s methods are not stable yet and may be changed in the future.",
+                    isFormatMethod ? "format" : "create"))
+            .build();
+    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
+
+    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode returnType = isFormatMethod ? TypeNode.STRING : thisClassType;
+    // Create the newBuilder and variation methods here.
+    // Variation example: newProjectLocationAutoscalingPolicyBuilder().
+    for (int i = 0; i < tokenHierarchies.size(); i++) {
+      List<String> tokens = tokenHierarchies.get(i);
+      String builderMethodName =
+          String.format(newBuilderMethodNameFormat, getBuilderTypeName(tokens));
+
+      MethodInvocationExpr returnExpr =
+          MethodInvocationExpr.builder().setMethodName(builderMethodName).build();
+      for (String token : tokens) {
+        returnExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(returnExpr)
+                .setMethodName(
+                    String.format(setMethodNameFormat, JavaStyle.toUpperCamelCase(token)))
+                .setArguments(
+                    Arrays.asList(
+                        VariableExpr.withVariable(
+                            Variable.builder().setName(token).setType(TypeNode.STRING).build())))
+                .build();
+      }
+      returnExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnExpr)
+              .setMethodName(buildMethodName)
+              .setReturnType(thisClassType)
+              .build();
+      if (isFormatMethod) {
+        returnExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(returnExpr)
+                .setMethodName(toStringMethodName)
+                .setReturnType(TypeNode.STRING)
+                .build();
+      }
+      List<VariableExpr> methodArgs =
+          tokens.stream()
+              .map(t -> patternTokenVarExprs.get(t).toBuilder().setIsDecl(true).build())
+              .collect(Collectors.toList());
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setScope(ScopeNode.PUBLIC)
+              .setIsStatic(true)
+              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
+              .setReturnType(returnType)
+              .setName(
+                  String.format(
+                      methodNameFormat, i == 0 ? "" : getBuilderTypeName(tokenHierarchies, i)))
+              .setArguments(methodArgs)
+              .setReturnExpr(returnExpr)
+              .build());
+
+      if (i == 0 && tokenHierarchies.size() > 1) {
+        javaMethods.add(
+            MethodDefinition.builder()
+                .setScope(ScopeNode.PUBLIC)
+                .setIsStatic(true)
+                .setAnnotations(annotations)
+                .setReturnType(returnType)
+                .setName(String.format(methodNameFormat, getBuilderTypeName(tokens)))
+                .setReturnExpr(returnExpr)
+                .build());
+      }
+    }
     return javaMethods;
   }
 
