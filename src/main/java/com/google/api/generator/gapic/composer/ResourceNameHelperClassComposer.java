@@ -43,6 +43,7 @@ import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -188,9 +189,10 @@ public class ResourceNameHelperClassComposer {
     memberVars.add(toDeclFn.apply(FIXED_CLASS_VARS.get("fixedValue")));
 
     // Private per-token string variables.
+    // Use the token set as a key to maintain ordering (for consistency).
     memberVars.addAll(
-        patternTokenVarExprs.values().stream()
-            .map(v -> toDeclFn.apply(v))
+        getTokenSet(tokenHierarchies).stream()
+            .map(t -> toDeclFn.apply(patternTokenVarExprs.get(t)))
             .collect(Collectors.toList()));
     return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
@@ -205,6 +207,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.addAll(
         createConstructorMethods(
             resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
+    javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
     return javaMethods;
   }
 
@@ -274,6 +277,20 @@ public class ResourceNameHelperClassComposer {
     }
 
     return javaMethods;
+  }
+
+  private static List<MethodDefinition> createTokenGetterMethods(
+      Map<String, VariableExpr> patternTokenVarExprs, List<List<String>> tokenHierarchies) {
+    return getTokenSet(tokenHierarchies).stream()
+        .map(
+            t ->
+                MethodDefinition.builder()
+                    .setScope(ScopeNode.PUBLIC)
+                    .setReturnType(TypeNode.STRING)
+                    .setName(String.format("get%s", JavaStyle.toUpperCamelCase(t)))
+                    .setReturnExpr(patternTokenVarExprs.get(t))
+                    .build())
+        .collect(Collectors.toList());
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
@@ -395,7 +412,9 @@ public class ResourceNameHelperClassComposer {
 
   @VisibleForTesting
   static Set<String> getTokenSet(List<List<String>> tokenHierarchy) {
-    return tokenHierarchy.stream().flatMap(tokens -> tokens.stream()).collect(Collectors.toSet());
+    return tokenHierarchy.stream()
+        .flatMap(tokens -> tokens.stream())
+        .collect(Collectors.toCollection(LinkedHashSet::new));
   }
 
   @VisibleForTesting
