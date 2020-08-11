@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
@@ -44,6 +45,7 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -316,69 +318,29 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
   }
 
+  /** =============================== COMMENT =============================== */
   @Test
-  public void writeBlockComment_basic() {
+  public void writeBlockCommentStatement_basic() {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(blockComment);
     String expected = "/** this is a test comment */\n";
-    blockComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
-  public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
-    BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
-    blockComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeLineComment_basic() {
+  public void writeLineCommentStatement_basic() {
     String content = "this is a test comment";
     LineComment lineComment = LineComment.builder().setComment(content).build();
+    CommentStatement commentStatement = CommentStatement.withComment(lineComment);
     String expected = "// this is a test comment\n";
-    lineComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
-  public void writeLineComment_longLine() {
-    String content =
-        "this is a long test comment with so many words, hello world, hello again, hello for 3"
-            + " times, blah, blah!";
-    LineComment lineComment = LineComment.builder().setComment(content).build();
-    String expected =
-        String.format(
-            createLines(2),
-            "// this is a long test comment with so many words, hello world, hello again, hello"
-                + " for 3 times,\n",
-            "// blah, blah!\n");
-    lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeLineComment_specialChar() {
-    String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
-            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
-            + "\"]']";
-    LineComment lineComment = LineComment.withComment(content);
-    String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
-            + " [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n"
-            + "\\r"
-            + "\"]']\n";
-    lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
-  }
-
-  @Test
-  public void writeJavaDocComment_allComponents() {
+  public void writeJavaDocCommentStatement_allComponents() {
     String content = "this is a test comment";
     String deprecatedText = "Use the {@link ArchivedBookName} class instead.";
     String paramName = "shelfName";
@@ -406,6 +368,7 @@ public class JavaWriterVisitorTest {
             .setThrows(throwsType, throwsDescription)
             .setDeprecated(deprecatedText)
             .build();
+    CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
     String expected =
         String.format(
             createLines(23),
@@ -434,7 +397,45 @@ public class JavaWriterVisitorTest {
             "* @throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
             "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
             "*/\n");
-    javaDocComment.accept(writerVisitor);
+    commentStatement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeBlockComment_specialChar() {
+    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_longLine() {
+    String content =
+        "this is a long test comment with so many words, hello world, hello again, hello for 3"
+            + " times, blah, blah!";
+    LineComment lineComment = LineComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(2),
+            "// this is a long test comment with so many words, hello world, hello again, hello"
+                + " for 3 times,\n",
+            "// blah, blah!\n");
+    lineComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeLineComment_specialChar() {
+    String content =
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+    LineComment lineComment = LineComment.withComment(content);
+    String expected =
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+    lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1399,7 +1400,15 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_withAnnotationsAndThrows() {
+  public void writeMethodDefinition_withCommentsAnnotationsAndThrows() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND METHOD");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("This is an override method called `close()`")
+            .addParam("valOne", "string type")
+            .addParam("valTwo", "boolean type")
+            .addComment("The return value is int 3.")
+            .build();
     ValueExpr returnExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -1429,6 +1438,10 @@ public class JavaWriterVisitorTest {
                     TypeNode.withExceptionClazz(InterruptedException.class)))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
+            .setHeaderCommentStatements(
+                Arrays.asList(
+                    CommentStatement.withComment(lineComment),
+                    CommentStatement.withComment(javaDocComment)))
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED))
@@ -1440,10 +1453,16 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
+    String expected =
         String.format(
-            createLines(10),
+            createLines(17),
+            "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
+            "/**\n",
+            "* This is an override method called `close()`\n",
+            "* The return value is int 3.\n",
+            "* @param valOne string type\n",
+            "* @param valTwo boolean type\n",
+            "*/\n",
             "@SuppressWarnings(\"all\")\n",
             "@Deprecated\n",
             "@Override\n",
@@ -1454,7 +1473,8 @@ public class JavaWriterVisitorTest {
             "}\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n"));
+            "}\n");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
@@ -1551,7 +1571,18 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_statementsAndMethods() {
+  public void writeClassDefinition_commentsStatementsAndMethods() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("Class to configure an instance of {@link LibraryServiceStub}.")
+            .addParagraph("The default instance has everything set to sensible defaults:")
+            .addUnorderedList(
+                Arrays.asList(
+                    "The default service address (library-example.googleapis.com) and default port (1234) are used.",
+                    "Credentials are acquired automatically through Application Default Credentials.",
+                    "Retries are configured for idempotent methods but not for non-idempotent methods."))
+            .build();
     List<Reference> subGenerics =
         Arrays.asList(
             ConcreteReference.withClazz(String.class),
@@ -1619,6 +1650,10 @@ public class JavaWriterVisitorTest {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.example.library.v1.stub")
+            .setHeaderCommentStatements(
+                Arrays.asList(
+                    CommentStatement.withComment(lineComment),
+                    CommentStatement.withComment(javaDocComment)))
             .setName("LibraryServiceStub")
             .setScope(ScopeNode.PUBLIC)
             .setStatements(statements)
@@ -1627,10 +1662,9 @@ public class JavaWriterVisitorTest {
             .build();
 
     classDef.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
+    String expected =
         String.format(
-            createLines(23),
+            createLines(36),
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
@@ -1638,6 +1672,19 @@ public class JavaWriterVisitorTest {
             "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import java.util.Map;\n",
             "\n",
+            "// AUTO-GENERATED DOCUMENTATION AND CLASS\n",
+            "/**\n",
+            " * Class to configure an instance of {{@literal @}link LibraryServiceStub}.\n",
+            " *\n",
+            " * <p>The default instance has everything set to sensible defaults:\n",
+            " *\n",
+            " * <ul>\n",
+            " *   <li>The default service address (library-example.googleapis.com) and default port (1234) are\n",
+            " *       used.\n",
+            " *   <li>Credentials are acquired automatically through Application Default Credentials.\n",
+            " *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.\n",
+            " * </ul>\n",
+            " */\n",
             "public class LibraryServiceStub {\n",
             "  private AssignmentExpr x;\n",
             "  protected Map<ClassDefinition, Map.Entry<String, MethodDefinition>> y;\n\n",
@@ -1653,7 +1700,8 @@ public class JavaWriterVisitorTest {
             "      return true;\n",
             "    }\n",
             "  }\n",
-            "}\n"));
+            "}\n");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
@@ -1735,6 +1783,36 @@ public class JavaWriterVisitorTest {
 
     assignmentExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("this.name = this.getName(id)");
+  }
+
+  @Test
+  public void writeSuperObjectValue_accessFieldAndInvokeMethod() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    SuperObjectValue superObjectValue = SuperObjectValue.withType(classType);
+    ValueExpr superValueExpr = ValueExpr.withValue(superObjectValue);
+    Variable subVariable = Variable.builder().setName("name").setType(TypeNode.STRING).build();
+    VariableExpr superVariableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(superValueExpr)
+            .build();
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setExprReferenceExpr(ValueExpr.withValue(superObjectValue))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(superVariableExpr)
+            .setValueExpr(methodExpr)
+            .build();
+
+    assignmentExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("super.name = super.getName()");
   }
 
   private static String createLines(int numLines) {

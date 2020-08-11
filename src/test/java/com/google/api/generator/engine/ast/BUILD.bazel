@@ -27,6 +27,7 @@ TESTS = [
     "MethodInvocationExprTest",
     "ReferenceConstructorExprTest",
     "ThisObjectValueTest",
+    "SuperObjectValueTest",
 ]
 
 filegroup(

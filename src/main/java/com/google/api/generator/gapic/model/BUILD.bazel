@@ -13,6 +13,7 @@ java_library(
     deps = [
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_auto_value_auto_value//jar",
         "@com_google_auto_value_auto_value_annotations//jar",
         "@com_google_code_findbugs_jsr305//jar",

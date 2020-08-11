@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -51,6 +52,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -487,6 +489,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
   }
 
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    commentStatement.comment().accept(this);
+  }
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment) {
     // Split comments by new line and add `//` to each line.
@@ -520,6 +527,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== OTHER =============================== */
   @Override
   public void visit(MethodDefinition methodDefinition) {
+    // Header comments, if any.
+    statements(methodDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(methodDefinition.annotations());
 
@@ -645,13 +654,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       buffer.append(importWriterVisitor.write());
     }
-
+    // Header comments, if any.
+    statements(classDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(classDefinition.annotations());
-
-    // Comments, if any.
-    // TODO(xiaozhenliu): Uncomment / update the lines below.
-    // statements(classDefinition.comments());
 
     classDefinition.scope().accept(this);
     space();

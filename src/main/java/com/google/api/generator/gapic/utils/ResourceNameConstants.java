@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.gapic.utils;
 
-public interface Comment {
-  public String comment();
-
-  public void accept(AstNodeVisitor visitor);
+public class ResourceNameConstants {
+  public static final String DELETED_TOPIC_LITERAL = "_deleted-topic_";
+  public static final String NAME_FIELD_NAME = "name";
+  public static final String WILDCARD_PATTERN = "*";
 }

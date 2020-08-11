@@ -19,13 +19,16 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +46,10 @@ public class GrpcServiceStubClassComposerTest {
   @Test
   public void generateServiceClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Service> services = Parser.parseService(echoFileDescriptor, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     Service echoProtoService = services.get(0);
     GapicClass clazz =
         GrpcServiceStubClassComposer.instance().generate(echoProtoService, messageTypes);
@@ -60,6 +66,7 @@ public class GrpcServiceStubClassComposerTest {
           + "import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;\n"
           + "\n"
           + "import com.google.api.gax.core.BackgroundResource;\n"
+          + "import com.google.api.gax.core.BackgroundResourceAggregation;\n"
           + "import com.google.api.gax.grpc.GrpcCallSettings;\n"
           + "import com.google.api.gax.grpc.GrpcStubCallableFactory;\n"
           + "import com.google.api.gax.rpc.BidiStreamingCallable;\n"
@@ -188,24 +195,24 @@ public class GrpcServiceStubClassComposerTest {
           + "\n"
           + "  public static final GrpcEchoStub create(EchoStubSettings settings) throws"
           + " IOException {\n"
-          + "    return newGrpcEchoStub(settings, ClientContext.create(settings));\n"
+          + "    return new GrpcEchoStub(settings, ClientContext.create(settings));\n"
           + "  }\n"
           + "\n"
           + "  public static final GrpcEchoStub create(ClientContext clientContext) throws"
           + " IOException {\n"
-          + "    return newGrpcEchoStub(EchoStubSettings.newBuilder().build(), clientContext);\n"
+          + "    return new GrpcEchoStub(EchoStubSettings.newBuilder().build(), clientContext);\n"
           + "  }\n"
           + "\n"
           + "  public static final GrpcEchoStub create(\n"
           + "      ClientContext clientContext, GrpcStubCallableFactory callableFactory) throws"
           + " IOException {\n"
-          + "    return newGrpcEchoStub(EchoStubSettings.newBuilder().build(), clientContext,"
+          + "    return new GrpcEchoStub(EchoStubSettings.newBuilder().build(), clientContext,"
           + " callableFactory);\n"
           + "  }\n"
           + "\n"
           + "  protected GrpcEchoStub(EchoStubSettings settings, ClientContext clientContext)\n"
           + "      throws IOException {\n"
-          + "    thiis(settings, clientContext, newGrpcEchoCallableFactory());\n"
+          + "    thiis(settings, clientContext, new GrpcEchoCallableFactory());\n"
           + "  }\n"
           + "\n"
           + "  protected GrpcEchoStub(\n"
@@ -282,8 +289,8 @@ public class GrpcServiceStubClassComposerTest {
           + "    blockCallable =\n"
           + "        callableFactori.createUnaryCallable(\n"
           + "            blockTransportSettings, settings.blockSettings(), clientContext);\n"
-          + "    backgroundResources ="
-          + " newBackgroundResourceAggregation(clientContext.getBackgroundResources());\n"
+          + "    backgroundResources = new"
+          + " BackgroundResourceAggregation(clientContext.getBackgroundResources());\n"
           + "  }\n"
           + "\n"
           + "  public GrpcOperationsStub getOperationsStub() {\n"
