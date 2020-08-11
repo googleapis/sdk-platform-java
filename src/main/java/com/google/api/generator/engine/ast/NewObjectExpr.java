@@ -33,6 +33,10 @@ public abstract class NewObjectExpr implements Expr {
     visitor.visit(this);
   }
 
+  public static NewObjectExpr withType(TypeNode type) {
+    return builder().setType(type).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_NewObjectExpr.Builder()
         .setArguments(Collections.emptyList())

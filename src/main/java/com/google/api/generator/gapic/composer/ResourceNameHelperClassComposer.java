@@ -23,10 +23,12 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -42,6 +44,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -208,6 +211,7 @@ public class ResourceNameHelperClassComposer {
         createConstructorMethods(
             resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
+    javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
     return javaMethods;
   }
 
@@ -291,6 +295,68 @@ public class ResourceNameHelperClassComposer {
                     .setReturnExpr(patternTokenVarExprs.get(t))
                     .build())
         .collect(Collectors.toList());
+  }
+
+  private static List<MethodDefinition> createBuilderCreatorMethods(
+      ResourceName resourceName, List<List<String>> tokenHierarchies, Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    String newMethodNameFormat = "new%s";
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("BetaApi"))
+            .setDescription(
+                "The per-pattern Builders are not stable yet and may be changed in the future.")
+            .build();
+    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
+
+    // Create the newBuilder and variation methods here.
+    // Variation example: newProjectLocationAutoscalingPolicyBuilder().
+    for (int i = 0; i < tokenHierarchies.size(); i++) {
+      final TypeNode returnType = getBuilderType(types, tokenHierarchies, i);
+      final Expr returnExpr = NewObjectExpr.withType(returnType);
+
+      Function<String, MethodDefinition.Builder> methodDefStarterFn =
+          methodName ->
+              MethodDefinition.builder()
+                  .setScope(ScopeNode.PUBLIC)
+                  .setIsStatic(true)
+                  .setReturnType(returnType)
+                  .setName(methodName)
+                  .setReturnExpr(returnExpr);
+
+      String variantName = getBuilderTypeName(tokenHierarchies, i);
+      javaMethods.add(
+          methodDefStarterFn
+              .apply(String.format(newMethodNameFormat, variantName))
+              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
+              .build());
+      if (i == 0 && tokenHierarchies.size() > 1) {
+        // Create another builder creator method, but with the per-variant name.
+        javaMethods.add(
+            methodDefStarterFn
+                .apply(getBuilderTypeName(tokenHierarchies.get(i)))
+                .setAnnotations(annotations)
+                .build());
+      }
+    }
+
+    // TODO(miraleung, v2): It seems weird that we currently generate a toBuilder method only for
+    // the default class, and none for the Builder variants.
+    TypeNode toBuilderReturnType = getBuilderType(types, tokenHierarchies, 0);
+    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(toBuilderReturnType)
+            .setName("toBuilder")
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(toBuilderReturnType)
+                    .setArguments(
+                        Arrays.asList(ValueExpr.withValue(ThisObjectValue.withType(thisClassType))))
+                    .build())
+            .build());
+    return javaMethods;
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
@@ -377,6 +443,10 @@ public class ResourceNameHelperClassComposer {
         CLASS_NAME_PATTERN, JavaStyle.toUpperCamelCase(resourceName.resourceTypeName()));
   }
 
+  private static String getBuilderTypeName(List<List<String>> tokenHierarchies, int index) {
+    return index == 0 ? "Builder" : getBuilderTypeName(tokenHierarchies.get(index));
+  }
+
   private static String getBuilderTypeName(List<String> tokens) {
     return String.format("%sBuilder", concatToUpperCamelCaseName(tokens));
   }
@@ -385,7 +455,7 @@ public class ResourceNameHelperClassComposer {
       Map<String, TypeNode> types, List<List<String>> tokenHierarchies, int index) {
     return index == 0
         ? types.get("Builder")
-        : types.get(getBuilderTypeName(tokenHierarchies.get(index)));
+        : types.get(getBuilderTypeName(tokenHierarchies, index));
   }
 
   @VisibleForTesting
