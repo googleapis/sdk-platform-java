@@ -232,7 +232,7 @@ public class ResourceNameHelperClassComposer {
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       List<Expr> bodyExprs = new ArrayList<>();
-      TypeNode argType = i == 0 ? types.get("Builder") : types.get(getBuilderTypeName(tokens));
+      TypeNode argType = getBuilderType(types, tokenHierarchies, i);
       VariableExpr builderArgExpr =
           VariableExpr.withVariable(Variable.builder().setName("builder").setType(argType).build());
       for (String token : tokens) {
@@ -315,6 +315,7 @@ public class ResourceNameHelperClassComposer {
                 .setName("Builder")
                 .setPakkage(resourceName.pakkage())
                 .setEnclosingClassName(thisClassName)
+                .setIsStaticImport(true)
                 .build()));
 
     if (tokenHierarchies.size() > 1) {
@@ -330,6 +331,7 @@ public class ResourceNameHelperClassComposer {
                                   .setName(s)
                                   .setPakkage(resourceName.pakkage())
                                   .setEnclosingClassName(thisClassName)
+                                  .setIsStaticImport(true)
                                   .build()))));
     }
     return dynamicTypes;
@@ -359,7 +361,14 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static String getBuilderTypeName(List<String> tokens) {
-    return String.format("%sBuilder", concatToUpperSnakeCaseName(tokens));
+    return String.format("%sBuilder", concatToUpperCamelCaseName(tokens));
+  }
+
+  private static TypeNode getBuilderType(
+      Map<String, TypeNode> types, List<List<String>> tokenHierarchies, int index) {
+    return index == 0
+        ? types.get("Builder")
+        : types.get(getBuilderTypeName(tokenHierarchies.get(index)));
   }
 
   @VisibleForTesting
