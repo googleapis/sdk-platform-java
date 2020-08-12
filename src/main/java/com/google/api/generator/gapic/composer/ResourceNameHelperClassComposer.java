@@ -490,6 +490,8 @@ public class ResourceNameHelperClassComposer {
     javaMethods.add(
         createParseMethod(thisClassType, templateFinalVarExprs, tokenHierarchies, types));
     javaMethods.add(createParseListMethod(thisClassType));
+    javaMethods.add(createToStringListMethod(thisClassType));
+    javaMethods.add(createIsParseableFromMethod(templateFinalVarExprs));
     return javaMethods;
   }
 
@@ -730,6 +732,138 @@ public class ResourceNameHelperClassComposer {
         .setArguments(Arrays.asList(formattedStringsVarExpr.toBuilder().setIsDecl(true).build()))
         .setBody(Arrays.asList(ExprStatement.withExpr(listAssignExpr), forStatement))
         .setReturnExpr(listVarExpr)
+        .build();
+  }
+
+  private static MethodDefinition createToStringListMethod(TypeNode thisClassType) {
+    TypeNode listClassType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(thisClassType.reference()))
+                .build());
+    VariableExpr valuesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("values").setType(listClassType).build());
+
+    TypeNode listStringType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+                .build());
+    VariableExpr listVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("list").setType(listStringType).build());
+
+    AssignmentExpr listAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(listVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
+                    .setIsGeneric(true)
+                    .setArguments(
+                        Arrays.asList(
+                            MethodInvocationExpr.builder()
+                                .setExprReferenceExpr(valuesVarExpr)
+                                .setMethodName("size")
+                                .build()))
+                    .build())
+            .build();
+
+    // TODO(miraleung): Use equality check instead of Objects.
+    Expr isNullCheck =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+            .setMethodName("equals")
+            .setArguments(
+                Arrays.asList(valuesVarExpr, ValueExpr.withValue(NullObjectValue.create())))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    Statement listAddEmptyStringStatement =
+        ExprStatement.withExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(listVarExpr)
+                .setMethodName("add")
+                .setArguments(Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(""))))
+                .build());
+
+    VariableExpr valueVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("value").setType(thisClassType).build());
+    Statement listAddValueStatement =
+        ExprStatement.withExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(listVarExpr)
+                .setMethodName("add")
+                .setArguments(
+                    Arrays.asList(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(valueVarExpr)
+                            .setMethodName("toString")
+                            .build()))
+                .build());
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(isNullCheck)
+            .setBody(Arrays.asList(listAddEmptyStringStatement))
+            .setElseBody(Arrays.asList(listAddValueStatement))
+            .build();
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(valueVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(valuesVarExpr)
+            .setBody(Arrays.asList(ifStatement))
+            .build();
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(listStringType)
+        .setName("toStringList")
+        .setArguments(Arrays.asList(valuesVarExpr.toBuilder().setIsDecl(true).build()))
+        .setBody(Arrays.asList(ExprStatement.withExpr(listAssignExpr), forStatement))
+        .setReturnExpr(listVarExpr)
+        .build();
+  }
+
+  private static MethodDefinition createIsParseableFromMethod(
+      List<VariableExpr> templateFinalVarExprs) {
+    VariableExpr formattedStringVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("formattedString").setType(TypeNode.STRING).build());
+    MethodInvocationExpr returnOrExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(templateFinalVarExprs.get(0))
+            .setMethodName("matches")
+            .setArguments(Arrays.asList(formattedStringVarExpr))
+            .build();
+    for (int i = 1; i < templateFinalVarExprs.size(); i++) {
+      // TODO(miraleung): Use actual or operations here.
+      returnOrExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(returnOrExpr)
+              .setMethodName("todoOr")
+              .setArguments(
+                  Arrays.asList(
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(templateFinalVarExprs.get(i))
+                          .setMethodName("matches")
+                          .setArguments(Arrays.asList(formattedStringVarExpr))
+                          .build()))
+              .setReturnType(TypeNode.BOOLEAN)
+              .build();
+    }
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(TypeNode.BOOLEAN)
+        .setName("isParsableFrom")
+        .setArguments(Arrays.asList(formattedStringVarExpr.toBuilder().setIsDecl(true).build()))
+        .setReturnExpr(returnOrExpr)
         .build();
   }
 
