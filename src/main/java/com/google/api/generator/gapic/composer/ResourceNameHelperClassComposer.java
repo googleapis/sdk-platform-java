@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.SynchronizedStatement;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -86,6 +87,14 @@ public class ResourceNameHelperClassComposer {
     List<VariableExpr> templateFinalVarExprs = createTemplateClassMembers(tokenHierarchies);
     Map<String, VariableExpr> patternTokenVarExprs =
         createPatternTokenClassMembers(tokenHierarchies);
+
+    Preconditions.checkState(
+        patternTokenVarExprs.size() > 0
+            && templateFinalVarExprs.size() == patternTokenVarExprs.size()
+            && tokenHierarchies.size() == patternTokenVarExprs.size(),
+        String.format(
+            "Cardinalities of patterns and associated variables do not match for resource name %s",
+            resourceName.resourceTypeString()));
 
     String className = getThisClassName(resourceName);
     ClassDefinition classDef =
@@ -154,10 +163,6 @@ public class ResourceNameHelperClassComposer {
       List<String> patterns,
       List<List<String>> tokenHierarchies) {
     List<Expr> memberVars = new ArrayList<>();
-    Preconditions.checkState(
-        templateFinalVarExprs.size() == patterns.size()
-            && tokenHierarchies.size() == patterns.size(),
-        "Cardinalities of patterns and associated variables do not match");
     // Pattern string variables.
     // Example:
     // private static final PathTemplate PROJECT_LOCATION_AUTOSCALING_POLICY_PATH_TEMPLATE =
@@ -232,6 +237,8 @@ public class ResourceNameHelperClassComposer {
 
     javaMethods.addAll(
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+    javaMethods.add(
+        createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
     return javaMethods;
   }
 
@@ -1020,6 +1027,66 @@ public class ResourceNameHelperClassComposer {
         .setReturnType(TypeNode.STRING)
         .setName("getFieldValue")
         .setArguments(fieldNameVarExpr.toBuilder().setIsDecl(true).build())
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createToStringMethod(
+      List<VariableExpr> templateFinalVarExprs,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies) {
+    boolean hasVariants = tokenHierarchies.size() > 1;
+    if (!hasVariants) {
+      String token = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList()).get(0);
+      String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
+      MethodInvocationExpr returnInstantiateExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(templateFinalVarExprs.get(0))
+              .setMethodName("instantiate")
+              .setArguments(
+                  ValueExpr.withValue(StringObjectValue.withValue(token)),
+                  patternTokenVarExprs.get(javaTokenVarName))
+              .setReturnType(TypeNode.STRING)
+              .build();
+      return MethodDefinition.builder()
+          .setIsOverride(true)
+          .setScope(ScopeNode.PUBLIC)
+          .setReturnType(TypeNode.STRING)
+          .setReturnExpr(returnInstantiateExpr)
+          .build();
+    }
+    VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
+    // TODO(miraleung): Use neq operator, then swap the ternary exprs and do the following:
+    // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
+    MethodInvocationExpr fixedValueNullCheck =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+            .setMethodName("equals")
+            .setArguments(fixedValueVarExpr, ValueExpr.withValue(NullObjectValue.create()))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    MethodInvocationExpr instantiateExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(FIXED_CLASS_VARS.get("pathTemplate"))
+            .setMethodName("instantiate")
+            .setArguments(MethodInvocationExpr.builder().setMethodName("getFieldValuesMap").build())
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    TernaryExpr returnExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(fixedValueNullCheck)
+            // TODO(miraleung): Swap these when using the neq operator.
+            .setThenExpr(instantiateExpr)
+            .setElseExpr(fixedValueVarExpr)
+            .build();
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.STRING)
+        .setName("toString")
         .setReturnExpr(returnExpr)
         .build();
   }
