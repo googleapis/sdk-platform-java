@@ -45,9 +45,6 @@ public class TernaryExprTest {
 
   @Test
   public void validTernaryExpr_objectType() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
-    VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
-
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -69,7 +66,7 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_boxedPrimitiveType() {
+  public void validTernaryExpr_boxedAndPrimitiveType() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -108,6 +105,19 @@ public class TernaryExprTest {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
             .setThenExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
+            .build();
+    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+  }
+
+  @Test
+  public void validTernaryExpr_booleanObjectCondition() {
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN_OBJECT).build();
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(VariableExpr.builder().setVariable(conditionVariable).build())
+            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("barfoo")))
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
     assertEquals(ternaryExpr.type(), TypeNode.STRING);
