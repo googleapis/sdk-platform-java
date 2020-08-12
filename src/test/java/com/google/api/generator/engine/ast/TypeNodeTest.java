@@ -24,33 +24,27 @@ import java.util.List;
 import org.junit.Test;
 
 public class TypeNodeTest {
+  private static final TypeNode INT_ARRAY =
+      TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
+  private static final TypeNode INTEGER_ARRAY =
+      TypeNode.builder()
+          .setIsArray(true)
+          .setReference(ConcreteReference.withClazz(Integer.class))
+          .setTypeKind(TypeKind.OBJECT)
+          .build();
+  private static final TypeNode BOOLEAN_ARRAY =
+      TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
+
   @Test
-  public void equals_basic() {
-    assertFalse(TypeNode.DOUBLE.equals(TypeKind.DOUBLE));
-    assertFalse(TypeNode.INT.equals(TypeNode.BOOLEAN));
-    assertFalse(TypeNode.CHAR.equals(TypeNode.NULL));
+  public void stricEquals_basic() {
+    assertFalse(TypeNode.INT.strictEquals(TypeNode.BOOLEAN));
+    assertFalse(TypeNode.CHAR.strictEquals(TypeNode.NULL));
+    assertFalse(TypeNode.INT.strictEquals(INT_ARRAY));
+    assertTrue(TypeNode.BOOLEAN.strictEquals(TypeNode.BOOLEAN));
   }
 
   @Test
-  public void equals_primitiveBoxedType() {
-    assertTrue(TypeNode.INT.equals(TypeNode.INT_OBJECT));
-    assertTrue(TypeNode.DOUBLE_OBJECT.equals(TypeNode.DOUBLE));
-    assertFalse(TypeNode.BOOLEAN_OBJECT.equals(TypeNode.SHORT));
-    assertFalse(TypeNode.DOUBLE_OBJECT.equals(TypeNode.BOOLEAN_OBJECT));
-    assertFalse(TypeNode.DOUBLE.equals(TypeNode.FLOAT));
-  }
-
-  @Test
-  public void equals_arrayType() {
-    TypeNode intArray = TypeNode.builder().setTypeKind(TypeKind.INT).setIsArray(true).build();
-    TypeNode booleanArray =
-        TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
-    assertFalse(TypeNode.INT.equals(intArray));
-    assertFalse(booleanArray.equals(intArray));
-  }
-
-  @Test
-  public void equals_referenceType() {
+  public void stricEquals_referenceType() {
     TypeNode list = TypeNode.withReference(ConcreteReference.withClazz(List.class));
     TypeNode intList =
         TypeNode.withReference(
@@ -64,8 +58,36 @@ public class TypeNodeTest {
                 .setClazz(List.class)
                 .setGenerics(Arrays.asList(ConcreteReference.withClazz(Character.class)))
                 .build());
-    assertFalse(intList.equals(list));
-    assertFalse(intList.equals(charList));
+    assertFalse(intList.strictEquals(list));
+    assertFalse(intList.strictEquals(charList));
+  }
+
+  @Test
+  public void isBoxedTypeEquals_basic() {
+    assertTrue(TypeNode.INT.isBoxedTypeEquals(TypeNode.INT_OBJECT));
+    assertTrue(TypeNode.DOUBLE_OBJECT.isBoxedTypeEquals(TypeNode.DOUBLE));
+    assertFalse(TypeNode.BOOLEAN_OBJECT.isBoxedTypeEquals(TypeNode.SHORT));
+    assertFalse(TypeNode.DOUBLE_OBJECT.isBoxedTypeEquals(TypeNode.BOOLEAN_OBJECT));
+    assertFalse(TypeNode.DOUBLE.isBoxedTypeEquals(TypeNode.FLOAT));
+  }
+
+  @Test
+  public void isBoxedTypeEquals_arrayType() {
+    assertFalse(TypeNode.INT.isBoxedTypeEquals(INT_ARRAY));
+    assertFalse(INTEGER_ARRAY.isBoxedTypeEquals(INT_ARRAY));
+    assertFalse(BOOLEAN_ARRAY.isBoxedTypeEquals(INT_ARRAY));
+  }
+
+  @Test
+  public void equals_basic() {
+    assertTrue(TypeNode.INT.equals(TypeNode.INT_OBJECT));
+    assertTrue(TypeNode.DOUBLE_OBJECT.equals(TypeNode.DOUBLE));
+    assertTrue(TypeNode.BOOLEAN.equals(TypeNode.BOOLEAN));
+    assertTrue(BOOLEAN_ARRAY.equals(BOOLEAN_ARRAY));
+    assertFalse(TypeNode.DOUBLE.equals(TypeKind.DOUBLE));
+    assertFalse(TypeNode.INT.equals(TypeNode.BOOLEAN));
+    assertFalse(TypeNode.CHAR.equals(TypeNode.NULL));
+    assertFalse(INTEGER_ARRAY.equals(INT_ARRAY));
   }
 
   @Test

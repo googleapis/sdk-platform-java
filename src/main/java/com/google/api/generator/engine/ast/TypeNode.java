@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
 import java.util.Map;
@@ -149,10 +150,7 @@ public abstract class TypeNode implements AstNode {
     }
 
     TypeNode type = (TypeNode) o;
-    return isBoxedTypeEquals(type, this)
-        || typeKind().equals(type.typeKind())
-            && (isArray() == type.isArray())
-            && Objects.equals(reference(), type.reference());
+    return strictEquals(type) || isBoxedTypeEquals(type);
   }
 
   @Override
@@ -164,15 +162,24 @@ public abstract class TypeNode implements AstNode {
     return hash;
   }
 
-  private static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
-    // If both of type1 and type2 are primitive/reference type, return false.
-    if (type1.isPrimitiveType() == type2.isPrimitiveType()) {
+  @VisibleForTesting
+  boolean strictEquals(TypeNode other) {
+    return typeKind().equals(other.typeKind())
+        && (isArray() == other.isArray())
+        && Objects.equals(reference(), other.reference());
+  }
+
+  @VisibleForTesting
+  boolean isBoxedTypeEquals(TypeNode other) {
+    // If both types are primitive/reference type, return false.
+    // Array of boxed/primitive type is not considered equal.
+    if (isArray() || other.isArray()) {
       return false;
     }
-    if (type2.isPrimitiveType()) {
-      return type1.equals(BOXED_TYPE_MAP.get(type2));
+    if (other.isPrimitiveType()) {
+      return Objects.equals(this, BOXED_TYPE_MAP.get(other));
     }
-    return type2.equals(BOXED_TYPE_MAP.get(type1));
+    return Objects.equals(other, BOXED_TYPE_MAP.get(this));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
@@ -195,14 +202,14 @@ public abstract class TypeNode implements AstNode {
 
   private static Map<TypeNode, TypeNode> createBoxedTypeMap() {
     Map<TypeNode, TypeNode> map = new HashMap<>();
-    map.put(INT, INT_OBJECT);
-    map.put(BOOLEAN, BOOLEAN_OBJECT);
-    map.put(BYTE, BYTE_OBJECT);
-    map.put(CHAR, CHAR_OBJECT);
-    map.put(FLOAT, FLOAT_OBJECT);
-    map.put(LONG, LONG_OBJECT);
-    map.put(SHORT, SHORT_OBJECT);
-    map.put(DOUBLE, DOUBLE_OBJECT);
+    map.put(TypeNode.INT, TypeNode.INT_OBJECT);
+    map.put(TypeNode.BOOLEAN, TypeNode.BOOLEAN_OBJECT);
+    map.put(TypeNode.BYTE, TypeNode.BYTE_OBJECT);
+    map.put(TypeNode.CHAR, TypeNode.CHAR_OBJECT);
+    map.put(TypeNode.FLOAT, TypeNode.FLOAT_OBJECT);
+    map.put(TypeNode.LONG, TypeNode.LONG_OBJECT);
+    map.put(TypeNode.SHORT, TypeNode.SHORT_OBJECT);
+    map.put(TypeNode.DOUBLE, TypeNode.DOUBLE_OBJECT);
     return map;
   }
 }
