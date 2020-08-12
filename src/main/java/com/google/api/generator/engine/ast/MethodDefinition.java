@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,6 +136,10 @@ public abstract class MethodDefinition implements AstNode {
     public abstract Builder setIsConstructor(boolean isConstructor);
 
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
+
+    public Builder setArguments(Expr... arguments) {
+      return setArguments(Arrays.asList(arguments));
+    }
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
 

@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -79,6 +80,10 @@ public abstract class MethodInvocationExpr implements Expr {
     public abstract Builder setStaticReferenceType(TypeNode type);
 
     // Optional.
+    public Builder setArguments(Expr... arguments) {
+      return setArguments(Arrays.asList(arguments));
+    }
+
     public abstract Builder setArguments(List<Expr> arguments);
 
     // Optional.
