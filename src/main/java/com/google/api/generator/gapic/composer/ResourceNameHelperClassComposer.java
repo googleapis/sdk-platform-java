@@ -21,14 +21,19 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.ThisObjectValue;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -216,6 +221,9 @@ public class ResourceNameHelperClassComposer {
         createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.addAll(
         createFormatCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+    javaMethods.addAll(
+        createParsingAndSplittingMethods(
+            resourceName, templateFinalVarExprs, tokenHierarchies, types));
     return javaMethods;
   }
 
@@ -470,6 +478,259 @@ public class ResourceNameHelperClassComposer {
       }
     }
     return javaMethods;
+  }
+
+  private static List<MethodDefinition> createParsingAndSplittingMethods(
+      ResourceName resourceName,
+      List<VariableExpr> templateFinalVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    javaMethods.add(
+        createParseMethod(thisClassType, templateFinalVarExprs, tokenHierarchies, types));
+    javaMethods.add(createParseListMethod(thisClassType));
+    return javaMethods;
+  }
+
+  private static MethodDefinition createParseMethod(
+      TypeNode thisClassType,
+      List<VariableExpr> templateFinalVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    String formattedStringArgName = "formattedString";
+    VariableExpr formattedStringArgExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(formattedStringArgName).setType(TypeNode.STRING).build());
+    String exceptionMessageString =
+        String.format(
+            "%s.parse: %s not in valid format",
+            thisClassType.reference().name(), formattedStringArgName);
+
+    ValueExpr exceptionMessageExpr =
+        ValueExpr.withValue(StringObjectValue.withValue(exceptionMessageString));
+    TypeNode mapStringType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Map.class)
+                .setGenerics(
+                    Arrays.asList(
+                        ConcreteReference.withClazz(String.class),
+                        ConcreteReference.withClazz(String.class)))
+                .build());
+    VariableExpr matchMapVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("matchMap").setType(mapStringType).build());
+
+    List<Statement> body = new ArrayList<>();
+    body.add(
+        IfStatement.builder()
+            .setConditionExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(formattedStringArgExpr)
+                    .setMethodName("isEmpty")
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        ReturnExpr.withExpr(ValueExpr.withValue(NullObjectValue.create())))))
+            .build());
+
+    List<Expr> formattedStringArgList = Arrays.asList(formattedStringArgExpr);
+    List<VariableExpr> formattedStringArgDeclList =
+        Arrays.asList(formattedStringArgExpr.toBuilder().setIsDecl(true).build());
+    boolean hasVariants = tokenHierarchies.size() > 1;
+    if (!hasVariants) {
+      List<Expr> methodArgs = Arrays.asList(formattedStringArgExpr, exceptionMessageExpr);
+      MethodInvocationExpr validatedMatchExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(templateFinalVarExprs.get(0))
+              .setMethodName("validatedMatch")
+              .setArguments(methodArgs)
+              .setReturnType(mapStringType)
+              .build();
+
+      AssignmentExpr matchMapAssignExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(matchMapVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(validatedMatchExpr)
+              .build();
+      body.add(ExprStatement.withExpr(matchMapAssignExpr));
+
+      List<Expr> ofMethodArgExprs =
+          tokenHierarchies.get(0).stream()
+              .map(
+                  t ->
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(matchMapVarExpr)
+                          .setMethodName("get")
+                          .setArguments(
+                              Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(t))))
+                          .build())
+              .collect(Collectors.toList());
+
+      MethodInvocationExpr ofMethodExpr =
+          MethodInvocationExpr.builder()
+              .setMethodName("of")
+              .setArguments(ofMethodArgExprs)
+              .setReturnType(thisClassType)
+              .build();
+      return MethodDefinition.builder()
+          .setScope(ScopeNode.PUBLIC)
+          .setIsStatic(true)
+          .setReturnType(thisClassType)
+          .setName("parse")
+          .setArguments(formattedStringArgDeclList)
+          .setBody(body)
+          .setReturnExpr(ofMethodExpr)
+          .build();
+    }
+
+    IfStatement.Builder ifStatementBuilder = IfStatement.builder();
+    String ofMethodNamePattern = "of%s";
+    for (int i = 0; i < tokenHierarchies.size(); i++) {
+      VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
+      MethodInvocationExpr conditionExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(templateVarExpr)
+              .setMethodName("matches")
+              .setArguments(formattedStringArgList)
+              .setReturnType(TypeNode.BOOLEAN)
+              .build();
+
+      MethodInvocationExpr matchValueExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(templateVarExpr)
+              .setMethodName("match")
+              .setArguments(formattedStringArgList)
+              .setReturnType(mapStringType)
+              .build();
+      AssignmentExpr matchMapAssignExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(matchMapVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(matchValueExpr)
+              .build();
+
+      List<String> tokens = tokenHierarchies.get(i);
+      MethodInvocationExpr ofMethodExpr =
+          MethodInvocationExpr.builder()
+              .setMethodName(String.format(ofMethodNamePattern, getBuilderTypeName(tokens)))
+              .setArguments(
+                  tokens.stream()
+                      .map(
+                          t ->
+                              MethodInvocationExpr.builder()
+                                  .setExprReferenceExpr(matchMapVarExpr)
+                                  .setMethodName("get")
+                                  .setArguments(
+                                      Arrays.asList(
+                                          ValueExpr.withValue(StringObjectValue.withValue(t))))
+                                  .build())
+                      .collect(Collectors.toList()))
+              .setReturnType(thisClassType)
+              .build();
+
+      ReturnExpr subReturnExpr = ReturnExpr.withExpr(ofMethodExpr);
+
+      List<Statement> ifStatements =
+          Arrays.asList(matchMapAssignExpr, subReturnExpr).stream()
+              .map(e -> ExprStatement.withExpr(e))
+              .collect(Collectors.toList());
+      if (i == 0) {
+        ifStatementBuilder =
+            ifStatementBuilder.setConditionExpr(conditionExpr).setBody(ifStatements);
+      } else {
+        ifStatementBuilder = ifStatementBuilder.addElseIf(conditionExpr, ifStatements);
+      }
+    }
+
+    body.add(ifStatementBuilder.build());
+    body.add(
+        ExprStatement.withExpr(
+            ThrowExpr.builder()
+                .setType(STATIC_TYPES.get("ValidationException"))
+                .setMessage(exceptionMessageString)
+                .build()));
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(thisClassType)
+        .setName("parse")
+        .setArguments(formattedStringArgDeclList)
+        .setBody(body)
+        .build();
+  }
+
+  private static MethodDefinition createParseListMethod(TypeNode thisClassType) {
+    TypeNode listStringType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+                .build());
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(thisClassType.reference()))
+                .build());
+
+    VariableExpr formattedStringsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("formattedStrings").setType(listStringType).build());
+    VariableExpr listVarExpr =
+        VariableExpr.withVariable(Variable.builder().setName("list").setType(returnType).build());
+
+    AssignmentExpr listAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(listVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(
+                        TypeNode.withReference(
+                            ConcreteReference.builder().setClazz(ArrayList.class).build()))
+                    .setIsGeneric(true)
+                    .setArguments(
+                        Arrays.asList(
+                            MethodInvocationExpr.builder()
+                                .setExprReferenceExpr(formattedStringsVarExpr)
+                                .setMethodName("size")
+                                .build()))
+                    .build())
+            .build();
+
+    VariableExpr singleStrVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("formattedString").setType(TypeNode.STRING).build());
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(singleStrVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(formattedStringsVarExpr)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(listVarExpr)
+                            .setMethodName("add")
+                            .setArguments(
+                                Arrays.asList(
+                                    MethodInvocationExpr.builder()
+                                        .setMethodName("parse")
+                                        .setArguments(Arrays.asList(singleStrVarExpr))
+                                        .build()))
+                            .build())))
+            .build();
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setReturnType(returnType)
+        .setName("parseList")
+        .setArguments(Arrays.asList(formattedStringsVarExpr.toBuilder().setIsDecl(true).build()))
+        .setBody(Arrays.asList(ExprStatement.withExpr(listAssignExpr), forStatement))
+        .setReturnExpr(listVarExpr)
+        .build();
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
