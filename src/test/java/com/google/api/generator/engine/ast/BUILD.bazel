@@ -17,6 +17,7 @@ TESTS = [
     "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "ReturnExprTest",
     "StringObjectValueTest",
     "TernaryExprTest",
     "ThrowExprTest",

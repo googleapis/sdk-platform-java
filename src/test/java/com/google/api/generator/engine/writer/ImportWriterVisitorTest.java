@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -631,6 +632,18 @@ public class ImportWriterVisitorTest {
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
     enumRefExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.TypeNode;\n\n");
+  }
+
+  @Test
+  public void writeReturnExprImports_basic() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("createExpr")
+                .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+                .build());
+    returnExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
   }
 
   @Test

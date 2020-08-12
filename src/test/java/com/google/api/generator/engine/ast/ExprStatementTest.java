@@ -22,7 +22,7 @@ import org.junit.Test;
 public class ExprStatementTest {
 
   @Test
-  public void validMethodExprStatement() {
+  public void validExprStatement_method() {
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -39,13 +39,13 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void validVariableExprStatement() {
+  public void validExprStatement_variable() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     assertValidExprStatement(VariableExpr.builder().setVariable(variable).setIsDecl(true).build());
   }
 
   @Test
-  public void validAssignmentExprStatement() {
+  public void validExprStatement_assignment() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
@@ -59,20 +59,33 @@ public class ExprStatementTest {
   }
 
   @Test
-  public void invalidVariableExprStatement() {
-    Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
-    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
-    assertInvalidExprStatement(varExpr);
+  public void validExprStatement_throw() {
+    TypeNode npeType =
+        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    assertValidExprStatement(ThrowExpr.builder().setType(npeType).build());
   }
 
   @Test
-  public void invalidValueExprStatement() {
-    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
-    ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
-    assertInvalidExprStatement(valueExpr);
+  public void validExprStatement_return() {
+    assertValidExprStatement(
+        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf"))));
   }
 
-  private static void assertInvalidExprStatement(Expr expr) {
+  @Test
+  public void invalidExprStatement_variable() {
+    Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
+    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
+    assertInvalidExprStatement_(varExpr);
+  }
+
+  @Test
+  public void invalidExprStatement_value() {
+    Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
+    ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
+    assertInvalidExprStatement_(valueExpr);
+  }
+
+  private static void assertInvalidExprStatement_(Expr expr) {
     assertThrows(
         IllegalStateException.class,
         () -> {

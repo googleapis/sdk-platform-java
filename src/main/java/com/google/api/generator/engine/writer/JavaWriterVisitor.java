@@ -35,6 +35,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -344,6 +345,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     enumRefExpr.type().accept(this);
     buffer.append(DOT);
     enumRefExpr.identifier().accept(this);
+  }
+
+  @Override
+  public void visit(ReturnExpr returnExpr) {
+    buffer.append(RETURN);
+    space();
+    returnExpr.expr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
