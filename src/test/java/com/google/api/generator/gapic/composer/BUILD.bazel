@@ -6,6 +6,8 @@ TESTS = [
     "MockServiceClassComposerTest",
     "MockServiceImplClassComposerTest",
     "ServiceClientClassComposerTest",
+    "ServiceClientTestClassComposerTest",
+    "ServiceSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
 ]
 

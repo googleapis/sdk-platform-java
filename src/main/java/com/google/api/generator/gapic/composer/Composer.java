@@ -18,20 +18,24 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 
 public class Composer {
-  public static List<GapicClass> composeServiceClasses(
-      @Nonnull List<Service> services, @Nonnull Map<String, Message> messageTypes) {
+  public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    for (Service service : services) {
-      clazzes.addAll(generateServiceClasses(service, messageTypes));
+    for (Service service : context.services()) {
+      clazzes.addAll(generateServiceClasses(service, context.messages()));
     }
+    clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return clazzes;
   }
 
@@ -43,6 +47,14 @@ public class Composer {
     clazzes.addAll(generateMocksAndTestClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
+  }
+
+  public static List<GapicClass> generateResourceNameHelperClasses(
+      Set<ResourceName> resourceNames) {
+    return resourceNames.stream()
+        .filter(r -> !r.isOnlyWildcard())
+        .map(r -> ResourceNameHelperClassComposer.instance().generate(r))
+        .collect(Collectors.toList());
   }
 
   public static List<GapicClass> generateStubClasses(
@@ -68,6 +80,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
     clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(ServiceClientTestClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 

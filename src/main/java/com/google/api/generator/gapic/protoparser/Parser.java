@@ -14,46 +14,75 @@
 
 package com.google.api.generator.gapic.protoparser;
 
-import com.google.api.ClientProto;
+import com.google.api.ResourceDescriptor;
+import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
+import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
+import com.google.protobuf.DescriptorProtos.MessageOptions;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Parser {
-  // Collapses any whitespace between elements.
-  private static final String METHOD_SIGNATURE_DELIMITER = "\\s*,\\s*";
-
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
   }
 
+  public static GapicContext parse(CodeGeneratorRequest request) {
+    // Keep message and resource name parsing separate for cleaner logic.
+    // While this takes an extra pass through the protobufs, the extra time is relatively trivial
+    // and is worth the larger reduced maintenance cost.
+    Map<String, Message> messages = parseMessages(request);
+    Map<String, ResourceName> resourceNames = parseResourceNames(request);
+    messages = updateResourceNamesInMessages(messages, resourceNames.values());
+    Set<ResourceName> outputArgResourceNames = new HashSet<>();
+    List<Service> services =
+        parseServices(request, messages, resourceNames, outputArgResourceNames);
+    return GapicContext.builder()
+        .setServices(services)
+        .setMessages(messages)
+        .setResourceNames(resourceNames)
+        .setHelperResourceNames(outputArgResourceNames)
+        .build();
+  }
+
   public static List<Service> parseServices(
-      CodeGeneratorRequest request, Map<String, Message> messageTypes) {
+      CodeGeneratorRequest request,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -63,14 +92,18 @@ public class Parser {
               "Missing file descriptor for [%s]",
               fileToGenerate);
 
-      services.addAll(parseService(fileDescriptor, messageTypes));
+      services.addAll(
+          parseService(fileDescriptor, messageTypes, resourceNames, outputArgResourceNames));
     }
 
     return services;
   }
 
   public static List<Service> parseService(
-      FileDescriptor fileDescriptor, Map<String, Message> messageTypes) {
+      FileDescriptor fileDescriptor,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
     return fileDescriptor.getServices().stream()
         .map(
@@ -79,7 +112,9 @@ public class Parser {
                     .setName(s.getName())
                     .setPakkage(pakkage)
                     .setProtoPakkage(fileDescriptor.getPackage())
-                    .setMethods(parseMethods(s, messageTypes))
+                    .setMethods(
+                        parseMethods(
+                            s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
                     .build())
         .collect(Collectors.toList());
   }
@@ -117,21 +152,74 @@ public class Parser {
                         .build()));
   }
 
+  /**
+   * Populates ResourceName objects in Message POJOs.
+   *
+   * @param messageTypes A map of the message type name (as in the protobuf) to Message POJOs.
+   * @param resourceNames A list of ResourceName POJOs.
+   * @return The updated messageTypes map.
+   */
+  public static Map<String, Message> updateResourceNamesInMessages(
+      Map<String, Message> messageTypes, Collection<ResourceName> resources) {
+    Map<String, Message> updatedMessages = new HashMap<>(messageTypes);
+    for (ResourceName resource : resources) {
+      if (!resource.hasParentMessageName()) {
+        continue;
+      }
+      String messageKey = resource.parentMessageName();
+      Message messageToUpdate = updatedMessages.get(messageKey);
+      updatedMessages.put(messageKey, messageToUpdate.toBuilder().setResource(resource).build());
+    }
+    return updatedMessages;
+  }
+
+  public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+      resourceNames.putAll(parseResourceNames(fileDescriptor));
+    }
+    return resourceNames;
+  }
+
+  // Convenience wrapper for package-external unit tests.
+  public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
+    return ResourceNameParser.parseResourceNames(fileDescriptor);
+  }
+
   @VisibleForTesting
   static List<Method> parseMethods(
-      ServiceDescriptor serviceDescriptor, Map<String, Message> messageTypes) {
+      ServiceDescriptor serviceDescriptor,
+      String servicePackage,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Set<ResourceName> outputArgResourceNames) {
     return serviceDescriptor.getMethods().stream()
         .map(
-            md ->
-                Method.builder()
-                    .setName(md.getName())
-                    .setInputType(TypeParser.parseType(md.getInputType()))
-                    .setOutputType(TypeParser.parseType(md.getOutputType()))
-                    .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
-                    .setLro(parseLro(md, messageTypes))
-                    .setMethodSignatures(parseMethodSignatures(md))
-                    .setIsPaged(parseIsPaged(md, messageTypes))
-                    .build())
+            md -> {
+              TypeNode inputType = TypeParser.parseType(md.getInputType());
+              return Method.builder()
+                  .setName(md.getName())
+                  .setInputType(inputType)
+                  .setOutputType(TypeParser.parseType(md.getOutputType()))
+                  .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
+                  .setLro(parseLro(md, messageTypes))
+                  .setMethodSignatures(
+                      MethodSignatureParser.parseMethodSignatures(
+                          md,
+                          servicePackage,
+                          inputType,
+                          messageTypes,
+                          resourceNames,
+                          outputArgResourceNames))
+                  .setIsPaged(parseIsPaged(md, messageTypes))
+                  .build();
+            })
         .collect(Collectors.toList());
   }
 
@@ -167,22 +255,44 @@ public class Parser {
         || outputMessage.fieldMap().containsKey("next_page_token");
   }
 
-  @VisibleForTesting
-  static List<List<String>> parseMethodSignatures(MethodDescriptor methodDescriptor) {
-    List<String> signatures =
-        methodDescriptor.getOptions().getExtension(ClientProto.methodSignature);
-    // Example from Expand in echo.proto:
-    // Input: ["content,error", "content,error,info"].
-    // Output: [["content", "error"], ["content", "error", "info"]].
-    return methodDescriptor.getOptions().getExtension(ClientProto.methodSignature).stream()
-        .map(signature -> Arrays.asList(signature.split(METHOD_SIGNATURE_DELIMITER)))
+  private static List<Field> parseFields(Descriptor messageDescriptor) {
+    return messageDescriptor.getFields().stream()
+        .map(f -> parseField(f, messageDescriptor))
         .collect(Collectors.toList());
   }
 
-  private static List<Field> parseFields(Descriptor messageDescriptor) {
-    return messageDescriptor.getFields().stream()
-        .map(f -> Field.builder().setName(f.getName()).setType(TypeParser.parseType(f)).build())
-        .collect(Collectors.toList());
+  private static Field parseField(FieldDescriptor fieldDescriptor, Descriptor messageDescriptor) {
+    FieldOptions fieldOptions = fieldDescriptor.getOptions();
+    MessageOptions messageOptions = messageDescriptor.getOptions();
+    ResourceReference resourceReference = null;
+    if (fieldOptions.hasExtension(ResourceProto.resourceReference)) {
+      com.google.api.ResourceReference protoResourceReference =
+          fieldOptions.getExtension(ResourceProto.resourceReference);
+      // Assumes only one of type or child_type is set.
+      String typeString = protoResourceReference.getType();
+      String childTypeString = protoResourceReference.getChildType();
+      Preconditions.checkState(
+          !Strings.isNullOrEmpty(typeString) ^ !Strings.isNullOrEmpty(childTypeString),
+          String.format(
+              "Exactly one of type or child_type must be set for resource_reference in field %s",
+              fieldDescriptor.getName()));
+      boolean isChildType = !Strings.isNullOrEmpty(childTypeString);
+      resourceReference =
+          isChildType
+              ? ResourceReference.withChildType(childTypeString)
+              : ResourceReference.withType(typeString);
+    } else if (fieldDescriptor.getName().equals(ResourceNameConstants.NAME_FIELD_NAME)
+        && messageOptions.hasExtension(ResourceProto.resource)) {
+      ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
+      resourceReference = ResourceReference.withType(protoResource.getType());
+    }
+
+    return Field.builder()
+        .setName(fieldDescriptor.getName())
+        .setType(TypeParser.parseType(fieldDescriptor))
+        .setIsRepeated(fieldDescriptor.isRepeated())
+        .setResourceReference(resourceReference)
+        .build();
   }
 
   private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
