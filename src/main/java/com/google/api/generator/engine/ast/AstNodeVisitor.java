@@ -47,6 +47,8 @@ public interface AstNodeVisitor {
 
   public void visit(EnumRefExpr enumRefExpr);
 
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr);
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);
 
@@ -66,6 +68,8 @@ public interface AstNodeVisitor {
   public void visit(WhileStatement whileStatement);
 
   public void visit(TryCatchStatement tryCatchStatement);
+
+  public void visit(CommentStatement commentStatement);
 
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);

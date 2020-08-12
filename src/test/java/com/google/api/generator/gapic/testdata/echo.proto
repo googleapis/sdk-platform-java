@@ -17,6 +17,7 @@ syntax = "proto3";
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/duration.proto";
 import "google/protobuf/timestamp.proto";
@@ -27,6 +28,11 @@ package google.showcase.v1beta1;
 option go_package = "github.com/googleapis/gapic-showcase/server/genproto";
 option java_package = "com.google.showcase.v1beta1";
 option java_multiple_files = true;
+
+option (google.api.resource_definition) = {
+  type: "showcase.googleapis.com/AnythingGoes"
+  pattern: "*"
+};
 
 // This service is used showcase the four main types of rpcs - unary, server
 // side streaming, client side streaming, and bidirectional streaming. This
@@ -47,6 +53,8 @@ service Echo {
     option (google.api.method_signature) = "content";
     option (google.api.method_signature) = "error";
     option (google.api.method_signature) = "content,severity";
+    option (google.api.method_signature) = "name";
+    option (google.api.method_signature) = "parent";
   }
 
   // This method split the given content into words and will pass each word back
@@ -56,8 +64,6 @@ service Echo {
       post: "/v1beta1/echo:expand"
       body: "*"
     };
-    // TODO(landrito): change this to be `fields: ["content", "error"]` once
-    // github.com/dcodeIO/protobuf.js/issues/1094 has been resolved.
     option (google.api.method_signature) = "content,error";
   }
 
@@ -123,6 +129,12 @@ enum Severity {
 }
 
 message Foobar {
+  option (google.api.resource) = {
+    type: "showcase.googleapis.com/Foobar"
+    pattern: "foobars/{foobar}"
+    pattern: "*"
+  };
+
   string name = 1;
   string info = 2;
 }
@@ -132,6 +144,17 @@ message Foobar {
 // If status is set in this message
 // then the status will be returned as an error.
 message EchoRequest {
+  string name = 5 [
+    (google.api.resource_reference).type = "showcase.googleapis.com/Foobar",
+    (google.api.field_behavior) = REQUIRED
+  ];
+
+  string parent = 6 [
+    (google.api.resource_reference).child_type =
+        "showcase.googleapis.com/AnythingGoes",
+    (google.api.field_behavior) = REQUIRED
+  ];
+
   oneof response {
     // The content to be echoed by the server.
     string content = 1;
@@ -216,7 +239,7 @@ message WaitResponse {
 // The metadata for Wait operation.
 message WaitMetadata {
   // The time that this operation will complete.
-  google.protobuf.Timestamp end_time =1;
+  google.protobuf.Timestamp end_time = 1;
 }
 
 // The request for Block method.
@@ -240,5 +263,3 @@ message BlockResponse {
   // here.
   string content = 1;
 }
-
-

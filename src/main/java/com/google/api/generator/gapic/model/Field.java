@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Field {
@@ -23,8 +24,17 @@ public abstract class Field {
 
   public abstract TypeNode type();
 
+  public abstract boolean isRepeated();
+
+  @Nullable
+  public abstract ResourceReference resourceReference();
+
+  public boolean hasResourceReference() {
+    return type().equals(TypeNode.STRING) && resourceReference() != null;
+  }
+
   public static Builder builder() {
-    return new AutoValue_Field.Builder();
+    return new AutoValue_Field.Builder().setIsRepeated(false);
   }
 
   @AutoValue.Builder
@@ -32,6 +42,10 @@ public abstract class Field {
     public abstract Builder setName(String name);
 
     public abstract Builder setType(TypeNode type);
+
+    public abstract Builder setIsRepeated(boolean isRepeated);
+
+    public abstract Builder setResourceReference(ResourceReference resourceReference);
 
     public abstract Field build();
   }

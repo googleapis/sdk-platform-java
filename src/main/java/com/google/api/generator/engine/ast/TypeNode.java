@@ -69,6 +69,7 @@ public abstract class TypeNode implements AstNode {
 
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
+  public static final TypeNode OBJECT = withReference(ConcreteReference.withClazz(Object.class));
   public static final TypeNode STRING = withReference(ConcreteReference.withClazz(String.class));
   public static final TypeNode VOID_OBJECT = withReference(ConcreteReference.withClazz(Void.class));
 
@@ -138,9 +139,11 @@ public abstract class TypeNode implements AstNode {
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
+    boolean oneTypeIsNull = this.equals(TypeNode.NULL) ^ other.equals(TypeNode.NULL);
     return !isPrimitiveType()
         && !other.isPrimitiveType()
-        && reference().isSupertypeOrEquals(other.reference());
+        && isArray() == other.isArray()
+        && (reference().isSupertypeOrEquals(other.reference()) || oneTypeIsNull);
   }
 
   @Override
