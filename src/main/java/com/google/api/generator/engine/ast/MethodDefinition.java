@@ -137,7 +137,7 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
 
-    public Builder setArguments(Expr... arguments) {
+    public Builder setArguments(VariableExpr... arguments) {
       return setArguments(Arrays.asList(arguments));
     }
 
