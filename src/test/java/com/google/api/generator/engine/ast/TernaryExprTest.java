@@ -68,25 +68,24 @@ public class TernaryExprTest {
     assertThat(ternaryExpr.type()).isEqualTo(ternaryExpr.thenExpr().type());
   }
 
-  //   @Test
-  //   public void validTernaryExpr_boxedPrimitiveType() {
-  //     Variable conditionVariable =
-  //         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
-  //     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
-  //     Variable intVariable =
-  // Variable.builder().setName("intValue").setType(TypeNode.INT).build();
-  //     VariableExpr thenExpr = VariableExpr.builder().setVariable(intVariable).build();
-  //     Variable elseVariable =
-  //         Variable.builder().setName("integerValue").setType(TypeNode.INT_OBJECT).build();
-  //     VariableExpr elseExpr = VariableExpr.builder().setVariable(elseVariable).build();
-  //     TernaryExpr ternaryExpr =
-  //         TernaryExpr.builder()
-  //             .setConditionExpr(conditionExpr)
-  //             .setThenExpr(thenExpr)
-  //             .setElseExpr(elseExpr)
-  //             .build();
-  //     assertThat(ternaryExpr.conditionExpr().type()).isEqualTo(TypeNode.BOOLEAN);
-  //   }
+  @Test
+  public void validTernaryExpr_boxedPrimitiveType() {
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    Variable intVariable = Variable.builder().setName("intValue").setType(TypeNode.INT).build();
+    VariableExpr thenExpr = VariableExpr.builder().setVariable(intVariable).build();
+    Variable elseVariable =
+        Variable.builder().setName("integerValue").setType(TypeNode.INT_OBJECT).build();
+    VariableExpr elseExpr = VariableExpr.builder().setVariable(elseVariable).build();
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(elseExpr)
+            .build();
+    assertThat(ternaryExpr.conditionExpr().type()).isEqualTo(TypeNode.BOOLEAN);
+  }
 
   @Test
   public void validTernaryExpr_objectAndNull() {

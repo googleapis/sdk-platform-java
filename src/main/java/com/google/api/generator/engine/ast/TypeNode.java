@@ -15,8 +15,10 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -63,7 +65,7 @@ public abstract class TypeNode implements AstNode {
   public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
 
-  private static final HashMap<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -123,17 +125,6 @@ public abstract class TypeNode implements AstNode {
         && !type.equals(TypeNode.NULL);
   }
 
-  public static boolean isBoxedTypeEquals(TypeNode type1, TypeNode type2) {
-    // If both of type1 and type2 are primitive/reference type, return false.
-    if (type1.isPrimitiveType() == type2.isPrimitiveType()) {
-      return false;
-    }
-    if (type2.isPrimitiveType()) {
-      return type1.equals(BOXED_TYPE_MAP.get(type2));
-    }
-    return type2.equals(BOXED_TYPE_MAP.get(type1));
-  }
-
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
   }
@@ -159,9 +150,7 @@ public abstract class TypeNode implements AstNode {
     }
 
     TypeNode type = (TypeNode) o;
-    return typeKind().equals(type.typeKind())
-        && (isArray() == type.isArray())
-        && Objects.equals(reference(), type.reference());
+    return strictEquals(type) || isBoxedTypeEquals(type);
   }
 
   @Override
@@ -171,6 +160,26 @@ public abstract class TypeNode implements AstNode {
       hash += 23 * reference().hashCode();
     }
     return hash;
+  }
+
+  @VisibleForTesting
+  boolean strictEquals(TypeNode other) {
+    return typeKind().equals(other.typeKind())
+        && (isArray() == other.isArray())
+        && Objects.equals(reference(), other.reference());
+  }
+
+  @VisibleForTesting
+  boolean isBoxedTypeEquals(TypeNode other) {
+    // If both types are primitive/reference type, return false.
+    // Array of boxed/primitive type is not considered equal.
+    if (isArray() || other.isArray()) {
+      return false;
+    }
+    if (other.isPrimitiveType()) {
+      return Objects.equals(this, BOXED_TYPE_MAP.get(other));
+    }
+    return Objects.equals(other, BOXED_TYPE_MAP.get(this));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
@@ -191,16 +200,16 @@ public abstract class TypeNode implements AstNode {
     return !typeKind.equals(TypeKind.OBJECT);
   }
 
-  private static HashMap<TypeNode, TypeNode> createBoxedTypeMap() {
-    HashMap<TypeNode, TypeNode> map = new HashMap<>();
-    map.put(INT, INT_OBJECT);
-    map.put(BOOLEAN, BOOLEAN_OBJECT);
-    map.put(BYTE, BYTE_OBJECT);
-    map.put(CHAR, CHAR_OBJECT);
-    map.put(FLOAT, FLOAT_OBJECT);
-    map.put(LONG, LONG_OBJECT);
-    map.put(SHORT, SHORT_OBJECT);
-    map.put(DOUBLE, DOUBLE_OBJECT);
+  private static Map<TypeNode, TypeNode> createBoxedTypeMap() {
+    Map<TypeNode, TypeNode> map = new HashMap<>();
+    map.put(TypeNode.INT, TypeNode.INT_OBJECT);
+    map.put(TypeNode.BOOLEAN, TypeNode.BOOLEAN_OBJECT);
+    map.put(TypeNode.BYTE, TypeNode.BYTE_OBJECT);
+    map.put(TypeNode.CHAR, TypeNode.CHAR_OBJECT);
+    map.put(TypeNode.FLOAT, TypeNode.FLOAT_OBJECT);
+    map.put(TypeNode.LONG, TypeNode.LONG_OBJECT);
+    map.put(TypeNode.SHORT, TypeNode.SHORT_OBJECT);
+    map.put(TypeNode.DOUBLE, TypeNode.DOUBLE_OBJECT);
     return map;
   }
 }
