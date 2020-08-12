@@ -34,9 +34,9 @@ public class ComposerTest {
             .setName("EchoStubSettings")
             .setScope(ScopeNode.PUBLIC)
             .build();
-    GapicClass gapicClass = GapicClass.create(Kind.TEST, classDef);
     List<GapicClass> gapicClassWithHeaderList =
-        Composer.addApacheLicenseToGapicClassList(Arrays.asList(gapicClass));
+        Composer.addApacheLicenseToGapicClassList(
+            Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
     assertEquals(visitor.write(), EXPECTED_CLASS_STRING);
