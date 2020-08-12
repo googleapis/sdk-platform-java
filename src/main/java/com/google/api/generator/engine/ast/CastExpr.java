@@ -60,9 +60,9 @@ public abstract class CastExpr implements Expr {
             exprType.equals(TypeNode.NULL) || TypeNode.isReferenceType(exprType);
         boolean isValidReferenceTypeCast =
             TypeNode.isReferenceType(castType) && isExprTypeReferenceOrNull;
-        boolean isValidPrimitiveTypeCast = castType.equals(exprType);
+        boolean isEqualType = castType.equals(exprType);
         Preconditions.checkState(
-            isValidPrimitiveTypeCast || isValidReferenceTypeCast,
+            isEqualType || isValidReferenceTypeCast,
             "Boxed type and primitive type are inter-castable, otherwise reference types can only be casted to reference types or null type.");
       }
       return castExpr;
