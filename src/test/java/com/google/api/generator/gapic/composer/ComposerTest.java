@@ -12,17 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.model;
+package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.Test;
 
-public class GapicClassTest {
+public class ComposerTest {
   @Test
   public void gapicClass_addApacheLicense() {
     ClassDefinition classDef =
@@ -31,9 +34,11 @@ public class GapicClassTest {
             .setName("EchoStubSettings")
             .setScope(ScopeNode.PUBLIC)
             .build();
-    GapicClass gapicClassWithHeader = GapicClass.create(Kind.TEST, classDef).addApacheLicense();
+    GapicClass gapicClass = GapicClass.create(Kind.TEST, classDef);
+    List<GapicClass> gapicClassWithHeaderList =
+        Composer.addApacheLicenseToGapicClassList(Arrays.asList(gapicClass));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
-    gapicClassWithHeader.classDefinition().accept(visitor);
+    gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
     assertEquals(visitor.write(), EXPECTED_CLASS_STRING);
   }
 
