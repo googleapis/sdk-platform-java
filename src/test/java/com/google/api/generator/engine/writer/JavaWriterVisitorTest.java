@@ -400,10 +400,26 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_multipleLine() {
+  public void writeBlockComment_shortLines() {
     String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected = "/*\n" + "* Apache License\n" + "* This is a test file header\n" + "*/\n";
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeBlockComment_newLineInBetween() {
+    String content =
+        "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        "/*\n"
+            + "* Apache License\n"
+            + "* Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+            + "*\n"
+            + "* you may not use this file except in compliance with the License.\n"
+            + "*/\n";
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
