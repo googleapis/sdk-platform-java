@@ -989,11 +989,11 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeIfStatement_simpleBooleanObject() {
+  public void writeIfStatement_simple() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> ifBody = Arrays.asList(assignExprStatement, assignExprStatement);
-    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN_OBJECT);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN);
 
     IfStatement ifStatement =
         IfStatement.builder().setConditionExpr(condExpr).setBody(ifBody).build();
@@ -1002,6 +1002,22 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeIfStatement_booleanObjectCondition() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> ifBody = Arrays.asList(assignExprStatement);
+    VariableExpr condExpr = createVariableExpr("condition", TypeNode.BOOLEAN_OBJECT);
+
+    IfStatement ifStatement =
+        IfStatement.builder().setConditionExpr(condExpr).setBody(ifBody).build();
+
+    ifStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format("%s%s%s", "if (condition) {\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
