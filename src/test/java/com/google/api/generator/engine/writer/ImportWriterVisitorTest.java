@@ -34,7 +34,9 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -681,6 +683,59 @@ public class ImportWriterVisitorTest {
                     .build())
             .build();
     methodDefinition.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import java.util.Map;\n\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatementImports_basicThis() {
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(
+                ThisObjectValue.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Expr.class))))
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("doStuff")
+                        .setReturnType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                        .build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.util.Arrays;\n\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatementImports_basicVariableExpr() {
+    VariableExpr strVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("str")
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+                .build());
+
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(strVarExpr)
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("doStuff")
+                        .setReturnType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Map.class)))
+                        .build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
         String.format(

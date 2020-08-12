@@ -45,6 +45,7 @@ import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -1309,6 +1310,42 @@ public class JavaWriterVisitorTest {
             "} catch (IllegalArgumentException e) {\n",
             "int foobar = 123;\n",
             "}\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatement_basicThis() {
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(
+                ThisObjectValue.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Expr.class))))
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatement_basicVariableExpr() {
+    VariableExpr strVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("str").setType(TypeNode.STRING).build());
+
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(strVarExpr)
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"));
   }
 
   @Test
