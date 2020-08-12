@@ -25,4 +25,11 @@ public class JavaStyle {
     }
     return String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1));
   }
+
+  public static String toUpperCamelCase(String s) {
+    if (s.indexOf(UNDERSCORE) >= 0) {
+      s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
+    }
+    return String.format("%s%s", s.substring(0, 1).toUpperCase(), s.substring(1));
+  }
 }

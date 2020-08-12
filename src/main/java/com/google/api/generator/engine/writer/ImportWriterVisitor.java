@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -35,6 +36,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -120,7 +122,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(TernaryExpr ternaryExpr) {
-    ternaryExpr.type().accept(this);
+    ternaryExpr.conditionExpr().accept(this);
+    ternaryExpr.thenExpr().accept(this);
+    ternaryExpr.elseExpr().accept(this);
   }
 
   @Override
@@ -186,6 +190,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     enumRefExpr.type().accept(this);
   }
 
+  @Override
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
+    referenceConstructorExpr.type().accept(this);
+    expressions(referenceConstructorExpr.arguments());
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
@@ -236,6 +246,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
   }
+
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    // Do nothing
+  }
+
   /** =============================== COMMENT =============================== */
   @Override
   public void visit(LineComment lineComment) {

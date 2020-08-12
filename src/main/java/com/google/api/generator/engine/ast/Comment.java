@@ -16,4 +16,6 @@ package com.google.api.generator.engine.ast;
 
 public interface Comment {
   public String comment();
+
+  public void accept(AstNodeVisitor visitor);
 }

@@ -19,13 +19,16 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -43,7 +46,11 @@ public class MockServiceImplClassComposerTest {
   @Test
   public void generateServiceClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    List<Service> services = Parser.parseService(echoFileDescriptor, messageTypes);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
     Service echoProtoService = services.get(0);
     GapicClass clazz =
         MockServiceImplClassComposer.instance().generate(echoProtoService, messageTypes);
@@ -62,6 +69,8 @@ public class MockServiceImplClassComposerTest {
           + "import com.google.protobuf.AbstractMessage;\n"
           + "import com.google.showcase.v1beta1.EchoGrpc.EchoImplBase;\n"
           + "import io.grpc.stub.StreamObserver;\n"
+          + "import java.util.ArrayList;\n"
+          + "import java.util.LinkedList;\n"
           + "import java.util.List;\n"
           + "import java.util.Queue;\n"
           + "import javax.annotation.Generated;\n"
@@ -72,7 +81,10 @@ public class MockServiceImplClassComposerTest {
           + "  private List<AbstractMessage> requests;\n"
           + "  private Queue<Object> responses;\n"
           + "\n"
-          + "  public MockEchoImpl() {}\n"
+          + "  public MockEchoImpl() {\n"
+          + "    requests = new ArrayList<>();\n"
+          + "    responses = new LinkedList<>();\n"
+          + "  }\n"
           + "\n"
           + "  @Override\n"
           + "  public List<AbstractMessage> getRequests() {\n"
@@ -85,7 +97,9 @@ public class MockServiceImplClassComposerTest {
           + "  }\n"
           + "\n"
           + "  @Override\n"
-          + "  public void setResponses(List<AbstractMessage> responses) {}\n"
+          + "  public void setResponses(List<AbstractMessage> responses) {\n"
+          + "    this.responses = new LinkedList<Object>(responses);\n"
+          + "  }\n"
           + "\n"
           + "  @Override\n"
           + "  public void addException(Exception exception) {\n"
@@ -93,7 +107,10 @@ public class MockServiceImplClassComposerTest {
           + "  }\n"
           + "\n"
           + "  @Override\n"
-          + "  public void reset() {}\n"
+          + "  public void reset() {\n"
+          + "    requests = new ArrayList<>();\n"
+          + "    responses = new LinkedList<>();\n"
+          + "  }\n"
           + "\n"
           + "  @Override\n"
           + "  public void echo(EchoRequest request, StreamObserver<EchoResponse>"
@@ -106,7 +123,8 @@ public class MockServiceImplClassComposerTest {
           + "    } else if (response instanceof Exception) {\n"
           + "      responseObserver.onError(((Exception) response));\n"
           + "    } else {\n"
-          + "      responseObserver.onError();\n"
+          + "      responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "    }\n"
           + "  }\n"
           + "\n"
@@ -121,7 +139,8 @@ public class MockServiceImplClassComposerTest {
           + "    } else if (response instanceof Exception) {\n"
           + "      responseObserver.onError(((Exception) response));\n"
           + "    } else {\n"
-          + "      responseObserver.onError();\n"
+          + "      responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "    }\n"
           + "  }\n"
           + "\n"
@@ -139,7 +158,8 @@ public class MockServiceImplClassComposerTest {
           + "            } else if (response instanceof Exception) {\n"
           + "              responseObserver.onError(((Exception) response));\n"
           + "            } else {\n"
-          + "              responseObserver.onError();\n"
+          + "              responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "            }\n"
           + "          }\n"
           + "\n"
@@ -170,7 +190,8 @@ public class MockServiceImplClassComposerTest {
           + "            } else if (response instanceof Exception) {\n"
           + "              responseObserver.onError(((Exception) response));\n"
           + "            } else {\n"
-          + "              responseObserver.onError();\n"
+          + "              responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "            }\n"
           + "          }\n"
           + "\n"
@@ -201,7 +222,8 @@ public class MockServiceImplClassComposerTest {
           + "            } else if (response instanceof Exception) {\n"
           + "              responseObserver.onError(((Exception) response));\n"
           + "            } else {\n"
-          + "              responseObserver.onError();\n"
+          + "              responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "            }\n"
           + "          }\n"
           + "\n"
@@ -230,7 +252,8 @@ public class MockServiceImplClassComposerTest {
           + "    } else if (response instanceof Exception) {\n"
           + "      responseObserver.onError(((Exception) response));\n"
           + "    } else {\n"
-          + "      responseObserver.onError();\n"
+          + "      responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "    }\n"
           + "  }\n"
           + "\n"
@@ -245,7 +268,8 @@ public class MockServiceImplClassComposerTest {
           + "    } else if (response instanceof Exception) {\n"
           + "      responseObserver.onError(((Exception) response));\n"
           + "    } else {\n"
-          + "      responseObserver.onError();\n"
+          + "      responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "    }\n"
           + "  }\n"
           + "\n"
@@ -260,7 +284,8 @@ public class MockServiceImplClassComposerTest {
           + "    } else if (response instanceof Exception) {\n"
           + "      responseObserver.onError(((Exception) response));\n"
           + "    } else {\n"
-          + "      responseObserver.onError();\n"
+          + "      responseObserver.onError(new "
+          + "IllegalArgumentException(\"Unrecognized response type\"));\n"
           + "    }\n"
           + "  }\n"
           + "}\n";

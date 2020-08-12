@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -34,6 +35,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -50,6 +52,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class JavaWriterVisitor implements AstNodeVisitor {
@@ -338,6 +341,22 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     enumRefExpr.identifier().accept(this);
   }
 
+  @Override
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
+    buffer.append(referenceConstructorExpr.keywordKind().name().toLowerCase());
+    leftParen();
+    IntStream.range(0, referenceConstructorExpr.arguments().size())
+        .forEach(
+            i -> {
+              referenceConstructorExpr.arguments().get(i).accept(this);
+              if (i < referenceConstructorExpr.arguments().size() - 1) {
+                buffer.append(COMMA);
+                space();
+              }
+            });
+    rightParen();
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
@@ -470,6 +489,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
   }
 
+  @Override
+  public void visit(CommentStatement commentStatement) {
+    commentStatement.comment().accept(this);
+  }
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment) {
     // Split comments by new line and add `//` to each line.
@@ -503,6 +527,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== OTHER =============================== */
   @Override
   public void visit(MethodDefinition methodDefinition) {
+    // Header comments, if any.
+    statements(methodDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(methodDefinition.annotations());
 
@@ -628,13 +654,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       buffer.append(importWriterVisitor.write());
     }
-
+    // Header comments, if any.
+    statements(classDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(classDefinition.annotations());
-
-    // Comments, if any.
-    // TODO(xiaozhenliu): Uncomment / update the lines below.
-    // statements(classDefinition.comments());
 
     classDefinition.scope().accept(this);
     space();
