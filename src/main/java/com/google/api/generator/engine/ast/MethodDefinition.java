@@ -279,7 +279,7 @@ public abstract class MethodDefinition implements AstNode {
           TypeNode returnType = method.returnType();
           Preconditions.checkState(
               returnExprType.equals(returnType) || returnType.isSupertypeOrEquals(returnExprType),
-              "Method return type should be equal to the return expression type, or it should be a super type of the return expression type.");
+              "Method return type should be equal to the return expression type, or it should be a supertype of the return expression type.");
         }
       }
 
