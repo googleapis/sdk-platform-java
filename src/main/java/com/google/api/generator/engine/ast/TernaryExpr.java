@@ -29,9 +29,12 @@ public abstract class TernaryExpr implements Expr {
   public TypeNode type() {
     TypeNode thenType = thenExpr().type();
     TypeNode elseType = elseExpr().type();
-    if (thenType.equals(elseType)
-        || (thenType.isSupertypeOrEquals(elseType) && !thenType.equals(TypeNode.NULL))) {
+    if (thenType.isSupertypeOrEquals(elseType) && !thenType.equals(TypeNode.NULL)) {
       return thenType;
+    }
+    if (thenType.equals(elseType)) {
+      // If types are boxed/primitive type equals, return the boxed type.
+      return TypeNode.isReferenceType(thenType) ? thenType : elseType;
     }
     return elseType;
   }
@@ -65,10 +68,10 @@ public abstract class TernaryExpr implements Expr {
     public TernaryExpr build() {
       Preconditions.checkState(
           conditionExpr().type().equals(TypeNode.BOOLEAN),
-          "Ternary condition must be a boolean/Boolean-typed expression.");
+          "Ternary condition must be a boolean-typed expression.");
 
       if (!thenExpr().type().equals(elseExpr().type())) {
-        // Not both primitives, and no boxed equality, and one of them is null.
+        // If the types are not equal, then they should be assignable to the other.
         Preconditions.checkState(
             thenExpr().type().isSupertypeOrEquals(elseExpr().type())
                 || elseExpr().type().isSupertypeOrEquals(thenExpr().type()),
