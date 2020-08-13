@@ -33,6 +33,7 @@ public class IfStatementTest {
 
   @Test
   public void validIfStatement_booleanObjectCondition() {
+    // The condition expression type can be boolean or its boxed type.
     VariableExpr condExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("condition").setType(TypeNode.BOOLEAN_OBJECT).build());
