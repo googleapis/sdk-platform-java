@@ -68,7 +68,7 @@ public abstract class TernaryExpr implements Expr {
           "Ternary condition must be a boolean-typed expression.");
 
       if (!thenExpr().type().equals(elseExpr().type())) {
-        // Not both primitives, and no boxed equality, and one of them is null.
+        // If the types are not equal, then they should be assignable to the other.
         Preconditions.checkState(
             thenExpr().type().isSupertypeOrEquals(elseExpr().type())
                 || elseExpr().type().isSupertypeOrEquals(thenExpr().type()),
