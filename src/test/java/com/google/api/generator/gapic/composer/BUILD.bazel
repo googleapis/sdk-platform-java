@@ -9,6 +9,7 @@ TESTS = [
     "ServiceClientClassComposerTest",
     "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
+    "ServiceStubSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
 ]
 
