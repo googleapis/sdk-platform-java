@@ -73,8 +73,8 @@ public class ResourceNameHelperClassComposer {
       new ResourceNameHelperClassComposer();
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
-  private static final Map<String, VariableExpr> FIXED_CLASS_VARS =
-      createFixedClassMemberVariables();
+
+  private static Map<String, VariableExpr> FIXED_CLASS_VARS = createFixedClassMemberVariables();
 
   private ResourceNameHelperClassComposer() {}
 
@@ -201,16 +201,22 @@ public class ResourceNameHelperClassComposer {
             .setScope(ScopeNode.PRIVATE)
             .setIsVolatile(true)
             .build());
-    Function<VariableExpr, VariableExpr> toDeclFn =
-        v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).build();
-    memberVars.add(toDeclFn.apply(FIXED_CLASS_VARS.get("pathTemplate")));
-    memberVars.add(toDeclFn.apply(FIXED_CLASS_VARS.get("fixedValue")));
+
+    boolean hasVariants = tokenHierarchies.size() > 1;
+    if (hasVariants) {
+      Function<VariableExpr, VariableExpr> toDeclFn =
+          v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).build();
+      memberVars.add(toDeclFn.apply(FIXED_CLASS_VARS.get("pathTemplate")));
+      memberVars.add(toDeclFn.apply(FIXED_CLASS_VARS.get("fixedValue")));
+    }
 
     // Private per-token string variables.
     // Use the token set as a key to maintain ordering (for consistency).
+    Function<VariableExpr, VariableExpr> toFinalDeclFn =
+        v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
     memberVars.addAll(
         getTokenSet(tokenHierarchies).stream()
-            .map(t -> toDeclFn.apply(patternTokenVarExprs.get(t)))
+            .map(t -> toFinalDeclFn.apply(patternTokenVarExprs.get(t)))
             .collect(Collectors.toList()));
     return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
@@ -255,18 +261,21 @@ public class ResourceNameHelperClassComposer {
       Map<String, TypeNode> types) {
     String thisClassName = getThisClassName(resourceName);
     TypeNode thisClassType = types.get(thisClassName);
+    boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    MethodDefinition deprecatedCtor =
-        MethodDefinition.constructorBuilder()
-            .setScope(ScopeNode.PRIVATE)
-            .setAnnotations(
-                Arrays.asList(
-                    AnnotationNode.withType(
-                        TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
-            .setReturnType(thisClassType)
-            .build();
-    javaMethods.add(deprecatedCtor);
+    if (hasVariants) {
+      MethodDefinition deprecatedCtor =
+          MethodDefinition.constructorBuilder()
+              .setScope(ScopeNode.PRIVATE)
+              .setAnnotations(
+                  Arrays.asList(
+                      AnnotationNode.withType(
+                          TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
+              .setReturnType(thisClassType)
+              .build();
+      javaMethods.add(deprecatedCtor);
+    }
 
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
@@ -294,12 +303,17 @@ public class ResourceNameHelperClassComposer {
                 .setValueExpr(checkNotNullExpr)
                 .build());
       }
-      AssignmentExpr pathTemplateAssignExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(FIXED_CLASS_VARS.get("pathTemplate"))
-              .setValueExpr(templateFinalVarExprs.get(i))
-              .build();
-      bodyExprs.add(pathTemplateAssignExpr);
+
+      if (hasVariants) {
+        AssignmentExpr pathTemplateAssignExpr =
+            AssignmentExpr.builder()
+                .setVariableExpr(FIXED_CLASS_VARS.get("pathTemplate"))
+                .setValueExpr(templateFinalVarExprs.get(i))
+                .build();
+        bodyExprs.add(pathTemplateAssignExpr);
+      }
+
+      // Private constructor.
       javaMethods.add(
           MethodDefinition.constructorBuilder()
               .setScope(ScopeNode.PRIVATE)
@@ -435,10 +449,11 @@ public class ResourceNameHelperClassComposer {
     TypeNode returnType = isFormatMethod ? TypeNode.STRING : thisClassType;
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
+    boolean hasVariants = tokenHierarchies.size() > 1;
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       String builderMethodName =
-          String.format(newBuilderMethodNameFormat, getBuilderTypeName(tokens));
+          String.format(newBuilderMethodNameFormat, getBuilderTypeName(tokenHierarchies, i));
 
       MethodInvocationExpr returnExpr =
           MethodInvocationExpr.builder().setMethodName(builderMethodName).build();
@@ -485,7 +500,7 @@ public class ResourceNameHelperClassComposer {
               .setReturnExpr(returnExpr)
               .build());
 
-      if (i == 0 && tokenHierarchies.size() > 1) {
+      if (i == 0 && hasVariants) {
         javaMethods.add(
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
@@ -793,12 +808,15 @@ public class ResourceNameHelperClassComposer {
             .build();
 
     // TODO(miraleung): Use equality check instead of Objects.
+    VariableExpr valueVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("value").setType(thisClassType).build());
     Expr isNullCheck =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("Objects"))
             .setMethodName("equals")
             .setArguments(
-                Arrays.asList(valuesVarExpr, ValueExpr.withValue(NullObjectValue.create())))
+                Arrays.asList(valueVarExpr, ValueExpr.withValue(NullObjectValue.create())))
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     Statement listAddEmptyStringStatement =
@@ -809,9 +827,6 @@ public class ResourceNameHelperClassComposer {
                 .setArguments(Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(""))))
                 .build());
 
-    VariableExpr valueVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("value").setType(thisClassType).build());
     Statement listAddValueStatement =
         ExprStatement.withExpr(
             MethodInvocationExpr.builder()
@@ -859,6 +874,7 @@ public class ResourceNameHelperClassComposer {
             .setExprReferenceExpr(templateFinalVarExprs.get(0))
             .setMethodName("matches")
             .setArguments(Arrays.asList(formattedStringVarExpr))
+            .setReturnType(TypeNode.BOOLEAN)
             .build();
     for (int i = 1; i < templateFinalVarExprs.size(); i++) {
       // TODO(miraleung): Use actual or operations here.
@@ -1057,9 +1073,11 @@ public class ResourceNameHelperClassComposer {
           .setIsOverride(true)
           .setScope(ScopeNode.PUBLIC)
           .setReturnType(TypeNode.STRING)
+          .setName("toString")
           .setReturnExpr(returnInstantiateExpr)
           .build();
     }
+
     VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
     // TODO(miraleung): Use neq operator, then swap the ternary exprs and do the following:
     // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
@@ -1208,19 +1226,20 @@ public class ResourceNameHelperClassComposer {
                   .setType(outerClassType)
                   .build());
       List<Expr> builderCtorBodyExprs = new ArrayList<>();
-      // TODO(miraleung): Use eq operator instead.
-      MethodInvocationExpr equalsCheckExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-              .setMethodName("equals")
-              .setArguments(
-                  FIXED_CLASS_VARS.get("pathTemplate").toBuilder()
-                      .setExprReferenceExpr(outerClassVarExpr)
-                      .build(),
-                  templateFinalVarExpr)
-              .build();
 
       if (hasVariants) {
+        // TODO(miraleung): Use eq operator instead.
+        MethodInvocationExpr equalsCheckExpr =
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                .setMethodName("equals")
+                .setArguments(
+                    FIXED_CLASS_VARS.get("pathTemplate").toBuilder()
+                        .setExprReferenceExpr(outerClassVarExpr)
+                        .build(),
+                    templateFinalVarExpr)
+                .build();
+
         builderCtorBodyExprs.add(
             MethodInvocationExpr.builder()
                 .setStaticReferenceType(STATIC_TYPES.get("Preconditions"))
