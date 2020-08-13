@@ -248,6 +248,19 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_boxedReturnType() {
+    MethodDefinition.builder()
+        .setName("foobar")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.INT_OBJECT)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build()))
+        .build();
+  }
+
+  @Test
   public void invalidMethodDefinition_badTemplateName() {
     assertThrows(
         IdentifierNode.InvalidIdentifierException.class,
