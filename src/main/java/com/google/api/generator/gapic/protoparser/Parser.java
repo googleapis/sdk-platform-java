@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.ClientProto;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -37,6 +38,7 @@ import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.MessageOptions;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
+import com.google.protobuf.DescriptorProtos.ServiceOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -45,6 +47,7 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -54,6 +57,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Parser {
+  private static final String COMMA = ",";
+  private static final String COLON = ":";
+  private static final String DEFAULT_PORT = "443";
+
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
       super(errorMessage);
@@ -105,17 +112,37 @@ public class Parser {
       Map<String, ResourceName> resourceNames,
       Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
+
     return fileDescriptor.getServices().stream()
         .map(
-            s ->
-                Service.builder()
-                    .setName(s.getName())
-                    .setPakkage(pakkage)
-                    .setProtoPakkage(fileDescriptor.getPackage())
-                    .setMethods(
-                        parseMethods(
-                            s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
-                    .build())
+            s -> {
+              // TODO(miraleung, v2): Handle missing default_host and oauth_scopes annotations.
+              ServiceOptions serviceOptions = s.getOptions();
+              // The proto publishing process will insert these two fields from the 1P esrvice
+              // config YAML file, so we can assume they must be present for v1 for the
+              // microgenerator.
+              Preconditions.checkState(
+                  serviceOptions.hasExtension(ClientProto.defaultHost),
+                  String.format("Default host annotation not found in service %s", s.getName()));
+              Preconditions.checkState(
+                  serviceOptions.hasExtension(ClientProto.oauthScopes),
+                  String.format("Oauth scopes annotation not found in service %s", s.getName()));
+
+              String defaultHost =
+                  sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
+              List<String> oauthScopes =
+                  Arrays.asList(serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
+
+              return Service.builder()
+                  .setName(s.getName())
+                  .setDefaultHost(defaultHost)
+                  .setOauthScopes(oauthScopes)
+                  .setPakkage(pakkage)
+                  .setProtoPakkage(fileDescriptor.getPackage())
+                  .setMethods(
+                      parseMethods(s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
+                  .build();
+            })
         .collect(Collectors.toList());
   }
 
@@ -268,6 +295,15 @@ public class Parser {
     return inputMessage.fieldMap().containsKey("page_size")
         || inputMessage.fieldMap().containsKey("page_token")
         || outputMessage.fieldMap().containsKey("next_page_token");
+  }
+
+  @VisibleForTesting
+  static String sanitizeDefaultHost(String rawDefaultHost) {
+    if (rawDefaultHost.indexOf(COLON) >= 0) {
+      // A port is already present, just return the existing string.
+      return rawDefaultHost;
+    }
+    return String.format("%s:%s", rawDefaultHost, DEFAULT_PORT);
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {

@@ -31,6 +31,8 @@ service Testing {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
   option (google.api.default_host) = "localhost:7469";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
 
   // Creates a new testing session.
   rpc CreateSession(CreateSessionRequest) returns (Session) {
@@ -140,10 +142,10 @@ message CreateSessionRequest {
   // be deleted).
   Session session = 1;
 
-  // A blueprint is an explicit definition of methods and requests that are needed
-  // to be made to test this specific test case. Ideally this would be represented
-  // by something more robust like CEL, but as of writing this, I am unsure if CEL
-  // is ready.
+  // A blueprint is an explicit definition of methods and requests that are
+  // needed to be made to test this specific test case. Ideally this would be
+  // represented by something more robust like CEL, but as of writing this, I am
+  // unsure if CEL is ready.
   message Blueprint {
     option (google.api.resource) = {
       type: "showcase.googleapis.com/Blueprint"
@@ -167,22 +169,20 @@ message CreateSessionRequest {
 
     // The initial request to trigger this test.
     Invocation request = 3;
-
   }
 
-  // The blueprints that will satisfy this test. There may be multiple blueprints
-  // that can signal to the server that this test case is being exercised. Although
-  // multiple blueprints are specified, only a single blueprint needs to be run to
-  // signal that the test case was exercised.
-   Blueprint blueprint = 2;
-
+  // The blueprints that will satisfy this test. There may be multiple
+  // blueprints that can signal to the server that this test case is being
+  // exercised. Although multiple blueprints are specified, only a single
+  // blueprint needs to be run to signal that the test case was exercised.
+  Blueprint blueprint = 2;
 }
 
 // The request for the GetSession method.
 message GetSessionRequest {
   // The session to be retrieved.
-  string name = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Session"];
+  string name = 1 [(google.api.resource_reference).type =
+                       "showcase.googleapis.com/Session"];
 }
 
 // The request for the ListSessions method.
@@ -207,15 +207,15 @@ message ListSessionsResponse {
 // Request for the DeleteSession method.
 message DeleteSessionRequest {
   // The session to be deleted.
-  string name = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Session"];
+  string name = 1 [(google.api.resource_reference).type =
+                       "showcase.googleapis.com/Session"];
 }
 
 // Request message for reporting on a session.
 message ReportSessionRequest {
   // The session to be reported on.
-  string name = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Session"];
+  string name = 1 [(google.api.resource_reference).type =
+                       "showcase.googleapis.com/Session"];
 }
 
 // Response message for reporting on a session.
@@ -284,7 +284,6 @@ message Test {
 
   // A description of the test.
   string description = 3;
-
 }
 
 // An issue found in the test.
@@ -328,8 +327,8 @@ message Issue {
 // The request for the ListTests method.
 message ListTestsRequest {
   // The session.
-  string parent = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Session"];
+  string parent = 1 [(google.api.resource_reference).type =
+                         "showcase.googleapis.com/Session"];
 
   // The maximum number of tests to return per page.
   int32 page_size = 2;
@@ -353,9 +352,8 @@ message TestRun {
   // The name of the test.
   // The tests/* portion of the names are hard-coded, and do not change
   // from session to session.
-  string test = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Test"];
-
+  string test = 1
+      [(google.api.resource_reference).type = "showcase.googleapis.com/Test"];
 
   // An issue found with the test run. If empty, this test run was successful.
   Issue issue = 2;
@@ -364,14 +362,14 @@ message TestRun {
 // Request message for deleting a test.
 message DeleteTestRequest {
   // The test to be deleted.
-  string name = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Test"];
+  string name = 1
+      [(google.api.resource_reference).type = "showcase.googleapis.com/Test"];
 }
 
 message VerifyTestRequest {
   // The test to have an answer registered to it.
-  string name = 1 [
-    (google.api.resource_reference).type = "showcase.googleapis.com/Test"];
+  string name = 1
+      [(google.api.resource_reference).type = "showcase.googleapis.com/Test"];
 
   // The answer from the test.
   bytes answer = 2;
@@ -381,6 +379,7 @@ message VerifyTestRequest {
 }
 
 message VerifyTestResponse {
-  // An issue if check answer was unsuccessful. This will be empty if the check answer succeeded.
+  // An issue if check answer was unsuccessful. This will be empty if the check
+  // answer succeeded.
   Issue issue = 1;
 }
