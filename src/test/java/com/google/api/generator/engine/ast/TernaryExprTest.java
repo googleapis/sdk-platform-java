@@ -162,27 +162,6 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void invalidTernaryExpr_nonBooleanConditon() {
-    Variable conditionVariable =
-        Variable.builder().setName("condition").setType(TypeNode.INT).build();
-    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
-
-    Value value1 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
-    Expr thenExpr = ValueExpr.builder().setValue(value1).build();
-    Value value2 = PrimitiveValue.builder().setType(TypeNode.INT).setValue("4").build();
-    Expr elseExpr = ValueExpr.builder().setValue(value2).build();
-    assertThrows(
-        IllegalStateException.class,
-        () -> {
-          TernaryExpr.builder()
-              .setConditionExpr(conditionExpr)
-              .setThenExpr(thenExpr)
-              .setElseExpr(elseExpr)
-              .build();
-        });
-  }
-
-  @Test
   public void invalidTernaryExpr_mismatchedPrimitiveTypes() {
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
