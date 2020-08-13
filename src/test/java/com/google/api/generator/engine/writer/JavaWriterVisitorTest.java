@@ -751,20 +751,6 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeCastExpr_nestedPrimitiveAndBoxedType() {
-    Variable variable = Variable.builder().setType(TypeNode.CHAR).setName("charVariable").build();
-    VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
-    CastExpr castExpr = CastExpr.builder().setType(TypeNode.CHAR_OBJECT).setExpr(varExpr).build();
-    castExpr =
-        CastExpr.builder()
-            .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
-            .setExpr(castExpr)
-            .build();
-    castExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "((Object) ((Character) charVariable))");
-  }
-
-  @Test
   public void writeAnonymousClassExpr_basic() {
     ConcreteReference ref = ConcreteReference.withClazz(Runnable.class);
     TypeNode type = TypeNode.withReference(ref);
