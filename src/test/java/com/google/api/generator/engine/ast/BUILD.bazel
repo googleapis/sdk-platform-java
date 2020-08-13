@@ -29,6 +29,7 @@ TESTS = [
     "ReferenceConstructorExprTest",
     "ThisObjectValueTest",
     "SuperObjectValueTest",
+    "WhileStatementTest",
 ]
 
 filegroup(
