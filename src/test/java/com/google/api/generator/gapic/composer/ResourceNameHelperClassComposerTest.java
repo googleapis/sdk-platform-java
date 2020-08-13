@@ -156,6 +156,7 @@ public class ResourceNameHelperClassComposerTest {
             testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
+    assertThat(outputResourceNames).contains(sessionResname);
 
     Service testingProtoService = services.get(0);
     GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(sessionResname);

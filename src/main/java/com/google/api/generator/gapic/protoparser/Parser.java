@@ -199,28 +199,44 @@ public class Parser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Set<ResourceName> outputArgResourceNames) {
-    return serviceDescriptor.getMethods().stream()
-        .map(
-            md -> {
-              TypeNode inputType = TypeParser.parseType(md.getInputType());
-              return Method.builder()
-                  .setName(md.getName())
-                  .setInputType(inputType)
-                  .setOutputType(TypeParser.parseType(md.getOutputType()))
-                  .setStream(Method.toStream(md.isClientStreaming(), md.isServerStreaming()))
-                  .setLro(parseLro(md, messageTypes))
-                  .setMethodSignatures(
-                      MethodSignatureParser.parseMethodSignatures(
-                          md,
-                          servicePackage,
-                          inputType,
-                          messageTypes,
-                          resourceNames,
-                          outputArgResourceNames))
-                  .setIsPaged(parseIsPaged(md, messageTypes))
-                  .build();
-            })
-        .collect(Collectors.toList());
+    List<Method> methods = new ArrayList<>();
+    for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
+      // Parse the method.
+      TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
+      methods.add(
+          Method.builder()
+              .setName(protoMethod.getName())
+              .setInputType(inputType)
+              .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
+              .setStream(
+                  Method.toStream(protoMethod.isClientStreaming(), protoMethod.isServerStreaming()))
+              .setLro(parseLro(protoMethod, messageTypes))
+              .setMethodSignatures(
+                  MethodSignatureParser.parseMethodSignatures(
+                      protoMethod,
+                      servicePackage,
+                      inputType,
+                      messageTypes,
+                      resourceNames,
+                      outputArgResourceNames))
+              .setIsPaged(parseIsPaged(protoMethod, messageTypes))
+              .build());
+
+      // Any input type that has a resource reference will need a resource name helper calss.
+      Message inputMessage = messageTypes.get(inputType.reference().name());
+      for (Field field : inputMessage.fields()) {
+        if (field.hasResourceReference()) {
+          String resourceTypeString = field.resourceReference().resourceTypeString();
+          ResourceName resourceName = resourceNames.get(resourceTypeString);
+          Preconditions.checkNotNull(
+              resourceName, String.format("Resource name %s not found", resourceTypeString));
+          System.out.println("DEL: ADDING " + resourceTypeString);
+          outputArgResourceNames.add(resourceName);
+        }
+      }
+    }
+
+    return methods;
   }
 
   @VisibleForTesting
