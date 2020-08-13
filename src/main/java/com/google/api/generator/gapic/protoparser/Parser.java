@@ -230,7 +230,6 @@ public class Parser {
           ResourceName resourceName = resourceNames.get(resourceTypeString);
           Preconditions.checkNotNull(
               resourceName, String.format("Resource name %s not found", resourceTypeString));
-          System.out.println("DEL: ADDING " + resourceTypeString);
           outputArgResourceNames.add(resourceName);
         }
       }
