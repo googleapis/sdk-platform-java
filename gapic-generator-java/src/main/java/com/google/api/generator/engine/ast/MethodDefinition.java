@@ -275,6 +275,10 @@ public abstract class MethodDefinition implements AstNode {
         }
 
         if (method.returnExpr() != null && !isLastStatementThrowExpr) {
+          // TODO(miraleung): Refactor this to use ReturnExpr under the covers instead.
+          Preconditions.checkState(
+              !(method.returnExpr() instanceof ReturnExpr),
+              "A method's return expression can only consist of non-ReturnExpr expressions");
           if (method.returnType().isPrimitiveType()) {
             Preconditions.checkState(
                 method.returnExpr().type().isPrimitiveType()

@@ -47,6 +47,8 @@ public interface AstNodeVisitor {
 
   public void visit(EnumRefExpr enumRefExpr);
 
+  public void visit(ReturnExpr returnExpr);
+
   public void visit(ReferenceConstructorExpr referenceConstructorExpr);
 
   /** =============================== COMMENT =============================== */
