@@ -103,7 +103,6 @@ public class ResourceNameHelperClassComposer {
                     patternTokenVarExprs,
                     tokenHierarchies,
                     types))
-
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
@@ -340,7 +339,8 @@ public class ResourceNameHelperClassComposer {
         // Create another builder creator method, but with the per-variant name.
         javaMethods.add(
             methodDefStarterFn
-                .apply(getBuilderTypeName(tokenHierarchies.get(i)))
+                .apply(
+                    String.format(newMethodNameFormat, getBuilderTypeName(tokenHierarchies.get(i))))
                 .setAnnotations(annotations)
                 .build());
       }
@@ -467,6 +467,7 @@ public class ResourceNameHelperClassComposer {
                 .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(String.format(methodNameFormat, getBuilderTypeName(tokens)))
+                .setArguments(methodArgs)
                 .setReturnExpr(returnExpr)
                 .build());
       }
@@ -475,6 +476,7 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
+
     List<Class> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
