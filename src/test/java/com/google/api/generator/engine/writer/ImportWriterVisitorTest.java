@@ -32,11 +32,14 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -50,6 +53,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.LongStream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -687,6 +691,62 @@ public class ImportWriterVisitorTest {
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import java.util.Map;\n\n"));
+  }
+
+  @Test
+  public void writeReferenceConstructorExprImports_basic() {
+    VaporReference ref =
+        VaporReference.builder().setName("Parent").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.superBuilder().setType(classType).build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.example.v1.Parent;\n\n");
+  }
+
+  @Test
+  public void writeReferenceConstructorExprImports_withArgs() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    VariableExpr streamVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                createVariable(
+                    "stream",
+                    TypeNode.withReference(ConcreteReference.withClazz(LongStream.class))))
+            .build();
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.thisBuilder()
+            .setArguments(Arrays.asList(streamVarExpr))
+            .setType(classType)
+            .build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.example.v1.Student;\n",
+            "import java.util.stream.LongStream;\n\n"));
+  }
+
+  @Test
+  public void writeSuperObjectValueImports() {
+    VaporReference ref =
+        VaporReference.builder()
+            .setName("Student")
+            .setPakkage("com.google.example.examples.v1")
+            .build();
+    TypeNode typeNode = TypeNode.withReference(ref);
+    SuperObjectValue superObjectValue = SuperObjectValue.withType(typeNode);
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setExprReferenceExpr(ValueExpr.withValue(superObjectValue))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    methodExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.example.examples.v1.Student;\n\n");
   }
 
   private static TypeNode createType(Class clazz) {

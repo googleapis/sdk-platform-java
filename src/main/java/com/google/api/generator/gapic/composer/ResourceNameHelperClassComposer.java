@@ -87,6 +87,7 @@ public class ResourceNameHelperClassComposer {
         createPatternTokenClassMembers(tokenHierarchies);
 
     String className = getThisClassName(resourceName);
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(resourceName.pakkage())
@@ -107,6 +108,7 @@ public class ResourceNameHelperClassComposer {
                     patternTokenVarExprs,
                     tokenHierarchies,
                     types))
+
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
@@ -239,7 +241,7 @@ public class ResourceNameHelperClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     MethodDefinition deprecatedCtor =
         MethodDefinition.constructorBuilder()
-            .setScope(ScopeNode.PRIVATE)
+            .setScope(ScopeNode.PROTECTED)
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withType(
