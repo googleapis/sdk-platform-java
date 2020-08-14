@@ -131,6 +131,8 @@ enum Severity {
 message Foobar {
   option (google.api.resource) = {
     type: "showcase.googleapis.com/Foobar"
+    pattern: "projects/{project}/foobars/{foobar}"
+    pattern: "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}"
     pattern: "foobars/{foobar}"
     pattern: "*"
   };
