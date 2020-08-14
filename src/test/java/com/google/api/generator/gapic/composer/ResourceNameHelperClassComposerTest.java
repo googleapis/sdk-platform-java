@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.TestingOuterClass;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -123,7 +124,7 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void generateResourceNameClass() {
+  public void generateResourceNameClass_echoFoobarMultiplePatterns() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -138,12 +139,35 @@ public class ResourceNameHelperClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    assertEquals(EXPECTED_FOOBAR_NAME_CLASS_STRING, visitor.write());
+  }
+
+  @Test
+  public void generateResourceNameClass_testingSessionOnePattern() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
+    ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
+
+    Service testingProtoService = services.get(0);
+    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(sessionResname);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    assertEquals(EXPECTED_SESSION_NAME_CLASS_STRING, visitor.write());
   }
 
   // TODO(miraleung): Add more tests for a single pattern.
   // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
-  private static final String EXPECTED_CLASS_STRING =
+  private static final String EXPECTED_FOOBAR_NAME_CLASS_STRING =
       "package com.google.showcase.v1beta1;\n"
           + "\n"
           + "import com.google.api.core.BetaApi;\n"
@@ -171,9 +195,9 @@ public class ResourceNameHelperClassComposerTest {
           + "  private volatile Map<String, String> fieldValuesMap;\n"
           + "  private PathTemplate pathTemplate;\n"
           + "  private String fixedValue;\n"
-          + "  private String project;\n"
-          + "  private String foobar;\n"
-          + "  private String variant;\n"
+          + "  private final String project;\n"
+          + "  private final String foobar;\n"
+          + "  private final String variant;\n"
           + "\n"
           + "  @Deprecated\n"
           + "  protected FoobarName() {}\n"
@@ -235,13 +259,13 @@ public class ResourceNameHelperClassComposerTest {
           + "  }\n"
           + "\n"
           + "  public static FoobarName of(String project, String foobar) {\n"
-          + "    return newProjectFoobarBuilder().setProject(project).setFoobar(foobar).build();\n"
+          + "    return newBuilder().setProject(project).setFoobar(foobar).build();\n"
           + "  }\n"
           + "\n"
           + "  @BetaApi(\"The static create methods are not stable yet and may be changed in the"
           + " future.\")\n"
           + "  public static FoobarName ofProjectFoobarBuilder(String project, String foobar) {\n"
-          + "    return newProjectFoobarBuilder().setProject(project).setFoobar(foobar).build();\n"
+          + "    return newBuilder().setProject(project).setFoobar(foobar).build();\n"
           + "  }\n"
           + "\n"
           + "  @BetaApi(\"The static create methods are not stable yet and may be changed in the"
@@ -263,14 +287,14 @@ public class ResourceNameHelperClassComposerTest {
           + "\n"
           + "  public static String format(String project, String foobar) {\n"
           + "    return"
-          + " newProjectFoobarBuilder().setProject(project).setFoobar(foobar).build().toString();\n"
+          + " newBuilder().setProject(project).setFoobar(foobar).build().toString();\n"
           + "  }\n"
           + "\n"
           + "  @BetaApi(\"The static format methods are not stable yet and may be changed in the"
           + " future.\")\n"
           + "  public static String formatProjectFoobarBuilder(String project, String foobar) {\n"
           + "    return"
-          + " newProjectFoobarBuilder().setProject(project).setFoobar(foobar).build().toString();\n"
+          + " newBuilder().setProject(project).setFoobar(foobar).build().toString();\n"
           + "  }\n"
           + "\n"
           + "  @BetaApi(\"The static format methods are not stable yet and may be changed in the"
@@ -323,7 +347,7 @@ public class ResourceNameHelperClassComposerTest {
           + "  public static List<String> toStringList(List<FoobarName> values) {\n"
           + "    List<String> list = new ArrayList<>(values.size());\n"
           + "    for (FoobarName value : values) {\n"
-          + "      if (Objects.equals(values, null)) {\n"
+          + "      if (Objects.equals(value, null)) {\n"
           + "        list.add(\"\");\n"
           + "      } else {\n"
           + "        list.add(value.toString());\n"
@@ -470,6 +494,135 @@ public class ResourceNameHelperClassComposerTest {
           + "\n"
           + "    public FoobarName build() {\n"
           + "      return new FoobarName(this);\n"
+          + "    }\n"
+          + "  }\n"
+          + "}\n";
+
+  private static final String EXPECTED_SESSION_NAME_CLASS_STRING =
+      "package com.google.showcase.v1beta1;\n"
+          + "\n"
+          + "import com.google.api.pathtemplate.PathTemplate;\n"
+          + "import com.google.api.resourcenames.ResourceName;\n"
+          + "import com.google.common.base.Preconditions;\n"
+          + "import com.google.common.collect.ImmutableMap;\n"
+          + "import java.util.ArrayList;\n"
+          + "import java.util.List;\n"
+          + "import java.util.Map;\n"
+          + "import java.util.Objects;\n"
+          + "import javax.annotation.Generated;\n"
+          + "\n"
+          + "@Generated(\"by gapic-generator-java\")\n"
+          + "public class SessionName implements ResourceName {\n"
+          + "  private static final PathTemplate SESSION =\n"
+          + "      PathTemplate.createWithoutUrlEncoding(\"sessions/{session}\");\n"
+          + "  private volatile Map<String, String> fieldValuesMap;\n"
+          + "  private final String session;\n"
+          + "\n"
+          + "  private SessionName(Builder builder) {\n"
+          + "    session = Preconditions.checkNotNull(builder.getSession());\n"
+          + "  }\n"
+          + "\n"
+          + "  public String getSession() {\n"
+          + "    return session;\n"
+          + "  }\n"
+          + "\n"
+          + "  public static Builder newBuilder() {\n"
+          + "    return new Builder();\n"
+          + "  }\n"
+          + "\n"
+          + "  public Builder toBuilder() {\n"
+          + "    return new Builder(this);\n"
+          + "  }\n"
+          + "\n"
+          + "  public static SessionName of(String session) {\n"
+          + "    return newBuilder().setSession(session).build();\n"
+          + "  }\n"
+          + "\n"
+          + "  public static String format(String session) {\n"
+          + "    return newBuilder().setSession(session).build().toString();\n"
+          + "  }\n"
+          + "\n"
+          + "  public static SessionName parse(String formattedString) {\n"
+          + "    if (formattedString.isEmpty()) {\n"
+          + "      return null;\n"
+          + "    }\n"
+          + "    Map<String, String> matchMap =\n"
+          + "        SESSION.validatedMatch(\n"
+          + "            formattedString, \"SessionName.parse:"
+          + " formattedString not in valid format\");\n"
+          + "    return of(matchMap.get(\"session\"));\n"
+          + "  }\n"
+          + "\n"
+          + "  public static List<SessionName> parseList(List<String> formattedStrings) {\n"
+          + "    List<SessionName> list = new ArrayList<>(formattedStrings.size());\n"
+          + "    for (String formattedString : formattedStrings) {\n"
+          + "      list.add(parse(formattedString));\n"
+          + "    }\n"
+          + "    return list;\n"
+          + "  }\n"
+          + "\n"
+          + "  public static List<String> toStringList(List<SessionName> values) {\n"
+          + "    List<String> list = new ArrayList<>(values.size());\n"
+          + "    for (SessionName value : values) {\n"
+          + "      if (Objects.equals(value, null)) {\n"
+          + "        list.add(\"\");\n"
+          + "      } else {\n"
+          + "        list.add(value.toString());\n"
+          + "      }\n"
+          + "    }\n"
+          + "    return list;\n"
+          + "  }\n"
+          + "\n"
+          + "  public static boolean isParsableFrom(String formattedString) {\n"
+          + "    return SESSION.matches(formattedString);\n"
+          + "  }\n"
+          + "\n"
+          + "  @Override\n"
+          + "  public Map<String, String> getFieldValuesMap() {\n"
+          + "    if (Objects.equals(fieldValuesMap, null)) {\n"
+          + "      synchronized (this) {\n"
+          + "        if (Objects.equals(fieldValuesMap, null)) {\n"
+          + "          ImmutableMap.Builder<String, String> fieldMapBuilder ="
+          + " ImmutableMap.builder();\n"
+          + "          if (Objects.notTodoEquals(session, null)) {\n"
+          + "            fieldMapBuilder.put(\"session\", session);\n"
+          + "          }\n"
+          + "          fieldValuesMap = fieldMapBuilder.build();\n"
+          + "        }\n"
+          + "      }\n"
+          + "    }\n"
+          + "    return fieldValuesMap;\n"
+          + "  }\n"
+          + "\n"
+          + "  public String getFieldValue(String fieldName) {\n"
+          + "    return getFieldValuesMap().get(fieldName);\n"
+          + "  }\n"
+          + "\n"
+          + "  @Override\n"
+          + "  public String toString() {\n"
+          + "    return SESSION.instantiate(\"session\", session);\n"
+          + "  }\n"
+          + "\n"
+          + "  public static class Builder {\n"
+          + "    private String session;\n"
+          + "\n"
+          + "    private Builder() {}\n"
+          + "\n"
+          + "    public String getSession() {\n"
+          + "      return session;\n"
+          + "    }\n"
+          + "\n"
+          + "    public Builder setSession(String session) {\n"
+          + "      this.session = session;\n"
+          + "      return this;\n"
+          + "    }\n"
+          + "\n"
+          + "    private Builder(SessionName sessionName) {\n"
+          + "      session = sessionName.session;\n"
+          + "    }\n"
+          + "\n"
+          + "    public SessionName build() {\n"
+          + "      return new SessionName(this);\n"
           + "    }\n"
           + "  }\n"
           + "}\n";
