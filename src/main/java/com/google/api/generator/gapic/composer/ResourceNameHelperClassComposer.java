@@ -214,6 +214,7 @@ public class ResourceNameHelperClassComposer {
             resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
     javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
+
     return javaMethods;
   }
 
