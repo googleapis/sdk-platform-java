@@ -78,6 +78,7 @@ public class ResourceNameHelperClassComposer {
         createPatternTokenClassMembers(tokenHierarchies);
 
     String className = getThisClassName(resourceName);
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(resourceName.pakkage())
@@ -98,6 +99,7 @@ public class ResourceNameHelperClassComposer {
                     patternTokenVarExprs,
                     tokenHierarchies,
                     types))
+
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
