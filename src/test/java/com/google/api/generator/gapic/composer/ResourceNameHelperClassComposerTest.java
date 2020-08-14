@@ -169,7 +169,7 @@ public class ResourceNameHelperClassComposerTest {
           + "  private String project;\n"
           + "\n"
           + "  @Deprecated\n"
-          + "  private FoobarName() {}\n"
+          + "  protected FoobarName() {}\n"
           + "\n"
           + "  private FoobarName(Builder builder) {\n"
           + "    project = Preconditions.checkNotNull(builder.getProject());\n"
