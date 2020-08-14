@@ -275,11 +275,17 @@ public abstract class MethodDefinition implements AstNode {
         }
 
         if (method.returnExpr() != null && !isLastStatementThrowExpr) {
-          TypeNode returnExprType = method.returnExpr().type();
-          TypeNode returnType = method.returnType();
-          Preconditions.checkState(
-              returnExprType.equals(returnType) || returnType.isSupertypeOrEquals(returnExprType),
-              "Method return type should be equal to the return expression type, or it should be a supertype of the return expression type.");
+          if (method.returnType().isPrimitiveType()) {
+            Preconditions.checkState(
+                method.returnType().equals((method.returnExpr().type())),
+                "Method primitive return type is not equal to the return expression type");
+
+          } else {
+            Preconditions.checkState(
+                method.returnType().equals(method.returnExpr().type())
+                    || method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+                "Method reference return type is not a super/boxed type of the return expression type");
+          }
         }
       }
 
