@@ -16,12 +16,14 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -112,9 +114,16 @@ public class MockServiceClassComposer implements ClassComposer {
 
   private static MethodDefinition createConstructor(
       String serviceName, VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
-    // TODO(miraleung): Instantiate fields here.
+    String mockImplName = String.format(MOCK_IMPL_NAME_PATTERN, serviceName);
+    Expr serviceImplAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(serviceImplVarExpr)
+            .setValueExpr(NewObjectExpr.builder().setType(types.get(mockImplName)).build())
+            .build();
+
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PUBLIC)
+        .setBody(Arrays.asList(ExprStatement.withExpr(serviceImplAssignExpr)))
         .setReturnType(types.get(String.format(MOCK_SERVICE_NAME_PATTERN, serviceName)))
         .build();
   }
