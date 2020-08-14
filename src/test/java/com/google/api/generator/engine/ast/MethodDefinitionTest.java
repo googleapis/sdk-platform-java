@@ -568,7 +568,7 @@ public class MethodDefinitionTest {
           MethodDefinition.builder()
               .setName("close")
               .setScope(ScopeNode.PUBLIC)
-              .setReturnType(TypeNode.INTEGER)
+              .setReturnType(TypeNode.INT_OBJECT)
               .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
               .setReturnExpr(
                   MethodInvocationExpr.builder()
