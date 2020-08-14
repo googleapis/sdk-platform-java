@@ -98,6 +98,7 @@ public class ResourceNameHelperClassComposer {
             resourceName.resourceTypeString()));
 
     String className = getThisClassName(resourceName);
+
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(resourceName.pakkage())
@@ -259,7 +260,7 @@ public class ResourceNameHelperClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     MethodDefinition deprecatedCtor =
         MethodDefinition.constructorBuilder()
-            .setScope(ScopeNode.PRIVATE)
+            .setScope(ScopeNode.PROTECTED)
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withType(
