@@ -15,7 +15,10 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Nullable;
 
@@ -39,13 +42,33 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static final TypeNode BOOLEAN = builder().setTypeKind(TypeKind.BOOLEAN).build();
-  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
-  public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
+  public static final TypeNode BYTE = builder().setTypeKind(TypeKind.BYTE).build();
+  public static final TypeNode CHAR = builder().setTypeKind(TypeKind.CHAR).build();
   public static final TypeNode DOUBLE = builder().setTypeKind(TypeKind.DOUBLE).build();
+  public static final TypeNode FLOAT = builder().setTypeKind(TypeKind.FLOAT).build();
+  public static final TypeNode INT = builder().setTypeKind(TypeKind.INT).build();
   public static final TypeNode LONG = builder().setTypeKind(TypeKind.LONG).build();
+  public static final TypeNode SHORT = builder().setTypeKind(TypeKind.SHORT).build();
+
+  public static final TypeNode BOOLEAN_OBJECT =
+      withReference(ConcreteReference.withClazz(Boolean.class));
+  public static final TypeNode BYTE_OBJECT = withReference(ConcreteReference.withClazz(Byte.class));
+  public static final TypeNode CHAR_OBJECT =
+      withReference(ConcreteReference.withClazz(Character.class));
+  public static final TypeNode DOUBLE_OBJECT =
+      withReference(ConcreteReference.withClazz(Double.class));
+  public static final TypeNode FLOAT_OBJECT =
+      withReference(ConcreteReference.withClazz(Float.class));
+  public static final TypeNode INT_OBJECT =
+      withReference(ConcreteReference.withClazz(Integer.class));
+  public static final TypeNode LONG_OBJECT = withReference(ConcreteReference.withClazz(Long.class));
+  public static final TypeNode SHORT_OBJECT =
+      withReference(ConcreteReference.withClazz(Short.class));
+
+  private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
-  public static final TypeNode INTEGER = withReference(ConcreteReference.withClazz(Integer.class));
   public static final TypeNode NULL =
       withReference(ConcreteReference.withClazz(javax.lang.model.type.NullType.class));
   public static final TypeNode OBJECT = withReference(ConcreteReference.withClazz(Object.class));
@@ -127,9 +150,7 @@ public abstract class TypeNode implements AstNode {
     }
 
     TypeNode type = (TypeNode) o;
-    return typeKind().equals(type.typeKind())
-        && (isArray() == type.isArray())
-        && Objects.equals(reference(), type.reference());
+    return strictEquals(type) || isBoxedTypeEquals(type);
   }
 
   @Override
@@ -139,6 +160,26 @@ public abstract class TypeNode implements AstNode {
       hash += 23 * reference().hashCode();
     }
     return hash;
+  }
+
+  @VisibleForTesting
+  boolean strictEquals(TypeNode other) {
+    return typeKind().equals(other.typeKind())
+        && (isArray() == other.isArray())
+        && Objects.equals(reference(), other.reference());
+  }
+
+  @VisibleForTesting
+  boolean isBoxedTypeEquals(TypeNode other) {
+    // If both types are primitive/reference type, return false.
+    // Array of boxed/primitive type is not considered equal.
+    if (isArray() || other.isArray()) {
+      return false;
+    }
+    if (other.isPrimitiveType()) {
+      return Objects.equals(this, BOXED_TYPE_MAP.get(other));
+    }
+    return Objects.equals(other, BOXED_TYPE_MAP.get(this));
   }
 
   private static TypeNode createPrimitiveType(TypeKind typeKind) {
@@ -157,5 +198,18 @@ public abstract class TypeNode implements AstNode {
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
+  }
+
+  private static Map<TypeNode, TypeNode> createBoxedTypeMap() {
+    Map<TypeNode, TypeNode> map = new HashMap<>();
+    map.put(TypeNode.INT, TypeNode.INT_OBJECT);
+    map.put(TypeNode.BOOLEAN, TypeNode.BOOLEAN_OBJECT);
+    map.put(TypeNode.BYTE, TypeNode.BYTE_OBJECT);
+    map.put(TypeNode.CHAR, TypeNode.CHAR_OBJECT);
+    map.put(TypeNode.FLOAT, TypeNode.FLOAT_OBJECT);
+    map.put(TypeNode.LONG, TypeNode.LONG_OBJECT);
+    map.put(TypeNode.SHORT, TypeNode.SHORT_OBJECT);
+    map.put(TypeNode.DOUBLE, TypeNode.DOUBLE_OBJECT);
+    return map;
   }
 }
