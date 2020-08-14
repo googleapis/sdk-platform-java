@@ -94,6 +94,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String THROW = "throw";
   private static final String THROWS = "throws";
   private static final String TRY = "try";
+  private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
@@ -174,6 +175,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       if (variableExpr.isFinal()) {
         buffer.append(FINAL);
+        space();
+      }
+
+      if (variableExpr.isVolatile()) {
+        buffer.append(VOLATILE);
         space();
       }
 
