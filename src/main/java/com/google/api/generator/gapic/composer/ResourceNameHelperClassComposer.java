@@ -220,7 +220,7 @@ public class ResourceNameHelperClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     MethodDefinition deprecatedCtor =
         MethodDefinition.constructorBuilder()
-            .setScope(ScopeNode.PRIVATE)
+            .setScope(ScopeNode.PROTECTED)
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withType(
