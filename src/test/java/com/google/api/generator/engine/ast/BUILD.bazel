@@ -22,11 +22,14 @@ TESTS = [
     "TernaryExprTest",
     "ThrowExprTest",
     "TryCatchStatementTest",
+    "TypeNodeTest",
     "VariableExprTest",
     "VariableTest",
     "VaporReferenceTest",
     "MethodInvocationExprTest",
+    "ReferenceConstructorExprTest",
     "ThisObjectValueTest",
+    "SuperObjectValueTest",
 ]
 
 filegroup(
