@@ -65,6 +65,21 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
+  public void parseTokenHierarchy_wildcards() {
+    List<String> patterns =
+        Arrays.asList(
+            "projects/{project}/metricDescriptors/{metric_descriptor=**}",
+            "organizations/{organization}/metricDescriptors/{metric_descriptor=**}",
+            "folders/{folder=**}/metricDescriptors/{metric_descriptor}");
+    List<List<String>> tokenHierarchies =
+        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
+    assertEquals(3, tokenHierarchies.size());
+    assertThat(tokenHierarchies.get(0)).containsExactly("project", "metric_descriptor");
+    assertThat(tokenHierarchies.get(1)).containsExactly("organization", "metric_descriptor");
+    assertThat(tokenHierarchies.get(2)).containsExactly("folder", "metric_descriptor");
+  }
+
+  @Test
   public void parseTokenHierarchy_singletonCollection() {
     List<String> patterns =
         Arrays.asList(

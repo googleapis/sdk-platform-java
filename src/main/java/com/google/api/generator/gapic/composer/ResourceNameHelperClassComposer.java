@@ -1419,7 +1419,6 @@ public class ResourceNameHelperClassComposer {
 
   @VisibleForTesting
   static List<List<String>> parseTokenHierarchy(List<String> patterns) {
-    List<String> nonSlashSepRegexes = Arrays.asList("_", "-", ".", "~");
     List<String> nonSlashSepStrings = Arrays.asList("}_{", "}-{", "}.{", "}~{");
 
     List<List<String>> tokenHierachies = new ArrayList<>();
@@ -1430,10 +1429,19 @@ public class ResourceNameHelperClassComposer {
       for (String patternToken : patternTokens) {
         if (patternToken.startsWith(LEFT_BRACE) && patternToken.endsWith(RIGHT_BRACE)) {
           String processedPatternToken = patternToken;
+
+          // Handle non-slash separators.
           if (nonSlashSepStrings.stream().anyMatch(s -> patternToken.contains(s))) {
             for (String str : nonSlashSepStrings) {
               processedPatternToken = processedPatternToken.replace(str, "_");
             }
+          } else {
+            // Handles wildcards.
+            processedPatternToken =
+                vars.stream()
+                    .filter(v -> patternToken.contains(v))
+                    .collect(Collectors.toList())
+                    .get(0);
           }
           hierarchy.add(processedPatternToken.replace("{", "").replace("}", ""));
         }
