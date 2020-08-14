@@ -36,7 +36,9 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
@@ -722,12 +724,30 @@ public class ImportWriterVisitorTest {
             .setType(classType)
             .build();
     referenceConstructorExpr.accept(writerVisitor);
+  }
+
+  @Test
+  public void writeSynchronizedStatementImports_basicThis() {
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(
+                ThisObjectValue.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Expr.class))))
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("doStuff")
+                        .setReturnType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                        .build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
         String.format(
             createLines(2),
-            "import com.google.example.v1.Student;\n",
-            "import java.util.stream.LongStream;\n\n"));
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.util.Arrays;\n\n"));
   }
 
   @Test
@@ -747,6 +767,35 @@ public class ImportWriterVisitorTest {
             .build();
     methodExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import com.google.example.examples.v1.Student;\n\n");
+  }
+
+  @Test
+  public void writeSynchronizedStatementImports_basicVariableExpr() {
+    VariableExpr strVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("str")
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+                .build());
+
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(strVarExpr)
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("doStuff")
+                        .setReturnType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Map.class)))
+                        .build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import java.util.Map;\n\n"));
   }
 
   private static TypeNode createType(Class clazz) {

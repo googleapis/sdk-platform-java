@@ -40,6 +40,7 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -251,6 +252,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
             + " try-catch block");
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
+  }
+
+  @Override
+  public void visit(SynchronizedStatement synchronizedStatement) {
+    synchronizedStatement.lock().accept(this);
+    statements(synchronizedStatement.body());
   }
 
   @Override

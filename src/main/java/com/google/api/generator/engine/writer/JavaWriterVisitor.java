@@ -39,6 +39,7 @@ import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -91,6 +92,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String IMPLEMENTS = "implements";
   private static final String NEW = "new";
   private static final String RETURN = "return";
+  private static final String SYNCHRONIZED = "synchronized";
   private static final String STATIC = "static";
   private static final String THROW = "throw";
   private static final String THROWS = "throws";
@@ -500,6 +502,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       statements(tryCatchStatement.catchBody());
       rightBrace();
     }
+    newline();
+  }
+
+  @Override
+  public void visit(SynchronizedStatement synchronizedStatement) {
+    buffer.append(SYNCHRONIZED);
+    space();
+    leftParen();
+    synchronizedStatement.lock().accept(this);
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(synchronizedStatement.body());
+    rightBrace();
     newline();
   }
 
