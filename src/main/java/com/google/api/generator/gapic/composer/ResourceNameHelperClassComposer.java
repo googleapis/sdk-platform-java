@@ -103,7 +103,6 @@ public class ResourceNameHelperClassComposer {
                     patternTokenVarExprs,
                     tokenHierarchies,
                     types))
-
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
@@ -340,7 +339,8 @@ public class ResourceNameHelperClassComposer {
         // Create another builder creator method, but with the per-variant name.
         javaMethods.add(
             methodDefStarterFn
-                .apply(getBuilderTypeName(tokenHierarchies.get(i)))
+                .apply(
+                    String.format(newMethodNameFormat, getBuilderTypeName(tokenHierarchies.get(i))))
                 .setAnnotations(annotations)
                 .build());
       }

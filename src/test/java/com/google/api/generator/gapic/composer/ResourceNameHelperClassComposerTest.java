@@ -208,7 +208,7 @@ public class ResourceNameHelperClassComposerTest {
           + "\n"
           + "  @BetaApi(\"The per-pattern Builders are not stable yet and may be changed in the"
           + " future.\")\n"
-          + "  public static Builder ProjectFoobarBuilder() {\n"
+          + "  public static Builder newProjectFoobarBuilder() {\n"
           + "    return new Builder();\n"
           + "  }\n"
           + "\n"
