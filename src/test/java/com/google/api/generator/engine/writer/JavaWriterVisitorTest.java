@@ -322,7 +322,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = "/*\n" + "* this is a test comment\n" + "*/\n";
+    String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -403,7 +403,9 @@ public class JavaWriterVisitorTest {
   public void writeBlockComment_shortLines() {
     String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected = "/*\n" + "* Apache License\n" + "* This is a test file header\n" + "*/\n";
+    String expected =
+        String.format(
+            createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -414,12 +416,14 @@ public class JavaWriterVisitorTest {
         "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        "/*\n"
-            + "* Apache License\n"
-            + "* Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-            + "*\n"
-            + "* you may not use this file except in compliance with the License.\n"
-            + "*/\n";
+        String.format(
+            createLines(6),
+            "/*\n",
+            "* Apache License\n",
+            "* Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+            "*\n",
+            "* you may not use this file except in compliance with the License.\n",
+            "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
