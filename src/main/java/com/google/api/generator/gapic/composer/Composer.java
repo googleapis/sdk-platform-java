@@ -112,19 +112,17 @@ public class Composer {
   @VisibleForTesting
   protected static List<GapicClass> addApacheLicenseToGapicClassList(
       List<GapicClass> gapicClassList) {
-    gapicClassList =
-        gapicClassList.stream()
-            .map(
-                gapicClass -> {
-                  ClassDefinition classWithHeader =
-                      gapicClass
-                          .classDefinition()
-                          .toBuilder()
-                          .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
-                          .build();
-                  return GapicClass.create(gapicClass.kind(), classWithHeader);
-                })
-            .collect(Collectors.toList());
-    return gapicClassList;
+    return gapicClassList.stream()
+        .map(
+            gapicClass -> {
+              ClassDefinition classWithHeader =
+                  gapicClass
+                      .classDefinition()
+                      .toBuilder()
+                      .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
+                      .build();
+              return GapicClass.create(gapicClass.kind(), classWithHeader);
+            })
+        .collect(Collectors.toList());
   }
 }
