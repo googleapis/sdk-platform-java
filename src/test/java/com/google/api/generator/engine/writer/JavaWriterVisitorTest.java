@@ -42,6 +42,7 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -936,6 +937,14 @@ public class JavaWriterVisitorTest {
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
     enumRefExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
+  }
+
+  @Test
+  public void writeReturnExpr_basic() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
+    returnExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "return \"asdf\"");
   }
 
   /** =============================== STATEMENTS =============================== */
