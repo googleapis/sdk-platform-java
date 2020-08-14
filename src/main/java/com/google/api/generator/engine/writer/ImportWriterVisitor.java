@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -193,6 +194,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ReturnExpr returnExpr) {
     returnExpr.expr().accept(this);
+  }
+
+  @Override
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
+    referenceConstructorExpr.type().accept(this);
+    expressions(referenceConstructorExpr.arguments());
   }
 
   /** =============================== STATEMENTS =============================== */
