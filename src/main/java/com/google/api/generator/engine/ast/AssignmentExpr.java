@@ -63,7 +63,7 @@ public abstract class AssignmentExpr implements Expr {
         if (!lhsType.equals(rhsType)) {
           throw new TypeMismatchException(
               String.format(
-                  "If LHS type %s is reference type and RHS type %s is primitive type, they should be boxed/primitive type equals.",
+                  "LHS reference type %s and RHS primitive type %s are not equal.",
                   lhsType.reference().name(), rhsType.reference().name()));
         }
       } else {

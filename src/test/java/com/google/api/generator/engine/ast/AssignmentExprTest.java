@@ -116,25 +116,25 @@ public class AssignmentExprTest {
   @Test
   public void writeAssignmentExpr_boxedToPrimitiveType() {
     // [Constructing] `double x = (Double) y`
-    Variable lvariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
-    VariableExpr lvariableExpr =
-        VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
+    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
+    VariableExpr lVariableExpr =
+        VariableExpr.builder().setVariable(lVariable).setIsDecl(true).build();
 
-    Variable rvariable = Variable.builder().setName("y").setType(TypeNode.DOUBLE_OBJECT).build();
-    VariableExpr rvariableExpr = VariableExpr.builder().setVariable(rvariable).build();
-    assertValidAssignmentExpr(lvariableExpr, rvariableExpr);
+    Variable rVariable = Variable.builder().setName("y").setType(TypeNode.DOUBLE_OBJECT).build();
+    VariableExpr rVariableExpr = VariableExpr.builder().setVariable(rVariable).build();
+    assertValidAssignmentExpr(lVariableExpr, rVariableExpr);
   }
 
   @Test
   public void writeAssignmentExpr_invalidBoxedPrimitiveType() {
     // [Constructing] `double x = (Integer) y`
-    Variable lvariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
-    VariableExpr lvariableExpr =
-        VariableExpr.builder().setVariable(lvariable).setIsDecl(true).build();
+    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.DOUBLE).build();
+    VariableExpr lVariableExpr =
+        VariableExpr.builder().setVariable(lVariable).setIsDecl(true).build();
 
-    Variable rvariable = Variable.builder().setName("y").setType(TypeNode.INT_OBJECT).build();
-    VariableExpr rvariableExpr = VariableExpr.builder().setVariable(rvariable).build();
-    assertInvalidAssignmentExpr(lvariableExpr, rvariableExpr);
+    Variable rVariable = Variable.builder().setName("y").setType(TypeNode.INT_OBJECT).build();
+    VariableExpr rVariableExpr = VariableExpr.builder().setVariable(rVariable).build();
+    assertInvalidAssignmentExpr(lVariableExpr, rVariableExpr);
   }
 
   private static void assertInvalidAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
