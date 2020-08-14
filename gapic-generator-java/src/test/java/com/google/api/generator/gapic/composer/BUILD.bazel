@@ -5,6 +5,7 @@ TESTS = [
     "GrpcServiceStubClassComposerTest",
     "MockServiceClassComposerTest",
     "MockServiceImplClassComposerTest",
+    "ResourceNameHelperClassComposerTest",
     "ServiceClientClassComposerTest",
     "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
