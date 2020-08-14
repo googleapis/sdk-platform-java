@@ -467,6 +467,7 @@ public class ResourceNameHelperClassComposer {
                 .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(String.format(methodNameFormat, getBuilderTypeName(tokens)))
+                .setArguments(methodArgs)
                 .setReturnExpr(returnExpr)
                 .build());
       }
