@@ -225,6 +225,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.addAll(
         createParsingAndSplittingMethods(
             resourceName, templateFinalVarExprs, tokenHierarchies, types));
+
     return javaMethods;
   }
 
