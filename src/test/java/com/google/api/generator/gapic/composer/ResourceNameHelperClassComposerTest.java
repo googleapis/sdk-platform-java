@@ -79,6 +79,28 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
+  public void parseTokenHierarchy_singletonCollectionAndNonSlashSeparators() {
+    List<String> patterns =
+        Arrays.asList(
+            "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}",
+            "users/{user}/profile/blurbs/{blurb}",
+            "rooms/{room}/blurbs/{blurb}",
+            "users/{user}/profile/blurbs/legacy/{legacy_document}_{blurb}",
+            "users/{user}/profile/blurbs/legacy/{legacy_book}-{blurb}",
+            "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}");
+
+    List<List<String>> tokenHierarchies =
+        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
+    assertEquals(6, tokenHierarchies.size());
+    assertThat(tokenHierarchies.get(0)).containsExactly("user", "legacy_user_blurb");
+    assertThat(tokenHierarchies.get(1)).containsExactly("user", "blurb");
+    assertThat(tokenHierarchies.get(2)).containsExactly("room", "blurb");
+    assertThat(tokenHierarchies.get(3)).containsExactly("user", "legacy_document_blurb");
+    assertThat(tokenHierarchies.get(4)).containsExactly("user", "legacy_book_blurb");
+    assertThat(tokenHierarchies.get(5)).containsExactly("room", "legacy_room_blurb");
+  }
+
+  @Test
   public void parseTokenHierarchy_invalidPatterns() {
     List<String> patterns =
         Arrays.asList(
