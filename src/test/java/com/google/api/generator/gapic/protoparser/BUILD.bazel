@@ -3,6 +3,7 @@ package(default_visibility = ["//visibility:public"])
 TESTS = [
     "MethodSignatureParserTest",
     "ParserTest",
+    "PluginArgumentParserTest",
     "ResourceNameParserTest",
     "ResourceReferenceParserTest",
 ]

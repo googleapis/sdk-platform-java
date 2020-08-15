@@ -181,7 +181,6 @@ message CreateSessionRequest {
 // The request for the GetSession method.
 message GetSessionRequest {
   // The session to be retrieved.
-
   string name = 1 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Session"];
 }
