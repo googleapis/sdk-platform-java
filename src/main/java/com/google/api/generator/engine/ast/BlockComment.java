@@ -14,7 +14,6 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.escaper.MetacharEscaper;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -38,14 +37,6 @@ public abstract class BlockComment implements Comment {
   public abstract static class Builder {
     public abstract Builder setComment(String comment);
 
-    // Private accessor.
-    abstract String comment();
-
-    public abstract BlockComment autoBuild();
-
-    public BlockComment build() {
-      setComment(MetacharEscaper.escaper(comment()));
-      return autoBuild();
-    }
+    public abstract BlockComment build();
   }
 }
