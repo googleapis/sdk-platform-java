@@ -32,6 +32,7 @@ import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -213,19 +214,25 @@ public class ResourceNameHelperClassComposer {
       List<List<String>> tokenHierarchies,
       Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+
     javaMethods.addAll(
         createConstructorMethods(
             resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
+
     javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
+
     javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
     javaMethods.addAll(
         createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.addAll(
         createFormatCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+
     javaMethods.addAll(
         createParsingAndSplittingMethods(
             resourceName, templateFinalVarExprs, tokenHierarchies, types));
 
+    javaMethods.addAll(
+        createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     return javaMethods;
   }
 
@@ -872,8 +879,156 @@ public class ResourceNameHelperClassComposer {
         .build();
   }
 
-  private static Map<String, TypeNode> createStaticTypes() {
+  private static List<MethodDefinition> createFieldValueGetterMethods(
+      ResourceName resourceName,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies,
+      Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    javaMethods.add(
+        createGetFieldValuesMapMethod(
+            resourceName, thisClassType, patternTokenVarExprs, tokenHierarchies));
+    javaMethods.add(createGetFieldValueMethod());
+    return javaMethods;
+  }
 
+  private static MethodDefinition createGetFieldValuesMapMethod(
+      ResourceName resourceName,
+      TypeNode thisClassType,
+      Map<String, VariableExpr> patternTokenVarExprs,
+      List<List<String>> tokenHierarchies) {
+
+    Reference strRef = TypeNode.STRING.reference();
+    TypeNode mapBuilderType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.Builder.class)
+                .setGenerics(Arrays.asList(strRef, strRef))
+                .build());
+    VariableExpr fieldMapBuilderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("fieldMapBuilder").setType(mapBuilderType).build());
+
+    AssignmentExpr builderAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(fieldMapBuilderVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setMethodName("builder")
+                    .setReturnType(mapBuilderType)
+                    .build())
+            .build();
+
+    // Innermost if-blocks.
+    List<Statement> tokenIfStatements = new ArrayList<>();
+    ValueExpr nullValExpr = ValueExpr.withValue(NullObjectValue.create());
+    for (String token : getTokenSet(tokenHierarchies)) {
+      VariableExpr tokenVarExpr = patternTokenVarExprs.get(JavaStyle.toLowerCamelCase(token));
+      StringObjectValue tokenStrVal = StringObjectValue.withValue(token);
+      MethodInvocationExpr putExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(fieldMapBuilderVarExpr)
+              .setMethodName("put")
+              .setArguments(ValueExpr.withValue(tokenStrVal), tokenVarExpr)
+              .build();
+      // TODO(miraleung): Use neq operator here.
+      MethodInvocationExpr notNullCheckExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+              .setMethodName("notTodoEquals")
+              .setArguments(tokenVarExpr, nullValExpr)
+              .setReturnType(TypeNode.BOOLEAN)
+              .build();
+      tokenIfStatements.add(
+          IfStatement.builder()
+              .setConditionExpr(notNullCheckExpr)
+              .setBody(Arrays.asList(ExprStatement.withExpr(putExpr)))
+              .build());
+    }
+
+    // Put the innermost if-statements and assignment expressions together.
+    VariableExpr fieldValuesMapVarExpr = FIXED_CLASS_VARS.get("fieldValuesMap");
+    AssignmentExpr fieldValuesMapAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(fieldValuesMapVarExpr)
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(fieldMapBuilderVarExpr)
+                    .setMethodName("build")
+                    .setReturnType(fieldValuesMapVarExpr.type())
+                    .build())
+            .build();
+
+    List<Statement> middleIfBlockStatements = new ArrayList<>();
+    middleIfBlockStatements.add(ExprStatement.withExpr(builderAssignExpr));
+    middleIfBlockStatements.addAll(tokenIfStatements);
+    middleIfBlockStatements.add(ExprStatement.withExpr(fieldValuesMapAssignExpr));
+
+    // Middle if-block, i.e. `if (fieldValuesMap == null)`.
+    // TODO(miraleung): Use eq operator here.
+    MethodInvocationExpr fieldValuesMapNullCheckExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+            .setMethodName("equals")
+            .setArguments(fieldValuesMapVarExpr, nullValExpr)
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    IfStatement fieldValuesMapIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(fieldValuesMapNullCheckExpr)
+            .setBody(middleIfBlockStatements)
+            .build();
+
+    // Outer if-block.
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    IfStatement outerIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(fieldValuesMapNullCheckExpr)
+            .setBody(
+                Arrays.asList(
+                    SynchronizedStatement.builder()
+                        .setLock(ThisObjectValue.withType(thisClassType))
+                        .setBody(Arrays.asList(fieldValuesMapIfStatement))
+                        .build()))
+            .build();
+
+    // Put the method together.
+    TypeNode mapStringType = fieldValuesMapVarExpr.type();
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(mapStringType)
+        .setName("getFieldValuesMap")
+        .setBody(Arrays.asList(outerIfStatement))
+        .setReturnExpr(fieldValuesMapVarExpr)
+        .build();
+  }
+
+  private static MethodDefinition createGetFieldValueMethod() {
+    VariableExpr fieldNameVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("fieldName").setType(TypeNode.STRING).build());
+    MethodInvocationExpr returnExpr =
+        MethodInvocationExpr.builder().setMethodName("getFieldValuesMap").build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("get")
+            .setArguments(fieldNameVarExpr)
+            .setReturnType(TypeNode.STRING)
+            .build();
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.STRING)
+        .setName("getFieldValue")
+        .setArguments(fieldNameVarExpr.toBuilder().setIsDecl(true).build())
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
