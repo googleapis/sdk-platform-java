@@ -19,6 +19,7 @@ TESTS = [
     "ReferenceTest",
     "ReturnExprTest",
     "StringObjectValueTest",
+    "SynchronizedStatementTest",
     "TernaryExprTest",
     "ThrowExprTest",
     "TryCatchStatementTest",
