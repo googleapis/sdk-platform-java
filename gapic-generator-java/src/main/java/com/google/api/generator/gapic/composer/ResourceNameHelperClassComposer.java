@@ -90,11 +90,16 @@ public class ResourceNameHelperClassComposer {
         createPatternTokenClassMembers(tokenHierarchies);
 
     Preconditions.checkState(
-        patternTokenVarExprs.size() > 0
-            && templateFinalVarExprs.size() == patternTokenVarExprs.size()
-            && tokenHierarchies.size() == patternTokenVarExprs.size(),
+        patternTokenVarExprs.size() > 0,
         String.format(
-            "Cardinalities of patterns and associated variables do not match for resource name %s",
+            "No patterns fround for resource naem %s", resourceName.resourceTypeString()));
+    Preconditions.checkState(
+        templateFinalVarExprs.size() > 0 && tokenHierarchies.size() == templateFinalVarExprs.size(),
+        String.format(
+            "Cardinalities of patterns (%d) and associated variables (%d) do not match for"
+                + " resource name %s ",
+            templateFinalVarExprs.size(),
+            tokenHierarchies.size(),
             resourceName.resourceTypeString()));
 
     String className = getThisClassName(resourceName);
@@ -1419,19 +1424,31 @@ public class ResourceNameHelperClassComposer {
 
   @VisibleForTesting
   static List<List<String>> parseTokenHierarchy(List<String> patterns) {
+    List<String> nonSlashSepStrings = Arrays.asList("}_{", "}-{", "}.{", "}~{");
+
     List<List<String>> tokenHierachies = new ArrayList<>();
-    // Assumes that resource definitions do not have non-slash separators.
     for (String pattern : patterns) {
       List<String> hierarchy = new ArrayList<>();
       Set<String> vars = PathTemplate.create(pattern).vars();
       String[] patternTokens = pattern.split(SLASH);
       for (String patternToken : patternTokens) {
         if (patternToken.startsWith(LEFT_BRACE) && patternToken.endsWith(RIGHT_BRACE)) {
-          hierarchy.add(
-              vars.stream()
-                  .filter(v -> patternToken.contains(v))
-                  .collect(Collectors.toList())
-                  .get(0));
+          String processedPatternToken = patternToken;
+
+          // Handle non-slash separators.
+          if (nonSlashSepStrings.stream().anyMatch(s -> patternToken.contains(s))) {
+            for (String str : nonSlashSepStrings) {
+              processedPatternToken = processedPatternToken.replace(str, "_");
+            }
+          } else {
+            // Handles wildcards.
+            processedPatternToken =
+                vars.stream()
+                    .filter(v -> patternToken.contains(v))
+                    .collect(Collectors.toList())
+                    .get(0);
+          }
+          hierarchy.add(processedPatternToken.replace("{", "").replace("}", ""));
         }
       }
       tokenHierachies.add(hierarchy);
