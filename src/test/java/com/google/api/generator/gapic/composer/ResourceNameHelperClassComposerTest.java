@@ -65,6 +65,21 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
+  public void parseTokenHierarchy_wildcards() {
+    List<String> patterns =
+        Arrays.asList(
+            "projects/{project}/metricDescriptors/{metric_descriptor=**}",
+            "organizations/{organization}/metricDescriptors/{metric_descriptor=**}",
+            "folders/{folder=**}/metricDescriptors/{metric_descriptor}");
+    List<List<String>> tokenHierarchies =
+        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
+    assertEquals(3, tokenHierarchies.size());
+    assertThat(tokenHierarchies.get(0)).containsExactly("project", "metric_descriptor");
+    assertThat(tokenHierarchies.get(1)).containsExactly("organization", "metric_descriptor");
+    assertThat(tokenHierarchies.get(2)).containsExactly("folder", "metric_descriptor");
+  }
+
+  @Test
   public void parseTokenHierarchy_singletonCollection() {
     List<String> patterns =
         Arrays.asList(
@@ -76,6 +91,28 @@ public class ResourceNameHelperClassComposerTest {
     assertThat(tokenHierarchies.get(0)).containsExactly("project", "session");
     assertThat(tokenHierarchies.get(1))
         .containsExactly("project", "environment", "user", "session");
+  }
+
+  @Test
+  public void parseTokenHierarchy_singletonCollectionAndNonSlashSeparators() {
+    List<String> patterns =
+        Arrays.asList(
+            "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}",
+            "users/{user}/profile/blurbs/{blurb}",
+            "rooms/{room}/blurbs/{blurb}",
+            "users/{user}/profile/blurbs/legacy/{legacy_document}_{blurb}",
+            "users/{user}/profile/blurbs/legacy/{legacy_book}-{blurb}",
+            "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}");
+
+    List<List<String>> tokenHierarchies =
+        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
+    assertEquals(6, tokenHierarchies.size());
+    assertThat(tokenHierarchies.get(0)).containsExactly("user", "legacy_user_blurb");
+    assertThat(tokenHierarchies.get(1)).containsExactly("user", "blurb");
+    assertThat(tokenHierarchies.get(2)).containsExactly("room", "blurb");
+    assertThat(tokenHierarchies.get(3)).containsExactly("user", "legacy_document_blurb");
+    assertThat(tokenHierarchies.get(4)).containsExactly("user", "legacy_book_blurb");
+    assertThat(tokenHierarchies.get(5)).containsExactly("room", "legacy_room_blurb");
   }
 
   @Test
