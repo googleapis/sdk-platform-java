@@ -345,6 +345,15 @@ public class ParserTest {
     assertThat(outputResourceNames).contains(resname);
   }
 
+  @Test
+  public void sanitizeDefaultHost_basic() {
+    String defaultHost = "localhost:1234";
+    assertEquals(defaultHost, Parser.sanitizeDefaultHost(defaultHost));
+
+    defaultHost = "logging.googleapis.com";
+    assertEquals(String.format("%s:443", defaultHost), Parser.sanitizeDefaultHost(defaultHost));
+  }
+
   private void assertMethodArgumentEquals(
       String name, TypeNode type, List<TypeNode> nestedTypes, MethodArgument argument) {
     assertEquals(name, argument.name());
