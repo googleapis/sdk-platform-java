@@ -365,5 +365,12 @@ public class ResourceNameHelperClassComposerTest {
           + "  public String getFieldValue(String fieldName) {\n"
           + "    return getFieldValuesMap().get(fieldName);\n"
           + "  }\n"
+          + "\n"
+          + "  @Override\n"
+          + "  public String toString() {\n"
+          + "    return Objects.equals(fixedValue, null)\n"
+          + "        ? pathTemplate.instantiate(getFieldValuesMap())\n"
+          + "        : fixedValue;\n"
+          + "  }\n"
           + "}\n";
 }
