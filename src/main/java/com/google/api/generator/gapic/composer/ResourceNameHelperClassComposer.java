@@ -240,6 +240,7 @@ public class ResourceNameHelperClassComposer {
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
+
     return javaMethods;
   }
 
