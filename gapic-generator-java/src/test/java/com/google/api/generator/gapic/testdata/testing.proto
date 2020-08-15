@@ -31,6 +31,8 @@ service Testing {
   // This service is meant to only run locally on the port 7469 (keypad digits
   // for "show").
   option (google.api.default_host) = "localhost:7469";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform";
 
   // Creates a new testing session.
   rpc CreateSession(CreateSessionRequest) returns (Session) {
@@ -140,10 +142,10 @@ message CreateSessionRequest {
   // be deleted).
   Session session = 1;
 
-  // A blueprint is an explicit definition of methods and requests that are needed
-  // to be made to test this specific test case. Ideally this would be represented
-  // by something more robust like CEL, but as of writing this, I am unsure if CEL
-  // is ready.
+  // A blueprint is an explicit definition of methods and requests that are
+  // needed to be made to test this specific test case. Ideally this would be
+  // represented by something more robust like CEL, but as of writing this, I am
+  // unsure if CEL is ready.
   message Blueprint {
     option (google.api.resource) = {
       type: "showcase.googleapis.com/Blueprint"
@@ -167,15 +169,13 @@ message CreateSessionRequest {
 
     // The initial request to trigger this test.
     Invocation request = 3;
-
   }
 
-  // The blueprints that will satisfy this test. There may be multiple blueprints
-  // that can signal to the server that this test case is being exercised. Although
-  // multiple blueprints are specified, only a single blueprint needs to be run to
-  // signal that the test case was exercised.
-   Blueprint blueprint = 2;
-
+  // The blueprints that will satisfy this test. There may be multiple
+  // blueprints that can signal to the server that this test case is being
+  // exercised. Although multiple blueprints are specified, only a single
+  // blueprint needs to be run to signal that the test case was exercised.
+  Blueprint blueprint = 2;
 }
 
 // The request for the GetSession method.
@@ -284,7 +284,6 @@ message Test {
 
   // A description of the test.
   string description = 3;
-
 }
 
 // An issue found in the test.
@@ -381,6 +380,7 @@ message VerifyTestRequest {
 }
 
 message VerifyTestResponse {
-  // An issue if check answer was unsuccessful. This will be empty if the check answer succeeded.
+  // An issue if check answer was unsuccessful. This will be empty if the check
+  // answer succeeded.
   Issue issue = 1;
 }

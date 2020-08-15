@@ -1297,6 +1297,7 @@ public class ResourceNameHelperClassComposer {
             .build();
     nestedClassMethods.add(buildMethod);
 
+
     // Return the class.
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
