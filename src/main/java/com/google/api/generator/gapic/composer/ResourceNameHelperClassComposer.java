@@ -1095,7 +1095,6 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-
     List<Class> concreteClazzes =
         Arrays.asList(
             ArrayList.class,

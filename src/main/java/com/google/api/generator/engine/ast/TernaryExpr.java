@@ -54,6 +54,8 @@ public abstract class TernaryExpr implements Expr {
     public abstract Builder setElseExpr(Expr elseExpression);
 
     // Private accessors.
+    abstract Expr conditionExpr();
+
     abstract Expr thenExpr();
 
     abstract Expr elseExpr();
@@ -61,8 +63,11 @@ public abstract class TernaryExpr implements Expr {
     abstract TernaryExpr autoBuild();
 
     public TernaryExpr build() {
+      Preconditions.checkState(
+          conditionExpr().type().equals(TypeNode.BOOLEAN),
+          "Ternary condition must be a boolean-typed expression.");
+
       if (!thenExpr().type().equals(elseExpr().type())) {
-        // Not both primitives, and no boxed equality, and one of them is null.
         Preconditions.checkState(
             thenExpr().type().isSupertypeOrEquals(elseExpr().type())
                 || elseExpr().type().isSupertypeOrEquals(thenExpr().type()),
