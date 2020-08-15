@@ -65,7 +65,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private static final String COLON = ":";
   private static final String COMMA = ",";
-  private static final String BLOCK_COMMENT_START = "/**";
+  private static final String BLOCK_COMMENT_START = "/*";
   private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
   private static final String ESCAPED_QUOTE = "\"";
@@ -73,6 +73,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
   private static final String LEFT_PAREN = "(";
+  private static final String JAVADOC_COMMENT_START = "/**";
   private static final String QUESTION_MARK = "?";
   private static final String RIGHT_ANGLE = ">";
   private static final String RIGHT_BRACE = "}";
@@ -535,17 +536,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   public void visit(BlockComment blockComment) {
-    // Split comments by new line and embrace the comment block with `/** */`.
-    String sourceComment = blockComment.comment();
-    String formattedSource =
-        JavaFormatter.format(
-            String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
-    buffer.append(formattedSource);
+    // Split comments by new line and embrace the comment block with `/* */`.
+    StringBuilder sourceComment = new StringBuilder();
+    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
+    Arrays.stream(blockComment.comment().split("\\r?\\n"))
+        .forEach(
+            comment -> {
+              sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
+            });
+    sourceComment.append(BLOCK_COMMENT_END);
+    buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
 
   public void visit(JavaDocComment javaDocComment) {
     StringBuilder sourceComment = new StringBuilder();
-    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
+    sourceComment.append(JAVADOC_COMMENT_START).append(NEWLINE);
     Arrays.stream(javaDocComment.comment().split("\\r?\\n"))
         .forEach(
             comment -> {

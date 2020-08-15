@@ -503,6 +503,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.add(createParseListMethod(thisClassType));
     javaMethods.add(createToStringListMethod(thisClassType));
     javaMethods.add(createIsParseableFromMethod(templateFinalVarExprs));
+
     return javaMethods;
   }
 
@@ -1028,7 +1029,6 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
-
     List<Class> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
