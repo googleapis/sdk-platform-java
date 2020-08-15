@@ -251,6 +251,7 @@ public class ResourceNameHelperClassComposer {
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
+
     return javaMethods;
   }
 
@@ -1295,6 +1296,7 @@ public class ResourceNameHelperClassComposer {
                 NewObjectExpr.builder().setType(outerClassType).setArguments(thisExpr).build())
             .build();
     nestedClassMethods.add(buildMethod);
+
 
     // Return the class.
     AnnotationNode betaAnnotation =
