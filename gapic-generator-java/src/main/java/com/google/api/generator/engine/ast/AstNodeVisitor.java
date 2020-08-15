@@ -71,6 +71,8 @@ public interface AstNodeVisitor {
 
   public void visit(TryCatchStatement tryCatchStatement);
 
+  public void visit(SynchronizedStatement synchronizedStatement);
+
   public void visit(CommentStatement commentStatement);
 
   /** =============================== OTHER =============================== */
