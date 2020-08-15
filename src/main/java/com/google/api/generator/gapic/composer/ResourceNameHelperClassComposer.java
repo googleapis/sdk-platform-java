@@ -225,6 +225,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.addAll(
         createParsingAndSplittingMethods(
             resourceName, templateFinalVarExprs, tokenHierarchies, types));
+
     return javaMethods;
   }
 
@@ -495,6 +496,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.add(createParseListMethod(thisClassType));
     javaMethods.add(createToStringListMethod(thisClassType));
     javaMethods.add(createIsParseableFromMethod(templateFinalVarExprs));
+
     return javaMethods;
   }
 
