@@ -355,7 +355,6 @@ message TestRun {
   string test = 1 [
     (google.api.resource_reference).type = "showcase.googleapis.com/Test"];
 
-
   // An issue found with the test run. If empty, this test run was successful.
   Issue issue = 2;
 }
