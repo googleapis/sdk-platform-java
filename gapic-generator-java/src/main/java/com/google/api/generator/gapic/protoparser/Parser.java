@@ -53,6 +53,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -68,6 +69,14 @@ public class Parser {
   }
 
   public static GapicContext parse(CodeGeneratorRequest request) {
+    // TODO(miraleung): Actually parse these files.
+    Optional<String> jsonConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
+    String jsonConfigPath = jsonConfigPathOpt.isPresent() ? jsonConfigPathOpt.get() : null;
+    Optional<String> gapicYamlConfigPathOpt =
+        PluginArgumentParser.parseGapicYamlConfigPath(request);
+    String gapicYamlConfigPath =
+        gapicYamlConfigPathOpt.isPresent() ? gapicYamlConfigPathOpt.get() : null;
+
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
