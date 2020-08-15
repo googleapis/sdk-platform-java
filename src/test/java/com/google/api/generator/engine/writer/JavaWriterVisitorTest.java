@@ -343,7 +343,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = "/** this is a test comment */\n";
+    String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -421,11 +421,30 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+  public void writeBlockComment_shortLines() {
+    String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+        String.format(
+            createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeBlockComment_newLineInBetween() {
+    String content =
+        "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(6),
+            "/*\n",
+            "* Apache License\n",
+            "* Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+            "*\n",
+            "* you may not use this file except in compliance with the License.\n",
+            "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
