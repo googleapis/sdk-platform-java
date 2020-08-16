@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -469,11 +470,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
 
-    // TODO(miraleung): Change the name of this var to callableFactory.
     VariableExpr callableFactoryVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setName("callableFactori")
+                .setName("callableFactory")
                 .setType(staticTypes.get("GrpcStubCallableFactory"))
                 .build());
 
@@ -517,19 +517,23 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                         .setReturnType(thisClassType)
                         .build())));
 
+    Expr thisExpr =
+        ValueExpr.withValue(ThisObjectValue.withType(types.get(getThisClassName(service.name()))));
     // Body of the second constructor method.
     List<Expr> secondCtorExprs = new ArrayList<>();
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            // TODO(miraleung): this.callableFactory.
-            .setVariableExpr(classMemberVarExprs.get("callableFactory"))
+            .setVariableExpr(
+                classMemberVarExprs.get("callableFactory").toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
             .setValueExpr(callableFactoryVarExpr)
             .build());
-    // TODO(miraleung): this.operationsStub.
     VariableExpr operationsStubClassVarExpr = classMemberVarExprs.get("operationsStub");
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            .setVariableExpr(operationsStubClassVarExpr)
+            .setVariableExpr(
+                operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(staticTypes.get("GrpcOperationsStub"))
@@ -585,6 +589,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                         settingsVarExpr,
                         clientContextVarExpr,
                         operationsStubClassVarExpr,
+                        thisExpr,
                         javaStyleMethodNameToTransportSettingsVarExprs))
             .collect(Collectors.toList()));
 
@@ -597,7 +602,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     VariableExpr backgroundResourcesVarExpr = classMemberVarExprs.get("backgroundResources");
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            .setVariableExpr(backgroundResourcesVarExpr)
+            .setVariableExpr(
+                backgroundResourcesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 NewObjectExpr.builder()
                     .setType(staticTypes.get("BackgroundResourceAggregation"))
@@ -649,6 +655,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
       VariableExpr settingsVarExpr,
       VariableExpr clientContextVarExpr,
       VariableExpr operationsStubClassVarExpr,
+      Expr thisExpr,
       Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs) {
     boolean isOperation = callableVarName.endsWith(OPERATION_CALLABLE_NAME);
     boolean isPaged = callableVarName.endsWith(PAGED_CALLABLE_NAME);
@@ -685,8 +692,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
     String callableCreatorMethodName = getCallableCreatorMethodName(callableVarExpr.type());
     return AssignmentExpr.builder()
-        // TODO(miraleung): Reference this.
-        .setVariableExpr(callableVarExpr)
+        .setVariableExpr(callableVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
         .setValueExpr(
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(callableFactoryVarExpr)
