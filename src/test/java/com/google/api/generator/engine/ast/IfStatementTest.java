@@ -14,7 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +28,7 @@ public class IfStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(createAssignmentExprList())
             .build();
-    assertTrue(ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
@@ -43,7 +43,7 @@ public class IfStatementTest {
             .setConditionExpr(condExpr)
             .setBody(createAssignmentExprList())
             .build();
-    assertTrue(ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class IfStatementTest {
             .addElseIf(thirdCondExpr, createAssignmentExprList())
             .setElseBody(createAssignmentExprList())
             .build();
-    assertTrue(ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
@@ -78,7 +78,7 @@ public class IfStatementTest {
             .setConditionExpr(condExpr)
             .setBody(Arrays.asList(nestedIfStatement))
             .build();
-    assertTrue(ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   private static List<Statement> createAssignmentExprList() {
