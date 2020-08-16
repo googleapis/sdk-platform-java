@@ -36,8 +36,11 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -189,6 +192,17 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     enumRefExpr.type().accept(this);
   }
 
+  @Override
+  public void visit(ReturnExpr returnExpr) {
+    returnExpr.expr().accept(this);
+  }
+
+  @Override
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
+    referenceConstructorExpr.type().accept(this);
+    expressions(referenceConstructorExpr.arguments());
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
@@ -238,6 +252,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
             + " try-catch block");
     tryCatchStatement.catchVariableExpr().accept(this);
     statements(tryCatchStatement.catchBody());
+  }
+
+  @Override
+  public void visit(SynchronizedStatement synchronizedStatement) {
+    synchronizedStatement.lock().accept(this);
+    statements(synchronizedStatement.body());
   }
 
   @Override

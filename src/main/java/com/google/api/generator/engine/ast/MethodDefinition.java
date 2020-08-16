@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,7 +35,8 @@ public abstract class MethodDefinition implements AstNode {
   // Required.
   public abstract IdentifierNode methodIdentifier();
 
-  // TODO(xiahzhenliu): Add a Nullable JavaDoc here.
+  public abstract ImmutableList<CommentStatement> headerCommentStatements();
+
   public abstract ImmutableList<AnnotationNode> annotations();
 
   // Using a list helps with determinism in unit tests.
@@ -84,6 +86,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(false)
+        .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -99,6 +102,7 @@ public abstract class MethodDefinition implements AstNode {
         .setIsFinal(false)
         .setIsStatic(false)
         .setIsConstructor(true)
+        .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList())
         .setThrowsExceptions(Collections.emptyList())
         .setBody(Collections.emptyList())
@@ -115,6 +119,9 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setName(String name);
 
+    public abstract Builder setHeaderCommentStatements(
+        List<CommentStatement> headeCommentStatements);
+
     public Builder setAnnotations(List<AnnotationNode> annotations) {
       annotationsBuilder().addAll(annotations);
       return this;
@@ -129,6 +136,10 @@ public abstract class MethodDefinition implements AstNode {
     public abstract Builder setIsConstructor(boolean isConstructor);
 
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
+
+    public Builder setArguments(VariableExpr... arguments) {
+      return setArguments(Arrays.asList(arguments));
+    }
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
 
@@ -269,6 +280,10 @@ public abstract class MethodDefinition implements AstNode {
         }
 
         if (method.returnExpr() != null && !isLastStatementThrowExpr) {
+          // TODO(miraleung): Refactor this to use ReturnExpr under the covers instead.
+          Preconditions.checkState(
+              !(method.returnExpr() instanceof ReturnExpr),
+              "A method's return expression can only consist of non-ReturnExpr expressions");
           if (method.returnType().isPrimitiveType()) {
             Preconditions.checkState(
                 method.returnExpr().type().isPrimitiveType()

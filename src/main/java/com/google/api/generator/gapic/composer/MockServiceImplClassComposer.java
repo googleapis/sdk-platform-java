@@ -27,9 +27,13 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -134,7 +138,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
             types.get(String.format(MOCK_SERVICE_IMPL_NAME_PATTERN, service.name()))));
     javaMethods.add(createGetRequestsMethod());
     javaMethods.add(createAddResponseMethod());
-    javaMethods.add(createSetResponsesMethod());
+    javaMethods.add(createSetResponsesMethod(service));
     javaMethods.add(createAddExceptionMethod());
     javaMethods.add(createResetMethod());
     javaMethods.addAll(createProtoMethodOverrides(service));
@@ -142,9 +146,9 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createConstructor(TypeNode classType) {
-    // TODO(miraleung): Instantiate fields here.
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PUBLIC)
+        .setBody(createRequestResponseAssignStatements())
         .setReturnType(classType)
         .build();
   }
@@ -182,30 +186,46 @@ public class MockServiceImplClassComposer implements ClassComposer {
         .build();
   }
 
-  private static MethodDefinition createSetResponsesMethod() {
-    // TODO(miraleung): Re-instantiate the fields here.
+  private static MethodDefinition createSetResponsesMethod(Service service) {
+    VariableExpr responsesArgVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("responses")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(
+                                Arrays.asList(staticTypes.get("AbstractMessage").reference()))
+                            .build()))
+                .build());
+    Expr responseAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                responsesVarExpr
+                    .toBuilder()
+                    .setExprReferenceExpr(
+                        ValueExpr.withValue(ThisObjectValue.withType(getThisClassType(service))))
+                    .build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(
+                        TypeNode.withReference(
+                            ConcreteReference.builder()
+                                .setClazz(LinkedList.class)
+                                .setGenerics(
+                                    Arrays.asList(ConcreteReference.withClazz(Object.class)))
+                                .build()))
+                    .setArguments(Arrays.asList(responsesArgVarExpr))
+                    .build())
+            .build();
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("setResponses")
-        .setArguments(
-            Arrays.asList(
-                VariableExpr.builder()
-                    .setVariable(
-                        Variable.builder()
-                            .setName("responses")
-                            .setType(
-                                TypeNode.withReference(
-                                    ConcreteReference.builder()
-                                        .setClazz(List.class)
-                                        .setGenerics(
-                                            Arrays.asList(
-                                                staticTypes.get("AbstractMessage").reference()))
-                                        .build()))
-                            .build())
-                    .setIsDecl(true)
-                    .build()))
+        .setArguments(Arrays.asList(responsesArgVarExpr.toBuilder().setIsDecl(true).build()))
+        .setBody(Arrays.asList(ExprStatement.withExpr(responseAssignExpr)))
         .build();
   }
 
@@ -233,12 +253,12 @@ public class MockServiceImplClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createResetMethod() {
-    // TODO(miraleung): Re-instantiate the fields here.
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("reset")
+        .setBody(createRequestResponseAssignStatements())
         .build();
   }
 
@@ -471,6 +491,14 @@ public class MockServiceImplClassComposer implements ClassComposer {
     }
 
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(Exception.class));
+    Expr newExceptionExpr =
+        NewObjectExpr.builder()
+            .setType(
+                TypeNode.withReference(ConcreteReference.withClazz(IllegalArgumentException.class)))
+            .setArguments(
+                Arrays.asList(
+                    ValueExpr.withValue(StringObjectValue.withValue("Unrecognized response type"))))
+            .build();
 
     return IfStatement.builder()
         .setConditionExpr(
@@ -498,13 +526,12 @@ public class MockServiceImplClassComposer implements ClassComposer {
                         .setExprReferenceExpr(responseObserverVarExpr)
                         .build())))
         .setElseBody(
-            // TODO(miraleung): Pass a new IllegalArgumentException into
-            // responseObserver.onError().
             Arrays.asList(
                 ExprStatement.withExpr(
                     MethodInvocationExpr.builder()
                         .setMethodName("onError")
                         .setExprReferenceExpr(responseObserverVarExpr)
+                        .setArguments(Arrays.asList(newExceptionExpr))
                         .build())))
         .build();
   }
@@ -549,5 +576,37 @@ public class MockServiceImplClassComposer implements ClassComposer {
                 .setPakkage(service.pakkage())
                 .build()));
     return types;
+  }
+
+  private static TypeNode getThisClassType(Service service) {
+    return TypeNode.withReference(
+        VaporReference.builder()
+            .setName(String.format(MOCK_SERVICE_IMPL_NAME_PATTERN, service.name()))
+            .setPakkage(service.pakkage())
+            .build());
+  }
+
+  private static List<Statement> createRequestResponseAssignStatements() {
+    Expr assignRequestVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestsVarExpr)
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
+                    .setIsGeneric(true)
+                    .build())
+            .build();
+    Expr assignResponsesVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(responsesVarExpr)
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(LinkedList.class)))
+                    .setIsGeneric(true)
+                    .build())
+            .build();
+    return Arrays.asList(assignRequestVarExpr, assignResponsesVarExpr).stream()
+        .map(e -> ExprStatement.withExpr(e))
+        .collect(Collectors.toList());
   }
 }

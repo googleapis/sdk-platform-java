@@ -41,9 +41,13 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -268,6 +272,24 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_scopedStaticFinalVolatileDecl() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr expr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setIsVolatile(true)
+            .build();
+
+    expr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "private static final volatile boolean x");
+  }
+
+  @Test
   public void writeVariableExpr_basicReference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
@@ -322,7 +344,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = "/*\n" + "* this is a test comment\n" + "*/\n";
+    String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -403,7 +425,9 @@ public class JavaWriterVisitorTest {
   public void writeBlockComment_shortLines() {
     String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
-    String expected = "/*\n" + "* Apache License\n" + "* This is a test file header\n" + "*/\n";
+    String expected =
+        String.format(
+            createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -414,12 +438,14 @@ public class JavaWriterVisitorTest {
         "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        "/*\n"
-            + "* Apache License\n"
-            + "* Licensed under the Apache License, Version 2.0 (the \"License\");\n"
-            + "*\n"
-            + "* you may not use this file except in compliance with the License.\n"
-            + "*/\n";
+        String.format(
+            createLines(6),
+            "/*\n",
+            "* Apache License\n",
+            "* Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+            "*\n",
+            "* you may not use this file except in compliance with the License.\n",
+            "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -443,11 +469,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -462,7 +493,8 @@ public class JavaWriterVisitorTest {
                 "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
             .addComment("named `bookShelves/*`")
             .addSampleCode(
-                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+                "ApiFuture<Shelf> future ="
+                    + " libraryClient.createShelfCallable().futureCall(request);")
             .addOrderedList(
                 Arrays.asList(
                     "A \"flattened\" method.",
@@ -477,7 +509,8 @@ public class JavaWriterVisitorTest {
             "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
             "* named `bookShelves/&#42;`\n",
             "* <pre><code>\n",
-            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* ApiFuture&lt;Shelf&gt; future ="
+                + " libraryClient.createShelfCallable().futureCall(request);\n",
             "* </code></pre>\n",
             "* <ol>\n",
             "* <li> A \"flattened\" method.\n",
@@ -926,6 +959,14 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
   }
 
+  @Test
+  public void writeReturnExpr_basic() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
+    returnExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "return \"asdf\"");
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
@@ -1293,6 +1334,42 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeSynchronizedStatement_basicThis() {
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(
+                ThisObjectValue.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Expr.class))))
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatement_basicVariableExpr() {
+    VariableExpr strVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("str").setType(TypeNode.STRING).build());
+
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(strVarExpr)
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"));
+  }
+
+  @Test
   public void writeMethodDefinition_basic() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
@@ -1413,7 +1490,15 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeMethodDefinition_withAnnotationsAndThrows() {
+  public void writeMethodDefinition_withCommentsAnnotationsAndThrows() {
+    LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND METHOD");
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder()
+            .addComment("This is an override method called `close()`")
+            .addParam("valOne", "string type")
+            .addParam("valTwo", "boolean type")
+            .addComment("The return value is int 3.")
+            .build();
     ValueExpr returnExpr =
         ValueExpr.builder()
             .setValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build())
@@ -1443,6 +1528,10 @@ public class JavaWriterVisitorTest {
                     TypeNode.withExceptionClazz(InterruptedException.class)))
             .setArguments(arguments)
             .setReturnExpr(returnExpr)
+            .setHeaderCommentStatements(
+                Arrays.asList(
+                    CommentStatement.withComment(lineComment),
+                    CommentStatement.withComment(javaDocComment)))
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED))
@@ -1454,10 +1543,16 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(
-        writerVisitor.write(),
+    String expected =
         String.format(
-            createLines(10),
+            createLines(17),
+            "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
+            "/**\n",
+            "* This is an override method called `close()`\n",
+            "* The return value is int 3.\n",
+            "* @param valOne string type\n",
+            "* @param valTwo boolean type\n",
+            "*/\n",
             "@SuppressWarnings(\"all\")\n",
             "@Deprecated\n",
             "@Override\n",
@@ -1468,7 +1563,8 @@ public class JavaWriterVisitorTest {
             "}\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n"));
+            "}\n");
+    assertEquals(writerVisitor.write(), expected);
   }
 
   @Test
@@ -1577,9 +1673,12 @@ public class JavaWriterVisitorTest {
             .addParagraph("The default instance has everything set to sensible defaults:")
             .addUnorderedList(
                 Arrays.asList(
-                    "The default service address (library-example.googleapis.com) and default port (1234) are used.",
-                    "Credentials are acquired automatically through Application Default Credentials.",
-                    "Retries are configured for idempotent methods but not for non-idempotent methods."))
+                    "The default service address (library-example.googleapis.com) and default port"
+                        + " (1234) are used.",
+                    "Credentials are acquired automatically through Application Default"
+                        + " Credentials.",
+                    "Retries are configured for idempotent methods but not for non-idempotent"
+                        + " methods."))
             .build();
     List<Reference> subGenerics =
         Arrays.asList(
@@ -1677,10 +1776,13 @@ public class JavaWriterVisitorTest {
             " * <p>The default instance has everything set to sensible defaults:\n",
             " *\n",
             " * <ul>\n",
-            " *   <li>The default service address (library-example.googleapis.com) and default port (1234) are\n",
+            " *   <li>The default service address (library-example.googleapis.com) and default"
+                + " port (1234) are\n",
             " *       used.\n",
-            " *   <li>Credentials are acquired automatically through Application Default Credentials.\n",
-            " *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.\n",
+            " *   <li>Credentials are acquired automatically through Application Default"
+                + " Credentials.\n",
+            " *   <li>Retries are configured for idempotent methods but not for non-idempotent"
+                + " methods.\n",
             " * </ul>\n",
             " */\n",
             "public class LibraryServiceStub {\n",
@@ -1700,6 +1802,39 @@ public class JavaWriterVisitorTest {
             "  }\n",
             "}\n");
     assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeReferenceConstructorExpr_thisConstructorWithArguments() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    VariableExpr idVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("id").setType(TypeNode.STRING).build())
+            .build();
+    VariableExpr nameVarExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("name").setType(TypeNode.STRING).build())
+            .build();
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.thisBuilder()
+            .setArguments(Arrays.asList(idVarExpr, nameVarExpr))
+            .setType(classType)
+            .build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("this(id, name)");
+  }
+
+  @Test
+  public void writeReferenceConstructorExpr_superConstructorWithNoArguments() {
+    VaporReference ref =
+        VaporReference.builder().setName("Parent").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    ReferenceConstructorExpr referenceConstructorExpr =
+        ReferenceConstructorExpr.superBuilder().setType(classType).build();
+    referenceConstructorExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("super()");
   }
 
   @Test
@@ -1748,6 +1883,36 @@ public class JavaWriterVisitorTest {
 
     assignmentExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("this.name = this.getName(id)");
+  }
+
+  @Test
+  public void writeSuperObjectValue_accessFieldAndInvokeMethod() {
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    SuperObjectValue superObjectValue = SuperObjectValue.withType(classType);
+    ValueExpr superValueExpr = ValueExpr.withValue(superObjectValue);
+    Variable subVariable = Variable.builder().setName("name").setType(TypeNode.STRING).build();
+    VariableExpr superVariableExpr =
+        VariableExpr.builder()
+            .setVariable(subVariable)
+            .setExprReferenceExpr(superValueExpr)
+            .build();
+
+    MethodInvocationExpr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setExprReferenceExpr(ValueExpr.withValue(superObjectValue))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(superVariableExpr)
+            .setValueExpr(methodExpr)
+            .build();
+
+    assignmentExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("super.name = super.getName()");
   }
 
   private static String createLines(int numLines) {

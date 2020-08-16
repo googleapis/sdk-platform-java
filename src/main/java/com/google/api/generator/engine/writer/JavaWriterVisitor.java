@@ -35,8 +35,11 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -90,10 +93,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String IMPLEMENTS = "implements";
   private static final String NEW = "new";
   private static final String RETURN = "return";
+  private static final String SYNCHRONIZED = "synchronized";
   private static final String STATIC = "static";
   private static final String THROW = "throw";
   private static final String THROWS = "throws";
   private static final String TRY = "try";
+  private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
@@ -174,6 +179,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       if (variableExpr.isFinal()) {
         buffer.append(FINAL);
+        space();
+      }
+
+      if (variableExpr.isVolatile()) {
+        buffer.append(VOLATILE);
         space();
       }
 
@@ -341,6 +351,29 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     enumRefExpr.identifier().accept(this);
   }
 
+  @Override
+  public void visit(ReturnExpr returnExpr) {
+    buffer.append(RETURN);
+    space();
+    returnExpr.expr().accept(this);
+  }
+
+  @Override
+  public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
+    buffer.append(referenceConstructorExpr.keywordKind().name().toLowerCase());
+    leftParen();
+    IntStream.range(0, referenceConstructorExpr.arguments().size())
+        .forEach(
+            i -> {
+              referenceConstructorExpr.arguments().get(i).accept(this);
+              if (i < referenceConstructorExpr.arguments().size() - 1) {
+                buffer.append(COMMA);
+                space();
+              }
+            });
+    rightParen();
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Override
   public void visit(ExprStatement exprStatement) {
@@ -474,6 +507,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
+  public void visit(SynchronizedStatement synchronizedStatement) {
+    buffer.append(SYNCHRONIZED);
+    space();
+    leftParen();
+    synchronizedStatement.lock().accept(this);
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(synchronizedStatement.body());
+    rightBrace();
+    newline();
+  }
+
+  @Override
   public void visit(CommentStatement commentStatement) {
     commentStatement.comment().accept(this);
   }
@@ -515,6 +563,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   /** =============================== OTHER =============================== */
   @Override
   public void visit(MethodDefinition methodDefinition) {
+    // Header comments, if any.
+    statements(methodDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
     // Annotations, if any.
     annotations(methodDefinition.annotations());
 

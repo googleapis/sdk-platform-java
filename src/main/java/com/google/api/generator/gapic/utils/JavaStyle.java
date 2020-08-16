@@ -32,4 +32,8 @@ public class JavaStyle {
     }
     return String.format("%s%s", s.substring(0, 1).toUpperCase(), s.substring(1));
   }
+
+  public static String toUpperSnakeCase(String s) {
+    return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, toUpperCamelCase(s));
+  }
 }
