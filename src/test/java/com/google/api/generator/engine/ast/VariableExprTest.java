@@ -63,6 +63,25 @@ public class VariableExprTest {
   }
 
   @Test
+  public void validVariableExpr_volatileDeclaration() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setIsVolatile(true)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .build();
+    assertThat(variableExpr.variable()).isEqualTo(variable);
+    assertThat(variableExpr.type()).isEqualTo(TypeNode.VOID);
+    assertThat(variableExpr.isDecl()).isTrue();
+    assertThat(variableExpr.isStatic()).isTrue();
+    assertThat(variableExpr.isFinal()).isTrue();
+    assertThat(variableExpr.isVolatile()).isTrue();
+  }
+
+  @Test
   public void validVariableExpr_reference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();

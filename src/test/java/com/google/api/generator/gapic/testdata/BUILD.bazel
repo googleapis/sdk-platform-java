@@ -4,6 +4,7 @@ proto_library(
     name = "showcase_proto",
     srcs = [
         "echo.proto",
+        "testing.proto",
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",

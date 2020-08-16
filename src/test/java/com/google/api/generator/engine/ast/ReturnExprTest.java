@@ -14,29 +14,21 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.auto.value.AutoValue;
+import static org.junit.Assert.assertThrows;
 
-@AutoValue
-public abstract class BlockComment implements Comment {
-  public abstract String comment();
+import org.junit.Test;
 
-  @Override
-  public void accept(AstNodeVisitor visitor) {
-    visitor.visit(this);
+public class ReturnExprTest {
+  @Test
+  public void validReturnExpr_basic() {
+    ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
+    // No exception thrown, we're good.
   }
 
-  public static Builder builder() {
-    return new AutoValue_BlockComment.Builder();
-  }
-
-  public static BlockComment withComment(String comment) {
-    return BlockComment.builder().setComment(comment).build();
-  }
-
-  @AutoValue.Builder
-  public abstract static class Builder {
-    public abstract Builder setComment(String comment);
-
-    public abstract BlockComment build();
+  @Test
+  public void invalidReturnExpr_nestedReturnExpr() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
+    assertThrows(IllegalStateException.class, () -> ReturnExpr.withExpr(returnExpr));
   }
 }
