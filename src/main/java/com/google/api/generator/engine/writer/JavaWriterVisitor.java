@@ -36,8 +36,10 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
@@ -63,7 +65,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private static final String COLON = ":";
   private static final String COMMA = ",";
-  private static final String BLOCK_COMMENT_START = "/**";
+  private static final String BLOCK_COMMENT_START = "/*";
   private static final String BLOCK_COMMENT_END = "*/";
   private static final String DOT = ".";
   private static final String ESCAPED_QUOTE = "\"";
@@ -71,6 +73,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String LEFT_ANGLE = "<";
   private static final String LEFT_BRACE = "{";
   private static final String LEFT_PAREN = "(";
+  private static final String JAVADOC_COMMENT_START = "/**";
   private static final String QUESTION_MARK = "?";
   private static final String RIGHT_ANGLE = ">";
   private static final String RIGHT_BRACE = "}";
@@ -90,10 +93,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String IMPLEMENTS = "implements";
   private static final String NEW = "new";
   private static final String RETURN = "return";
+  private static final String SYNCHRONIZED = "synchronized";
   private static final String STATIC = "static";
   private static final String THROW = "throw";
   private static final String THROWS = "throws";
   private static final String TRY = "try";
+  private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
 
   private final StringBuffer buffer = new StringBuffer();
@@ -174,6 +179,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
       if (variableExpr.isFinal()) {
         buffer.append(FINAL);
+        space();
+      }
+
+      if (variableExpr.isVolatile()) {
+        buffer.append(VOLATILE);
         space();
       }
 
@@ -342,6 +352,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
+  public void visit(ReturnExpr returnExpr) {
+    buffer.append(RETURN);
+    space();
+    returnExpr.expr().accept(this);
+  }
+
+  @Override
   public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
     buffer.append(referenceConstructorExpr.keywordKind().name().toLowerCase());
     leftParen();
@@ -490,6 +507,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   @Override
+  public void visit(SynchronizedStatement synchronizedStatement) {
+    buffer.append(SYNCHRONIZED);
+    space();
+    leftParen();
+    synchronizedStatement.lock().accept(this);
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+    statements(synchronizedStatement.body());
+    rightBrace();
+    newline();
+  }
+
+  @Override
   public void visit(CommentStatement commentStatement) {
     commentStatement.comment().accept(this);
   }
@@ -504,17 +536,21 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   }
 
   public void visit(BlockComment blockComment) {
-    // Split comments by new line and embrace the comment block with `/** */`.
-    String sourceComment = blockComment.comment();
-    String formattedSource =
-        JavaFormatter.format(
-            String.format("%s %s %s", BLOCK_COMMENT_START, sourceComment, BLOCK_COMMENT_END));
-    buffer.append(formattedSource);
+    // Split comments by new line and embrace the comment block with `/* */`.
+    StringBuilder sourceComment = new StringBuilder();
+    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
+    Arrays.stream(blockComment.comment().split("\\r?\\n"))
+        .forEach(
+            comment -> {
+              sourceComment.append(String.format("%s %s%s", ASTERISK, comment, NEWLINE));
+            });
+    sourceComment.append(BLOCK_COMMENT_END);
+    buffer.append(JavaFormatter.format(sourceComment.toString()));
   }
 
   public void visit(JavaDocComment javaDocComment) {
     StringBuilder sourceComment = new StringBuilder();
-    sourceComment.append(BLOCK_COMMENT_START).append(NEWLINE);
+    sourceComment.append(JAVADOC_COMMENT_START).append(NEWLINE);
     Arrays.stream(javaDocComment.comment().split("\\r?\\n"))
         .forEach(
             comment -> {

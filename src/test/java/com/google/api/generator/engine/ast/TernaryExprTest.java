@@ -14,7 +14,6 @@
 
 package com.google.api.generator.engine.ast;
 
-import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
@@ -38,7 +37,7 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
     assertEquals(ternaryExpr.type(), TypeNode.INT);
   }
@@ -60,7 +59,7 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
     assertEquals(ternaryExpr.type(), TypeNode.STRING);
   }
@@ -81,8 +80,8 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
-    assertTrue(ternaryExpr.thenExpr().type().equals(ternaryExpr.elseExpr().type()));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
     assertEquals(ternaryExpr.type(), TypeNode.INT_OBJECT);
   }
 
@@ -96,7 +95,7 @@ public class TernaryExprTest {
             .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .setElseExpr(ValueExpr.withValue(NullObjectValue.create()))
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.type(), TypeNode.STRING);
   }
 
@@ -111,7 +110,7 @@ public class TernaryExprTest {
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
 
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.type(), TypeNode.STRING);
   }
 
@@ -125,7 +124,7 @@ public class TernaryExprTest {
             .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("barfoo")))
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.type(), TypeNode.STRING);
   }
 
@@ -141,7 +140,7 @@ public class TernaryExprTest {
                     Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
   }
 
@@ -157,7 +156,7 @@ public class TernaryExprTest {
                 VariableExpr.withVariable(
                     Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
             .build();
-    assertTrue(ternaryExpr.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
   }
 
