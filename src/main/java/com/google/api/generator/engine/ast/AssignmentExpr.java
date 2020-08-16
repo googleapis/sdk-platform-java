@@ -48,8 +48,8 @@ public abstract class AssignmentExpr implements Expr {
       AssignmentExpr assignmentExpr = autoBuild();
       TypeNode lhsType = assignmentExpr.variableExpr().variable().type();
       TypeNode rhsType = assignmentExpr.valueExpr().type();
-      if (lhsType.isPrimitiveType()) {
-        if (rhsType == TypeNode.NULL) {
+      if (lhsType.isPrimitiveType() || rhsType.isPrimitiveType()) {
+        if (rhsType == TypeNode.NULL || lhsType == TypeNode.NULL) {
           throw new TypeMismatchException(
               String.format(
                   "Null cannot be assigned to the primitive type %s", lhsType.toString()));
@@ -58,13 +58,6 @@ public abstract class AssignmentExpr implements Expr {
           throw new TypeMismatchException(
               String.format(
                   "LHS type %s must match RHS type %s", lhsType.toString(), rhsType.toString()));
-        }
-      } else if (rhsType.isPrimitiveType()) {
-        if (!lhsType.equals(rhsType)) {
-          throw new TypeMismatchException(
-              String.format(
-                  "LHS reference type %s and RHS primitive type %s are not equal.",
-                  lhsType.reference().name(), rhsType.reference().name()));
         }
       } else {
         if (rhsType != TypeNode.NULL && !lhsType.isSupertypeOrEquals(rhsType)) {
