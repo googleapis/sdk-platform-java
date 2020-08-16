@@ -14,8 +14,8 @@
 
 package com.google.api.generator.engine.ast;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ public class WhileStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(createAssignmentExprList())
             .build();
-    assertTrue(whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
@@ -43,7 +43,7 @@ public class WhileStatementTest {
             .setConditionExpr(condExpr)
             .setBody(createAssignmentExprList())
             .build();
-    assertTrue(whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
@@ -58,7 +58,7 @@ public class WhileStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(Arrays.asList(nestedWhileStatement))
             .build();
-    assertTrue(whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN));
+    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
   }
 
   @Test
