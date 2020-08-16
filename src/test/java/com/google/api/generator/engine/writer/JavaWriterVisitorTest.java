@@ -42,10 +42,12 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.SynchronizedStatement;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -270,6 +272,24 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_scopedStaticFinalVolatileDecl() {
+    IdentifierNode identifier = IdentifierNode.builder().setName("x").build();
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build();
+    VariableExpr expr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setIsVolatile(true)
+            .build();
+
+    expr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "private static final volatile boolean x");
+  }
+
+  @Test
   public void writeVariableExpr_basicReference() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
@@ -324,7 +344,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = "/** this is a test comment */\n";
+    String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -402,11 +422,30 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeBlockComment_specialChar() {
-    String content = "Testing special characters: \b\t\n\r\"`'?/\\,.[]{}|-_!@#$%^()";
+  public void writeBlockComment_shortLines() {
+    String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        "/** Testing special characters: \\b\\t\\n\\r\"`'?/\\\\,.[]{}|-_!@#$%^() */\n";
+        String.format(
+            createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
+    blockComment.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), expected);
+  }
+
+  @Test
+  public void writeBlockComment_newLineInBetween() {
+    String content =
+        "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
+    BlockComment blockComment = BlockComment.builder().setComment(content).build();
+    String expected =
+        String.format(
+            createLines(6),
+            "/*\n",
+            "* Apache License\n",
+            "* Licensed under the Apache License, Version 2.0 (the \"License\");\n",
+            "*\n",
+            "* you may not use this file except in compliance with the License.\n",
+            "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -430,11 +469,16 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeLineComment_specialChar() {
     String content =
-        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf \"Novel\\\"`\b\t\n\r\"]']";
+        "usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf \"Novel\\\"`\b\t\n\r"
+            + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n\\r\"]']\n";
+        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+            + " [--args='[--shelf\n"
+            + "// \"Novel\\\\\"`\\b\\t\\n"
+            + "\\r"
+            + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);
   }
@@ -449,7 +493,8 @@ public class JavaWriterVisitorTest {
                 "The API has a collection of [Shelf][google.example.library.v1.Shelf] resources")
             .addComment("named `bookShelves/*`")
             .addSampleCode(
-                "ApiFuture<Shelf> future = libraryClient.createShelfCallable().futureCall(request);")
+                "ApiFuture<Shelf> future ="
+                    + " libraryClient.createShelfCallable().futureCall(request);")
             .addOrderedList(
                 Arrays.asList(
                     "A \"flattened\" method.",
@@ -464,7 +509,8 @@ public class JavaWriterVisitorTest {
             "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
             "* named `bookShelves/&#42;`\n",
             "* <pre><code>\n",
-            "* ApiFuture&lt;Shelf&gt; future = libraryClient.createShelfCallable().futureCall(request);\n",
+            "* ApiFuture&lt;Shelf&gt; future ="
+                + " libraryClient.createShelfCallable().futureCall(request);\n",
             "* </code></pre>\n",
             "* <ol>\n",
             "* <li> A \"flattened\" method.\n",
@@ -913,6 +959,14 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
   }
 
+  @Test
+  public void writeReturnExpr_basic() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
+    returnExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "return \"asdf\"");
+  }
+
   /** =============================== STATEMENTS =============================== */
   @Test
   public void writeExprStatement() {
@@ -1280,6 +1334,42 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeSynchronizedStatement_basicThis() {
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(
+                ThisObjectValue.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Expr.class))))
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"));
+  }
+
+  @Test
+  public void writeSynchronizedStatement_basicVariableExpr() {
+    VariableExpr strVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("str").setType(TypeNode.STRING).build());
+
+    SynchronizedStatement synchronizedStatement =
+        SynchronizedStatement.builder()
+            .setLock(strVarExpr)
+            .setBody(
+                ExprStatement.withExpr(
+                    MethodInvocationExpr.builder().setMethodName("doStuff").build()))
+            .build();
+    synchronizedStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"));
+  }
+
+  @Test
   public void writeMethodDefinition_basic() {
     MethodDefinition methodDefinition =
         MethodDefinition.builder()
@@ -1579,9 +1669,12 @@ public class JavaWriterVisitorTest {
             .addParagraph("The default instance has everything set to sensible defaults:")
             .addUnorderedList(
                 Arrays.asList(
-                    "The default service address (library-example.googleapis.com) and default port (1234) are used.",
-                    "Credentials are acquired automatically through Application Default Credentials.",
-                    "Retries are configured for idempotent methods but not for non-idempotent methods."))
+                    "The default service address (library-example.googleapis.com) and default port"
+                        + " (1234) are used.",
+                    "Credentials are acquired automatically through Application Default"
+                        + " Credentials.",
+                    "Retries are configured for idempotent methods but not for non-idempotent"
+                        + " methods."))
             .build();
     List<Reference> subGenerics =
         Arrays.asList(
@@ -1679,10 +1772,13 @@ public class JavaWriterVisitorTest {
             " * <p>The default instance has everything set to sensible defaults:\n",
             " *\n",
             " * <ul>\n",
-            " *   <li>The default service address (library-example.googleapis.com) and default port (1234) are\n",
+            " *   <li>The default service address (library-example.googleapis.com) and default"
+                + " port (1234) are\n",
             " *       used.\n",
-            " *   <li>Credentials are acquired automatically through Application Default Credentials.\n",
-            " *   <li>Retries are configured for idempotent methods but not for non-idempotent methods.\n",
+            " *   <li>Credentials are acquired automatically through Application Default"
+                + " Credentials.\n",
+            " *   <li>Retries are configured for idempotent methods but not for non-idempotent"
+                + " methods.\n",
             " * </ul>\n",
             " */\n",
             "public class LibraryServiceStub {\n",

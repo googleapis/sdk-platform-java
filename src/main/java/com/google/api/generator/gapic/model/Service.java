@@ -22,6 +22,10 @@ import java.util.List;
 public abstract class Service {
   public abstract String name();
 
+  public abstract String defaultHost();
+
+  public abstract ImmutableList<String> oauthScopes();
+
   public abstract String pakkage();
 
   public abstract String protoPakkage();
@@ -37,6 +41,10 @@ public abstract class Service {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setName(String name);
+
+    public abstract Builder setDefaultHost(String defaultHost);
+
+    public abstract Builder setOauthScopes(List<String> oauthScopes);
 
     public abstract Builder setPakkage(String pakkage);
 
