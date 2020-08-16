@@ -71,9 +71,9 @@ public class TernaryExprTest {
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
     Variable intVariable = Variable.builder().setName("intValue").setType(TypeNode.INT).build();
     VariableExpr thenExpr = VariableExpr.builder().setVariable(intVariable).build();
-    Variable elseVariable =
+    Variable integerVariable =
         Variable.builder().setName("integerValue").setType(TypeNode.INT_OBJECT).build();
-    VariableExpr elseExpr = VariableExpr.builder().setVariable(elseVariable).build();
+    VariableExpr elseExpr = VariableExpr.builder().setVariable(integerVariable).build();
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(conditionExpr)
