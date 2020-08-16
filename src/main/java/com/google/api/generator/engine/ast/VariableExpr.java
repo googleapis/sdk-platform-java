@@ -37,6 +37,8 @@ public abstract class VariableExpr implements Expr {
 
   public abstract boolean isFinal();
 
+  public abstract boolean isVolatile();
+
   // Please use this only in conjunction with methods.
   // Supports only parameterized types like Map<K, V>.
   // TODO(unsupported): Fully generic arguments, e.g. foobar(K key, V value).
@@ -69,6 +71,7 @@ public abstract class VariableExpr implements Expr {
         .setIsDecl(false)
         .setIsFinal(false)
         .setIsStatic(false)
+        .setIsVolatile(false)
         .setScope(ScopeNode.LOCAL)
         .setTemplateObjects(ImmutableList.of());
   }
@@ -89,6 +92,8 @@ public abstract class VariableExpr implements Expr {
     public abstract Builder setIsStatic(boolean isStatic);
 
     public abstract Builder setIsFinal(boolean isFinal);
+
+    public abstract Builder setIsVolatile(boolean isVolatile);
 
     // This should be used only for method arguments.
     public abstract Builder setTemplateObjects(List<Object> objects);
