@@ -288,7 +288,7 @@ public abstract class MethodDefinition implements AstNode {
               || method.returnExpr().type().isPrimitiveType()) {
             Preconditions.checkState(
                 method.returnType().equals((method.returnExpr().type())),
-                "Method primitive return type does not match the return expression type");
+                "Method return type does not match the return expression type");
           } else {
             Preconditions.checkState(
                 method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
