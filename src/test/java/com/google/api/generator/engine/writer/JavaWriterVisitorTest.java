@@ -548,26 +548,6 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeTernaryExpr_boxedPrimitiveType() {
-    Variable conditionVariable =
-        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
-    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
-    Variable intVariable = Variable.builder().setName("intValue").setType(TypeNode.INT).build();
-    VariableExpr thenExpr = VariableExpr.builder().setVariable(intVariable).build();
-    Variable integerVariable =
-        Variable.builder().setName("integerValue").setType(TypeNode.INT_OBJECT).build();
-    VariableExpr elseExpr = VariableExpr.builder().setVariable(integerVariable).build();
-    TernaryExpr ternaryExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(conditionExpr)
-            .setThenExpr(thenExpr)
-            .setElseExpr(elseExpr)
-            .build();
-    ternaryExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "condition ? intValue : integerValue");
-  }
-
-  @Test
   public void writeAssignmentExpr_basicValue() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
