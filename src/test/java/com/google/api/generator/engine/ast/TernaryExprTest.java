@@ -65,7 +65,9 @@ public class TernaryExprTest {
   }
 
   @Test
-  public void validTernaryExpr_boxedAndPrimitiveType() {
+  public void validTernaryExpr_primitiveAndBoxedType() {
+    // [Constructing] `condition ? intValue : integerValue`
+    // The type of whole expression should be Integer.
     Variable conditionVariable =
         Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
     VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
@@ -83,6 +85,30 @@ public class TernaryExprTest {
     assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
     assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
     assertEquals(ternaryExpr.type(), TypeNode.INT_OBJECT);
+  }
+
+  @Test
+  public void validTernaryExpr_boxedAndPrimitiveType() {
+    // [Constructing] `condition ? doubleObjectVariable : doubleVariable`
+    // The type of whole expression should be Double.
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+    Variable intVariable =
+        Variable.builder().setName("doubleObjectVariable").setType(TypeNode.DOUBLE_OBJECT).build();
+    VariableExpr thenExpr = VariableExpr.builder().setVariable(intVariable).build();
+    Variable integerVariable =
+        Variable.builder().setName("doubleVariable").setType(TypeNode.DOUBLE).build();
+    VariableExpr elseExpr = VariableExpr.builder().setVariable(integerVariable).build();
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(elseExpr)
+            .build();
+    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
+    assertEquals(ternaryExpr.type(), TypeNode.DOUBLE_OBJECT);
   }
 
   @Test
