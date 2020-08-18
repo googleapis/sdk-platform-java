@@ -193,6 +193,29 @@ public class TernaryExprTest {
   }
 
   @Test
+  public void invalidTernaryExpr_mismatchedBoxedAndPrimitiveTypes() {
+    Variable conditionVariable =
+        Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build();
+    VariableExpr conditionExpr = VariableExpr.builder().setVariable(conditionVariable).build();
+
+    Expr thenExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("intObjectVar").setType(TypeNode.INT_OBJECT).build());
+    Expr elseExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("doubleVar").setType(TypeNode.DOUBLE).build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          TernaryExpr.builder()
+              .setConditionExpr(conditionExpr)
+              .setThenExpr(thenExpr)
+              .setElseExpr(elseExpr)
+              .build();
+        });
+  }
+
+  @Test
   public void invalidTernaryExpr_incompatibleThenElsePrimitiveTypes() {
     assertThrows(
         IllegalStateException.class,
