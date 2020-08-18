@@ -18,8 +18,10 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -66,6 +68,7 @@ public abstract class TypeNode implements AstNode {
       withReference(ConcreteReference.withClazz(Short.class));
 
   private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final Set<TypeNode> BOXED_TYPE_SET = createBoxedTypeSet();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -123,6 +126,19 @@ public abstract class TypeNode implements AstNode {
         && type.typeKind().equals(TypeKind.OBJECT)
         && type.reference() != null
         && !type.equals(TypeNode.NULL);
+  }
+
+  public static boolean isBoxedType(TypeNode type) {
+    return BOXED_TYPE_SET.contains(type);
+  }
+
+  public static boolean isNumberType(TypeNode type) {
+    return type.typeKind().equals(TypeKind.BYTE)
+        || type.typeKind().equals(TypeKind.INT)
+        || type.typeKind().equals(TypeKind.DOUBLE)
+        || type.typeKind().equals(TypeKind.LONG)
+        || type.typeKind().equals(TypeKind.SHORT)
+        || type.typeKind().equals(TypeKind.FLOAT);
   }
 
   public boolean isPrimitiveType() {
@@ -211,5 +227,18 @@ public abstract class TypeNode implements AstNode {
     map.put(TypeNode.SHORT, TypeNode.SHORT_OBJECT);
     map.put(TypeNode.DOUBLE, TypeNode.DOUBLE_OBJECT);
     return map;
+  }
+
+  private static Set<TypeNode> createBoxedTypeSet() {
+    Set<TypeNode> set = new HashSet<>();
+    set.add(TypeNode.INT_OBJECT);
+    set.add(TypeNode.BOOLEAN_OBJECT);
+    set.add(TypeNode.BYTE_OBJECT);
+    set.add(TypeNode.CHAR_OBJECT);
+    set.add(TypeNode.FLOAT_OBJECT);
+    set.add(TypeNode.LONG_OBJECT);
+    set.add(TypeNode.SHORT_OBJECT);
+    set.add(TypeNode.DOUBLE_OBJECT);
+    return set;
   }
 }

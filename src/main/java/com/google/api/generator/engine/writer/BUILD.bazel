@@ -12,6 +12,7 @@ java_library(
     ],
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/lexicon",
         "@com_google_guava_guava//jar",
         "@google_java_format_all_deps//jar",
     ],

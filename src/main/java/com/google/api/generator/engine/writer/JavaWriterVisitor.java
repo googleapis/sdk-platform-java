@@ -16,6 +16,7 @@ package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -36,6 +37,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -45,10 +47,12 @@ import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.engine.lexicon.OperatorKind;
 import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -100,6 +104,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String TRY = "try";
   private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
+
+  private static final String ADDITION = "+";
+  private static final String EQUAL_TO = "==";
+  private static final String NOT_EQUAL_TO = "!=";
+  private static final String INCREMENT = "++";
+  private static final String LOGICAL_NOT = "!";
 
   private final StringBuffer buffer = new StringBuffer();
   private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
@@ -372,6 +382,35 @@ public class JavaWriterVisitor implements AstNodeVisitor {
               }
             });
     rightParen();
+  }
+
+  @Override
+  public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
+    arithmeticOperationExpr.firstExpression().accept(this);
+    space();
+    operator(arithmeticOperationExpr.operatorKind());
+    space();
+    arithmeticOperationExpr.secondExpression().accept(this);
+  }
+
+  @Override
+  public void visit(UnaryOperationExpr unaryOperationExpr) {
+    if (unaryOperationExpr.isPostfixOperator()) {
+      unaryOperationExpr.firstExpression().accept(this);
+      operator(unaryOperationExpr.operatorKind());
+    } else {
+      operator(unaryOperationExpr.operatorKind());
+      unaryOperationExpr.firstExpression().accept(this);
+    }
+  }
+
+  @Override
+  public void visit(RelationalOperationExpr relationalOperationExpr) {
+    relationalOperationExpr.firstExpression().accept(this);
+    space();
+    operator(relationalOperationExpr.operatorKind());
+    space();
+    relationalOperationExpr.secondExpression().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -817,5 +856,25 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void semicolon() {
     buffer.append(SEMICOLON);
+  }
+
+  private void operator(OperatorKind kind) {
+    switch (kind) {
+      case RELATIONAL_EQUAL_TO:
+        buffer.append(EQUAL_TO);
+        break;
+      case RELATIONAL_NOT_EQUAL_TO:
+        buffer.append(NOT_EQUAL_TO);
+        break;
+      case UNARY_INCREMENT:
+        buffer.append(INCREMENT);
+        break;
+      case LOGICAL_NOT:
+        buffer.append(LOGICAL_NOT);
+        break;
+      case ARITHMETIC_ADDITION:
+        buffer.append(ADDITION);
+        break;
+    }
   }
 }

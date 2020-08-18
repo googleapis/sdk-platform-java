@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -42,6 +43,7 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -53,6 +55,7 @@ import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -1909,6 +1912,78 @@ public class JavaWriterVisitorTest {
 
     assignmentExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("super.name = super.getName()");
+  }
+
+  @Test
+  public void writeArithmeticOperationExpr_concatString() {
+    Expr methodExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getSomeStrings")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ValueExpr valueExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
+    ArithmeticOperationExpr arithmeticOperationExpr =
+        ArithmeticOperationExpr.concatWithExprs(valueExpr, methodExpr);
+    arithmeticOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"someWord\" + getSomeStrings()");
+  }
+
+  @Test
+  public void writeUnaryOperationExpr_postfixIncrement() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());
+    UnaryOperationExpr postIncrementOperationExpr =
+        UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
+    postIncrementOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("i++");
+  }
+
+  @Test
+  public void writeUnaryOperationExpr_logicalNot() {
+    MethodInvocationExpr methodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isEmpty")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    UnaryOperationExpr logicalNotOperationExpr =
+        UnaryOperationExpr.logicalNotWithExpr(methodInvocationExpr);
+    logicalNotOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("!isEmpty()");
+  }
+
+  @Test
+  public void writeRelationOperationExpr_equalTo() {
+    VariableExpr variableExprLHS =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Boolean.class)))
+                .setName("isGood")
+                .build());
+    MethodInvocationExpr methodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isBad")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    RelationalOperationExpr equalToOperationExpr =
+        RelationalOperationExpr.equalToWithExpr(variableExprLHS, methodInvocationExpr);
+    equalToOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("isGood == isBad()");
+  }
+
+  @Test
+  public void writeRelationOperationExpr_notEqualTo() {
+    VariableExpr variableExprLHS =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("isGood").build());
+    VariableExpr variableExprRHS =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("isBad").build());
+
+    RelationalOperationExpr notEqualToOperationExpr =
+        RelationalOperationExpr.notEqualToWithExpr(variableExprLHS, variableExprRHS);
+    notEqualToOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("isGood != isBad");
   }
 
   private static String createLines(int numLines) {
