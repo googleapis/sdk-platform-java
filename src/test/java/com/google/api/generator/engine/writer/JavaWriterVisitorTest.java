@@ -1611,9 +1611,11 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeClassDefinition_basicWithFileHeader() {
+    List<CommentStatement> fileHeader =
+        Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setFileHeader(createFileHeader())
+            .setFileHeader(fileHeader)
             .setPackageString("com.google.example.library.v1.stub")
             .setName("LibraryServiceStub")
             .setScope(ScopeNode.PUBLIC)
@@ -1971,10 +1973,5 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     return writerVisitor.write();
-  }
-
-  // Create a simple block comment to stand for the Apache License header.
-  private static List<CommentStatement> createFileHeader() {
-    return Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   }
 }

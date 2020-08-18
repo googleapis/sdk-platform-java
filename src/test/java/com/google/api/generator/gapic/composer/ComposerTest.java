@@ -35,8 +35,7 @@ public class ComposerTest {
             .setScope(ScopeNode.PUBLIC)
             .build();
     List<GapicClass> gapicClassWithHeaderList =
-        Composer.addApacheLicenseToGapicClassList(
-            Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
+        Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
     assertEquals(visitor.write(), EXPECTED_CLASS_STRING);

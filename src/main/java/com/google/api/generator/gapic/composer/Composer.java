@@ -38,7 +38,7 @@ public class Composer {
       clazzes.addAll(generateServiceClasses(service, context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
-    return addApacheLicenseToGapicClassList(clazzes);
+    return addApacheLicense(clazzes);
   }
 
   public static List<GapicClass> generateServiceClasses(
@@ -110,8 +110,7 @@ public class Composer {
   }
 
   @VisibleForTesting
-  protected static List<GapicClass> addApacheLicenseToGapicClassList(
-      List<GapicClass> gapicClassList) {
+  protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
     return gapicClassList.stream()
         .map(
             gapicClass -> {

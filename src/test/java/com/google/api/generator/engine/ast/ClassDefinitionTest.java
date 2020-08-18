@@ -120,6 +120,21 @@ public class ClassDefinitionTest {
   }
 
   @Test
+  public void invalidClassDefinition_nestedWithFileHeader() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setIsNested(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setFileHeader(createFileHeader())
+              .build();
+        });
+  }
+
+  @Test
   public void invalidClassDefinition_implementsNullType() {
     assertThrows(
         IllegalStateException.class,
