@@ -235,7 +235,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr.toBuilder()
+                methodDescriptorVarExpr
+                    .toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -524,7 +525,9 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     secondCtorExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(
-                classMemberVarExprs.get("callableFactory").toBuilder()
+                classMemberVarExprs
+                    .get("callableFactory")
+                    .toBuilder()
                     .setExprReferenceExpr(thisExpr)
                     .build())
             .setValueExpr(callableFactoryVarExpr)
