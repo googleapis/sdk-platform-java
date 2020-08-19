@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ApacheLicense {
-  private static final String fileHeadeString =
+  private static final String fileHeaderString =
       "Copyright 2020 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
           + "you may not use this file except in compliance with the License.\n"
@@ -33,5 +33,5 @@ public class ApacheLicense {
           + "limitations under the License.";
 
   public static final List<CommentStatement> APACHE_LICENSE_COMMENT_STATEMENT =
-      Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeadeString)));
+      Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeaderString)));
 }

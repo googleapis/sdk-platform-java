@@ -138,7 +138,7 @@ public abstract class ClassDefinition implements AstNode {
             !classDef.scope().equals(ScopeNode.PRIVATE), "Outer classes cannot be private");
       } else {
         Preconditions.checkState(
-            classDef.fileHeader().isEmpty(), "Nested classes cannot have file header");
+            classDef.fileHeader().isEmpty(), "Nested classes cannot have a file header");
       }
 
       // Abstract classes cannot be marked final.
