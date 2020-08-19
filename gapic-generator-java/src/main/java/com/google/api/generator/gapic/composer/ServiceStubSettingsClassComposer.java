@@ -155,7 +155,8 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
 
     // Assign DEFAULT_SERVICE_SCOPES.
     VariableExpr defaultServiceScopesDeclVarExpr =
-        DEFAULT_SERVICE_SCOPES_VAR_EXPR.toBuilder()
+        DEFAULT_SERVICE_SCOPES_VAR_EXPR
+            .toBuilder()
             .setIsDecl(true)
             .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)

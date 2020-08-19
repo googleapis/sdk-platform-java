@@ -23,6 +23,8 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ClassDefinition implements AstNode {
+  // Optional.
+  public abstract ImmutableList<CommentStatement> fileHeader();
   // Required.
   public abstract ScopeNode scope();
   // Required.
@@ -66,6 +68,7 @@ public abstract class ClassDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_ClassDefinition.Builder()
+        .setFileHeader(Collections.emptyList())
         .setHeaderCommentStatements(Collections.emptyList())
         .setIsNested(false)
         .setIsFinal(false)
@@ -78,8 +81,12 @@ public abstract class ClassDefinition implements AstNode {
         .setNestedClasses(Collections.emptyList());
   }
 
+  public abstract Builder toBuilder();
+
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setFileHeader(List<CommentStatement> fileHeader);
+
     public abstract Builder setHeaderCommentStatements(
         List<CommentStatement> headerCommentStatements);
 
@@ -129,6 +136,9 @@ public abstract class ClassDefinition implements AstNode {
         Preconditions.checkState(!classDef.isStatic(), "Outer classes cannot be static");
         Preconditions.checkState(
             !classDef.scope().equals(ScopeNode.PRIVATE), "Outer classes cannot be private");
+      } else {
+        Preconditions.checkState(
+            classDef.fileHeader().isEmpty(), "Nested classes cannot have a file header");
       }
 
       // Abstract classes cannot be marked final.

@@ -1610,9 +1610,12 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeClassDefinition_basic() {
+  public void writeClassDefinition_basicWithFileHeader() {
+    List<CommentStatement> fileHeader =
+        Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
     ClassDefinition classDef =
         ClassDefinition.builder()
+            .setFileHeader(fileHeader)
             .setPackageString("com.google.example.library.v1.stub")
             .setName("LibraryServiceStub")
             .setScope(ScopeNode.PUBLIC)
@@ -1622,7 +1625,10 @@ public class JavaWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         String.format(
-            createLines(3),
+            createLines(6),
+            "/*\n",
+            " * Apache License\n",
+            " */\n\n",
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "public class LibraryServiceStub {}\n"));

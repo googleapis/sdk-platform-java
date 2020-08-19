@@ -202,7 +202,8 @@ public class MockServiceImplClassComposer implements ClassComposer {
     Expr responseAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(
-                responsesVarExpr.toBuilder()
+                responsesVarExpr
+                    .toBuilder()
                     .setExprReferenceExpr(
                         ValueExpr.withValue(ThisObjectValue.withType(getThisClassType(service))))
                     .build())
