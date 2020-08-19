@@ -29,11 +29,17 @@ public abstract class TernaryExpr implements Expr {
   public TypeNode type() {
     TypeNode thenType = thenExpr().type();
     TypeNode elseType = elseExpr().type();
-    if (thenType.equals(elseType)
-        || (thenType.isSupertypeOrEquals(elseType) && !thenType.equals(TypeNode.NULL))) {
-      return thenType;
+    if (thenType.isPrimitiveType() || elseType.isPrimitiveType()) {
+      // If both types are equal primitive, return either of them (elseType).
+      // If types are boxed/primitive equal, return the boxed type.
+      return thenType.isPrimitiveType() ? elseType : thenType;
+    } else {
+      // If both types are reference types, return the super type.
+      if (thenType.isSupertypeOrEquals(elseType) && !thenType.equals(TypeNode.NULL)) {
+        return thenType;
+      }
+      return elseType;
     }
-    return elseType;
   }
 
   @Override
