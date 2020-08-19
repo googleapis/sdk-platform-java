@@ -33,9 +33,11 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -66,6 +68,7 @@ import javax.annotation.Generated;
 
 public class GrpcServiceStubClassComposer implements ClassComposer {
   private static final String CLASS_NAME_PATTERN = "Grpc%sStub";
+  private static final String GRPC_SERVICE_CALLABLE_FACTORY_PATTERN = "Grpc%sCallableFactory";
   private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String PAGED_CALLABLE_CLASS_MEMBER_PATTERN = "%sPagedCallable";
@@ -232,7 +235,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     return ExprStatement.withExpr(
         AssignmentExpr.builder()
             .setVariableExpr(
-                methodDescriptorVarExpr.toBuilder()
+                methodDescriptorVarExpr
+                    .toBuilder()
                     .setIsDecl(true)
                     .setScope(ScopeNode.PRIVATE)
                     .setIsStatic(true)
@@ -391,14 +395,9 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                     Arrays.asList(
                         TypeNode.withReference(ConcreteReference.withClazz(IOException.class))));
 
-    // TODO(miraleung): Actually instantiate the class.
     Function<List<Expr>, Expr> instantiatorExprFn =
         argList ->
-            MethodInvocationExpr.builder()
-                .setMethodName("newGrpcEchoStub")
-                .setArguments(argList)
-                .setReturnType(creatorMethodReturnType)
-                .build();
+            NewObjectExpr.builder().setType(creatorMethodReturnType).setArguments(argList).build();
 
     TypeNode stubSettingsType = types.get(String.format(STUB_SETTINGS_PATTERN, serviceName));
     VariableExpr settingsVarExpr =
@@ -472,11 +471,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
 
-    // TODO(miraleung): Change the name of this var to callableFactory.
     VariableExpr callableFactoryVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setName("callableFactori")
+                .setName("callableFactory")
                 .setType(staticTypes.get("GrpcStubCallableFactory"))
                 .build());
 
@@ -510,26 +508,35 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                             Arrays.asList(
                                 settingsVarExpr,
                                 clientContextVarExpr,
-                                MethodInvocationExpr.builder()
-                                    // TODO(miraleung): Actually instantiate  the callable factory.
-                                    .setMethodName("newGrpcEchoCallableFactory")
+                                NewObjectExpr.builder()
+                                    .setType(
+                                        types.get(
+                                            String.format(
+                                                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN,
+                                                service.name())))
                                     .build()))
                         .setReturnType(thisClassType)
                         .build())));
 
+    Expr thisExpr =
+        ValueExpr.withValue(ThisObjectValue.withType(types.get(getThisClassName(service.name()))));
     // Body of the second constructor method.
     List<Expr> secondCtorExprs = new ArrayList<>();
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            // TODO(miraleung): this.callableFactory.
-            .setVariableExpr(classMemberVarExprs.get("callableFactory"))
+            .setVariableExpr(
+                classMemberVarExprs
+                    .get("callableFactory")
+                    .toBuilder()
+                    .setExprReferenceExpr(thisExpr)
+                    .build())
             .setValueExpr(callableFactoryVarExpr)
             .build());
-    // TODO(miraleung): this.operationsStub.
     VariableExpr operationsStubClassVarExpr = classMemberVarExprs.get("operationsStub");
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            .setVariableExpr(operationsStubClassVarExpr)
+            .setVariableExpr(
+                operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(staticTypes.get("GrpcOperationsStub"))
@@ -585,6 +592,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                         settingsVarExpr,
                         clientContextVarExpr,
                         operationsStubClassVarExpr,
+                        thisExpr,
                         javaStyleMethodNameToTransportSettingsVarExprs))
             .collect(Collectors.toList()));
 
@@ -597,13 +605,12 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     VariableExpr backgroundResourcesVarExpr = classMemberVarExprs.get("backgroundResources");
     secondCtorExprs.add(
         AssignmentExpr.builder()
-            .setVariableExpr(backgroundResourcesVarExpr)
+            .setVariableExpr(
+                backgroundResourcesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
-                MethodInvocationExpr.builder()
-                    // TODO(miraleung): Initialize this instead.
-                    .setMethodName("newBackgroundResourceAggregation")
+                NewObjectExpr.builder()
+                    .setType(staticTypes.get("BackgroundResourceAggregation"))
                     .setArguments(Arrays.asList(getBackgroundResourcesMethodExpr))
-                    .setReturnType(backgroundResourcesVarExpr.type())
                     .build())
             .build());
 
@@ -651,6 +658,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
       VariableExpr settingsVarExpr,
       VariableExpr clientContextVarExpr,
       VariableExpr operationsStubClassVarExpr,
+      Expr thisExpr,
       Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs) {
     boolean isOperation = callableVarName.endsWith(OPERATION_CALLABLE_NAME);
     boolean isPaged = callableVarName.endsWith(PAGED_CALLABLE_NAME);
@@ -687,8 +695,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
     String callableCreatorMethodName = getCallableCreatorMethodName(callableVarExpr.type());
     return AssignmentExpr.builder()
-        // TODO(miraleung): Reference this.
-        .setVariableExpr(callableVarExpr)
+        .setVariableExpr(callableVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
         .setValueExpr(
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(callableFactoryVarExpr)
@@ -857,7 +864,12 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createDynamicTypes(Service service, String stubPakkage) {
     Map<String, TypeNode> types = new HashMap<>();
     types.putAll(
-        Arrays.asList(CLASS_NAME_PATTERN, STUB_SETTINGS_PATTERN, STUB_PATTERN).stream()
+        Arrays.asList(
+                CLASS_NAME_PATTERN,
+                STUB_SETTINGS_PATTERN,
+                STUB_PATTERN,
+                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN)
+            .stream()
             .collect(
                 Collectors.toMap(
                     p -> String.format(p, service.name()),

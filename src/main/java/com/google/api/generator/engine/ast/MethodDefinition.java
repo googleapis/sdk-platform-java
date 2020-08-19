@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,6 +136,10 @@ public abstract class MethodDefinition implements AstNode {
     public abstract Builder setIsConstructor(boolean isConstructor);
 
     public abstract Builder setThrowsExceptions(List<TypeNode> exceptionTypes);
+
+    public Builder setArguments(VariableExpr... arguments) {
+      return setArguments(Arrays.asList(arguments));
+    }
 
     public abstract Builder setArguments(List<VariableExpr> arguments);
 
@@ -275,17 +280,19 @@ public abstract class MethodDefinition implements AstNode {
         }
 
         if (method.returnExpr() != null && !isLastStatementThrowExpr) {
-          if (method.returnType().isPrimitiveType()) {
+          // TODO(miraleung): Refactor this to use ReturnExpr under the covers instead.
+          Preconditions.checkState(
+              !(method.returnExpr() instanceof ReturnExpr),
+              "A method's return expression can only consist of non-ReturnExpr expressions");
+          if (method.returnType().isPrimitiveType()
+              || method.returnExpr().type().isPrimitiveType()) {
             Preconditions.checkState(
-                method.returnExpr().type().isPrimitiveType()
-                    && method.returnType().equals((method.returnExpr().type())),
-                "Method primitive return type does not match the return expression type");
-
+                method.returnType().equals((method.returnExpr().type())),
+                "Method return type does not match the return expression type");
           } else {
             Preconditions.checkState(
-                !method.returnExpr().type().isPrimitiveType()
-                    && method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
-                "Method reference return type is not a subtype of the return expression type");
+                method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+                "Method reference return type is not a supertype of the return expression type");
           }
         }
       }

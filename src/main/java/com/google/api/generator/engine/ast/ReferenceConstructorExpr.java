@@ -17,59 +17,56 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @AutoValue
-public abstract class NewObjectExpr implements Expr {
+public abstract class ReferenceConstructorExpr implements Expr {
+  public enum KeywordKind {
+    THIS,
+    SUPER
+  }
+
   public abstract TypeNode type();
 
-  public abstract ImmutableList<Expr> arguments();
+  public abstract KeywordKind keywordKind();
 
-  public abstract boolean isGeneric();
+  public abstract ImmutableList<Expr> arguments();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
   }
 
-  public static NewObjectExpr withType(TypeNode type) {
-    return builder().setType(type).build();
+  public static Builder thisBuilder() {
+    return new AutoValue_ReferenceConstructorExpr.Builder()
+        .setArguments(Collections.emptyList())
+        .setKeywordKind(KeywordKind.THIS);
   }
 
-  public static Builder builder() {
-    return new AutoValue_NewObjectExpr.Builder()
+  public static Builder superBuilder() {
+    return new AutoValue_ReferenceConstructorExpr.Builder()
         .setArguments(Collections.emptyList())
-        .setIsGeneric(false);
+        .setKeywordKind(KeywordKind.SUPER);
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setType(TypeNode type);
-
-    public Builder setArguments(Expr... arguments) {
-      return setArguments(Arrays.asList(arguments));
-    }
+    public abstract Builder setType(TypeNode node);
 
     public abstract Builder setArguments(List<Expr> arguments);
 
-    public abstract Builder setIsGeneric(boolean isGeneric);
+    // private.
+    abstract Builder setKeywordKind(KeywordKind keywordKind);
 
-    // Private accessor.
-    abstract TypeNode type();
-    // Private accessor.
-    abstract boolean isGeneric();
+    abstract ReferenceConstructorExpr autoBuild();
 
-    abstract NewObjectExpr autoBuild();
-
-    public NewObjectExpr build() {
+    public ReferenceConstructorExpr build() {
+      ReferenceConstructorExpr referenceConstructorExpr = autoBuild();
       Preconditions.checkState(
-          TypeNode.isReferenceType(type()), "New object expression should be reference types.");
-      // Only the case where generics() is empty and isGeneric() is false, we set isGeneric() to
-      // false. Otherwise, isGeneric() should be true.
-      setIsGeneric(isGeneric() || !type().reference().generics().isEmpty());
-      return autoBuild();
+          referenceConstructorExpr.type().isReferenceType(referenceConstructorExpr.type()),
+          "ReferenceConstructExpr type must be reference type. ");
+      return referenceConstructorExpr;
     }
   }
 }

@@ -32,7 +32,7 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MockServiceClassComposerTest {
+public class ServiceStubSettingsClassComposerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -52,7 +52,8 @@ public class MockServiceClassComposerTest {
         Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     Service echoProtoService = services.get(0);
-    GapicClass clazz = MockServiceClassComposer.instance().generate(echoProtoService, messageTypes);
+    GapicClass clazz =
+        ServiceStubSettingsClassComposer.instance().generate(echoProtoService, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -61,47 +62,20 @@ public class MockServiceClassComposerTest {
 
   // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
   private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1;\n"
+      "package com.google.showcase.v1beta1.stub;\n"
           + "\n"
           + "import com.google.api.core.BetaApi;\n"
-          + "import com.google.api.gax.grpc.testing.MockGrpcService;\n"
-          + "import com.google.protobuf.AbstractMessage;\n"
-          + "import io.grpc.ServerServiceDefinition;\n"
-          + "import java.util.List;\n"
+          + "import com.google.api.gax.rpc.StubSettings;\n"
+          + "import com.google.common.collect.ImmutableList;\n"
           + "import javax.annotation.Generated;\n"
           + "\n"
           + "@BetaApi\n"
           + "@Generated(\"by gapic-generator-java\")\n"
-          + "public class MockEcho implements MockGrpcService {\n"
-          + "  private final MockEchoImpl serviceImpl;\n"
+          + "public class EchoStubSettings extends StubSettings<EchoStubSettings> {\n"
+          + "  private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =\n"
+          + "     "
+          + " ImmutableList.<String>builder().add(\"https://www.googleapis.com/auth/cloud-platform\").build();\n"
           + "\n"
-          + "  public MockEcho() {\n"
-          + "    serviceImpl = new MockEchoImpl();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public List<AbstractMessage> getRequests() {\n"
-          + "    return serviceImpl.getRequests();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addResponse(AbstractMessage response) {\n"
-          + "    serviceImpl.addResponse(response);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addException(Exception exception) {\n"
-          + "    serviceImpl.addException(exception);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public ServerServiceDefinition getServiceDefinition() {\n"
-          + "    return serviceImpl.bindService();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void reset() {\n"
-          + "    serviceImpl.reset();\n"
-          + "  }\n"
+          + "  public static class Builder {}\n"
           + "}\n";
 }

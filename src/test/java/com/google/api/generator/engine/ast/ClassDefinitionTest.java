@@ -23,7 +23,7 @@ import org.junit.Test;
 public class ClassDefinitionTest {
 
   @Test
-  public void validClassDefinition_basicWithComments() {
+  public void validClassDefinition_basicWithCommentsAndHeader() {
     LineComment lineComment = LineComment.withComment("AUTO-GENERATED DOCUMENTATION AND CLASS");
     JavaDocComment javaDocComment =
         JavaDocComment.builder()
@@ -32,6 +32,7 @@ public class ClassDefinitionTest {
                 "This class is for advanced usage and reflects the underlying API directly.")
             .build();
     ClassDefinition.builder()
+        .setFileHeader(createFileHeader())
         .setHeaderCommentStatements(
             Arrays.asList(
                 CommentStatement.withComment(lineComment),
@@ -116,6 +117,21 @@ public class ClassDefinitionTest {
         .setMethods(methods)
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void invalidClassDefinition_nestedWithFileHeader() {
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          ClassDefinition.builder()
+              .setPackageString("com.google.example.library.v1.stub")
+              .setName("LibraryServiceStub")
+              .setIsNested(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setFileHeader(createFileHeader())
+              .build();
+        });
   }
 
   @Test
@@ -346,5 +362,9 @@ public class ClassDefinitionTest {
         .setCollectionExpr(methodExpr)
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
         .build();
+  }
+  // Create a simple block comment to stand for the Apache License header.
+  private static List<CommentStatement> createFileHeader() {
+    return Arrays.asList(CommentStatement.withComment(BlockComment.withComment("Apache License")));
   }
 }
