@@ -34,6 +34,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -322,6 +323,35 @@ public class ParserTest {
     resourceReference = field.resourceReference();
     assertEquals("testgapic.googleapis.com/Document", resourceReference.resourceTypeString());
     assertFalse(resourceReference.isChildType());
+  }
+
+  @Test
+  public void parseResourceNames_inputTypeHasReferenceNotInMethodSignature() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    Parser.parseService(testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
+    assertEquals(2, outputResourceNames.size());
+
+    ResourceName resname = resourceNames.get("showcase.googleapis.com/Session");
+    assertThat(outputResourceNames).contains(resname);
+
+    resname = resourceNames.get("showcase.googleapis.com/Test");
+    assertThat(outputResourceNames).contains(resname);
+  }
+
+  @Test
+  public void sanitizeDefaultHost_basic() {
+    String defaultHost = "localhost:1234";
+    assertEquals(defaultHost, Parser.sanitizeDefaultHost(defaultHost));
+
+    defaultHost = "logging.googleapis.com";
+    assertEquals(String.format("%s:443", defaultHost), Parser.sanitizeDefaultHost(defaultHost));
   }
 
   private void assertMethodArgumentEquals(

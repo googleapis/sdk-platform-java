@@ -10,6 +10,7 @@ TESTS = [
     "ExprStatementTest",
     "ForStatementTest",
     "IdentifierNodeTest",
+    "IfStatementTest",
     "InstanceofExprTest",
     "JavaDocCommentTest",
     "MethodDefinitionTest",
@@ -17,7 +18,9 @@ TESTS = [
     "NullObjectValueTest",
     "PrimitiveValueTest",
     "ReferenceTest",
+    "ReturnExprTest",
     "StringObjectValueTest",
+    "SynchronizedStatementTest",
     "TernaryExprTest",
     "ThrowExprTest",
     "TryCatchStatementTest",
@@ -29,6 +32,7 @@ TESTS = [
     "ReferenceConstructorExprTest",
     "ThisObjectValueTest",
     "SuperObjectValueTest",
+    "WhileStatementTest",
 ]
 
 filegroup(

@@ -22,6 +22,8 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.ApacheLicense;
+import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +38,7 @@ public class Composer {
       clazzes.addAll(generateServiceClasses(service, context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
-    return clazzes;
+    return addApacheLicense(clazzes);
   }
 
   public static List<GapicClass> generateServiceClasses(
@@ -105,5 +107,21 @@ public class Composer {
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  @VisibleForTesting
+  protected static List<GapicClass> addApacheLicense(List<GapicClass> gapicClassList) {
+    return gapicClassList.stream()
+        .map(
+            gapicClass -> {
+              ClassDefinition classWithHeader =
+                  gapicClass
+                      .classDefinition()
+                      .toBuilder()
+                      .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
+                      .build();
+              return GapicClass.create(gapicClass.kind(), classWithHeader);
+            })
+        .collect(Collectors.toList());
   }
 }
