@@ -249,6 +249,7 @@ public class ResourceNameHelperClassComposer {
     javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
     javaMethods.addAll(
         createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+
     javaMethods.addAll(
         createFormatCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
 
@@ -260,7 +261,6 @@ public class ResourceNameHelperClassComposer {
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
-
     return javaMethods;
   }
 
@@ -963,7 +963,10 @@ public class ResourceNameHelperClassComposer {
     List<Statement> tokenIfStatements = new ArrayList<>();
     ValueExpr nullValExpr = ValueExpr.withValue(NullObjectValue.create());
     for (String token : getTokenSet(tokenHierarchies)) {
-      VariableExpr tokenVarExpr = patternTokenVarExprs.get(JavaStyle.toLowerCamelCase(token));
+      VariableExpr tokenVarExpr = patternTokenVarExprs.get(token);
+      Preconditions.checkNotNull(
+          tokenVarExpr,
+          String.format("No variable found for %s among %s", token, patternTokenVarExprs.keySet()));
       StringObjectValue tokenStrVal = StringObjectValue.withValue(token);
       MethodInvocationExpr putExpr =
           MethodInvocationExpr.builder()
