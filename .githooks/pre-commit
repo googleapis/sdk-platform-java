@@ -102,17 +102,17 @@ then
 fi
 
 # Check tests.
-if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
-then
-  echo_status "Checking tests..."
-  bazel test //...
-  TEST_STATUS=$?
-  if [ $TEST_STATUS != 0 ]
-  then
-    echo_error "Tests failed." "Please fix them and try again."
-    exit 1
-  fi
-fi
+# if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
+# then
+#   echo_status "Checking tests..."
+#   bazel test //...
+#   TEST_STATUS=$?
+#   if [ $TEST_STATUS != 0 ]
+#   then
+#     echo_error "Tests failed." "Please fix them and try again."
+#     exit 1
+#   fi
+# fi
 
 # Check and fix Bazel format.
 if [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
