@@ -25,9 +25,6 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -60,24 +57,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    compareToBaseline(visitor.write());
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
-  }
-
-  private static void compareToBaseline(String output) {
-    try {
-      File outputFile = new File(OUTPUT_FILE_PATH);
-      if (outputFile.createNewFile()) {
-        System.out.println("File created: " + OUTPUT_FILE_PATH);
-        System.out.println("File path is: " + outputFile.getAbsolutePath());
-      }
-      FileWriter fileWriter = new FileWriter(OUTPUT_FILE_PATH);
-      fileWriter.write(output);
-      fileWriter.close();
-    } catch (IOException e) {
-      System.out.println("An error occurred.");
-      e.printStackTrace();
-    }
   }
 
   private static final String OUTPUT_FILE_PATH =
