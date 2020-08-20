@@ -1,5 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
+filegroup(
+    name = "service_config_files",
+    srcs = glob(["*.json"]),
+)
+
 proto_library(
     name = "showcase_proto",
     srcs = [
