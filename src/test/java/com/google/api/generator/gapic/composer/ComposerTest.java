@@ -22,8 +22,6 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -41,11 +39,31 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    String goldensPath =
-        "/Users/xiaozhenliu/gapic-generator-java/src/test/goldens/com/google/api/generator/gapic/composer/ComposerTest.java.txt";
-    String expected = new String(Files.readAllBytes(Paths.get(goldensPath)));
-    System.out.println(expected);
-    System.out.println(visitor.write());
-    assertEquals("", expected);
+    // String goldensPath =
+    //
+    // "/Users/xiaozhenliu/gapic-generator-java/src/test/goldens/com/google/api/generator/gapic/composer/ComposerTest.java.txt";
+    // String expected = new String(Files.readAllBytes(Paths.get(goldensPath)));
+    // System.out.println(expected);
+    // System.out.println(visitor.write());
+    assertEquals("", EXPECTED_CLASS_STRING);
   }
+
+  private static final String EXPECTED_CLASS_STRING =
+      "/*\n"
+          + " * Copyright 2020 Google LLC\n"
+          + " *\n"
+          + " * Licensed under the Apache License, Version 2.0 (the \"License\");\n"
+          + " * you may not use this file except in compliance with the License.\n"
+          + " * You may obtain a copy of the License at\n"
+          + " *\n"
+          + " *      https://www.apache.org/licenses/LICENSE-2.0\n"
+          + " *\n"
+          + " * Unless required by applicable law or agreed to in writing, software\n"
+          + " * distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+          + " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
+          + " * See the License for the specific language governing permissions and\n"
+          + " * limitations under the License.\n"
+          + " */\n\n"
+          + "package com.google.showcase.v1beta1.stub;\n\n"
+          + "public class EchoStubSettings {}\n";
 }
