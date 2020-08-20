@@ -5,7 +5,7 @@
 # Usage example here:
 : << 'EXAMPLE'
   DIR=~/dev/googleapis/google/showcase/v1beta1
-  ./run.sh --g ~/dev/googleapis --p "$DIR"-s "$DIR/showcase_grpc_config.json"
+  ./run.sh --g ~/dev/googleapis --p "$DIR"-s "$DIR/showcase_grpc_service_config.json"
 EXAMPLE
 
 source gbash.sh

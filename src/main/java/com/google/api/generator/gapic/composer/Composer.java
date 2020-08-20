@@ -24,27 +24,31 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.ApacheLicense;
 import com.google.common.annotations.VisibleForTesting;
+import io.grpc.serviceconfig.ServiceConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     for (Service service : context.services()) {
-      clazzes.addAll(generateServiceClasses(service, context.messages()));
+      clazzes.addAll(generateServiceClasses(service, context.serviceConfig(), context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
   }
 
   public static List<GapicClass> generateServiceClasses(
-      @Nonnull Service service, @Nonnull Map<String, Message> messageTypes) {
+      @Nonnull Service service,
+      @Nullable ServiceConfig serviceConfig,
+      @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(generateStubClasses(service, messageTypes));
+    clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes));
     clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
     clazzes.addAll(generateMocksAndTestClasses(service, messageTypes));
     // TODO(miraleung): Generate test classes.
@@ -60,10 +64,11 @@ public class Composer {
   }
 
   public static List<GapicClass> generateStubClasses(
-      Service service, Map<String, Message> messageTypes) {
+      Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(generateStubServiceSettings(service));
+    clazzes.add(
+        ServiceStubSettingsClassComposer.instance().generate(service, serviceConfig, messageTypes));
     clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes));
     clazzes.add(GrpcServiceStubClassComposer.instance().generate(service, messageTypes));
     return clazzes;
@@ -84,12 +89,6 @@ public class Composer {
     clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
     clazzes.add(ServiceClientTestClassComposer.instance().generate(service, messageTypes));
     return clazzes;
-  }
-
-  /** ====================== STUB CLASSES ==================== */
-  private static GapicClass generateStubServiceSettings(Service service) {
-    return generateGenericClass(
-        Kind.STUB, String.format("%sStubSettings", service.name()), service);
   }
 
   /** ====================== HELPERS ==================== */

@@ -75,6 +75,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
+import io.grpc.serviceconfig.ServiceConfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,7 +86,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
-public class ServiceStubSettingsClassComposer implements ClassComposer {
+// TODO(miraleung): Refactor ClassComposer's interface.
+public class ServiceStubSettingsClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String SLASH = "/";
   private static final String LEFT_BRACE = "{";
@@ -104,8 +106,8 @@ public class ServiceStubSettingsClassComposer implements ClassComposer {
     return INSTANCE;
   }
 
-  @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);

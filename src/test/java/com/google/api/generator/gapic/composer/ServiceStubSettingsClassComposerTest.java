@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -22,17 +23,25 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import io.grpc.serviceconfig.ServiceConfig;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
+  private static final String JSON_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/testdata/";
+
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -51,9 +60,16 @@ public class ServiceStubSettingsClassComposerTest {
     List<Service> services =
         Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
+    Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    ServiceConfig config = configOpt.get();
+
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(echoProtoService, messageTypes);
+        ServiceStubSettingsClassComposer.instance()
+            .generate(echoProtoService, config, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
