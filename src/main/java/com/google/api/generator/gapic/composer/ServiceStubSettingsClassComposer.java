@@ -44,7 +44,9 @@ import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
 import com.google.api.gax.rpc.PagedListResponseFactory;
+import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
@@ -57,6 +59,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -67,8 +70,10 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -80,6 +85,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -89,9 +95,11 @@ import org.threeten.bp.Duration;
 // TODO(miraleung): Refactor ClassComposer's interface.
 public class ServiceStubSettingsClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
-  private static final String SLASH = "/";
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
+  private static final String SLASH = "/";
 
   private static final ServiceStubSettingsClassComposer INSTANCE =
       new ServiceStubSettingsClassComposer();
@@ -110,7 +118,8 @@ public class ServiceStubSettingsClassComposer {
       Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
-    Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);
+    Map<String, VariableExpr> methodSettingsMemberVarExprs =
+        createClassMemberVarExprs(service, types);
     String className = getThisClassName(service.name());
 
     ClassDefinition classDef =
@@ -120,7 +129,7 @@ public class ServiceStubSettingsClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(createExtendsType(service, types))
-            .setStatements(createClassStatements(service, types))
+            .setStatements(createClassStatements(service, methodSettingsMemberVarExprs, types))
             .setMethods(createClassMethods(service, types))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
             .build();
@@ -147,12 +156,35 @@ public class ServiceStubSettingsClassComposer {
 
   private static Map<String, VariableExpr> createClassMemberVarExprs(
       Service service, Map<String, TypeNode> types) {
-    // TODO(miraleung): Fill this out.
-    return new HashMap<String, VariableExpr>();
+    // Maintain insertion order.
+    Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
+
+    // Creates class variables <method>Settings, e.g. echoSettings.
+    // TODO(miraleung): Handle batching here.
+    for (Method method : service.methods()) {
+      TypeNode settingsType = getCallSettingsType(method, types);
+      String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
+      varExprs.put(
+          varName,
+          VariableExpr.withVariable(
+              Variable.builder().setType(settingsType).setName(varName).build()));
+      if (method.hasLro()) {
+        settingsType = getOperationCallSettingsType(method);
+        varName = JavaStyle.toLowerCamelCase(String.format("%sOperationSettings", method.name()));
+        varExprs.put(
+            varName,
+            VariableExpr.withVariable(
+                Variable.builder().setType(settingsType).setName(varName).build()));
+      }
+    }
+
+    return varExprs;
   }
 
   private static List<Statement> createClassStatements(
-      Service service, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
     List<Expr> memberVars = new ArrayList<>();
 
     // Assign DEFAULT_SERVICE_SCOPES.
@@ -191,6 +223,18 @@ public class ServiceStubSettingsClassComposer {
             .setVariableExpr(defaultServiceScopesDeclVarExpr)
             .setValueExpr(listBuilderExpr)
             .build());
+
+    // Declare settings members.
+    memberVars.addAll(
+        methodSettingsMemberVarExprs.values().stream()
+            .map(
+                v ->
+                    v.toBuilder()
+                        .setIsDecl(true)
+                        .setScope(ScopeNode.PRIVATE)
+                        .setIsFinal(true)
+                        .build())
+            .collect(Collectors.toList()));
 
     // TODO(miraleung): Fill this out.
     return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
@@ -262,7 +306,9 @@ public class ServiceStubSettingsClassComposer {
             ProtoOperationTransformers.class,
             RequestBuilder.class,
             RetrySettings.class,
+            ServerStreamingCallSettings.class,
             StatusCode.class,
+            StreamingCallSettings.class,
             StubSettings.class,
             TransportChannelProvider.class,
             UnaryCallSettings.class,
@@ -291,6 +337,22 @@ public class ServiceStubSettingsClassComposer {
                 .setIsStaticImport(true)
                 .build()));
 
+    // Pagination types.
+    dynamicTypes.putAll(
+        service.methods().stream()
+            .filter(m -> m.isPaged())
+            .collect(
+                Collectors.toMap(
+                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
+                    m ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(getPagedResponseTypeName(m.name()))
+                                .setPakkage(service.pakkage())
+                                .setEnclosingClassName(String.format("%sClient", service.name()))
+                                .setIsStaticImport(true)
+                                .build()))));
+
     // TODO(miraleung): Fill this out.
     return dynamicTypes;
   }
@@ -308,5 +370,53 @@ public class ServiceStubSettingsClassComposer {
 
   private static String getThisClassName(String serviceName) {
     return String.format(CLASS_NAME_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
+  }
+
+  private static String getPagedResponseTypeName(String methodName) {
+    return String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, methodName);
+  }
+
+  private static TypeNode getCallSettingsType(Method method, Map<String, TypeNode> types) {
+    // Default: No streaming.
+    TypeNode callSettingsType =
+        method.isPaged()
+            ? STATIC_TYPES.get("PagedCallSettings")
+            : STATIC_TYPES.get("UnaryCallSettings");
+
+    // Streaming takes precendence over paging, as per the monolith's existing behavior.
+    switch (method.stream()) {
+      case SERVER:
+        callSettingsType = STATIC_TYPES.get("ServerStreamingCallSettings");
+        break;
+      case CLIENT:
+        // Fall through.
+      case BIDI:
+        callSettingsType = STATIC_TYPES.get("StreamingCallSettings");
+        break;
+      case NONE:
+        // Fall through.
+      default:
+        break;
+    }
+
+    List<Reference> generics = new ArrayList<>();
+    generics.add(method.inputType().reference());
+    generics.add(method.outputType().reference());
+    if (method.isPaged()) {
+      generics.add(types.get(getPagedResponseTypeName(method.name())).reference());
+    }
+    return TypeNode.withReference(callSettingsType.reference().copyAndSetGenerics(generics));
+  }
+
+  private static TypeNode getOperationCallSettingsType(Method method) {
+    Preconditions.checkState(
+        method.hasLro(),
+        String.format("Cannot get OperationCallSettings for non-LRO method %s", method.name()));
+    List<Reference> generics = new ArrayList<>();
+    generics.add(method.inputType().reference());
+    generics.add(method.lro().responseType().reference());
+    generics.add(method.lro().metadataType().reference());
+    return TypeNode.withReference(
+        STATIC_TYPES.get("OperationCallSettings").reference().copyAndSetGenerics(generics));
   }
 }
