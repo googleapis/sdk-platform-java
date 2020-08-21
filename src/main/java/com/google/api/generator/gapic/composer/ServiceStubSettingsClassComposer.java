@@ -57,12 +57,16 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
+import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -97,6 +101,8 @@ import org.threeten.bp.Duration;
 public class ServiceStubSettingsClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
+  private static final String STUB_PATTERN = "%sStub";
 
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
@@ -247,6 +253,7 @@ public class ServiceStubSettingsClassComposer {
       Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
+    javaMethods.add(createCreateStubMethod(service, types));
     // TODO(miraleung): Fill this out.
     return javaMethods;
   }
@@ -264,6 +271,80 @@ public class ServiceStubSettingsClassComposer {
     return methodSettingsMemberVarExprs.entrySet().stream()
         .map(e -> varToMethodFn.apply(e))
         .collect(Collectors.toList());
+  }
+
+  private static MethodDefinition createCreateStubMethod(
+      Service service, Map<String, TypeNode> types) {
+    // Set up the if-statement.
+    Expr grpcTransportNameExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("GrpcTransportChannel"))
+            .setMethodName("getGrpcTransportName")
+            .build();
+
+    Expr getTransportNameExpr =
+        MethodInvocationExpr.builder().setMethodName("getTransportChannelProvider").build();
+    getTransportNameExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getTransportNameExpr)
+            .setMethodName("getTransportName")
+            .build();
+
+    Expr ifConditionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getTransportNameExpr)
+            .setMethodName("equals")
+            .setArguments(grpcTransportNameExpr)
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    Expr createExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get(getGrpcServiceStubTypeName(service.name())))
+            .setMethodName("create")
+            .setArguments(
+                ValueExpr.withValue(
+                    ThisObjectValue.withType(types.get(getThisClassName(service.name())))))
+            .build();
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(ifConditionExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(ReturnExpr.withExpr(createExpr))))
+            .build();
+
+    // Set up exception throwing.
+    Expr errorMessageExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.STRING)
+            .setMethodName("format")
+            .setArguments(
+                ValueExpr.withValue(StringObjectValue.withValue("Transport not supported: %s")),
+                getTransportNameExpr)
+            .setReturnType(TypeNode.STRING)
+            .build();
+    TypeNode exceptionType = TypeNode.withExceptionClazz(UnsupportedOperationException.class);
+    Statement throwStatement =
+        ExprStatement.withExpr(
+            ThrowExpr.builder().setType(exceptionType).setMessageExpr(errorMessageExpr).build());
+
+    // Put the method together.
+    TypeNode returnType = types.get(getServiceStubTypeName(service.name()));
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(annotation))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setName("createStub")
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .setBody(Arrays.asList(ifStatement, throwStatement))
+        .build();
   }
 
   private static ClassDefinition createNestedBuilderClass(
@@ -342,10 +423,14 @@ public class ServiceStubSettingsClassComposer {
   private static Map<String, TypeNode> createDynamicTypes(Service service, String pakkage) {
     String thisClassName = getThisClassName(service.name());
     Map<String, TypeNode> dynamicTypes = new HashMap<>();
+
+    // This type.
     dynamicTypes.put(
         thisClassName,
         TypeNode.withReference(
             VaporReference.builder().setName(thisClassName).setPakkage(pakkage).build()));
+
+    // Nested builder class.
     dynamicTypes.put(
         "Builder",
         TypeNode.withReference(
@@ -355,6 +440,19 @@ public class ServiceStubSettingsClassComposer {
                 .setEnclosingClassName(thisClassName)
                 .setIsStaticImport(true)
                 .build()));
+
+    // Other generated stub classes.
+    dynamicTypes.putAll(
+        Arrays.asList(GRPC_SERVICE_STUB_PATTERN, STUB_PATTERN).stream()
+            .collect(
+                Collectors.toMap(
+                    p -> String.format(p, service.name()),
+                    p ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(String.format(p, service.name()))
+                                .setPakkage(pakkage)
+                                .build()))));
 
     // Pagination types.
     dynamicTypes.putAll(
@@ -392,7 +490,15 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static String getPagedResponseTypeName(String methodName) {
-    return String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, methodName);
+    return String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, JavaStyle.toUpperCamelCase(methodName));
+  }
+
+  private static String getServiceStubTypeName(String serviceName) {
+    return String.format(STUB_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
+  }
+
+  private static String getGrpcServiceStubTypeName(String serviceName) {
+    return String.format(GRPC_SERVICE_STUB_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
   }
 
   private static TypeNode getCallSettingsType(Method method, Map<String, TypeNode> types) {
