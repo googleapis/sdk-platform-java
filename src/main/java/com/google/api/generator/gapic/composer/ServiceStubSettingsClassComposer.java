@@ -254,6 +254,7 @@ public class ServiceStubSettingsClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
     javaMethods.add(createCreateStubMethod(service, types));
+    javaMethods.addAll(createDefaultHelperAndGetterMethods(service, types));
     // TODO(miraleung): Fill this out.
     return javaMethods;
   }
@@ -345,6 +346,58 @@ public class ServiceStubSettingsClassComposer {
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
         .setBody(Arrays.asList(ifStatement, throwStatement))
         .build();
+  }
+
+  private static List<MethodDefinition> createDefaultHelperAndGetterMethods(
+      Service service, Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+
+    // Create the defaultExecutorProviderBuilder method.
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultExecutorProviderBuilder")
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("InstantiatingExecutorProvider"))
+                    .setMethodName("newBuilder")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
+
+    // Create the getDefaultEndpoint method.
+    returnType = TypeNode.STRING;
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("getDefaultEndpoint")
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue(service.defaultHost())))
+            .build());
+
+    // Create the getDefaultServiceScopes method.
+    returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(TypeNode.STRING.reference()))
+                .build());
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("getDefaultServiceScopes")
+            .setReturnExpr(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
+            .build());
+
+    return javaMethods;
   }
 
   private static ClassDefinition createNestedBuilderClass(
