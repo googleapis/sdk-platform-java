@@ -146,6 +146,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(MethodInvocationExpr methodInvocationExpr) {
+    // May not actually be used in source, but import it anyway. Unused imports will be removed by
+    // the formatter.
     methodInvocationExpr.returnType().accept(this);
     if (methodInvocationExpr.staticReferenceType() != null) {
       methodInvocationExpr.staticReferenceType().accept(this);
@@ -173,6 +175,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(ThrowExpr throwExpr) {
     throwExpr.type().accept(this);
+    if (throwExpr.messageExpr() != null) {
+      throwExpr.messageExpr().accept(this);
+    }
   }
 
   @Override
