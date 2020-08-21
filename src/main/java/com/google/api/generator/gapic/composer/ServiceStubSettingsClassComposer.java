@@ -397,6 +397,80 @@ public class ServiceStubSettingsClassComposer {
             .setReturnExpr(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
             .build());
 
+    // Create the defaultCredentialsProviderBuilder method.
+    returnType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(GoogleCredentialsProvider.Builder.class));
+    MethodInvocationExpr credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("GoogleCredentialsProvider"))
+            .setMethodName("newBuilder")
+            .build();
+    credsProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credsProviderBuilderExpr)
+            .setMethodName("setScopesToApply")
+            .setArguments(DEFAULT_SERVICE_SCOPES_VAR_EXPR)
+            .setReturnType(returnType)
+            .build();
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultCredentialsProviderBuilder")
+            .setReturnExpr(credsProviderBuilderExpr)
+            .build());
+
+    // Create the defaultGrpcTransportProviderBuilder method.
+    returnType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(InstantiatingGrpcChannelProvider.Builder.class));
+    MethodInvocationExpr grpcChannelProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("InstantiatingGrpcChannelProvider"))
+            .setMethodName("newBuilder")
+            .build();
+    grpcChannelProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(grpcChannelProviderBuilderExpr)
+            .setMethodName("setMaxInboundMessageSize")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
+                    .setStaticReferenceType(TypeNode.INT_OBJECT)
+                    .build())
+            .setReturnType(returnType)
+            .build();
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultGrpcTransportProviderBuilder")
+            .setReturnExpr(grpcChannelProviderBuilderExpr)
+            .build());
+
+    // Create the defaultTransportChannelProvider method.
+    returnType = STATIC_TYPES.get("TransportChannelProvider");
+    MethodInvocationExpr transportProviderBuilderExpr =
+        MethodInvocationExpr.builder().setMethodName("defaultGrpcTransportProviderBuilder").build();
+    transportProviderBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(transportProviderBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultTransportChannelProvider")
+            .setReturnExpr(transportProviderBuilderExpr)
+            .build());
+
     return javaMethods;
   }
 
