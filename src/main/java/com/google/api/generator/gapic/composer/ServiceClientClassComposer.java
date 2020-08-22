@@ -62,7 +62,9 @@ import com.google.rpc.Status;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -86,8 +88,6 @@ public class ServiceClientClassComposer implements ClassComposer {
     String pakkage = service.pakkage();
     boolean hasLroClient = hasLroMethods(service);
 
-    // TODO(miraleung): Comments, methods, etc.
-
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
@@ -103,6 +103,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
     return Arrays.asList(
+        AnnotationNode.withType(types.get("BetaApi")),
         AnnotationNode.builder()
             .setType(types.get("Generated"))
             .setDescription("by gapic-generator")
@@ -372,12 +373,18 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static List<MethodDefinition> createGetterMethods(
       Service service, Map<String, TypeNode> types, boolean hasLroClient) {
-    Map<String, TypeNode> methodNameToTypes = new HashMap<>();
+    Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
     methodNameToTypes.put("getSettings", types.get(String.format("%sSettings", service.name())));
     methodNameToTypes.put("getStub", types.get(String.format("%sStub", service.name())));
     if (hasLroClient) {
       methodNameToTypes.put("getOperationsClient", types.get("OperationsClient"));
     }
+    AnnotationNode betaStubAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
 
     return methodNameToTypes.entrySet().stream()
         .map(
@@ -386,6 +393,10 @@ public class ServiceClientClassComposer implements ClassComposer {
               TypeNode methodReturnType = e.getValue();
               String returnVariableName = JavaStyle.toLowerCamelCase(methodName.substring(3));
               return MethodDefinition.builder()
+                  .setAnnotations(
+                      methodName.equals("getStub")
+                          ? Arrays.asList(betaStubAnnotation)
+                          : Collections.emptyList())
                   .setScope(ScopeNode.PUBLIC)
                   .setName(methodName)
                   .setIsFinal(!methodName.equals("getStub"))
