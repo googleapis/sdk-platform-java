@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
@@ -501,21 +502,17 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             Arrays.asList(settingsVarExpr, clientContextVarExpr),
             Arrays.asList(
                 ExprStatement.withExpr(
-                    MethodInvocationExpr.builder()
-                        // TODO(miraleung): Actually instantiate this class.
-                        .setMethodName("thiis")
+                    ReferenceConstructorExpr.thisBuilder()
+                        .setType(thisClassType)
                         .setArguments(
-                            Arrays.asList(
-                                settingsVarExpr,
-                                clientContextVarExpr,
-                                NewObjectExpr.builder()
-                                    .setType(
-                                        types.get(
-                                            String.format(
-                                                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN,
-                                                service.name())))
-                                    .build()))
-                        .setReturnType(thisClassType)
+                            settingsVarExpr,
+                            clientContextVarExpr,
+                            NewObjectExpr.builder()
+                                .setType(
+                                    types.get(
+                                        String.format(
+                                            GRPC_SERVICE_CALLABLE_FACTORY_PATTERN, service.name())))
+                                .build())
                         .build())));
 
     Expr thisExpr =

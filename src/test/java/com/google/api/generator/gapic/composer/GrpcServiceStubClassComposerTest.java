@@ -212,7 +212,7 @@ public class GrpcServiceStubClassComposerTest {
           + "\n"
           + "  protected GrpcEchoStub(EchoStubSettings settings, ClientContext clientContext)\n"
           + "      throws IOException {\n"
-          + "    thiis(settings, clientContext, new GrpcEchoCallableFactory());\n"
+          + "    this(settings, clientContext, new GrpcEchoCallableFactory());\n"
           + "  }\n"
           + "\n"
           + "  protected GrpcEchoStub(\n"
