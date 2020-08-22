@@ -60,6 +60,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -101,6 +102,7 @@ import org.threeten.bp.Duration;
 public class ServiceStubSettingsClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
   private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
   private static final String STUB_PATTERN = "%sStub";
 
@@ -255,6 +257,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
     javaMethods.add(createCreateStubMethod(service, types));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, types));
+    javaMethods.addAll(createBuilderHelperMethods(service, types));
     // TODO(miraleung): Fill this out.
     return javaMethods;
   }
@@ -538,6 +541,59 @@ public class ServiceStubSettingsClassComposer {
     return javaMethods;
   }
 
+  private static List<MethodDefinition> createBuilderHelperMethods(
+      Service service, Map<String, TypeNode> types) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    // Create the newBuilder() method.
+    final TypeNode builderReturnType = types.get(NESTED_BUILDER_CLASS_NAME);
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(builderReturnType)
+            .setName("newBuilder")
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(builderReturnType)
+                    .setMethodName("createDefault")
+                    .setReturnType(builderReturnType)
+                    .build())
+            .build());
+
+    // Create the newBuilder(ClientContext) method.
+    Function<Expr, NewObjectExpr> newBuilderFn =
+        argExpr -> NewObjectExpr.builder().setType(builderReturnType).setArguments(argExpr).build();
+    VariableExpr clientContextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ClientContext"))
+                .setName("clientContext")
+                .build());
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(builderReturnType)
+            .setName("newBuilder")
+            .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(newBuilderFn.apply(clientContextVarExpr))
+            .build());
+
+    // Create the toBuilder method.
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(builderReturnType)
+            .setName("toBuilder")
+            .setReturnExpr(
+                newBuilderFn.apply(
+                    ValueExpr.withValue(
+                        ThisObjectValue.withType(types.get(getThisClassName(service.name()))))))
+            .build());
+
+    return javaMethods;
+  }
+
   private static ClassDefinition createNestedBuilderClass(
       Service service, Map<String, TypeNode> types) {
     String thisClassName = getThisClassName(service.name());
@@ -623,10 +679,10 @@ public class ServiceStubSettingsClassComposer {
 
     // Nested builder class.
     dynamicTypes.put(
-        "Builder",
+        NESTED_BUILDER_CLASS_NAME,
         TypeNode.withReference(
             VaporReference.builder()
-                .setName("Builder")
+                .setName(NESTED_BUILDER_CLASS_NAME)
                 .setPakkage(pakkage)
                 .setEnclosingClassName(thisClassName)
                 .setIsStaticImport(true)
