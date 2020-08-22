@@ -255,7 +255,6 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
     javaMethods.add(createCreateStubMethod(service, types));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, types));
-
     // TODO(miraleung): Fill this out.
     return javaMethods;
   }
