@@ -27,6 +27,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -38,6 +39,7 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -118,7 +120,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
-    // TODO(miraleung): Ctors go here.
+    methods.addAll(createConstructorMethods(service, types));
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(createServiceMethods(service, messageTypes, types));
     methods.addAll(createBackgroundResourceMethods(service, types));
@@ -246,6 +248,123 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
             .setReturnExpr(
                 NewObjectExpr.builder().setType(thisClassType).setArguments(stubVarExpr).build())
+            .build());
+
+    return methods;
+  }
+
+  private static List<MethodDefinition> createConstructorMethods(
+      Service service, Map<String, TypeNode> types) {
+    List<MethodDefinition> methods = new ArrayList<>();
+    String thisClientName = String.format("%sClient", service.name());
+    String settingsName = String.format("%sSettings", service.name());
+    TypeNode thisClassType = types.get(thisClientName);
+    TypeNode stubSettingsType = types.get(String.format("%sStubSettings", service.name()));
+    TypeNode operationsClientType = types.get("OperationsClient");
+    TypeNode exceptionType = types.get("IOException");
+
+    TypeNode settingsType = types.get(settingsName);
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
+    VariableExpr operationsClientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(operationsClientType).setName("operationsClient").build());
+
+    // Create the ServiceClient(ServiceSettings settings) ctor.
+    List<Expr> ctorAssignmentExprs = new ArrayList<>();
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(settingsVarExpr)
+            .build());
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        CastExpr.builder()
+                            .setType(stubSettingsType)
+                            .setExpr(
+                                MethodInvocationExpr.builder()
+                                    .setExprReferenceExpr(settingsVarExpr)
+                                    .setMethodName("getStubSettings")
+                                    .setReturnType(stubSettingsType)
+                                    .build())
+                            .build())
+                    .setMethodName("createStub")
+                    .setReturnType(stubVarExpr.type())
+                    .build())
+            .build());
+
+    Expr clientArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setMethodName("getOperationsStub")
+            .build();
+    AssignmentExpr operationsClientAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                operationsClientVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(operationsClientType)
+                    .setMethodName("create")
+                    .setArguments(clientArgExpr)
+                    .setReturnType(operationsClientVarExpr.type())
+                    .build())
+            .build();
+    ctorAssignmentExprs.add(operationsClientAssignExpr);
+
+    methods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(thisClassType)
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setThrowsExceptions(Arrays.asList(exceptionType))
+            .setBody(
+                ctorAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    // Create the ServiceClient(ServiceStub stub) ctor.
+    ctorAssignmentExprs.clear();
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .build());
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(stubVarExpr)
+            .build());
+    ctorAssignmentExprs.add(operationsClientAssignExpr);
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
+    methods.add(
+        MethodDefinition.constructorBuilder()
+            .setAnnotations(Arrays.asList(betaAnnotation))
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(thisClassType)
+            .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
             .build());
 
     return methods;
