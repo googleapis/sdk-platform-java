@@ -33,7 +33,6 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
-import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -120,7 +119,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     // TODO(miraleung): Constructors when "this" and field accessors are checked in.
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(createServiceMethods(service, messageTypes, types));
-    methods.addAll(createBackgroundResourceMethods(types));
+    methods.addAll(createBackgroundResourceMethods(service, types));
     return methods;
   }
 
@@ -525,51 +524,75 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethods(
-      Map<String, TypeNode> types) {
+      Service service, Map<String, TypeNode> types) {
     List<MethodDefinition> methods = new ArrayList<>();
 
-    // TODO(miraleung): Fill out the body.
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
     MethodDefinition closeMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
             .setReturnType(TypeNode.VOID)
             .setName("close")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("close")
+                            .build())))
             .build();
     methods.add(closeMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition shutdownMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setName("shutdown")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("shutdown")
+                            .build())))
             .build();
     methods.add(shutdownMethod);
 
-    // TODO(miraleung): Fill out the body.
-    Expr placeholderReturnExpr =
-        ValueExpr.withValue(
-            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build());
     MethodDefinition isShutdownMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("isShutdown")
-            .setReturnExpr(placeholderReturnExpr)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("isShutdown")
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(isShutdownMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition isTerminatedMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("isTerminated")
-            .setReturnExpr(placeholderReturnExpr)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("isTerminated")
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(isTerminatedMethod);
 
@@ -580,19 +603,21 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setName("shutdownNow")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("shutdownNow")
+                            .build())))
             .build();
     methods.add(shutdownNowMethod);
 
-    // TODO(miraleung): Fill out the body.
     List<VariableExpr> arguments =
         Arrays.asList(
-            VariableExpr.builder()
-                .setVariable(createVariable("duration", TypeNode.LONG))
-                .setIsDecl(true)
-                .build(),
+            VariableExpr.builder().setVariable(createVariable("duration", TypeNode.LONG)).build(),
             VariableExpr.builder()
                 .setVariable(createVariable("unit", types.get("TimeUnit")))
-                .setIsDecl(true)
                 .build());
 
     MethodDefinition awaitTerminationMethod =
@@ -601,9 +626,19 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("awaitTermination")
-            .setReturnExpr(placeholderReturnExpr)
-            .setArguments(arguments)
+            .setArguments(
+                arguments.stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
             .setThrowsExceptions(Arrays.asList(types.get("InterruptedException")))
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("awaitTermination")
+                    .setArguments(
+                        arguments.stream().map(v -> (Expr) v).collect(Collectors.toList()))
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(awaitTerminationMethod);
 
