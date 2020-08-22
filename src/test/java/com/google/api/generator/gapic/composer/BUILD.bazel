@@ -22,8 +22,12 @@ filegroup(
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
+    data = [
+        "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
+    ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
+        "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic/composer",
