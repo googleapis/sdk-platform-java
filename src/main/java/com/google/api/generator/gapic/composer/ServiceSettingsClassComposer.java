@@ -39,7 +39,9 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -137,7 +139,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setType(types.get(BUILDER_CLASS_NAME))
                 .build());
     TypeNode thisClassType = types.get(getThisClassName(service.name()));
-    // TODO(miraleung): Use super.
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(thisClassType)
@@ -146,10 +147,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setBody(
             Arrays.asList(
                 ExprStatement.withExpr(
-                    MethodInvocationExpr.builder()
-                        .setMethodName("suuper")
-                        .setArguments(Arrays.asList(settingsBuilderVarExpr))
-                        .setReturnType(thisClassType)
+                    ReferenceConstructorExpr.superBuilder()
+                        .setType(staticTypes.get("ClientSettings"))
+                        .setArguments(settingsBuilderVarExpr)
                         .build())))
         .build();
   }
@@ -391,7 +391,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             .build())))
             .build();
 
-    // TODO(miraleung): Use super.
     BiFunction<VariableExpr, Expr, MethodDefinition> ctorMakerFn =
         (ctorArg, superArg) ->
             MethodDefinition.constructorBuilder()
@@ -401,10 +400,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setBody(
                     Arrays.asList(
                         ExprStatement.withExpr(
-                            MethodInvocationExpr.builder()
-                                .setMethodName("suuper")
-                                .setArguments(Arrays.asList(superArg))
-                                .setReturnType(builderType)
+                            ReferenceConstructorExpr.superBuilder()
+                                .setType(staticTypes.get("ClientSettings"))
+                                .setArguments(superArg)
                                 .build())))
                 .build();
 
@@ -497,10 +495,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
       Service service, Map<String, TypeNode> types) {
     TypeNode builderType = types.get(BUILDER_CLASS_NAME);
     String javaMethodName = "applyToAllUnaryMethods";
-    // TODO(miraleung): Use super.
-    VariableExpr superExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("suuper").setType(staticTypes.get("StubSettings")).build());
 
     TypeNode unaryCallSettingsType =
         TypeNode.withReference(
@@ -534,7 +528,11 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
     MethodInvocationExpr applyMethodExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(superExpr)
+            .setExprReferenceExpr(
+                ValueExpr.withValue(
+                    SuperObjectValue.withType(
+                        TypeNode.withReference(
+                            ConcreteReference.withClazz(ClientSettings.Builder.class)))))
             .setMethodName(javaMethodName)
             .setArguments(Arrays.asList(builderMethodExpr, settingsUpdaterVarExpr))
             .build();
