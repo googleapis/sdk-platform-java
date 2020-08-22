@@ -49,7 +49,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -304,11 +303,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     space();
     throwExpr.type().accept(this);
     leftParen();
-    if (!Strings.isNullOrEmpty(throwExpr.message())) {
-      // TODO(miraleung): Update this when we use StringObjectValue.
-      buffer.append(ESCAPED_QUOTE);
-      buffer.append(throwExpr.message());
-      buffer.append(ESCAPED_QUOTE);
+    if (throwExpr.messageExpr() != null) {
+      throwExpr.messageExpr().accept(this);
     }
     rightParen();
   }

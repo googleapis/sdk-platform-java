@@ -701,7 +701,7 @@ public class ResourceNameHelperClassComposer {
         ExprStatement.withExpr(
             ThrowExpr.builder()
                 .setType(STATIC_TYPES.get("ValidationException"))
-                .setMessage(exceptionMessageString)
+                .setMessageExpr(exceptionMessageString)
                 .build()));
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)

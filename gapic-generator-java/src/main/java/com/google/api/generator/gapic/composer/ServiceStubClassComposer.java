@@ -244,7 +244,7 @@ public class ServiceStubClassComposer implements ClassComposer {
         ExprStatement.withExpr(
             ThrowExpr.builder()
                 .setType(types.get("UnsupportedOperationException"))
-                .setMessage(String.format("Not implemented: %s()", methodName))
+                .setMessageExpr(String.format("Not implemented: %s()", methodName))
                 .build()));
   }
 }
