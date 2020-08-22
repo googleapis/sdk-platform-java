@@ -517,8 +517,17 @@ public class ServiceStubSettingsClassComposer {
                     .build())
             .setReturnType(returnType)
             .build();
+
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("BetaApi"))
+            .setDescription(
+                "The surface for customizing headers is not stable yet and may change in the"
+                    + " future.")
+            .build();
     javaMethods.add(
         MethodDefinition.builder()
+            .setAnnotations(Arrays.asList(annotation))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
