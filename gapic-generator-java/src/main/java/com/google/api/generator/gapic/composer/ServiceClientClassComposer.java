@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.rpc.BidiStreamingCallable;
@@ -32,6 +33,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -116,7 +118,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
-    // TODO(miraleung): Constructors when "this" and field accessors are checked in.
+    // TODO(miraleung): Ctors go here.
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(createServiceMethods(service, messageTypes, types));
     methods.addAll(createBackgroundResourceMethods(service, types));
@@ -164,6 +166,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> methods = new ArrayList<>();
     String thisClientName = String.format("%sClient", service.name());
     String settingsName = String.format("%sSettings", service.name());
+    TypeNode thisClassType = types.get(thisClientName);
+    TypeNode exceptionType = types.get("IOException");
 
     TypeNode settingsType = types.get(settingsName);
     Preconditions.checkNotNull(settingsType, String.format("Type %s not found", settingsName));
@@ -175,7 +179,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     MethodInvocationExpr buildExpr =
         MethodInvocationExpr.builder()
-            .setMethodName("builder")
+            .setMethodName("build")
             .setExprReferenceExpr(newBuilderExpr)
             .build();
     MethodInvocationExpr createMethodInvocationExpr =
@@ -190,24 +194,59 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
-            .setReturnType(types.get(thisClientName))
+            .setReturnType(thisClassType)
             .setName("create")
-            .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder()
-                        .setVariable(
-                            Variable.builder()
-                                .setName("settings")
-                                .setType(types.get(settingsName))
-                                .build())
-                        .setIsDecl(true)
-                        .build()))
-            .setThrowsExceptions(Arrays.asList(types.get("IOException")))
+            .setThrowsExceptions(Arrays.asList(exceptionType))
             .setReturnExpr(createMethodInvocationExpr)
             .build();
     methods.add(createMethodOne);
 
-    // TODO(miraleung): Add the creators that rely on NewObjectExpr when that is checked in.
+    // Second create(ServiceSettings settings) method.
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+
+    methods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setReturnType(thisClassType)
+            .setName("create")
+            .setThrowsExceptions(Arrays.asList(exceptionType))
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(thisClassType)
+                    .setArguments(settingsVarExpr)
+                    .build())
+            .build());
+
+    // Third create(ServiceStub stub) method.
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
+    methods.add(
+        MethodDefinition.builder()
+            .setAnnotations(Arrays.asList(betaAnnotation))
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setReturnType(thisClassType)
+            .setName("create")
+            .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                NewObjectExpr.builder().setType(thisClassType).setArguments(stubVarExpr).build())
+            .build());
 
     return methods;
   }
@@ -596,7 +635,6 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     methods.add(isTerminatedMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition shutdownNowMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
@@ -661,6 +699,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             ApiFuture.class,
             ApiFutures.class,
             BackgroundResource.class,
+            BetaApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,
