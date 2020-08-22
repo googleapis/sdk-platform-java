@@ -133,6 +133,15 @@ def com_google_api_codegen_repositories():
         strip_prefix = "grpc-java-%s" % _io_grpc_version,
     )
 
+    # grpc-proto doesn't have releases, so we use hashes instead.
+    _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
+    _maybe(
+        http_archive,
+        name = "io_grpc_proto",
+        urls = ["https://github.com/grpc/grpc-proto/archive/%s.zip" % _io_grpc_proto_prefix],
+        strip_prefix = "grpc-proto-%s" % _io_grpc_proto_prefix,
+    )
+
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
     if not name.startswith(strip_repo_prefix):
         return

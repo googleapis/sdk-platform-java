@@ -6,6 +6,7 @@ TESTS = [
     "PluginArgumentParserTest",
     "ResourceNameParserTest",
     "ResourceReferenceParserTest",
+    "ServiceConfigParserTest",
 ]
 
 filegroup(
@@ -16,8 +17,13 @@ filegroup(
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
+    data = [
+        "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
+    ],
     test_class = "com.google.api.generator.gapic.protoparser.{0}".format(test_name),
     deps = [
+        "//:rpc_java_proto",
+        "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
@@ -27,6 +33,7 @@ filegroup(
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
         "@com_google_protobuf//:protobuf_java",
+        "@com_google_protobuf//:protobuf_java_util",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
     ],
