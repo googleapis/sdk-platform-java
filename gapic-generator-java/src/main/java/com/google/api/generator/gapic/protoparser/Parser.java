@@ -46,6 +46,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import io.grpc.serviceconfig.ServiceConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -69,9 +70,11 @@ public class Parser {
   }
 
   public static GapicContext parse(CodeGeneratorRequest request) {
-    // TODO(miraleung): Actually parse these files.
-    Optional<String> jsonConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
-    String jsonConfigPath = jsonConfigPathOpt.isPresent() ? jsonConfigPathOpt.get() : null;
+    Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
+    String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
+    Optional<ServiceConfig> serviceConfigOpt = ServiceConfigParser.parseFile(serviceConfigPath);
+
+    // TODO(miraleung): Actually parse the yaml file.
     Optional<String> gapicYamlConfigPathOpt =
         PluginArgumentParser.parseGapicYamlConfigPath(request);
     String gapicYamlConfigPath =
@@ -91,6 +94,7 @@ public class Parser {
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
+        .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
         .build();
   }
 
