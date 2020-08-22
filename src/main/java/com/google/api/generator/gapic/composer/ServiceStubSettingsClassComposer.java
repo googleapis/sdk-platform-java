@@ -62,6 +62,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -258,6 +259,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(createCreateStubMethod(service, types));
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, types));
     javaMethods.addAll(createBuilderHelperMethods(service, types));
+    javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, types));
     // TODO(miraleung): Fill this out.
     return javaMethods;
   }
@@ -592,6 +594,57 @@ public class ServiceStubSettingsClassComposer {
             .build());
 
     return javaMethods;
+  }
+
+  private static MethodDefinition createClassConstructor(
+      Service service,
+      Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
+    TypeNode thisType = types.get(getThisClassName(service.name()));
+    final VariableExpr settingsBuilderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(NESTED_BUILDER_CLASS_NAME))
+                .setName("settingsBuilder")
+                .build());
+
+    Expr superCtorExpr =
+        ReferenceConstructorExpr.superBuilder()
+            .setType(STATIC_TYPES.get("StubSettings"))
+            .setArguments(settingsBuilderVarExpr)
+            .build();
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(superCtorExpr);
+
+    Function<Map.Entry<String, VariableExpr>, AssignmentExpr> varInitExprFn =
+        e ->
+            AssignmentExpr.builder()
+                .setVariableExpr(e.getValue())
+                .setValueExpr(
+                    MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(
+                            MethodInvocationExpr.builder()
+                                .setExprReferenceExpr(settingsBuilderVarExpr)
+                                .setMethodName(e.getKey())
+                                .build())
+                        .setMethodName("build")
+                        .setReturnType(e.getValue().type())
+                        .build())
+                .build();
+    bodyExprs.addAll(
+        methodSettingsMemberVarExprs.entrySet().stream()
+            .map(e -> varInitExprFn.apply(e))
+            .collect(Collectors.toList()));
+
+    return MethodDefinition.constructorBuilder()
+        .setScope(ScopeNode.PROTECTED)
+        .setReturnType(thisType)
+        .setArguments(settingsBuilderVarExpr.toBuilder().setIsDecl(true).build())
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
   }
 
   private static ClassDefinition createNestedBuilderClass(
