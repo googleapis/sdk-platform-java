@@ -59,7 +59,16 @@ public abstract class IdentifierNode implements AstNode {
 
     abstract IdentifierNode autoBuild();
 
+    public IdentifierNode buildVariableIdentifier() throws InvalidIdentifierException {
+      return build(/* isField= */ true);
+    }
+
     public IdentifierNode build() throws InvalidIdentifierException {
+      return build(/* isField= */ false);
+    }
+
+    // Private.
+    IdentifierNode build(boolean isField) throws InvalidIdentifierException {
       IdentifierNode identifier = autoBuild();
       String identifierName = identifier.name();
       Preconditions.checkNotNull(identifierName);
@@ -84,9 +93,17 @@ public abstract class IdentifierNode implements AstNode {
             String.format("Name %s cannot contain non-alphanumeric characters", identifierName));
       }
 
-      if (Keyword.isKeyword(identifierName)) {
-        throw new InvalidIdentifierException(
-            String.format("Name %s cannot be a keyword.", identifierName));
+      if (isField) {
+        if (Keyword.isInvalidFieldName(identifierName)) {
+          throw new InvalidIdentifierException(
+              String.format("Name %s cannot be a keyword.", identifierName));
+        }
+
+      } else {
+        if (Keyword.isKeyword(identifierName)) {
+          throw new InvalidIdentifierException(
+              String.format("Name %s cannot be a keyword.", identifierName));
+        }
       }
 
       return identifier;

@@ -39,5 +39,10 @@ public class KeywordTest {
     assertThat(Keyword.isKeyword("null")).isFalse();
     assertThat(Keyword.isKeyword("asdf")).isFalse();
     assertThat(Keyword.isKeyword("12345")).isFalse();
+
+    // Keywords.
+    assertThat(Keyword.isKeyword("while")).isTrue();
+    assertThat(Keyword.isKeyword("class")).isTrue();
+    assertThat(Keyword.isInvalidFieldName("class")).isFalse();
   }
 }

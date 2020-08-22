@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -148,6 +149,17 @@ public abstract class VariableExpr implements Expr {
             String.format(
                 "Static field references can only be done on static types, but instead found %s",
                 variableExpr.staticReferenceType()));
+      }
+
+      // A variable name of "class" is valid only when it's a static reference.
+      String varName = variableExpr.variable().identifier().name();
+      if (Keyword.isKeyword(varName)) {
+        Preconditions.checkState(
+            variableExpr.staticReferenceType() != null
+                || (variableExpr.exprReferenceExpr() != null
+                    && TypeNode.isReferenceType(variableExpr.exprReferenceExpr().type())),
+            String.format(
+                "Variable field name %s is invalid on non-static or non-reference types", varName));
       }
 
       return variableExpr;
