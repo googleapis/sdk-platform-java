@@ -26,7 +26,7 @@ public abstract class ThrowExpr implements Expr {
   public abstract TypeNode type();
 
   @Nullable
-  public abstract String message();
+  public abstract Expr messageExpr();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -41,19 +41,29 @@ public abstract class ThrowExpr implements Expr {
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setMessage(String message);
+    public Builder setMessageExpr(String message) {
+      return setMessageExpr(ValueExpr.withValue(StringObjectValue.withValue(message)));
+    }
+
+    public abstract Builder setMessageExpr(Expr expr);
 
     // Private.
+    abstract TypeNode type();
+
+    abstract Expr messageExpr();
+
     abstract ThrowExpr autoBuild();
 
     public ThrowExpr build() {
-      // TODO(miraleung): Escaping message() and the corresponding tests will be done when we switch
-      // to StringObjectValue.
-      ThrowExpr throwExpr = autoBuild();
       Preconditions.checkState(
-          TypeNode.isExceptionType(throwExpr.type()),
-          String.format("Type %s must be an exception type", throwExpr.type()));
-      return throwExpr;
+          TypeNode.isExceptionType(type()),
+          String.format("Type %s must be an exception type", type()));
+      if (messageExpr() != null) {
+        Preconditions.checkState(
+            messageExpr().type().equals(TypeNode.STRING),
+            String.format("Message expression type must be a string for exception %s", type()));
+      }
+      return autoBuild();
     }
   }
 }

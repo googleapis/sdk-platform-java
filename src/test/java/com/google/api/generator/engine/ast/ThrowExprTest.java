@@ -21,20 +21,29 @@ import org.junit.Test;
 public class ThrowExprTest {
   @Test
   public void createThrowExpr_basic() {
-    TypeNode npeType =
-        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
     ThrowExpr.builder().setType(npeType).build();
     // No exception thrown, we're good.
 
   }
 
   @Test
-  public void createThrowExpr_basicWithMessage() {
-    TypeNode npeType =
-        TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
-    ThrowExpr.builder().setType(npeType).setMessage("Some message").build();
+  public void createThrowExpr_basicWithStringMessage() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    ThrowExpr.builder().setType(npeType).setMessageExpr("Some message").build();
     // No exception thrown, we're good.
+  }
 
+  @Test
+  public void createThrowExpr_messageExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build();
+    // No exception thrown, we're good.
   }
 
   @Test
@@ -42,5 +51,15 @@ public class ThrowExprTest {
     TypeNode nonExceptionType = TypeNode.STRING;
     assertThrows(
         IllegalStateException.class, () -> ThrowExpr.builder().setType(nonExceptionType).build());
+  }
+
+  @Test
+  public void createThrowExpr_badMessageExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder().setMethodName("foobar").setReturnType(TypeNode.INT).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build());
   }
 }
