@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,6 +55,10 @@ public abstract class ReferenceConstructorExpr implements Expr {
   public abstract static class Builder {
     public abstract Builder setType(TypeNode node);
 
+    public Builder setArguments(Expr... arguments) {
+      return setArguments(Arrays.asList(arguments));
+    }
+
     public abstract Builder setArguments(List<Expr> arguments);
 
     // private.
@@ -65,7 +70,7 @@ public abstract class ReferenceConstructorExpr implements Expr {
       ReferenceConstructorExpr referenceConstructorExpr = autoBuild();
       Preconditions.checkState(
           referenceConstructorExpr.type().isReferenceType(referenceConstructorExpr.type()),
-          "ReferenceConstructExpr type must be reference type. ");
+          "A this/super constructor must have a reference type.");
       return referenceConstructorExpr;
     }
   }
