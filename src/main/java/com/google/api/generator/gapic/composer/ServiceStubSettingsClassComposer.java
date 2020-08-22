@@ -88,6 +88,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
@@ -130,7 +131,7 @@ public class ServiceStubSettingsClassComposer {
             .setName(className)
             .setExtendsType(createExtendsType(service, types))
             .setStatements(createClassStatements(service, methodSettingsMemberVarExprs, types))
-            .setMethods(createClassMethods(service, types))
+            .setMethods(createClassMethods(service, methodSettingsMemberVarExprs, types))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
             .build();
     return GapicClass.create(GapicClass.Kind.STUB, classDef);
@@ -241,10 +242,28 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.addAll(createMethodSettingsGetterMethods(methodSettingsMemberVarExprs));
     // TODO(miraleung): Fill this out.
     return javaMethods;
+  }
+
+  private static List<MethodDefinition> createMethodSettingsGetterMethods(
+      Map<String, VariableExpr> methodSettingsMemberVarExprs) {
+    Function<Map.Entry<String, VariableExpr>, MethodDefinition> varToMethodFn =
+        e ->
+            MethodDefinition.builder()
+                .setScope(ScopeNode.PUBLIC)
+                .setReturnType(e.getValue().type())
+                .setName(e.getKey())
+                .setReturnExpr(e.getValue())
+                .build();
+    return methodSettingsMemberVarExprs.entrySet().stream()
+        .map(e -> varToMethodFn.apply(e))
+        .collect(Collectors.toList());
   }
 
   private static ClassDefinition createNestedBuilderClass(
