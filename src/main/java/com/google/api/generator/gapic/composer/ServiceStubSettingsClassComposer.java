@@ -471,6 +471,70 @@ public class ServiceStubSettingsClassComposer {
             .setReturnExpr(transportProviderBuilderExpr)
             .build());
 
+    // Create the defaultApiClientHeaderProviderBuilder method.
+    returnType =
+        TypeNode.withReference(ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class));
+    MethodInvocationExpr returnExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("ApiClientHeaderProvider"))
+            .setMethodName("newBuilder")
+            .build();
+
+    MethodInvocationExpr versionArgExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("GaxProperties"))
+            .setMethodName("getLibraryVersion")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder()
+                            .setType(
+                                TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                            .setName("class")
+                            .build())
+                    .setStaticReferenceType(types.get(getThisClassName(service.name())))
+                    .build())
+            .build();
+
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("setGeneratedLibToken")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("gapic")), versionArgExpr)
+            .build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("setTransportToken")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("GaxGrpcProperties"))
+                    .setMethodName("getGrpcTokenName")
+                    .build(),
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("GaxGrpcProperties"))
+                    .setMethodName("getGrpcVersion")
+                    .build())
+            .setReturnType(returnType)
+            .build();
+
+    AnnotationNode annotation =
+        AnnotationNode.builder()
+            .setType(STATIC_TYPES.get("BetaApi"))
+            .setDescription(
+                "The surface for customizing headers is not stable yet and may change in the"
+                    + " future.")
+            .build();
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setAnnotations(Arrays.asList(annotation))
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("defaultApiClientHeaderProviderBuilder")
+            .setReturnExpr(returnExpr)
+            .build());
+
     return javaMethods;
   }
 
