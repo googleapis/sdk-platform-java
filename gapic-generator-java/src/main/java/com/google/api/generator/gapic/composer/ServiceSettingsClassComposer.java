@@ -37,11 +37,13 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -207,11 +209,18 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setExprReferenceExpr(stubVarExpr)
             .setMethodName("toBuilder")
             .build();
-    // TODO(miraleung): Actually instantiate the builder instaead of newTodoBuilder.
-    MethodInvocationExpr returnMethodExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName("newTodoBuilder")
-            .setArguments(Arrays.asList(stubBuilderMethodExpr))
+
+    TypeNode stubBuilderType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("Builder")
+                .setEnclosingClassName(String.format("%sStubSettings", service.name()))
+                .setPakkage(String.format("%s.stub", service.pakkage()))
+                .build());
+    Expr returnMethodExpr =
+        NewObjectExpr.builder()
+            .setType(stubBuilderType)
+            .setArguments(stubBuilderMethodExpr)
             .build();
     returnMethodExpr =
         MethodInvocationExpr.builder()
@@ -296,39 +305,32 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setName("clientContext")
                 .setType(staticTypes.get("ClientContext"))
                 .build());
-    // TODO(miraleung): Actually instantiate thie builder.
+
     MethodDefinition newBuilderMethodTwo =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderType)
             .setName("newBuilder")
-            .setArguments(Arrays.asList(clientContextVarExpr.toBuilder().setIsDecl(true).build()))
+            .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
             .setReturnExpr(
-                MethodInvocationExpr.builder()
-                    .setMethodName("newBuilder")
+                NewObjectExpr.builder()
+                    .setType(builderType)
                     .setArguments(Arrays.asList(clientContextVarExpr))
-                    .setReturnType(builderType)
                     .build())
             .build();
 
-    // TODO(miraleung): Use this and actually instantiate the builder.
     MethodDefinition toBuilderMethod =
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(builderType)
             .setName("toBuilder")
             .setReturnExpr(
-                MethodInvocationExpr.builder()
-                    .setMethodName("newBuilder")
+                NewObjectExpr.builder()
+                    .setType(builderType)
                     .setArguments(
-                        Arrays.asList(
-                            VariableExpr.withVariable(
-                                Variable.builder()
-                                    .setName("thiis")
-                                    .setType(types.get(getThisClassName(service.name())))
-                                    .build())))
-                    .setReturnType(builderType)
+                        ValueExpr.withValue(
+                            ThisObjectValue.withType(types.get(getThisClassName(service.name())))))
                     .build())
             .build();
 
@@ -370,7 +372,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static List<MethodDefinition> createNestedBuilderConstructorMethods(
       Service service, Map<String, TypeNode> types) {
     TypeNode builderType = types.get(BUILDER_CLASS_NAME);
-    // TODO(miraleung): Use this.
     MethodDefinition noArgCtor =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
@@ -379,15 +380,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(
-                        MethodInvocationExpr.builder()
-                            .setMethodName("thiis")
+                        ReferenceConstructorExpr.thisBuilder()
+                            .setType(builderType)
                             .setArguments(
-                                Arrays.asList(
-                                    CastExpr.builder()
-                                        .setType(staticTypes.get("ClientContext"))
-                                        .setExpr(ValueExpr.withValue(NullObjectValue.create()))
-                                        .build()))
-                            .setReturnType(builderType)
+                                CastExpr.builder()
+                                    .setType(staticTypes.get("ClientContext"))
+                                    .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                    .build())
                             .build())))
             .build();
 
@@ -457,18 +456,12 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .build();
 
     TypeNode builderType = types.get(BUILDER_CLASS_NAME);
-    // TODO(miraleung): Actually instantiate the Builder instead of newBuilderTodo.
     return MethodDefinition.builder()
         .setScope(ScopeNode.PRIVATE)
         .setIsStatic(true)
         .setReturnType(builderType)
         .setName("createDefault")
-        .setReturnExpr(
-            MethodInvocationExpr.builder()
-                .setMethodName("newBuilderTodo")
-                .setArguments(Arrays.asList(ctorArg))
-                .setReturnType(builderType)
-                .build())
+        .setReturnExpr(NewObjectExpr.builder().setType(builderType).setArguments(ctorArg).build())
         .build();
   }
 
@@ -537,10 +530,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setArguments(Arrays.asList(builderMethodExpr, settingsUpdaterVarExpr))
             .build();
 
-    // TODO(miraleung): Use this.
-    VariableExpr returnExpr =
-        VariableExpr.withVariable(Variable.builder().setName("thiis").setType(builderType).build());
-
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(builderType)
@@ -549,7 +538,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setThrowsExceptions(
             Arrays.asList(TypeNode.withReference(ConcreteReference.withClazz(Exception.class))))
         .setBody(Arrays.asList(ExprStatement.withExpr(applyMethodExpr)))
-        .setReturnExpr(returnExpr)
+        .setReturnExpr(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
         .build();
   }
 
@@ -590,10 +579,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static MethodDefinition createNestedBuilderClassBuildMethod(
       Service service, Map<String, TypeNode> types) {
-    VariableExpr thisExpr =
-        VariableExpr.withVariable(
-            // TODO(miraleung): Actually use this.
-            Variable.builder().setName("thiis").setType(types.get(BUILDER_CLASS_NAME)).build());
+    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
     TypeNode returnType = types.get(getThisClassName(service.name()));
     return MethodDefinition.builder()
         .setIsOverride(true)
@@ -602,11 +588,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setName("build")
         .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
         .setReturnExpr(
-            MethodInvocationExpr.builder()
-                // TODO(miraleung): Actually instantiate ServiceSettings.
-                .setMethodName("newServiceSettings")
-                .setArguments(Arrays.asList(thisExpr))
-                .setReturnType(returnType)
+            NewObjectExpr.builder()
+                .setType(returnType)
+                .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
                 .build())
         .build();
   }
