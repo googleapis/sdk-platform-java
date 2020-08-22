@@ -17,6 +17,9 @@ package com.google.api.generator.engine.lexicon;
 import com.google.common.collect.ImmutableList;
 
 public class Keyword {
+  // This is a valid field for all objects, so handle particular keyword differently.
+  private static final String CLASS_KEYWORD = "class";
+
   private static final ImmutableList<String> KEYWORDS =
       ImmutableList.of(
           "abstract",
@@ -59,7 +62,6 @@ public class Keyword {
           "interface",
           "static",
           "void",
-          "class",
           "finally",
           "long",
           "strictfp",
@@ -71,6 +73,10 @@ public class Keyword {
           "while");
 
   public static boolean isKeyword(String s) {
+    return s.equals(CLASS_KEYWORD) || KEYWORDS.contains(s);
+  }
+
+  public static boolean isInvalidFieldName(String s) {
     return KEYWORDS.contains(s);
   }
 }
