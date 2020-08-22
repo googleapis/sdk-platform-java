@@ -28,6 +28,9 @@ public abstract class VariableExpr implements Expr {
   @Nullable
   public abstract Expr exprReferenceExpr();
 
+  @Nullable
+  public abstract TypeNode staticReferenceType();
+
   /** Variable declaration fields. */
   public abstract boolean isDecl();
 
@@ -85,6 +88,9 @@ public abstract class VariableExpr implements Expr {
     // Optional, but cannot co-exist with a variable declaration.
     public abstract Builder setExprReferenceExpr(Expr exprReference);
 
+    // Optional, but cannot co-exist with an expression reference.
+    public abstract Builder setStaticReferenceType(TypeNode type);
+
     public abstract Builder setIsDecl(boolean isDecl);
 
     public abstract Builder setScope(ScopeNode scope);
@@ -126,11 +132,24 @@ public abstract class VariableExpr implements Expr {
             variableExpr.isDecl() ^ (variableExpr.exprReferenceExpr() != null),
             "Variable references cannot be declared");
       }
+
+      Preconditions.checkState(
+          variableExpr.exprReferenceExpr() == null || variableExpr.staticReferenceType() == null,
+          "Only the expression reference or the static reference can be set, not both");
+
       if (variableExpr.exprReferenceExpr() != null) {
         Preconditions.checkState(
             TypeNode.isReferenceType(variableExpr.exprReferenceExpr().type()),
             "Variables can only be referenced from object types");
       }
+      if (variableExpr.staticReferenceType() != null) {
+        Preconditions.checkState(
+            TypeNode.isReferenceType(variableExpr.staticReferenceType()),
+            String.format(
+                "Static field references can only be done on static types, but instead found %s",
+                variableExpr.staticReferenceType()));
+      }
+
       return variableExpr;
     }
   }

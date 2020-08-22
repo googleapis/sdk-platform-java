@@ -196,12 +196,25 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr() {
+  public void writeVariableExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "x");
+  }
+
+  @Test
+  public void writeVariableExpr_staticReference() {
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setType(TypeNode.INT_OBJECT).setName("MAX_VALUE").build())
+            .setStaticReferenceType(TypeNode.INT_OBJECT)
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "Integer.MAX_VALUE");
   }
 
   @Test

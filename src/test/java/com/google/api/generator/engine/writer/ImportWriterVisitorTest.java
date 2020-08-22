@@ -451,6 +451,29 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExprImports_staticReference() {
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(
+                        TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+                    .setName("AN_ASSIGN_EXPR")
+                    .build())
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(TypeNode.class)))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.TypeNode;\n\n"));
+  }
+
+  @Test
   public void writeVariableExprImports_reference() {
     Variable variable =
         Variable.builder()
