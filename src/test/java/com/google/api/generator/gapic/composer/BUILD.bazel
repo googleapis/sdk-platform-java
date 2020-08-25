@@ -1,5 +1,6 @@
-package(default_visibility = ["//visibility:public"])
 load("//src/test/java/com/google/api/generator/gapic/composer:composer_rule.bzl", "composer_test")
+
+package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "ComposerTest",
@@ -23,8 +24,8 @@ filegroup(
 [composer_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
-    test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     golden = "//src/main/java/com/google/api/generator/gapic/composer/goldens/(test_name).golden",
+    test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
