@@ -62,12 +62,14 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -96,6 +98,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -265,7 +268,8 @@ public class ServiceStubSettingsClassComposer {
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
     // TODO(miraleung): Add a test case for several such statements.
-    List<Expr> exprs = new ArrayList<>();
+    List<Expr> descExprs = new ArrayList<>();
+    List<Expr> factoryExprs = new ArrayList<>();
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
         continue;
@@ -290,7 +294,7 @@ public class ServiceStubSettingsClassComposer {
               method.outputType().reference().name(), method.name()));
 
       // Create the PAGE_STR_DESC variable.
-      TypeNode pagedListDescriptorType =
+      TypeNode pagedListDescType =
           TypeNode.withReference(
               ConcreteReference.builder()
                   .setClazz(PagedListDescriptor.class)
@@ -302,21 +306,202 @@ public class ServiceStubSettingsClassComposer {
                   .build());
       String pageStrDescVarName =
           String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
-      VariableExpr pageStrDescVarExpr =
+      VariableExpr pagedListDescVarExpr =
           VariableExpr.withVariable(
-              Variable.builder()
-                  .setType(pagedListDescriptorType)
-                  .setName(pageStrDescVarName)
-                  .build());
+              Variable.builder().setType(pagedListDescType).setName(pageStrDescVarName).build());
 
-      Expr pagedListResponseFactoryAssignExpr =
+      descExprs.add(
+          createPagedListDescriptorAssignExpr(
+              pagedListDescVarExpr, method, repeatedResponseType, types));
+      factoryExprs.add(
           createPagedListResponseFactoryAssignExpr(
-              pageStrDescVarExpr, method, repeatedResponseType, types);
-
-      exprs.add(pagedListResponseFactoryAssignExpr);
+              pagedListDescVarExpr, method, repeatedResponseType, types));
     }
 
-    return exprs;
+    descExprs.addAll(factoryExprs);
+    return descExprs;
+  }
+
+  private static Expr createPagedListDescriptorAssignExpr(
+      VariableExpr pagedListDescVarExpr,
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, TypeNode> types) {
+    MethodDefinition.Builder methodStarterBuilder =
+        MethodDefinition.builder().setIsOverride(true).setScope(ScopeNode.PUBLIC);
+    List<MethodDefinition> anonClassMethods = new ArrayList<>();
+
+    // Create emptyToken method.
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(TypeNode.STRING)
+            .setName("emptyToken")
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("")))
+            .build());
+
+    // Create injectToken method.
+    VariableExpr payloadVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("payload").build());
+    VariableExpr strTokenVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("token").build());
+    TypeNode returnType = method.inputType();
+    Expr newBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(method.inputType())
+            .setMethodName("newBuilder")
+            .setArguments(payloadVarExpr)
+            .build();
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderExpr)
+            .setMethodName("setPageToken")
+            .setArguments(strTokenVarExpr)
+            .build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(method.inputType())
+            .setName("injectToken")
+            .setArguments(
+                Arrays.asList(payloadVarExpr, strTokenVarExpr).stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // Create injectPageSize method.
+    VariableExpr pageSizeVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
+    // Re-declare for clarity and easier readeability.
+    returnType = method.inputType();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderExpr)
+            .setMethodName("setPageSize")
+            .setArguments(pageSizeVarExpr)
+            .build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(method.inputType())
+            .setName("injectPageSize")
+            .setArguments(
+                Arrays.asList(payloadVarExpr, pageSizeVarExpr).stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // TODO(miraleung): Test the edge cases where these proto fields aren't present.
+    // Create extractPageSize method.
+    returnType = TypeNode.INT_OBJECT;
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractPageSize")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(payloadVarExpr)
+                    .setMethodName("getPageSize")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
+
+    // Create extractNextToken method.
+    returnType = TypeNode.STRING;
+    payloadVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.outputType()).setName("payload").build());
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractNextToken")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(payloadVarExpr)
+                    .setMethodName("getNextPageToken")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
+
+    // Create extractResources method.
+    returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Iterable.class)
+                .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                .build());
+    Expr getResponsesListExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(payloadVarExpr)
+            .setMethodName("getResponsesList")
+            .setReturnType(returnType)
+            .build();
+    Expr conditionExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Objects.class)))
+            .setMethodName("equals")
+            .setArguments(getResponsesListExpr, ValueExpr.withValue(NullObjectValue.create()))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    Expr thenExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
+            .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+            .setMethodName("of")
+            .setReturnType(returnType)
+            .build();
+
+    returnExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(getResponsesListExpr)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractResources")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // Create the anonymous class.
+    AnonymousClassExpr pagedListDescAnonClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(pagedListDescVarExpr.type())
+            .setMethods(anonClassMethods)
+            .build();
+
+    // Declare and assign the variable.
+    return AssignmentExpr.builder()
+        .setVariableExpr(
+            pagedListDescVarExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build())
+        .setValueExpr(pagedListDescAnonClassExpr)
+        .build();
   }
 
   private static Expr createPagedListResponseFactoryAssignExpr(
