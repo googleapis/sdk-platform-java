@@ -60,6 +60,9 @@ public class GrpcServiceCallableFactoryClassComposerTest {
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
   }
 
+  private static final String OUTPUT_FILE_PATH =
+      "GrpcServiceCallableFactoryClassComposerTestOuput.txt";
+
   // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
   private static final String EXPECTED_CLASS_STRING =
       "package com.google.showcase.v1beta1.stub;\n"

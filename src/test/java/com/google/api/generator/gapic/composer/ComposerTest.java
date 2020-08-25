@@ -21,13 +21,14 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
 
 public class ComposerTest {
   @Test
-  public void gapicClass_addApacheLicense() {
+  public void gapicClass_addApacheLicense() throws IOException {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -38,7 +39,13 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    assertEquals(visitor.write(), EXPECTED_CLASS_STRING);
+    // String goldensPath =
+    //
+    // "/Users/xiaozhenliu/gapic-generator-java/src/test/goldens/com/google/api/generator/gapic/composer/ComposerTest.java.txt";
+    // String expected = new String(Files.readAllBytes(Paths.get(goldensPath)));
+    // System.out.println(expected);
+    // System.out.println(visitor.write());
+    assertEquals("", EXPECTED_CLASS_STRING);
   }
 
   private static final String EXPECTED_CLASS_STRING =
