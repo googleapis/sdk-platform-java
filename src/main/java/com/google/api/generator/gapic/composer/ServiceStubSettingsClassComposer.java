@@ -52,6 +52,7 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -74,6 +75,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -102,9 +104,11 @@ import org.threeten.bp.Duration;
 // TODO(miraleung): Refactor ClassComposer's interface.
 public class ServiceStubSettingsClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
+  private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
+  private static final String PAGE_STR_DESC_PATTERN = "%s_PAGE_STR_DESC";
+  private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
-  private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
   private static final String STUB_PATTERN = "%sStub";
 
   private static final String LEFT_BRACE = "{";
@@ -139,7 +143,9 @@ public class ServiceStubSettingsClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(createExtendsType(service, types))
-            .setStatements(createClassStatements(service, methodSettingsMemberVarExprs, types))
+            .setStatements(
+                createClassStatements(
+                    service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, types))
             .setMethods(createClassMethods(service, methodSettingsMemberVarExprs, types))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
             .build();
@@ -193,9 +199,11 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<Statement> createClassStatements(
       Service service,
+      ServiceConfig serviceConfig,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
-    List<Expr> memberVars = new ArrayList<>();
+    List<Expr> memberVarExprs = new ArrayList<>();
 
     // Assign DEFAULT_SERVICE_SCOPES.
     VariableExpr defaultServiceScopesDeclVarExpr =
@@ -228,14 +236,14 @@ public class ServiceStubSettingsClassComposer {
             .setReturnType(DEFAULT_SERVICE_SCOPES_VAR_EXPR.type())
             .build();
 
-    memberVars.add(
+    memberVarExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(defaultServiceScopesDeclVarExpr)
             .setValueExpr(listBuilderExpr)
             .build());
 
     // Declare settings members.
-    memberVars.addAll(
+    memberVarExprs.addAll(
         methodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
@@ -246,8 +254,209 @@ public class ServiceStubSettingsClassComposer {
                         .build())
             .collect(Collectors.toList()));
 
-    // TODO(miraleung): Fill this out.
-    return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    memberVarExprs.addAll(
+        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types));
+    return memberVarExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  private static List<Expr> createPagingStaticAssignExprs(
+      Service service,
+      ServiceConfig serviceConfig,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
+    // TODO(miraleung): Add a test case for several such statements.
+    List<Expr> exprs = new ArrayList<>();
+    for (Method method : service.methods()) {
+      if (!method.isPaged()) {
+        continue;
+      }
+      // Find the repeated type.
+      Message pagedResponseMessage =
+          messageTypes.get(JavaStyle.toUpperCamelCase(method.outputType().reference().name()));
+      TypeNode repeatedResponseType = null;
+      for (Field field : pagedResponseMessage.fields()) {
+        if (field.isRepeated()) {
+          // Field is currently a List-type.
+          Preconditions.checkState(
+              !field.type().reference().generics().isEmpty(),
+              String.format("No generics found for field reference %s", field.type().reference()));
+          repeatedResponseType = TypeNode.withReference(field.type().reference().generics().get(0));
+        }
+      }
+      Preconditions.checkNotNull(
+          repeatedResponseType,
+          String.format(
+              "No repeated type found for paged reesponse %s for method %s",
+              method.outputType().reference().name(), method.name()));
+
+      // Create the PAGE_STR_DESC variable.
+      TypeNode pagedListDescriptorType =
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setClazz(PagedListDescriptor.class)
+                  .setGenerics(
+                      Arrays.asList(method.inputType(), method.outputType(), repeatedResponseType)
+                          .stream()
+                          .map(t -> t.reference())
+                          .collect(Collectors.toList()))
+                  .build());
+      String pageStrDescVarName =
+          String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+      VariableExpr pageStrDescVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(pagedListDescriptorType)
+                  .setName(pageStrDescVarName)
+                  .build());
+
+      Expr pagedListResponseFactoryAssignExpr =
+          createPagedListResponseFactoryAssignExpr(
+              pageStrDescVarExpr, method, repeatedResponseType, types);
+
+      exprs.add(pagedListResponseFactoryAssignExpr);
+    }
+
+    return exprs;
+  }
+
+  private static Expr createPagedListResponseFactoryAssignExpr(
+      VariableExpr pageStrDescVarExpr,
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, TypeNode> types) {
+    Preconditions.checkState(
+        method.isPaged(), String.format("Method %s is not paged", method.name()));
+
+    // Create the PagedListResponseFactory.
+    TypeNode pagedResponseType = types.get(getPagedResponseTypeName(method.name()));
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(Arrays.asList(pagedResponseType.reference()))
+                .build());
+
+    VariableExpr callableVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(UnaryCallable.class)
+                            .setGenerics(
+                                Arrays.asList(
+                                    method.inputType().reference(),
+                                    method.outputType().reference()))
+                            .build()))
+                .setName("callable")
+                .build());
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr contextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ApiCallContext"))
+                .setName("context")
+                .build());
+    VariableExpr futureResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .setName("futureResponse")
+                .build());
+
+    TypeNode pageContextType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(PageContext.class)
+                .setGenerics(
+                    Arrays.asList(method.inputType(), method.outputType(), repeatedResponseType)
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    VariableExpr pageContextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(pageContextType).setName("pageContext").build());
+    AssignmentExpr pageContextAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(pageContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("PageContext"))
+                    .setMethodName("create")
+                    .setArguments(
+                        callableVarExpr, pageStrDescVarExpr, requestVarExpr, contextVarExpr)
+                    .setReturnType(pageContextVarExpr.type())
+                    .build())
+            .build();
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get(getPagedResponseTypeName(method.name())))
+            .setMethodName("createAsync")
+            .setArguments(pageContextVarExpr, futureResponseVarExpr)
+            .setReturnType(apiFutureType)
+            .build();
+
+    MethodDefinition getFuturePagedResponseMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(apiFutureType)
+            .setName("getFuturePagedResponse")
+            .setArguments(
+                Arrays.asList(
+                        callableVarExpr, requestVarExpr, contextVarExpr, futureResponseVarExpr)
+                    .stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setBody(Arrays.asList(ExprStatement.withExpr(pageContextAssignExpr)))
+            .setReturnExpr(returnExpr)
+            .build();
+
+    // Create the variable.
+    TypeNode pagedResponseFactoryType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(PagedListResponseFactory.class)
+                .setGenerics(
+                    Arrays.asList(
+                            method.inputType(),
+                            method.outputType(),
+                            types.get(getPagedResponseTypeName(method.name())))
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    String varName =
+        String.format(PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+    VariableExpr pagedListResponseFactoryVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(pagedResponseFactoryType).setName(varName).build());
+    AnonymousClassExpr factoryAnonClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(pagedResponseFactoryType)
+            .setMethods(Arrays.asList(getFuturePagedResponseMethod))
+            .build();
+
+    return AssignmentExpr.builder()
+        .setVariableExpr(
+            pagedListResponseFactoryVarExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build())
+        .setValueExpr(factoryAnonClassExpr)
+        .build();
   }
 
   private static List<MethodDefinition> createClassMethods(
