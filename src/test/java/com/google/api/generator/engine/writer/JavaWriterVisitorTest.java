@@ -1964,6 +1964,16 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeArithmeticOperationExpr_concatStringNumber() {
+    ValueExpr valueExprNumber = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
+    ValueExpr valueExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
+    ArithmeticOperationExpr arithmeticOperationExpr =
+        ArithmeticOperationExpr.concatWithExprs(valueExpr, valueExprNumber);
+    arithmeticOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"someWord\" + 5");
+  }
+
+  @Test
   public void writeUnaryOperationExpr_postfixIncrement() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());

@@ -20,6 +20,9 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class ThisObjectValue implements ObjectValue {
   private static final String THIS_VALUE = "this";
+  String a = "ab";
+  String b = "ab";
+  boolean c = a == new Object();
 
   @Override
   public abstract TypeNode type();

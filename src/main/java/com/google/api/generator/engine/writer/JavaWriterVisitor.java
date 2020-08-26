@@ -52,7 +52,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-import com.google.api.generator.engine.lexicon.OperatorKind;
+import com.google.api.generator.engine.ast.OperatorKind;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -388,31 +388,31 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
-    arithmeticOperationExpr.firstExpression().accept(this);
+    arithmeticOperationExpr.lhsExpression().accept(this);
     space();
     operator(arithmeticOperationExpr.operatorKind());
     space();
-    arithmeticOperationExpr.secondExpression().accept(this);
+    arithmeticOperationExpr.rhsExpression().accept(this);
   }
 
   @Override
   public void visit(UnaryOperationExpr unaryOperationExpr) {
-    if (unaryOperationExpr.isPostfixOperator()) {
-      unaryOperationExpr.firstExpression().accept(this);
+    if (unaryOperationExpr.operatorKind().isPostfixOperator()) {
+      unaryOperationExpr.expression().accept(this);
       operator(unaryOperationExpr.operatorKind());
     } else {
       operator(unaryOperationExpr.operatorKind());
-      unaryOperationExpr.firstExpression().accept(this);
+      unaryOperationExpr.expression().accept(this);
     }
   }
 
   @Override
   public void visit(RelationalOperationExpr relationalOperationExpr) {
-    relationalOperationExpr.firstExpression().accept(this);
+    relationalOperationExpr.lhsExpression().accept(this);
     space();
     operator(relationalOperationExpr.operatorKind());
     space();
-    relationalOperationExpr.secondExpression().accept(this);
+    relationalOperationExpr.rhsExpression().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -870,7 +870,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       case RELATIONAL_NOT_EQUAL_TO:
         buffer.append(NOT_EQUAL_TO);
         break;
-      case UNARY_INCREMENT:
+      case UNARY_POST_INCREMENT:
         buffer.append(INCREMENT);
         break;
       case LOGICAL_NOT:

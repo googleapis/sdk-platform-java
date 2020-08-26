@@ -133,12 +133,17 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isNumberType(TypeNode type) {
-    return type.typeKind().equals(TypeKind.BYTE)
-        || type.typeKind().equals(TypeKind.INT)
-        || type.typeKind().equals(TypeKind.DOUBLE)
-        || type.typeKind().equals(TypeKind.LONG)
-        || type.typeKind().equals(TypeKind.SHORT)
-        || type.typeKind().equals(TypeKind.FLOAT);
+    return type.equals(TypeNode.INT)
+        || type.equals(TypeNode.DOUBLE)
+        || type.equals(TypeNode.LONG)
+        || type.equals(TypeNode.SHORT)
+        || type.equals(TypeNode.FLOAT)
+        || type.equals(TypeNode.INT_OBJECT)
+        || type.equals(TypeNode.FLOAT_OBJECT)
+        || type.equals(TypeNode.BYTE_OBJECT)
+        || type.equals(TypeNode.DOUBLE_OBJECT)
+        || type.equals(TypeNode.LONG_OBJECT)
+        || type.equals(TypeNode.SHORT_OBJECT);
   }
 
   public boolean isPrimitiveType() {

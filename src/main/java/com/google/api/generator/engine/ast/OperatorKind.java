@@ -12,12 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.lexicon;
+package com.google.api.generator.engine.ast;
 
 public enum OperatorKind {
-  ARITHMETIC_ADDITION,
-  UNARY_INCREMENT,
-  LOGICAL_NOT,
-  RELATIONAL_EQUAL_TO,
-  RELATIONAL_NOT_EQUAL_TO
+  ARITHMETIC_ADDITION(true),
+  UNARY_POST_INCREMENT(true),
+  LOGICAL_NOT(false),
+  RELATIONAL_EQUAL_TO(true),
+  RELATIONAL_NOT_EQUAL_TO(true);
+
+  private final boolean isPostfixOperator;
+  private OperatorKind(final boolean isPostfixOperator) {this.isPostfixOperator = isPostfixOperator;}
+  public boolean isPostfixOperator() { return this.isPostfixOperator; }
 }

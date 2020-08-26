@@ -14,18 +14,15 @@
 
 package com.google.api.generator.engine.ast;
 
-import com.google.api.generator.engine.lexicon.OperatorKind;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.List;
 
 @AutoValue
 public abstract class RelationalOperationExpr implements OperationExpr {
 
-  public abstract Expr firstExpression();
+  public abstract Expr lhsExpression();
 
-  public abstract Expr secondExpression();
+  public abstract Expr rhsExpression();
 
   public abstract OperatorKind operatorKind();
 
@@ -35,16 +32,16 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
   public static RelationalOperationExpr equalToWithExpr(Expr expr1, Expr expr2) {
     return builder()
-        .setFirstExpression(expr1)
-        .setSecondExpression(expr2)
+        .setLhsExpression(expr1)
+        .setRhsExpression(expr2)
         .setOperatorKind(OperatorKind.RELATIONAL_EQUAL_TO)
         .build();
   }
 
   public static RelationalOperationExpr notEqualToWithExpr(Expr expr1, Expr expr2) {
     return builder()
-        .setFirstExpression(expr1)
-        .setSecondExpression(expr2)
+        .setLhsExpression(expr1)
+        .setRhsExpression(expr2)
         .setOperatorKind(OperatorKind.RELATIONAL_NOT_EQUAL_TO)
         .build();
   }
@@ -62,10 +59,10 @@ public abstract class RelationalOperationExpr implements OperationExpr {
   public abstract static class Builder {
 
     // private, required
-    abstract Builder setFirstExpression(Expr expr);
+    abstract Builder setLhsExpression(Expr expr);
 
     // private, required
-    abstract Builder setSecondExpression(Expr expr);
+    abstract Builder setRhsExpression(Expr expr);
 
     // private
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -73,22 +70,17 @@ public abstract class RelationalOperationExpr implements OperationExpr {
     public abstract RelationalOperationExpr autoBuild();
 
     private RelationalOperationExpr build() {
-      String a = "5";
-      Character b = 'a';
-      // boolean c = a != b;
       RelationalOperationExpr relationalOperationExpr = autoBuild();
-      List h = new ArrayList();
-      boolean c = relationalOperationExpr != h;
-      Expr firstExpr = relationalOperationExpr.firstExpression();
-      Expr secondExpr = relationalOperationExpr.secondExpression();
-      TypeNode firstExprType =
-          firstExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) firstExpr).returnType()
-              : firstExpr.type();
-      TypeNode secondExprType =
-          secondExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) secondExpr).returnType()
-              : secondExpr.type();
+      Expr lhsExpr = relationalOperationExpr.lhsExpression();
+      Expr rhsExpr = relationalOperationExpr.rhsExpression();
+      TypeNode lhsExprType =
+          lhsExpr instanceof MethodInvocationExpr
+              ? ((MethodInvocationExpr) lhsExpr).returnType()
+              : lhsExpr.type();
+      TypeNode rhsExprType =
+          rhsExpr instanceof MethodInvocationExpr
+              ? ((MethodInvocationExpr) rhsExpr).returnType()
+              : rhsExpr.type();
       OperatorKind operator = relationalOperationExpr.operatorKind();
       if (operator.equals(OperatorKind.RELATIONAL_EQUAL_TO)
           || operator.equals(OperatorKind.RELATIONAL_NOT_EQUAL_TO)) {
@@ -96,22 +88,22 @@ public abstract class RelationalOperationExpr implements OperationExpr {
             "Relational operator "
                 + operator
                 + " can not be applied on "
-                + firstExprType.toString()
+                + lhsExprType.toString()
                 + ", "
-                + secondExprType.toString();
+                + rhsExprType.toString();
         Preconditions.checkState(
-            !firstExprType.equals(TypeNode.VOID)
-                && !secondExprType.equals(TypeNode.VOID)
-                && (firstExprType.isBoxedTypeEquals(secondExprType)
-                    || secondExprType.isBoxedTypeEquals(firstExprType)
-                    || TypeNode.isNumberType(firstExprType) && TypeNode.isNumberType(secondExprType)
-                    || firstExprType.equals(secondExprType)
-                    || !TypeNode.isBoxedType(firstExprType)
-                        && !TypeNode.isBoxedType((secondExprType))
-                        && !firstExprType.equals(TypeNode.STRING)
-                        && !secondExprType.equals(TypeNode.STRING)
-                        && TypeNode.isReferenceType(firstExprType)
-                        && TypeNode.isReferenceType(secondExprType)),
+            !lhsExprType.equals(TypeNode.VOID)
+                && !rhsExprType.equals(TypeNode.VOID)
+                && (lhsExprType.isBoxedTypeEquals(rhsExprType)
+                    || rhsExprType.isBoxedTypeEquals(lhsExprType)
+                    || TypeNode.isNumberType(lhsExprType) && TypeNode.isNumberType(rhsExprType)
+                    || lhsExprType.equals(rhsExprType)
+                    || !TypeNode.isBoxedType(lhsExprType)
+                        && !TypeNode.isBoxedType((rhsExprType))
+                        && !lhsExprType.equals(TypeNode.STRING)
+                        && !rhsExprType.equals(TypeNode.STRING)
+                        && TypeNode.isReferenceType(lhsExprType)
+                        && TypeNode.isReferenceType(rhsExprType)),
             errorMsg);
       }
       return relationalOperationExpr;

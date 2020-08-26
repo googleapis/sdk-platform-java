@@ -216,19 +216,19 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
-    arithmeticOperationExpr.firstExpression().type().accept(this);
-    arithmeticOperationExpr.secondExpression().type().accept(this);
+    arithmeticOperationExpr.lhsExpression().type().accept(this);
+    arithmeticOperationExpr.rhsExpression().type().accept(this);
   }
 
   @Override
   public void visit(UnaryOperationExpr unaryOperationExpr) {
-    unaryOperationExpr.firstExpression().type().accept(this);
+    unaryOperationExpr.expression().type().accept(this);
   }
 
   @Override
   public void visit(RelationalOperationExpr relationalOperationExpr) {
-    relationalOperationExpr.firstExpression().type().accept(this);
-    relationalOperationExpr.secondExpression().type().accept(this);
+    relationalOperationExpr.lhsExpression().type().accept(this);
+    relationalOperationExpr.rhsExpression().type().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
