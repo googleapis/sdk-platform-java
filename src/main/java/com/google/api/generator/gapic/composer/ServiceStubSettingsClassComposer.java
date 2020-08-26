@@ -80,6 +80,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
@@ -91,7 +92,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -145,7 +145,7 @@ public class ServiceStubSettingsClassComposer {
   }
 
   public GapicClass generate(
-      Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
+      Service service, GapicServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
@@ -215,7 +215,7 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<Statement> createClassStatements(
       Service service,
-      ServiceConfig serviceConfig,
+      GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
@@ -277,7 +277,7 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<Expr> createPagingStaticAssignExprs(
       Service service,
-      ServiceConfig serviceConfig,
+      GapicServiceConfig serviceConfig,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
     // TODO(miraleung): Add a test case for several such statements.

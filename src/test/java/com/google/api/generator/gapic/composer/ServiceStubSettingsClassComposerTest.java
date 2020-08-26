@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
@@ -27,7 +28,6 @@ import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -62,9 +62,9 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<ServiceConfig> configOpt = ServiceConfigParser.parseFile(jsonPath.toString());
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
-    ServiceConfig config = configOpt.get();
+    GapicServiceConfig config = configOpt.get();
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =

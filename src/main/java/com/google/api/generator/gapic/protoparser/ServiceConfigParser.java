@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
 import com.google.protobuf.util.JsonFormat;
 import io.grpc.serviceconfig.ServiceConfig;
@@ -23,7 +25,16 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class ServiceConfigParser {
-  public static Optional<ServiceConfig> parseFile(String serviceConfigFilePath) {
+  public static Optional<GapicServiceConfig> parse(String serviceConfigFilePath) {
+    Optional<ServiceConfig> rawConfigOpt = parseFile(serviceConfigFilePath);
+    if (!rawConfigOpt.isPresent()) {
+      return Optional.empty();
+    }
+    return Optional.of(GapicServiceConfig.create(rawConfigOpt.get()));
+  }
+
+  @VisibleForTesting
+  static Optional<ServiceConfig> parseFile(String serviceConfigFilePath) {
     if (Strings.isNullOrEmpty(serviceConfigFilePath)) {
       return Optional.empty();
     }
