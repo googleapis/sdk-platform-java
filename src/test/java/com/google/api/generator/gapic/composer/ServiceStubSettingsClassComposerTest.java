@@ -512,6 +512,11 @@ public class ServiceStubSettingsClassComposerTest {
           + "      super.applyToAllUnaryMethods(unaryMethodSettingsBuilders, settingsUpdater);\n"
           + "      return this;\n"
           + "    }\n"
+          + "\n"
+          + "    public ImmutableList<UnaryCallSettings.Builder<?, ?>>"
+          + " unaryMethodSettingsBuilders() {\n"
+          + "      return unaryMethodSettingsBuilders;\n"
+          + "    }\n"
           + "  }\n"
           + "}\n";
 }
