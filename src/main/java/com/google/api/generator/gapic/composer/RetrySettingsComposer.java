@@ -22,17 +22,25 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.GapicRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.protobuf.Duration;
+import com.google.protobuf.util.Durations;
+import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RetrySettingsComposer {
@@ -78,7 +86,15 @@ public class RetrySettingsComposer {
             .build());
 
     // Build the settings object for each config.
-    // TODO(miraleung): Fill this out.
+    for (Map.Entry<String, GapicRetrySettings> settingsEntry :
+        serviceConfig.getAllGapicRetrySettings(service).entrySet()) {
+      bodyExprs.addAll(
+          createRetrySettingsExprs(
+              settingsEntry.getKey(),
+              settingsEntry.getValue(),
+              settingsVarExpr,
+              definitionsVarExpr));
+    }
 
     // Reassign the new settings.
     bodyExprs.add(
@@ -98,6 +114,130 @@ public class RetrySettingsComposer {
         .setBody(
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
+  }
+
+  private static List<Expr> createRetrySettingsExprs(
+      String settingsName,
+      GapicRetrySettings settings,
+      VariableExpr settingsVarExpr,
+      VariableExpr definitionsVarExpr) {
+    Function<Duration, ValueExpr> durationToMillisValExprFn =
+        d ->
+            ValueExpr.withValue(
+                PrimitiveValue.builder()
+                    .setType(TypeNode.LONG)
+                    .setValue(String.format("%dL", Durations.toMillis(d)))
+                    .build());
+    Function<Float, ValueExpr> floatToValExprFn =
+        f ->
+            ValueExpr.withValue(
+                PrimitiveValue.builder()
+                    .setType(TypeNode.DOUBLE)
+                    .setValue(String.format("%.1f", f))
+                    .build());
+    Function<ValueExpr, MethodInvocationExpr> durationMillisMethodFn =
+        v ->
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Duration"))
+                .setMethodName("ofMillis")
+                .setArguments(v)
+                .build();
+
+    Expr settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    RetryPolicy retryPolicy = settings.retryPolicy();
+    if (settings.kind().equals(GapicRetrySettings.Kind.FULL)) {
+      Preconditions.checkState(
+          retryPolicy.hasInitialBackoff(),
+          String.format("initialBackoff not found for setting %s", settingsName));
+      settingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(settingsBuilderExpr)
+              .setMethodName("setInitialRetryDelay")
+              .setArguments(
+                  durationMillisMethodFn.apply(
+                      durationToMillisValExprFn.apply(retryPolicy.getInitialBackoff())))
+              .build();
+
+      settingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(settingsBuilderExpr)
+              .setMethodName("setRetryDelayMultiplier")
+              .setArguments(floatToValExprFn.apply(retryPolicy.getBackoffMultiplier()))
+              .build();
+
+      Preconditions.checkState(
+          retryPolicy.hasMaxBackoff(),
+          String.format("maxBackoff not found for setting %s", settingsName));
+      settingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(settingsBuilderExpr)
+              .setMethodName("setMaxRetryDelay")
+              .setArguments(
+                  durationMillisMethodFn.apply(
+                      durationToMillisValExprFn.apply(retryPolicy.getMaxBackoff())))
+              .build();
+    }
+
+    if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
+      settingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(settingsBuilderExpr)
+              .setMethodName("setInitialRpcTimeout")
+              .setArguments(
+                  durationMillisMethodFn.apply(durationToMillisValExprFn.apply(settings.timeout())))
+              .build();
+    }
+
+    // This will always be done, no matter the type of the retry settings object.
+    settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName("setRpcTimeoutMultiplier")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.DOUBLE).setValue("1.0").build()))
+            .build();
+
+    if (!settings.kind().equals(GapicRetrySettings.Kind.NONE)) {
+      for (String setterMethodName : Arrays.asList("setMaxRpcTimeout", "setTotalTimeout")) {
+        settingsBuilderExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(settingsBuilderExpr)
+                .setMethodName(setterMethodName)
+                .setArguments(
+                    durationMillisMethodFn.apply(
+                        durationToMillisValExprFn.apply(settings.timeout())))
+                .build();
+      }
+    }
+
+    settingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingsBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(settingsVarExpr.type())
+            .build();
+
+    Expr settingsAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr)
+            .setValueExpr(settingsBuilderExpr)
+            .build();
+
+    Expr definitionsPutExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(definitionsVarExpr)
+            .setMethodName("put")
+            .setArguments(
+                ValueExpr.withValue(StringObjectValue.withValue(settingsName)), settingsVarExpr)
+            .build();
+
+    return Arrays.asList(settingsAssignExpr, definitionsPutExpr);
   }
 
   private static Map<String, TypeNode> createStaticTypes() {

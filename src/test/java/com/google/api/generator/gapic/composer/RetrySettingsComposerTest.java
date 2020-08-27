@@ -88,6 +88,8 @@ public class RetrySettingsComposerTest {
             "static {\n",
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
+            "settings = RetrySettings.newBuilder().setRpcTimeoutMultiplier(1.0).build();\n",
+            "definitions.put(\"no_retry_params\", settings);\n",
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
     assertEquals(expected, writerVisitor.write());
@@ -95,7 +97,42 @@ public class RetrySettingsComposerTest {
 
   @Test
   public void paramDefinitionsBlock_basic() {
-    // TODO(miraleung): Fill this out.
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+    assertEquals(1, services.size());
+
+    Service service = services.get(0);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    BlockStatement paramDefinitionsBlock =
+        RetrySettingsComposer.createRetryParamDefinitionsBlock(
+            service, serviceConfig, RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+
+    paramDefinitionsBlock.accept(writerVisitor);
+    String expected =
+        createLines(
+            "static {\n",
+            "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
+            "RetrySettings settings = null;\n",
+            "settings ="
+                + " RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0).setMaxRetryDelay(Duration.ofMillis(3000L)).setInitialRpcTimeout(Duration.ofMillis(10000L)).setRpcTimeoutMultiplier(1.0).setMaxRpcTimeout(Duration.ofMillis(10000L)).setTotalTimeout(Duration.ofMillis(10000L)).build();\n",
+            "definitions.put(\"retry_policy_1_params\", settings);\n",
+            "settings ="
+                + " RetrySettings.newBuilder().setInitialRpcTimeout(Duration.ofMillis(5000L)).setRpcTimeoutMultiplier(1.0).setMaxRpcTimeout(Duration.ofMillis(5000L)).setTotalTimeout(Duration.ofMillis(5000L)).build();\n",
+            "definitions.put(\"no_retry_0_params\", settings);\n",
+            "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
+            "}\n");
+    assertEquals(expected, writerVisitor.write());
   }
 
   private static VariableExpr createRetryParamDefinitionsVarExpr() {
