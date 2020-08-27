@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.rpc.BidiStreamingCallable;
@@ -26,17 +27,19 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
-import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -59,7 +62,9 @@ import com.google.rpc.Status;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -83,8 +88,6 @@ public class ServiceClientClassComposer implements ClassComposer {
     String pakkage = service.pakkage();
     boolean hasLroClient = hasLroMethods(service);
 
-    // TODO(miraleung): Comments, methods, etc.
-
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
@@ -100,6 +103,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
     return Arrays.asList(
+        AnnotationNode.withType(types.get("BetaApi")),
         AnnotationNode.builder()
             .setType(types.get("Generated"))
             .setDescription("by gapic-generator")
@@ -117,10 +121,10 @@ public class ServiceClientClassComposer implements ClassComposer {
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
-    // TODO(miraleung): Constructors when "this" and field accessors are checked in.
+    methods.addAll(createConstructorMethods(service, types));
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(createServiceMethods(service, messageTypes, types));
-    methods.addAll(createBackgroundResourceMethods(types));
+    methods.addAll(createBackgroundResourceMethods(service, types));
     return methods;
   }
 
@@ -165,6 +169,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> methods = new ArrayList<>();
     String thisClientName = String.format("%sClient", service.name());
     String settingsName = String.format("%sSettings", service.name());
+    TypeNode thisClassType = types.get(thisClientName);
+    TypeNode exceptionType = types.get("IOException");
 
     TypeNode settingsType = types.get(settingsName);
     Preconditions.checkNotNull(settingsType, String.format("Type %s not found", settingsName));
@@ -176,7 +182,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     MethodInvocationExpr buildExpr =
         MethodInvocationExpr.builder()
-            .setMethodName("builder")
+            .setMethodName("build")
             .setExprReferenceExpr(newBuilderExpr)
             .build();
     MethodInvocationExpr createMethodInvocationExpr =
@@ -191,36 +197,194 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
-            .setReturnType(types.get(thisClientName))
+            .setReturnType(thisClassType)
             .setName("create")
-            .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder()
-                        .setVariable(
-                            Variable.builder()
-                                .setName("settings")
-                                .setType(types.get(settingsName))
-                                .build())
-                        .setIsDecl(true)
-                        .build()))
-            .setThrowsExceptions(Arrays.asList(types.get("IOException")))
+            .setThrowsExceptions(Arrays.asList(exceptionType))
             .setReturnExpr(createMethodInvocationExpr)
             .build();
     methods.add(createMethodOne);
 
-    // TODO(miraleung): Add the creators that rely on NewObjectExpr when that is checked in.
+    // Second create(ServiceSettings settings) method.
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+
+    methods.add(
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setReturnType(thisClassType)
+            .setName("create")
+            .setThrowsExceptions(Arrays.asList(exceptionType))
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(thisClassType)
+                    .setArguments(settingsVarExpr)
+                    .build())
+            .build());
+
+    // Third create(ServiceStub stub) method.
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
+    methods.add(
+        MethodDefinition.builder()
+            .setAnnotations(Arrays.asList(betaAnnotation))
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setReturnType(thisClassType)
+            .setName("create")
+            .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                NewObjectExpr.builder().setType(thisClassType).setArguments(stubVarExpr).build())
+            .build());
+
+    return methods;
+  }
+
+  private static List<MethodDefinition> createConstructorMethods(
+      Service service, Map<String, TypeNode> types) {
+    List<MethodDefinition> methods = new ArrayList<>();
+    String thisClientName = String.format("%sClient", service.name());
+    String settingsName = String.format("%sSettings", service.name());
+    TypeNode thisClassType = types.get(thisClientName);
+    TypeNode stubSettingsType = types.get(String.format("%sStubSettings", service.name()));
+    TypeNode operationsClientType = types.get("OperationsClient");
+    TypeNode exceptionType = types.get("IOException");
+
+    TypeNode settingsType = types.get(settingsName);
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
+    VariableExpr operationsClientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(operationsClientType).setName("operationsClient").build());
+
+    // Create the ServiceClient(ServiceSettings settings) ctor.
+    List<Expr> ctorAssignmentExprs = new ArrayList<>();
+    Expr thisExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(settingsVarExpr)
+            .build());
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        CastExpr.builder()
+                            .setType(stubSettingsType)
+                            .setExpr(
+                                MethodInvocationExpr.builder()
+                                    .setExprReferenceExpr(settingsVarExpr)
+                                    .setMethodName("getStubSettings")
+                                    .setReturnType(stubSettingsType)
+                                    .build())
+                            .build())
+                    .setMethodName("createStub")
+                    .setReturnType(stubVarExpr.type())
+                    .build())
+            .build());
+
+    Expr clientArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setMethodName("getOperationsStub")
+            .build();
+    AssignmentExpr operationsClientAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(
+                operationsClientVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(operationsClientType)
+                    .setMethodName("create")
+                    .setArguments(clientArgExpr)
+                    .setReturnType(operationsClientVarExpr.type())
+                    .build())
+            .build();
+    ctorAssignmentExprs.add(operationsClientAssignExpr);
+
+    methods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(thisClassType)
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setThrowsExceptions(Arrays.asList(exceptionType))
+            .setBody(
+                ctorAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    // Create the ServiceClient(ServiceStub stub) ctor.
+    ctorAssignmentExprs.clear();
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .build());
+    ctorAssignmentExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
+            .setValueExpr(stubVarExpr)
+            .build());
+    ctorAssignmentExprs.add(operationsClientAssignExpr);
+    AnnotationNode betaAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
+    methods.add(
+        MethodDefinition.constructorBuilder()
+            .setAnnotations(Arrays.asList(betaAnnotation))
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(thisClassType)
+            .setArguments(stubVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorAssignmentExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
 
     return methods;
   }
 
   private static List<MethodDefinition> createGetterMethods(
       Service service, Map<String, TypeNode> types, boolean hasLroClient) {
-    Map<String, TypeNode> methodNameToTypes = new HashMap<>();
+    Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
     methodNameToTypes.put("getSettings", types.get(String.format("%sSettings", service.name())));
     methodNameToTypes.put("getStub", types.get(String.format("%sStub", service.name())));
     if (hasLroClient) {
       methodNameToTypes.put("getOperationsClient", types.get("OperationsClient"));
     }
+    AnnotationNode betaStubAnnotation =
+        AnnotationNode.builder()
+            .setType(types.get("BetaApi"))
+            .setDescription(
+                "A restructuring of stub classes is planned, so this may break in the future")
+            .build();
 
     return methodNameToTypes.entrySet().stream()
         .map(
@@ -229,6 +393,10 @@ public class ServiceClientClassComposer implements ClassComposer {
               TypeNode methodReturnType = e.getValue();
               String returnVariableName = JavaStyle.toLowerCamelCase(methodName.substring(3));
               return MethodDefinition.builder()
+                  .setAnnotations(
+                      methodName.equals("getStub")
+                          ? Arrays.asList(betaStubAnnotation)
+                          : Collections.emptyList())
                   .setScope(ScopeNode.PUBLIC)
                   .setName(methodName)
                   .setIsFinal(!methodName.equals("getStub"))
@@ -525,74 +693,99 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethods(
-      Map<String, TypeNode> types) {
+      Service service, Map<String, TypeNode> types) {
     List<MethodDefinition> methods = new ArrayList<>();
 
-    // TODO(miraleung): Fill out the body.
+    VariableExpr stubVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(types.get(String.format("%sStub", service.name())))
+                .setName("stub")
+                .build());
     MethodDefinition closeMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
             .setReturnType(TypeNode.VOID)
             .setName("close")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("close")
+                            .build())))
             .build();
     methods.add(closeMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition shutdownMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setName("shutdown")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("shutdown")
+                            .build())))
             .build();
     methods.add(shutdownMethod);
 
-    // TODO(miraleung): Fill out the body.
-    Expr placeholderReturnExpr =
-        ValueExpr.withValue(
-            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build());
     MethodDefinition isShutdownMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("isShutdown")
-            .setReturnExpr(placeholderReturnExpr)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("isShutdown")
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(isShutdownMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition isTerminatedMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("isTerminated")
-            .setReturnExpr(placeholderReturnExpr)
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("isTerminated")
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(isTerminatedMethod);
 
-    // TODO(miraleung): Fill out the body.
     MethodDefinition shutdownNowMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.VOID)
             .setName("shutdownNow")
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(stubVarExpr)
+                            .setMethodName("shutdownNow")
+                            .build())))
             .build();
     methods.add(shutdownNowMethod);
 
-    // TODO(miraleung): Fill out the body.
     List<VariableExpr> arguments =
         Arrays.asList(
-            VariableExpr.builder()
-                .setVariable(createVariable("duration", TypeNode.LONG))
-                .setIsDecl(true)
-                .build(),
+            VariableExpr.builder().setVariable(createVariable("duration", TypeNode.LONG)).build(),
             VariableExpr.builder()
                 .setVariable(createVariable("unit", types.get("TimeUnit")))
-                .setIsDecl(true)
                 .build());
 
     MethodDefinition awaitTerminationMethod =
@@ -601,9 +794,19 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(TypeNode.BOOLEAN)
             .setName("awaitTermination")
-            .setReturnExpr(placeholderReturnExpr)
-            .setArguments(arguments)
+            .setArguments(
+                arguments.stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
             .setThrowsExceptions(Arrays.asList(types.get("InterruptedException")))
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(stubVarExpr)
+                    .setMethodName("awaitTermination")
+                    .setArguments(
+                        arguments.stream().map(v -> (Expr) v).collect(Collectors.toList()))
+                    .setReturnType(TypeNode.BOOLEAN)
+                    .build())
             .build();
     methods.add(awaitTerminationMethod);
 
@@ -626,6 +829,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             ApiFuture.class,
             ApiFutures.class,
             BackgroundResource.class,
+            BetaApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,

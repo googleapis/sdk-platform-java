@@ -42,7 +42,8 @@ public abstract class Variable {
     abstract Variable autoBuild();
 
     public Variable build() {
-      IdentifierNode identifier = IdentifierNode.builder().setName(name()).build();
+      IdentifierNode identifier =
+          IdentifierNode.builder().setName(name()).buildVariableIdentifier();
       setIdentifier(identifier);
 
       Variable variable = autoBuild();

@@ -196,12 +196,25 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeVariableExpr() {
+  public void writeVariableExpr_basic() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "x");
+  }
+
+  @Test
+  public void writeVariableExpr_staticReference() {
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setType(TypeNode.INT_OBJECT).setName("MAX_VALUE").build())
+            .setStaticReferenceType(TypeNode.INT_OBJECT)
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "Integer.MAX_VALUE");
   }
 
   @Test
@@ -435,7 +448,9 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeBlockComment_newLineInBetween() {
     String content =
-        "Apache License \nLicensed under the Apache License, Version 2.0 (the \"License\");\n\nyou may not use this file except in compliance with the License.";
+        "Apache License \n"
+            + "Licensed under the Apache License, Version 2.0 (the \"License\");\n\n"
+            + "you may not use this file except in compliance with the License.";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
         String.format(
@@ -921,9 +936,23 @@ public class JavaWriterVisitorTest {
     TypeNode npeType =
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     String message = "Some message asdf";
-    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessage(message).build();
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessageExpr(message).build();
     throwExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+  }
+
+  @Test
+  public void writeThrowExpr_messageExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build();
+
+    throwExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "throw new NullPointerException(foobar())");
   }
 
   @Test

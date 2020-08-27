@@ -35,6 +35,42 @@ public class VariableExprTest {
   }
 
   @Test
+  public void validVariableExpr_staticReference() {
+    VariableExpr.builder()
+        .setVariable(Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
+        .setStaticReferenceType(TypeNode.INT_OBJECT)
+        .build();
+  }
+
+  @Test
+  public void validVariableExpr_classFieldOnStaticReference() {
+    VariableExpr.builder()
+        .setVariable(
+            Variable.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                .setName("class")
+                .build())
+        .setStaticReferenceType(TypeNode.INT_OBJECT)
+        .build();
+  }
+
+  @Test
+  public void validVariableExpr_classFieldOnExprReference() {
+    VariableExpr.builder()
+        .setVariable(
+            Variable.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                .setName("class")
+                .build())
+        .setExprReferenceExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("foobar")
+                .setReturnType(TypeNode.INT_OBJECT)
+                .build())
+        .build();
+  }
+
+  @Test
   public void validVariableExpr_withFields() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.STRING).build();
     VariableExpr variableExpr =
@@ -193,6 +229,63 @@ public class VariableExprTest {
                 .setVariable(subVariable)
                 .setIsDecl(true)
                 .setExprReferenceExpr(variableExpr)
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_exprAndStaticReference() {
+    Variable refVariable = Variable.builder().setName("x").setType(TypeNode.STRING_ARRAY).build();
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
+                .setExprReferenceExpr(VariableExpr.withVariable(refVariable))
+                .setStaticReferenceType(TypeNode.INT_OBJECT)
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_primitiveStaticReference() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(Variable.builder().setType(TypeNode.INT).setName("MAX_VALUE").build())
+                .setStaticReferenceType(TypeNode.INT)
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_standaloneClassField() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(
+                    Variable.builder()
+                        .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                        .setName("class")
+                        .build())
+                .build());
+  }
+
+  @Test
+  public void invalidVariableExpr_classFieldOnPrimitiveType() {
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            VariableExpr.builder()
+                .setVariable(
+                    Variable.builder()
+                        .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                        .setName("class")
+                        .build())
+                .setExprReferenceExpr(
+                    MethodInvocationExpr.builder()
+                        .setMethodName("foobar")
+                        .setReturnType(TypeNode.INT)
+                        .build())
                 .build());
   }
 }

@@ -50,11 +50,12 @@ public abstract class ExprStatement implements Statement {
       } else {
         Preconditions.checkState(
             (expr instanceof MethodInvocationExpr)
+                || (expr instanceof ReferenceConstructorExpr)
                 || (expr instanceof AssignmentExpr)
                 || (expr instanceof ThrowExpr)
                 || (expr instanceof ReturnExpr),
-            "Expression statements must be either a method invocation, assignment, throw, or"
-                + " return expression");
+            "Expression statements must be either a method invocation, assignment, throw, "
+                + "this/super constructor, or return expression");
       }
       return exprStatement;
     }

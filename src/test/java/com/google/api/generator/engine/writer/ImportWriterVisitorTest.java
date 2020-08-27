@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -450,6 +451,29 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExprImports_staticReference() {
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(
+                        TypeNode.withReference(ConcreteReference.withClazz(AssignmentExpr.class)))
+                    .setName("AN_ASSIGN_EXPR")
+                    .build())
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(TypeNode.class)))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
+            "import com.google.api.generator.engine.ast.TypeNode;\n\n"));
+  }
+
+  @Test
   public void writeVariableExprImports_reference() {
     Variable variable =
         Variable.builder()
@@ -589,9 +613,38 @@ public class ImportWriterVisitorTest {
     TypeNode exceptionTypes =
         TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
     String message = "Some message asdf";
-    ThrowExpr throwExpr = ThrowExpr.builder().setType(exceptionTypes).setMessage(message).build();
+    ThrowExpr throwExpr =
+        ThrowExpr.builder().setType(exceptionTypes).setMessageExpr(message).build();
     throwExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import java.io.IOException;\n\n");
+  }
+
+  @Test
+  public void writeThrowExprImports_messageExpr() {
+    TypeNode npeType = TypeNode.withExceptionClazz(NullPointerException.class);
+    Expr messageExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(IfStatement.class)))
+            .setMethodName("conditionExpr")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    messageExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(messageExpr)
+            .setMethodName("foobar")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build();
+
+    throwExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import com.google.api.generator.engine.ast.IfStatement;\n\n"));
   }
 
   @Test
