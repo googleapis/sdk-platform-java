@@ -1170,8 +1170,8 @@ public class ServiceStubSettingsClassComposer {
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
     nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, types));
     nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
-
-    // TODO(miraleung): More methods.
+    nestedClassMethods.addAll(
+        createNestedClassSettingsBuilderGetterMethods(nestedMethodSettingsMemberVarExprs));
     nestedClassMethods.add(createNestedClassBuildMethod(service, types));
     return nestedClassMethods;
   }
@@ -1554,6 +1554,43 @@ public class ServiceStubSettingsClassComposer {
         .setName("unaryMethodSettingsBuilders")
         .setReturnExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
         .build();
+  }
+
+  private static List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
+    Reference operationCallSettingsBuilderRef =
+        ConcreteReference.withClazz(OperationCallSettings.Builder.class);
+    Function<TypeNode, Boolean> isOperationCallSettingsBuilderFn =
+        t ->
+            t.reference()
+                .copyAndSetGenerics(ImmutableList.of())
+                .equals(operationCallSettingsBuilderRef);
+    List<AnnotationNode> lroBetaAnnotations =
+        Arrays.asList(
+            AnnotationNode.builder()
+                .setType(STATIC_TYPES.get("BetaApi"))
+                .setDescription(
+                    "The surface for use by generated code is not stable yet and may change in the"
+                        + " future.")
+                .build());
+
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    for (Map.Entry<String, VariableExpr> settingsVarEntry :
+        nestedMethodSettingsMemberVarExprs.entrySet()) {
+      String varName = settingsVarEntry.getKey();
+      VariableExpr settingsVarExpr = settingsVarEntry.getValue();
+      boolean isOperationCallSettings =
+          isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setAnnotations(isOperationCallSettings ? lroBetaAnnotations : ImmutableList.of())
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(settingsVarExpr.type())
+              .setName(settingsVarExpr.variable().identifier().name())
+              .setReturnExpr(settingsVarExpr)
+              .build());
+    }
+    return javaMethods;
   }
 
   private static MethodDefinition createNestedClassBuildMethod(
