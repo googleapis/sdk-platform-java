@@ -26,8 +26,9 @@ public class Literal {
   private static final Pattern LONG_PATTERN = Pattern.compile("^[0-9]+[Ll]?$");
   private static final Pattern FLOAT_PATTERN =
       Pattern.compile("^[0-9]+([fF]|(\\.(([0-9]+[fF])|[fF])))?$");
-  private static final Pattern DOUBLE_PATTERN =
+  private static final Pattern DOUBLE_PATTERN_ONE =
       Pattern.compile("^[0-9]+(\\.[0-9]+)?(\\.?[eE]\\-?[0-9]+)$");
+  private static final Pattern DOUBLE_PATTERN_TWO = Pattern.compile("^\\d*\\.\\d+$|^\\d+\\.\\d*$");
 
   public static boolean isBooleanLiteral(String str) {
     return str.equals(BOOLEAN_TRUE) || str.equals(BOOLEAN_FALSE);
@@ -46,7 +47,9 @@ public class Literal {
   }
 
   public static boolean isDoubleLiteral(String str) {
-    return isFloatLiteral(str) || DOUBLE_PATTERN.matcher(str).matches();
+    return isFloatLiteral(str)
+        || DOUBLE_PATTERN_ONE.matcher(str).matches()
+        || DOUBLE_PATTERN_TWO.matcher(str).matches();
   }
 
   public static boolean isNullLiteral(String str) {
