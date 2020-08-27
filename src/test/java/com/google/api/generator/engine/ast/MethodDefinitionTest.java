@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -33,6 +34,24 @@ public class MethodDefinitionTest {
         .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
         .build();
     // No exception thrown, we're good.
+  }
+
+  @Test
+  public void validMethodDefinition_repeatedAnnotations() {
+    MethodDefinition method =
+        MethodDefinition.builder()
+            .setName("close")
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withSuppressWarnings("all"),
+                    AnnotationNode.DEPRECATED,
+                    AnnotationNode.DEPRECATED))
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(TypeNode.VOID)
+            .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+            .build();
+    assertThat(method.annotations())
+        .containsExactly(AnnotationNode.withSuppressWarnings("all"), AnnotationNode.DEPRECATED);
   }
 
   @Test
@@ -681,7 +700,8 @@ public class MethodDefinitionTest {
         JavaDocComment.builder()
             .addComment("Constructs an instance of GrpcMyProtoStub, using the given settings.")
             .addComment(
-                "This is protected so that it is easy to make a subclass, but otherwise, the static factory methods should be preferred.")
+                "This is protected so that it is easy to make a subclass, but otherwise, the"
+                    + " static factory methods should be preferred.")
             .build();
     return Arrays.asList(CommentStatement.withComment(javaDocComment));
   }

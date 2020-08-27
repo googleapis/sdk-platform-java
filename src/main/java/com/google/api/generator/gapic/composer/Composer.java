@@ -19,12 +19,12 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.ApacheLicense;
 import com.google.common.annotations.VisibleForTesting;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +45,7 @@ public class Composer {
 
   public static List<GapicClass> generateServiceClasses(
       @Nonnull Service service,
-      @Nullable ServiceConfig serviceConfig,
+      @Nullable GapicServiceConfig serviceConfig,
       @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes));
@@ -64,7 +64,7 @@ public class Composer {
   }
 
   public static List<GapicClass> generateStubClasses(
-      Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
+      Service service, GapicServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
     clazzes.add(
