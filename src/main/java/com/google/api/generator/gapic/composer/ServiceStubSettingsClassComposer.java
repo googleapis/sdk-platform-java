@@ -1172,6 +1172,7 @@ public class ServiceStubSettingsClassComposer {
     nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
 
     // TODO(miraleung): More methods.
+    nestedClassMethods.add(createNestedClassBuildMethod(service, types));
     return nestedClassMethods;
   }
 
@@ -1552,6 +1553,25 @@ public class ServiceStubSettingsClassComposer {
         .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
         .setName("unaryMethodSettingsBuilders")
         .setReturnExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
+        .build();
+  }
+
+  private static MethodDefinition createNestedClassBuildMethod(
+      Service service, Map<String, TypeNode> types) {
+    TypeNode outerClassType = types.get(getThisClassName(service.name()));
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(outerClassType)
+        .setName("build")
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .setReturnExpr(
+            NewObjectExpr.builder()
+                .setType(outerClassType)
+                .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
+                .build())
         .build();
   }
 

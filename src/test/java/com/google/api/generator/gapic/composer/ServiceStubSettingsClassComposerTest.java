@@ -517,6 +517,11 @@ public class ServiceStubSettingsClassComposerTest {
           + " unaryMethodSettingsBuilders() {\n"
           + "      return unaryMethodSettingsBuilders;\n"
           + "    }\n"
+          + "\n"
+          + "    @Override\n"
+          + "    public EchoStubSettings build() throws IOException {\n"
+          + "      return new EchoStubSettings(this);\n"
+          + "    }\n"
           + "  }\n"
           + "}\n";
 }
