@@ -165,24 +165,26 @@ public abstract class ClassDefinition implements AstNode {
       for (Statement statement : classDef.statements()) {
         // TODO(xiaozhenliu): Add CommentStatement check here.
         Preconditions.checkState(
-            statement instanceof ExprStatement,
-            "Class statement type must be either an expression or comment statement");
-        Expr expr = ((ExprStatement) statement).expression();
-        if (expr instanceof VariableExpr) {
-          VariableExpr variableExpr = (VariableExpr) expr;
-          Preconditions.checkState(
-              variableExpr.isDecl(), "Class expression variable statements must be declarations");
-          Preconditions.checkState(
-              !variableExpr.scope().equals(ScopeNode.LOCAL),
-              "Class variable statement cannot have a local scope");
-        } else {
-          Preconditions.checkState(
-              expr instanceof AssignmentExpr,
-              "Class expression statement must be assignment or variable declaration");
-          VariableExpr variableExpr = ((AssignmentExpr) expr).variableExpr();
-          Preconditions.checkState(
-              !variableExpr.scope().equals(ScopeNode.LOCAL),
-              "Class variable in assignment statement cannot have a local scope");
+            statement instanceof ExprStatement || statement instanceof BlockStatement,
+            "Class statement type must be either an expression, block, or comment statement");
+        if (statement instanceof ExprStatement) {
+          Expr expr = ((ExprStatement) statement).expression();
+          if (expr instanceof VariableExpr) {
+            VariableExpr variableExpr = (VariableExpr) expr;
+            Preconditions.checkState(
+                variableExpr.isDecl(), "Class expression variable statements must be declarations");
+            Preconditions.checkState(
+                !variableExpr.scope().equals(ScopeNode.LOCAL),
+                "Class variable statement cannot have a local scope");
+          } else {
+            Preconditions.checkState(
+                expr instanceof AssignmentExpr,
+                "Class expression statement must be assignment or variable declaration");
+            VariableExpr variableExpr = ((AssignmentExpr) expr).variableExpr();
+            Preconditions.checkState(
+                !variableExpr.scope().equals(ScopeNode.LOCAL),
+                "Class variable in assignment statement cannot have a local scope");
+          }
         }
       }
 
