@@ -1163,7 +1163,7 @@ public class ServiceStubSettingsClassComposer {
       Map<String, TypeNode> types) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
-        createNestedClassConstructorMethods(nestedMethodSettingsMemberVarExprs, types));
+        createNestedClassConstructorMethods(service, nestedMethodSettingsMemberVarExprs, types));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
 
     // TODO(miraleung): More methods.
@@ -1220,7 +1220,9 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static List<MethodDefinition> createNestedClassConstructorMethods(
-      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
     TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
 
     List<MethodDefinition> ctorMethods = new ArrayList<>();
@@ -1324,7 +1326,7 @@ public class ServiceStubSettingsClassComposer {
                 })
             .collect(Collectors.toList()));
 
-    ctorBodyExprs.add(
+    Expr unaryMethodSettingsBuildersAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
             .setValueExpr(
@@ -1345,7 +1347,8 @@ public class ServiceStubSettingsClassComposer {
                             .collect(Collectors.toList()))
                     .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
                     .build())
-            .build());
+            .build();
+    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
 
     ctorBodyExprs.add(
         MethodInvocationExpr.builder()
@@ -1358,6 +1361,50 @@ public class ServiceStubSettingsClassComposer {
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
             .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    // Third constructor that takes a ServivceStubSettings.
+    TypeNode outerSettingsType = types.get(getThisClassName(service.name()));
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(outerSettingsType).setName("settings").build());
+    ctorBodyExprs = new ArrayList<>();
+    ctorBodyExprs.add(
+        ReferenceConstructorExpr.superBuilder()
+            .setType(builderType)
+            .setArguments(settingsVarExpr)
+            .build());
+    // TODO(cleanup): Technically this should actually use the outer class's <method>Settings
+    // members to avoid decoupling variable names.
+    ctorBodyExprs.addAll(
+        nestedMethodSettingsMemberVarExprs.values().stream()
+            .map(
+                v ->
+                    AssignmentExpr.builder()
+                        .setVariableExpr(v)
+                        .setValueExpr(
+                            MethodInvocationExpr.builder()
+                                .setExprReferenceExpr(
+                                    VariableExpr.builder()
+                                        .setExprReferenceExpr(settingsVarExpr)
+                                        .setVariable(v.variable())
+                                        .build())
+                                .setMethodName("toBuilder")
+                                .setReturnType(v.type())
+                                .build())
+                        .build())
+            .collect(Collectors.toList()));
+    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
+
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
             .setBody(
                 ctorBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
