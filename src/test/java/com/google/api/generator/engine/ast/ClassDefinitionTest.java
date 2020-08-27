@@ -45,7 +45,7 @@ public class ClassDefinitionTest {
   }
 
   @Test
-  public void validClassDefinition_exprAndBlockStatements() {
+  public void validClassDefinition_exprCommentAndBlockStatements() {
     ClassDefinition.builder()
         .setName("LibraryServiceStub")
         .setIsNested(true)
@@ -53,6 +53,7 @@ public class ClassDefinitionTest {
         .setStatements(
             Arrays.asList(
                 BlockStatement.builder().setIsStatic(true).build(),
+                CommentStatement.withComment(LineComment.withComment("Test line comment.")),
                 ExprStatement.withExpr(
                     AssignmentExpr.builder()
                         .setVariableExpr(
