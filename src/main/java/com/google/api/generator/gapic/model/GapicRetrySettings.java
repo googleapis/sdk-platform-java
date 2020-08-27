@@ -19,26 +19,31 @@ import com.google.protobuf.Duration;
 import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 
 @AutoValue
-public abstract class RetrySettings {
+public abstract class GapicRetrySettings {
+  public enum Kind {
+    NONE, // No retry policy and no timeout.
+    NO_RETRY, // No retry policy, timeout only.
+    FULL // Retry policy and timeout.
+  };
+
   public abstract Duration timeout();
 
   public abstract RetryPolicy retryPolicy();
 
-  public static RetrySettings with(Duration timeout, RetryPolicy retryPolicy) {
-    return builder().setTimeout(timeout).setRetryPolicy(retryPolicy).build();
-  }
+  public abstract Kind kind();
 
-  // Private.
-  static Builder builder() {
-    return new AutoValue_RetrySettings.Builder();
+  public static Builder builder() {
+    return new AutoValue_GapicRetrySettings.Builder();
   }
 
   @AutoValue.Builder
-  abstract static class Builder {
-    abstract Builder setTimeout(Duration timeout);
+  public abstract static class Builder {
+    public abstract Builder setTimeout(Duration timeout);
 
-    abstract Builder setRetryPolicy(RetryPolicy retryPolicy);
+    public abstract Builder setRetryPolicy(RetryPolicy retryPolicy);
 
-    abstract RetrySettings build();
+    public abstract Builder setKind(Kind kind);
+
+    public abstract GapicRetrySettings build();
   }
 }
