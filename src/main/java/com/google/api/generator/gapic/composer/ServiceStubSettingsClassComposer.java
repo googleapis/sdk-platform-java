@@ -1100,7 +1100,9 @@ public class ServiceStubSettingsClassComposer {
         .setExtendsType(extendsType)
         .setStatements(
             createNestedClassStatements(service, serviceConfig, nestedMethodSettingsMemberVarExprs))
-        .setMethods(createNestedClassMethods(nestedMethodSettingsMemberVarExprs, types))
+        .setMethods(
+            createNestedClassMethods(
+                service, serviceConfig, nestedMethodSettingsMemberVarExprs, types))
         .build();
   }
 
@@ -1155,13 +1157,53 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static List<MethodDefinition> createNestedClassMethods(
-      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs, Map<String, TypeNode> types) {
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
         createNestedClassConstructorMethods(nestedMethodSettingsMemberVarExprs, types));
+    nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
 
-    // TODO(miraleung): initDefaults().
+    // TODO(miraleung): More methods.
     return nestedClassMethods;
+  }
+
+  private static MethodDefinition createNestedClassInitDefaultsMethod(
+      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+    VariableExpr builderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(builderType).setName("builder").build());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    // Iterate through methods twice to so we can have LRO expressions appear last.
+    for (Method method : service.methods()) {
+      Method.Stream streamKind = method.stream();
+      if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
+        continue;
+      }
+      bodyExprs.add(
+          RetrySettingsComposer.createSimpleBuilderSettingsExpr(
+              service,
+              serviceConfig,
+              method,
+              builderVarExpr,
+              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+    }
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PRIVATE)
+        .setIsStatic(true)
+        .setReturnType(builderType)
+        .setName("initDefaults")
+        .setArguments(builderVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(builderVarExpr)
+        .build();
   }
 
   private static List<MethodDefinition> createNestedClassConstructorMethods(
