@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import com.google.api.gax.rpc.StatusCode;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -31,6 +32,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -51,6 +53,8 @@ public class RetrySettingsComposerTest {
       "src/test/java/com/google/api/generator/gapic/testdata/";
   private static final VariableExpr RETRY_PARAM_DEFINITIONS_VAR_EXPR =
       createRetryParamDefinitionsVarExpr();
+  private static final VariableExpr RETRY_CODES_DEFINITIONS_VAR_EXPR =
+      createRetryableCodesDefinitionsVarExpr();
 
   private JavaWriterVisitor writerVisitor;
 
@@ -133,6 +137,101 @@ public class RetrySettingsComposerTest {
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
     assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void codesDefinitionsBlock_noConfigsFound() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+    assertEquals(1, services.size());
+
+    Service service = services.get(0);
+
+    String jsonFilename = "retrying_grpc_service_config.json";
+    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    BlockStatement paramDefinitionsBlock =
+        RetrySettingsComposer.createRetryCodesDefinitionsBlock(
+            service, serviceConfig, RETRY_CODES_DEFINITIONS_VAR_EXPR);
+
+    paramDefinitionsBlock.accept(writerVisitor);
+    String expected =
+        createLines(
+            "static {\n",
+            "ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions ="
+                + " ImmutableMap.builder();\n",
+            "definitions.put(\"no_retry_codes\","
+                + " ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));\n",
+            "RETRYABLE_CODE_DEFINITIONS = definitions.build();\n",
+            "}\n");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void codesDefinitionsBlock_basic() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+    assertEquals(1, services.size());
+
+    Service service = services.get(0);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    BlockStatement paramDefinitionsBlock =
+        RetrySettingsComposer.createRetryCodesDefinitionsBlock(
+            service, serviceConfig, RETRY_CODES_DEFINITIONS_VAR_EXPR);
+
+    paramDefinitionsBlock.accept(writerVisitor);
+    String expected =
+        createLines(
+            "static {\n",
+            "ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions ="
+                + " ImmutableMap.builder();\n",
+            "definitions.put(\"retry_policy_1_codes\","
+                + " ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList(StatusCode.Code.UNAVAILABLE,"
+                + " StatusCode.Code.UNKNOWN)));\n",
+            "definitions.put(\"no_retry_0_codes\","
+                + " ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));\n",
+            "RETRYABLE_CODE_DEFINITIONS = definitions.build();\n",
+            "}\n");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  private static VariableExpr createRetryableCodesDefinitionsVarExpr() {
+    TypeNode immutableSetType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableSet.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(StatusCode.Code.class)))
+                .build());
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, immutableSetType).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder().setType(varType).setName("RETRYABLE_CODE_DEFINITIONS").build());
   }
 
   private static VariableExpr createRetryParamDefinitionsVarExpr() {
