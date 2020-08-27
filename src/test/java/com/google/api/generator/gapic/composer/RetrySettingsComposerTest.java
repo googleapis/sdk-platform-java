@@ -218,7 +218,7 @@ public class RetrySettingsComposerTest {
   }
 
   @Test
-  public void simplerBuilderExpr_basic() {
+  public void simpleBuilderExpr_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
@@ -295,6 +295,58 @@ public class RetrySettingsComposerTest {
             "builder.waitSettings()"
                 + ".setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get(\"no_retry_0_codes\"))"
                 + ".setRetrySettings(RETRY_PARAM_DEFINITIONS.get(\"no_retry_0_params\"))");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void lroBuilderExpr() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+    assertEquals(1, services.size());
+
+    Service service = services.get(0);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    // LRO method.
+    Method waitMethod = findMethod(service, "Wait");
+    assertThat(waitMethod).isNotNull();
+
+    VariableExpr builderVarExpr = createBuilderVarExpr(service);
+    Expr builderExpr =
+        RetrySettingsComposer.createLroSettingsBuilderExpr(
+            service,
+            serviceConfig,
+            waitMethod,
+            builderVarExpr,
+            RETRY_CODES_DEFINITIONS_VAR_EXPR,
+            RETRY_PARAM_DEFINITIONS_VAR_EXPR);
+    builderExpr.accept(writerVisitor);
+    String expected =
+        createLines(
+            "builder.waitOperationSettings()"
+                + ".setInitialCallSettings(UnaryCallSettings.<WaitRequest,"
+                + " OperationSnapshot>newUnaryCallSettingsBuilder()"
+                + ".setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get(\"no_retry_0_codes\"))"
+                + ".setRetrySettings(RETRY_PARAM_DEFINITIONS.get(\"no_retry_0_params\")).build())"
+                + ".setResponseTransformer(ProtoOperationTransformers.ResponseTransformer.create("
+                + "WaitResponse.class))"
+                + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
+                + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
+                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(500L))"
+                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(Duration.ofMillis(5000L))"
+                + ".setInitialRpcTimeout(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeout(Duration.ZERO).setTotalTimeout(Duration.ofMillis(300000L))"
+                + ".build()))");
     assertEquals(expected, writerVisitor.write());
   }
 
