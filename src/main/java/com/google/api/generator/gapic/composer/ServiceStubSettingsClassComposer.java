@@ -1164,6 +1164,7 @@ public class ServiceStubSettingsClassComposer {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
         createNestedClassConstructorMethods(service, nestedMethodSettingsMemberVarExprs, types));
+    nestedClassMethods.add(createNestedClassCreateDefaultMethod(types));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
 
     // TODO(miraleung): More methods.
@@ -1412,6 +1413,93 @@ public class ServiceStubSettingsClassComposer {
             .build());
 
     return ctorMethods;
+  }
+
+  private static MethodDefinition createNestedClassCreateDefaultMethod(
+      Map<String, TypeNode> types) {
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Initialize the builder: Builder builder = new Builder((ClientContext) null);
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+    VariableExpr builderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(builderType).setName("builder").build());
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(builderVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(builderType)
+                    .setArguments(
+                        CastExpr.builder()
+                            .setType(STATIC_TYPES.get("ClientContext"))
+                            .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                            .build())
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setTransportChannelProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setMethodName("defaultTransportChannelProvider")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setCredentialsProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setMethodName("defaultCredentialsProviderBuilder")
+                            .build())
+                    .setMethodName("build")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setInternalHeaderProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setMethodName("defaultApiClientHeaderProviderBuilder")
+                            .build())
+                    .setMethodName("build")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setEndpoint")
+            .setArguments(
+                MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
+            .build());
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("initDefaults")
+            .setArguments(builderVarExpr)
+            .setReturnType(builderType)
+            .build();
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PRIVATE)
+        .setIsStatic(true)
+        .setReturnType(builderType)
+        .setName("createDefault")
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(returnExpr)
+        .build();
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
