@@ -73,38 +73,47 @@ public abstract class RelationalOperationExpr implements OperationExpr {
       RelationalOperationExpr relationalOperationExpr = autoBuild();
       Expr lhsExpr = relationalOperationExpr.lhsExpression();
       Expr rhsExpr = relationalOperationExpr.rhsExpression();
-      TypeNode lhsExprType =
-          lhsExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) lhsExpr).returnType()
-              : lhsExpr.type();
-      TypeNode rhsExprType =
-          rhsExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) rhsExpr).returnType()
-              : rhsExpr.type();
+      TypeNode lhsExprType = lhsExpr.type();
+      TypeNode rhsExprType = rhsExpr.type();
       OperatorKind operator = relationalOperationExpr.operatorKind();
+      final String errorMsg =
+          "Relational operator "
+              + operator
+              + " can not be applied on "
+              + lhsExprType.toString()
+              + ", "
+              + rhsExprType.toString();
+      // operators can not be applied on void type
+      Preconditions.checkState(
+          !lhsExprType.equals(TypeNode.VOID)
+              && !rhsExprType.equals(TypeNode.VOID), errorMsg);
+      // type check for equal to (==) and not equal to (!=)
       if (operator.equals(OperatorKind.RELATIONAL_EQUAL_TO)
           || operator.equals(OperatorKind.RELATIONAL_NOT_EQUAL_TO)) {
-        final String errorMsg =
-            "Relational operator "
-                + operator
-                + " can not be applied on "
-                + lhsExprType.toString()
-                + ", "
-                + rhsExprType.toString();
-        Preconditions.checkState(
-            !lhsExprType.equals(TypeNode.VOID)
-                && !rhsExprType.equals(TypeNode.VOID)
-                && (lhsExprType.isBoxedTypeEquals(rhsExprType)
-                    || rhsExprType.isBoxedTypeEquals(lhsExprType)
-                    || TypeNode.isNumberType(lhsExprType) && TypeNode.isNumberType(rhsExprType)
-                    || lhsExprType.equals(rhsExprType)
-                    || !TypeNode.isBoxedType(lhsExprType)
-                        && !TypeNode.isBoxedType((rhsExprType))
-                        && !lhsExprType.equals(TypeNode.STRING)
-                        && !rhsExprType.equals(TypeNode.STRING)
-                        && TypeNode.isReferenceType(lhsExprType)
-                        && TypeNode.isReferenceType(rhsExprType)),
-            errorMsg);
+        // lhsExpr type is array, rhsExpr type should be array and matched type or null
+        if (lhsExprType.isArray()) {
+          Preconditions.checkState((rhsExprType.isArray() && lhsExprType.typeKind().equals(rhsExprType.typeKind())) || rhsExprType.equals(TypeNode.NULL), errorMsg);
+        }
+        // lhsExpr type is numerical type, rhsExpr type should be any numerical or any Boxed numerical
+        if (!lhsExprType.isArray() && lhsExprType.isNumericType()) {
+          Preconditions.checkState(!rhsExprType.isArray() && (rhsExprType.isNumericType() || TypeNode.isNumericBoxedType(rhsExprType)), errorMsg);
+        }
+        // lhsExpr type is boolean type, rhsExpr type should be boolean or its boxed type
+        if (!lhsExprType.isArray() && lhsExprType.equals(TypeNode.BOOLEAN)) {
+          Preconditions.checkState(!rhsExprType.isArray() && rhsExprType.equals(lhsExprType), errorMsg);
+        }
+        // lhsExpr type is reference type, rhsExpr type should be matched referenced type or null or Object
+        if (!lhsExprType.isArray() && TypeNode.isReferenceType(lhsExprType) && !lhsExprType.equals(TypeNode.OBJECT)) {
+          Preconditions.checkState(!rhsExprType.isArray() && (rhsExprType.equals(lhsExprType) || rhsExprType.equals(TypeNode.NULL) || rhsExprType.equals(TypeNode.OBJECT)),errorMsg);
+        }
+        // lhsExpr type is Object or null type, rhsExpr type should be any reference type or null or any Boxed type
+        if (!lhsExprType.isArray() && (lhsExprType.equals(TypeNode.OBJECT) || lhsExprType.equals(TypeNode.NULL))) {
+          Preconditions.checkState((!rhsExprType.isArray() && (TypeNode.isReferenceType(rhsExprType) || TypeNode.isBoxedType(lhsExprType))) || rhsExprType.equals(TypeNode.NULL), errorMsg);
+        }
+        // lhsExpr type is boxed type, rhsExpr type should be matched boxed type or its unboxing type or null
+        if (!lhsExprType.isArray() && (TypeNode.isBoxedType(lhsExprType))) {
+          Preconditions.checkState((!rhsExprType.isArray() && lhsExprType.equals(rhsExprType)) || rhsExprType.equals(TypeNode.NULL), errorMsg);
+        }
       }
       return relationalOperationExpr;
     }

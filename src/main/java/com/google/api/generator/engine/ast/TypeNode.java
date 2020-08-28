@@ -132,22 +132,14 @@ public abstract class TypeNode implements AstNode {
     return BOXED_TYPE_SET.contains(type);
   }
 
-  public static boolean isNumberType(TypeNode type) {
-    return type.equals(TypeNode.INT)
-        || type.equals(TypeNode.DOUBLE)
-        || type.equals(TypeNode.LONG)
-        || type.equals(TypeNode.SHORT)
-        || type.equals(TypeNode.FLOAT)
-        || type.equals(TypeNode.INT_OBJECT)
-        || type.equals(TypeNode.FLOAT_OBJECT)
-        || type.equals(TypeNode.BYTE_OBJECT)
-        || type.equals(TypeNode.DOUBLE_OBJECT)
-        || type.equals(TypeNode.LONG_OBJECT)
-        || type.equals(TypeNode.SHORT_OBJECT);
-  }
+  public static boolean isNumericBoxedType(TypeNode type) { return isBoxedType(type) && !type.equals(TypeNode.BOOLEAN_OBJECT); }
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public boolean isNumericType() {
+    return isNumericType(typeKind());
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
@@ -172,6 +164,11 @@ public abstract class TypeNode implements AstNode {
 
     TypeNode type = (TypeNode) o;
     return strictEquals(type) || isBoxedTypeEquals(type);
+  }
+
+  public boolean strictEquals(Object o) {
+    TypeNode type = (TypeNode) o;
+    return strictEquals(type);
   }
 
   @Override
@@ -219,6 +216,15 @@ public abstract class TypeNode implements AstNode {
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
+  }
+
+  private static boolean isNumericType(TypeKind typeKind) {
+    return typeKind.equals(TypeKind.INT)
+        || typeKind.equals(TypeKind.DOUBLE)
+        || typeKind.equals(TypeKind.LONG)
+        || typeKind.equals(TypeKind.SHORT)
+        || typeKind.equals(TypeKind.FLOAT)
+        || typeKind.equals(TypeKind.CHAR);
   }
 
   private static Map<TypeNode, TypeNode> createBoxedTypeMap() {

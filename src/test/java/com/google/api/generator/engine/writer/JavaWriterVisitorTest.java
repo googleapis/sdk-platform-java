@@ -195,6 +195,7 @@ public class JavaWriterVisitorTest {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
+    Object a = value.type().typeKind();
     assertEquals(writerVisitor.write(), "3");
   }
 

@@ -66,22 +66,24 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
       TypeNode lhsExprType = lhsExpr.type();
       TypeNode rhsExprType = rhsExpr.type();
       OperatorKind operator = arithmeticOperationExpr.operatorKind();
+      final String errorMsg =
+          "Arithmetic operator "
+              + operator
+              + " can not be applied to "
+              + lhsExprType.toString()
+              + ", "
+              + rhsExprType.toString();
+
+      // None of expression should be void type
+      Preconditions.checkState(
+          !lhsExprType.equals(TypeNode.VOID) && !rhsExprType.equals(TypeNode.VOID), errorMsg);
+
       // Concat operator type checks
       if (operator.equals(OperatorKind.ARITHMETIC_ADDITION)
           && arithmeticOperationExpr.type().equals(TypeNode.STRING)) {
-        final String errorMsg =
-            "Arithmetic operator "
-                + operator
-                + " can not be applied to "
-                + lhsExprType.toString()
-                + ", "
-                + rhsExprType.toString();
         // concat require at least one expression type is String
         Preconditions.checkState(
             lhsExprType.equals(TypeNode.STRING) || rhsExprType.equals(TypeNode.STRING), errorMsg);
-        // None of expression should be void type
-        Preconditions.checkState(
-            !lhsExprType.equals(TypeNode.VOID) && !rhsExprType.equals(TypeNode.VOID), errorMsg);
       }
       return arithmeticOperationExpr;
     }
