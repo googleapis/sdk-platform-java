@@ -150,7 +150,8 @@ public class ServiceStubSettingsClassComposer {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
-        createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ false);
+        createMethodSettingsClassMemberVarExprs(
+            service, serviceConfig, types, /* isNestedClass= */ false);
     String className = getThisClassName(service.name());
 
     ClassDefinition classDef =
@@ -189,14 +190,19 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static Map<String, VariableExpr> createMethodSettingsClassMemberVarExprs(
-      Service service, Map<String, TypeNode> types, boolean isNestedClass) {
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, TypeNode> types,
+      boolean isNestedClass) {
     // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
     // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
-      TypeNode settingsType = getCallSettingsType(method, types, isNestedClass);
+      boolean hasBatchingSettings = serviceConfig.hasBatchingSetting(service, method);
+      TypeNode settingsType =
+          getCallSettingsType(method, types, hasBatchingSettings, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
       varExprs.put(
           varName,
@@ -1090,7 +1096,8 @@ public class ServiceStubSettingsClassComposer {
                 .build());
 
     Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
-        createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ true);
+        createMethodSettingsClassMemberVarExprs(
+            service, serviceConfig, types, /* isNestedClass= */ true);
 
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
@@ -1260,6 +1267,8 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     Reference pagedSettingsBuilderRef =
         ConcreteReference.withClazz(PagedCallSettings.Builder.class);
+    Reference batchingSettingsBuilderRef =
+        ConcreteReference.withClazz(BatchingCallSettings.Builder.class);
     Reference unaryCallSettingsBuilderRef =
         ConcreteReference.withClazz(UnaryCallSettings.Builder.class);
     Function<TypeNode, Boolean> isUnaryCallSettingsBuilderFn =
@@ -1269,6 +1278,9 @@ public class ServiceStubSettingsClassComposer {
                 .equals(unaryCallSettingsBuilderRef);
     Function<TypeNode, Boolean> isPagedCallSettingsBuilderFn =
         t -> t.reference().copyAndSetGenerics(ImmutableList.of()).equals(pagedSettingsBuilderRef);
+    Function<TypeNode, Boolean> isBatchingCallSettingsBuilderFn =
+        t ->
+            t.reference().copyAndSetGenerics(ImmutableList.of()).equals(batchingSettingsBuilderRef);
     Function<TypeNode, TypeNode> builderToCallSettingsFn =
         t ->
             TypeNode.withReference(
@@ -1349,7 +1361,8 @@ public class ServiceStubSettingsClassComposer {
                             .filter(
                                 v ->
                                     isUnaryCallSettingsBuilderFn.apply(v.type())
-                                        || isPagedCallSettingsBuilderFn.apply(v.type()))
+                                        || isPagedCallSettingsBuilderFn.apply(v.type())
+                                        || isBatchingCallSettingsBuilderFn.apply(v.type()))
                             .collect(Collectors.toList()))
                     .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
                     .build())
@@ -1809,7 +1822,10 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static TypeNode getCallSettingsType(
-      Method method, Map<String, TypeNode> types, final boolean isSettingsBuilder) {
+      Method method,
+      Map<String, TypeNode> types,
+      boolean isBatchingSettings,
+      final boolean isSettingsBuilder) {
     Function<Class, TypeNode> typeMakerFn =
         clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
@@ -1819,6 +1835,11 @@ public class ServiceStubSettingsClassComposer {
                 isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
             : typeMakerFn.apply(
                 isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
+    if (isBatchingSettings) {
+      callSettingsType =
+          typeMakerFn.apply(
+              isSettingsBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class);
+    }
 
     // Streaming takes precendence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
