@@ -132,7 +132,18 @@ public abstract class TypeNode implements AstNode {
     return BOXED_TYPE_SET.contains(type);
   }
 
+<<<<<<< HEAD
   public static boolean isNumericBoxedType(TypeNode type) { return isBoxedType(type) && !type.equals(TypeNode.BOOLEAN_OBJECT); }
+=======
+  public static boolean isNumberType(TypeNode type) {
+    return type.typeKind().equals(TypeKind.BYTE)
+        || type.typeKind().equals(TypeKind.INT)
+        || type.typeKind().equals(TypeKind.DOUBLE)
+        || type.typeKind().equals(TypeKind.LONG)
+        || type.typeKind().equals(TypeKind.SHORT)
+        || type.typeKind().equals(TypeKind.FLOAT);
+  }
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());

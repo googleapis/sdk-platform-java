@@ -14,16 +14,29 @@
 
 package com.google.api.generator.engine.ast;
 
+<<<<<<< HEAD
+=======
+import com.google.api.generator.engine.lexicon.OperatorKind;
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
 @AutoValue
 public abstract class UnaryOperationExpr implements OperationExpr {
 
+<<<<<<< HEAD
   public abstract Expr expression();
 
   public abstract OperatorKind operatorKind();
 
+=======
+  public abstract Expr firstExpression();
+
+  public abstract OperatorKind operatorKind();
+
+  public abstract boolean isPostfixOperator();
+
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
   public abstract TypeNode type();
 
   @Override
@@ -33,17 +46,30 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
   public static UnaryOperationExpr postfixIncrementWithExpr(Expr expr) {
     return builder()
+<<<<<<< HEAD
         .setExpression(expr)
         .setOperatorKind(OperatorKind.UNARY_POST_INCREMENT)
         .setType(expr.type())
+=======
+        .setFirstExpression(expr)
+        .setOperatorKind(OperatorKind.UNARY_INCREMENT)
+        .setType(expr.type())
+        .setIsPostfixOperator(true)
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
         .build();
   }
 
   public static UnaryOperationExpr logicalNotWithExpr(Expr expr) {
     return builder()
         .setOperatorKind(OperatorKind.LOGICAL_NOT)
+<<<<<<< HEAD
         .setExpression(expr)
         .setType(TypeNode.BOOLEAN)
+=======
+        .setFirstExpression(expr)
+        .setType(TypeNode.BOOLEAN)
+        .setIsPostfixOperator(false)
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
         .build();
   }
 
@@ -53,9 +79,17 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
   @AutoValue.Builder
   public abstract static class Builder {
+<<<<<<< HEAD
 
     // private
     abstract Builder setExpression(Expr expr);
+=======
+    // private
+    abstract Builder setFirstExpression(Expr expr);
+
+    // private
+    abstract Builder setSecondExpression(Expr expr);
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 
     // private.
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -63,10 +97,17 @@ public abstract class UnaryOperationExpr implements OperationExpr {
     // private.
     abstract Builder setType(TypeNode type);
 
+<<<<<<< HEAD
+=======
+    // private
+    abstract Builder setIsPostfixOperator(boolean isPostfix);
+
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
     abstract UnaryOperationExpr autoBuild();
 
     private UnaryOperationExpr build() {
       UnaryOperationExpr unaryOperationExpr = autoBuild();
+<<<<<<< HEAD
       Expr expr = unaryOperationExpr.expression();
       TypeNode exprType = expr.type();
       OperatorKind operator = unaryOperationExpr.operatorKind();
@@ -86,6 +127,22 @@ public abstract class UnaryOperationExpr implements OperationExpr {
             exprType.isNumericType()
             || (TypeNode.isBoxedType(exprType) && !exprType.equals(TypeNode.BOOLEAN_OBJECT)),
             errorMsg);
+=======
+      Expr expr = unaryOperationExpr.firstExpression();
+      TypeNode exprType =
+          expr instanceof MethodInvocationExpr
+              ? ((MethodInvocationExpr) expr).returnType()
+              : expr.type();
+      OperatorKind operator = unaryOperationExpr.operatorKind();
+      final String errorMsg =
+          "Unary operator " + operator + " can not be applied to " + exprType.toString();
+      if (operator.equals(OperatorKind.LOGICAL_NOT)) {
+        Preconditions.checkState(exprType.equals(TypeNode.BOOLEAN), errorMsg);
+      }
+      // Note: the following check also apply for Decrement, if we support for future.
+      if (operator.equals(OperatorKind.UNARY_INCREMENT)) {
+        Preconditions.checkState(TypeNode.isNumberType(exprType), errorMsg);
+>>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
       }
       return unaryOperationExpr;
     }

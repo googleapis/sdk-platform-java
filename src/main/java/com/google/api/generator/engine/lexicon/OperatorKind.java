@@ -12,20 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.engine.lexicon;
 
-<<<<<<< HEAD
-public interface OperationExpr extends Expr {
-=======
-import com.google.api.generator.engine.lexicon.OperatorKind;
-import javax.annotation.Nullable;
-
-public interface OperationExpr extends Expr {
-  Expr firstExpression();
-
-  @Nullable
-  Expr secondExpression();
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
-
-  OperatorKind operatorKind();
+public enum OperatorKind {
+  ARITHMETIC_ADDITION,
+  UNARY_INCREMENT,
+  LOGICAL_NOT,
+  RELATIONAL_EQUAL_TO,
+  RELATIONAL_NOT_EQUAL_TO
 }
