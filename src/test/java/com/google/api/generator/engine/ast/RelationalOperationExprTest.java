@@ -1,10 +1,23 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import org.junit.Test;
-
 
 public class RelationalOperationExprTest {
   /** =============================== LHS data type is numeric =============================== */
@@ -57,7 +70,6 @@ public class RelationalOperationExprTest {
   }
 
   /** =============================== LHS data type is boolean =============================== */
-
   @Test
   public void equalToOperationExpr_validBooleanType() {
     // LHS: boolean type, RHS: boolean boxed Type
@@ -97,15 +109,16 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.notEqualToWithExpr(lhsExpr, rhsExpr));
   }
 
-
   /** =============================== LHS data type is Array =============================== */
   @Test
   public void equalToOperationExpr_validArrayWithMatchedType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.INT).build(), "x");
-    VariableExpr rhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.INT).build(), "y");
+    VariableExpr lhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.INT).build(), "x");
+    VariableExpr rhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.INT).build(), "y");
     RelationalOperationExpr.equalToWithExpr(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -113,8 +126,9 @@ public class RelationalOperationExprTest {
   @Test
   public void equalToOperationExpr_validArrayWithNullType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.INT).build(), "x");
+    VariableExpr lhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.INT).build(), "x");
     NullObjectValue nullObjectValue = NullObjectValue.create();
     ValueExpr rhsExpr = ValueExpr.withValue(nullObjectValue);
     RelationalOperationExpr.equalToWithExpr(lhsExpr, rhsExpr);
@@ -124,10 +138,12 @@ public class RelationalOperationExprTest {
   @Test
   public void equalToOperationExpr_invalidArrayWithUnmatchedType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.INT).build(), "x");
-    VariableExpr rhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.CHAR).build(), "y");
+    VariableExpr lhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.INT).build(), "x");
+    VariableExpr rhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.CHAR).build(), "y");
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.equalToWithExpr(lhsExpr, rhsExpr));
@@ -136,15 +152,18 @@ public class RelationalOperationExprTest {
   @Test
   public void equalToOperationExpr_invalidArrayWithNotArrayType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.builder().setIsArray(true).setTypeKind(
-        TypeKind.INT).build(), "x");
+    VariableExpr lhsExpr =
+        createVariableExpr(
+            TypeNode.builder().setIsArray(true).setTypeKind(TypeKind.INT).build(), "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.equalToWithExpr(lhsExpr, rhsExpr));
   }
 
-  /** =============================== LHS data type is reference type =============================== */
+  /**
+   * =============================== LHS data type is reference type ===============================
+   */
   @Test
   public void equalToOperationExpr_validReferenceWithMatchedType() {
     // LHS: String type, RHS: matched String type
@@ -198,7 +217,9 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExpr(lhsExpr, rhsExpr));
   }
 
-  /** =============================== LHS data type is Object or null =============================== */
+  /**
+   * =============================== LHS data type is Object or null ===============================
+   */
   @Test
   public void equalToOperationExpr_validObjectWithAnyObjectType() {
     // LHS: object type, RHS: any reference type

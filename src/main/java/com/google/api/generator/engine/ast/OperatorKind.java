@@ -22,6 +22,12 @@ public enum OperatorKind {
   RELATIONAL_NOT_EQUAL_TO(true);
 
   private final boolean isPostfixOperator;
-  private OperatorKind(final boolean isPostfixOperator) {this.isPostfixOperator = isPostfixOperator;}
-  public boolean isPostfixOperator() { return this.isPostfixOperator; }
+
+  private OperatorKind(final boolean isPostfixOperator) {
+    this.isPostfixOperator = isPostfixOperator;
+  }
+
+  public boolean isPostfixOperator() {
+    return this.isPostfixOperator;
+  }
 }
