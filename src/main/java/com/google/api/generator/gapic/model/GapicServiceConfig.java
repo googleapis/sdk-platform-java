@@ -42,14 +42,19 @@ public class GapicServiceConfig {
 
   private final List<MethodConfig> methodConfigs;
   private final Map<MethodConfig.Name, Integer> methodConfigTable;
+  private final Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable;
 
   private GapicServiceConfig(
-      List<MethodConfig> methodConfigs, Map<MethodConfig.Name, Integer> methodConfigTable) {
+      List<MethodConfig> methodConfigs,
+      Map<MethodConfig.Name, Integer> methodConfigTable,
+      Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable) {
     this.methodConfigs = methodConfigs;
     this.methodConfigTable = methodConfigTable;
+    this.batchingSettingsTable = batchingSettingsTable;
   }
 
-  public static GapicServiceConfig create(ServiceConfig serviceConfig) {
+  public static GapicServiceConfig create(
+      ServiceConfig serviceConfig, Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
     // Keep this  processing logic out of the constructor.
     Map<MethodConfig.Name, Integer> methodConfigTable = new HashMap<>();
     List<MethodConfig> methodConfigs = serviceConfig.getMethodConfigList();
@@ -60,7 +65,21 @@ public class GapicServiceConfig {
       }
     }
 
-    return new GapicServiceConfig(methodConfigs, methodConfigTable);
+    Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable = new HashMap<>();
+    if (batchingSettingsOpt.isPresent()) {
+      for (GapicBatchingSettings batchingSetting : batchingSettingsOpt.get()) {
+        batchingSettingsTable.put(
+            MethodConfig.Name.newBuilder()
+                .setService(
+                    String.format(
+                        "%s.%s", batchingSetting.protoPakkage(), batchingSetting.serviceName()))
+                .setMethod(batchingSetting.methodName())
+                .build(),
+            batchingSetting);
+      }
+    }
+
+    return new GapicServiceConfig(methodConfigs, methodConfigTable, batchingSettingsTable);
   }
 
   public Map<String, GapicRetrySettings> getAllGapicRetrySettings(Service service) {
@@ -68,28 +87,7 @@ public class GapicServiceConfig {
         .collect(
             Collectors.toMap(
                 m -> getRetryParamsName(service, m),
-                m -> {
-                  GapicRetrySettings.Kind kind = GapicRetrySettings.Kind.FULL;
-                  Optional<Integer> retryPolicyIndexOpt = retryPolicyIndexLookup(service, m);
-                  if (!retryPolicyIndexOpt.isPresent()) {
-                    kind = GapicRetrySettings.Kind.NONE;
-                  } else {
-                    MethodConfig methodConfig = methodConfigs.get(retryPolicyIndexOpt.get());
-                    if (!methodConfig.hasTimeout() && !methodConfig.hasRetryPolicy()) {
-                      kind = GapicRetrySettings.Kind.NONE;
-                    } else {
-                      kind =
-                          methodConfig.hasRetryPolicy()
-                              ? GapicRetrySettings.Kind.FULL
-                              : GapicRetrySettings.Kind.NO_RETRY;
-                    }
-                  }
-                  return GapicRetrySettings.builder()
-                      .setTimeout(timeoutLookup(service, m))
-                      .setRetryPolicy(retryPolicyLookup(service, m))
-                      .setKind(kind)
-                      .build();
-                },
+                m -> toGapicRetrySettings(service, m),
                 (r1, r2) -> r2,
                 LinkedHashMap::new));
   }
@@ -118,6 +116,40 @@ public class GapicServiceConfig {
       return getRetryParamsName(retryPolicyIndexOpt.get());
     }
     return NO_RETRY_PARAMS_NAME;
+  }
+
+  public boolean hasBatchingSetting(Service service, Method method) {
+    return batchingSettingsTable.containsKey(toName(service, method));
+  }
+
+  public Optional<GapicBatchingSettings> getBatchingSetting(Service service, Method method) {
+    return hasBatchingSetting(service, method)
+        ? Optional.of(batchingSettingsTable.get(toName(service, method)))
+        : Optional.empty();
+  }
+
+  private GapicRetrySettings toGapicRetrySettings(Service service, Method method) {
+    GapicRetrySettings.Kind kind = GapicRetrySettings.Kind.FULL;
+    Optional<Integer> retryPolicyIndexOpt = retryPolicyIndexLookup(service, method);
+    if (!retryPolicyIndexOpt.isPresent()) {
+      kind = GapicRetrySettings.Kind.NONE;
+    } else {
+      MethodConfig methodConfig = methodConfigs.get(retryPolicyIndexOpt.get());
+      if (!methodConfig.hasTimeout() && !methodConfig.hasRetryPolicy()) {
+        kind = GapicRetrySettings.Kind.NONE;
+      } else {
+        kind =
+            methodConfig.hasRetryPolicy()
+                ? GapicRetrySettings.Kind.FULL
+                : GapicRetrySettings.Kind.NO_RETRY;
+      }
+    }
+
+    return GapicRetrySettings.builder()
+        .setTimeout(timeoutLookup(service, method))
+        .setRetryPolicy(retryPolicyLookup(service, method))
+        .setKind(kind)
+        .build();
   }
 
   private List<Code> retryCodesLookup(Service service, Method method) {
