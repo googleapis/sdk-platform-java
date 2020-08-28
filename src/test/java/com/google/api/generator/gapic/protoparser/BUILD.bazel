@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "BatchingSettingsConfigParserTest",
     "MethodSignatureParserTest",
     "ParserTest",
     "PluginArgumentParserTest",
@@ -18,6 +19,7 @@ filegroup(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
     test_class = "com.google.api.generator.gapic.protoparser.{0}".format(test_name),
