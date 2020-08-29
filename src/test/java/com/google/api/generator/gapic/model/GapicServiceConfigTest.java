@@ -26,7 +26,6 @@ import com.google.protobuf.util.Durations;
 import com.google.rpc.Code;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import io.grpc.serviceconfig.MethodConfig;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -49,11 +48,9 @@ public class GapicServiceConfigTest {
 
     String jsonFilename = "retrying_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<ServiceConfig> rawConfigOpt = ServiceConfigParser.parseFile(jsonPath.toString());
-    assertTrue(rawConfigOpt.isPresent());
-
-    ServiceConfig rawConfig = rawConfigOpt.get();
-    GapicServiceConfig serviceConfig = GapicServiceConfig.create(rawConfig);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
     Map<String, RetrySettings> retrySettings = serviceConfig.getAllRetrySettings(service);
     assertEquals(1, retrySettings.size());
@@ -79,11 +76,9 @@ public class GapicServiceConfigTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<ServiceConfig> rawConfigOpt = ServiceConfigParser.parseFile(jsonPath.toString());
-    assertTrue(rawConfigOpt.isPresent());
-
-    ServiceConfig rawConfig = rawConfigOpt.get();
-    GapicServiceConfig serviceConfig = GapicServiceConfig.create(rawConfig);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
     Map<String, RetrySettings> retrySettings = serviceConfig.getAllRetrySettings(service);
     assertEquals(2, retrySettings.size());
