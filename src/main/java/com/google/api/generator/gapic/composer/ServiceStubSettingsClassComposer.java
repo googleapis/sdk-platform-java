@@ -112,6 +112,13 @@ public class ServiceStubSettingsClassComposer {
   private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
+
+  private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
+      "unaryMethodSettingsBuilders";
+  private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
+      "RETRYABLE_CODE_DEFINITIONS";
+  private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
+
   private static final String STUB_PATTERN = "%sStub";
 
   private static final String LEFT_BRACE = "{";
@@ -124,6 +131,12 @@ public class ServiceStubSettingsClassComposer {
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
   private static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
+  private static final VariableExpr NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR =
+      createNestedUnaryMethodSettingsBuildersVarExpr();
+  private static final VariableExpr NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR =
+      createNestedRetryableCodeDefinitionsVarExpr();
+  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
+      createNestedRetryParamDefinitionsVarExpr();
 
   private ServiceStubSettingsClassComposer() {}
 
@@ -1050,13 +1063,47 @@ public class ServiceStubSettingsClassComposer {
 
     String className = "Builder";
 
+    TypeNode extendsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(StubSettings.Builder.class)
+                .setGenerics(
+                    Arrays.asList(
+                            types.get(getServiceStubTypeName(service.name())), types.get(className))
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setName(className)
+        .setExtendsType(extendsType)
+        .setStatements(createNestedClassStatements())
         .build();
+  }
+
+  private static List<Statement> createNestedClassStatements() {
+    List<VariableExpr> varDeclExprs = new ArrayList<>();
+    Function<VariableExpr, VariableExpr> varDeclFn =
+        v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
+    varDeclExprs.add(varDeclFn.apply(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR));
+
+    Function<VariableExpr, VariableExpr> varStaticDeclFn =
+        v ->
+            v.toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build();
+    varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR));
+    varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+
+    return varDeclExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
@@ -1179,6 +1226,65 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     return VariableExpr.withVariable(
         Variable.builder().setName("DEFAULT_SERVICE_SCOPES").setType(listStringType).build());
+  }
+
+  private static VariableExpr createNestedUnaryMethodSettingsBuildersVarExpr() {
+    Reference builderRef =
+        ConcreteReference.builder()
+            .setClazz(UnaryCallSettings.Builder.class)
+            .setGenerics(Arrays.asList(TypeNode.WILDCARD_REFERENCE, TypeNode.WILDCARD_REFERENCE))
+            .build();
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableList.class)
+                .setGenerics(Arrays.asList(builderRef))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME)
+            .build());
+  }
+
+  private static VariableExpr createNestedRetryableCodeDefinitionsVarExpr() {
+    TypeNode immutableSetType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableSet.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(StatusCode.Code.class)))
+                .build());
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, immutableSetType).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME)
+            .build());
+  }
+
+  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, STATIC_TYPES.get("RetrySettings")).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME)
+            .build());
   }
 
   private static String getThisClassName(String serviceName) {
