@@ -270,6 +270,7 @@ public class ServiceStubSettingsClassComposer {
     // TODO(miraleung): Add a test case for several such statements.
     List<Expr> descExprs = new ArrayList<>();
     List<Expr> factoryExprs = new ArrayList<>();
+
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
         continue;
@@ -306,6 +307,7 @@ public class ServiceStubSettingsClassComposer {
                   .build());
       String pageStrDescVarName =
           String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+
       VariableExpr pagedListDescVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(pagedListDescType).setName(pageStrDescVarName).build());
