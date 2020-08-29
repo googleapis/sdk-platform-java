@@ -610,7 +610,6 @@ public class RetrySettingsComposer {
             RetrySettings.class,
             StatusCode.class,
             UnaryCallSettings.class);
-
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
