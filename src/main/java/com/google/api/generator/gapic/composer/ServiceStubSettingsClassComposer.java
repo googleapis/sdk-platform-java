@@ -1169,6 +1169,7 @@ public class ServiceStubSettingsClassComposer {
     nestedClassMethods.add(createNestedClassCreateDefaultMethod(types));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
     nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, types));
+    nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
 
     // TODO(miraleung): More methods.
     return nestedClassMethods;
@@ -1542,6 +1543,15 @@ public class ServiceStubSettingsClassComposer {
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
         .setBody(Arrays.asList(ExprStatement.withExpr(superApplyExpr)))
         .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createNestedClassUnaryMethodSettingsBuilderGetterMethod() {
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
+        .setName("unaryMethodSettingsBuilders")
+        .setReturnExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
         .build();
   }
 
