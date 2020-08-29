@@ -20,7 +20,7 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class UnaryOperationExpr implements OperationExpr {
 
-  public abstract Expr expression();
+  public abstract Expr expr();
 
   public abstract OperatorKind operatorKind();
 
@@ -33,7 +33,7 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
   public static UnaryOperationExpr postfixIncrementWithExpr(Expr expr) {
     return builder()
-        .setExpression(expr)
+        .setExpr(expr)
         .setOperatorKind(OperatorKind.UNARY_POST_INCREMENT)
         .setType(expr.type())
         .build();
@@ -42,7 +42,7 @@ public abstract class UnaryOperationExpr implements OperationExpr {
   public static UnaryOperationExpr logicalNotWithExpr(Expr expr) {
     return builder()
         .setOperatorKind(OperatorKind.LOGICAL_NOT)
-        .setExpression(expr)
+        .setExpr(expr)
         .setType(TypeNode.BOOLEAN)
         .build();
   }
@@ -55,7 +55,7 @@ public abstract class UnaryOperationExpr implements OperationExpr {
   public abstract static class Builder {
 
     // private
-    abstract Builder setExpression(Expr expr);
+    abstract Builder setExpr(Expr expr);
 
     // private.
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -67,7 +67,7 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
     private UnaryOperationExpr build() {
       UnaryOperationExpr unaryOperationExpr = autoBuild();
-      Expr expr = unaryOperationExpr.expression();
+      Expr expr = unaryOperationExpr.expr();
       TypeNode exprType = expr.type();
       OperatorKind operator = unaryOperationExpr.operatorKind();
       final String errorMsg =

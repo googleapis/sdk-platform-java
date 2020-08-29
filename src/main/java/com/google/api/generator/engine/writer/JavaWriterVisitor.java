@@ -398,11 +398,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(UnaryOperationExpr unaryOperationExpr) {
     if (unaryOperationExpr.operatorKind().isPostfixOperator()) {
-      unaryOperationExpr.expression().accept(this);
+      unaryOperationExpr.expr().accept(this);
       operator(unaryOperationExpr.operatorKind());
     } else {
       operator(unaryOperationExpr.operatorKind());
-      unaryOperationExpr.expression().accept(this);
+      unaryOperationExpr.expr().accept(this);
     }
   }
 

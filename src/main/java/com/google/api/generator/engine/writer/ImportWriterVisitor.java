@@ -222,7 +222,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(UnaryOperationExpr unaryOperationExpr) {
-    unaryOperationExpr.expression().type().accept(this);
+    unaryOperationExpr.expr().type().accept(this);
   }
 
   @Override
