@@ -19,6 +19,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Nullable;
@@ -122,10 +123,7 @@ public abstract class MethodDefinition implements AstNode {
     public abstract Builder setHeaderCommentStatements(
         List<CommentStatement> headeCommentStatements);
 
-    public Builder setAnnotations(List<AnnotationNode> annotations) {
-      annotationsBuilder().addAll(annotations);
-      return this;
-    }
+    public abstract Builder setAnnotations(List<AnnotationNode> annotations);
 
     public abstract Builder setIsStatic(boolean isStatic);
 
@@ -162,9 +160,9 @@ public abstract class MethodDefinition implements AstNode {
 
     // Private accessors.
 
-    abstract ImmutableList.Builder<AnnotationNode> annotationsBuilder();
-
     abstract String name();
+
+    abstract ImmutableList<AnnotationNode> annotations();
 
     abstract TypeNode returnType();
 
@@ -231,9 +229,19 @@ public abstract class MethodDefinition implements AstNode {
       }
 
       // If this method overrides another, ensure that the Override annotaiton is the last one.
+      ImmutableList<AnnotationNode> processedAnnotations = annotations();
       if (isOverride()) {
-        annotationsBuilder().add(AnnotationNode.OVERRIDE);
+        processedAnnotations =
+            annotations()
+                .<AnnotationNode>builder()
+                .addAll(annotations())
+                .add(AnnotationNode.OVERRIDE)
+                .build();
       }
+      // Remove duplicates while maintaining insertion order.
+      setAnnotations(
+          new LinkedHashSet<AnnotationNode>(processedAnnotations)
+              .stream().collect(Collectors.toList()));
 
       MethodDefinition method = autoBuild();
 
