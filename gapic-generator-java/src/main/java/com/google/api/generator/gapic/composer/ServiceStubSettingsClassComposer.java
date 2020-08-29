@@ -54,6 +54,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -120,6 +121,7 @@ public class ServiceStubSettingsClassComposer {
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
 
   private static final String STUB_PATTERN = "%sStub";
+  private static final String SETTINGS_LITERAL = "Settings";
 
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
@@ -288,11 +290,26 @@ public class ServiceStubSettingsClassComposer {
       if (!method.isPaged()) {
         continue;
       }
+
       // Find the repeated type.
-      Message pagedResponseMessage =
-          messageTypes.get(JavaStyle.toUpperCamelCase(method.outputType().reference().name()));
+      String pagedResponseMessageKey =
+          JavaStyle.toUpperCamelCase(method.outputType().reference().name());
+      if (method.hasLro()) {
+        pagedResponseMessageKey =
+            JavaStyle.toUpperCamelCase(method.lro().responseType().reference().name());
+      }
+      Message pagedResponseMessage = messageTypes.get(pagedResponseMessageKey);
+      Preconditions.checkNotNull(
+          pagedResponseMessage,
+          String.format(
+              "No method found for message type %s for method %s among %s",
+              pagedResponseMessageKey, method.name(), messageTypes.keySet()));
       TypeNode repeatedResponseType = null;
       for (Field field : pagedResponseMessage.fields()) {
+        Preconditions.checkState(
+            field != null,
+            String.format("Null field found for message %s", pagedResponseMessage.name()));
+
         if (field.isRepeated()) {
           // Field is currently a List-type.
           Preconditions.checkState(
@@ -1086,6 +1103,7 @@ public class ServiceStubSettingsClassComposer {
         .setName(className)
         .setExtendsType(extendsType)
         .setStatements(createNestedClassStatements(nestedMethodSettingsMemberVarExprs))
+        .setMethods(createNestedClassMethods(nestedMethodSettingsMemberVarExprs, types))
         .build();
   }
 
@@ -1119,6 +1137,164 @@ public class ServiceStubSettingsClassComposer {
     varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
 
     return varDeclExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  private static List<MethodDefinition> createNestedClassMethods(
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs, Map<String, TypeNode> types) {
+    List<MethodDefinition> nestedClassMethods = new ArrayList<>();
+    nestedClassMethods.addAll(
+        createNestedClassConstructorMethods(nestedMethodSettingsMemberVarExprs, types));
+
+    // TODO(miraleung): initDefaults().
+    return nestedClassMethods;
+  }
+
+  private static List<MethodDefinition> createNestedClassConstructorMethods(
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs, Map<String, TypeNode> types) {
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+
+    List<MethodDefinition> ctorMethods = new ArrayList<>();
+
+    // First argument-less contructor.
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        ReferenceConstructorExpr.thisBuilder()
+                            .setType(builderType)
+                            .setArguments(
+                                CastExpr.builder()
+                                    .setType(STATIC_TYPES.get("ClientContext"))
+                                    .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                    .build())
+                            .build())))
+            .build());
+
+    // Second ctor that takes a clientContext argument.
+    VariableExpr clientContextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ClientContext"))
+                .setName("clientContext")
+                .build());
+    Reference pagedSettingsBuilderRef =
+        ConcreteReference.withClazz(PagedCallSettings.Builder.class);
+    Reference unaryCallSettingsBuilderRef =
+        ConcreteReference.withClazz(UnaryCallSettings.Builder.class);
+    Function<TypeNode, Boolean> isUnaryCallSettingsBuilderFn =
+        t ->
+            t.reference()
+                .copyAndSetGenerics(ImmutableList.of())
+                .equals(unaryCallSettingsBuilderRef);
+    Function<TypeNode, Boolean> isPagedCallSettingsBuilderFn =
+        t -> t.reference().copyAndSetGenerics(ImmutableList.of()).equals(pagedSettingsBuilderRef);
+    Function<TypeNode, TypeNode> builderToCallSettingsFn =
+        t ->
+            TypeNode.withReference(
+                VaporReference.builder()
+                    .setName(t.reference().enclosingClassName())
+                    .setPakkage(t.reference().pakkage())
+                    .build());
+    List<Expr> ctorBodyExprs = new ArrayList<>();
+    ctorBodyExprs.add(
+        ReferenceConstructorExpr.superBuilder()
+            .setType(builderType)
+            .setArguments(clientContextVarExpr)
+            .build());
+    ctorBodyExprs.addAll(
+        nestedMethodSettingsMemberVarExprs.entrySet().stream()
+            .map(
+                e -> {
+                  // Name is fooBarSettings.
+                  VariableExpr varExpr = e.getValue();
+                  TypeNode varType = varExpr.type();
+                  if (!isPagedCallSettingsBuilderFn.apply(varType)) {
+                    boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
+                    return AssignmentExpr.builder()
+                        .setVariableExpr(varExpr)
+                        .setValueExpr(
+                            MethodInvocationExpr.builder()
+                                .setStaticReferenceType(
+                                    builderToCallSettingsFn.apply(varExpr.type()))
+                                .setMethodName(
+                                    isUnaryCallSettings
+                                        ? "newUnaryCallSettingsBuilder"
+                                        : "newBuilder")
+                                .setReturnType(varExpr.type())
+                                .build())
+                        .build();
+                  }
+                  String varName = e.getKey();
+                  Preconditions.checkState(
+                      varName.endsWith(SETTINGS_LITERAL),
+                      String.format("%s expected to end with \"Settings\"", varName));
+                  varName = varName.substring(0, varName.length() - SETTINGS_LITERAL.length());
+                  varName =
+                      String.format(
+                          PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(varName));
+                  VariableExpr argVar =
+                      VariableExpr.withVariable(
+                          Variable.builder()
+                              .setType(STATIC_TYPES.get("PagedListResponseFactory"))
+                              .setName(varName)
+                              .build());
+                  return AssignmentExpr.builder()
+                      .setVariableExpr(varExpr)
+                      .setValueExpr(
+                          MethodInvocationExpr.builder()
+                              .setStaticReferenceType(builderToCallSettingsFn.apply(varExpr.type()))
+                              .setMethodName("newBuilder")
+                              .setArguments(argVar)
+                              .setReturnType(varExpr.type())
+                              .build())
+                      .build();
+                })
+            .collect(Collectors.toList()));
+
+    ctorBodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableList"))
+                    .setGenerics(
+                        NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR
+                            .type()
+                            .reference()
+                            .generics())
+                    .setMethodName("of")
+                    .setArguments(
+                        nestedMethodSettingsMemberVarExprs.values().stream()
+                            .filter(
+                                v ->
+                                    isUnaryCallSettingsBuilderFn.apply(v.type())
+                                        || isPagedCallSettingsBuilderFn.apply(v.type()))
+                            .collect(Collectors.toList()))
+                    .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
+                    .build())
+            .build());
+
+    ctorBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setMethodName("initDefaults")
+            .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
+            .build());
+
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    return ctorMethods;
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
