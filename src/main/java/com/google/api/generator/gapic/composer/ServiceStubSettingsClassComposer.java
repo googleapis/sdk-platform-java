@@ -108,6 +108,7 @@ import org.threeten.bp.Duration;
 
 // TODO(miraleung): Refactor ClassComposer's interface.
 public class ServiceStubSettingsClassComposer {
+  private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
   private static final String PAGE_STR_DESC_PATTERN = "%s_PAGE_STR_DESC";
@@ -1172,7 +1173,8 @@ public class ServiceStubSettingsClassComposer {
       Map<String, TypeNode> types) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
     nestedClassMethods.addAll(
-        createNestedClassConstructorMethods(service, nestedMethodSettingsMemberVarExprs, types));
+        createNestedClassConstructorMethods(
+            service, serviceConfig, nestedMethodSettingsMemberVarExprs, types));
     nestedClassMethods.add(createNestedClassCreateDefaultMethod(types));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
     nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, types));
@@ -1234,6 +1236,7 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<MethodDefinition> createNestedClassConstructorMethods(
       Service service,
+      GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
       Map<String, TypeNode> types) {
     TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
@@ -1298,38 +1301,80 @@ public class ServiceStubSettingsClassComposer {
         nestedMethodSettingsMemberVarExprs.entrySet().stream()
             .map(
                 e -> {
+                  // TODO(miraleung): Extract this into another method.
                   // Name is fooBarSettings.
                   VariableExpr varExpr = e.getValue();
                   TypeNode varType = varExpr.type();
+                  String methodName = e.getKey();
+                  Preconditions.checkState(
+                      methodName.endsWith(SETTINGS_LITERAL),
+                      String.format("%s expected to end with \"Settings\"", methodName));
+                  methodName =
+                      methodName.substring(0, methodName.length() - SETTINGS_LITERAL.length());
+
                   if (!isPagedCallSettingsBuilderFn.apply(varType)) {
-                    boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
+                    if (!isBatchingCallSettingsBuilderFn.apply(varType)) {
+                      boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
+                      return AssignmentExpr.builder()
+                          .setVariableExpr(varExpr)
+                          .setValueExpr(
+                              MethodInvocationExpr.builder()
+                                  .setStaticReferenceType(
+                                      builderToCallSettingsFn.apply(varExpr.type()))
+                                  .setMethodName(
+                                      isUnaryCallSettings
+                                          ? "newUnaryCallSettingsBuilder"
+                                          : "newBuilder")
+                                  .setReturnType(varExpr.type())
+                                  .build())
+                          .build();
+                    }
+                    Expr newBatchingSettingsExpr =
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
+                            .setMethodName("newBuilder")
+                            .build();
+                    newBatchingSettingsExpr =
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(newBatchingSettingsExpr)
+                            .setMethodName("build")
+                            .build();
+
+                    String batchingDescVarName =
+                        String.format(
+                            BATCHING_DESC_PATTERN, JavaStyle.toUpperSnakeCase(methodName));
+                    Expr batchingSettingsBuilderExpr =
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(builderToCallSettingsFn.apply(varType))
+                            .setMethodName("newBuilder")
+                            .setArguments(
+                                VariableExpr.withVariable(
+                                    Variable.builder()
+                                        .setType(STATIC_TYPES.get("BatchingDescriptor"))
+                                        .setName(batchingDescVarName)
+                                        .build()))
+                            .build();
+                    batchingSettingsBuilderExpr =
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+                            .setMethodName("setBatchingSettings")
+                            .setArguments(newBatchingSettingsExpr)
+                            .setReturnType(varType)
+                            .build();
+
                     return AssignmentExpr.builder()
                         .setVariableExpr(varExpr)
-                        .setValueExpr(
-                            MethodInvocationExpr.builder()
-                                .setStaticReferenceType(
-                                    builderToCallSettingsFn.apply(varExpr.type()))
-                                .setMethodName(
-                                    isUnaryCallSettings
-                                        ? "newUnaryCallSettingsBuilder"
-                                        : "newBuilder")
-                                .setReturnType(varExpr.type())
-                                .build())
+                        .setValueExpr(batchingSettingsBuilderExpr)
                         .build();
                   }
-                  String varName = e.getKey();
-                  Preconditions.checkState(
-                      varName.endsWith(SETTINGS_LITERAL),
-                      String.format("%s expected to end with \"Settings\"", varName));
-                  varName = varName.substring(0, varName.length() - SETTINGS_LITERAL.length());
-                  varName =
+                  String memberVarName =
                       String.format(
-                          PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(varName));
+                          PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(methodName));
                   VariableExpr argVar =
                       VariableExpr.withVariable(
                           Variable.builder()
                               .setType(STATIC_TYPES.get("PagedListResponseFactory"))
-                              .setName(varName)
+                              .setName(memberVarName)
                               .build());
                   return AssignmentExpr.builder()
                       .setVariableExpr(varExpr)
