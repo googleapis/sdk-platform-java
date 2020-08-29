@@ -20,9 +20,9 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class ArithmeticOperationExpr implements OperationExpr {
 
-  public abstract Expr lhsExpression();
+  public abstract Expr lhsExpr();
 
-  public abstract Expr rhsExpression();
+  public abstract Expr rhsExpr();
 
   public abstract OperatorKind operatorKind();
 
@@ -35,8 +35,8 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
   public static ArithmeticOperationExpr concatWithExprs(Expr expr1, Expr expr2) {
     return builder()
-        .setLhsExpression(expr1)
-        .setRhsExpression(expr2)
+        .setLhsExpr(expr1)
+        .setRhsExpr(expr2)
         .setOperatorKind(OperatorKind.ARITHMETIC_ADDITION)
         .setType(TypeNode.STRING)
         .build();
@@ -49,9 +49,9 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
   @AutoValue.Builder
   public abstract static class Builder {
     // private, required
-    abstract Builder setLhsExpression(Expr expr);
+    abstract Builder setLhsExpr(Expr expr);
     // private, required
-    abstract Builder setRhsExpression(Expr expr);
+    abstract Builder setRhsExpr(Expr expr);
     // private.
     abstract Builder setOperatorKind(OperatorKind operator);
     // private.
@@ -61,8 +61,8 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
     private ArithmeticOperationExpr build() {
       ArithmeticOperationExpr arithmeticOperationExpr = autoBuild();
-      Expr lhsExpr = arithmeticOperationExpr.lhsExpression();
-      Expr rhsExpr = arithmeticOperationExpr.rhsExpression();
+      Expr lhsExpr = arithmeticOperationExpr.lhsExpr();
+      Expr rhsExpr = arithmeticOperationExpr.rhsExpr();
       TypeNode lhsExprType = lhsExpr.type();
       TypeNode rhsExprType = rhsExpr.type();
       OperatorKind operator = arithmeticOperationExpr.operatorKind();
@@ -79,8 +79,7 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
           !lhsExprType.equals(TypeNode.VOID) && !rhsExprType.equals(TypeNode.VOID), errorMsg);
 
       // Concat operator type checks
-      if (operator.equals(OperatorKind.ARITHMETIC_ADDITION)
-          && arithmeticOperationExpr.type().equals(TypeNode.STRING)) {
+      if (operator.equals(OperatorKind.ARITHMETIC_ADDITION)) {
         // concat require at least one expression type is String
         Preconditions.checkState(
             lhsExprType.equals(TypeNode.STRING) || rhsExprType.equals(TypeNode.STRING), errorMsg);

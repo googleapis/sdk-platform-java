@@ -388,11 +388,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
-    arithmeticOperationExpr.lhsExpression().accept(this);
+    arithmeticOperationExpr.lhsExpr().accept(this);
     space();
     operator(arithmeticOperationExpr.operatorKind());
     space();
-    arithmeticOperationExpr.rhsExpression().accept(this);
+    arithmeticOperationExpr.rhsExpr().accept(this);
   }
 
   @Override

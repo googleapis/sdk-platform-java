@@ -216,8 +216,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
-    arithmeticOperationExpr.lhsExpression().type().accept(this);
-    arithmeticOperationExpr.rhsExpression().type().accept(this);
+    arithmeticOperationExpr.lhsExpr().type().accept(this);
+    arithmeticOperationExpr.rhsExpr().type().accept(this);
   }
 
   @Override
