@@ -14,8 +14,12 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.gax.grpc.ProtoOperationTransformers;
+import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -56,10 +60,12 @@ public class RetrySettingsComposer {
       TypeNode.withReference(ConcreteReference.withClazz(StatusCode.Code.class));
 
   // TODO(miraleung): Determine defaults here.
-  private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 9999;
-  private static final long LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1;
-  private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 8888;
-  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLIS = 7777;
+  // Default values for LongRunningConfig fields.
+  private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 500;
+  private static final double LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1.5;
+  private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 5000;
+  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS = 300000;
+  private static final double LRO_DEFAULT_MAX_RPC_TIMEOUT = 1.0;
 
   public static BlockStatement createRetryParamDefinitionsBlock(
       Service service,
@@ -231,6 +237,134 @@ public class RetrySettingsComposer {
     return builderSettingsExpr;
   }
 
+  public static Expr createLroSettingsBuilderExpr(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Method method,
+      VariableExpr builderVarExpr,
+      VariableExpr retryableCodeDefsVarExpr,
+      VariableExpr retryParamDefsVarExpr) {
+    Preconditions.checkState(
+        method.hasLro(),
+        String.format(
+            "Tried to create LRO settings initialization for non-LRO method %s", method.name()));
+
+    String codeName = serviceConfig.getRetryCodeName(service, method);
+    String retryParamName = serviceConfig.getRetryParamsName(service, method);
+    String settingsGetterMethodName =
+        String.format("%sOperationSettings", JavaStyle.toLowerCamelCase(method.name()));
+
+    Function<String, ValueExpr> strValExprFn =
+        s -> ValueExpr.withValue(StringObjectValue.withValue(s));
+
+    // Argument for setInitialCallSettings.
+    Expr unaryCallSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("UnaryCallSettings"))
+            .setGenerics(
+                Arrays.asList(
+                    method.inputType().reference(),
+                    STATIC_TYPES.get("OperationSnapshot").reference()))
+            .setMethodName("newUnaryCallSettingsBuilder")
+            .build();
+    unaryCallSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(unaryCallSettingsExpr)
+            .setMethodName("setRetryableCodes")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(retryableCodeDefsVarExpr)
+                    .setMethodName("get")
+                    .setArguments(strValExprFn.apply(codeName))
+                    .build())
+            .build();
+    unaryCallSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(unaryCallSettingsExpr)
+            .setMethodName("setRetrySettings")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(retryParamDefsVarExpr)
+                    .setMethodName("get")
+                    .setArguments(strValExprFn.apply(retryParamName))
+                    .build())
+            .build();
+    unaryCallSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(unaryCallSettingsExpr)
+            .setMethodName("build")
+            .build();
+
+    Expr builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName(settingsGetterMethodName)
+            .build();
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setInitialCallSettings")
+            .setArguments(unaryCallSettingsExpr)
+            .build();
+
+    Function<TypeNode, VariableExpr> classFieldRefFn =
+        t ->
+            VariableExpr.builder()
+                .setVariable(
+                    Variable.builder()
+                        .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                        .setName("class")
+                        .build())
+                .setStaticReferenceType(t)
+                .build();
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setResponseTransformer")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(
+                        TypeNode.withReference(
+                            ConcreteReference.withClazz(
+                                ProtoOperationTransformers.ResponseTransformer.class)))
+                    .setMethodName("create")
+                    .setArguments(classFieldRefFn.apply(method.lro().responseType()))
+                    .build())
+            .build();
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setMetadataTransformer")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(
+                        TypeNode.withReference(
+                            ConcreteReference.withClazz(
+                                ProtoOperationTransformers.MetadataTransformer.class)))
+                    .setMethodName("create")
+                    .setArguments(classFieldRefFn.apply(method.lro().metadataType()))
+                    .build())
+            .build();
+
+    // TODO(miraleung): Determine fianl LRO settings values here.
+    Expr lroRetrySettingsExpr = createLroRetrySettingsExpr();
+    Expr pollAlgoExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("OperationTimedPollAlgorithm"))
+            .setMethodName("create")
+            .setArguments(lroRetrySettingsExpr)
+            .build();
+
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setPollingAlgorithm")
+            .setArguments(pollAlgoExpr)
+            .build();
+
+    return builderSettingsExpr;
+  }
+
   private static Expr createRetryCodeDefinitionExpr(
       String codeName, List<Code> retryCodes, VariableExpr definitionsVarExpr) {
     // Construct something like `definitions.put("code_name",
@@ -264,28 +398,6 @@ public class RetrySettingsComposer {
       GapicRetrySettings settings,
       VariableExpr settingsVarExpr,
       VariableExpr definitionsVarExpr) {
-    Function<Duration, ValueExpr> durationToMillisValExprFn =
-        d ->
-            ValueExpr.withValue(
-                PrimitiveValue.builder()
-                    .setType(TypeNode.LONG)
-                    .setValue(String.format("%dL", Durations.toMillis(d)))
-                    .build());
-    Function<Float, ValueExpr> floatToValExprFn =
-        f ->
-            ValueExpr.withValue(
-                PrimitiveValue.builder()
-                    .setType(TypeNode.DOUBLE)
-                    .setValue(String.format("%.1f", f))
-                    .build());
-    Function<ValueExpr, MethodInvocationExpr> durationMillisMethodFn =
-        v ->
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(STATIC_TYPES.get("Duration"))
-                .setMethodName("ofMillis")
-                .setArguments(v)
-                .build();
-
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
@@ -301,16 +413,14 @@ public class RetrySettingsComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
               .setMethodName("setInitialRetryDelay")
-              .setArguments(
-                  durationMillisMethodFn.apply(
-                      durationToMillisValExprFn.apply(retryPolicy.getInitialBackoff())))
+              .setArguments(createDurationOfMillisExpr(toValExpr(retryPolicy.getInitialBackoff())))
               .build();
 
       settingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
               .setMethodName("setRetryDelayMultiplier")
-              .setArguments(floatToValExprFn.apply(retryPolicy.getBackoffMultiplier()))
+              .setArguments(toValExpr(retryPolicy.getBackoffMultiplier()))
               .build();
 
       Preconditions.checkState(
@@ -320,9 +430,7 @@ public class RetrySettingsComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
               .setMethodName("setMaxRetryDelay")
-              .setArguments(
-                  durationMillisMethodFn.apply(
-                      durationToMillisValExprFn.apply(retryPolicy.getMaxBackoff())))
+              .setArguments(createDurationOfMillisExpr(toValExpr(retryPolicy.getMaxBackoff())))
               .build();
     }
 
@@ -331,8 +439,7 @@ public class RetrySettingsComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(settingsBuilderExpr)
               .setMethodName("setInitialRpcTimeout")
-              .setArguments(
-                  durationMillisMethodFn.apply(durationToMillisValExprFn.apply(settings.timeout())))
+              .setArguments(createDurationOfMillisExpr(toValExpr(settings.timeout())))
               .build();
     }
 
@@ -352,9 +459,7 @@ public class RetrySettingsComposer {
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(settingsBuilderExpr)
                 .setMethodName(setterMethodName)
-                .setArguments(
-                    durationMillisMethodFn.apply(
-                        durationToMillisValExprFn.apply(settings.timeout())))
+                .setArguments(createDurationOfMillisExpr(toValExpr(settings.timeout())))
                 .build();
       }
     }
@@ -383,8 +488,113 @@ public class RetrySettingsComposer {
     return Arrays.asList(settingsAssignExpr, definitionsPutExpr);
   }
 
+  private static Expr createLroRetrySettingsExpr() {
+    // TODO(miraleung): Determine fianl LRO settings values here.
+    Expr lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setInitialRetryDelay")
+            .setArguments(
+                createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS)))
+            .build();
+
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setRetryDelayMultiplier")
+            .setArguments(toValExpr(LRO_DEFAULT_POLL_DELAY_MULTIPLIER))
+            .build();
+
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setMaxRetryDelay")
+            .setArguments(createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_MAX_POLL_DELAY_MILLIS)))
+            .build();
+
+    Expr zeroDurationExpr =
+        EnumRefExpr.builder().setType(STATIC_TYPES.get("Duration")).setName("ZERO").build();
+    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setInitialRpcTimeout")
+            .setArguments(zeroDurationExpr)
+            .build();
+
+    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setRpcTimeoutMultiplier")
+            .setArguments(toValExpr(LRO_DEFAULT_MAX_RPC_TIMEOUT))
+            .build();
+
+    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setMaxRpcTimeout")
+            .setArguments(zeroDurationExpr)
+            .build();
+
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("setTotalTimeout")
+            .setArguments(
+                createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS)))
+            .build();
+
+    lroRetrySettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(lroRetrySettingsExpr)
+            .setMethodName("build")
+            .build();
+
+    return lroRetrySettingsExpr;
+  }
+
   private static EnumRefExpr toStatusCodeEnumRefExpr(Code code) {
     return EnumRefExpr.builder().setType(STATUS_CODE_CODE_TYPE).setName(code.name()).build();
+  }
+
+  private static ValueExpr toValExpr(long longValue) {
+    return ValueExpr.withValue(
+        PrimitiveValue.builder()
+            .setType(TypeNode.LONG)
+            .setValue(String.format("%dL", longValue))
+            .build());
+  }
+
+  private static ValueExpr toValExpr(float floatValue) {
+    return toValExpr((double) floatValue);
+  }
+
+  private static ValueExpr toValExpr(double val) {
+    return ValueExpr.withValue(
+        PrimitiveValue.builder()
+            .setType(TypeNode.DOUBLE)
+            .setValue(String.format("%.1f", val))
+            .build());
+  }
+
+  private static ValueExpr toValExpr(Duration duration) {
+    return toValExpr(Durations.toMillis(duration));
+  }
+
+  private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
+    return MethodInvocationExpr.builder()
+        .setStaticReferenceType(STATIC_TYPES.get("Duration"))
+        .setMethodName("ofMillis")
+        .setArguments(valExpr)
+        .build();
   }
 
   private static Map<String, TypeNode> createStaticTypes() {
@@ -394,8 +604,13 @@ public class RetrySettingsComposer {
             ImmutableMap.class,
             ImmutableSet.class,
             Lists.class,
+            OperationSnapshot.class,
+            OperationTimedPollAlgorithm.class,
+            ProtoOperationTransformers.class,
             RetrySettings.class,
-            StatusCode.class);
+            StatusCode.class,
+            UnaryCallSettings.class);
+
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(
