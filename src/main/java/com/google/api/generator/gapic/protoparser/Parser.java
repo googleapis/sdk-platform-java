@@ -346,10 +346,16 @@ public class Parser {
           isChildType
               ? ResourceReference.withChildType(childTypeString)
               : ResourceReference.withType(typeString);
-    } else if (fieldDescriptor.getName().equals(ResourceNameConstants.NAME_FIELD_NAME)
-        && messageOptions.hasExtension(ResourceProto.resource)) {
+    } else if (messageOptions.hasExtension(ResourceProto.resource)) {
       ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
-      resourceReference = ResourceReference.withType(protoResource.getType());
+      // aip.dev/4231.
+      String resourceFieldNameValue = ResourceNameConstants.NAME_FIELD_NAME;
+      if (!Strings.isNullOrEmpty(protoResource.getNameField())) {
+        resourceFieldNameValue = protoResource.getNameField();
+      }
+      if (fieldDescriptor.getName().equals(resourceFieldNameValue)) {
+        resourceReference = ResourceReference.withType(protoResource.getType());
+      }
     }
 
     return Field.builder()

@@ -87,17 +87,17 @@ public class ResourceNameParser {
       return Optional.empty();
     }
 
+    ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
     // aip.dev/4231.
-    Preconditions.checkNotNull(
-        messageTypeDescriptor.findFieldByName(ResourceNameConstants.NAME_FIELD_NAME),
-        String.format(
-            "Message %s has a resource annotation but no \"name\" field",
-            messageTypeDescriptor.getName()));
+    if (Strings.isNullOrEmpty(protoResource.getNameField())) {
+      Preconditions.checkNotNull(
+          messageTypeDescriptor.findFieldByName(ResourceNameConstants.NAME_FIELD_NAME),
+          String.format(
+              "Message %s has a resource annotation but no \"name\" field",
+              messageTypeDescriptor.getName()));
+    }
 
-    return createResourceName(
-        messageOptions.getExtension(ResourceProto.resource),
-        pakkage,
-        messageTypeDescriptor.getName());
+    return createResourceName(protoResource, pakkage, messageTypeDescriptor.getName());
   }
 
   private static Optional<ResourceName> createResourceName(
@@ -156,15 +156,16 @@ public class ResourceNameParser {
     } else if (lastToken.equals(ResourceNameConstants.WILDCARD_PATTERN)) {
       resourceVariableName = null;
     } else {
-      Preconditions.checkState(
-          lastToken.contains("{"),
-          String.format(
-              "Pattern %s must end with a brace-encapsulated variable, e.g. {foobar}", pattern));
-      Set<String> variableNames = PathTemplate.create(pattern).vars();
-      for (String variableName : variableNames) {
-        if (lastToken.contains(variableName)) {
-          resourceVariableName = variableName;
-          break;
+      // Allow singleton patterns like projects/{project}/cmekSettings.
+      if (!lastToken.contains("{")) {
+        resourceVariableName = lastToken;
+      } else {
+        Set<String> variableNames = PathTemplate.create(pattern).vars();
+        for (String variableName : variableNames) {
+          if (lastToken.contains(variableName)) {
+            resourceVariableName = variableName;
+            break;
+          }
         }
       }
     }

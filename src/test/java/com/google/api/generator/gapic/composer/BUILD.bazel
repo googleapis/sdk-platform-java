@@ -20,14 +20,23 @@ filegroup(
     srcs = ["{0}.java".format(f) for f in TESTS],
 )
 
+java_proto_library(
+    name = "logging_java_proto",
+    deps = [
+        "@com_google_googleapis//google/logging/v2:logging_proto",
+    ],
+)
+
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
+        ":logging_java_proto",
         "//:rpc_java_proto",
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
