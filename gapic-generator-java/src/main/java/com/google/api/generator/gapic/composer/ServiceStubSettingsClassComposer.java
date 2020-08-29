@@ -70,6 +70,7 @@ import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
@@ -1102,7 +1103,7 @@ public class ServiceStubSettingsClassComposer {
             createNestedClassStatements(service, serviceConfig, nestedMethodSettingsMemberVarExprs))
         .setMethods(
             createNestedClassMethods(
-                service, serviceConfig, nestedMethodSettingsMemberVarExprs, types))
+                service, serviceConfig, extendsType, nestedMethodSettingsMemberVarExprs, types))
         .build();
   }
 
@@ -1159,6 +1160,7 @@ public class ServiceStubSettingsClassComposer {
   private static List<MethodDefinition> createNestedClassMethods(
       Service service,
       GapicServiceConfig serviceConfig,
+      TypeNode superType,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
       Map<String, TypeNode> types) {
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
@@ -1166,6 +1168,7 @@ public class ServiceStubSettingsClassComposer {
         createNestedClassConstructorMethods(service, nestedMethodSettingsMemberVarExprs, types));
     nestedClassMethods.add(createNestedClassCreateDefaultMethod(types));
     nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
+    nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, types));
 
     // TODO(miraleung): More methods.
     return nestedClassMethods;
@@ -1502,6 +1505,46 @@ public class ServiceStubSettingsClassComposer {
         .build();
   }
 
+  private static MethodDefinition createNestedClassApplyToAllUnaryMethodsMethod(
+      TypeNode superType, Map<String, TypeNode> types) {
+    List<Reference> apiFunctionTypeGenerics = new ArrayList<>();
+    apiFunctionTypeGenerics.addAll(
+        NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type().reference().generics());
+    apiFunctionTypeGenerics.add(TypeNode.VOID_OBJECT.reference());
+
+    TypeNode settingsUpdaterType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFunction.class)
+                .setGenerics(apiFunctionTypeGenerics)
+                .build());
+    VariableExpr settingsUpdaterVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(settingsUpdaterType).setName("settingsUpdater").build());
+
+    String methodName = "applyToAllUnaryMethods";
+    Expr superApplyExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(ValueExpr.withValue(SuperObjectValue.withType(superType)))
+            .setMethodName(methodName)
+            .setArguments(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR, settingsUpdaterVarExpr)
+            .build();
+
+    TypeNode returnType = types.get(NESTED_BUILDER_CLASS_NAME);
+    Expr returnExpr = ValueExpr.withValue(ThisObjectValue.withType(returnType));
+
+    // TODO(miraleung): Add major ver note.
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setName(methodName)
+        .setArguments(settingsUpdaterVarExpr.toBuilder().setIsDecl(true).build())
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(Arrays.asList(ExprStatement.withExpr(superApplyExpr)))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
@@ -1609,7 +1652,6 @@ public class ServiceStubSettingsClassComposer {
                                 .setIsStaticImport(true)
                                 .build()))));
 
-    // TODO(miraleung): Fill this out.
     return dynamicTypes;
   }
 
