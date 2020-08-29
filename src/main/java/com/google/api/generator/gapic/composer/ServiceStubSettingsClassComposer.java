@@ -114,13 +114,11 @@ public class ServiceStubSettingsClassComposer {
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
 
-
   private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
       "unaryMethodSettingsBuilders";
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-
 
   private static final String STUB_PATTERN = "%sStub";
   private static final String SETTINGS_LITERAL = "Settings";
