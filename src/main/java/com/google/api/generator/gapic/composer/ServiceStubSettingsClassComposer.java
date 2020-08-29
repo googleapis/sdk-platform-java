@@ -1215,6 +1215,7 @@ public class ServiceStubSettingsClassComposer {
             RetrySettingsComposer.createBatchingBuilderSettingsExpr(
                 settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr));
       }
+
       bodyExprs.add(
           RetrySettingsComposer.createSimpleBuilderSettingsExpr(
               service,
