@@ -112,11 +112,13 @@ public class ServiceStubSettingsClassComposer {
   private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
+
   private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
       "unaryMethodSettingsBuilders";
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
+
   private static final String STUB_PATTERN = "%sStub";
 
   private static final String LEFT_BRACE = "{";
@@ -281,6 +283,7 @@ public class ServiceStubSettingsClassComposer {
     // TODO(miraleung): Add a test case for several such statements.
     List<Expr> descExprs = new ArrayList<>();
     List<Expr> factoryExprs = new ArrayList<>();
+
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
         continue;
@@ -317,6 +320,7 @@ public class ServiceStubSettingsClassComposer {
                   .build());
       String pageStrDescVarName =
           String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+
       VariableExpr pagedListDescVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(pagedListDescType).setName(pageStrDescVarName).build());
@@ -1073,6 +1077,7 @@ public class ServiceStubSettingsClassComposer {
 
     Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ true);
+
 
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
