@@ -55,6 +55,8 @@ public class LiteralTest {
     assertThat(Literal.isFloatLiteral("123")).isTrue();
     assertThat(Literal.isFloatLiteral("123f")).isTrue();
     assertThat(Literal.isFloatLiteral("123.")).isFalse();
+    assertThat(Literal.isFloatLiteral("0.01")).isFalse();
+    assertThat(Literal.isFloatLiteral(".01")).isFalse();
     assertThat(Literal.isFloatLiteral("123.f")).isTrue();
     assertThat(Literal.isFloatLiteral("123.F")).isTrue();
     assertThat(Literal.isFloatLiteral("123.234F")).isTrue();
@@ -65,6 +67,9 @@ public class LiteralTest {
   @Test
   public void doubleDetected() {
     assertThat(Literal.isDoubleLiteral("123")).isTrue();
+    assertThat(Literal.isDoubleLiteral("0.01")).isTrue();
+    assertThat(Literal.isDoubleLiteral(".01")).isTrue();
+    assertThat(Literal.isDoubleLiteral("123.0")).isTrue();
     assertThat(Literal.isDoubleLiteral("123f")).isTrue();
     assertThat(Literal.isDoubleLiteral("123E-2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123.134E-2")).isTrue();
