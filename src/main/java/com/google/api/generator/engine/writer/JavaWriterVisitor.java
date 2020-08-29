@@ -408,11 +408,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(RelationalOperationExpr relationalOperationExpr) {
-    relationalOperationExpr.lhsExpression().accept(this);
+    relationalOperationExpr.lhsExpr().accept(this);
     space();
     operator(relationalOperationExpr.operatorKind());
     space();
-    relationalOperationExpr.rhsExpression().accept(this);
+    relationalOperationExpr.rhsExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

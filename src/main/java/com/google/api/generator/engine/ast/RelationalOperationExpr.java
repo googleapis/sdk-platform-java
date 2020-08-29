@@ -20,9 +20,9 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class RelationalOperationExpr implements OperationExpr {
 
-  public abstract Expr lhsExpression();
+  public abstract Expr lhsExpr();
 
-  public abstract Expr rhsExpression();
+  public abstract Expr rhsExpr();
 
   public abstract OperatorKind operatorKind();
 
@@ -32,16 +32,16 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
   public static RelationalOperationExpr equalToWithExpr(Expr expr1, Expr expr2) {
     return builder()
-        .setLhsExpression(expr1)
-        .setRhsExpression(expr2)
+        .setLhsExpr(expr1)
+        .setRhsExpr(expr2)
         .setOperatorKind(OperatorKind.RELATIONAL_EQUAL_TO)
         .build();
   }
 
   public static RelationalOperationExpr notEqualToWithExpr(Expr expr1, Expr expr2) {
     return builder()
-        .setLhsExpression(expr1)
-        .setRhsExpression(expr2)
+        .setLhsExpr(expr1)
+        .setRhsExpr(expr2)
         .setOperatorKind(OperatorKind.RELATIONAL_NOT_EQUAL_TO)
         .build();
   }
@@ -59,10 +59,10 @@ public abstract class RelationalOperationExpr implements OperationExpr {
   public abstract static class Builder {
 
     // private, required
-    abstract Builder setLhsExpression(Expr expr);
+    abstract Builder setLhsExpr(Expr expr);
 
     // private, required
-    abstract Builder setRhsExpression(Expr expr);
+    abstract Builder setRhsExpr(Expr expr);
 
     // private
     abstract Builder setOperatorKind(OperatorKind operator);
@@ -71,8 +71,8 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
     private RelationalOperationExpr build() {
       RelationalOperationExpr relationalOperationExpr = autoBuild();
-      Expr lhsExpr = relationalOperationExpr.lhsExpression();
-      Expr rhsExpr = relationalOperationExpr.rhsExpression();
+      Expr lhsExpr = relationalOperationExpr.lhsExpr();
+      Expr rhsExpr = relationalOperationExpr.rhsExpr();
       TypeNode lhsExprType = lhsExpr.type();
       TypeNode rhsExprType = rhsExpr.type();
       OperatorKind operator = relationalOperationExpr.operatorKind();

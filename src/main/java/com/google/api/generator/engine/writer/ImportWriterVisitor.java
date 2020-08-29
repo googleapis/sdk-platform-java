@@ -227,8 +227,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(RelationalOperationExpr relationalOperationExpr) {
-    relationalOperationExpr.lhsExpression().type().accept(this);
-    relationalOperationExpr.rhsExpression().type().accept(this);
+    relationalOperationExpr.lhsExpr().type().accept(this);
+    relationalOperationExpr.rhsExpr().type().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
