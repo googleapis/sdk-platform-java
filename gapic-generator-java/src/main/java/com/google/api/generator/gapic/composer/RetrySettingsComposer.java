@@ -15,9 +15,11 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -33,8 +35,11 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.protobuf.Duration;
 import com.google.protobuf.util.Durations;
+import com.google.rpc.Code;
 import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,6 +50,8 @@ import java.util.stream.Collectors;
 
 public class RetrySettingsComposer {
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final TypeNode STATUS_CODE_CODE_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(StatusCode.Code.class));
 
   public static BlockStatement createRetryParamDefinitionsBlock(
       Service service,
@@ -113,6 +120,88 @@ public class RetrySettingsComposer {
         .setIsStatic(true)
         .setBody(
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
+  }
+
+  public static BlockStatement createRetryCodesDefinitionsBlock(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      VariableExpr retryCodesDefinitionsClassMemberVarExpr) {
+    TypeNode definitionsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.Builder.class)
+                .setGenerics(retryCodesDefinitionsClassMemberVarExpr.type().reference().generics())
+                .build());
+    VariableExpr definitionsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(definitionsType).setName("definitions").build());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    // Create the first expr.
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(definitionsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setMethodName("builder")
+                    .setReturnType(definitionsVarExpr.type())
+                    .build())
+            .build());
+
+    for (Map.Entry<String, List<Code>> codeEntry :
+        serviceConfig.getAllRetryCodes(service).entrySet()) {
+      bodyExprs.add(
+          createRetryCodeDefinitionExpr(
+              codeEntry.getKey(), codeEntry.getValue(), definitionsVarExpr));
+    }
+
+    // Reassign the new codes.
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(retryCodesDefinitionsClassMemberVarExpr)
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(definitionsVarExpr)
+                    .setMethodName("build")
+                    .setReturnType(retryCodesDefinitionsClassMemberVarExpr.type())
+                    .build())
+            .build());
+
+    // Put everything together.
+    return BlockStatement.builder()
+        .setIsStatic(true)
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
+  }
+
+  private static Expr createRetryCodeDefinitionExpr(
+      String codeName, List<Code> retryCodes, VariableExpr definitionsVarExpr) {
+    // Construct something like `definitions.put("code_name",
+    //          ImmutableSet.copYOf(Lists.<StatusCode.Code>newArrayList()));`
+    MethodInvocationExpr codeListExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Lists"))
+            .setGenerics(Arrays.asList(STATUS_CODE_CODE_TYPE.reference()))
+            .setMethodName("newArrayList")
+            .setArguments(
+                retryCodes.stream()
+                    .map(c -> toStatusCodeEnumRefExpr(c))
+                    .collect(Collectors.toList()))
+            .build();
+
+    MethodInvocationExpr codeSetExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("ImmutableSet"))
+            .setMethodName("copyOf")
+            .setArguments(codeListExpr)
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(definitionsVarExpr)
+        .setMethodName("put")
+        .setArguments(ValueExpr.withValue(StringObjectValue.withValue(codeName)), codeSetExpr)
         .build();
   }
 
@@ -240,9 +329,19 @@ public class RetrySettingsComposer {
     return Arrays.asList(settingsAssignExpr, definitionsPutExpr);
   }
 
+  private static EnumRefExpr toStatusCodeEnumRefExpr(Code code) {
+    return EnumRefExpr.builder().setType(STATUS_CODE_CODE_TYPE).setName(code.name()).build();
+  }
+
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
-        Arrays.asList(org.threeten.bp.Duration.class, ImmutableMap.class, RetrySettings.class);
+        Arrays.asList(
+            org.threeten.bp.Duration.class,
+            ImmutableMap.class,
+            ImmutableSet.class,
+            Lists.class,
+            RetrySettings.class,
+            StatusCode.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(

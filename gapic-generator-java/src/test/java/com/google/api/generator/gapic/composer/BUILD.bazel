@@ -28,6 +28,7 @@ filegroup(
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
+        "//:rpc_java_proto",
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
@@ -35,6 +36,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+        "@com_google_api_gax_java//jar",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
