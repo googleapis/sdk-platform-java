@@ -113,13 +113,11 @@ public class ServiceStubSettingsClassComposer {
   private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
-
   private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
       "unaryMethodSettingsBuilders";
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
-
   private static final String STUB_PATTERN = "%sStub";
   private static final String SETTINGS_LITERAL = "Settings";
 
@@ -165,7 +163,8 @@ public class ServiceStubSettingsClassComposer {
                 createClassStatements(
                     service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, types))
             .setMethods(createClassMethods(service, methodSettingsMemberVarExprs, types))
-            .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
+            .setNestedClasses(
+                Arrays.asList(createNestedBuilderClass(service, serviceConfig, types)))
             .build();
     return GapicClass.create(GapicClass.Kind.STUB, classDef);
   }
@@ -285,7 +284,6 @@ public class ServiceStubSettingsClassComposer {
     // TODO(miraleung): Add a test case for several such statements.
     List<Expr> descExprs = new ArrayList<>();
     List<Expr> factoryExprs = new ArrayList<>();
-
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
         continue;
@@ -309,7 +307,6 @@ public class ServiceStubSettingsClassComposer {
         Preconditions.checkState(
             field != null,
             String.format("Null field found for message %s", pagedResponseMessage.name()));
-
         if (field.isRepeated()) {
           // Field is currently a List-type.
           Preconditions.checkState(
@@ -337,7 +334,6 @@ public class ServiceStubSettingsClassComposer {
                   .build());
       String pageStrDescVarName =
           String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
-
       VariableExpr pagedListDescVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(pagedListDescType).setName(pageStrDescVarName).build());
@@ -1074,7 +1070,7 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static ClassDefinition createNestedBuilderClass(
-      Service service, Map<String, TypeNode> types) {
+      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
     String thisClassName = getThisClassName(service.name());
     TypeNode outerThisClassType = types.get(thisClassName);
 
@@ -1102,22 +1098,25 @@ public class ServiceStubSettingsClassComposer {
         .setIsStatic(true)
         .setName(className)
         .setExtendsType(extendsType)
-        .setStatements(createNestedClassStatements(nestedMethodSettingsMemberVarExprs))
+        .setStatements(
+            createNestedClassStatements(service, serviceConfig, nestedMethodSettingsMemberVarExprs))
         .setMethods(createNestedClassMethods(nestedMethodSettingsMemberVarExprs, types))
         .build();
   }
 
   private static List<Statement> createNestedClassStatements(
+      Service service,
+      GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
-    List<VariableExpr> varDeclExprs = new ArrayList<>();
+    List<Expr> exprs = new ArrayList<>();
 
     // Declare unaryMethodSettingsBuilders.
     Function<VariableExpr, VariableExpr> varDeclFn =
         v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
-    varDeclExprs.add(varDeclFn.apply(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR));
+    exprs.add(varDeclFn.apply(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR));
 
     // Declare all the settings fields.
-    varDeclExprs.addAll(
+    exprs.addAll(
         nestedMethodSettingsMemberVarExprs.values().stream()
             .map(v -> varDeclFn.apply(v))
             .collect(Collectors.toList()));
@@ -1131,12 +1130,23 @@ public class ServiceStubSettingsClassComposer {
                 .setIsStatic(true)
                 .setIsFinal(true)
                 .build();
-    varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR));
+    Function<Expr, Statement> exprStatementFn = e -> ExprStatement.withExpr(e);
+
+    List<Statement> statements = new ArrayList<>();
+    statements.addAll(
+        exprs.stream().map(e -> exprStatementFn.apply(e)).collect(Collectors.toList()));
+    statements.add(
+        exprStatementFn.apply((varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR))));
 
     // Declare the RETRY_PARAM_DEFINITIONS field.
-    varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+    statements.add(
+        exprStatementFn.apply(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
 
-    return varDeclExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    statements.add(
+        RetrySettingsComposer.createRetryParamDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+
+    return statements;
   }
 
   private static List<MethodDefinition> createNestedClassMethods(
