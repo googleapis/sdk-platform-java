@@ -1121,7 +1121,7 @@ public class ServiceStubSettingsClassComposer {
             .map(v -> varDeclFn.apply(v))
             .collect(Collectors.toList()));
 
-    // Declare the RETRYABLE_CODE_DEFNITIONS field.
+    // Declare the RETRYABLE_CODE_DEFINITIONS field.
     Function<VariableExpr, VariableExpr> varStaticDeclFn =
         v ->
             v.toBuilder()
@@ -1135,8 +1135,13 @@ public class ServiceStubSettingsClassComposer {
     List<Statement> statements = new ArrayList<>();
     statements.addAll(
         exprs.stream().map(e -> exprStatementFn.apply(e)).collect(Collectors.toList()));
+
+    // Declare and set the RETRYABLE_CODE_DEFINITIONS field.
     statements.add(
         exprStatementFn.apply((varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR))));
+    statements.add(
+        RetrySettingsComposer.createRetryCodesDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR));
 
     // Declare the RETRY_PARAM_DEFINITIONS field.
     statements.add(

@@ -13,6 +13,7 @@ java_library(
     deps = [
         "//:longrunning_java_proto",
         "//:monitored_resource_java_proto",
+        "//:rpc_java_proto",
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
