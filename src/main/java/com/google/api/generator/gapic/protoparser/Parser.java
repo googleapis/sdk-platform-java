@@ -74,7 +74,7 @@ public class Parser {
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
     Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
 
-    // TODO(miraleung): Actually parse the yaml file.
+    // TODO(miraleung): Actually pars the yaml file.
     Optional<String> gapicYamlConfigPathOpt =
         PluginArgumentParser.parseGapicYamlConfigPath(request);
     String gapicYamlConfigPath =
