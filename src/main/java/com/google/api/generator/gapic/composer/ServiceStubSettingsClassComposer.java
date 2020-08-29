@@ -80,6 +80,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
@@ -101,6 +102,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -1198,6 +1200,20 @@ public class ServiceStubSettingsClassComposer {
       Method.Stream streamKind = method.stream();
       if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
         continue;
+      }
+      if (serviceConfig.hasBatchingSetting(service, method)) {
+        Optional<GapicBatchingSettings> batchingSettingOpt =
+            serviceConfig.getBatchingSetting(service, method);
+        Preconditions.checkState(
+            batchingSettingOpt.isPresent(),
+            String.format(
+                "No batching setting found for service %s, method %s",
+                service.name(), method.name()));
+        String settingsGetterMethodName =
+            String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
+        bodyExprs.add(
+            RetrySettingsComposer.createBatchingBuilderSettingsExpr(
+                settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr));
       }
       bodyExprs.add(
           RetrySettingsComposer.createSimpleBuilderSettingsExpr(
