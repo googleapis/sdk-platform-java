@@ -21,6 +21,7 @@ import io.grpc.serviceconfig.MethodConfig.RetryPolicy;
 import io.grpc.serviceconfig.ServiceConfig;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -68,7 +69,8 @@ public class GapicServiceConfig {
             Collectors.toMap(
                 m -> getRetryParamsName(service, m),
                 m -> RetrySettings.with(timeoutLookup(service, m), retryPolicyLookup(service, m)),
-                (r1, r2) -> r2));
+                (r1, r2) -> r2,
+                LinkedHashMap::new));
   }
 
   public Map<String, List<Code>> getAllRetryCodes(Service service) {
@@ -77,7 +79,8 @@ public class GapicServiceConfig {
             Collectors.toMap(
                 m -> getRetryCodeName(service, m),
                 m -> retryCodesLookup(service, m),
-                (l1, l2) -> l2));
+                (l1, l2) -> l2,
+                LinkedHashMap::new));
   }
 
   public String getRetryCodeName(Service service, Method method) {
