@@ -1193,6 +1193,19 @@ public class ServiceStubSettingsClassComposer {
               NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
               NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
     }
+    for (Method method : service.methods()) {
+      if (!method.hasLro()) {
+        continue;
+      }
+      bodyExprs.add(
+          RetrySettingsComposer.createLroSettingsBuilderExpr(
+              service,
+              serviceConfig,
+              method,
+              builderVarExpr,
+              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+    }
 
     return MethodDefinition.builder()
         .setScope(ScopeNode.PRIVATE)
