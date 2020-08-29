@@ -32,7 +32,9 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
+import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -52,6 +54,12 @@ public class RetrySettingsComposer {
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
   private static final TypeNode STATUS_CODE_CODE_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(StatusCode.Code.class));
+
+  // TODO(miraleung): Determine defaults here.
+  private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 9999;
+  private static final long LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1;
+  private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 8888;
+  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLIS = 7777;
 
   public static BlockStatement createRetryParamDefinitionsBlock(
       Service service,
@@ -175,6 +183,52 @@ public class RetrySettingsComposer {
         .setBody(
             bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
+  }
+
+  public static Expr createSimpleBuilderSettingsExpr(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Method method,
+      VariableExpr builderVarExpr,
+      VariableExpr retryableCodeDefsVarExpr,
+      VariableExpr retryParamDefsVarExpr) {
+    String codeName = serviceConfig.getRetryCodeName(service, method);
+    String retryParamName = serviceConfig.getRetryParamsName(service, method);
+    String settingsGetterMethodName =
+        String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
+
+    Expr builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName(settingsGetterMethodName)
+            .build();
+
+    Function<String, ValueExpr> strValExprFn =
+        s -> ValueExpr.withValue(StringObjectValue.withValue(s));
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setRetryableCodes")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(retryableCodeDefsVarExpr)
+                    .setMethodName("get")
+                    .setArguments(strValExprFn.apply(codeName))
+                    .build())
+            .build();
+    builderSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderSettingsExpr)
+            .setMethodName("setRetrySettings")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(retryParamDefsVarExpr)
+                    .setMethodName("get")
+                    .setArguments(strValExprFn.apply(retryParamName))
+                    .build())
+            .build();
+
+    return builderSettingsExpr;
   }
 
   private static Expr createRetryCodeDefinitionExpr(
