@@ -1078,7 +1078,6 @@ public class ServiceStubSettingsClassComposer {
     Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
         createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ true);
 
-
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
         .setIsNested(true)
