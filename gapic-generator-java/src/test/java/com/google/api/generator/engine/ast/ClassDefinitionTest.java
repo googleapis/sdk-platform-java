@@ -45,6 +45,34 @@ public class ClassDefinitionTest {
   }
 
   @Test
+  public void validClassDefinition_exprAndBlockStatements() {
+    ClassDefinition.builder()
+        .setName("LibraryServiceStub")
+        .setIsNested(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setStatements(
+            Arrays.asList(
+                BlockStatement.builder().setIsStatic(true).build(),
+                ExprStatement.withExpr(
+                    AssignmentExpr.builder()
+                        .setVariableExpr(
+                            VariableExpr.builder()
+                                .setIsDecl(true)
+                                .setScope(ScopeNode.PRIVATE)
+                                .setVariable(
+                                    Variable.builder().setType(TypeNode.INT).setName("x").build())
+                                .build())
+                        .setValueExpr(
+                            MethodInvocationExpr.builder()
+                                .setMethodName("foobar")
+                                .setReturnType(TypeNode.INT)
+                                .build())
+                        .build())))
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
   public void validClassDefinition_nestedBasic() {
     ClassDefinition.builder()
         .setName("LibraryServiceStub")
