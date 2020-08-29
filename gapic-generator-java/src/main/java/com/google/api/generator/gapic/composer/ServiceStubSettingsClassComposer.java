@@ -149,7 +149,7 @@ public class ServiceStubSettingsClassComposer {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
-        createClassMemberVarExprs(service, types);
+        createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ false);
     String className = getThisClassName(service.name());
 
     ClassDefinition classDef =
@@ -186,22 +186,22 @@ public class ServiceStubSettingsClassComposer {
             .copyAndSetGenerics(Arrays.asList(thisClassType.reference())));
   }
 
-  private static Map<String, VariableExpr> createClassMemberVarExprs(
-      Service service, Map<String, TypeNode> types) {
+  private static Map<String, VariableExpr> createMethodSettingsClassMemberVarExprs(
+      Service service, Map<String, TypeNode> types, boolean isNestedClass) {
     // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
     // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
-      TypeNode settingsType = getCallSettingsType(method, types);
+      TypeNode settingsType = getCallSettingsType(method, types, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
       varExprs.put(
           varName,
           VariableExpr.withVariable(
               Variable.builder().setType(settingsType).setName(varName).build()));
       if (method.hasLro()) {
-        settingsType = getOperationCallSettingsType(method);
+        settingsType = getOperationCallSettingsType(method, isNestedClass);
         varName = JavaStyle.toLowerCamelCase(String.format("%sOperationSettings", method.name()));
         varExprs.put(
             varName,
@@ -1075,6 +1075,9 @@ public class ServiceStubSettingsClassComposer {
                         .collect(Collectors.toList()))
                 .build());
 
+    Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
+        createMethodSettingsClassMemberVarExprs(service, types, /* isNestedClass= */ true);
+
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
         .setIsNested(true)
@@ -1082,16 +1085,26 @@ public class ServiceStubSettingsClassComposer {
         .setIsStatic(true)
         .setName(className)
         .setExtendsType(extendsType)
-        .setStatements(createNestedClassStatements())
+        .setStatements(createNestedClassStatements(nestedMethodSettingsMemberVarExprs))
         .build();
   }
 
-  private static List<Statement> createNestedClassStatements() {
+  private static List<Statement> createNestedClassStatements(
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
     List<VariableExpr> varDeclExprs = new ArrayList<>();
+
+    // Declare unaryMethodSettingsBuilders.
     Function<VariableExpr, VariableExpr> varDeclFn =
         v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
     varDeclExprs.add(varDeclFn.apply(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR));
 
+    // Declare all the settings fields.
+    varDeclExprs.addAll(
+        nestedMethodSettingsMemberVarExprs.values().stream()
+            .map(v -> varDeclFn.apply(v))
+            .collect(Collectors.toList()));
+
+    // Declare the RETRYABLE_CODE_DEFNITIONS field.
     Function<VariableExpr, VariableExpr> varStaticDeclFn =
         v ->
             v.toBuilder()
@@ -1101,6 +1114,8 @@ public class ServiceStubSettingsClassComposer {
                 .setIsFinal(true)
                 .build();
     varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR));
+
+    // Declare the RETRY_PARAM_DEFINITIONS field.
     varDeclExprs.add(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
 
     return varDeclExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
@@ -1303,22 +1318,35 @@ public class ServiceStubSettingsClassComposer {
     return String.format(GRPC_SERVICE_STUB_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
   }
 
-  private static TypeNode getCallSettingsType(Method method, Map<String, TypeNode> types) {
+  private static TypeNode getCallSettingsType(
+      Method method, Map<String, TypeNode> types, final boolean isSettingsBuilder) {
+    Function<Class, TypeNode> typeMakerFn =
+        clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
     TypeNode callSettingsType =
         method.isPaged()
-            ? STATIC_TYPES.get("PagedCallSettings")
-            : STATIC_TYPES.get("UnaryCallSettings");
+            ? typeMakerFn.apply(
+                isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
+            : typeMakerFn.apply(
+                isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
 
     // Streaming takes precendence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
-        callSettingsType = STATIC_TYPES.get("ServerStreamingCallSettings");
+        callSettingsType =
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? ServerStreamingCallSettings.Builder.class
+                    : ServerStreamingCallSettings.class);
         break;
       case CLIENT:
         // Fall through.
       case BIDI:
-        callSettingsType = STATIC_TYPES.get("StreamingCallSettings");
+        callSettingsType =
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? StreamingCallSettings.Builder.class
+                    : StreamingCallSettings.class);
         break;
       case NONE:
         // Fall through.
@@ -1335,7 +1363,7 @@ public class ServiceStubSettingsClassComposer {
     return TypeNode.withReference(callSettingsType.reference().copyAndSetGenerics(generics));
   }
 
-  private static TypeNode getOperationCallSettingsType(Method method) {
+  private static TypeNode getOperationCallSettingsType(Method method, boolean isSettingsBuilder) {
     Preconditions.checkState(
         method.hasLro(),
         String.format("Cannot get OperationCallSettings for non-LRO method %s", method.name()));
@@ -1344,6 +1372,12 @@ public class ServiceStubSettingsClassComposer {
     generics.add(method.lro().responseType().reference());
     generics.add(method.lro().metadataType().reference());
     return TypeNode.withReference(
-        STATIC_TYPES.get("OperationCallSettings").reference().copyAndSetGenerics(generics));
+        ConcreteReference.builder()
+            .setClazz(
+                isSettingsBuilder
+                    ? OperationCallSettings.Builder.class
+                    : OperationCallSettings.class)
+            .setGenerics(generics)
+            .build());
   }
 }
