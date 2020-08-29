@@ -62,7 +62,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> configOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 

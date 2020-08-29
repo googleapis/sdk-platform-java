@@ -81,7 +81,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "retrying_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -117,7 +118,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -157,7 +159,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "retrying_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -193,7 +196,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -232,7 +236,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -313,7 +318,8 @@ public class RetrySettingsComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 

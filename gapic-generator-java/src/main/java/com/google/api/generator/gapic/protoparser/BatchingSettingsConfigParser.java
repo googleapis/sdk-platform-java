@@ -45,7 +45,14 @@ public class BatchingSettingsConfigParser {
   private static String YAML_KEY_BATCHING_FLOW_CONTROL_LIMIT_EXCEEDED_BEHAVIOR =
       "flow_control_limit_exceeded_behavior";
 
-  public static Optional<List<GapicBatchingSettings>> parse(String gapicYamlConfigFilePath) {
+  public static Optional<List<GapicBatchingSettings>> parse(
+      Optional<String> gapicYamlConfigFilePathOpt) {
+    return gapicYamlConfigFilePathOpt.isPresent()
+        ? parse(gapicYamlConfigFilePathOpt.get())
+        : Optional.empty();
+  }
+
+  static Optional<List<GapicBatchingSettings>> parse(String gapicYamlConfigFilePath) {
     if (Strings.isNullOrEmpty(gapicYamlConfigFilePath)
         || !(new File(gapicYamlConfigFilePath)).exists()) {
       return Optional.empty();

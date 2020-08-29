@@ -45,6 +45,12 @@ public abstract class GapicBatchingSettings {
 
   public abstract FlowControlLimitExceededBehavior flowControlLimitExceededBehavior();
 
+  public boolean matches(Service service, Method method) {
+    return protoPakkage().equals(service.protoPakkage())
+        && serviceName().equals(service.name())
+        && methodName().equals(method.name());
+  }
+
   public static Builder builder() {
     return new AutoValue_GapicBatchingSettings.Builder()
         .setFlowControlLimitExceededBehavior(FlowControlLimitExceededBehavior.IGNORE);
