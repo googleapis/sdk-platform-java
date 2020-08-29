@@ -63,12 +63,33 @@ public class GapicServiceConfig {
     return new GapicServiceConfig(methodConfigs, methodConfigTable);
   }
 
-  public Map<String, RetrySettings> getAllRetrySettings(Service service) {
+  public Map<String, GapicRetrySettings> getAllGapicRetrySettings(Service service) {
     return service.methods().stream()
         .collect(
             Collectors.toMap(
                 m -> getRetryParamsName(service, m),
-                m -> RetrySettings.with(timeoutLookup(service, m), retryPolicyLookup(service, m)),
+                m -> {
+                  GapicRetrySettings.Kind kind = GapicRetrySettings.Kind.FULL;
+                  Optional<Integer> retryPolicyIndexOpt = retryPolicyIndexLookup(service, m);
+                  if (!retryPolicyIndexOpt.isPresent()) {
+                    kind = GapicRetrySettings.Kind.NONE;
+                  } else {
+                    MethodConfig methodConfig = methodConfigs.get(retryPolicyIndexOpt.get());
+                    if (!methodConfig.hasTimeout() && !methodConfig.hasRetryPolicy()) {
+                      kind = GapicRetrySettings.Kind.NONE;
+                    } else {
+                      kind =
+                          methodConfig.hasRetryPolicy()
+                              ? GapicRetrySettings.Kind.FULL
+                              : GapicRetrySettings.Kind.NO_RETRY;
+                    }
+                  }
+                  return GapicRetrySettings.builder()
+                      .setTimeout(timeoutLookup(service, m))
+                      .setRetryPolicy(retryPolicyLookup(service, m))
+                      .setKind(kind)
+                      .build();
+                },
                 (r1, r2) -> r2,
                 LinkedHashMap::new));
   }

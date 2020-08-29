@@ -34,7 +34,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.threeten.bp.Duration;
 
 public class RetrySettingsComposer {
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
@@ -103,7 +102,7 @@ public class RetrySettingsComposer {
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
-        Arrays.asList(Duration.class, ImmutableMap.class, RetrySettings.class);
+        Arrays.asList(org.threeten.bp.Duration.class, ImmutableMap.class, RetrySettings.class);
     return concreteClazzes.stream()
         .collect(
             Collectors.toMap(

@@ -52,7 +52,7 @@ public class GapicServiceConfigTest {
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
-    Map<String, RetrySettings> retrySettings = serviceConfig.getAllRetrySettings(service);
+    Map<String, GapicRetrySettings> retrySettings = serviceConfig.getAllGapicRetrySettings(service);
     assertEquals(1, retrySettings.size());
     String retryParamsName = serviceConfig.getRetryParamsName(service, service.methods().get(0));
     assertEquals("no_retry_params", retryParamsName);
@@ -60,6 +60,7 @@ public class GapicServiceConfigTest {
     assertEquals(GapicServiceConfig.EMPTY_TIMEOUT, retrySettings.get(retryParamsName).timeout());
     assertEquals(
         GapicServiceConfig.EMPTY_RETRY_POLICY, retrySettings.get(retryParamsName).retryPolicy());
+    assertEquals(GapicRetrySettings.Kind.NONE, retrySettings.get(retryParamsName).kind());
 
     Map<String, List<Code>> retryCodes = serviceConfig.getAllRetryCodes(service);
     assertEquals(1, retryCodes.size());
@@ -80,7 +81,7 @@ public class GapicServiceConfigTest {
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
-    Map<String, RetrySettings> retrySettings = serviceConfig.getAllRetrySettings(service);
+    Map<String, GapicRetrySettings> retrySettings = serviceConfig.getAllGapicRetrySettings(service);
     assertEquals(2, retrySettings.size());
     Map<String, List<Code>> retryCodes = serviceConfig.getAllRetryCodes(service);
     assertEquals(2, retryCodes.size());
@@ -90,9 +91,10 @@ public class GapicServiceConfigTest {
     assertThat(method).isNotNull();
     String retryParamsName = serviceConfig.getRetryParamsName(service, method);
     assertEquals("retry_policy_1_params", retryParamsName);
-    RetrySettings settings = retrySettings.get(retryParamsName);
+    GapicRetrySettings settings = retrySettings.get(retryParamsName);
     assertThat(settings).isNotNull();
     assertEquals(10, settings.timeout().getSeconds());
+    assertEquals(GapicRetrySettings.Kind.FULL, settings.kind());
 
     MethodConfig.RetryPolicy retryPolicy = settings.retryPolicy();
     assertEquals(3, retryPolicy.getMaxAttempts());
@@ -115,6 +117,7 @@ public class GapicServiceConfigTest {
     assertThat(settings).isNotNull();
     assertEquals(5, settings.timeout().getSeconds());
     assertEquals(GapicServiceConfig.EMPTY_RETRY_POLICY, settings.retryPolicy());
+    assertEquals(GapicRetrySettings.Kind.NO_RETRY, settings.kind());
 
     retryCodeName = serviceConfig.getRetryCodeName(service, method);
     assertEquals("no_retry_0_codes", retryCodeName);
