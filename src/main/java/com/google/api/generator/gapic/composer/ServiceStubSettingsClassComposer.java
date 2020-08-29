@@ -1223,6 +1223,7 @@ public class ServiceStubSettingsClassComposer {
       Service service,
       Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
       Map<String, TypeNode> types) {
+
     TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
 
     List<MethodDefinition> ctorMethods = new ArrayList<>();
