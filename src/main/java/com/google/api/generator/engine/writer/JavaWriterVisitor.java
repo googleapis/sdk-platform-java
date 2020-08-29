@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.OperatorKind;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
@@ -52,12 +53,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-<<<<<<< HEAD
-import com.google.api.generator.engine.ast.OperatorKind;
-=======
-import com.google.api.generator.engine.lexicon.OperatorKind;
-import com.google.common.base.Strings;
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -393,56 +388,31 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
-<<<<<<< HEAD
     arithmeticOperationExpr.lhsExpression().accept(this);
     space();
     operator(arithmeticOperationExpr.operatorKind());
     space();
     arithmeticOperationExpr.rhsExpression().accept(this);
-=======
-    arithmeticOperationExpr.firstExpression().accept(this);
-    space();
-    operator(arithmeticOperationExpr.operatorKind());
-    space();
-    arithmeticOperationExpr.secondExpression().accept(this);
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
   }
 
   @Override
   public void visit(UnaryOperationExpr unaryOperationExpr) {
-<<<<<<< HEAD
     if (unaryOperationExpr.operatorKind().isPostfixOperator()) {
       unaryOperationExpr.expression().accept(this);
       operator(unaryOperationExpr.operatorKind());
     } else {
       operator(unaryOperationExpr.operatorKind());
       unaryOperationExpr.expression().accept(this);
-=======
-    if (unaryOperationExpr.isPostfixOperator()) {
-      unaryOperationExpr.firstExpression().accept(this);
-      operator(unaryOperationExpr.operatorKind());
-    } else {
-      operator(unaryOperationExpr.operatorKind());
-      unaryOperationExpr.firstExpression().accept(this);
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
     }
   }
 
   @Override
   public void visit(RelationalOperationExpr relationalOperationExpr) {
-<<<<<<< HEAD
     relationalOperationExpr.lhsExpression().accept(this);
     space();
     operator(relationalOperationExpr.operatorKind());
     space();
     relationalOperationExpr.rhsExpression().accept(this);
-=======
-    relationalOperationExpr.firstExpression().accept(this);
-    space();
-    operator(relationalOperationExpr.operatorKind());
-    space();
-    relationalOperationExpr.secondExpression().accept(this);
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -900,11 +870,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       case RELATIONAL_NOT_EQUAL_TO:
         buffer.append(NOT_EQUAL_TO);
         break;
-<<<<<<< HEAD
       case UNARY_POST_INCREMENT:
-=======
-      case UNARY_INCREMENT:
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
         buffer.append(INCREMENT);
         break;
       case LOGICAL_NOT:

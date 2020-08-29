@@ -1965,9 +1965,9 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-<<<<<<< HEAD
   public void writeArithmeticOperationExpr_concatStringNumber() {
-    ValueExpr valueExprNumber = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
+    ValueExpr valueExprNumber =
+        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
     ValueExpr valueExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
     ArithmeticOperationExpr arithmeticOperationExpr =
         ArithmeticOperationExpr.concatWithExprs(valueExpr, valueExprNumber);
@@ -1976,8 +1976,6 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-=======
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
   public void writeUnaryOperationExpr_postfixIncrement() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());

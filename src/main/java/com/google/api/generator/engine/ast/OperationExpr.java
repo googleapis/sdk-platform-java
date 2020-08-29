@@ -14,18 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
-<<<<<<< HEAD
 public interface OperationExpr extends Expr {
-=======
-import com.google.api.generator.engine.lexicon.OperatorKind;
-import javax.annotation.Nullable;
-
-public interface OperationExpr extends Expr {
-  Expr firstExpression();
-
-  @Nullable
-  Expr secondExpression();
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 
   OperatorKind operatorKind();
 }

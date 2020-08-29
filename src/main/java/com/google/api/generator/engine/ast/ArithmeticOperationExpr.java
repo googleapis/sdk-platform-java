@@ -14,25 +14,15 @@
 
 package com.google.api.generator.engine.ast;
 
-<<<<<<< HEAD
-=======
-import com.google.api.generator.engine.lexicon.OperatorKind;
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
 @AutoValue
 public abstract class ArithmeticOperationExpr implements OperationExpr {
 
-<<<<<<< HEAD
   public abstract Expr lhsExpression();
 
   public abstract Expr rhsExpression();
-=======
-  public abstract Expr firstExpression();
-
-  public abstract Expr secondExpression();
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
 
   public abstract OperatorKind operatorKind();
 
@@ -45,13 +35,8 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
   public static ArithmeticOperationExpr concatWithExprs(Expr expr1, Expr expr2) {
     return builder()
-<<<<<<< HEAD
         .setLhsExpression(expr1)
         .setRhsExpression(expr2)
-=======
-        .setFirstExpression(expr1)
-        .setSecondExpression(expr2)
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
         .setOperatorKind(OperatorKind.ARITHMETIC_ADDITION)
         .setType(TypeNode.STRING)
         .build();
@@ -64,15 +49,9 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
   @AutoValue.Builder
   public abstract static class Builder {
     // private, required
-<<<<<<< HEAD
     abstract Builder setLhsExpression(Expr expr);
     // private, required
     abstract Builder setRhsExpression(Expr expr);
-=======
-    abstract Builder setFirstExpression(Expr expr);
-    // private, required
-    abstract Builder setSecondExpression(Expr expr);
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
     // private.
     abstract Builder setOperatorKind(OperatorKind operator);
     // private.
@@ -82,7 +61,6 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
     private ArithmeticOperationExpr build() {
       ArithmeticOperationExpr arithmeticOperationExpr = autoBuild();
-<<<<<<< HEAD
       Expr lhsExpr = arithmeticOperationExpr.lhsExpression();
       Expr rhsExpr = arithmeticOperationExpr.rhsExpression();
       TypeNode lhsExprType = lhsExpr.type();
@@ -106,33 +84,6 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
         // concat require at least one expression type is String
         Preconditions.checkState(
             lhsExprType.equals(TypeNode.STRING) || rhsExprType.equals(TypeNode.STRING), errorMsg);
-=======
-      Expr lhsExpr = arithmeticOperationExpr.firstExpression();
-      Expr rhsExpr = arithmeticOperationExpr.secondExpression();
-      TypeNode lhsExprType =
-          lhsExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) lhsExpr).returnType()
-              : lhsExpr.type();
-      TypeNode rhsExprType =
-          rhsExpr instanceof MethodInvocationExpr
-              ? ((MethodInvocationExpr) rhsExpr).returnType()
-              : rhsExpr.type();
-      OperatorKind operator = arithmeticOperationExpr.operatorKind();
-      // Concat operator type checks
-      if (operator.equals(OperatorKind.ARITHMETIC_ADDITION)
-          && arithmeticOperationExpr.type().equals(TypeNode.STRING)) {
-        final String errorMsg =
-            "Arithmetic operator "
-                + operator
-                + " can not be applied to "
-                + lhsExprType.toString()
-                + ", "
-                + rhsExprType.toString();
-        Preconditions.checkState(
-            lhsExprType.equals(TypeNode.STRING) || rhsExprType.equals(TypeNode.STRING), errorMsg);
-        Preconditions.checkState(
-            !lhsExprType.equals(TypeNode.VOID) && !rhsExprType.equals(TypeNode.VOID), errorMsg);
->>>>>>> 7bb0f2b43a3139b8cf31c4f55287d441f597e2aa
       }
       return arithmeticOperationExpr;
     }
