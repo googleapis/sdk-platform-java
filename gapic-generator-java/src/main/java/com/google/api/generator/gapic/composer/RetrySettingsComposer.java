@@ -14,6 +14,9 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.gax.batching.BatchingSettings;
+import com.google.api.gax.batching.FlowControlSettings;
+import com.google.api.gax.batching.FlowController;
 import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
@@ -34,6 +37,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
@@ -365,6 +369,108 @@ public class RetrySettingsComposer {
     return builderSettingsExpr;
   }
 
+  public static Expr createBatchingBuilderSettingsExpr(
+      String settingsGetterMethodName,
+      GapicBatchingSettings batchingSettings,
+      VariableExpr builderVarExpr) {
+
+    Expr batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setElementCountThreshold")
+            .setArguments(toValExpr(batchingSettings.elementCountThreshold()))
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setRequestByteThreshold")
+            .setArguments(toValExpr(batchingSettings.requestByteThreshold()))
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setDelayThreshold")
+            .setArguments(
+                createDurationOfMillisExpr(toValExpr(batchingSettings.delayThresholdMillis())))
+            .build();
+
+    // FlowControlSettings.
+    Expr flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("FlowControlSettings"))
+            .setMethodName("newBuilder")
+            .build();
+    if (batchingSettings.flowControlElementLimit() != null) {
+      flowControlSettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(flowControlSettingsExpr)
+              .setMethodName("setMaxOutstandingElementCount")
+              .setArguments(toValExpr(batchingSettings.flowControlElementLimit()))
+              .build();
+    }
+    if (batchingSettings.flowControlByteLimit() != null) {
+      flowControlSettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(flowControlSettingsExpr)
+              .setMethodName("setMaxOutstandingRequestBytes")
+              .setArguments(toValExpr(batchingSettings.flowControlByteLimit()))
+              .build();
+    }
+    flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(flowControlSettingsExpr)
+            .setMethodName("setLimitExceededBehavior")
+            .setArguments(
+                EnumRefExpr.builder()
+                    .setType(STATIC_TYPES.get("LimitExceededBehavior"))
+                    .setName(
+                        JavaStyle.toUpperCamelCase(
+                            batchingSettings
+                                .flowControlLimitExceededBehavior()
+                                .name()
+                                .toLowerCase()))
+                    .build())
+            .build();
+    flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(flowControlSettingsExpr)
+            .setMethodName("build")
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setFlowControlSettings")
+            .setArguments(flowControlSettingsExpr)
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("build")
+            .build();
+
+    // Put everything together.
+    Expr builderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName(settingsGetterMethodName)
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(builderExpr)
+        .setMethodName("setBatchingSettings")
+        .setArguments(batchingSettingsBuilderExpr)
+        .build();
+  }
+
   private static Expr createRetryCodeDefinitionExpr(
       String codeName, List<Code> retryCodes, VariableExpr definitionsVarExpr) {
     // Construct something like `definitions.put("code_name",
@@ -600,7 +706,10 @@ public class RetrySettingsComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
+            BatchingSettings.class,
             org.threeten.bp.Duration.class,
+            FlowControlSettings.class,
+            FlowController.LimitExceededBehavior.class,
             ImmutableMap.class,
             ImmutableSet.class,
             Lists.class,
