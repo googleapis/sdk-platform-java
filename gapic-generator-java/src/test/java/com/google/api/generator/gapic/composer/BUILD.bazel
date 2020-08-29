@@ -27,6 +27,20 @@ java_proto_library(
     ],
 )
 
+java_proto_library(
+    name = "pubsub_java_proto",
+    deps = [
+        "@com_google_googleapis//google/pubsub/v1:pubsub_proto",
+    ],
+)
+
+java_proto_library(
+    name = "common_resources_java_proto",
+    deps = [
+        "@com_google_googleapis//google/cloud:common_resources_proto",
+    ],
+)
+
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
@@ -36,7 +50,9 @@ java_proto_library(
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
+        ":common_resources_java_proto",
         ":logging_java_proto",
+        ":pubsub_java_proto",
         "//:rpc_java_proto",
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
