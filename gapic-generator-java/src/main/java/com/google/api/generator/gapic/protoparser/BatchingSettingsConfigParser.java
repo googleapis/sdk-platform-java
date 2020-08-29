@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import java.io.File;
@@ -52,6 +53,7 @@ public class BatchingSettingsConfigParser {
         : Optional.empty();
   }
 
+  @VisibleForTesting
   static Optional<List<GapicBatchingSettings>> parse(String gapicYamlConfigFilePath) {
     if (Strings.isNullOrEmpty(gapicYamlConfigFilePath)
         || !(new File(gapicYamlConfigFilePath)).exists()) {

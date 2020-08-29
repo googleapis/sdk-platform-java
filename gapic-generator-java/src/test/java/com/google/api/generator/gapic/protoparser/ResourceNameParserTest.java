@@ -191,17 +191,19 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void getVariableName_badEndingLiteral() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> ResourceNameParser.getVariableNameFromPattern("projects/{project}/badLiteral"));
+  public void getVariableName_singletonEnding() {
+    Optional<String> nameOpt =
+        ResourceNameParser.getVariableNameFromPattern("projects/{project}/cmekSettings");
+    assertTrue(nameOpt.isPresent());
+    assertEquals("cmekSettings", nameOpt.get());
   }
 
   @Test
   public void getVariableName_onlyLiterals() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> ResourceNameParser.getVariableNameFromPattern("projects/project/locations/location"));
+    Optional<String> nameOpt =
+        ResourceNameParser.getVariableNameFromPattern("projects/project/locations/location");
+    assertTrue(nameOpt.isPresent());
+    assertEquals("location", nameOpt.get());
   }
 
   @Test
