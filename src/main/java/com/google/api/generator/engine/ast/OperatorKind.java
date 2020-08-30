@@ -1,3 +1,5 @@
+// Copyright 2020 Google LLC
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -14,10 +16,10 @@ package com.google.api.generator.engine.ast;
 
 public enum OperatorKind {
   ARITHMETIC_ADDITION(true),
-  UNARY_POST_INCREMENT(true),
-  LOGICAL_NOT(false),
   RELATIONAL_EQUAL_TO(true),
-  RELATIONAL_NOT_EQUAL_TO(true);
+  RELATIONAL_NOT_EQUAL_TO(true),
+  UNARY_LOGICAL_NOT(false),
+  UNARY_POST_INCREMENT(true);
 
   private final boolean isPostfixOperator;
 

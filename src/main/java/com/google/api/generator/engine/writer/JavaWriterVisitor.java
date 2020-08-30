@@ -35,6 +35,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.OperatorKind;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -99,6 +100,13 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String TRY = "try";
   private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
+
+  // Operators
+  private static final String ADDITION = "+";
+  private static final String EQUAL_TO = "==";
+  private static final String NOT_EQUAL_TO = "!=";
+  private static final String INCREMENT = "++";
+  private static final String LOGICAL_NOT = "!";
 
   private final StringBuffer buffer = new StringBuffer();
   private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
@@ -821,5 +829,25 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void semicolon() {
     buffer.append(SEMICOLON);
+  }
+
+  private void operator(OperatorKind kind) {
+    switch (kind) {
+      case RELATIONAL_EQUAL_TO:
+        buffer.append(EQUAL_TO);
+        break;
+      case RELATIONAL_NOT_EQUAL_TO:
+        buffer.append(NOT_EQUAL_TO);
+        break;
+      case UNARY_POST_INCREMENT:
+        buffer.append(INCREMENT);
+        break;
+      case UNARY_LOGICAL_NOT:
+        buffer.append(LOGICAL_NOT);
+        break;
+      case ARITHMETIC_ADDITION:
+        buffer.append(ADDITION);
+        break;
+    }
   }
 }
