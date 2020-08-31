@@ -147,6 +147,8 @@ public class GapicServiceConfigTest {
             .setElementCountThreshold(1000)
             .setRequestByteThreshold(2000)
             .setDelayThresholdMillis(3000)
+            .setBatchedFieldName("name")
+            .setDiscriminatorFieldNames(Arrays.asList("severity"))
             .build();
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         Optional.of(Arrays.asList(origBatchingSetting));
