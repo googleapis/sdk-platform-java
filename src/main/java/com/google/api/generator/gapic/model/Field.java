@@ -26,6 +26,8 @@ public abstract class Field {
 
   public abstract boolean isRepeated();
 
+  public abstract boolean isMap();
+
   @Nullable
   public abstract ResourceReference resourceReference();
 
@@ -34,7 +36,7 @@ public abstract class Field {
   }
 
   public static Builder builder() {
-    return new AutoValue_Field.Builder().setIsRepeated(false);
+    return new AutoValue_Field.Builder().setIsRepeated(false).setIsMap(false);
   }
 
   @AutoValue.Builder
@@ -44,6 +46,8 @@ public abstract class Field {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setIsRepeated(boolean isRepeated);
+
+    public abstract Builder setIsMap(boolean isMap);
 
     public abstract Builder setResourceReference(ResourceReference resourceReference);
 
