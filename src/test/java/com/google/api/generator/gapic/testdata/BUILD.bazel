@@ -5,6 +5,11 @@ filegroup(
     srcs = glob(["*.json"]),
 )
 
+filegroup(
+    name = "gapic_config_files",
+    srcs = glob(["*_gapic.yaml"]),
+)
+
 proto_library(
     name = "showcase_proto",
     srcs = [

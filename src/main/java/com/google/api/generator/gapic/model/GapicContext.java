@@ -18,7 +18,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +36,7 @@ public abstract class GapicContext {
   public abstract ImmutableSet<ResourceName> helperResourceNames();
 
   @Nullable
-  public abstract ServiceConfig serviceConfig();
+  public abstract GapicServiceConfig serviceConfig();
 
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder();
@@ -53,7 +52,7 @@ public abstract class GapicContext {
 
     public abstract Builder setHelperResourceNames(Set<ResourceName> helperResourceNames);
 
-    public abstract Builder setServiceConfig(ServiceConfig serviceConfig);
+    public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
 
     public abstract GapicContext build();
   }

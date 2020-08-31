@@ -20,7 +20,9 @@ import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -46,7 +48,6 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -70,15 +71,15 @@ public class Parser {
   }
 
   public static GapicContext parse(CodeGeneratorRequest request) {
-    Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
-    String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
-    Optional<ServiceConfig> serviceConfigOpt = ServiceConfigParser.parseFile(serviceConfigPath);
-
-    // TODO(miraleung): Actually parse the yaml file.
     Optional<String> gapicYamlConfigPathOpt =
         PluginArgumentParser.parseGapicYamlConfigPath(request);
-    String gapicYamlConfigPath =
-        gapicYamlConfigPathOpt.isPresent() ? gapicYamlConfigPathOpt.get() : null;
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
+        BatchingSettingsConfigParser.parse(gapicYamlConfigPathOpt);
+
+    Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
+    String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(serviceConfigPath, batchingSettingsOpt);
 
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
@@ -345,10 +346,16 @@ public class Parser {
           isChildType
               ? ResourceReference.withChildType(childTypeString)
               : ResourceReference.withType(typeString);
-    } else if (fieldDescriptor.getName().equals(ResourceNameConstants.NAME_FIELD_NAME)
-        && messageOptions.hasExtension(ResourceProto.resource)) {
+    } else if (messageOptions.hasExtension(ResourceProto.resource)) {
       ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
-      resourceReference = ResourceReference.withType(protoResource.getType());
+      // aip.dev/4231.
+      String resourceFieldNameValue = ResourceNameConstants.NAME_FIELD_NAME;
+      if (!Strings.isNullOrEmpty(protoResource.getNameField())) {
+        resourceFieldNameValue = protoResource.getNameField();
+      }
+      if (fieldDescriptor.getName().equals(resourceFieldNameValue)) {
+        resourceReference = ResourceReference.withType(protoResource.getType());
+      }
     }
 
     return Field.builder()

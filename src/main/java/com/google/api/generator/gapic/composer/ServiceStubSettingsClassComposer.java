@@ -52,7 +52,9 @@ import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -61,12 +63,15 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.SuperObjectValue;
+import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -74,7 +79,10 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
@@ -86,7 +94,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
-import io.grpc.serviceconfig.ServiceConfig;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,6 +101,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -101,11 +110,20 @@ import org.threeten.bp.Duration;
 
 // TODO(miraleung): Refactor ClassComposer's interface.
 public class ServiceStubSettingsClassComposer {
+  private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
+  private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
+  private static final String PAGE_STR_DESC_PATTERN = "%s_PAGE_STR_DESC";
+  private static final String PAGED_RESPONSE_FACTORY_PATTERN = "%s_PAGE_STR_FACT";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String NESTED_BUILDER_CLASS_NAME = "Builder";
-  private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
+  private static final String NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME =
+      "unaryMethodSettingsBuilders";
+  private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
+      "RETRYABLE_CODE_DEFINITIONS";
+  private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
   private static final String STUB_PATTERN = "%sStub";
+  private static final String SETTINGS_LITERAL = "Settings";
 
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
@@ -117,6 +135,12 @@ public class ServiceStubSettingsClassComposer {
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
   private static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
+  private static final VariableExpr NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR =
+      createNestedUnaryMethodSettingsBuildersVarExpr();
+  private static final VariableExpr NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR =
+      createNestedRetryableCodeDefinitionsVarExpr();
+  private static final VariableExpr NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR =
+      createNestedRetryParamDefinitionsVarExpr();
 
   private ServiceStubSettingsClassComposer() {}
 
@@ -125,11 +149,12 @@ public class ServiceStubSettingsClassComposer {
   }
 
   public GapicClass generate(
-      Service service, ServiceConfig serviceConfig, Map<String, Message> messageTypes) {
+      Service service, GapicServiceConfig serviceConfig, Map<String, Message> messageTypes) {
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
-        createClassMemberVarExprs(service, types);
+        createMethodSettingsClassMemberVarExprs(
+            service, serviceConfig, types, /* isNestedClass= */ false);
     String className = getThisClassName(service.name());
 
     ClassDefinition classDef =
@@ -139,9 +164,12 @@ public class ServiceStubSettingsClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(createExtendsType(service, types))
-            .setStatements(createClassStatements(service, methodSettingsMemberVarExprs, types))
+            .setStatements(
+                createClassStatements(
+                    service, serviceConfig, methodSettingsMemberVarExprs, messageTypes, types))
             .setMethods(createClassMethods(service, methodSettingsMemberVarExprs, types))
-            .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
+            .setNestedClasses(
+                Arrays.asList(createNestedBuilderClass(service, serviceConfig, types)))
             .build();
     return GapicClass.create(GapicClass.Kind.STUB, classDef);
   }
@@ -164,22 +192,27 @@ public class ServiceStubSettingsClassComposer {
             .copyAndSetGenerics(Arrays.asList(thisClassType.reference())));
   }
 
-  private static Map<String, VariableExpr> createClassMemberVarExprs(
-      Service service, Map<String, TypeNode> types) {
+  private static Map<String, VariableExpr> createMethodSettingsClassMemberVarExprs(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, TypeNode> types,
+      boolean isNestedClass) {
     // Maintain insertion order.
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
     // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
-      TypeNode settingsType = getCallSettingsType(method, types);
+      boolean hasBatchingSettings = serviceConfig.hasBatchingSetting(service, method);
+      TypeNode settingsType =
+          getCallSettingsType(method, types, hasBatchingSettings, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
       varExprs.put(
           varName,
           VariableExpr.withVariable(
               Variable.builder().setType(settingsType).setName(varName).build()));
       if (method.hasLro()) {
-        settingsType = getOperationCallSettingsType(method);
+        settingsType = getOperationCallSettingsType(method, isNestedClass);
         varName = JavaStyle.toLowerCamelCase(String.format("%sOperationSettings", method.name()));
         varExprs.put(
             varName,
@@ -193,9 +226,11 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<Statement> createClassStatements(
       Service service,
+      GapicServiceConfig serviceConfig,
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
+      Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
-    List<Expr> memberVars = new ArrayList<>();
+    List<Expr> memberVarExprs = new ArrayList<>();
 
     // Assign DEFAULT_SERVICE_SCOPES.
     VariableExpr defaultServiceScopesDeclVarExpr =
@@ -228,14 +263,14 @@ public class ServiceStubSettingsClassComposer {
             .setReturnType(DEFAULT_SERVICE_SCOPES_VAR_EXPR.type())
             .build();
 
-    memberVars.add(
+    memberVarExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(defaultServiceScopesDeclVarExpr)
             .setValueExpr(listBuilderExpr)
             .build());
 
     // Declare settings members.
-    memberVars.addAll(
+    memberVarExprs.addAll(
         methodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
@@ -246,8 +281,405 @@ public class ServiceStubSettingsClassComposer {
                         .build())
             .collect(Collectors.toList()));
 
-    // TODO(miraleung): Fill this out.
-    return memberVars.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    memberVarExprs.addAll(
+        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types));
+    return memberVarExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  private static List<Expr> createPagingStaticAssignExprs(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
+    // TODO(miraleung): Add a test case for several such statements.
+    List<Expr> descExprs = new ArrayList<>();
+    List<Expr> factoryExprs = new ArrayList<>();
+    for (Method method : service.methods()) {
+      if (!method.isPaged()) {
+        continue;
+      }
+
+      // Find the repeated type.
+      String pagedResponseMessageKey =
+          JavaStyle.toUpperCamelCase(method.outputType().reference().name());
+      if (method.hasLro()) {
+        pagedResponseMessageKey =
+            JavaStyle.toUpperCamelCase(method.lro().responseType().reference().name());
+      }
+      Message pagedResponseMessage = messageTypes.get(pagedResponseMessageKey);
+      Preconditions.checkNotNull(
+          pagedResponseMessage,
+          String.format(
+              "No method found for message type %s for method %s among %s",
+              pagedResponseMessageKey, method.name(), messageTypes.keySet()));
+      TypeNode repeatedResponseType = null;
+      for (Field field : pagedResponseMessage.fields()) {
+        Preconditions.checkState(
+            field != null,
+            String.format("Null field found for message %s", pagedResponseMessage.name()));
+        if (field.isRepeated()) {
+          // Field is currently a List-type.
+          Preconditions.checkState(
+              !field.type().reference().generics().isEmpty(),
+              String.format("No generics found for field reference %s", field.type().reference()));
+          repeatedResponseType = TypeNode.withReference(field.type().reference().generics().get(0));
+        }
+      }
+      Preconditions.checkNotNull(
+          repeatedResponseType,
+          String.format(
+              "No repeated type found for paged reesponse %s for method %s",
+              method.outputType().reference().name(), method.name()));
+
+      // Create the PAGE_STR_DESC variable.
+      TypeNode pagedListDescType =
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setClazz(PagedListDescriptor.class)
+                  .setGenerics(
+                      Arrays.asList(method.inputType(), method.outputType(), repeatedResponseType)
+                          .stream()
+                          .map(t -> t.reference())
+                          .collect(Collectors.toList()))
+                  .build());
+      String pageStrDescVarName =
+          String.format(PAGE_STR_DESC_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+      VariableExpr pagedListDescVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(pagedListDescType).setName(pageStrDescVarName).build());
+
+      descExprs.add(
+          createPagedListDescriptorAssignExpr(
+              pagedListDescVarExpr, method, repeatedResponseType, types));
+      factoryExprs.add(
+          createPagedListResponseFactoryAssignExpr(
+              pagedListDescVarExpr, method, repeatedResponseType, types));
+    }
+
+    descExprs.addAll(factoryExprs);
+    return descExprs;
+  }
+
+  private static Expr createPagedListDescriptorAssignExpr(
+      VariableExpr pagedListDescVarExpr,
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, TypeNode> types) {
+    MethodDefinition.Builder methodStarterBuilder =
+        MethodDefinition.builder().setIsOverride(true).setScope(ScopeNode.PUBLIC);
+    List<MethodDefinition> anonClassMethods = new ArrayList<>();
+
+    // Create emptyToken method.
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(TypeNode.STRING)
+            .setName("emptyToken")
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("")))
+            .build());
+
+    // Create injectToken method.
+    VariableExpr payloadVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("payload").build());
+    VariableExpr strTokenVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.STRING).setName("token").build());
+    TypeNode returnType = method.inputType();
+    Expr newBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(method.inputType())
+            .setMethodName("newBuilder")
+            .setArguments(payloadVarExpr)
+            .build();
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderExpr)
+            .setMethodName("setPageToken")
+            .setArguments(strTokenVarExpr)
+            .build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(method.inputType())
+            .setName("injectToken")
+            .setArguments(
+                Arrays.asList(payloadVarExpr, strTokenVarExpr).stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // Create injectPageSize method.
+    VariableExpr pageSizeVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
+    // Re-declare for clarity and easier readeability.
+    returnType = method.inputType();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderExpr)
+            .setMethodName("setPageSize")
+            .setArguments(pageSizeVarExpr)
+            .build();
+    returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(method.inputType())
+            .setName("injectPageSize")
+            .setArguments(
+                Arrays.asList(payloadVarExpr, pageSizeVarExpr).stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // TODO(miraleung): Test the edge cases where these proto fields aren't present.
+    // Create extractPageSize method.
+    returnType = TypeNode.INT_OBJECT;
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractPageSize")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(payloadVarExpr)
+                    .setMethodName("getPageSize")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
+
+    // Create extractNextToken method.
+    returnType = TypeNode.STRING;
+    payloadVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.outputType()).setName("payload").build());
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractNextToken")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(payloadVarExpr)
+                    .setMethodName("getNextPageToken")
+                    .setReturnType(returnType)
+                    .build())
+            .build());
+
+    // Create extractResources method.
+    returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Iterable.class)
+                .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                .build());
+    Expr getResponsesListExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(payloadVarExpr)
+            .setMethodName("getResponsesList")
+            .setReturnType(returnType)
+            .build();
+    Expr conditionExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(Objects.class)))
+            .setMethodName("equals")
+            .setArguments(getResponsesListExpr, ValueExpr.withValue(NullObjectValue.create()))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    Expr thenExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(ImmutableList.class)))
+            .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+            .setMethodName("of")
+            .setReturnType(returnType)
+            .build();
+
+    returnExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(conditionExpr)
+            .setThenExpr(thenExpr)
+            .setElseExpr(getResponsesListExpr)
+            .build();
+    anonClassMethods.add(
+        methodStarterBuilder
+            .setReturnType(returnType)
+            .setName("extractResources")
+            .setArguments(payloadVarExpr.toBuilder().setIsDecl(true).build())
+            .setReturnExpr(returnExpr)
+            .build());
+
+    // Create the anonymous class.
+    AnonymousClassExpr pagedListDescAnonClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(pagedListDescVarExpr.type())
+            .setMethods(anonClassMethods)
+            .build();
+
+    // Declare and assign the variable.
+    return AssignmentExpr.builder()
+        .setVariableExpr(
+            pagedListDescVarExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build())
+        .setValueExpr(pagedListDescAnonClassExpr)
+        .build();
+  }
+
+  private static Expr createPagedListResponseFactoryAssignExpr(
+      VariableExpr pageStrDescVarExpr,
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, TypeNode> types) {
+    Preconditions.checkState(
+        method.isPaged(), String.format("Method %s is not paged", method.name()));
+
+    // Create the PagedListResponseFactory.
+    TypeNode pagedResponseType = types.get(getPagedResponseTypeName(method.name()));
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(Arrays.asList(pagedResponseType.reference()))
+                .build());
+
+    VariableExpr callableVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(UnaryCallable.class)
+                            .setGenerics(
+                                Arrays.asList(
+                                    method.inputType().reference(),
+                                    method.outputType().reference()))
+                            .build()))
+                .setName("callable")
+                .build());
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr contextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ApiCallContext"))
+                .setName("context")
+                .build());
+    VariableExpr futureResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .setName("futureResponse")
+                .build());
+
+    TypeNode pageContextType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(PageContext.class)
+                .setGenerics(
+                    Arrays.asList(method.inputType(), method.outputType(), repeatedResponseType)
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    VariableExpr pageContextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(pageContextType).setName("pageContext").build());
+    AssignmentExpr pageContextAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(pageContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("PageContext"))
+                    .setMethodName("create")
+                    .setArguments(
+                        callableVarExpr, pageStrDescVarExpr, requestVarExpr, contextVarExpr)
+                    .setReturnType(pageContextVarExpr.type())
+                    .build())
+            .build();
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get(getPagedResponseTypeName(method.name())))
+            .setMethodName("createAsync")
+            .setArguments(pageContextVarExpr, futureResponseVarExpr)
+            .setReturnType(apiFutureType)
+            .build();
+
+    MethodDefinition getFuturePagedResponseMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(apiFutureType)
+            .setName("getFuturePagedResponse")
+            .setArguments(
+                Arrays.asList(
+                        callableVarExpr, requestVarExpr, contextVarExpr, futureResponseVarExpr)
+                    .stream()
+                    .map(v -> v.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setBody(Arrays.asList(ExprStatement.withExpr(pageContextAssignExpr)))
+            .setReturnExpr(returnExpr)
+            .build();
+
+    // Create the variable.
+    TypeNode pagedResponseFactoryType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(PagedListResponseFactory.class)
+                .setGenerics(
+                    Arrays.asList(
+                            method.inputType(),
+                            method.outputType(),
+                            types.get(getPagedResponseTypeName(method.name())))
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    String varName =
+        String.format(PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(method.name()));
+    VariableExpr pagedListResponseFactoryVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(pagedResponseFactoryType).setName(varName).build());
+    AnonymousClassExpr factoryAnonClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(pagedResponseFactoryType)
+            .setMethods(Arrays.asList(getFuturePagedResponseMethod))
+            .build();
+
+    return AssignmentExpr.builder()
+        .setVariableExpr(
+            pagedListResponseFactoryVarExpr
+                .toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build())
+        .setValueExpr(factoryAnonClassExpr)
+        .build();
   }
 
   private static List<MethodDefinition> createClassMethods(
@@ -648,11 +1080,27 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static ClassDefinition createNestedBuilderClass(
-      Service service, Map<String, TypeNode> types) {
+      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
     String thisClassName = getThisClassName(service.name());
     TypeNode outerThisClassType = types.get(thisClassName);
 
     String className = "Builder";
+
+    TypeNode extendsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(StubSettings.Builder.class)
+                .setGenerics(
+                    Arrays.asList(
+                            types.get(getServiceStubTypeName(service.name())), types.get(className))
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+
+    Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs =
+        createMethodSettingsClassMemberVarExprs(
+            service, serviceConfig, types, /* isNestedClass= */ true);
 
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
@@ -660,6 +1108,582 @@ public class ServiceStubSettingsClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setName(className)
+        .setExtendsType(extendsType)
+        .setStatements(
+            createNestedClassStatements(service, serviceConfig, nestedMethodSettingsMemberVarExprs))
+        .setMethods(
+            createNestedClassMethods(
+                service, serviceConfig, extendsType, nestedMethodSettingsMemberVarExprs, types))
+        .build();
+  }
+
+  private static List<Statement> createNestedClassStatements(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
+    List<Expr> exprs = new ArrayList<>();
+
+    // Declare unaryMethodSettingsBuilders.
+    Function<VariableExpr, VariableExpr> varDeclFn =
+        v -> v.toBuilder().setIsDecl(true).setScope(ScopeNode.PRIVATE).setIsFinal(true).build();
+    exprs.add(varDeclFn.apply(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR));
+
+    // Declare all the settings fields.
+    exprs.addAll(
+        nestedMethodSettingsMemberVarExprs.values().stream()
+            .map(v -> varDeclFn.apply(v))
+            .collect(Collectors.toList()));
+
+    // Declare the RETRYABLE_CODE_DEFINITIONS field.
+    Function<VariableExpr, VariableExpr> varStaticDeclFn =
+        v ->
+            v.toBuilder()
+                .setIsDecl(true)
+                .setScope(ScopeNode.PRIVATE)
+                .setIsStatic(true)
+                .setIsFinal(true)
+                .build();
+    Function<Expr, Statement> exprStatementFn = e -> ExprStatement.withExpr(e);
+
+    List<Statement> statements = new ArrayList<>();
+    statements.addAll(
+        exprs.stream().map(e -> exprStatementFn.apply(e)).collect(Collectors.toList()));
+
+    // Declare and set the RETRYABLE_CODE_DEFINITIONS field.
+    statements.add(
+        exprStatementFn.apply((varStaticDeclFn.apply(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR))));
+    statements.add(
+        RetrySettingsComposer.createRetryCodesDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR));
+
+    // Declare the RETRY_PARAM_DEFINITIONS field.
+    statements.add(
+        exprStatementFn.apply(varStaticDeclFn.apply(NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
+
+    statements.add(
+        RetrySettingsComposer.createRetryParamDefinitionsBlock(
+            service, serviceConfig, NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+
+    return statements;
+  }
+
+  private static List<MethodDefinition> createNestedClassMethods(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      TypeNode superType,
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
+    List<MethodDefinition> nestedClassMethods = new ArrayList<>();
+    nestedClassMethods.addAll(
+        createNestedClassConstructorMethods(
+            service, serviceConfig, nestedMethodSettingsMemberVarExprs, types));
+    nestedClassMethods.add(createNestedClassCreateDefaultMethod(types));
+    nestedClassMethods.add(createNestedClassInitDefaultsMethod(service, serviceConfig, types));
+    nestedClassMethods.add(createNestedClassApplyToAllUnaryMethodsMethod(superType, types));
+    nestedClassMethods.add(createNestedClassUnaryMethodSettingsBuilderGetterMethod());
+    nestedClassMethods.addAll(
+        createNestedClassSettingsBuilderGetterMethods(nestedMethodSettingsMemberVarExprs));
+    nestedClassMethods.add(createNestedClassBuildMethod(service, types));
+    return nestedClassMethods;
+  }
+
+  private static MethodDefinition createNestedClassInitDefaultsMethod(
+      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+    VariableExpr builderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(builderType).setName("builder").build());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    // Iterate through methods twice to so we can have LRO expressions appear last.
+    for (Method method : service.methods()) {
+      Method.Stream streamKind = method.stream();
+      if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
+        continue;
+      }
+      if (serviceConfig.hasBatchingSetting(service, method)) {
+        Optional<GapicBatchingSettings> batchingSettingOpt =
+            serviceConfig.getBatchingSetting(service, method);
+        Preconditions.checkState(
+            batchingSettingOpt.isPresent(),
+            String.format(
+                "No batching setting found for service %s, method %s",
+                service.name(), method.name()));
+        String settingsGetterMethodName =
+            String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
+        bodyExprs.add(
+            RetrySettingsComposer.createBatchingBuilderSettingsExpr(
+                settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr));
+      }
+
+      bodyExprs.add(
+          RetrySettingsComposer.createSimpleBuilderSettingsExpr(
+              service,
+              serviceConfig,
+              method,
+              builderVarExpr,
+              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+    }
+    for (Method method : service.methods()) {
+      if (!method.hasLro()) {
+        continue;
+      }
+      bodyExprs.add(
+          RetrySettingsComposer.createLroSettingsBuilderExpr(
+              service,
+              serviceConfig,
+              method,
+              builderVarExpr,
+              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+    }
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PRIVATE)
+        .setIsStatic(true)
+        .setReturnType(builderType)
+        .setName("initDefaults")
+        .setArguments(builderVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(builderVarExpr)
+        .build();
+  }
+
+  private static List<MethodDefinition> createNestedClassConstructorMethods(
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs,
+      Map<String, TypeNode> types) {
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+
+    List<MethodDefinition> ctorMethods = new ArrayList<>();
+
+    // First argument-less contructor.
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        ReferenceConstructorExpr.thisBuilder()
+                            .setType(builderType)
+                            .setArguments(
+                                CastExpr.builder()
+                                    .setType(STATIC_TYPES.get("ClientContext"))
+                                    .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                    .build())
+                            .build())))
+            .build());
+
+    // Second ctor that takes a clientContext argument.
+    VariableExpr clientContextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("ClientContext"))
+                .setName("clientContext")
+                .build());
+    Reference pagedSettingsBuilderRef =
+        ConcreteReference.withClazz(PagedCallSettings.Builder.class);
+    Reference batchingSettingsBuilderRef =
+        ConcreteReference.withClazz(BatchingCallSettings.Builder.class);
+    Reference unaryCallSettingsBuilderRef =
+        ConcreteReference.withClazz(UnaryCallSettings.Builder.class);
+    Function<TypeNode, Boolean> isUnaryCallSettingsBuilderFn =
+        t ->
+            t.reference()
+                .copyAndSetGenerics(ImmutableList.of())
+                .equals(unaryCallSettingsBuilderRef);
+    Function<TypeNode, Boolean> isPagedCallSettingsBuilderFn =
+        t -> t.reference().copyAndSetGenerics(ImmutableList.of()).equals(pagedSettingsBuilderRef);
+    Function<TypeNode, Boolean> isBatchingCallSettingsBuilderFn =
+        t ->
+            t.reference().copyAndSetGenerics(ImmutableList.of()).equals(batchingSettingsBuilderRef);
+    Function<TypeNode, TypeNode> builderToCallSettingsFn =
+        t ->
+            TypeNode.withReference(
+                VaporReference.builder()
+                    .setName(t.reference().enclosingClassName())
+                    .setPakkage(t.reference().pakkage())
+                    .build());
+    List<Expr> ctorBodyExprs = new ArrayList<>();
+    ctorBodyExprs.add(
+        ReferenceConstructorExpr.superBuilder()
+            .setType(builderType)
+            .setArguments(clientContextVarExpr)
+            .build());
+    ctorBodyExprs.addAll(
+        nestedMethodSettingsMemberVarExprs.entrySet().stream()
+            .map(
+                e -> {
+                  // TODO(miraleung): Extract this into another method.
+                  // Name is fooBarSettings.
+                  VariableExpr varExpr = e.getValue();
+                  TypeNode varType = varExpr.type();
+                  String methodName = e.getKey();
+                  Preconditions.checkState(
+                      methodName.endsWith(SETTINGS_LITERAL),
+                      String.format("%s expected to end with \"Settings\"", methodName));
+                  methodName =
+                      methodName.substring(0, methodName.length() - SETTINGS_LITERAL.length());
+
+                  if (!isPagedCallSettingsBuilderFn.apply(varType)) {
+                    if (!isBatchingCallSettingsBuilderFn.apply(varType)) {
+                      boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
+                      return AssignmentExpr.builder()
+                          .setVariableExpr(varExpr)
+                          .setValueExpr(
+                              MethodInvocationExpr.builder()
+                                  .setStaticReferenceType(
+                                      builderToCallSettingsFn.apply(varExpr.type()))
+                                  .setMethodName(
+                                      isUnaryCallSettings
+                                          ? "newUnaryCallSettingsBuilder"
+                                          : "newBuilder")
+                                  .setReturnType(varExpr.type())
+                                  .build())
+                          .build();
+                    }
+                    Expr newBatchingSettingsExpr =
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
+                            .setMethodName("newBuilder")
+                            .build();
+                    newBatchingSettingsExpr =
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(newBatchingSettingsExpr)
+                            .setMethodName("build")
+                            .build();
+
+                    String batchingDescVarName =
+                        String.format(
+                            BATCHING_DESC_PATTERN, JavaStyle.toUpperSnakeCase(methodName));
+                    Expr batchingSettingsBuilderExpr =
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(builderToCallSettingsFn.apply(varType))
+                            .setMethodName("newBuilder")
+                            .setArguments(
+                                VariableExpr.withVariable(
+                                    Variable.builder()
+                                        .setType(STATIC_TYPES.get("BatchingDescriptor"))
+                                        .setName(batchingDescVarName)
+                                        .build()))
+                            .build();
+                    batchingSettingsBuilderExpr =
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+                            .setMethodName("setBatchingSettings")
+                            .setArguments(newBatchingSettingsExpr)
+                            .setReturnType(varType)
+                            .build();
+
+                    return AssignmentExpr.builder()
+                        .setVariableExpr(varExpr)
+                        .setValueExpr(batchingSettingsBuilderExpr)
+                        .build();
+                  }
+                  String memberVarName =
+                      String.format(
+                          PAGED_RESPONSE_FACTORY_PATTERN, JavaStyle.toUpperSnakeCase(methodName));
+                  VariableExpr argVar =
+                      VariableExpr.withVariable(
+                          Variable.builder()
+                              .setType(STATIC_TYPES.get("PagedListResponseFactory"))
+                              .setName(memberVarName)
+                              .build());
+                  return AssignmentExpr.builder()
+                      .setVariableExpr(varExpr)
+                      .setValueExpr(
+                          MethodInvocationExpr.builder()
+                              .setStaticReferenceType(builderToCallSettingsFn.apply(varExpr.type()))
+                              .setMethodName("newBuilder")
+                              .setArguments(argVar)
+                              .setReturnType(varExpr.type())
+                              .build())
+                      .build();
+                })
+            .collect(Collectors.toList()));
+
+    Expr unaryMethodSettingsBuildersAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableList"))
+                    .setGenerics(
+                        NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR
+                            .type()
+                            .reference()
+                            .generics())
+                    .setMethodName("of")
+                    .setArguments(
+                        nestedMethodSettingsMemberVarExprs.values().stream()
+                            .filter(
+                                v ->
+                                    isUnaryCallSettingsBuilderFn.apply(v.type())
+                                        || isPagedCallSettingsBuilderFn.apply(v.type())
+                                        || isBatchingCallSettingsBuilderFn.apply(v.type()))
+                            .collect(Collectors.toList()))
+                    .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
+                    .build())
+            .build();
+    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
+
+    ctorBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setMethodName("initDefaults")
+            .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
+            .build());
+
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    // Third constructor that takes a ServivceStubSettings.
+    TypeNode outerSettingsType = types.get(getThisClassName(service.name()));
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(outerSettingsType).setName("settings").build());
+    ctorBodyExprs = new ArrayList<>();
+    ctorBodyExprs.add(
+        ReferenceConstructorExpr.superBuilder()
+            .setType(builderType)
+            .setArguments(settingsVarExpr)
+            .build());
+    // TODO(cleanup): Technically this should actually use the outer class's <method>Settings
+    // members to avoid decoupling variable names.
+    ctorBodyExprs.addAll(
+        nestedMethodSettingsMemberVarExprs.values().stream()
+            .map(
+                v ->
+                    AssignmentExpr.builder()
+                        .setVariableExpr(v)
+                        .setValueExpr(
+                            MethodInvocationExpr.builder()
+                                .setExprReferenceExpr(
+                                    VariableExpr.builder()
+                                        .setExprReferenceExpr(settingsVarExpr)
+                                        .setVariable(v.variable())
+                                        .build())
+                                .setMethodName("toBuilder")
+                                .setReturnType(v.type())
+                                .build())
+                        .build())
+            .collect(Collectors.toList()));
+    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
+
+    ctorMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(builderType)
+            .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                ctorBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .build());
+
+    return ctorMethods;
+  }
+
+  private static MethodDefinition createNestedClassCreateDefaultMethod(
+      Map<String, TypeNode> types) {
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Initialize the builder: Builder builder = new Builder((ClientContext) null);
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+    VariableExpr builderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(builderType).setName("builder").build());
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(builderVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(builderType)
+                    .setArguments(
+                        CastExpr.builder()
+                            .setType(STATIC_TYPES.get("ClientContext"))
+                            .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                            .build())
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setTransportChannelProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setMethodName("defaultTransportChannelProvider")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setCredentialsProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setMethodName("defaultCredentialsProviderBuilder")
+                            .build())
+                    .setMethodName("build")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setInternalHeaderProvider")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setMethodName("defaultApiClientHeaderProviderBuilder")
+                            .build())
+                    .setMethodName("build")
+                    .build())
+            .build());
+
+    bodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName("setEndpoint")
+            .setArguments(
+                MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
+            .build());
+
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("initDefaults")
+            .setArguments(builderVarExpr)
+            .setReturnType(builderType)
+            .build();
+
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PRIVATE)
+        .setIsStatic(true)
+        .setReturnType(builderType)
+        .setName("createDefault")
+        .setBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createNestedClassApplyToAllUnaryMethodsMethod(
+      TypeNode superType, Map<String, TypeNode> types) {
+    List<Reference> apiFunctionTypeGenerics = new ArrayList<>();
+    apiFunctionTypeGenerics.addAll(
+        NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type().reference().generics());
+    apiFunctionTypeGenerics.add(TypeNode.VOID_OBJECT.reference());
+
+    TypeNode settingsUpdaterType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFunction.class)
+                .setGenerics(apiFunctionTypeGenerics)
+                .build());
+    VariableExpr settingsUpdaterVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(settingsUpdaterType).setName("settingsUpdater").build());
+
+    String methodName = "applyToAllUnaryMethods";
+    Expr superApplyExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(ValueExpr.withValue(SuperObjectValue.withType(superType)))
+            .setMethodName(methodName)
+            .setArguments(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR, settingsUpdaterVarExpr)
+            .build();
+
+    TypeNode returnType = types.get(NESTED_BUILDER_CLASS_NAME);
+    Expr returnExpr = ValueExpr.withValue(ThisObjectValue.withType(returnType));
+
+    // TODO(miraleung): Add major ver note.
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(returnType)
+        .setName(methodName)
+        .setArguments(settingsUpdaterVarExpr.toBuilder().setIsDecl(true).build())
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(Arrays.asList(ExprStatement.withExpr(superApplyExpr)))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createNestedClassUnaryMethodSettingsBuilderGetterMethod() {
+    return MethodDefinition.builder()
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
+        .setName("unaryMethodSettingsBuilders")
+        .setReturnExpr(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR)
+        .build();
+  }
+
+  private static List<MethodDefinition> createNestedClassSettingsBuilderGetterMethods(
+      Map<String, VariableExpr> nestedMethodSettingsMemberVarExprs) {
+    Reference operationCallSettingsBuilderRef =
+        ConcreteReference.withClazz(OperationCallSettings.Builder.class);
+    Function<TypeNode, Boolean> isOperationCallSettingsBuilderFn =
+        t ->
+            t.reference()
+                .copyAndSetGenerics(ImmutableList.of())
+                .equals(operationCallSettingsBuilderRef);
+    List<AnnotationNode> lroBetaAnnotations =
+        Arrays.asList(
+            AnnotationNode.builder()
+                .setType(STATIC_TYPES.get("BetaApi"))
+                .setDescription(
+                    "The surface for use by generated code is not stable yet and may change in the"
+                        + " future.")
+                .build());
+
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    for (Map.Entry<String, VariableExpr> settingsVarEntry :
+        nestedMethodSettingsMemberVarExprs.entrySet()) {
+      String varName = settingsVarEntry.getKey();
+      VariableExpr settingsVarExpr = settingsVarEntry.getValue();
+      boolean isOperationCallSettings =
+          isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setAnnotations(isOperationCallSettings ? lroBetaAnnotations : ImmutableList.of())
+              .setScope(ScopeNode.PUBLIC)
+              .setReturnType(settingsVarExpr.type())
+              .setName(settingsVarExpr.variable().identifier().name())
+              .setReturnExpr(settingsVarExpr)
+              .build());
+    }
+    return javaMethods;
+  }
+
+  private static MethodDefinition createNestedClassBuildMethod(
+      Service service, Map<String, TypeNode> types) {
+    TypeNode outerClassType = types.get(getThisClassName(service.name()));
+    TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(outerClassType)
+        .setName("build")
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
+        .setReturnExpr(
+            NewObjectExpr.builder()
+                .setType(outerClassType)
+                .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
+                .build())
         .build();
   }
 
@@ -770,7 +1794,6 @@ public class ServiceStubSettingsClassComposer {
                                 .setIsStaticImport(true)
                                 .build()))));
 
-    // TODO(miraleung): Fill this out.
     return dynamicTypes;
   }
 
@@ -783,6 +1806,65 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     return VariableExpr.withVariable(
         Variable.builder().setName("DEFAULT_SERVICE_SCOPES").setType(listStringType).build());
+  }
+
+  private static VariableExpr createNestedUnaryMethodSettingsBuildersVarExpr() {
+    Reference builderRef =
+        ConcreteReference.builder()
+            .setClazz(UnaryCallSettings.Builder.class)
+            .setGenerics(Arrays.asList(TypeNode.WILDCARD_REFERENCE, TypeNode.WILDCARD_REFERENCE))
+            .build();
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableList.class)
+                .setGenerics(Arrays.asList(builderRef))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_NAME)
+            .build());
+  }
+
+  private static VariableExpr createNestedRetryableCodeDefinitionsVarExpr() {
+    TypeNode immutableSetType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableSet.class)
+                .setGenerics(Arrays.asList(ConcreteReference.withClazz(StatusCode.Code.class)))
+                .build());
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, immutableSetType).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME)
+            .build());
+  }
+
+  private static VariableExpr createNestedRetryParamDefinitionsVarExpr() {
+    TypeNode varType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.STRING, STATIC_TYPES.get("RetrySettings")).stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setType(varType)
+            .setName(NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME)
+            .build());
   }
 
   private static String getThisClassName(String serviceName) {
@@ -801,22 +1883,43 @@ public class ServiceStubSettingsClassComposer {
     return String.format(GRPC_SERVICE_STUB_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
   }
 
-  private static TypeNode getCallSettingsType(Method method, Map<String, TypeNode> types) {
+  private static TypeNode getCallSettingsType(
+      Method method,
+      Map<String, TypeNode> types,
+      boolean isBatchingSettings,
+      final boolean isSettingsBuilder) {
+    Function<Class, TypeNode> typeMakerFn =
+        clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
     TypeNode callSettingsType =
         method.isPaged()
-            ? STATIC_TYPES.get("PagedCallSettings")
-            : STATIC_TYPES.get("UnaryCallSettings");
+            ? typeMakerFn.apply(
+                isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
+            : typeMakerFn.apply(
+                isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
+    if (isBatchingSettings) {
+      callSettingsType =
+          typeMakerFn.apply(
+              isSettingsBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class);
+    }
 
     // Streaming takes precendence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
-        callSettingsType = STATIC_TYPES.get("ServerStreamingCallSettings");
+        callSettingsType =
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? ServerStreamingCallSettings.Builder.class
+                    : ServerStreamingCallSettings.class);
         break;
       case CLIENT:
         // Fall through.
       case BIDI:
-        callSettingsType = STATIC_TYPES.get("StreamingCallSettings");
+        callSettingsType =
+            typeMakerFn.apply(
+                isSettingsBuilder
+                    ? StreamingCallSettings.Builder.class
+                    : StreamingCallSettings.class);
         break;
       case NONE:
         // Fall through.
@@ -833,7 +1936,7 @@ public class ServiceStubSettingsClassComposer {
     return TypeNode.withReference(callSettingsType.reference().copyAndSetGenerics(generics));
   }
 
-  private static TypeNode getOperationCallSettingsType(Method method) {
+  private static TypeNode getOperationCallSettingsType(Method method, boolean isSettingsBuilder) {
     Preconditions.checkState(
         method.hasLro(),
         String.format("Cannot get OperationCallSettings for non-LRO method %s", method.name()));
@@ -842,6 +1945,12 @@ public class ServiceStubSettingsClassComposer {
     generics.add(method.lro().responseType().reference());
     generics.add(method.lro().metadataType().reference());
     return TypeNode.withReference(
-        STATIC_TYPES.get("OperationCallSettings").reference().copyAndSetGenerics(generics));
+        ConcreteReference.builder()
+            .setClazz(
+                isSettingsBuilder
+                    ? OperationCallSettings.Builder.class
+                    : OperationCallSettings.class)
+            .setGenerics(generics)
+            .build());
   }
 }
