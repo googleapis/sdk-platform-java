@@ -14,20 +14,22 @@
 
 package com.google.api.generator.engine.ast;
 
+import java.util.EnumSet;
+
 public enum OperatorKind {
-  ARITHMETIC_ADDITION(true),
-  RELATIONAL_EQUAL_TO(true),
-  RELATIONAL_NOT_EQUAL_TO(true),
-  UNARY_LOGICAL_NOT(false),
-  UNARY_POST_INCREMENT(true);
+  ARITHMETIC_ADDITION,
+  UNARY_POST_INCREMENT,
+  LOGICAL_NOT,
+  RELATIONAL_EQUAL_TO,
+  RELATIONAL_NOT_EQUAL_TO;
 
-  private final boolean isPostfixOperator;
+  private static final EnumSet<OperatorKind> PREFIX_OPERATORS_SET;
 
-  OperatorKind(final boolean isPostfixOperator) {
-    this.isPostfixOperator = isPostfixOperator;
+  static {
+    PREFIX_OPERATORS_SET = EnumSet.of(OperatorKind.LOGICAL_NOT);
   }
 
-  public boolean isPostfixOperator() {
-    return this.isPostfixOperator;
+  public boolean isPrefixOperator() {
+    return PREFIX_OPERATORS_SET.contains(this);
   }
 }

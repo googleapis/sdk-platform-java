@@ -102,11 +102,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String WHILE = "while";
 
   // Operators
-  private static final String ADDITION = "+";
-  private static final String EQUAL_TO = "==";
-  private static final String NOT_EQUAL_TO = "!=";
-  private static final String INCREMENT = "++";
-  private static final String LOGICAL_NOT = "!";
+  private static final String OPERATOR_ADDITION = "+";
+  private static final String OPERATOR_EQUAL_TO = "==";
+  private static final String OPERATOR_NOT_EQUAL_TO = "!=";
+  private static final String OPERATOR_INCREMENT = "++";
+  private static final String OPERATOR_LOGICAL_NOT = "!";
 
   private final StringBuffer buffer = new StringBuffer();
   private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
@@ -834,19 +834,19 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private void operator(OperatorKind kind) {
     switch (kind) {
       case RELATIONAL_EQUAL_TO:
-        buffer.append(EQUAL_TO);
+        buffer.append(OPERATOR_EQUAL_TO);
         break;
       case RELATIONAL_NOT_EQUAL_TO:
-        buffer.append(NOT_EQUAL_TO);
+        buffer.append(OPERATOR_NOT_EQUAL_TO);
         break;
       case UNARY_POST_INCREMENT:
-        buffer.append(INCREMENT);
+        buffer.append(OPERATOR_INCREMENT);
         break;
       case UNARY_LOGICAL_NOT:
-        buffer.append(LOGICAL_NOT);
+        buffer.append(OPERATOR_LOGICAL_NOT);
         break;
       case ARITHMETIC_ADDITION:
-        buffer.append(ADDITION);
+        buffer.append(OPERATOR_ADDITION);
         break;
     }
   }
