@@ -3,7 +3,6 @@ package(default_visibility = ["//visibility:public"])
 TESTS = [
     "ImportWriterVisitorTest",
     "JavaWriterVisitorTest",
-    "JavaCodeGeneratorTest",
 ]
 
 filegroup(

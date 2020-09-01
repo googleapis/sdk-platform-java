@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.writer;
+package com.google.api.generator.engine;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -50,6 +50,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
