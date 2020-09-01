@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.GeneralForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
@@ -457,6 +458,36 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     leftBrace();
     newline();
     statements(forStatement.body());
+    rightBrace();
+    newline();
+  }
+
+  @Override
+  public void visit(GeneralForStatement generalForStatement) {
+    buffer.append(FOR);
+    space();
+    leftParen();
+    generalForStatement.initializationExpr().accept(this);
+    semicolon();
+    space();
+
+    generalForStatement.localVariableExpr().accept(this);
+    space();
+    buffer.append(LEFT_ANGLE);
+    space();
+    generalForStatement.maxSizeExpr().accept(this);
+    semicolon();
+    space();
+
+    generalForStatement.localVariableExpr().accept(this);
+    // TODO(summerji): Remove the following temporary workaround.
+    buffer.append("++");
+    rightParen();
+    space();
+    leftBrace();
+    newline();
+
+    statements(generalForStatement.body());
     rightBrace();
     newline();
   }

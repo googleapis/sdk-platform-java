@@ -9,6 +9,7 @@ TESTS = [
     "EnumRefExprTest",
     "ExprStatementTest",
     "ForStatementTest",
+    "GeneralForStatementTest",
     "IdentifierNodeTest",
     "IfStatementTest",
     "InstanceofExprTest",

@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.GeneralForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
@@ -1296,6 +1297,26 @@ public class JavaWriterVisitorTest {
         String.format(
             "%s%s%s%s",
             "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeGeneralForStatement_basic() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
+
+    VariableExpr localVarExpr = createVariableDeclExpr("i", TypeNode.INT);
+    Expr maxSizeExpr = MethodInvocationExpr.builder().setMethodName("maxSize").build();
+
+    GeneralForStatement forStatement =
+        GeneralForStatement.incrementWith(localVarExpr, maxSizeExpr, body);
+
+    forStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s",
+            "for (int i = 0; i < maxSize(); i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
