@@ -35,7 +35,7 @@ public class TypeNodeTest {
       TypeNode.builder().setTypeKind(TypeKind.BOOLEAN).setIsArray(true).build();
 
   @Test
-  public void stricEquals_basic() {
+  public void strictEquals_basic() {
     assertFalse(TypeNode.INT.strictEquals(TypeNode.BOOLEAN));
     assertFalse(TypeNode.CHAR.strictEquals(TypeNode.NULL));
     assertFalse(TypeNode.INT.strictEquals(INT_ARRAY));
@@ -43,7 +43,7 @@ public class TypeNodeTest {
   }
 
   @Test
-  public void stricEquals_referenceType() {
+  public void strictEquals_referenceType() {
     TypeNode list = TypeNode.withReference(ConcreteReference.withClazz(List.class));
     TypeNode intList =
         TypeNode.withReference(
