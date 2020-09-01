@@ -373,7 +373,7 @@ public class JavaCodeGeneratorTest {
                 Arrays.asList(VariableExpr.builder().setVariable(shelfVar).setIsDecl(true).build()))
             .build();
 
-    // Creat method `printShelfListToFile`
+    // Create method `printShelfListToFile`
     Variable stringBuilderVar = createVarFromConcreteRef(stringBuilderRef, "sb");
     Variable fileNameVar = createVarFromType(TypeNode.STRING, "fileName");
     Variable shelfObject = createVarFromVaporRef(shelfClassRef, "s");
