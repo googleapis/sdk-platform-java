@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.CastExpr;
@@ -32,6 +33,7 @@ import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
@@ -776,6 +778,21 @@ public class ImportWriterVisitorTest {
             .setType(classType)
             .build();
     referenceConstructorExpr.accept(writerVisitor);
+  }
+
+  @Test
+  public void writeArithmeticOperationExprImports() {
+    MethodInvocationExpr lhsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setMethodName("getSomething")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ArithmeticOperationExpr arithmeticOperationExpr =
+        ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
+    arithmeticOperationExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
   }
 
   @Test
