@@ -18,15 +18,15 @@ import java.util.EnumSet;
 
 public enum OperatorKind {
   ARITHMETIC_ADDITION,
-  UNARY_POST_INCREMENT,
-  LOGICAL_NOT,
   RELATIONAL_EQUAL_TO,
-  RELATIONAL_NOT_EQUAL_TO;
+  RELATIONAL_NOT_EQUAL_TO,
+  UNARY_LOGICAL_NOT,
+  UNARY_POST_INCREMENT;
 
   private static final EnumSet<OperatorKind> PREFIX_OPERATORS_SET;
 
   static {
-    PREFIX_OPERATORS_SET = EnumSet.of(OperatorKind.LOGICAL_NOT);
+    PREFIX_OPERATORS_SET = EnumSet.of(OperatorKind.UNARY_LOGICAL_NOT);
   }
 
   public boolean isPrefixOperator() {
