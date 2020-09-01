@@ -23,11 +23,8 @@ public enum OperatorKind {
   UNARY_LOGICAL_NOT,
   UNARY_POST_INCREMENT;
 
-  private static final EnumSet<OperatorKind> PREFIX_OPERATORS_SET;
-
-  static {
-    PREFIX_OPERATORS_SET = EnumSet.of(OperatorKind.UNARY_LOGICAL_NOT);
-  }
+  private static final EnumSet<OperatorKind> PREFIX_OPERATORS_SET =
+      EnumSet.of(OperatorKind.UNARY_LOGICAL_NOT);
 
   public boolean isPrefixOperator() {
     return PREFIX_OPERATORS_SET.contains(this);
