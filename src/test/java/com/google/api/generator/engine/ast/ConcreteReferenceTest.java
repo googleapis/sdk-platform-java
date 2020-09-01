@@ -140,4 +140,12 @@ public class ConcreteReferenceTest {
     assertTrue(typeOne.isSupertypeOrEquals(typeTwo));
     assertFalse(typeTwo.isSupertypeOrEquals(typeOne));
   }
+
+  @Test
+  public void wildcards() {
+    assertEquals("?", ConcreteReference.wildcard().name());
+    assertEquals(
+        "? extends String",
+        ConcreteReference.wildcardWithUpperBound(TypeNode.STRING.reference()).name());
+  }
 }

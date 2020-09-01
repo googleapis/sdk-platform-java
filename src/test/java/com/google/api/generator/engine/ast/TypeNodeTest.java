@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import java.util.Arrays;
@@ -87,5 +88,33 @@ public class TypeNodeTest {
     assertFalse(TypeNode.INT.equals(TypeNode.BOOLEAN));
     assertFalse(TypeNode.CHAR.equals(TypeNode.NULL));
     assertFalse(INTEGER_ARRAY.equals(INT_ARRAY));
+  }
+
+  @Test
+  public void type_wildcardGenerics() {
+    // No exception thrown equates to success.
+    TypeNode.withReference(
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.wildcard()))
+            .build());
+  }
+
+  @Test
+  public void type_wildcardUpperBoundGenerics() {
+    // No exception thrown equates to success.
+    TypeNode.withReference(
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(
+                Arrays.asList(
+                    ConcreteReference.wildcardWithUpperBound(TypeNode.STRING.reference())))
+            .build());
+  }
+
+  @Test
+  public void invalidType_topLevelWildcard() {
+    assertThrows(
+        IllegalStateException.class, () -> TypeNode.withReference(ConcreteReference.wildcard()));
   }
 }

@@ -50,6 +50,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -340,9 +341,15 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
       // Don't need to import this.
-      if ((!ref.isStaticImport()
-              && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage)))
-          || ref.equals(TypeNode.WILDCARD_REFERENCE)) {
+      if (!ref.isStaticImport()
+          && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage))) {
+        continue;
+      }
+
+      if (ref.isWildcard()) {
+        if (ref.wildcardUpperBound() != null) {
+          references(Arrays.asList(ref.wildcardUpperBound()));
+        }
         continue;
       }
 
