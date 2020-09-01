@@ -63,39 +63,15 @@ public class JavaCodeGeneratorTest {
   @Test
   public void validJavaClass() {
     // Create references.
-    VaporReference stubRef =
-        VaporReference.builder().setPakkage("com.google.gax.grpc").setName("Stub").build();
-    VaporReference bookKindRef =
-        VaporReference.builder()
-            .setPakkage("com.google.exmaple.library.v1")
-            .setName("BookKind")
-            .build();
+    VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
+    VaporReference bookKindRef = createVaporReference("com.google.exmaple.library.v1", "BookKind");
     VaporReference libraryServiceRef =
-        VaporReference.builder()
-            .setPakkage("com.google.exmaple.library")
-            .setName("LibraryService")
-            .build();
+        createVaporReference("com.google.exmaple.library", "LibraryService");
     VaporReference libraryServiceStubRef =
-        VaporReference.builder()
-            .setPakkage("com.google.exmaple.library.core")
-            .setName("LibraryServiceStub")
-            .build();
-    VaporReference shelfClassRef =
-        VaporReference.builder()
-            .setName("Shelf")
-            .setPakkage("com.google.example.library.core")
-            .build();
-    VaporReference bookClassRef =
-        VaporReference.builder()
-            .setName("Book")
-            .setPakkage("com.google.example.library.core")
-            .build();
-    VaporReference novelClassRef =
-        VaporReference.builder()
-            .setName("Novel")
-            .setPakkage("com.google.example.library.core")
-            .build();
-    // TODO: (xiaozhenliu)import static jaav.lang.Integer.*;
+        createVaporReference("com.google.exmaple.library.core", "LibraryServiceStub");
+    VaporReference shelfClassRef = createVaporReference("com.google.example.library.core", "Shelf");
+    VaporReference bookClassRef = createVaporReference("com.google.example.library.core", "Book");
+    VaporReference novelClassRef = createVaporReference("com.google.example.library.core", "Novel");
     ConcreteReference nonexistentShelfExceptionRef =
         ConcreteReference.builder().setClazz(Exception.class).build();
     ConcreteReference integerUtilRef =
@@ -115,7 +91,7 @@ public class JavaCodeGeneratorTest {
         ConcreteReference.builder().setClazz(StringBuilder.class).build();
     ConcreteReference fileWriterRef =
         ConcreteReference.builder().setClazz(FileWriter.class).build();
-    // Create outer class variableDels.
+    // Create outer class variableDecls.
     // [code] private static final String serviceName = "LibraryServiceStub";
     VariableExpr serviceName =
         VariableExpr.builder()
@@ -123,23 +99,23 @@ public class JavaCodeGeneratorTest {
             .setIsFinal(true)
             .setIsStatic(true)
             .setScope(ScopeNode.PRIVATE)
-            .setVariable(createVar(stringRef, "serviceName"))
+            .setVariable(createVarFromType(TypeNode.STRING, "serviceName"))
             .build();
     AssignmentExpr serviceNameDel =
-        AssignmentExpr.builder()
-            .setValueExpr(ValueExpr.withValue(StringObjectValue.withValue("LibraryServiceStub")))
-            .setVariableExpr(serviceName)
-            .build();
+        createAssignmentExpr(
+            serviceName, ValueExpr.withValue(StringObjectValue.withValue("LibraryServiceStub")));
+
     // [code] protected List<Shelf> shelfList
-    Variable shelfList = createVar(shelfListRef, "shelfList");
+    Variable shelfList = createVarFromConcreteRef(shelfListRef, "shelfList");
     VariableExpr shelfListExpr =
         VariableExpr.builder()
             .setIsDecl(true)
             .setScope(ScopeNode.PROTECTED)
             .setVariable(shelfList)
             .build();
+
     // [code] public static HashMap<String, Shelf> shelfMap;
-    Variable shelfMap = createVar(shelfMapRef, "shelfMap");
+    Variable shelfMap = createVarFromConcreteRef(shelfMapRef, "shelfMap");
     VariableExpr shelfMapExpr =
         VariableExpr.builder()
             .setIsDecl(true)
@@ -147,6 +123,7 @@ public class JavaCodeGeneratorTest {
             .setIsStatic(true)
             .setVariable(shelfMap)
             .build();
+
     // Create the LibraryServiceStub constructor
     NewObjectExpr arrayList =
         NewObjectExpr.builder()
@@ -158,26 +135,18 @@ public class JavaCodeGeneratorTest {
             .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
             .setIsGeneric(true)
             .build();
-    VaporReference outerClassRef =
-        VaporReference.builder()
-            .setName("LibraryServiceStub")
-            .setPakkage("com.google.example.library.core")
-            .build();
     ReferenceConstructorExpr superExpr =
         ReferenceConstructorExpr.superBuilder()
-            .setType(TypeNode.withReference(outerClassRef))
+            .setType(TypeNode.withReference(libraryServiceStubRef))
             .build();
     ValueExpr thisValueExpr =
-        ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(outerClassRef)));
+        ValueExpr.withValue(
+            ThisObjectValue.withType(TypeNode.withReference(libraryServiceStubRef)));
     VariableExpr thisVariableExpr =
         VariableExpr.builder().setVariable(shelfList).setExprReferenceExpr(thisValueExpr).build();
-    AssignmentExpr shelfListAssignmentExpr =
-        AssignmentExpr.builder().setVariableExpr(thisVariableExpr).setValueExpr(arrayList).build();
+    AssignmentExpr shelfListAssignmentExpr = createAssignmentExpr(thisVariableExpr, arrayList);
     AssignmentExpr shelfMapAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.withVariable(shelfMap))
-            .setValueExpr(hashMap)
-            .build();
+        createAssignmentExpr(VariableExpr.withVariable(shelfMap), hashMap);
     MethodDefinition libraryServiceCtor =
         MethodDefinition.constructorBuilder()
             .setBody(
@@ -188,10 +157,11 @@ public class JavaCodeGeneratorTest {
             .setReturnType(TypeNode.withReference(libraryServiceStubRef))
             .setScope(ScopeNode.PUBLIC)
             .build();
+
     // Create nested class Shelf.
-    Variable shelfNameVar = createPrimitiveVar(TypeNode.STRING, "shelfName");
-    Variable seriesNumVar = createPrimitiveVar(TypeNode.INT, "seriesNum");
-    Variable shelfServiceNameVar = createPrimitiveVar(TypeNode.STRING, "shelfServiceName");
+    Variable shelfNameVar = createVarFromType(TypeNode.STRING, "shelfName");
+    Variable seriesNumVar = createVarFromType(TypeNode.INT, "seriesNum");
+    Variable shelfServiceNameVar = createVarFromType(TypeNode.STRING, "shelfServiceName");
 
     VariableExpr shelfNameDel =
         VariableExpr.builder()
@@ -205,7 +175,6 @@ public class JavaCodeGeneratorTest {
             .setScope(ScopeNode.PUBLIC)
             .setVariable(seriesNumVar)
             .build();
-
     VariableExpr shelfServiceNameDel =
         VariableExpr.builder()
             .setIsDecl(true)
@@ -213,12 +182,9 @@ public class JavaCodeGeneratorTest {
             .setVariable(shelfServiceNameVar)
             .build();
     AssignmentExpr shelfServiceNameAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(shelfServiceNameDel)
-            .setValueExpr(
-                VariableExpr.withVariable(
-                    Variable.builder().setName("serviceName").setType(TypeNode.STRING).build()))
-            .build();
+        createAssignmentExpr(
+            shelfServiceNameDel,
+            VariableExpr.withVariable(createVarFromType(TypeNode.STRING, "serviceName")));
     VariableExpr thisShelfNameVariableExpr =
         VariableExpr.builder()
             .setVariable(shelfNameVar)
@@ -234,21 +200,13 @@ public class JavaCodeGeneratorTest {
                     ThisObjectValue.withType(TypeNode.withReference(shelfClassRef))))
             .build();
     AssignmentExpr thisShelfNameAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(thisShelfNameVariableExpr)
-            .setValueExpr(VariableExpr.withVariable(shelfNameVar))
-            .build();
+        createAssignmentExpr(thisShelfNameVariableExpr, VariableExpr.withVariable(shelfNameVar));
     AssignmentExpr thisSeriesNumAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(thisSeriesNumVariableExpr)
-            .setValueExpr(VariableExpr.withVariable(seriesNumVar))
-            .build();
+        createAssignmentExpr(thisSeriesNumVariableExpr, VariableExpr.withVariable(seriesNumVar));
     MethodDefinition nestedShelfClassCtor =
         MethodDefinition.constructorBuilder()
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setIsDecl(true).setVariable(shelfNameVar).build(),
-                    VariableExpr.builder().setIsDecl(true).setVariable(seriesNumVar).build()))
+                Arrays.asList(createVarDeclExpr(shelfNameVar), createVarDeclExpr(seriesNumVar)))
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(thisShelfNameAssignExpr),
@@ -268,8 +226,9 @@ public class JavaCodeGeneratorTest {
             .setName("Shelf")
             .setScope(ScopeNode.PUBLIC)
             .build();
+
     // Create nested abstract class Book.
-    Variable bookKindVar = createVar(bookKindRef, "bookKind");
+    Variable bookKindVar = createVarFromVaporRef(bookKindRef, "bookKind");
     VariableExpr bookKindDel =
         VariableExpr.builder()
             .setVariable(bookKindVar)
@@ -280,9 +239,7 @@ public class JavaCodeGeneratorTest {
         MethodDefinition.builder()
             .setIsAbstract(true)
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setIsDecl(true).setVariable(seriesNumVar).build(),
-                    VariableExpr.builder().setIsDecl(true).setVariable(bookKindVar).build()))
+                Arrays.asList(createVarDeclExpr(seriesNumVar), createVarDeclExpr(bookKindVar)))
             .setReturnType(TypeNode.VOID)
             .setName("createBook")
             .setScope(ScopeNode.PUBLIC)
@@ -301,6 +258,7 @@ public class JavaCodeGeneratorTest {
             .setIsNested(true)
             .setIsAbstract(true)
             .build();
+
     // Create nested class Novel.
     EnumRefExpr bookKindNovelEnumExpr =
         EnumRefExpr.builder().setName("NOVEL").setType(bookKindVar.type()).build();
@@ -315,30 +273,32 @@ public class JavaCodeGeneratorTest {
                     overrideCreateBookMethod(
                         novelClassRef, seriesNumVar, bookKindVar, bookKindNovelEnumExpr)))
             .build();
+
     // Create method `addShelf`
-    Variable nameVar = createPrimitiveVar(TypeNode.STRING, "name");
-    Variable seriesDoubleNumVar = createPrimitiveVar(TypeNode.DOUBLE, "seriesDoubleNum");
-    Variable maxValueVar = createVar(integerUtilRef, "MAX_VALUE");
+    Variable nameVar = createVarFromType(TypeNode.STRING, "name");
+    Variable seriesDoubleNumVar = createVarFromType(TypeNode.DOUBLE, "seriesDoubleNum");
+    Variable maxValueVar = createVarFromConcreteRef(integerUtilRef, "MAX_VALUE");
     CastExpr seriesNumDoubleToIntExpr =
         CastExpr.builder()
             .setExpr(VariableExpr.withVariable(seriesDoubleNumVar))
             .setType(TypeNode.INT)
             .build();
     AssignmentExpr castSeriesNumExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(seriesNumVar).build())
-            .setValueExpr(seriesNumDoubleToIntExpr)
-            .build();
-    ReturnExpr returnExpr =
-        ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("")));
+        createAssignmentExpr(createVarDeclExpr(seriesNumVar), seriesNumDoubleToIntExpr);
+    ReturnExpr maxValueReturnExpr =
+        ReturnExpr.withExpr(
+            ValueExpr.withValue(
+                StringObjectValue.withValue("Series number equals to max int value.")));
+    ReturnExpr duplicateKeyReturnExpr =
+        ReturnExpr.withExpr(
+            ValueExpr.withValue(
+                StringObjectValue.withValue("Shelf is already existing in the map.")));
     // TODO: update the condition from `condition` to `seriesNum == MAX_VALUE`
     IfStatement maxValueCheck =
         IfStatement.builder()
             .setConditionExpr(
-                VariableExpr.withVariable(
-                    Variable.builder().setName("condition").setType(TypeNode.BOOLEAN).build()))
-            .setBody(Arrays.asList(ExprStatement.withExpr(returnExpr)))
+                VariableExpr.withVariable(createVarFromType(TypeNode.BOOLEAN, "condition")))
+            .setBody(Arrays.asList(ExprStatement.withExpr(maxValueReturnExpr)))
             .build();
     NewObjectExpr newShelfExpr =
         NewObjectExpr.builder()
@@ -347,51 +307,47 @@ public class JavaCodeGeneratorTest {
                 Arrays.asList(
                     VariableExpr.withVariable(nameVar), VariableExpr.withVariable(seriesNumVar)))
             .build();
-    MethodInvocationExpr addShelfToList =
-        MethodInvocationExpr.builder()
-            .setMethodName("add")
-            .setExprReferenceExpr(VariableExpr.withVariable(shelfList))
-            .setArguments(Arrays.asList(newShelfExpr))
-            .build();
+    MethodInvocationExpr addShelfToListExpr =
+        putShelfToObj(shelfList, "add", Arrays.asList(newShelfExpr));
     MethodInvocationExpr putShelfToMapExpr =
-        putShelfToMap(shelfMap, Arrays.asList(VariableExpr.withVariable(nameVar), newShelfExpr));
+        putShelfToObj(
+            shelfMap, "put", Arrays.asList(VariableExpr.withVariable(nameVar), newShelfExpr));
     MethodInvocationExpr mapContainsKey =
         shelfMapContainsKey(shelfMap, Arrays.asList(VariableExpr.withVariable(nameVar)));
 
     IfStatement mapContainsKeyCheck =
         IfStatement.builder()
             .setConditionExpr(mapContainsKey)
-            .setBody(Arrays.asList(ExprStatement.withExpr(returnExpr)))
+            .setBody(Arrays.asList(ExprStatement.withExpr(duplicateKeyReturnExpr)))
             .build();
     MethodDefinition addShelfMethod =
         MethodDefinition.builder()
             .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
             .setName("addShelf")
-            .setReturnType(TypeNode.VOID)
+            .setReturnType(TypeNode.STRING)
+            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("Shelf added.")))
             .setScope(ScopeNode.PUBLIC)
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(castSeriesNumExpr),
                     maxValueCheck,
-                    ExprStatement.withExpr(addShelfToList),
+                    ExprStatement.withExpr(addShelfToListExpr),
                     mapContainsKeyCheck,
                     ExprStatement.withExpr(putShelfToMapExpr)))
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setVariable(nameVar).setIsDecl(true).build(),
-                    VariableExpr.builder().setVariable(seriesDoubleNumVar).setIsDecl(true).build()))
+                Arrays.asList(createVarDeclExpr(nameVar), createVarDeclExpr(seriesDoubleNumVar)))
             .build();
-    // Create method `updateShelfMap`
-    Variable shelfVar = createVar(shelfClassRef, "newShelf");
 
+    // Create method `updateShelfMap`
+    Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
     VariableExpr shelfNameFromNewShelfObject =
-        fieldFromShelfObject(
-            shelfVar, Variable.builder().setType(TypeNode.STRING).setName("shelfName").build());
+        fieldFromShelfObject(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
 
     mapContainsKey = shelfMapContainsKey(shelfMap, Arrays.asList(shelfNameFromNewShelfObject));
     putShelfToMapExpr =
-        putShelfToMap(
+        putShelfToObj(
             shelfMap,
+            "put",
             Arrays.asList(shelfNameFromNewShelfObject, VariableExpr.withVariable(shelfVar)));
     ThrowExpr throwExpr =
         ThrowExpr.builder()
@@ -415,31 +371,29 @@ public class JavaCodeGeneratorTest {
             .setArguments(
                 Arrays.asList(VariableExpr.builder().setVariable(shelfVar).setIsDecl(true).build()))
             .build();
+
     // Creat method `printShelfListToFile`
-    Variable stringBuilderVar = createVar(stringBuilderRef, "sb");
-    Variable fileNameVar = createPrimitiveVar(TypeNode.STRING, "fileName");
-    Variable shelfObject = createVar(shelfClassRef, "s");
+    Variable stringBuilderVar = createVarFromConcreteRef(stringBuilderRef, "sb");
+    Variable fileNameVar = createVarFromType(TypeNode.STRING, "fileName");
+    Variable shelfObject = createVarFromVaporRef(shelfClassRef, "s");
+    Variable fileWriterVar = createVarFromConcreteRef(fileWriterRef, "fileWriter");
+    Variable ioException =
+        createVarFromConcreteRef(ConcreteReference.withClazz(IOException.class), "e");
     VariableExpr shelfNameFromShelfObject = fieldFromShelfObject(shelfObject, shelfNameVar);
     VariableExpr seriesNumFromShelfObject = fieldFromShelfObject(shelfObject, seriesNumVar);
 
     AssignmentExpr createStringBuilderExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(stringBuilderVar).build())
-            .setValueExpr(NewObjectExpr.withType(TypeNode.withReference(stringBuilderRef)))
-            .build();
-    Variable fileWriterVar = createVar(fileWriterRef, "fileWriter");
-    Variable ioException = createVar(ConcreteReference.withClazz(IOException.class), "e");
+        createAssignmentExpr(
+            createVarDeclExpr(stringBuilderVar),
+            NewObjectExpr.withType(TypeNode.withReference(stringBuilderRef)));
+
     AssignmentExpr createFileWriterExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(fileWriterVar).build())
-            .setValueExpr(
-                NewObjectExpr.builder()
-                    .setType(TypeNode.withReference(fileWriterRef))
-                    .setArguments(Arrays.asList(VariableExpr.withVariable(fileNameVar)))
-                    .build())
-            .build();
+        createAssignmentExpr(
+            createVarDeclExpr(fileWriterVar),
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(fileWriterRef))
+                .setArguments(Arrays.asList(VariableExpr.withVariable(fileNameVar)))
+                .build());
     MethodInvocationExpr appendShelfName =
         MethodInvocationExpr.builder()
             .setMethodName("append")
@@ -457,7 +411,6 @@ public class JavaCodeGeneratorTest {
             .setMethodName("toString")
             .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
             .build();
-
     MethodInvocationExpr writeToFileWriter =
         MethodInvocationExpr.builder()
             .setMethodName("write")
@@ -476,8 +429,7 @@ public class JavaCodeGeneratorTest {
             .build();
     ForStatement loopShelfList =
         ForStatement.builder()
-            .setLocalVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(shelfObject).build())
+            .setLocalVariableExpr(createVarDeclExpr(shelfObject))
             .setCollectionExpr(VariableExpr.withVariable(shelfList))
             .setBody(Arrays.asList(ExprStatement.withExpr(appendSeriesNum)))
             .build();
@@ -489,8 +441,7 @@ public class JavaCodeGeneratorTest {
                     loopShelfList,
                     ExprStatement.withExpr(writeToFileWriter),
                     ExprStatement.withExpr(closeFileWriter)))
-            .setCatchVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(ioException).build())
+            .setCatchVariableExpr(createVarDeclExpr(ioException))
             .setCatchBody(Arrays.asList(ExprStatement.withExpr(printError)))
             .build();
     MethodDefinition printShelfListToFile =
@@ -500,20 +451,19 @@ public class JavaCodeGeneratorTest {
             .setScope(ScopeNode.PUBLIC)
             .setBody(
                 Arrays.asList(ExprStatement.withExpr(createStringBuilderExpr), tryCatchStatement))
-            .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setVariable(fileNameVar).setIsDecl(true).build()))
+            .setArguments(Arrays.asList(createVarDeclExpr(fileNameVar)))
             .build();
+
     // Create method `addBooksContainsNovel`
     ConcreteReference bookKindStackRef =
         ConcreteReference.builder()
             .setClazz(Stack.class)
             .setGenerics(Arrays.asList(bookKindRef))
             .build();
-    Variable bookKindStackVar = createVar(bookKindStackRef, "stack");
-    Variable containsNovelVar = createPrimitiveVar(TypeNode.BOOLEAN, "containsNovel");
-    shelfVar = createVar(shelfClassRef, "shelf");
-    Variable bookVar = createVar(bookClassRef, "addedBook");
+    Variable bookKindStackVar = createVarFromConcreteRef(bookKindStackRef, "stack");
+    Variable containsNovelVar = createVarFromType(TypeNode.BOOLEAN, "containsNovel");
+    shelfVar = createVarFromVaporRef(shelfClassRef, "shelf");
+    Variable bookVar = createVarFromVaporRef(bookClassRef, "addedBook");
     TernaryExpr ternaryExpr =
         TernaryExpr.builder()
             .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
@@ -521,11 +471,8 @@ public class JavaCodeGeneratorTest {
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
             .build();
     AssignmentExpr setContainsNovelToFalse =
-        AssignmentExpr.builder()
-            .setVariableExpr(
-                VariableExpr.builder().setIsDecl(true).setVariable(containsNovelVar).build())
-            .setValueExpr(ValueExpr.withValue(createBooleanValue("false")))
-            .build();
+        createAssignmentExpr(
+            createVarDeclExpr(containsNovelVar), ValueExpr.withValue(createBooleanValue("false")));
     MethodInvocationExpr stackIsEmpty =
         MethodInvocationExpr.builder()
             .setMethodName("isEmpty")
@@ -544,20 +491,18 @@ public class JavaCodeGeneratorTest {
             .setReturnType(TypeNode.withReference(bookClassRef))
             .build();
     AssignmentExpr createNewAddedBook =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.builder().setIsDecl(true).setVariable(bookVar).build())
-            .setValueExpr(addBookToShelfMethod)
-            .build();
+        createAssignmentExpr(createVarDeclExpr(bookVar), addBookToShelfMethod);
+
     InstanceofExpr addedBookIsNovelInstance =
         InstanceofExpr.builder()
             .setExpr(VariableExpr.withVariable(bookVar))
             .setCheckType(TypeNode.withReference(novelClassRef))
             .build();
     AssignmentExpr setContainsNovelToTrue =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.withVariable(containsNovelVar))
-            .setValueExpr(ValueExpr.withValue(createBooleanValue("true")))
-            .build();
+        createAssignmentExpr(
+            VariableExpr.withVariable(containsNovelVar),
+            ValueExpr.withValue(createBooleanValue("true")));
+
     IfStatement ifStatement =
         IfStatement.builder()
             .setConditionExpr(addedBookIsNovelInstance)
@@ -573,17 +518,16 @@ public class JavaCodeGeneratorTest {
         MethodDefinition.builder()
             .setHeaderCommentStatements(createPreMethodJavaDocComment())
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setIsDecl(true).setVariable(shelfVar).build(),
-                    VariableExpr.builder().setIsDecl(true).setVariable(bookKindStackVar).build()))
+                Arrays.asList(createVarDeclExpr(shelfVar), createVarDeclExpr(bookKindStackVar)))
             .setName("addBooksContainsNovel")
             .setReturnType(TypeNode.STRING)
             .setScope(ScopeNode.PUBLIC)
             .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToFalse), whileStatement))
             .setReturnExpr(ternaryExpr)
             .build();
+
     // Create private method `addBookToShelf`
-    bookVar = createVar(bookClassRef, "book");
+    bookVar = createVarFromVaporRef(bookClassRef, "book");
     AnonymousClassExpr anonymousBookClassExpr =
         AnonymousClassExpr.builder()
             .setType(TypeNode.withReference(bookClassRef))
@@ -596,10 +540,8 @@ public class JavaCodeGeneratorTest {
                         VariableExpr.withVariable(bookKindVar))))
             .build();
     AssignmentExpr createNewBook =
-        AssignmentExpr.builder()
-            .setVariableExpr(VariableExpr.builder().setIsDecl(true).setVariable(bookVar).build())
-            .setValueExpr(anonymousBookClassExpr)
-            .build();
+        createAssignmentExpr(createVarDeclExpr(bookVar), anonymousBookClassExpr);
+
     MethodDefinition addBookToShelf =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
@@ -607,13 +549,12 @@ public class JavaCodeGeneratorTest {
             .setName("addBookToShelf")
             .setReturnType(TypeNode.withReference(bookClassRef))
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setIsDecl(true).setVariable(bookKindVar).build(),
-                    VariableExpr.builder().setIsDecl(true).setVariable(shelfVar).build()))
+                Arrays.asList(createVarDeclExpr(bookKindVar), createVarDeclExpr(shelfVar)))
             .setScope(ScopeNode.PRIVATE)
             .setBody(Arrays.asList(ExprStatement.withExpr(createNewBook)))
             .setReturnExpr(VariableExpr.withVariable(bookVar))
             .build();
+
     // Create outer class LibraryServiceStub
     ClassDefinition libraryServiceStubClass =
         ClassDefinition.builder()
@@ -646,7 +587,6 @@ public class JavaCodeGeneratorTest {
             .build();
     JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     libraryServiceStubClass.accept(javaWriterVisitor);
-    // System.out.println(javaWriterVisitor.write());
     assertEquals(javaWriterVisitor.write(), EXPECTED_CLASS_STRING);
   }
 
@@ -702,10 +642,10 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private MethodInvocationExpr putShelfToMap(Variable map, List<Expr> arg) {
+  private MethodInvocationExpr putShelfToObj(Variable obj, String methodName, List<Expr> arg) {
     return MethodInvocationExpr.builder()
-        .setMethodName("put")
-        .setExprReferenceExpr(VariableExpr.withVariable(map))
+        .setMethodName(methodName)
+        .setExprReferenceExpr(VariableExpr.withVariable(obj))
         .setArguments(arg)
         .build();
   }
@@ -717,20 +657,24 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private Variable createVar(ConcreteReference ref, String name) {
+  private Variable createVarFromConcreteRef(ConcreteReference ref, String name) {
     return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
   }
 
-  private Variable createVar(VaporReference ref, String name) {
+  private Variable createVarFromVaporRef(VaporReference ref, String name) {
     return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
   }
 
-  private Variable createPrimitiveVar(TypeNode ref, String name) {
+  private Variable createVarFromType(TypeNode ref, String name) {
     return Variable.builder().setName(name).setType(ref).build();
   }
 
   private PrimitiveValue createBooleanValue(String booleanValue) {
     return PrimitiveValue.builder().setValue(booleanValue).setType(TypeNode.BOOLEAN).build();
+  }
+
+  private VariableExpr createVarDeclExpr(Variable v) {
+    return VariableExpr.builder().setVariable(v).setIsDecl(true).build();
   }
 
   private MethodDefinition overrideCreateBookMethod(
@@ -752,22 +696,15 @@ public class JavaCodeGeneratorTest {
                 ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(classRef))))
             .build();
     AssignmentExpr thisSeriesNumAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(thisSeriesNumVariableExpr)
-            .setValueExpr(VariableExpr.withVariable(seriesNumVar))
-            .build();
+        createAssignmentExpr(thisSeriesNumVariableExpr, VariableExpr.withVariable(seriesNumVar));
     AssignmentExpr thisBookKindAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(thisBookKindVariableExpr)
-            .setValueExpr(bookKindDefaultExpr)
-            .build();
+        createAssignmentExpr(thisBookKindVariableExpr, bookKindDefaultExpr);
+
     MethodDefinition overrideCreateBook =
         MethodDefinition.builder()
             .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
             .setArguments(
-                Arrays.asList(
-                    VariableExpr.builder().setIsDecl(true).setVariable(seriesNumVar).build(),
-                    VariableExpr.builder().setIsDecl(true).setVariable(bookKindVar).build()))
+                Arrays.asList(createVarDeclExpr(seriesNumVar), createVarDeclExpr(bookKindVar)))
             .setReturnType(TypeNode.VOID)
             .setName("createBook")
             .setScope(ScopeNode.PUBLIC)
@@ -777,6 +714,14 @@ public class JavaCodeGeneratorTest {
                     ExprStatement.withExpr(thisBookKindAssignmentExpr)))
             .build();
     return overrideCreateBook;
+  }
+
+  private VaporReference createVaporReference(String pkgName, String name) {
+    return VaporReference.builder().setPakkage(pkgName).setName(name).build();
+  }
+
+  private AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
+    return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
   }
 
   private static final String EXPECTED_CLASS_STRING =
@@ -835,16 +780,17 @@ public class JavaCodeGeneratorTest {
           + "  }\n"
           + "\n"
           + "  @Override\n"
-          + "  public void addShelf(String name, double seriesDoubleNum) {\n"
+          + "  public String addShelf(String name, double seriesDoubleNum) {\n"
           + "    int seriesNum = ((int) seriesDoubleNum);\n"
           + "    if (condition) {\n"
-          + "      return \"\";\n"
+          + "      return \"Series number equals to max int value.\";\n"
           + "    }\n"
           + "    shelfList.add(new Shelf(name, seriesNum));\n"
           + "    if (shelfMap.containsKey(name)) {\n"
-          + "      return \"\";\n"
+          + "      return \"Shelf is already existing in the map.\";\n"
           + "    }\n"
           + "    shelfMap.put(name, new Shelf(name, seriesNum));\n"
+          + "    return \"Shelf added.\";\n"
           + "  }\n"
           + "\n"
           + "  public void updateShelfMap(Shelf newShelf) throws Exception {\n"
