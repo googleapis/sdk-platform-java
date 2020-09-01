@@ -49,34 +49,29 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
   @AutoValue.Builder
   public abstract static class Builder {
 
-    // private, required
+    // Private setter
     abstract Builder setLhsExpr(Expr expr);
 
-    // private, required
+    // Private setter
     abstract Builder setRhsExpr(Expr expr);
 
-    // private, required
+    // Private setter
     abstract Builder setOperatorKind(OperatorKind operator);
 
-    // private, required
+    // Private setter
     abstract Builder setType(TypeNode type);
 
     abstract ArithmeticOperationExpr autoBuild();
 
     private ArithmeticOperationExpr build() {
       ArithmeticOperationExpr arithmeticOperationExpr = autoBuild();
-      Expr lhsExpr = arithmeticOperationExpr.lhsExpr();
-      Expr rhsExpr = arithmeticOperationExpr.rhsExpr();
-      TypeNode lhsExprType = lhsExpr.type();
-      TypeNode rhsExprType = rhsExpr.type();
+      TypeNode lhsExprType = arithmeticOperationExpr.lhsExpr().type();
+      TypeNode rhsExprType = arithmeticOperationExpr.rhsExpr().type();
       OperatorKind operator = arithmeticOperationExpr.operatorKind();
       final String errorMsg =
-          "Arithmetic operator "
-              + operator
-              + " can not be applied to "
-              + lhsExprType.toString()
-              + ", "
-              + rhsExprType.toString();
+          String.format(
+              "Arithmetic operator %s can not be applied to %s, %s.",
+              operator, lhsExprType.toString(), rhsExprType.toString());
 
       // None of expression should be void type
       Preconditions.checkState(
@@ -91,7 +86,7 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
     }
 
     private boolean isValidConcatTypes(TypeNode lhsType, TypeNode rhsType) {
-      // concat require at least one expression type is String
+      // concat requires at least one String-typed expression
       return lhsType.equals(TypeNode.STRING) || rhsType.equals(TypeNode.STRING);
     }
   }
