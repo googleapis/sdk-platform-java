@@ -139,7 +139,7 @@ public class JavaCodeGeneratorTest {
 
     // Create nested abstract class Book.
     VariableExpr bookKindDel = createVarPublicDeclExpr(bookKindVar);
-    MethodDefinition createBookMethod = createCreateBookMethod();
+    MethodDefinition createBookMethod = createAbstractCreateBookMethod();
 
     ClassDefinition nestedClassBook =
         ClassDefinition.builder()
@@ -344,7 +344,7 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private NewObjectExpr createObjectExprWithArg(Variable var) {
+  private NewObjectExpr createNewObjectExprWithArg(Variable var) {
     return NewObjectExpr.builder()
         .setType(TypeNode.withReference(shelfClassRef))
         .setArguments(
@@ -454,7 +454,7 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private MethodDefinition createCreateBookMethod() {
+  private MethodDefinition createAbstractCreateBookMethod() {
     return MethodDefinition.builder()
         .setIsAbstract(true)
         .setArguments(
