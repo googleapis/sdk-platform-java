@@ -409,6 +409,9 @@ public class RetrySettingsComposerTest {
             .setElementCountThreshold(100)
             .setRequestByteThreshold(1048576)
             .setDelayThresholdMillis(10)
+            .setBatchedFieldName("messages")
+            .setDiscriminatorFieldNames(Arrays.asList("topic"))
+            .setSubresponseFieldName("message_ids")
             .build();
 
     Expr builderExpr =
@@ -487,6 +490,8 @@ public class RetrySettingsComposerTest {
             .setFlowControlByteLimit(10485760)
             .setFlowControlLimitExceededBehavior(
                 GapicBatchingSettings.FlowControlLimitExceededBehavior.THROW_EXCEPTION)
+            .setBatchedFieldName("entries")
+            .setDiscriminatorFieldNames(Arrays.asList("log_name", "resource", "labels"))
             .build();
 
     Expr builderExpr =
