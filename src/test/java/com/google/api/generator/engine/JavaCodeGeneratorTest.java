@@ -73,7 +73,7 @@ public class JavaCodeGeneratorTest {
       createVaporReference("com.google.example.library.core", "Book");
   private static final VaporReference novelClassRef =
       createVaporReference("com.google.example.library.core", "Novel");
-  // Create shared concrete references.
+  // Create shared ConcreteReferences.
   private static final ConcreteReference shelfListRef =
       ConcreteReference.builder()
           .setClazz(List.class)
@@ -176,8 +176,7 @@ public class JavaCodeGeneratorTest {
     MethodDefinition updateShelfMap = createUpdateShelfMap();
 
     // Create method `printShelfListToFile`
-    MethodDefinition printShelfListToFile =
-        createPrintShelfListToFile(shelfClassRef, shelfNameVar, seriesNumVar, shelfListVar);
+    MethodDefinition printShelfListToFile = createPrintShelfListToFile();
 
     // Create method `addBooksContainsNovel`
     MethodDefinition addBooksContainsNovel = createAddBooksContainsNovel();
@@ -345,24 +344,62 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
+  private NewObjectExpr createObjectExprWithArg(Variable var) {
+    return NewObjectExpr.builder()
+        .setType(TypeNode.withReference(shelfClassRef))
+        .setArguments(
+            Arrays.asList(VariableExpr.withVariable(var), VariableExpr.withVariable(seriesNumVar)))
+        .build();
+  }
+
   private AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
     return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
   }
 
-  private MethodInvocationExpr shelfMapContainsKey(Variable map, List<Expr> arg) {
+  private ReturnExpr createReturnExpr(String returnMsg) {
+    return ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue(returnMsg)));
+  }
+
+  private MethodInvocationExpr methodExprWithRef(Variable var, String methodName) {
+    return MethodInvocationExpr.builder()
+        .setMethodName(methodName)
+        .setExprReferenceExpr(VariableExpr.withVariable(var))
+        .build();
+  }
+
+  private MethodInvocationExpr methodExprWithRefAndArg(
+      Variable var, String methodName, List<Expr> args) {
+    return MethodInvocationExpr.builder()
+        .setMethodName(methodName)
+        .setExprReferenceExpr(VariableExpr.withVariable(var))
+        .setArguments(args)
+        .build();
+  }
+
+  private MethodInvocationExpr methodExprWithRefArgAndReturn(Variable var, List<Expr> args) {
     return MethodInvocationExpr.builder()
         .setMethodName("containsKey")
-        .setExprReferenceExpr(VariableExpr.withVariable(map))
-        .setArguments(arg)
+        .setExprReferenceExpr(VariableExpr.withVariable(var))
+        .setArguments(args)
         .setReturnType(TypeNode.BOOLEAN)
         .build();
   }
 
-  private MethodInvocationExpr putShelfToObj(Variable obj, String methodName, List<Expr> args) {
-    return MethodInvocationExpr.builder()
-        .setMethodName(methodName)
-        .setExprReferenceExpr(VariableExpr.withVariable(obj))
-        .setArguments(args)
+  private AnonymousClassExpr createAnonymousClass() {
+    return AnonymousClassExpr.builder()
+        .setType(TypeNode.withReference(bookClassRef))
+        .setMethods(
+            Arrays.asList(
+                createOverrideCreateBookMethod(
+                    bookClassRef, VariableExpr.withVariable(bookKindVar))))
+        .build();
+  }
+
+  private TernaryExpr createTernaryExpr(Variable containsNovelVar) {
+    return TernaryExpr.builder()
+        .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
+        .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("Added novels")))
+        .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
         .build();
   }
 
@@ -432,17 +469,14 @@ public class JavaCodeGeneratorTest {
       VaporReference classRef, Expr bookKindDefaultExpr) {
 
     VariableExpr thisBookKindVariableExpr =
-        VariableExpr.builder()
-            .setVariable(bookKindVar)
-            .setExprReferenceExpr(
-                ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(classRef))))
-            .build();
+        createVarExprFromRefVarExpr(
+            bookKindVar,
+            ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(classRef))));
     VariableExpr thisSeriesNumVariableExpr =
-        VariableExpr.builder()
-            .setVariable(seriesNumVar)
-            .setExprReferenceExpr(
-                ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(classRef))))
-            .build();
+        createVarExprFromRefVarExpr(
+            seriesNumVar,
+            ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(classRef))));
+
     AssignmentExpr thisSeriesNumAssignExpr =
         createAssignmentExpr(thisSeriesNumVariableExpr, VariableExpr.withVariable(seriesNumVar));
     AssignmentExpr thisBookKindAssignmentExpr =
@@ -477,14 +511,8 @@ public class JavaCodeGeneratorTest {
             .build();
     AssignmentExpr castSeriesNumExpr =
         createAssignmentExpr(createVarDeclExpr(seriesNumVar), seriesNumDoubleToIntExpr);
-    ReturnExpr maxValueReturnExpr =
-        ReturnExpr.withExpr(
-            ValueExpr.withValue(
-                StringObjectValue.withValue("Series number equals to max int value.")));
-    ReturnExpr duplicateKeyReturnExpr =
-        ReturnExpr.withExpr(
-            ValueExpr.withValue(
-                StringObjectValue.withValue("Shelf is already existing in the map.")));
+    ReturnExpr maxValueReturnExpr = createReturnExpr("Series number equals to max int value.");
+    ReturnExpr duplicateKeyReturnExpr = createReturnExpr("Shelf is already existing in the map.");
     // TODO: update the condition from `condition` to `seriesNum == MAX_VALUE`
     IfStatement maxValueCheck =
         IfStatement.builder()
@@ -492,20 +520,15 @@ public class JavaCodeGeneratorTest {
                 VariableExpr.withVariable(createVarFromType(TypeNode.BOOLEAN, "condition")))
             .setBody(Arrays.asList(ExprStatement.withExpr(maxValueReturnExpr)))
             .build();
-    NewObjectExpr newShelfExpr =
-        NewObjectExpr.builder()
-            .setType(TypeNode.withReference(shelfClassRef))
-            .setArguments(
-                Arrays.asList(
-                    VariableExpr.withVariable(nameVar), VariableExpr.withVariable(seriesNumVar)))
-            .build();
+    NewObjectExpr newShelfExpr = createNewObjectExprWithArg(nameVar);
     MethodInvocationExpr addShelfToListExpr =
-        putShelfToObj(shelfListVar, "add", Arrays.asList(newShelfExpr));
+        methodExprWithRefAndArg(shelfListVar, "add", Arrays.asList(newShelfExpr));
     MethodInvocationExpr putShelfToMapExpr =
-        putShelfToObj(
+        methodExprWithRefAndArg(
             shelfMapVar, "put", Arrays.asList(VariableExpr.withVariable(nameVar), newShelfExpr));
     MethodInvocationExpr mapContainsKey =
-        shelfMapContainsKey(shelfMapVar, Arrays.asList(VariableExpr.withVariable(nameVar)));
+        methodExprWithRefArgAndReturn(
+            shelfMapVar, Arrays.asList(VariableExpr.withVariable(nameVar)));
 
     IfStatement mapContainsKeyCheck =
         IfStatement.builder()
@@ -531,17 +554,16 @@ public class JavaCodeGeneratorTest {
   }
 
   private MethodDefinition createUpdateShelfMap() {
-    Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
-
     ConcreteReference nonexistentShelfExceptionRef =
         ConcreteReference.builder().setClazz(Exception.class).build();
+    Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
     VariableExpr shelfNameFromNewShelfObject =
         fieldFromShelfObject(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
 
-    MethodInvocationExpr mapContainsKey =
-        shelfMapContainsKey(shelfMapVar, Arrays.asList(shelfNameFromNewShelfObject));
+    MethodInvocationExpr mapContainsKeyExpr =
+        methodExprWithRefArgAndReturn(shelfMapVar, Arrays.asList(shelfNameFromNewShelfObject));
     MethodInvocationExpr putShelfToMapExpr =
-        putShelfToObj(
+        methodExprWithRefAndArg(
             shelfMapVar,
             "put",
             Arrays.asList(shelfNameFromNewShelfObject, VariableExpr.withVariable(shelfVar)));
@@ -552,7 +574,7 @@ public class JavaCodeGeneratorTest {
             .build();
     IfStatement updateShelfMapIfElseBlock =
         IfStatement.builder()
-            .setConditionExpr(mapContainsKey)
+            .setConditionExpr(mapContainsKeyExpr)
             .setBody(Arrays.asList(ExprStatement.withExpr(putShelfToMapExpr)))
             .setElseBody(Arrays.asList(ExprStatement.withExpr(throwExpr)))
             .build();
@@ -567,11 +589,7 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private MethodDefinition createPrintShelfListToFile(
-      VaporReference shelfClassRef,
-      Variable shelfNameVar,
-      Variable seriesNumVar,
-      Variable shelfList) {
+  private MethodDefinition createPrintShelfListToFile() {
     ConcreteReference stringBuilderRef =
         ConcreteReference.builder().setClazz(StringBuilder.class).build();
     ConcreteReference fileWriterRef =
@@ -598,42 +616,25 @@ public class JavaCodeGeneratorTest {
                 .setArguments(Arrays.asList(VariableExpr.withVariable(fileNameVar)))
                 .build());
     MethodInvocationExpr appendShelfName =
-        MethodInvocationExpr.builder()
-            .setMethodName("append")
-            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
-            .setArguments(shelfNameFromShelfObject)
-            .build();
+        methodExprWithRefAndArg(
+            stringBuilderVar, "append", Arrays.asList(shelfNameFromShelfObject));
+
     MethodInvocationExpr appendSeriesNum =
         MethodInvocationExpr.builder()
             .setMethodName("append")
             .setExprReferenceExpr(appendShelfName)
             .setArguments(seriesNumFromShelfObject)
             .build();
-    MethodInvocationExpr stringBuilderToString =
-        MethodInvocationExpr.builder()
-            .setMethodName("toString")
-            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
-            .build();
+    MethodInvocationExpr stringBuilderToString = methodExprWithRef(stringBuilderVar, "toString");
     MethodInvocationExpr writeToFileWriter =
-        MethodInvocationExpr.builder()
-            .setMethodName("write")
-            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
-            .setArguments(stringBuilderToString)
-            .build();
-    MethodInvocationExpr closeFileWriter =
-        MethodInvocationExpr.builder()
-            .setMethodName("close")
-            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
-            .build();
-    MethodInvocationExpr printError =
-        MethodInvocationExpr.builder()
-            .setMethodName("printStackTrace")
-            .setExprReferenceExpr(VariableExpr.withVariable(ioException))
-            .build();
+        methodExprWithRefAndArg(fileNameVar, "write", Arrays.asList(stringBuilderToString));
+    MethodInvocationExpr closeFileWriter = methodExprWithRef(fileNameVar, "close");
+    MethodInvocationExpr printError = methodExprWithRef(ioException, "printStackTrace");
+
     ForStatement loopShelfList =
         ForStatement.builder()
             .setLocalVariableExpr(createVarDeclExpr(shelfObject))
-            .setCollectionExpr(VariableExpr.withVariable(shelfList))
+            .setCollectionExpr(VariableExpr.withVariable(shelfListVar))
             .setBody(Arrays.asList(ExprStatement.withExpr(appendSeriesNum)))
             .build();
     TryCatchStatement tryCatchStatement =
@@ -659,14 +660,7 @@ public class JavaCodeGeneratorTest {
 
   private MethodDefinition createAddBookToShelf() {
     Variable bookVar = createVarFromVaporRef(bookClassRef, "book");
-    AnonymousClassExpr anonymousBookClassExpr =
-        AnonymousClassExpr.builder()
-            .setType(TypeNode.withReference(bookClassRef))
-            .setMethods(
-                Arrays.asList(
-                    createOverrideCreateBookMethod(
-                        bookClassRef, VariableExpr.withVariable(bookKindVar))))
-            .build();
+    AnonymousClassExpr anonymousBookClassExpr = createAnonymousClass();
     AssignmentExpr createNewBook =
         createAssignmentExpr(createVarDeclExpr(bookVar), anonymousBookClassExpr);
 
@@ -690,12 +684,7 @@ public class JavaCodeGeneratorTest {
     Variable bookKindStackVar = createVarFromConcreteRef(bookKindStackRef, "stack");
     Variable containsNovelVar = createVarFromType(TypeNode.BOOLEAN, "containsNovel");
     Variable bookVar = createVarFromVaporRef(bookClassRef, "addedBook");
-    TernaryExpr ternaryExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
-            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("Added novels")))
-            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
-            .build();
+    TernaryExpr ternaryExpr = createTernaryExpr(containsNovelVar);
     AssignmentExpr setContainsNovelToFalse =
         createAssignmentExpr(
             createVarDeclExpr(containsNovelVar), ValueExpr.withValue(createBooleanValue("false")));
@@ -705,11 +694,7 @@ public class JavaCodeGeneratorTest {
             .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
             .setReturnType(TypeNode.BOOLEAN)
             .build();
-    MethodInvocationExpr stackPop =
-        MethodInvocationExpr.builder()
-            .setMethodName("pop")
-            .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
-            .build();
+    MethodInvocationExpr stackPop = methodExprWithRef(bookKindStackVar, "pop");
     MethodInvocationExpr addBookToShelfMethod =
         MethodInvocationExpr.builder()
             .setMethodName("addBookToShelf")
