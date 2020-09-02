@@ -362,6 +362,7 @@ public class Parser {
         .setName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsRepeated(fieldDescriptor.isRepeated())
+        .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
         .build();
   }
