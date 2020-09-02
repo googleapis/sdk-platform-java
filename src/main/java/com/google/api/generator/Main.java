@@ -32,7 +32,7 @@ public class Main {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
-    String outputFilePath = String.format("%stemp-gen.srcjar", request.getParameter());
+    String outputFilePath = "temp-gen.srcjar";
     CodeGeneratorResponse response = Generator.generateGapic(request, outputFilePath);
     response.writeTo(System.out);
   }
