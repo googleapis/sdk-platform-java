@@ -61,12 +61,12 @@ public class TypeParser {
           .build();
 
   public static TypeNode parseType(@Nonnull FieldDescriptor field) {
-    if (field.isRepeated()) {
-      return createListType(field);
-    }
-
     if (field.isMapField()) {
       return createMapType(field);
+    }
+
+    if (field.isRepeated()) {
+      return createListType(field);
     }
 
     // Parse basic type.

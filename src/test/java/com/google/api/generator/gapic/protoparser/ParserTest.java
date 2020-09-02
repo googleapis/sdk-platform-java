@@ -20,6 +20,7 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -323,6 +324,25 @@ public class ParserTest {
     resourceReference = field.resourceReference();
     assertEquals("testgapic.googleapis.com/Document", resourceReference.resourceTypeString());
     assertFalse(resourceReference.isChildType());
+  }
+
+  @Test
+  public void parseFields_mapType() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Message message = messageTypes.get("Session");
+    Field field = message.fieldMap().get("session_ids_to_descriptor");
+    assertEquals(
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Map.class)
+                .setGenerics(
+                    Arrays.asList(TypeNode.INT_OBJECT.reference(), TypeNode.STRING.reference()))
+                .build()),
+        field.type());
   }
 
   @Test
