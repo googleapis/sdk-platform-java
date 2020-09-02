@@ -61,160 +61,69 @@ import java.util.Stack;
 import org.junit.Test;
 
 public class JavaCodeGeneratorTest {
+  // Create shared VaporReferences.
+  private static final VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
+  private static final VaporReference bookKindRef =
+      createVaporReference("com.google.exmaple.library.v1", "BookKind");
+  private static final VaporReference libraryServiceRef =
+      createVaporReference("com.google.exmaple.library", "LibraryService");
+  private static final VaporReference shelfClassRef =
+      createVaporReference("com.google.example.library.core", "Shelf");
+  private static final VaporReference bookClassRef =
+      createVaporReference("com.google.example.library.core", "Book");
+  private static final VaporReference novelClassRef =
+      createVaporReference("com.google.example.library.core", "Novel");
+  // Create shared concrete references.
+  private static final ConcreteReference shelfListRef =
+      ConcreteReference.builder()
+          .setClazz(List.class)
+          .setGenerics(Arrays.asList(shelfClassRef))
+          .build();
+  private static final ConcreteReference stringRef = ConcreteReference.withClazz(String.class);
+  private static final ConcreteReference shelfMapRef =
+      ConcreteReference.builder()
+          .setClazz(HashMap.class)
+          .setGenerics(Arrays.asList(stringRef, shelfClassRef))
+          .build();
+  // Create shared variables.
+  private static final Variable shelfVar = createVarFromVaporRef(shelfClassRef, "shelf");
+  private static final Variable shelfListVar = createVarFromConcreteRef(shelfListRef, "shelfList");
+  private static final Variable shelfMapVar = createVarFromConcreteRef(shelfMapRef, "shelfMap");
+  private static final Variable shelfNameVar = createVarFromType(TypeNode.STRING, "shelfName");
+  private static final Variable seriesNumVar = createVarFromType(TypeNode.INT, "seriesNum");
+  private static final Variable shelfServiceNameVar =
+      createVarFromType(TypeNode.STRING, "shelfServiceName");
+  private static final Variable bookKindVar = createVarFromVaporRef(bookKindRef, "bookKind");
+
   @Test
   public void validJavaClass() {
-    // Create references.
-    VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
-    VaporReference bookKindRef = createVaporReference("com.google.exmaple.library.v1", "BookKind");
-    VaporReference libraryServiceRef =
-        createVaporReference("com.google.exmaple.library", "LibraryService");
-    VaporReference libraryServiceStubRef =
-        createVaporReference("com.google.exmaple.library.core", "LibraryServiceStub");
-    VaporReference shelfClassRef = createVaporReference("com.google.example.library.core", "Shelf");
-    VaporReference bookClassRef = createVaporReference("com.google.example.library.core", "Book");
-    VaporReference novelClassRef = createVaporReference("com.google.example.library.core", "Novel");
-    ConcreteReference nonexistentShelfExceptionRef =
-        ConcreteReference.builder().setClazz(Exception.class).build();
-    ConcreteReference integerUtilRef =
-        ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
-    ConcreteReference shelfListRef =
-        ConcreteReference.builder()
-            .setClazz(List.class)
-            .setGenerics(Arrays.asList(shelfClassRef))
-            .build();
-    ConcreteReference stringRef = ConcreteReference.withClazz(String.class);
-    ConcreteReference shelfMapRef =
-        ConcreteReference.builder()
-            .setClazz(HashMap.class)
-            .setGenerics(Arrays.asList(stringRef, shelfClassRef))
-            .build();
-    ConcreteReference stringBuilderRef =
-        ConcreteReference.builder().setClazz(StringBuilder.class).build();
-    ConcreteReference fileWriterRef =
-        ConcreteReference.builder().setClazz(FileWriter.class).build();
     // Create outer class variableDecls.
     // [code] private static final String serviceName = "LibraryServiceStub";
-    VariableExpr serviceName =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setIsFinal(true)
-            .setIsStatic(true)
-            .setScope(ScopeNode.PRIVATE)
-            .setVariable(createVarFromType(TypeNode.STRING, "serviceName"))
-            .build();
+    VariableExpr serviceName = createServiceNameVarExpr();
     AssignmentExpr serviceNameDel =
         createAssignmentExpr(
             serviceName, ValueExpr.withValue(StringObjectValue.withValue("LibraryServiceStub")));
 
     // [code] protected List<Shelf> shelfList
-    Variable shelfList = createVarFromConcreteRef(shelfListRef, "shelfList");
-    VariableExpr shelfListExpr =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PROTECTED)
-            .setVariable(shelfList)
-            .build();
+    VariableExpr shelfListExpr = createShelfListVarExpr();
 
     // [code] public static HashMap<String, Shelf> shelfMap;
-    Variable shelfMap = createVarFromConcreteRef(shelfMapRef, "shelfMap");
-    VariableExpr shelfMapExpr =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setIsStatic(true)
-            .setVariable(shelfMap)
-            .build();
+    VariableExpr shelfMapExpr = createShelfMapVarExpr();
 
     // Create the LibraryServiceStub constructor
-    NewObjectExpr arrayList =
-        NewObjectExpr.builder()
-            .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
-            .setIsGeneric(true)
-            .build();
-    NewObjectExpr hashMap =
-        NewObjectExpr.builder()
-            .setType(TypeNode.withReference(ConcreteReference.withClazz(HashMap.class)))
-            .setIsGeneric(true)
-            .build();
-    ReferenceConstructorExpr superExpr =
-        ReferenceConstructorExpr.superBuilder()
-            .setType(TypeNode.withReference(libraryServiceStubRef))
-            .build();
-    ValueExpr thisValueExpr =
-        ValueExpr.withValue(
-            ThisObjectValue.withType(TypeNode.withReference(libraryServiceStubRef)));
-    VariableExpr thisVariableExpr =
-        VariableExpr.builder().setVariable(shelfList).setExprReferenceExpr(thisValueExpr).build();
-    AssignmentExpr shelfListAssignmentExpr = createAssignmentExpr(thisVariableExpr, arrayList);
-    AssignmentExpr shelfMapAssignmentExpr =
-        createAssignmentExpr(VariableExpr.withVariable(shelfMap), hashMap);
-    MethodDefinition libraryServiceCtor =
-        MethodDefinition.constructorBuilder()
-            .setBody(
-                Arrays.asList(
-                    ExprStatement.withExpr(superExpr),
-                    ExprStatement.withExpr(shelfListAssignmentExpr),
-                    ExprStatement.withExpr(shelfMapAssignmentExpr)))
-            .setReturnType(TypeNode.withReference(libraryServiceStubRef))
-            .setScope(ScopeNode.PUBLIC)
-            .build();
+    MethodDefinition libraryServiceCtor = createLibServiceCtor();
 
     // Create nested class Shelf.
-    Variable shelfNameVar = createVarFromType(TypeNode.STRING, "shelfName");
-    Variable seriesNumVar = createVarFromType(TypeNode.INT, "seriesNum");
-    Variable shelfServiceNameVar = createVarFromType(TypeNode.STRING, "shelfServiceName");
-
-    VariableExpr shelfNameDel =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setVariable(shelfNameVar)
-            .build();
-    VariableExpr seriesNumDel =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setVariable(seriesNumVar)
-            .build();
-    VariableExpr shelfServiceNameDel =
-        VariableExpr.builder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PUBLIC)
-            .setVariable(shelfServiceNameVar)
-            .build();
+    VariableExpr shelfNameDel = createVarPublicDeclExpr(shelfNameVar);
+    VariableExpr seriesNumDel = createVarPublicDeclExpr(seriesNumVar);
+    VariableExpr shelfServiceNameDel = createVarPublicDeclExpr(shelfServiceNameVar);
     AssignmentExpr shelfServiceNameAssignmentExpr =
         createAssignmentExpr(
             shelfServiceNameDel,
             VariableExpr.withVariable(createVarFromType(TypeNode.STRING, "serviceName")));
-    VariableExpr thisShelfNameVariableExpr =
-        VariableExpr.builder()
-            .setVariable(shelfNameVar)
-            .setExprReferenceExpr(
-                ValueExpr.withValue(
-                    ThisObjectValue.withType(TypeNode.withReference(shelfClassRef))))
-            .build();
-    VariableExpr thisSeriesNumVariableExpr =
-        VariableExpr.builder()
-            .setVariable(seriesNumVar)
-            .setExprReferenceExpr(
-                ValueExpr.withValue(
-                    ThisObjectValue.withType(TypeNode.withReference(shelfClassRef))))
-            .build();
-    AssignmentExpr thisShelfNameAssignExpr =
-        createAssignmentExpr(thisShelfNameVariableExpr, VariableExpr.withVariable(shelfNameVar));
-    AssignmentExpr thisSeriesNumAssignExpr =
-        createAssignmentExpr(thisSeriesNumVariableExpr, VariableExpr.withVariable(seriesNumVar));
-    MethodDefinition nestedShelfClassCtor =
-        MethodDefinition.constructorBuilder()
-            .setArguments(
-                Arrays.asList(createVarDeclExpr(shelfNameVar), createVarDeclExpr(seriesNumVar)))
-            .setBody(
-                Arrays.asList(
-                    ExprStatement.withExpr(thisShelfNameAssignExpr),
-                    ExprStatement.withExpr(thisSeriesNumAssignExpr)))
-            .setReturnType(TypeNode.withReference(shelfClassRef))
-            .setScope(ScopeNode.PUBLIC)
-            .build();
+
+    MethodDefinition nestedShelfClassCtor = createNestedShelfClassCtor();
+
     ClassDefinition nestedClassShelf =
         ClassDefinition.builder()
             .setIsNested(true)
@@ -229,22 +138,9 @@ public class JavaCodeGeneratorTest {
             .build();
 
     // Create nested abstract class Book.
-    Variable bookKindVar = createVarFromVaporRef(bookKindRef, "bookKind");
-    VariableExpr bookKindDel =
-        VariableExpr.builder()
-            .setVariable(bookKindVar)
-            .setScope(ScopeNode.PUBLIC)
-            .setIsDecl(true)
-            .build();
-    MethodDefinition createBookMethod =
-        MethodDefinition.builder()
-            .setIsAbstract(true)
-            .setArguments(
-                Arrays.asList(createVarDeclExpr(seriesNumVar), createVarDeclExpr(bookKindVar)))
-            .setReturnType(TypeNode.VOID)
-            .setName("createBook")
-            .setScope(ScopeNode.PUBLIC)
-            .build();
+    VariableExpr bookKindDel = createVarPublicDeclExpr(bookKindVar);
+    MethodDefinition createBookMethod = createCreateBookMethod();
+
     ClassDefinition nestedClassBook =
         ClassDefinition.builder()
             .setHeaderCommentStatements(
@@ -270,291 +166,24 @@ public class JavaCodeGeneratorTest {
             .setIsNested(true)
             .setExtendsType(TypeNode.withReference(bookClassRef))
             .setMethods(
-                Arrays.asList(
-                    overrideCreateBookMethod(
-                        novelClassRef, seriesNumVar, bookKindVar, bookKindNovelEnumExpr)))
+                Arrays.asList(createOverrideCreateBookMethod(novelClassRef, bookKindNovelEnumExpr)))
             .build();
 
     // Create method `addShelf`
-    Variable nameVar = createVarFromType(TypeNode.STRING, "name");
-    Variable seriesDoubleNumVar = createVarFromType(TypeNode.DOUBLE, "seriesDoubleNum");
-    Variable maxValueVar = createVarFromConcreteRef(integerUtilRef, "MAX_VALUE");
-    CastExpr seriesNumDoubleToIntExpr =
-        CastExpr.builder()
-            .setExpr(VariableExpr.withVariable(seriesDoubleNumVar))
-            .setType(TypeNode.INT)
-            .build();
-    AssignmentExpr castSeriesNumExpr =
-        createAssignmentExpr(createVarDeclExpr(seriesNumVar), seriesNumDoubleToIntExpr);
-    ReturnExpr maxValueReturnExpr =
-        ReturnExpr.withExpr(
-            ValueExpr.withValue(
-                StringObjectValue.withValue("Series number equals to max int value.")));
-    ReturnExpr duplicateKeyReturnExpr =
-        ReturnExpr.withExpr(
-            ValueExpr.withValue(
-                StringObjectValue.withValue("Shelf is already existing in the map.")));
-    // TODO: update the condition from `condition` to `seriesNum == MAX_VALUE`
-    IfStatement maxValueCheck =
-        IfStatement.builder()
-            .setConditionExpr(
-                VariableExpr.withVariable(createVarFromType(TypeNode.BOOLEAN, "condition")))
-            .setBody(Arrays.asList(ExprStatement.withExpr(maxValueReturnExpr)))
-            .build();
-    NewObjectExpr newShelfExpr =
-        NewObjectExpr.builder()
-            .setType(TypeNode.withReference(shelfClassRef))
-            .setArguments(
-                Arrays.asList(
-                    VariableExpr.withVariable(nameVar), VariableExpr.withVariable(seriesNumVar)))
-            .build();
-    MethodInvocationExpr addShelfToListExpr =
-        putShelfToObj(shelfList, "add", Arrays.asList(newShelfExpr));
-    MethodInvocationExpr putShelfToMapExpr =
-        putShelfToObj(
-            shelfMap, "put", Arrays.asList(VariableExpr.withVariable(nameVar), newShelfExpr));
-    MethodInvocationExpr mapContainsKey =
-        shelfMapContainsKey(shelfMap, Arrays.asList(VariableExpr.withVariable(nameVar)));
-
-    IfStatement mapContainsKeyCheck =
-        IfStatement.builder()
-            .setConditionExpr(mapContainsKey)
-            .setBody(Arrays.asList(ExprStatement.withExpr(duplicateKeyReturnExpr)))
-            .build();
-    MethodDefinition addShelfMethod =
-        MethodDefinition.builder()
-            .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
-            .setName("addShelf")
-            .setReturnType(TypeNode.STRING)
-            .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("Shelf added.")))
-            .setScope(ScopeNode.PUBLIC)
-            .setBody(
-                Arrays.asList(
-                    ExprStatement.withExpr(castSeriesNumExpr),
-                    maxValueCheck,
-                    ExprStatement.withExpr(addShelfToListExpr),
-                    mapContainsKeyCheck,
-                    ExprStatement.withExpr(putShelfToMapExpr)))
-            .setArguments(
-                Arrays.asList(createVarDeclExpr(nameVar), createVarDeclExpr(seriesDoubleNumVar)))
-            .build();
+    MethodDefinition addShelfMethod = createAddShelfMethod();
 
     // Create method `updateShelfMap`
-    Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
-    VariableExpr shelfNameFromNewShelfObject =
-        fieldFromShelfObject(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
-
-    mapContainsKey = shelfMapContainsKey(shelfMap, Arrays.asList(shelfNameFromNewShelfObject));
-    putShelfToMapExpr =
-        putShelfToObj(
-            shelfMap,
-            "put",
-            Arrays.asList(shelfNameFromNewShelfObject, VariableExpr.withVariable(shelfVar)));
-    ThrowExpr throwExpr =
-        ThrowExpr.builder()
-            .setMessageExpr("Updating shelf is not existing in the map")
-            .setType(TypeNode.withReference(nonexistentShelfExceptionRef))
-            .build();
-    IfStatement updateShelfMapIfElseBlock =
-        IfStatement.builder()
-            .setConditionExpr(mapContainsKey)
-            .setBody(Arrays.asList(ExprStatement.withExpr(putShelfToMapExpr)))
-            .setElseBody(Arrays.asList(ExprStatement.withExpr(throwExpr)))
-            .build();
-    MethodDefinition updateShelfMap =
-        MethodDefinition.builder()
-            .setName("updateShelfMap")
-            .setThrowsExceptions(
-                Arrays.asList(TypeNode.withReference(nonexistentShelfExceptionRef)))
-            .setReturnType(TypeNode.VOID)
-            .setScope(ScopeNode.PUBLIC)
-            .setBody(Arrays.asList(updateShelfMapIfElseBlock))
-            .setArguments(
-                Arrays.asList(VariableExpr.builder().setVariable(shelfVar).setIsDecl(true).build()))
-            .build();
+    MethodDefinition updateShelfMap = createUpdateShelfMap();
 
     // Create method `printShelfListToFile`
-    Variable stringBuilderVar = createVarFromConcreteRef(stringBuilderRef, "sb");
-    Variable fileNameVar = createVarFromType(TypeNode.STRING, "fileName");
-    Variable shelfObject = createVarFromVaporRef(shelfClassRef, "s");
-    Variable fileWriterVar = createVarFromConcreteRef(fileWriterRef, "fileWriter");
-    Variable ioException =
-        createVarFromConcreteRef(ConcreteReference.withClazz(IOException.class), "e");
-    VariableExpr shelfNameFromShelfObject = fieldFromShelfObject(shelfObject, shelfNameVar);
-    VariableExpr seriesNumFromShelfObject = fieldFromShelfObject(shelfObject, seriesNumVar);
-
-    AssignmentExpr createStringBuilderExpr =
-        createAssignmentExpr(
-            createVarDeclExpr(stringBuilderVar),
-            NewObjectExpr.withType(TypeNode.withReference(stringBuilderRef)));
-
-    AssignmentExpr createFileWriterExpr =
-        createAssignmentExpr(
-            createVarDeclExpr(fileWriterVar),
-            NewObjectExpr.builder()
-                .setType(TypeNode.withReference(fileWriterRef))
-                .setArguments(Arrays.asList(VariableExpr.withVariable(fileNameVar)))
-                .build());
-    MethodInvocationExpr appendShelfName =
-        MethodInvocationExpr.builder()
-            .setMethodName("append")
-            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
-            .setArguments(shelfNameFromShelfObject)
-            .build();
-    MethodInvocationExpr appendSeriesNum =
-        MethodInvocationExpr.builder()
-            .setMethodName("append")
-            .setExprReferenceExpr(appendShelfName)
-            .setArguments(seriesNumFromShelfObject)
-            .build();
-    MethodInvocationExpr stringBuilderToString =
-        MethodInvocationExpr.builder()
-            .setMethodName("toString")
-            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
-            .build();
-    MethodInvocationExpr writeToFileWriter =
-        MethodInvocationExpr.builder()
-            .setMethodName("write")
-            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
-            .setArguments(stringBuilderToString)
-            .build();
-    MethodInvocationExpr closeFileWriter =
-        MethodInvocationExpr.builder()
-            .setMethodName("close")
-            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
-            .build();
-    MethodInvocationExpr printError =
-        MethodInvocationExpr.builder()
-            .setMethodName("printStackTrace")
-            .setExprReferenceExpr(VariableExpr.withVariable(ioException))
-            .build();
-    ForStatement loopShelfList =
-        ForStatement.builder()
-            .setLocalVariableExpr(createVarDeclExpr(shelfObject))
-            .setCollectionExpr(VariableExpr.withVariable(shelfList))
-            .setBody(Arrays.asList(ExprStatement.withExpr(appendSeriesNum)))
-            .build();
-    TryCatchStatement tryCatchStatement =
-        TryCatchStatement.builder()
-            .setTryBody(
-                Arrays.asList(
-                    ExprStatement.withExpr(createFileWriterExpr),
-                    loopShelfList,
-                    ExprStatement.withExpr(writeToFileWriter),
-                    ExprStatement.withExpr(closeFileWriter)))
-            .setCatchVariableExpr(createVarDeclExpr(ioException))
-            .setCatchBody(Arrays.asList(ExprStatement.withExpr(printError)))
-            .build();
     MethodDefinition printShelfListToFile =
-        MethodDefinition.builder()
-            .setName("printShelfListToFile")
-            .setReturnType(TypeNode.VOID)
-            .setScope(ScopeNode.PUBLIC)
-            .setBody(
-                Arrays.asList(ExprStatement.withExpr(createStringBuilderExpr), tryCatchStatement))
-            .setArguments(Arrays.asList(createVarDeclExpr(fileNameVar)))
-            .build();
+        createPrintShelfListToFile(shelfClassRef, shelfNameVar, seriesNumVar, shelfListVar);
 
     // Create method `addBooksContainsNovel`
-    ConcreteReference bookKindStackRef =
-        ConcreteReference.builder()
-            .setClazz(Stack.class)
-            .setGenerics(Arrays.asList(bookKindRef))
-            .build();
-    Variable bookKindStackVar = createVarFromConcreteRef(bookKindStackRef, "stack");
-    Variable containsNovelVar = createVarFromType(TypeNode.BOOLEAN, "containsNovel");
-    shelfVar = createVarFromVaporRef(shelfClassRef, "shelf");
-    Variable bookVar = createVarFromVaporRef(bookClassRef, "addedBook");
-    TernaryExpr ternaryExpr =
-        TernaryExpr.builder()
-            .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
-            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("Added novels")))
-            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
-            .build();
-    AssignmentExpr setContainsNovelToFalse =
-        createAssignmentExpr(
-            createVarDeclExpr(containsNovelVar), ValueExpr.withValue(createBooleanValue("false")));
-    MethodInvocationExpr stackIsEmpty =
-        MethodInvocationExpr.builder()
-            .setMethodName("isEmpty")
-            .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
-    MethodInvocationExpr stackPop =
-        MethodInvocationExpr.builder()
-            .setMethodName("pop")
-            .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
-            .build();
-    MethodInvocationExpr addBookToShelfMethod =
-        MethodInvocationExpr.builder()
-            .setMethodName("addBookToShelf")
-            .setArguments(stackPop, VariableExpr.withVariable(shelfVar))
-            .setReturnType(TypeNode.withReference(bookClassRef))
-            .build();
-    AssignmentExpr createNewAddedBook =
-        createAssignmentExpr(createVarDeclExpr(bookVar), addBookToShelfMethod);
-
-    InstanceofExpr addedBookIsNovelInstance =
-        InstanceofExpr.builder()
-            .setExpr(VariableExpr.withVariable(bookVar))
-            .setCheckType(TypeNode.withReference(novelClassRef))
-            .build();
-    AssignmentExpr setContainsNovelToTrue =
-        createAssignmentExpr(
-            VariableExpr.withVariable(containsNovelVar),
-            ValueExpr.withValue(createBooleanValue("true")));
-
-    IfStatement ifStatement =
-        IfStatement.builder()
-            .setConditionExpr(addedBookIsNovelInstance)
-            .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToTrue)))
-            .build();
-    // TODO: update the conditionExpr from `stack.isEmpty()` to `!stack.isEmpty()`
-    WhileStatement whileStatement =
-        WhileStatement.builder()
-            .setConditionExpr(stackIsEmpty)
-            .setBody(Arrays.asList(ExprStatement.withExpr(createNewAddedBook), ifStatement))
-            .build();
-    MethodDefinition addBooksContainsNovel =
-        MethodDefinition.builder()
-            .setHeaderCommentStatements(createPreMethodJavaDocComment())
-            .setArguments(
-                Arrays.asList(createVarDeclExpr(shelfVar), createVarDeclExpr(bookKindStackVar)))
-            .setName("addBooksContainsNovel")
-            .setReturnType(TypeNode.STRING)
-            .setScope(ScopeNode.PUBLIC)
-            .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToFalse), whileStatement))
-            .setReturnExpr(ternaryExpr)
-            .build();
+    MethodDefinition addBooksContainsNovel = createAddBooksContainsNovel();
 
     // Create private method `addBookToShelf`
-    bookVar = createVarFromVaporRef(bookClassRef, "book");
-    AnonymousClassExpr anonymousBookClassExpr =
-        AnonymousClassExpr.builder()
-            .setType(TypeNode.withReference(bookClassRef))
-            .setMethods(
-                Arrays.asList(
-                    overrideCreateBookMethod(
-                        bookClassRef,
-                        seriesNumVar,
-                        bookKindVar,
-                        VariableExpr.withVariable(bookKindVar))))
-            .build();
-    AssignmentExpr createNewBook =
-        createAssignmentExpr(createVarDeclExpr(bookVar), anonymousBookClassExpr);
-
-    MethodDefinition addBookToShelf =
-        MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                Arrays.asList(createPreMethodLineComment("Private helper.")))
-            .setName("addBookToShelf")
-            .setReturnType(TypeNode.withReference(bookClassRef))
-            .setArguments(
-                Arrays.asList(createVarDeclExpr(bookKindVar), createVarDeclExpr(shelfVar)))
-            .setScope(ScopeNode.PRIVATE)
-            .setBody(Arrays.asList(ExprStatement.withExpr(createNewBook)))
-            .setReturnExpr(VariableExpr.withVariable(bookVar))
-            .build();
+    MethodDefinition addBookToShelf = createAddBookToShelf();
 
     // Create outer class LibraryServiceStub
     ClassDefinition libraryServiceStubClass =
@@ -634,6 +263,92 @@ public class JavaCodeGeneratorTest {
                 .build()));
   }
 
+  private static VaporReference createVaporReference(String pkgName, String name) {
+    return VaporReference.builder().setPakkage(pkgName).setName(name).build();
+  }
+
+  private static Variable createVarFromConcreteRef(ConcreteReference ref, String name) {
+    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  }
+
+  private static Variable createVarFromVaporRef(VaporReference ref, String name) {
+    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  }
+
+  private static Variable createVarFromType(TypeNode ref, String name) {
+    return Variable.builder().setName(name).setType(ref).build();
+  }
+
+  private PrimitiveValue createBooleanValue(String booleanValue) {
+    return PrimitiveValue.builder().setValue(booleanValue).setType(TypeNode.BOOLEAN).build();
+  }
+
+  private VariableExpr createVarExprFromRefThisExpr(Variable var, VaporReference ref) {
+    return VariableExpr.builder()
+        .setVariable(var)
+        .setExprReferenceExpr(
+            ValueExpr.withValue(ThisObjectValue.withType(TypeNode.withReference(ref))))
+        .build();
+  }
+
+  private VariableExpr createVarExprFromRefVarExpr(Variable var, Expr varRef) {
+    return VariableExpr.builder().setVariable(var).setExprReferenceExpr(varRef).build();
+  }
+
+  private VariableExpr createServiceNameVarExpr() {
+    return VariableExpr.builder()
+        .setIsDecl(true)
+        .setIsFinal(true)
+        .setIsStatic(true)
+        .setScope(ScopeNode.PRIVATE)
+        .setVariable(createVarFromType(TypeNode.STRING, "serviceName"))
+        .build();
+  }
+
+  private VariableExpr createShelfListVarExpr() {
+    return VariableExpr.builder()
+        .setIsDecl(true)
+        .setScope(ScopeNode.PROTECTED)
+        .setVariable(shelfListVar)
+        .build();
+  }
+
+  private VariableExpr createShelfMapVarExpr() {
+    return VariableExpr.builder()
+        .setIsDecl(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setVariable(shelfMapVar)
+        .build();
+  }
+
+  private VariableExpr fieldFromShelfObject(Variable shelfVar, Variable field) {
+    return createVarExprFromRefVarExpr(field, VariableExpr.withVariable(shelfVar));
+  }
+
+  private VariableExpr createVarDeclExpr(Variable var) {
+    return VariableExpr.builder().setVariable(var).setIsDecl(true).build();
+  }
+
+  private VariableExpr createVarPublicDeclExpr(Variable var) {
+    return VariableExpr.builder()
+        .setIsDecl(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setVariable(var)
+        .build();
+  }
+
+  private NewObjectExpr createNewObjectExpr(Class clazz) {
+    return NewObjectExpr.builder()
+        .setType(TypeNode.withReference(ConcreteReference.withClazz(clazz)))
+        .setIsGeneric(true)
+        .build();
+  }
+
+  private AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
+    return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+  }
+
   private MethodInvocationExpr shelfMapContainsKey(Variable map, List<Expr> arg) {
     return MethodInvocationExpr.builder()
         .setMethodName("containsKey")
@@ -643,46 +358,78 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private MethodInvocationExpr putShelfToObj(Variable obj, String methodName, List<Expr> arg) {
+  private MethodInvocationExpr putShelfToObj(Variable obj, String methodName, List<Expr> args) {
     return MethodInvocationExpr.builder()
         .setMethodName(methodName)
         .setExprReferenceExpr(VariableExpr.withVariable(obj))
-        .setArguments(arg)
+        .setArguments(args)
         .build();
   }
 
-  private VariableExpr fieldFromShelfObject(Variable shelfVar, Variable field) {
-    return VariableExpr.builder()
-        .setVariable(field)
-        .setExprReferenceExpr(VariableExpr.withVariable(shelfVar))
+  private MethodDefinition createLibServiceCtor() {
+    VaporReference libraryServiceStubRef =
+        createVaporReference("com.google.exmaple.library.core", "LibraryServiceStub");
+
+    NewObjectExpr arrayList = createNewObjectExpr(ArrayList.class);
+    NewObjectExpr hashMap = createNewObjectExpr(HashMap.class);
+    ReferenceConstructorExpr superExpr =
+        ReferenceConstructorExpr.superBuilder()
+            .setType(TypeNode.withReference(libraryServiceStubRef))
+            .build();
+    ValueExpr thisValueExpr =
+        ValueExpr.withValue(
+            ThisObjectValue.withType(TypeNode.withReference(libraryServiceStubRef)));
+    VariableExpr thisVariableExpr = createVarExprFromRefVarExpr(shelfListVar, thisValueExpr);
+
+    AssignmentExpr shelfListAssignmentExpr = createAssignmentExpr(thisVariableExpr, arrayList);
+    AssignmentExpr shelfMapAssignmentExpr =
+        createAssignmentExpr(VariableExpr.withVariable(shelfMapVar), hashMap);
+    return MethodDefinition.constructorBuilder()
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(superExpr),
+                ExprStatement.withExpr(shelfListAssignmentExpr),
+                ExprStatement.withExpr(shelfMapAssignmentExpr)))
+        .setReturnType(TypeNode.withReference(libraryServiceStubRef))
+        .setScope(ScopeNode.PUBLIC)
         .build();
   }
 
-  private Variable createVarFromConcreteRef(ConcreteReference ref, String name) {
-    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  private MethodDefinition createNestedShelfClassCtor() {
+    VariableExpr thisShelfNameVariableExpr =
+        createVarExprFromRefThisExpr(shelfNameVar, shelfClassRef);
+
+    VariableExpr thisSeriesNumVariableExpr =
+        createVarExprFromRefThisExpr(seriesNumVar, shelfClassRef);
+    AssignmentExpr thisShelfNameAssignExpr =
+        createAssignmentExpr(thisShelfNameVariableExpr, VariableExpr.withVariable(shelfNameVar));
+    AssignmentExpr thisSeriesNumAssignExpr =
+        createAssignmentExpr(thisSeriesNumVariableExpr, VariableExpr.withVariable(seriesNumVar));
+    return MethodDefinition.constructorBuilder()
+        .setArguments(
+            Arrays.asList(createVarDeclExpr(shelfNameVar), createVarDeclExpr(seriesNumVar)))
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(thisShelfNameAssignExpr),
+                ExprStatement.withExpr(thisSeriesNumAssignExpr)))
+        .setReturnType(TypeNode.withReference(shelfClassRef))
+        .setScope(ScopeNode.PUBLIC)
+        .build();
   }
 
-  private Variable createVarFromVaporRef(VaporReference ref, String name) {
-    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  private MethodDefinition createCreateBookMethod() {
+    return MethodDefinition.builder()
+        .setIsAbstract(true)
+        .setArguments(
+            Arrays.asList(createVarDeclExpr(seriesNumVar), createVarDeclExpr(bookKindVar)))
+        .setReturnType(TypeNode.VOID)
+        .setName("createBook")
+        .setScope(ScopeNode.PUBLIC)
+        .build();
   }
 
-  private Variable createVarFromType(TypeNode ref, String name) {
-    return Variable.builder().setName(name).setType(ref).build();
-  }
-
-  private PrimitiveValue createBooleanValue(String booleanValue) {
-    return PrimitiveValue.builder().setValue(booleanValue).setType(TypeNode.BOOLEAN).build();
-  }
-
-  private VariableExpr createVarDeclExpr(Variable v) {
-    return VariableExpr.builder().setVariable(v).setIsDecl(true).build();
-  }
-
-  private MethodDefinition overrideCreateBookMethod(
-      VaporReference classRef,
-      Variable seriesNumVar,
-      Variable bookKindVar,
-      Expr bookKindDefaultExpr) {
+  private MethodDefinition createOverrideCreateBookMethod(
+      VaporReference classRef, Expr bookKindDefaultExpr) {
 
     VariableExpr thisBookKindVariableExpr =
         VariableExpr.builder()
@@ -717,12 +464,292 @@ public class JavaCodeGeneratorTest {
     return overrideCreateBook;
   }
 
-  private VaporReference createVaporReference(String pkgName, String name) {
-    return VaporReference.builder().setPakkage(pkgName).setName(name).build();
+  private MethodDefinition createAddShelfMethod() {
+    ConcreteReference integerUtilRef =
+        ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
+    Variable nameVar = createVarFromType(TypeNode.STRING, "name");
+    Variable seriesDoubleNumVar = createVarFromType(TypeNode.DOUBLE, "seriesDoubleNum");
+    Variable maxValueVar = createVarFromConcreteRef(integerUtilRef, "MAX_VALUE");
+    CastExpr seriesNumDoubleToIntExpr =
+        CastExpr.builder()
+            .setExpr(VariableExpr.withVariable(seriesDoubleNumVar))
+            .setType(TypeNode.INT)
+            .build();
+    AssignmentExpr castSeriesNumExpr =
+        createAssignmentExpr(createVarDeclExpr(seriesNumVar), seriesNumDoubleToIntExpr);
+    ReturnExpr maxValueReturnExpr =
+        ReturnExpr.withExpr(
+            ValueExpr.withValue(
+                StringObjectValue.withValue("Series number equals to max int value.")));
+    ReturnExpr duplicateKeyReturnExpr =
+        ReturnExpr.withExpr(
+            ValueExpr.withValue(
+                StringObjectValue.withValue("Shelf is already existing in the map.")));
+    // TODO: update the condition from `condition` to `seriesNum == MAX_VALUE`
+    IfStatement maxValueCheck =
+        IfStatement.builder()
+            .setConditionExpr(
+                VariableExpr.withVariable(createVarFromType(TypeNode.BOOLEAN, "condition")))
+            .setBody(Arrays.asList(ExprStatement.withExpr(maxValueReturnExpr)))
+            .build();
+    NewObjectExpr newShelfExpr =
+        NewObjectExpr.builder()
+            .setType(TypeNode.withReference(shelfClassRef))
+            .setArguments(
+                Arrays.asList(
+                    VariableExpr.withVariable(nameVar), VariableExpr.withVariable(seriesNumVar)))
+            .build();
+    MethodInvocationExpr addShelfToListExpr =
+        putShelfToObj(shelfListVar, "add", Arrays.asList(newShelfExpr));
+    MethodInvocationExpr putShelfToMapExpr =
+        putShelfToObj(
+            shelfMapVar, "put", Arrays.asList(VariableExpr.withVariable(nameVar), newShelfExpr));
+    MethodInvocationExpr mapContainsKey =
+        shelfMapContainsKey(shelfMapVar, Arrays.asList(VariableExpr.withVariable(nameVar)));
+
+    IfStatement mapContainsKeyCheck =
+        IfStatement.builder()
+            .setConditionExpr(mapContainsKey)
+            .setBody(Arrays.asList(ExprStatement.withExpr(duplicateKeyReturnExpr)))
+            .build();
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
+        .setName("addShelf")
+        .setReturnType(TypeNode.STRING)
+        .setReturnExpr(ValueExpr.withValue(StringObjectValue.withValue("Shelf added.")))
+        .setScope(ScopeNode.PUBLIC)
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(castSeriesNumExpr),
+                maxValueCheck,
+                ExprStatement.withExpr(addShelfToListExpr),
+                mapContainsKeyCheck,
+                ExprStatement.withExpr(putShelfToMapExpr)))
+        .setArguments(
+            Arrays.asList(createVarDeclExpr(nameVar), createVarDeclExpr(seriesDoubleNumVar)))
+        .build();
   }
 
-  private AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
-    return AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
+  private MethodDefinition createUpdateShelfMap() {
+    Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
+
+    ConcreteReference nonexistentShelfExceptionRef =
+        ConcreteReference.builder().setClazz(Exception.class).build();
+    VariableExpr shelfNameFromNewShelfObject =
+        fieldFromShelfObject(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
+
+    MethodInvocationExpr mapContainsKey =
+        shelfMapContainsKey(shelfMapVar, Arrays.asList(shelfNameFromNewShelfObject));
+    MethodInvocationExpr putShelfToMapExpr =
+        putShelfToObj(
+            shelfMapVar,
+            "put",
+            Arrays.asList(shelfNameFromNewShelfObject, VariableExpr.withVariable(shelfVar)));
+    ThrowExpr throwExpr =
+        ThrowExpr.builder()
+            .setMessageExpr("Updating shelf is not existing in the map")
+            .setType(TypeNode.withReference(nonexistentShelfExceptionRef))
+            .build();
+    IfStatement updateShelfMapIfElseBlock =
+        IfStatement.builder()
+            .setConditionExpr(mapContainsKey)
+            .setBody(Arrays.asList(ExprStatement.withExpr(putShelfToMapExpr)))
+            .setElseBody(Arrays.asList(ExprStatement.withExpr(throwExpr)))
+            .build();
+    return MethodDefinition.builder()
+        .setName("updateShelfMap")
+        .setThrowsExceptions(Arrays.asList(TypeNode.withReference(nonexistentShelfExceptionRef)))
+        .setReturnType(TypeNode.VOID)
+        .setScope(ScopeNode.PUBLIC)
+        .setBody(Arrays.asList(updateShelfMapIfElseBlock))
+        .setArguments(
+            Arrays.asList(VariableExpr.builder().setVariable(shelfVar).setIsDecl(true).build()))
+        .build();
+  }
+
+  private MethodDefinition createPrintShelfListToFile(
+      VaporReference shelfClassRef,
+      Variable shelfNameVar,
+      Variable seriesNumVar,
+      Variable shelfList) {
+    ConcreteReference stringBuilderRef =
+        ConcreteReference.builder().setClazz(StringBuilder.class).build();
+    ConcreteReference fileWriterRef =
+        ConcreteReference.builder().setClazz(FileWriter.class).build();
+    Variable stringBuilderVar = createVarFromConcreteRef(stringBuilderRef, "sb");
+    Variable fileNameVar = createVarFromType(TypeNode.STRING, "fileName");
+    Variable shelfObject = createVarFromVaporRef(shelfClassRef, "s");
+    Variable fileWriterVar = createVarFromConcreteRef(fileWriterRef, "fileWriter");
+    Variable ioException =
+        createVarFromConcreteRef(ConcreteReference.withClazz(IOException.class), "e");
+    VariableExpr shelfNameFromShelfObject = fieldFromShelfObject(shelfObject, shelfNameVar);
+    VariableExpr seriesNumFromShelfObject = fieldFromShelfObject(shelfObject, seriesNumVar);
+
+    AssignmentExpr createStringBuilderExpr =
+        createAssignmentExpr(
+            createVarDeclExpr(stringBuilderVar),
+            NewObjectExpr.withType(TypeNode.withReference(stringBuilderRef)));
+
+    AssignmentExpr createFileWriterExpr =
+        createAssignmentExpr(
+            createVarDeclExpr(fileWriterVar),
+            NewObjectExpr.builder()
+                .setType(TypeNode.withReference(fileWriterRef))
+                .setArguments(Arrays.asList(VariableExpr.withVariable(fileNameVar)))
+                .build());
+    MethodInvocationExpr appendShelfName =
+        MethodInvocationExpr.builder()
+            .setMethodName("append")
+            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
+            .setArguments(shelfNameFromShelfObject)
+            .build();
+    MethodInvocationExpr appendSeriesNum =
+        MethodInvocationExpr.builder()
+            .setMethodName("append")
+            .setExprReferenceExpr(appendShelfName)
+            .setArguments(seriesNumFromShelfObject)
+            .build();
+    MethodInvocationExpr stringBuilderToString =
+        MethodInvocationExpr.builder()
+            .setMethodName("toString")
+            .setExprReferenceExpr(VariableExpr.withVariable(stringBuilderVar))
+            .build();
+    MethodInvocationExpr writeToFileWriter =
+        MethodInvocationExpr.builder()
+            .setMethodName("write")
+            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
+            .setArguments(stringBuilderToString)
+            .build();
+    MethodInvocationExpr closeFileWriter =
+        MethodInvocationExpr.builder()
+            .setMethodName("close")
+            .setExprReferenceExpr(VariableExpr.withVariable(fileNameVar))
+            .build();
+    MethodInvocationExpr printError =
+        MethodInvocationExpr.builder()
+            .setMethodName("printStackTrace")
+            .setExprReferenceExpr(VariableExpr.withVariable(ioException))
+            .build();
+    ForStatement loopShelfList =
+        ForStatement.builder()
+            .setLocalVariableExpr(createVarDeclExpr(shelfObject))
+            .setCollectionExpr(VariableExpr.withVariable(shelfList))
+            .setBody(Arrays.asList(ExprStatement.withExpr(appendSeriesNum)))
+            .build();
+    TryCatchStatement tryCatchStatement =
+        TryCatchStatement.builder()
+            .setTryBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(createFileWriterExpr),
+                    loopShelfList,
+                    ExprStatement.withExpr(writeToFileWriter),
+                    ExprStatement.withExpr(closeFileWriter)))
+            .setCatchVariableExpr(createVarDeclExpr(ioException))
+            .setCatchBody(Arrays.asList(ExprStatement.withExpr(printError)))
+            .build();
+
+    return MethodDefinition.builder()
+        .setName("printShelfListToFile")
+        .setReturnType(TypeNode.VOID)
+        .setScope(ScopeNode.PUBLIC)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createStringBuilderExpr), tryCatchStatement))
+        .setArguments(Arrays.asList(createVarDeclExpr(fileNameVar)))
+        .build();
+  }
+
+  private MethodDefinition createAddBookToShelf() {
+    Variable bookVar = createVarFromVaporRef(bookClassRef, "book");
+    AnonymousClassExpr anonymousBookClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(TypeNode.withReference(bookClassRef))
+            .setMethods(
+                Arrays.asList(
+                    createOverrideCreateBookMethod(
+                        bookClassRef, VariableExpr.withVariable(bookKindVar))))
+            .build();
+    AssignmentExpr createNewBook =
+        createAssignmentExpr(createVarDeclExpr(bookVar), anonymousBookClassExpr);
+
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(Arrays.asList(createPreMethodLineComment("Private helper.")))
+        .setName("addBookToShelf")
+        .setReturnType(TypeNode.withReference(bookClassRef))
+        .setArguments(Arrays.asList(createVarDeclExpr(bookKindVar), createVarDeclExpr(shelfVar)))
+        .setScope(ScopeNode.PRIVATE)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createNewBook)))
+        .setReturnExpr(VariableExpr.withVariable(bookVar))
+        .build();
+  }
+
+  private MethodDefinition createAddBooksContainsNovel() {
+    ConcreteReference bookKindStackRef =
+        ConcreteReference.builder()
+            .setClazz(Stack.class)
+            .setGenerics(Arrays.asList(bookKindRef))
+            .build();
+    Variable bookKindStackVar = createVarFromConcreteRef(bookKindStackRef, "stack");
+    Variable containsNovelVar = createVarFromType(TypeNode.BOOLEAN, "containsNovel");
+    Variable bookVar = createVarFromVaporRef(bookClassRef, "addedBook");
+    TernaryExpr ternaryExpr =
+        TernaryExpr.builder()
+            .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
+            .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("Added novels")))
+            .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
+            .build();
+    AssignmentExpr setContainsNovelToFalse =
+        createAssignmentExpr(
+            createVarDeclExpr(containsNovelVar), ValueExpr.withValue(createBooleanValue("false")));
+    MethodInvocationExpr stackIsEmpty =
+        MethodInvocationExpr.builder()
+            .setMethodName("isEmpty")
+            .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    MethodInvocationExpr stackPop =
+        MethodInvocationExpr.builder()
+            .setMethodName("pop")
+            .setExprReferenceExpr(VariableExpr.withVariable(bookKindStackVar))
+            .build();
+    MethodInvocationExpr addBookToShelfMethod =
+        MethodInvocationExpr.builder()
+            .setMethodName("addBookToShelf")
+            .setArguments(stackPop, VariableExpr.withVariable(shelfVar))
+            .setReturnType(TypeNode.withReference(bookClassRef))
+            .build();
+    AssignmentExpr createNewAddedBook =
+        createAssignmentExpr(createVarDeclExpr(bookVar), addBookToShelfMethod);
+
+    InstanceofExpr addedBookIsNovelInstance =
+        InstanceofExpr.builder()
+            .setExpr(VariableExpr.withVariable(bookVar))
+            .setCheckType(TypeNode.withReference(novelClassRef))
+            .build();
+    AssignmentExpr setContainsNovelToTrue =
+        createAssignmentExpr(
+            VariableExpr.withVariable(containsNovelVar),
+            ValueExpr.withValue(createBooleanValue("true")));
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(addedBookIsNovelInstance)
+            .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToTrue)))
+            .build();
+    // TODO: update the conditionExpr from `stack.isEmpty()` to `!stack.isEmpty()`
+    WhileStatement whileStatement =
+        WhileStatement.builder()
+            .setConditionExpr(stackIsEmpty)
+            .setBody(Arrays.asList(ExprStatement.withExpr(createNewAddedBook), ifStatement))
+            .build();
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(createPreMethodJavaDocComment())
+        .setArguments(
+            Arrays.asList(createVarDeclExpr(shelfVar), createVarDeclExpr(bookKindStackVar)))
+        .setName("addBooksContainsNovel")
+        .setReturnType(TypeNode.STRING)
+        .setScope(ScopeNode.PUBLIC)
+        .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToFalse), whileStatement))
+        .setReturnExpr(ternaryExpr)
+        .build();
   }
 
   private static final String EXPECTED_CLASS_STRING =
