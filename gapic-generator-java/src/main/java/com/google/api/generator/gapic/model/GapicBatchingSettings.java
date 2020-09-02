@@ -15,6 +15,8 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableList;
+import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -25,6 +27,7 @@ public abstract class GapicBatchingSettings {
     IGNORE
   };
 
+  // Threshold fields.
   public abstract String protoPakkage();
 
   public abstract String serviceName();
@@ -44,6 +47,14 @@ public abstract class GapicBatchingSettings {
   public abstract Integer flowControlByteLimit();
 
   public abstract FlowControlLimitExceededBehavior flowControlLimitExceededBehavior();
+
+  // Batch descriptor fields.
+  public abstract String batchedFieldName();
+
+  public abstract ImmutableList<String> discriminatorFieldNames();
+
+  @Nullable
+  public abstract String subresponseFieldName();
 
   public boolean matches(Service service, Method method) {
     return protoPakkage().equals(service.protoPakkage())
@@ -76,6 +87,12 @@ public abstract class GapicBatchingSettings {
 
     public abstract Builder setFlowControlLimitExceededBehavior(
         FlowControlLimitExceededBehavior behavior);
+
+    public abstract Builder setBatchedFieldName(String batchedFieldName);
+
+    public abstract Builder setDiscriminatorFieldNames(List<String> discriminatorFieldNames);
+
+    public abstract Builder setSubresponseFieldName(String subresponseFieldName);
 
     public abstract GapicBatchingSettings build();
   }

@@ -38,6 +38,8 @@ public class BatchingSettingsConfigParser {
   private static String YAML_KEY_METHODS = "methods";
   private static String YAML_KEY_BATCHING = "batching";
   private static String YAML_KEY_THRESHOLDS = "thresholds";
+  private static String YAML_KEY_DESCRIPTOR = "batch_descriptor";
+
   private static String YAML_KEY_BATCHING_ELEMENT_COUNT_THRESHOLD = "element_count_threshold";
   private static String YAML_KEY_BATCHING_DELAY_THRESHOLD_MILLIS = "delay_threshold_millis";
   private static String YAML_KEY_BATCHING_REQUEST_BYTE_THRESHOLD = "request_byte_threshold";
@@ -45,6 +47,10 @@ public class BatchingSettingsConfigParser {
   private static String YAML_KEY_BATCHING_FLOW_CONTROL_BYTE_LIMIT = "flow_control_byte_limit";
   private static String YAML_KEY_BATCHING_FLOW_CONTROL_LIMIT_EXCEEDED_BEHAVIOR =
       "flow_control_limit_exceeded_behavior";
+
+  private static String YAML_KEY_DESCRIPTOR_BATCHED_FIELD = "batched_field";
+  private static String YAML_KEY_DESCRIPTOR_DISCRIMINATOR_FIELD = "discriminator_fields";
+  private static String YAML_KEY_DESCRIPTOR_SUBRESPONSE_FIELD = "subresponse_field";
 
   public static Optional<List<GapicBatchingSettings>> parse(
       Optional<String> gapicYamlConfigFilePathOpt) {
@@ -94,6 +100,13 @@ public class BatchingSettingsConfigParser {
         if (!batchingOuterYamlConfig.containsKey(YAML_KEY_THRESHOLDS)) {
           continue;
         }
+        Preconditions.checkState(
+            batchingOuterYamlConfig.containsKey(YAML_KEY_DESCRIPTOR),
+            String.format(
+                "%s key expected but not found for method %s",
+                YAML_KEY_DESCRIPTOR, (String) methodYamlConfig.get(YAML_KEY_NAME)));
+
+        // Parse the threshold values first.
         Map<String, Object> batchingYamlConfig =
             (Map<String, Object>) batchingOuterYamlConfig.get(YAML_KEY_THRESHOLDS);
         Preconditions.checkState(
@@ -147,6 +160,27 @@ public class BatchingSettingsConfigParser {
           }
           settingsBuilder.setFlowControlLimitExceededBehavior(behaviorSetting);
         }
+
+        // Parse the descriptor values.
+        Map<String, Object> descriptorYamlConfig =
+            (Map<String, Object>) batchingOuterYamlConfig.get(YAML_KEY_DESCRIPTOR);
+        Preconditions.checkState(
+            descriptorYamlConfig.containsKey(YAML_KEY_DESCRIPTOR_BATCHED_FIELD)
+                && descriptorYamlConfig.containsKey(YAML_KEY_DESCRIPTOR_DISCRIMINATOR_FIELD),
+            String.format(
+                "Batching descriptor YAML config is missing one of %s or %s fields",
+                YAML_KEY_DESCRIPTOR_BATCHED_FIELD, YAML_KEY_DESCRIPTOR_DISCRIMINATOR_FIELD));
+
+        settingsBuilder.setBatchedFieldName(
+            (String) descriptorYamlConfig.get(YAML_KEY_DESCRIPTOR_BATCHED_FIELD));
+        settingsBuilder.setDiscriminatorFieldNames(
+            (List<String>) descriptorYamlConfig.get(YAML_KEY_DESCRIPTOR_DISCRIMINATOR_FIELD));
+
+        if (descriptorYamlConfig.containsKey(YAML_KEY_DESCRIPTOR_SUBRESPONSE_FIELD)) {
+          settingsBuilder.setSubresponseFieldName(
+              (String) descriptorYamlConfig.get(YAML_KEY_DESCRIPTOR_SUBRESPONSE_FIELD));
+        }
+
         settings.add(settingsBuilder.build());
       }
     }

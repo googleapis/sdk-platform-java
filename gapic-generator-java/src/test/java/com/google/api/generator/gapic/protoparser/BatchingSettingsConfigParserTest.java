@@ -75,6 +75,10 @@ public class BatchingSettingsConfigParserTest {
     assertEquals(
         GapicBatchingSettings.FlowControlLimitExceededBehavior.THROW_EXCEPTION,
         setting.flowControlLimitExceededBehavior());
+
+    assertEquals("entries", setting.batchedFieldName());
+    assertThat(setting.discriminatorFieldNames()).containsExactly("log_name", "resource", "labels");
+    assertThat(setting.subresponseFieldName()).isNull();
   }
 
   @Test
@@ -102,5 +106,9 @@ public class BatchingSettingsConfigParserTest {
     assertEquals(
         GapicBatchingSettings.FlowControlLimitExceededBehavior.IGNORE,
         setting.flowControlLimitExceededBehavior());
+
+    assertEquals("messages", setting.batchedFieldName());
+    assertThat(setting.discriminatorFieldNames()).containsExactly("topic");
+    assertEquals("message_ids", setting.subresponseFieldName());
   }
 }
