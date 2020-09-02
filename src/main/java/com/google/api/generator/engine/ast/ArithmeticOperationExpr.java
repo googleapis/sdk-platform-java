@@ -47,18 +47,18 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
   }
 
   @AutoValue.Builder
-  public abstract static class Builder {
+  abstract static class Builder {
 
-    // Private setter
+    // Private setter.
     abstract Builder setLhsExpr(Expr expr);
 
-    // Private setter
+    // Private setter.
     abstract Builder setRhsExpr(Expr expr);
 
-    // Private setter
+    // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
 
-    // Private setter
+    // Private setter.
     abstract Builder setType(TypeNode type);
 
     abstract ArithmeticOperationExpr autoBuild();
@@ -73,11 +73,11 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
               "Arithmetic operator %s can not be applied to %s, %s.",
               operator, lhsExprType.toString(), rhsExprType.toString());
 
-      // None of expression should be void type
+      // None of expression should be void type.
       Preconditions.checkState(
           !lhsExprType.equals(TypeNode.VOID) && !rhsExprType.equals(TypeNode.VOID), errorMsg);
 
-      // Concat operator type checks
+      // Type-checking for Concat operator.
       if (operator.equals(OperatorKind.ARITHMETIC_ADDITION)) {
         Preconditions.checkState(isValidConcatTypes(lhsExprType, rhsExprType), errorMsg);
       }

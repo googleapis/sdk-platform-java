@@ -21,6 +21,7 @@ import org.junit.Test;
 public class ArithmeticOperationExprTest {
   @Test
   public void concatOperator_validBasic() {
+    // valid type-checking for x + getSomeString()
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
     MethodInvocationExpr rhsExpr =
@@ -34,6 +35,7 @@ public class ArithmeticOperationExprTest {
 
   @Test
   public void concatOperator_validWithNull() {
+    // Type-checking for String variable x and null object value.
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -42,7 +44,23 @@ public class ArithmeticOperationExprTest {
   }
 
   @Test
+  public void concatOperator_validWithReferenceType() {
+    // Type-checking for String variable x, Expr variable y.
+    VariableExpr lhsExpr =
+        VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
+    VariableExpr rhsExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("y")
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+                .build());
+    ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
   public void concatOperator_invalidVoidType() {
+    // throw exception if one of expr is void-type
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
     MethodInvocationExpr rhsExpr =
@@ -57,6 +75,7 @@ public class ArithmeticOperationExprTest {
 
   @Test
   public void concatString_invalidNonStringType() {
+    // throw exception for concat usage if none of exprs is String-type
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("x").build());
     MethodInvocationExpr rhsExpr =
