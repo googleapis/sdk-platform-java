@@ -18,10 +18,12 @@ import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
 public class MetacharEscaper extends Escaper {
+  private static final MetacharEscaper SINGLETON = new MetacharEscaper();
+
   // Handle escape characters (https://docs.oracle.com/javase/tutorial/java/data/characters.html)
   // for the comments here, else JavaFormmater cannot properly format the string comment.
   // `"` and `'` are overlooked because the comments will not be surrounded by `"` or `'`.
-  private static final Escaper escaper =
+  private static final Escaper charEscaper =
       Escapers.builder()
           .addEscape('\t', "\\t")
           .addEscape('\b', "\\b")
@@ -39,6 +41,6 @@ public class MetacharEscaper extends Escaper {
   }
 
   public static String escaper(String source) {
-    return new MetacharEscaper().escape(source);
+    return SINGLETON.escape(source);
   }
 }
