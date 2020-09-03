@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -66,6 +67,14 @@ public abstract class TypeNode implements AstNode {
       withReference(ConcreteReference.withClazz(Short.class));
 
   private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  private static final EnumSet<TypeKind> NUMERIC_TYPE_SET =
+      EnumSet.of(
+          TypeKind.INT,
+          TypeKind.DOUBLE,
+          TypeKind.LONG,
+          TypeKind.SHORT,
+          TypeKind.FLOAT,
+          TypeKind.CHAR);
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -125,8 +134,16 @@ public abstract class TypeNode implements AstNode {
         && !type.equals(TypeNode.NULL);
   }
 
+  public static boolean isBoxedType(TypeNode type) {
+    return BOXED_TYPE_MAP.containsValue(type);
+  }
+
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public boolean isNumericType() {
+    return isNumericType(typeKind());
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
@@ -198,6 +215,10 @@ public abstract class TypeNode implements AstNode {
 
   private static boolean isPrimitiveType(TypeKind typeKind) {
     return !typeKind.equals(TypeKind.OBJECT);
+  }
+
+  private static boolean isNumericType(TypeKind typeKind) {
+    return NUMERIC_TYPE_SET.contains(typeKind);
   }
 
   private static Map<TypeNode, TypeNode> createBoxedTypeMap() {

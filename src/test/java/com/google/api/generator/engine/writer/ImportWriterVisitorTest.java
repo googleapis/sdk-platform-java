@@ -44,6 +44,7 @@ import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
@@ -865,6 +866,32 @@ public class ImportWriterVisitorTest {
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import java.util.Map;\n\n"));
+  }
+
+  @Test
+  public void writeUnaryOperationExprImports_LogicalNot() {
+    MethodInvocationExpr expr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setMethodName("isEmpty")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    UnaryOperationExpr unaryOperationExpr = UnaryOperationExpr.logicalNotWithExpr(expr);
+    unaryOperationExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+  }
+
+  @Test
+  public void writeUnaryOperationExprImports_PostIncrement() {
+    MethodInvocationExpr expr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setMethodName("getNumber")
+            .setReturnType(TypeNode.INT)
+            .build();
+    UnaryOperationExpr unaryOperationExpr = UnaryOperationExpr.postfixIncrementWithExpr(expr);
+    unaryOperationExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
   }
 
   private static TypeNode createType(Class clazz) {
