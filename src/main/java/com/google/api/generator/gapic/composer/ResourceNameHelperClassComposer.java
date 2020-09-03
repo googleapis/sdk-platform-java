@@ -18,11 +18,13 @@ import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IfStatement;
+import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -69,6 +71,8 @@ public class ResourceNameHelperClassComposer {
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
 
+  private static final String BUILDER_CLASS_HEADER_PATTERN = "Builder for %s.";
+
   private static final ResourceNameHelperClassComposer INSTANCE =
       new ResourceNameHelperClassComposer();
 
@@ -107,6 +111,7 @@ public class ResourceNameHelperClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(resourceName.pakkage())
+            .setHeaderCommentStatements(CommentComposer.AUTO_GENERATED_CLASS_COMMENT)
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -1323,6 +1328,10 @@ public class ResourceNameHelperClassComposer {
         isDefaultClass ? Collections.emptyList() : Arrays.asList(betaAnnotation);
 
     return ClassDefinition.builder()
+        .setHeaderCommentStatements(
+            CommentStatement.withComment(
+                JavaDocComment.withComment(
+                    String.format(BUILDER_CLASS_HEADER_PATTERN, resourceNamePattern))))
         .setAnnotations(classAnnotations)
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)

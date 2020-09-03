@@ -818,6 +818,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     for (ClassDefinition classDef : classes) {
       classDef.accept(this);
       newline();
+      newline();
     }
   }
 
