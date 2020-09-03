@@ -114,58 +114,13 @@ public class JavaCodeGeneratorTest {
     MethodDefinition libraryServiceCtor = createLibServiceCtor();
 
     // Create nested class Shelf.
-    VariableExpr shelfNameDel = createVarPublicDeclExpr(shelfNameVar);
-    VariableExpr seriesNumDel = createVarPublicDeclExpr(seriesNumVar);
-    VariableExpr shelfServiceNameDel = createVarPublicDeclExpr(shelfServiceNameVar);
-    AssignmentExpr shelfServiceNameAssignmentExpr =
-        createAssignmentExpr(
-            shelfServiceNameDel,
-            VariableExpr.withVariable(createVarFromType(TypeNode.STRING, "serviceName")));
-    MethodDefinition nestedShelfClassCtor = createNestedShelfClassCtor();
-    ClassDefinition nestedClassShelf =
-        ClassDefinition.builder()
-            .setIsNested(true)
-            .setMethods(Arrays.asList(nestedShelfClassCtor))
-            .setStatements(
-                Arrays.asList(
-                    ExprStatement.withExpr(shelfNameDel),
-                    ExprStatement.withExpr(seriesNumDel),
-                    ExprStatement.withExpr(shelfServiceNameAssignmentExpr)))
-            .setName("Shelf")
-            .setScope(ScopeNode.PUBLIC)
-            .build();
+    ClassDefinition nestedClassShelf = createNestedClassShelf();
 
     // Create nested abstract class Book.
-    VariableExpr bookKindDel = createVarPublicDeclExpr(bookKindVar);
-    MethodDefinition createBookMethod = createAbstractCreateBookMethod();
-
-    ClassDefinition nestedClassBook =
-        ClassDefinition.builder()
-            .setHeaderCommentStatements(
-                Arrays.asList(
-                    createPreMethodLineComment("Test nested abstract class and abstract method.")))
-            .setMethods(Arrays.asList(createBookMethod))
-            .setStatements(
-                Arrays.asList(
-                    ExprStatement.withExpr(bookKindDel), ExprStatement.withExpr(seriesNumDel)))
-            .setName("Book")
-            .setScope(ScopeNode.PUBLIC)
-            .setIsNested(true)
-            .setIsAbstract(true)
-            .build();
+    ClassDefinition nestedClassBook = createNestedClassBook();
 
     // Create nested class Novel.
-    EnumRefExpr bookKindNovelEnumExpr =
-        EnumRefExpr.builder().setName("NOVEL").setType(bookKindVar.type()).build();
-    ClassDefinition nestedClassNovel =
-        ClassDefinition.builder()
-            .setName("Novel")
-            .setScope(ScopeNode.PUBLIC)
-            .setIsNested(true)
-            .setExtendsType(TypeNode.withReference(bookClassRef))
-            .setMethods(
-                Arrays.asList(createOverrideCreateBookMethod(novelClassRef, bookKindNovelEnumExpr)))
-            .build();
+    ClassDefinition nestedClassNovel = createNestedClassNovel();
 
     // Create method `addShelf`
     MethodDefinition addShelfMethod = createAddShelfMethod();
@@ -733,6 +688,60 @@ public class JavaCodeGeneratorTest {
         .setScope(ScopeNode.PUBLIC)
         .setBody(Arrays.asList(ExprStatement.withExpr(setContainsNovelToFalse), whileStatement))
         .setReturnExpr(ternaryExpr)
+        .build();
+  }
+
+  private ClassDefinition createNestedClassShelf() {
+    VariableExpr shelfNameDel = createVarPublicDeclExpr(shelfNameVar);
+    VariableExpr seriesNumDel = createVarPublicDeclExpr(seriesNumVar);
+    VariableExpr shelfServiceNameDel = createVarPublicDeclExpr(shelfServiceNameVar);
+    AssignmentExpr shelfServiceNameAssignmentExpr =
+        createAssignmentExpr(
+            shelfServiceNameDel,
+            VariableExpr.withVariable(createVarFromType(TypeNode.STRING, "serviceName")));
+    MethodDefinition nestedShelfClassCtor = createNestedShelfClassCtor();
+    return ClassDefinition.builder()
+        .setIsNested(true)
+        .setMethods(Arrays.asList(nestedShelfClassCtor))
+        .setStatements(
+            Arrays.asList(
+                ExprStatement.withExpr(shelfNameDel),
+                ExprStatement.withExpr(seriesNumDel),
+                ExprStatement.withExpr(shelfServiceNameAssignmentExpr)))
+        .setName("Shelf")
+        .setScope(ScopeNode.PUBLIC)
+        .build();
+  }
+
+  private ClassDefinition createNestedClassBook() {
+    VariableExpr bookKindDel = createVarPublicDeclExpr(bookKindVar);
+    MethodDefinition createBookMethod = createAbstractCreateBookMethod();
+    VariableExpr seriesNumDel = createVarPublicDeclExpr(seriesNumVar);
+    return ClassDefinition.builder()
+        .setHeaderCommentStatements(
+            Arrays.asList(
+                createPreMethodLineComment("Test nested abstract class and abstract method.")))
+        .setMethods(Arrays.asList(createBookMethod))
+        .setStatements(
+            Arrays.asList(
+                ExprStatement.withExpr(bookKindDel), ExprStatement.withExpr(seriesNumDel)))
+        .setName("Book")
+        .setScope(ScopeNode.PUBLIC)
+        .setIsNested(true)
+        .setIsAbstract(true)
+        .build();
+  }
+
+  private ClassDefinition createNestedClassNovel() {
+    EnumRefExpr bookKindNovelEnumExpr =
+        EnumRefExpr.builder().setName("NOVEL").setType(bookKindVar.type()).build();
+    return ClassDefinition.builder()
+        .setName("Novel")
+        .setScope(ScopeNode.PUBLIC)
+        .setIsNested(true)
+        .setExtendsType(TypeNode.withReference(bookClassRef))
+        .setMethods(
+            Arrays.asList(createOverrideCreateBookMethod(novelClassRef, bookKindNovelEnumExpr)))
         .build();
   }
 
