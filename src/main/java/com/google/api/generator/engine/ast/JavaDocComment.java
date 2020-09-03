@@ -71,6 +71,11 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
+    public Builder addUnescapedComment(String comment) {
+      componentsList.add(comment);
+      return this;
+    }
+
     public Builder addComment(String comment) {
       componentsList.add(HtmlEscaper.escaper(comment));
       return this;
