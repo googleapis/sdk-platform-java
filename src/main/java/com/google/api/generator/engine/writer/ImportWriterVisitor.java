@@ -16,6 +16,7 @@ package com.google.api.generator.engine.writer;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
@@ -209,6 +210,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(ReferenceConstructorExpr referenceConstructorExpr) {
     referenceConstructorExpr.type().accept(this);
     expressions(referenceConstructorExpr.arguments());
+  }
+
+  @Override
+  public void visit(ArithmeticOperationExpr arithmeticOperationExpr) {
+    arithmeticOperationExpr.lhsExpr().accept(this);
+    arithmeticOperationExpr.rhsExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
