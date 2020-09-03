@@ -18,10 +18,12 @@ import com.google.common.escape.Escaper;
 import com.google.common.escape.Escapers;
 
 public class HtmlEscaper extends Escaper {
+  private static final HtmlEscaper SINGLETON = new HtmlEscaper();
+  
   // Based on the observation of the generated java files, we escape the following
   // five characters by html escaper. We do not directly use guava HtmlEscapers here because
   // it only escapes`<>&\"'` as specified by HTML 4.01.
-  private static final Escaper escaper =
+  private static final Escaper charEscaper =
       Escapers.builder()
           .addEscape('<', "&lt;")
           .addEscape('>', "&gt;")
@@ -38,6 +40,6 @@ public class HtmlEscaper extends Escaper {
   }
 
   public static String escaper(String source) {
-    return new HtmlEscaper().escape(source);
+    return SINGLETON.escape(source);
   }
 }
