@@ -104,7 +104,7 @@ public class JavaCodeGeneratorTest {
         createAssignmentExpr(
             serviceName, ValueExpr.withValue(StringObjectValue.withValue("LibraryServiceStub")));
 
-    // [code] protected List<Shelf> shelfList
+    // [code] protected List<Shelf> shelfList;
     VariableExpr shelfListExpr = createShelfListVarExpr();
 
     // [code] public static HashMap<String, Shelf> shelfMap;
@@ -121,9 +121,7 @@ public class JavaCodeGeneratorTest {
         createAssignmentExpr(
             shelfServiceNameDel,
             VariableExpr.withVariable(createVarFromType(TypeNode.STRING, "serviceName")));
-
     MethodDefinition nestedShelfClassCtor = createNestedShelfClassCtor();
-
     ClassDefinition nestedClassShelf =
         ClassDefinition.builder()
             .setIsNested(true)
@@ -321,7 +319,7 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private VariableExpr fieldFromShelfObject(Variable shelfVar, Variable field) {
+  private VariableExpr fieldFromShelfObjectExpr(Variable shelfVar, Variable field) {
     return createVarExprFromRefVarExpr(field, VariableExpr.withVariable(shelfVar));
   }
 
@@ -395,9 +393,9 @@ public class JavaCodeGeneratorTest {
         .build();
   }
 
-  private TernaryExpr createTernaryExpr(Variable containsNovelVar) {
+  private TernaryExpr createTernaryExpr(Variable var) {
     return TernaryExpr.builder()
-        .setConditionExpr(VariableExpr.withVariable(containsNovelVar))
+        .setConditionExpr(VariableExpr.withVariable(var))
         .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("Added novels")))
         .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("No novels added")))
         .build();
@@ -409,6 +407,7 @@ public class JavaCodeGeneratorTest {
 
     NewObjectExpr arrayList = createNewObjectExpr(ArrayList.class);
     NewObjectExpr hashMap = createNewObjectExpr(HashMap.class);
+
     ReferenceConstructorExpr superExpr =
         ReferenceConstructorExpr.superBuilder()
             .setType(TypeNode.withReference(libraryServiceStubRef))
@@ -558,7 +557,7 @@ public class JavaCodeGeneratorTest {
         ConcreteReference.builder().setClazz(Exception.class).build();
     Variable shelfVar = createVarFromVaporRef(shelfClassRef, "newShelf");
     VariableExpr shelfNameFromNewShelfObject =
-        fieldFromShelfObject(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
+        fieldFromShelfObjectExpr(shelfVar, createVarFromType(TypeNode.STRING, "shelfName"));
 
     MethodInvocationExpr mapContainsKeyExpr =
         methodExprWithRefArgAndReturn(shelfMapVar, Arrays.asList(shelfNameFromNewShelfObject));
@@ -600,8 +599,8 @@ public class JavaCodeGeneratorTest {
     Variable fileWriterVar = createVarFromConcreteRef(fileWriterRef, "fileWriter");
     Variable ioException =
         createVarFromConcreteRef(ConcreteReference.withClazz(IOException.class), "e");
-    VariableExpr shelfNameFromShelfObject = fieldFromShelfObject(shelfObject, shelfNameVar);
-    VariableExpr seriesNumFromShelfObject = fieldFromShelfObject(shelfObject, seriesNumVar);
+    VariableExpr shelfNameFromShelfObject = fieldFromShelfObjectExpr(shelfObject, shelfNameVar);
+    VariableExpr seriesNumFromShelfObject = fieldFromShelfObjectExpr(shelfObject, seriesNumVar);
 
     AssignmentExpr createStringBuilderExpr =
         createAssignmentExpr(
