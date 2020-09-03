@@ -140,6 +140,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
+            .setHeaderCommentStatements(
+                StubCommentComposer.createGrpcServiceStubClassHeaderComments(service.name()))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)

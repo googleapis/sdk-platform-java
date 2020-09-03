@@ -73,6 +73,9 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
+            .setHeaderCommentStatements(
+                StubCommentComposer.createGrpcServiceCallableFactoryClassHeaderComments(
+                    service.name()))
             .setAnnotations(createClassAnnotations(types))
             .setImplementsTypes(createClassImplements(types))
             .setName(className)

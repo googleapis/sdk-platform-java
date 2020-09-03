@@ -65,6 +65,8 @@ public class ServiceStubClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
+            .setHeaderCommentStatements(
+                StubCommentComposer.createServiceStubClassHeaderComments(service.name()))
             .setAnnotations(createClassAnnotations(types))
             .setIsAbstract(true)
             .setImplementsTypes(createClassImplements(types))
