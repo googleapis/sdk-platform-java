@@ -28,6 +28,11 @@ public abstract class JavaDocComment implements Comment {
   @Override
   public abstract String comment();
 
+  // Convenience helper for simple comments.
+  public static JavaDocComment withComment(String comment) {
+    return builder().addComment(comment).build();
+  }
+
   public static Builder builder() {
     return new AutoValue_JavaDocComment.Builder();
   }

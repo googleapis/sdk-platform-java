@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -85,7 +86,15 @@ public abstract class ClassDefinition implements AstNode {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public Builder setFileHeader(CommentStatement... headerComments) {
+      return setFileHeader(Arrays.asList(headerComments));
+    }
+
     public abstract Builder setFileHeader(List<CommentStatement> fileHeader);
+
+    public Builder setHeaderCommentStatements(CommentStatement... comments) {
+      return setHeaderCommentStatements(Arrays.asList(comments));
+    }
 
     public abstract Builder setHeaderCommentStatements(
         List<CommentStatement> headerCommentStatements);
@@ -165,7 +174,9 @@ public abstract class ClassDefinition implements AstNode {
       for (Statement statement : classDef.statements()) {
         // TODO(xiaozhenliu): Add CommentStatement check here.
         Preconditions.checkState(
-            statement instanceof ExprStatement || statement instanceof BlockStatement,
+            statement instanceof CommentStatement
+                || statement instanceof ExprStatement
+                || statement instanceof BlockStatement,
             "Class statement type must be either an expression, block, or comment statement");
         if (statement instanceof ExprStatement) {
           Expr expr = ((ExprStatement) statement).expression();

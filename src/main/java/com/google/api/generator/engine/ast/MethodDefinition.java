@@ -120,6 +120,10 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setName(String name);
 
+    public Builder setHeaderCommentStatements(CommentStatement... comments) {
+      return setHeaderCommentStatements(Arrays.asList(comments));
+    }
+
     public abstract Builder setHeaderCommentStatements(
         List<CommentStatement> headeCommentStatements);
 

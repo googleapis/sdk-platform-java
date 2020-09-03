@@ -103,6 +103,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -123,6 +124,8 @@ public class ServiceStubSettingsClassComposer {
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
   private static final String STUB_PATTERN = "%sStub";
+
+  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
 
   private static final String LEFT_BRACE = "{";
@@ -160,6 +163,7 @@ public class ServiceStubSettingsClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
+            .setHeaderCommentStatements(CommentComposer.AUTO_GENERATED_CLASS_COMMENT)
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -230,9 +234,11 @@ public class ServiceStubSettingsClassComposer {
       Map<String, VariableExpr> methodSettingsMemberVarExprs,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
-    List<Expr> memberVarExprs = new ArrayList<>();
+    Function<Expr, Statement> exprToStatementFn = e -> ExprStatement.withExpr(e);
+    List<Statement> statements = new ArrayList<>();
 
     // Assign DEFAULT_SERVICE_SCOPES.
+    statements.add(ServiceStubSettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
         DEFAULT_SERVICE_SCOPES_VAR_EXPR
             .toBuilder()
@@ -263,38 +269,43 @@ public class ServiceStubSettingsClassComposer {
             .setReturnType(DEFAULT_SERVICE_SCOPES_VAR_EXPR.type())
             .build();
 
-    memberVarExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(defaultServiceScopesDeclVarExpr)
-            .setValueExpr(listBuilderExpr)
-            .build());
+    statements.add(
+        exprToStatementFn.apply(
+            AssignmentExpr.builder()
+                .setVariableExpr(defaultServiceScopesDeclVarExpr)
+                .setValueExpr(listBuilderExpr)
+                .build()));
 
     // Declare settings members.
-    memberVarExprs.addAll(
+    statements.addAll(
         methodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
-                    v.toBuilder()
-                        .setIsDecl(true)
-                        .setScope(ScopeNode.PRIVATE)
-                        .setIsFinal(true)
-                        .build())
+                    exprToStatementFn.apply(
+                        v.toBuilder()
+                            .setIsDecl(true)
+                            .setScope(ScopeNode.PRIVATE)
+                            .setIsFinal(true)
+                            .build()))
             .collect(Collectors.toList()));
 
-    memberVarExprs.addAll(
-        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types));
+    statements.addAll(
+        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types).stream()
+            .map(e -> exprToStatementFn.apply(e))
+            .collect(Collectors.toList()));
 
     for (Method method : service.methods()) {
       Optional<GapicBatchingSettings> batchingSettingOpt =
           serviceConfig.getBatchingSetting(service, method);
       if (batchingSettingOpt.isPresent()) {
-        memberVarExprs.add(
-            BatchingDescriptorComposer.createBatchingDescriptorFieldDeclExpr(
-                method, batchingSettingOpt.get(), messageTypes));
+        statements.add(
+            exprToStatementFn.apply(
+                BatchingDescriptorComposer.createBatchingDescriptorFieldDeclExpr(
+                    method, batchingSettingOpt.get(), messageTypes)));
       }
     }
 
-    return memberVarExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    return statements;
   }
 
   private static List<Expr> createPagingStaticAssignExprs(
@@ -703,7 +714,6 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, types));
     javaMethods.addAll(createBuilderHelperMethods(service, types));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, types));
-    // TODO(miraleung): Fill this out.
     return javaMethods;
   }
 
@@ -712,6 +722,9 @@ public class ServiceStubSettingsClassComposer {
     Function<Map.Entry<String, VariableExpr>, MethodDefinition> varToMethodFn =
         e ->
             MethodDefinition.builder()
+                .setHeaderCommentStatements(
+                    ServiceStubSettingsCommentComposer.createCallSettingsGetterComment(
+                        getMethodNameFromSettingsVarName(e.getKey())))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(e.getValue().type())
                 .setName(e.getKey())
@@ -806,6 +819,8 @@ public class ServiceStubSettingsClassComposer {
             ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -822,6 +837,8 @@ public class ServiceStubSettingsClassComposer {
     returnType = TypeNode.STRING;
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -838,6 +855,8 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.DEFAULT_SERVICE_SCOPES_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -863,6 +882,9 @@ public class ServiceStubSettingsClassComposer {
             .build();
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer
+                    .DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -893,6 +915,9 @@ public class ServiceStubSettingsClassComposer {
             .build();
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer
+                    .DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -993,6 +1018,8 @@ public class ServiceStubSettingsClassComposer {
     final TypeNode builderReturnType = types.get(NESTED_BUILDER_CLASS_NAME);
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)
@@ -1016,6 +1043,8 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)
@@ -1027,6 +1056,8 @@ public class ServiceStubSettingsClassComposer {
     // Create the toBuilder method.
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceStubSettingsCommentComposer.TO_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(builderReturnType)
             .setName("toBuilder")
@@ -1116,6 +1147,9 @@ public class ServiceStubSettingsClassComposer {
     // TODO(miraleung): Fill this out.
     return ClassDefinition.builder()
         .setIsNested(true)
+        .setHeaderCommentStatements(
+            ServiceStubSettingsCommentComposer.createBuilderClassComment(
+                getThisClassName(service.name())))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setName(className)
@@ -1333,12 +1367,10 @@ public class ServiceStubSettingsClassComposer {
                   // Name is fooBarSettings.
                   VariableExpr varExpr = e.getValue();
                   TypeNode varType = varExpr.type();
-                  String methodName = e.getKey();
                   Preconditions.checkState(
-                      methodName.endsWith(SETTINGS_LITERAL),
-                      String.format("%s expected to end with \"Settings\"", methodName));
-                  methodName =
-                      methodName.substring(0, methodName.length() - SETTINGS_LITERAL.length());
+                      e.getKey().endsWith(SETTINGS_LITERAL),
+                      String.format("%s expected to end with \"Settings\"", e.getKey()));
+                  String methodName = getMethodNameFromSettingsVarName(e.getKey());
 
                   if (!isPagedCallSettingsBuilderFn.apply(varType)) {
                     if (!isBatchingCallSettingsBuilderFn.apply(varType)) {
@@ -1621,8 +1653,9 @@ public class ServiceStubSettingsClassComposer {
     TypeNode returnType = types.get(NESTED_BUILDER_CLASS_NAME);
     Expr returnExpr = ValueExpr.withValue(ThisObjectValue.withType(returnType));
 
-    // TODO(miraleung): Add major ver note.
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            ServiceStubSettingsCommentComposer.APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName(methodName)
@@ -1669,6 +1702,9 @@ public class ServiceStubSettingsClassComposer {
           isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
       javaMethods.add(
           MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  ServiceStubSettingsCommentComposer.createCallSettingsBuilderGetterComment(
+                      getMethodNameFromSettingsVarName(varName)))
               .setAnnotations(isOperationCallSettings ? lroBetaAnnotations : ImmutableList.of())
               .setScope(ScopeNode.PUBLIC)
               .setReturnType(settingsVarExpr.type())
@@ -1963,5 +1999,18 @@ public class ServiceStubSettingsClassComposer {
                     : OperationCallSettings.class)
             .setGenerics(generics)
             .build());
+  }
+
+  /** Turns a name like "waitSettings" or "waitOperationSettings" into "wait". */
+  private static String getMethodNameFromSettingsVarName(String settingsVarName) {
+    BiFunction<String, String, String> methodNameSubstrFn =
+        (s, literal) -> s.substring(0, s.length() - literal.length());
+    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    }
+    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    }
+    return settingsVarName;
   }
 }

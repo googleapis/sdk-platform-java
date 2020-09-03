@@ -854,7 +854,7 @@ public class JavaWriterVisitorTest {
             "new Runnable() {\n",
             "@Override\n",
             "public void run() {\n",
-            "boolean foobar = false;\n}\n}"));
+            "boolean foobar = false;\n}\n\n}"));
   }
 
   @Test
@@ -899,7 +899,7 @@ public class JavaWriterVisitorTest {
             "private static final String s = \"foo\";\n",
             "@Override\n",
             "public void run() {\n",
-            "int x = 3;\n}\n}");
+            "int x = 3;\n}\n\n}");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -956,7 +956,7 @@ public class JavaWriterVisitorTest {
             "@Override\n",
             "public MethodDefinition apply(List<IOException> arg) {\n",
             "return returnArg;\n",
-            "}\n}");
+            "}\n\n}");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1470,7 +1470,7 @@ public class JavaWriterVisitorTest {
     methodDefinition.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n"));
+        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n\n"));
   }
 
   @Test
@@ -1488,7 +1488,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public LibrarySettings() {\n}\n");
+    assertEquals(writerVisitor.write(), "public LibrarySettings() {\n}\n\n");
   }
 
   @Test
@@ -1501,7 +1501,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public void close() {\n}\n");
+    assertEquals(writerVisitor.write(), "public void close() {\n}\n\n");
   }
 
   @Test
@@ -1519,7 +1519,7 @@ public class JavaWriterVisitorTest {
     methodDefinition.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n"));
+        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n\n"));
   }
 
   @Test
@@ -1573,7 +1573,7 @@ public class JavaWriterVisitorTest {
             "public int close(int x, int y) {\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n"));
+            "}\n\n"));
   }
 
   @Test
@@ -1650,7 +1650,7 @@ public class JavaWriterVisitorTest {
             "}\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n");
+            "}\n\n");
     assertEquals(writerVisitor.write(), expected);
   }
 
@@ -1693,7 +1693,7 @@ public class JavaWriterVisitorTest {
             createLines(3),
             "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
             "return foobar();\n",
-            "}\n"));
+            "}\n\n"));
   }
 
   @Test
@@ -1884,7 +1884,7 @@ public class JavaWriterVisitorTest {
             "    boolean foobar = false;\n",
             "  }\n",
             "\n",
-            "  private static class IAmANestedClass {\n",
+            "  private static class IAmANestedClass {\n\n",
             "    public boolean open() {\n",
             "      return true;\n",
             "    }\n",
@@ -1942,7 +1942,7 @@ public class JavaWriterVisitorTest {
     methodDefinition.accept(writerVisitor);
     assertEquals(
         writerVisitor.write(),
-        String.format("public Student apply() {\n" + "return this;\n" + "}\n"));
+        String.format("public Student apply() {\n" + "return this;\n" + "}\n\n"));
   }
 
   @Test
