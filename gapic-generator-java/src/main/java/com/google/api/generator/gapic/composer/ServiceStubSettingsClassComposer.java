@@ -56,6 +56,7 @@ import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -163,7 +164,7 @@ public class ServiceStubSettingsClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(CommentComposer.AUTO_GENERATED_CLASS_COMMENT)
+            .setHeaderCommentStatements(createClassHeaderComments(service))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -185,6 +186,15 @@ public class ServiceStubSettingsClassComposer {
             .setType(STATIC_TYPES.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
+  }
+
+  private static List<CommentStatement> createClassHeaderComments(Service service) {
+    Optional<Method> methodOpt =
+        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+    return Arrays.asList(
+        CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
+        ServiceStubSettingsCommentComposer.createClassHeaderComment(
+            String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt));
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {
