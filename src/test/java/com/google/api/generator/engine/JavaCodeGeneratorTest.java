@@ -878,6 +878,7 @@ public class JavaCodeGeneratorTest {
           + "      this.seriesNum = seriesNum;\n"
           + "    }\n"
           + "  }\n"
+          + "\n"
           + "  // Test nested abstract class and abstract method.\n"
           + "  public abstract class Book {\n"
           + "    public BookKind bookKind;\n"
