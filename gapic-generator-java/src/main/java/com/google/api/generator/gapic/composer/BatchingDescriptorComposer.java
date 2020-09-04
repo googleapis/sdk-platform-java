@@ -74,7 +74,6 @@ public class BatchingDescriptorComposer {
     javaMethods.add(createGetBatchPartitionKeyMethod(method, batchingSettings, messageTypes));
     javaMethods.add(createGetRequestBuilderMethod(method, batchingSettings));
     javaMethods.add(createSplitResponseMethod(method, batchingSettings, messageTypes));
-
     javaMethods.add(createSplitExceptionMethod(method));
     javaMethods.add(createCountElementsMethod(method, batchingSettings));
     javaMethods.add(createCountByteSMethod(method));
