@@ -725,6 +725,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
     rightBrace();
     newline();
+    newline();
   }
 
   @Override
@@ -796,7 +797,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
 
     statements(classDefinition.statements());
+    newline();
     methods(classDefinition.methods());
+    newline();
     classes(classDefinition.nestedClasses());
 
     rightBrace();

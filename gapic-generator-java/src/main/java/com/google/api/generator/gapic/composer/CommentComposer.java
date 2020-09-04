@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.utils;
+package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CommentStatement;
-import java.util.Arrays;
-import java.util.List;
+import com.google.api.generator.engine.ast.LineComment;
 
-public class ApacheLicense {
-  private static final String fileHeaderString =
+public class CommentComposer {
+  private static final String APACHE_LICENSE_STRING =
       "Copyright 2020 Google LLC\n\n"
           + "Licensed under the Apache License, Version 2.0 (the \"License\");\n"
           + "you may not use this file except in compliance with the License.\n"
@@ -32,6 +31,19 @@ public class ApacheLicense {
           + "See the License for the specific language governing permissions and\n"
           + "limitations under the License.";
 
-  public static final List<CommentStatement> APACHE_LICENSE_COMMENT_STATEMENT =
-      Arrays.asList(CommentStatement.withComment(BlockComment.withComment(fileHeaderString)));
+  private static final String AUTO_GENERATED_CLASS_DISCLAIMER_STRING =
+      "AUTO-GENERATED DOCUMENTATION AND CLASS.";
+
+  private static final String AUTO_GENERATED_METHOD_DISCLAIMER_STRING =
+      "AUTO-GENERATED DOCUMENTATION AND METHOD.";
+
+  public static final CommentStatement APACHE_LICENSE_COMMENT =
+      CommentStatement.withComment(BlockComment.withComment(APACHE_LICENSE_STRING));
+
+  public static final CommentStatement AUTO_GENERATED_CLASS_COMMENT =
+      CommentStatement.withComment(LineComment.withComment(AUTO_GENERATED_CLASS_DISCLAIMER_STRING));
+
+  public static final CommentStatement AUTO_GENERATED_METHOD_COMMENT =
+      CommentStatement.withComment(
+          LineComment.withComment(AUTO_GENERATED_METHOD_DISCLAIMER_STRING));
 }
