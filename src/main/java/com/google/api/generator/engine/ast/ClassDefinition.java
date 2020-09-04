@@ -172,11 +172,10 @@ public abstract class ClassDefinition implements AstNode {
       }
 
       for (Statement statement : classDef.statements()) {
-        // TODO(xiaozhenliu): Add CommentStatement check here.
         Preconditions.checkState(
-            statement instanceof CommentStatement
-                || statement instanceof ExprStatement
-                || statement instanceof BlockStatement,
+            statement instanceof ExprStatement
+                || statement instanceof BlockStatement
+                || statement instanceof CommentStatement,
             "Class statement type must be either an expression, block, or comment statement");
         if (statement instanceof ExprStatement) {
           Expr expr = ((ExprStatement) statement).expression();

@@ -26,7 +26,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 class ServiceStubSettingsCommentComposer {
-
   private static final String COLON = ":";
 
   private static final String BUILDER_CLASS_DOC_PATTERN = "Builder for %s.";
