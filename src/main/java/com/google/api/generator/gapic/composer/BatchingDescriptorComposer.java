@@ -23,6 +23,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -39,6 +40,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -58,12 +60,17 @@ public class BatchingDescriptorComposer {
 
   private static final String ADD_ALL_METHOD_PATTERN = "addAll%s";
   private static final String GET_LIST_METHOD_PATTERN = "get%sList";
+  private static final String GET_COUNT_METHOD_PATTERN = "get%sCount";
 
   public static Expr createBatchingDescriptorFieldDeclExpr(
       Method method, GapicBatchingSettings batchingSettings, Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(createGetBatchPartitionKeyMethod(method, batchingSettings, messageTypes));
     javaMethods.add(createGetRequestBuilderMethod(method, batchingSettings));
+
+    javaMethods.add(createSplitExceptionMethod(method));
+    javaMethods.add(createCountElementsMethod(method, batchingSettings));
+    javaMethods.add(createCountByteSMethod(method));
 
     TypeNode batchingDescriptorType =
         toType(BATCHING_DESCRIPTOR_REF, method.inputType(), method.outputType());
@@ -226,6 +233,99 @@ public class BatchingDescriptorComposer {
         .setReturnType(builderType)
         .setName("getRequestBuilder")
         .setReturnExpr(requestBuilderAnonClassExpr)
+        .build();
+  }
+
+  private static MethodDefinition createSplitExceptionMethod(Method method) {
+    VariableExpr throwableVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(toType(Throwable.class)).setName("throwable").build());
+
+    TypeNode batchedRequestIssuerType = toType(BATCHED_REQUEST_ISSUER_REF, method.outputType());
+    TypeNode batchVarType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Collection.class)
+                .setGenerics(
+                    Arrays.asList(
+                        ConcreteReference.wildcardWithUpperBound(
+                            batchedRequestIssuerType.reference())))
+                .build());
+    VariableExpr batchVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(batchVarType).setName("batch").build());
+    VariableExpr responderVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(batchedRequestIssuerType).setName("responder").build());
+
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(responderVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(batchVarExpr)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(responderVarExpr)
+                            .setMethodName("setException")
+                            .setArguments(throwableVarExpr)
+                            .build())))
+            .build();
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName("splitException")
+        .setArguments(
+            Arrays.asList(throwableVarExpr, batchVarExpr).stream()
+                .map(v -> v.toBuilder().setIsDecl(true).build())
+                .collect(Collectors.toList()))
+        .setBody(Arrays.asList(forStatement))
+        .build();
+  }
+
+  private static MethodDefinition createCountElementsMethod(
+      Method method, GapicBatchingSettings batchingSettings) {
+    String getFooCountMethodName =
+        String.format(
+            GET_COUNT_METHOD_PATTERN,
+            JavaStyle.toUpperCamelCase(batchingSettings.batchedFieldName()));
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.LONG)
+        .setName("countElements")
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(requestVarExpr)
+                .setMethodName(getFooCountMethodName)
+                .setReturnType(TypeNode.LONG)
+                .build())
+        .build();
+  }
+
+  private static MethodDefinition createCountByteSMethod(Method method) {
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.LONG)
+        .setName("countBytes")
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setReturnExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(requestVarExpr)
+                .setMethodName("getSerializedSize")
+                .setReturnType(TypeNode.LONG)
+                .build())
         .build();
   }
 
