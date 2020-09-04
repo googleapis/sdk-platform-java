@@ -84,6 +84,7 @@ public class ServiceStubClassComposerTest {
           + "\n"
           + "@Generated(\"by gapic-generator\")\n"
           + "public abstract class EchoStub implements BackgroundResource {\n"
+          + "\n"
           + "  public OperationsStub getOperationsStub() {\n"
           + "    throw new UnsupportedOperationException(\"Not implemented:"
           + " getOperationsStub()\");\n"

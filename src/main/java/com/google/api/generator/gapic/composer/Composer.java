@@ -23,7 +23,6 @@ import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.utils.ApacheLicense;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +116,7 @@ public class Composer {
                   gapicClass
                       .classDefinition()
                       .toBuilder()
-                      .setFileHeader(ApacheLicense.APACHE_LICENSE_COMMENT_STATEMENT)
+                      .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
                       .build();
               return GapicClass.create(gapicClass.kind(), classWithHeader);
             })

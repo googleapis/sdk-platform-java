@@ -85,6 +85,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
           + "\n"
           + "@Generated(\"by gapic-generator\")\n"
           + "public class GrpcEchoCallableFactory implements GrpcStubCallableFactory {\n"
+          + "\n"
           + "  @Override\n"
           + "  public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT>"
           + " createUnaryCallable(\n"
