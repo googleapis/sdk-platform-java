@@ -283,6 +283,17 @@ public class ServiceStubSettingsClassComposer {
 
     memberVarExprs.addAll(
         createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types));
+
+    for (Method method : service.methods()) {
+      Optional<GapicBatchingSettings> batchingSettingOpt =
+          serviceConfig.getBatchingSetting(service, method);
+      if (batchingSettingOpt.isPresent()) {
+        memberVarExprs.add(
+            BatchingDescriptorComposer.createBatchingDescriptorFieldDeclExpr(
+                method, batchingSettingOpt.get(), messageTypes));
+      }
+    }
+
     return memberVarExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
