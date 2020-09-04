@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.GeneralForStatement;
 import com.google.api.generator.engine.ast.IdentifierNode;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
@@ -246,6 +247,14 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     forStatement.localVariableExpr().accept(this);
     forStatement.collectionExpr().accept(this);
     statements(forStatement.body());
+  }
+
+  @Override
+  public void visit(GeneralForStatement generalForStatement) {
+    generalForStatement.initializationExpr().accept(this);
+    generalForStatement.localVariableExpr().accept(this);
+    generalForStatement.maxSizeExpr().accept(this);
+    statements(generalForStatement.body());
   }
 
   @Override
