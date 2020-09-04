@@ -40,10 +40,10 @@ function echo_success {
 function header_check_preparation {
   echo_status "Setting up license check environment"
   export GOPATH=$(go env GOPATH)
-  if [ $? -ne 0 ]; 
-  then 
-      echo_status "Please install Go first, instructions can be found here: https://golang.org/doc/install." 
-  else 
+  if [ $? -ne 0 ];
+  then
+      echo_status "Please install Go first, instructions can be found here: https://golang.org/doc/install."
+  else
       export ENV_PATH=$(echo $PATH)
       if [[ $ENV_PATH != *$GOPATH* ]];
       then
@@ -51,13 +51,20 @@ function header_check_preparation {
         export PATH=$GOPATH/bin:$PATH
       fi
       which addlicense
-      if [ $? -ne 0 ]; 
+      if [ $? -ne 0 ];
       then
         echo_status "addlicense tool is not yet installed, downloading it now."
         go get -u github.com/google/addlicense
       fi
   fi
 }
+
+# Disk cache.
+BAZEL_CACHE_DIR=/tmp/bazel_cache_gapic_generator_java
+if [ ! -d $BAZEL_CACHE_DIR ]
+then
+  mkdir $BAZEL_CACHE_DIR
+fi
 
 # Constants.
 # Check only the staged files.
@@ -80,7 +87,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  bazel build //:google_java_format_verification
+  bazel build --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
@@ -93,7 +100,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking the build..."
-  bazel build //...
+  bazel build --disk_cache="$BAZEL_CACHE_DIR" //...
   BUILD_STATUS=$?
   if [ $BUILD_STATUS != 0 ]
   then
@@ -105,7 +112,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking tests..."
-  bazel test //...
+  bazel test --disk_cache="$BAZEL_CACHE_DIR" //...
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
