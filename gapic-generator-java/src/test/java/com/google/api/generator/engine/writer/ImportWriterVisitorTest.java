@@ -476,6 +476,50 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExprImports_wildcardType() {
+    TypeNode wildcardListType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(TypeNode.WILDCARD_REFERENCE))
+                .build());
+
+    // Constructs `List<?> x`.
+    Variable variable = Variable.builder().setName("x").setType(wildcardListType).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import java.util.List;\n\n");
+  }
+
+  @Test
+  public void writeVariableExprImport_wildcardTypeWithUpperBound() {
+    TypeNode wildcardListType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(
+                    Arrays.asList(
+                        ConcreteReference.wildcardWithUpperBound(
+                            ConcreteReference.withClazz(Expr.class))))
+                .build());
+
+    // Constructs `List<? extends Expr> x`.
+    Variable variable = Variable.builder().setName("x").setType(wildcardListType).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.util.List;\n\n"));
+  }
+
+  @Test
   public void writeVariableExprImports_reference() {
     Variable variable =
         Variable.builder()

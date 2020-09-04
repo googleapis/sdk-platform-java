@@ -206,6 +206,43 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeVariableExpr_wildcardType() {
+    TypeNode wildcardListType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(Arrays.asList(TypeNode.WILDCARD_REFERENCE))
+                .build());
+
+    Variable variable = Variable.builder().setName("x").setType(wildcardListType).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "List<?> x");
+  }
+
+  @Test
+  public void writeVariableExpr_wildcardTypeWithUpperBound() {
+    TypeNode wildcardListType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(List.class)
+                .setGenerics(
+                    Arrays.asList(
+                        ConcreteReference.wildcardWithUpperBound(
+                            ConcreteReference.withClazz(Expr.class))))
+                .build());
+
+    Variable variable = Variable.builder().setName("x").setType(wildcardListType).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "List<? extends Expr> x");
+  }
+
+  @Test
   public void writeVariableExpr_staticReference() {
     VariableExpr variableExpr =
         VariableExpr.builder()

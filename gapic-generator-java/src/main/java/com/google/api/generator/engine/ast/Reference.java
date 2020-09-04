@@ -30,6 +30,11 @@ public interface Reference {
   @Nullable
   String enclosingClassName();
 
+  @Nullable
+  Reference wildcardUpperBound();
+
+  Reference copyAndSetGenerics(List<Reference> generics);
+
   // Valid only for nested classes.
   boolean isStaticImport();
 
@@ -42,5 +47,5 @@ public interface Reference {
 
   boolean isAssignableFrom(Reference other);
 
-  Reference copyAndSetGenerics(List<Reference> generics);
+  boolean isWildcard();
 }
