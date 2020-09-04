@@ -36,7 +36,7 @@ public class HtmlEscaper extends Escaper {
 
   @Override
   public String escape(String sourceString) {
-    return escaper.escape(sourceString);
+    return charEscaper.escape(sourceString);
   }
 
   public static String escaper(String source) {
