@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
+import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -386,6 +387,34 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
     variableExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+  }
+
+  @Test
+  public void writeArithmeticOperationExpr_concatStringWithMethod() {
+    ValueExpr lhsExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
+    MethodInvocationExpr methodInvocationExpr =
+        MethodInvocationExpr.builder().setMethodName("getMethod").build();
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(methodInvocationExpr)
+            .setMethodName("getString")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ArithmeticOperationExpr arithmeticOperationExpr =
+        ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
+    arithmeticOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"someWord\" + getMethod().getString()");
+  }
+
+  @Test
+  public void writeArithmeticOperationExpr_concatStringWithNumber() {
+    ValueExpr rhsExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("5").build());
+    ValueExpr lhsExpr = ValueExpr.withValue(StringObjectValue.withValue("someWord"));
+    ArithmeticOperationExpr arithmeticOperationExpr =
+        ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
+    arithmeticOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("\"someWord\" + 5");
   }
 
   /** =============================== COMMENT =============================== */
