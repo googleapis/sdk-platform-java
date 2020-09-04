@@ -172,7 +172,6 @@ public abstract class ClassDefinition implements AstNode {
       }
 
       for (Statement statement : classDef.statements()) {
-        // TODO(xiaozhenliu): Add CommentStatement check here.
         Preconditions.checkState(
             statement instanceof CommentStatement
                 || statement instanceof ExprStatement
