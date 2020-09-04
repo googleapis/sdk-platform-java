@@ -32,6 +32,7 @@ import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -61,9 +62,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -72,9 +73,13 @@ import javax.annotation.Generated;
 public class ServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
   private static final String CLASS_NAME_PATTERN = "%sSettings";
+  private static final String CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String CALL_SETTINGS_TYPE_NAME_PATTERN = "%sCallSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String STUB_SETTINGS_PATTERN = "%sStubSettings";
+
+  private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
+  private static final String SETTINGS_LITERAL = "Settings";
 
   private static final ServiceSettingsClassComposer INSTANCE = new ServiceSettingsClassComposer();
 
@@ -96,6 +101,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
+            .setHeaderCommentStatements(createClassHeaderComments(service))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -111,6 +117,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  private static List<CommentStatement> createClassHeaderComments(Service service) {
+    Optional<Method> methodOpt =
+        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+    return SettingsCommentComposer.createClassHeaderComments(
+        getClientClassName(service.name()), service.defaultHost(), methodOpt);
   }
 
   private static List<AnnotationNode> createClassAnnotations() {
@@ -162,6 +175,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
+                .setHeaderCommentStatements(
+                    SettingsCommentComposer.createCallSettingsGetterComment(
+                        getMethodNameFromSettingsVarName(methodName)))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(retType)
                 .setName(methodName)
@@ -242,9 +258,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static List<MethodDefinition> createDefaultGetterMethods(
       Service service, Map<String, TypeNode> types) {
-    Map<String, TypeNode> javaMethodNameToReturnType = createDefaultMethodNamesToTypes();
-
-    BiFunction<String, TypeNode, MethodDefinition> methodMakerFn =
+    BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
@@ -256,20 +270,59 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                         .setStaticReferenceType(types.get(getStubSettingsClassName(service.name())))
                         .setMethodName(mName)
                         .setReturnType(retType)
-                        .build())
-                .build();
+                        .build());
+    BiFunction<MethodDefinition.Builder, CommentStatement, MethodDefinition> methodMakerFn =
+        (methodDefBuilder, comment) -> methodDefBuilder.setHeaderCommentStatements(comment).build();
+    Function<Class, TypeNode> typeMakerFn =
+        c -> TypeNode.withReference(ConcreteReference.withClazz(c));
+
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(
-        javaMethodNameToReturnType.entrySet().stream()
-            .map(e -> methodMakerFn.apply(e.getKey(), e.getValue()))
-            .collect(Collectors.toList()));
     javaMethods.add(
-        methodMakerFn
+        methodMakerFn.apply(
+            methodStarterFn.apply(
+                "defaultExecutorProviderBuilder",
+                typeMakerFn.apply(InstantiatingExecutorProvider.Builder.class)),
+            SettingsCommentComposer.DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT));
+    javaMethods.add(
+        methodMakerFn.apply(
+            methodStarterFn.apply("getDefaultEndpoint", TypeNode.STRING),
+            SettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT));
+    javaMethods.add(
+        methodMakerFn.apply(
+            methodStarterFn.apply(
+                "getDefaultServiceScopes",
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(List.class)
+                        .setGenerics(Arrays.asList(TypeNode.STRING.reference()))
+                        .build())),
+            SettingsCommentComposer.DEFAULT_SERVICE_SCOPES_METHOD_COMMENT));
+    javaMethods.add(
+        methodMakerFn.apply(
+            methodStarterFn.apply(
+                "defaultCredentialsProviderBuilder",
+                typeMakerFn.apply(GoogleCredentialsProvider.Builder.class)),
+            SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT));
+    javaMethods.add(
+        methodMakerFn.apply(
+            methodStarterFn.apply(
+                "defaultGrpcTransportProviderBuilder",
+                typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class)),
+            SettingsCommentComposer.DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT));
+
+    javaMethods.add(
+        methodStarterFn
+            .apply(
+                "defaultTransportChannelProvider",
+                typeMakerFn.apply(TransportChannelProvider.class))
+            .build());
+
+    javaMethods.add(
+        methodStarterFn
             .apply(
                 "defaultApiClientHeaderProviderBuilder",
                 TypeNode.withReference(
                     ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class)))
-            .toBuilder()
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
@@ -287,6 +340,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     TypeNode builderType = types.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()
+            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderType)
@@ -308,6 +362,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
     MethodDefinition newBuilderMethodTwo =
         MethodDefinition.builder()
+            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderType)
@@ -322,6 +377,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
     MethodDefinition toBuilderMethod =
         MethodDefinition.builder()
+            .setHeaderCommentStatements(SettingsCommentComposer.TO_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(builderType)
             .setName("toBuilder")
@@ -340,6 +396,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static ClassDefinition createNestedBuilderClass(
       Service service, Map<String, TypeNode> types) {
     return ClassDefinition.builder()
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.createBuilderClassComment(getThisClassName(service.name())))
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
@@ -531,6 +589,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            SettingsCommentComposer.APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(builderType)
         .setName(javaMethodName)
@@ -547,6 +607,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
+                .setHeaderCommentStatements(
+                    SettingsCommentComposer.createCallSettingsBuilderGetterComment(
+                        getMethodNameFromSettingsVarName(methodName)))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(retType)
                 .setName(methodName)
@@ -623,32 +686,6 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 
-  private static Map<String, TypeNode> createDefaultMethodNamesToTypes() {
-    Function<Class, TypeNode> typeMakerFn =
-        c -> TypeNode.withReference(ConcreteReference.withClazz(c));
-    Map<String, TypeNode> javaMethodNameToReturnType = new LinkedHashMap<>();
-    javaMethodNameToReturnType.put(
-        "defaultExecutorProviderBuilder",
-        typeMakerFn.apply(InstantiatingExecutorProvider.Builder.class));
-    javaMethodNameToReturnType.put("getDefaultEndpoint", TypeNode.STRING);
-    javaMethodNameToReturnType.put(
-        "getDefaultServiceScopes",
-        TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(List.class)
-                .setGenerics(Arrays.asList(TypeNode.STRING.reference()))
-                .build()));
-    javaMethodNameToReturnType.put(
-        "defaultCredentialsProviderBuilder",
-        typeMakerFn.apply(GoogleCredentialsProvider.Builder.class));
-    javaMethodNameToReturnType.put(
-        "defaultGrpcTransportProviderBuilder",
-        typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class));
-    javaMethodNameToReturnType.put(
-        "defaultTransportChannelProvider", staticTypes.get("TransportChannelProvider"));
-    return javaMethodNameToReturnType;
-  }
-
   private static Map<String, TypeNode> createDynamicTypes(Service service) {
     Map<String, TypeNode> types = new HashMap<>();
 
@@ -692,7 +729,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(String.format("%sClient", service.name()))
+                                .setEnclosingClassName(getClientClassName(service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -777,6 +814,11 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return String.format(CLASS_NAME_PATTERN, serviceName);
   }
 
+  private static String getClientClassName(String serviceName) {
+
+    return String.format(CLIENT_CLASS_NAME_PATTERN, serviceName);
+  }
+
   private static String getStubSettingsClassName(String serviceName) {
     return String.format(STUB_SETTINGS_PATTERN, serviceName);
   }
@@ -788,5 +830,18 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setName(BUILDER_CLASS_NAME)
             .setEnclosingClassName(getStubSettingsClassName(service.name()))
             .build());
+  }
+
+  /** Turns a name like "waitSettings" or "waitOperationSettings" into "wait". */
+  private static String getMethodNameFromSettingsVarName(String settingsVarName) {
+    BiFunction<String, String, String> methodNameSubstrFn =
+        (s, literal) -> s.substring(0, s.length() - literal.length());
+    if (settingsVarName.endsWith(OPERATION_SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, OPERATION_SETTINGS_LITERAL);
+    }
+    if (settingsVarName.endsWith(SETTINGS_LITERAL)) {
+      return methodNameSubstrFn.apply(settingsVarName, SETTINGS_LITERAL);
+    }
+    return settingsVarName;
   }
 }

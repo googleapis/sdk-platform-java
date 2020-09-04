@@ -191,10 +191,8 @@ public class ServiceStubSettingsClassComposer {
   private static List<CommentStatement> createClassHeaderComments(Service service) {
     Optional<Method> methodOpt =
         service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
-    return Arrays.asList(
-        CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
-        ServiceStubSettingsCommentComposer.createClassHeaderComment(
-            String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt));
+    return SettingsCommentComposer.createClassHeaderComments(
+        String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt);
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {
@@ -248,7 +246,7 @@ public class ServiceStubSettingsClassComposer {
     List<Statement> statements = new ArrayList<>();
 
     // Assign DEFAULT_SERVICE_SCOPES.
-    statements.add(ServiceStubSettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
+    statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
     VariableExpr defaultServiceScopesDeclVarExpr =
         DEFAULT_SERVICE_SCOPES_VAR_EXPR
             .toBuilder()
@@ -733,7 +731,7 @@ public class ServiceStubSettingsClassComposer {
         e ->
             MethodDefinition.builder()
                 .setHeaderCommentStatements(
-                    ServiceStubSettingsCommentComposer.createCallSettingsGetterComment(
+                    SettingsCommentComposer.createCallSettingsGetterComment(
                         getMethodNameFromSettingsVarName(e.getKey())))
                 .setScope(ScopeNode.PUBLIC)
                 .setReturnType(e.getValue().type())
@@ -830,7 +828,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -848,7 +846,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -866,7 +864,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.DEFAULT_SERVICE_SCOPES_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_SERVICE_SCOPES_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -893,8 +891,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer
-                    .DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -926,8 +923,7 @@ public class ServiceStubSettingsClassComposer {
     javaMethods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer
-                    .DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
+                SettingsCommentComposer.DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(returnType)
@@ -1028,8 +1024,7 @@ public class ServiceStubSettingsClassComposer {
     final TypeNode builderReturnType = types.get(NESTED_BUILDER_CLASS_NAME);
     javaMethods.add(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)
@@ -1053,8 +1048,7 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     javaMethods.add(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setReturnType(builderReturnType)
@@ -1066,8 +1060,7 @@ public class ServiceStubSettingsClassComposer {
     // Create the toBuilder method.
     javaMethods.add(
         MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceStubSettingsCommentComposer.TO_BUILDER_METHOD_COMMENT)
+            .setHeaderCommentStatements(SettingsCommentComposer.TO_BUILDER_METHOD_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setReturnType(builderReturnType)
             .setName("toBuilder")
@@ -1158,8 +1151,7 @@ public class ServiceStubSettingsClassComposer {
     return ClassDefinition.builder()
         .setIsNested(true)
         .setHeaderCommentStatements(
-            ServiceStubSettingsCommentComposer.createBuilderClassComment(
-                getThisClassName(service.name())))
+            SettingsCommentComposer.createBuilderClassComment(getThisClassName(service.name())))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setName(className)
@@ -1665,7 +1657,7 @@ public class ServiceStubSettingsClassComposer {
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceStubSettingsCommentComposer.APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS)
+            SettingsCommentComposer.APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName(methodName)
@@ -1713,7 +1705,7 @@ public class ServiceStubSettingsClassComposer {
       javaMethods.add(
           MethodDefinition.builder()
               .setHeaderCommentStatements(
-                  ServiceStubSettingsCommentComposer.createCallSettingsBuilderGetterComment(
+                  SettingsCommentComposer.createCallSettingsBuilderGetterComment(
                       getMethodNameFromSettingsVarName(varName)))
               .setAnnotations(isOperationCallSettings ? lroBetaAnnotations : ImmutableList.of())
               .setScope(ScopeNode.PUBLIC)
