@@ -242,7 +242,7 @@ public class ResourceNameHelperClassComposer {
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
       Map<String, TypeNode> types) {
-    // TODO(miraleung): Add equals and hashcode overrides.
+    // TODO(summerji): Add equals and hashCode overrides.
     List<MethodDefinition> javaMethods = new ArrayList<>();
 
     javaMethods.addAll(
