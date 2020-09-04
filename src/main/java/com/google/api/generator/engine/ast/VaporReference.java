@@ -41,6 +41,12 @@ public abstract class VaporReference implements Reference {
   @Override
   public abstract String enclosingClassName();
 
+  @Nullable
+  @Override
+  public Reference wildcardUpperBound() {
+    return null;
+  }
+
   @Override
   public String fullName() {
     // TODO(unsupported): Nested classes with depth greater than 1.
@@ -72,6 +78,11 @@ public abstract class VaporReference implements Reference {
   @Override
   public boolean isAssignableFrom(Reference other) {
     // Not handling this for VaporReference.
+    return false;
+  }
+
+  @Override
+  public boolean isWildcard() {
     return false;
   }
 

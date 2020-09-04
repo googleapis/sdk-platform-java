@@ -17,17 +17,28 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import java.util.Objects;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class ConcreteReference implements Reference {
+  private static final String EXTENDS = "extends";
+
   private static final String COMMA = ", ";
   private static final String DOT = ".";
+  private static final String SPACE = " ";
   private static final String LEFT_ANGLE = "<";
   private static final String RIGHT_ANGLE = ">";
   private static final String QUESTION_MARK = "?";
 
+  private static final Class WILDCARD_CLAZZ = ReferenceWildcard.class;
+
   // Private.
   abstract Class clazz();
+
+  @Nullable
+  @Override
+  public abstract Reference wildcardUpperBound();
 
   @Override
   public abstract ImmutableList<Reference> generics();
@@ -38,8 +49,15 @@ public abstract class ConcreteReference implements Reference {
   @Override
   public String name() {
     StringBuilder sb = new StringBuilder();
-    if (this.equals(TypeNode.WILDCARD_REFERENCE)) {
+    if (isWildcard()) {
       sb.append(QUESTION_MARK);
+      if (wildcardUpperBound() != null) {
+        // Handle the upper bound.
+        sb.append(SPACE);
+        sb.append(EXTENDS);
+        sb.append(SPACE);
+        sb.append(wildcardUpperBound().name());
+      }
     } else {
       if (hasEnclosingClass() && !isStaticImport()) {
         sb.append(clazz().getEnclosingClass().getSimpleName());
@@ -118,18 +136,27 @@ public abstract class ConcreteReference implements Reference {
   }
 
   @Override
+  public boolean isWildcard() {
+    return clazz().equals(WILDCARD_CLAZZ);
+  }
+
+  @Override
   public boolean equals(Object o) {
     if (!(o instanceof ConcreteReference)) {
       return false;
     }
 
     ConcreteReference ref = (ConcreteReference) o;
-    return clazz().equals(ref.clazz()) && generics().equals(ref.generics());
+    return clazz().equals(ref.clazz())
+        && generics().equals(ref.generics())
+        && Objects.equals(wildcardUpperBound(), ref.wildcardUpperBound());
   }
 
   @Override
   public int hashCode() {
-    return 17 * clazz().hashCode() + 31 * generics().hashCode();
+    int wildcardUpperBoundHash =
+        wildcardUpperBound() == null ? 0 : 11 * wildcardUpperBound().hashCode();
+    return 17 * clazz().hashCode() + 31 * generics().hashCode() + wildcardUpperBoundHash;
   }
 
   @Override
@@ -139,6 +166,14 @@ public abstract class ConcreteReference implements Reference {
 
   public static ConcreteReference withClazz(Class clazz) {
     return builder().setClazz(clazz).build();
+  }
+
+  public static ConcreteReference wildcard() {
+    return withClazz(ReferenceWildcard.class);
+  }
+
+  public static ConcreteReference wildcardWithUpperBound(Reference upperBoundReference) {
+    return builder().setClazz(WILDCARD_CLAZZ).setWildcardUpperBound(upperBoundReference).build();
   }
 
   public static Builder builder() {
@@ -153,6 +188,8 @@ public abstract class ConcreteReference implements Reference {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setClazz(Class clazz);
+
+    public abstract Builder setWildcardUpperBound(Reference reference);
 
     public abstract Builder setGenerics(List<Reference> clazzes);
 

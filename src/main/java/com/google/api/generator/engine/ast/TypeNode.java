@@ -25,8 +25,7 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class TypeNode implements AstNode {
   static final Reference EXCEPTION_REFERENCE = ConcreteReference.withClazz(Exception.class);
-  public static final Reference WILDCARD_REFERENCE =
-      ConcreteReference.withClazz(ReferenceWildcard.class);
+  public static final Reference WILDCARD_REFERENCE = ConcreteReference.wildcard();
 
   public enum TypeKind {
     BYTE,
@@ -101,7 +100,22 @@ public abstract class TypeNode implements AstNode {
 
     public abstract Builder setReference(Reference reference);
 
-    public abstract TypeNode build();
+    // Private.
+    abstract Reference reference();
+
+    abstract TypeNode autoBuild();
+
+    public TypeNode build() {
+      if (reference() != null) {
+        // Disallow top-level wildcard references.
+        Preconditions.checkState(
+            !reference().isWildcard(),
+            String.format(
+                "The top-level referenece in a type cannot be a wildcard, found %s",
+                reference().name()));
+      }
+      return autoBuild();
+    }
   }
 
   // TODO(miraleung): More type creation helpers to come...
