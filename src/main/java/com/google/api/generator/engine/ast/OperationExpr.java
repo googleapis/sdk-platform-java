@@ -18,7 +18,7 @@ public interface OperationExpr extends Expr {
 
   OperatorKind operatorKind();
 
-  TypeNode type();
+  com.google.api.generator.engine.ast.TypeNode type();
 
   void accept(AstNodeVisitor visitor);
 }

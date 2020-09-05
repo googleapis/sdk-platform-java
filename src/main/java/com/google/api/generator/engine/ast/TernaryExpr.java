@@ -26,7 +26,7 @@ public abstract class TernaryExpr implements Expr {
   public abstract Expr elseExpr();
 
   @Override
-  public TypeNode type() {
+  public com.google.api.generator.engine.ast.TypeNode type() {
     TypeNode thenType = thenExpr().type();
     TypeNode elseType = elseExpr().type();
     if (thenType.isPrimitiveType() || elseType.isPrimitiveType()) {

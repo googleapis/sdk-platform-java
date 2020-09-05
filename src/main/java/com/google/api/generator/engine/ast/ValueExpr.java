@@ -21,7 +21,7 @@ public abstract class ValueExpr implements Expr {
   public abstract Value value();
 
   @Override
-  public TypeNode type() {
+  public com.google.api.generator.engine.ast.TypeNode type() {
     return value().type();
   }
 

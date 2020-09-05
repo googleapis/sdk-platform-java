@@ -23,7 +23,7 @@ public abstract class AssignmentExpr implements Expr {
   public abstract Expr valueExpr();
 
   @Override
-  public TypeNode type() {
+  public com.google.api.generator.engine.ast.TypeNode type() {
     return TypeNode.VOID;
   }
 

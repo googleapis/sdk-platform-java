@@ -46,20 +46,20 @@ public abstract class UnaryOperationExpr implements OperationExpr {
         .build();
   }
 
-  public static Builder builder() {
+  private static Builder builder() {
     return new AutoValue_UnaryOperationExpr.Builder();
   }
 
   @AutoValue.Builder
   abstract static class Builder {
 
-    // private setter.
+    // Private setter.
     abstract Builder setExpr(Expr expr);
 
-    // private setter.
+    // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
 
-    // private setter.
+    // Private setter.
     abstract Builder setType(TypeNode type);
 
     abstract UnaryOperationExpr autoBuild();
@@ -72,7 +72,6 @@ public abstract class UnaryOperationExpr implements OperationExpr {
           String.format(
               "Unary operator %s can not be applied to %s. ", operator, exprType.toString());
 
-      // Unary Operators can not be applied on Void type
       Preconditions.checkState(
           !exprType.equals(TypeNode.VOID) && !exprType.equals(TypeNode.NULL), errorMsg);
 
@@ -90,13 +89,13 @@ public abstract class UnaryOperationExpr implements OperationExpr {
 
   private static boolean isValidLogicalNotType(TypeNode exprType) {
     // Logical not (!) can only be applied on boolean/Boolean type
-    return exprType.equals(TypeNode.BOOLEAN) || exprType.equals(TypeNode.BOOLEAN_OBJECT);
+    return exprType.equals(TypeNode.BOOLEAN);
   }
 
   private static boolean isValidIncrementType(TypeNode exprType) {
-    // Increment (++) can be applied on Numeric Type(int, double, float, long, short, char)
+    // Increment (++) can be applied on numeric types(int, double, float, long, short, char)
     // and its boxed type (exclude Boolean)
-    return exprType.isNumericType()
+    return TypeNode.isNumericType(exprType)
         || (TypeNode.isBoxedType(exprType) && !exprType.equals(TypeNode.BOOLEAN_OBJECT));
   }
 }

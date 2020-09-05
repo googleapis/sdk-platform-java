@@ -54,7 +54,7 @@ public abstract class VariableExpr implements Expr {
   abstract ImmutableList<Object> templateObjects();
 
   @Override
-  public TypeNode type() {
+  public com.google.api.generator.engine.ast.TypeNode type() {
     if (isDecl()) {
       return TypeNode.VOID;
     }

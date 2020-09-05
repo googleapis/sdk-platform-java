@@ -26,7 +26,7 @@ public abstract class ArithmeticOperationExpr implements OperationExpr {
 
   public abstract OperatorKind operatorKind();
 
-  public abstract TypeNode type();
+  public abstract com.google.api.generator.engine.ast.TypeNode type();
 
   @Override
   public void accept(AstNodeVisitor visitor) {

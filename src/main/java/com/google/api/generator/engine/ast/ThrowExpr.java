@@ -23,7 +23,7 @@ public abstract class ThrowExpr implements Expr {
   // TODO(miraleung): Refactor with StringObjectValue and possibly with NewObjectExpr.
 
   @Override
-  public abstract TypeNode type();
+  public abstract com.google.api.generator.engine.ast.TypeNode type();
 
   @Nullable
   public abstract Expr messageExpr();

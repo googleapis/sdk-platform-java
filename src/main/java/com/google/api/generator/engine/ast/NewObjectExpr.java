@@ -23,7 +23,7 @@ import java.util.List;
 
 @AutoValue
 public abstract class NewObjectExpr implements Expr {
-  public abstract TypeNode type();
+  public abstract com.google.api.generator.engine.ast.TypeNode type();
 
   public abstract ImmutableList<Expr> arguments();
 
