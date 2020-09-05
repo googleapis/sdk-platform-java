@@ -20,7 +20,7 @@ import com.google.common.base.Preconditions;
 @AutoValue
 public abstract class CastExpr implements Expr {
   @Override
-  public abstract com.google.api.generator.engine.ast.TypeNode type();
+  public abstract TypeNode type();
 
   public abstract Expr expr();
 

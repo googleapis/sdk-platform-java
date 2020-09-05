@@ -21,7 +21,7 @@ import com.google.common.base.Preconditions;
 public abstract class EnumRefExpr implements Expr {
   public abstract IdentifierNode identifier();
 
-  public abstract com.google.api.generator.engine.ast.TypeNode type();
+  public abstract TypeNode type();
 
   @Override
   public void accept(AstNodeVisitor visitor) {

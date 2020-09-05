@@ -23,7 +23,7 @@ import java.util.List;
 @AutoValue
 public abstract class AnonymousClassExpr implements Expr {
   @Override
-  public abstract com.google.api.generator.engine.ast.TypeNode type();
+  public abstract TypeNode type();
 
   public abstract ImmutableList<MethodDefinition> methods();
 

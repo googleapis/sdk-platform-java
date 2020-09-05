@@ -24,7 +24,7 @@ public abstract class InstanceofExpr implements Expr {
   public abstract TypeNode checkType();
 
   @Override
-  public com.google.api.generator.engine.ast.TypeNode type() {
+  public TypeNode type() {
     return TypeNode.BOOLEAN;
   }
 

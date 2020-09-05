@@ -22,7 +22,7 @@ public abstract class ReturnExpr implements Expr {
   public abstract Expr expr();
 
   @Override
-  public com.google.api.generator.engine.ast.TypeNode type() {
+  public TypeNode type() {
     return TypeNode.VOID;
   }
 

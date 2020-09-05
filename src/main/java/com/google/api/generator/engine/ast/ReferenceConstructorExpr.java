@@ -28,7 +28,7 @@ public abstract class ReferenceConstructorExpr implements Expr {
     SUPER
   }
 
-  public abstract com.google.api.generator.engine.ast.TypeNode type();
+  public abstract TypeNode type();
 
   public abstract KeywordKind keywordKind();
 

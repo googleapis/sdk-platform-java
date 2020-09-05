@@ -45,7 +45,7 @@ public abstract class MethodInvocationExpr implements Expr {
   }
 
   @Override
-  public com.google.api.generator.engine.ast.TypeNode type() {
+  public TypeNode type() {
     return returnType();
   }
 
