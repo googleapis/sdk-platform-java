@@ -16,6 +16,7 @@ TESTS = [
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
+    data = ["//src/test/java/com/google/api/generator/engine/goldens:goldens_files"],
     test_class = "com.google.api.generator.engine.{0}".format(test_name),
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",

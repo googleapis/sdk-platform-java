@@ -25,6 +25,10 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +39,8 @@ import org.junit.Test;
 public class GrpcServiceCallableFactoryClassComposerTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
+  private static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
 
   @Before
   public void setUp() {
@@ -44,7 +50,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses() {
+  public void generateServiceClasses() throws IOException {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -57,110 +63,9 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    Path goldeFilePath =
+        Paths.get(GOLDENFILES_DIRECTORY, "GrpcServiceCallableFactoryClassComposerTest.golden");
+    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
+    assertEquals(expectedClassString, visitor.write());
   }
-
-  // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
-  private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1.stub;\n"
-          + "\n"
-          + "import com.google.api.gax.grpc.GrpcCallSettings;\n"
-          + "import com.google.api.gax.grpc.GrpcCallableFactory;\n"
-          + "import com.google.api.gax.grpc.GrpcStubCallableFactory;\n"
-          + "import com.google.api.gax.rpc.BatchingCallSettings;\n"
-          + "import com.google.api.gax.rpc.BidiStreamingCallable;\n"
-          + "import com.google.api.gax.rpc.ClientContext;\n"
-          + "import com.google.api.gax.rpc.ClientStreamingCallable;\n"
-          + "import com.google.api.gax.rpc.OperationCallSettings;\n"
-          + "import com.google.api.gax.rpc.OperationCallable;\n"
-          + "import com.google.api.gax.rpc.PagedCallSettings;\n"
-          + "import com.google.api.gax.rpc.ServerStreamingCallSettings;\n"
-          + "import com.google.api.gax.rpc.ServerStreamingCallable;\n"
-          + "import com.google.api.gax.rpc.StreamingCallSettings;\n"
-          + "import com.google.api.gax.rpc.UnaryCallSettings;\n"
-          + "import com.google.api.gax.rpc.UnaryCallable;\n"
-          + "import com.google.longrunning.Operation;\n"
-          + "import com.google.longrunning.stub.OperationsStub;\n"
-          + "import javax.annotation.Generated;\n"
-          + "\n"
-          + "// AUTO-GENERATED DOCUMENTATION AND CLASS.\n"
-          + "/**\n"
-          + " * gRPC callable factory implementation for the Echo service API.\n"
-          + " *\n"
-          + " * <p>This class is for advanced usage.\n"
-          + " */\n"
-          + "@Generated(\"by gapic-generator\")\n"
-          + "public class GrpcEchoCallableFactory implements GrpcStubCallableFactory {\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT>"
-          + " createUnaryCallable(\n"
-          + "      GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "      UnaryCallSettings<RequestT, ResponseT> callSettings,\n"
-          + "      ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createUnaryCallable(grpcCallSettings, callSettings,"
-          + " clientContext);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT, PagedListResponseT>\n"
-          + "      UnaryCallable<RequestT, PagedListResponseT> createPagedCallable(\n"
-          + "          GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "          PagedCallSettings<RequestT, ResponseT, PagedListResponseT> callSettings,\n"
-          + "          ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createPagedCallable(grpcCallSettings, callSettings,"
-          + " clientContext);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT>"
-          + " createBatchingCallable(\n"
-          + "      GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "      BatchingCallSettings<RequestT, ResponseT> callSettings,\n"
-          + "      ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createBatchingCallable(\n"
-          + "        grpcCallSettings, callSettings, clientContext);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT, MetadataT>\n"
-          + "      OperationCallable<RequestT, ResponseT, MetadataT> createOperationCallable(\n"
-          + "          GrpcCallSettings<RequestT, Operation> grpcCallSettings,\n"
-          + "          OperationCallSettings<RequestT, ResponseT, MetadataT> callSettings,\n"
-          + "          ClientContext clientContext,\n"
-          + "          OperationsStub operationsStub) {\n"
-          + "    return GrpcCallableFactory.createOperationCallable(\n"
-          + "        grpcCallSettings, callSettings, clientContext, operationsStub);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT>\n"
-          + "      BidiStreamingCallable<RequestT, ResponseT> createBidiStreamingCallable(\n"
-          + "          GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "          StreamingCallSettings<RequestT, ResponseT> callSettings,\n"
-          + "          ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createBidiStreamingCallable(\n"
-          + "        grpcCallSettings, callSettings, clientContext);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT>\n"
-          + "      ServerStreamingCallable<RequestT, ResponseT> createServerStreamingCallable(\n"
-          + "          GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "          ServerStreamingCallSettings<RequestT, ResponseT> callSettings,\n"
-          + "          ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createServerStreamingCallable(\n"
-          + "        grpcCallSettings, callSettings, clientContext);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public <RequestT, ResponseT>\n"
-          + "      ClientStreamingCallable<RequestT, ResponseT> createClientStreamingCallable(\n"
-          + "          GrpcCallSettings<RequestT, ResponseT> grpcCallSettings,\n"
-          + "          StreamingCallSettings<RequestT, ResponseT> callSettings,\n"
-          + "          ClientContext clientContext) {\n"
-          + "    return GrpcCallableFactory.createClientStreamingCallable(\n"
-          + "        grpcCallSettings, callSettings, clientContext);\n"
-          + "  }\n"
-          + "}\n";
 }

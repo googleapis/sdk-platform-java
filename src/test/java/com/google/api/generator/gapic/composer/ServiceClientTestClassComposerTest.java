@@ -25,6 +25,10 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceClientTestClassComposerTest {
+  private static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -44,7 +50,7 @@ public class ServiceClientTestClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses() {
+  public void generateServiceClasses() throws IOException {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -57,62 +63,9 @@ public class ServiceClientTestClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    Path goldeFilePath =
+        Paths.get(GOLDENFILES_DIRECTORY, "ServiceClientTestClassComposerTest.golden");
+    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
+    assertEquals(expectedClassString, visitor.write());
   }
-
-  // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
-  private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1;\n"
-          + "\n"
-          + "import com.google.api.gax.core.NoCredentialsProvider;\n"
-          + "import com.google.api.gax.grpc.testing.LocalChannelProvider;\n"
-          + "import com.google.api.gax.grpc.testing.MockGrpcService;\n"
-          + "import com.google.api.gax.grpc.testing.MockServiceHelper;\n"
-          + "import java.io.IOException;\n"
-          + "import java.util.Arrays;\n"
-          + "import java.util.UUID;\n"
-          + "import javax.annotation.Generated;\n"
-          + "import org.junit.After;\n"
-          + "import org.junit.AfterClass;\n"
-          + "import org.junit.Before;\n"
-          + "import org.junit.BeforeClass;\n"
-          + "\n"
-          + "@Generated(\"by gapic-generator-java\")\n"
-          + "public class EchoClientTest {\n"
-          + "  public static MockServiceHelper mockServiceHelper;\n"
-          + "  public static MockEcho mockEcho;\n"
-          + "  public EchoClient client;\n"
-          + "  public LocalChannelProvider channelProvider;\n"
-          + "\n"
-          + "  @BeforeClass\n"
-          + "  public static void startStaticServer() {\n"
-          + "    mockEcho = new MockEcho();\n"
-          + "    mockServiceHelper =\n"
-          + "        new MockServiceHelper(\n"
-          + "            UUID.randomUUID().toString(), Arrays.<MockGrpcService>asList(mockEcho));\n"
-          + "    mockServiceHelper.start();\n"
-          + "  }\n"
-          + "\n"
-          + "  @AfterClass\n"
-          + "  public static void stopServer() {\n"
-          + "    mockServiceHelper.stop();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Before\n"
-          + "  public void setUp() throws IOException {\n"
-          + "    mockServiceHelper.reset();\n"
-          + "    channelProvider = mockServiceHelper.createChannelProvider();\n"
-          + "    settings =\n"
-          + "        EchoSettings.newBuilder()\n"
-          + "            .setTransportChannelProvider(channelProvider)\n"
-          + "            .setCredentialsProvider(NoCredentialsProvider.create())\n"
-          + "            .build();\n"
-          + "    client = EchoClient.create(settings);\n"
-          + "  }\n"
-          + "\n"
-          + "  @After\n"
-          + "  public static void tearDown() throws Exception {\n"
-          + "    client.close();\n"
-          + "  }\n"
-          + "}\n";
 }

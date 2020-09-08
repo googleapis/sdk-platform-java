@@ -1,0 +1,191 @@
+package com.google.showcase.v1beta1;
+
+import com.google.api.core.BetaApi;
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.resourcenames.ResourceName;
+import com.google.common.base.Strings;
+import com.google.longrunning.Operation;
+import com.google.longrunning.OperationsClient;
+import com.google.rpc.Status;
+import com.google.showcase.v1beta1.stub.EchoStub;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+@BetaApi
+@Generated("by gapic-generator")
+public class EchoClient implements BackgroundResource {
+  private final EchoSettings settings;
+  private final EchoStub stub;
+  private final OperationsClient operationsClient;
+
+  public static final EchoClient create() throws IOException {
+    return create(EchoSettings.newBuilder().build());
+  }
+
+  public static final EchoClient create(EchoSettings settings) throws IOException {
+    return new EchoClient(settings);
+  }
+
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  public static final EchoClient create(EchoStub stub) {
+    return new EchoClient(stub);
+  }
+
+  protected EchoClient(EchoSettings settings) throws IOException {
+    this.settings = settings;
+    this.stub = ((EchoStubSettings) settings.getStubSettings()).createStub();
+    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+  }
+
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  protected EchoClient(EchoStub stub) {
+    this.settings = null;
+    this.stub = stub;
+    this.operationsClient = OperationsClient.create(this.stub.getOperationsStub());
+  }
+
+  public final EchoSettings getSettings() {
+    return settings;
+  }
+
+  @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
+  public EchoStub getStub() {
+    return stub;
+  }
+
+  public final OperationsClient getOperationsClient() {
+    return operationsClient;
+  }
+
+  public final EchoResponse echo(String content) {
+    EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(Status error) {
+    EchoRequest request = EchoRequest.newBuilder().setError(error).build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(String content, Severity severity) {
+    EchoRequest request =
+        EchoRequest.newBuilder().setContent(content).setSeverity(severity).build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(String name) {
+    EchoRequest request = EchoRequest.newBuilder().setName(name).build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(FoobarName name) {
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setName(Strings.isNullOrEmpty(name) ? null : name.toString())
+            .build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(String parent) {
+    EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(ResourceName parent) {
+    EchoRequest request =
+        EchoRequest.newBuilder()
+            .setParent(Strings.isNullOrEmpty(parent) ? null : parent.toString())
+            .build();
+    return echo(request);
+  }
+
+  public final EchoResponse echo(EchoRequest request) {
+    return echoCallable().call(request);
+  }
+
+  public final UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
+    return stub.echoCallable();
+  }
+
+  public final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
+    return stub.expandCallable();
+  }
+
+  public final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
+    return stub.collectCallable();
+  }
+
+  public final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
+    return stub.chatCallable();
+  }
+
+  public final BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable() {
+    return stub.chatAgainCallable();
+  }
+
+  public final PagedExpandResponse pagedExpand(PagedExpandRequest request) {
+    return pagedExpandCallable().call(request);
+  }
+
+  public final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
+    return stub.pagedExpandCallable();
+  }
+
+  public final OperationFuture<WaitResponse, WaitMetadata> waitAsync(WaitRequest request) {
+    return waitOperationCallable().futureCall(request);
+  }
+
+  public final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallabke() {
+    return stub.waitOperationCallabke();
+  }
+
+  public final UnaryCallable<WaitRequest, Operation> waitCallable() {
+    return stub.waitCallable();
+  }
+
+  public final BlockResponse block(BlockRequest request) {
+    return blockCallable().call(request);
+  }
+
+  public final UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
+    return stub.blockCallable();
+  }
+
+  @Override
+  public final void close() {
+    stub.close();
+  }
+
+  @Override
+  public void shutdown() {
+    stub.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return stub.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return stub.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    stub.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return stub.awaitTermination(duration, unit);
+  }
+}

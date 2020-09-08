@@ -25,6 +25,10 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +37,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MockServiceClassComposerTest {
+  private static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -44,7 +50,7 @@ public class MockServiceClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses() {
+  public void generateServiceClasses() throws IOException {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -56,52 +62,8 @@ public class MockServiceClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, "MockServiceClassComposerTest.golden");
+    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
+    assertEquals(expectedClassString, visitor.write());
   }
-
-  // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
-  private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1;\n"
-          + "\n"
-          + "import com.google.api.core.BetaApi;\n"
-          + "import com.google.api.gax.grpc.testing.MockGrpcService;\n"
-          + "import com.google.protobuf.AbstractMessage;\n"
-          + "import io.grpc.ServerServiceDefinition;\n"
-          + "import java.util.List;\n"
-          + "import javax.annotation.Generated;\n"
-          + "\n"
-          + "@BetaApi\n"
-          + "@Generated(\"by gapic-generator-java\")\n"
-          + "public class MockEcho implements MockGrpcService {\n"
-          + "  private final MockEchoImpl serviceImpl;\n"
-          + "\n"
-          + "  public MockEcho() {\n"
-          + "    serviceImpl = new MockEchoImpl();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public List<AbstractMessage> getRequests() {\n"
-          + "    return serviceImpl.getRequests();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addResponse(AbstractMessage response) {\n"
-          + "    serviceImpl.addResponse(response);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addException(Exception exception) {\n"
-          + "    serviceImpl.addException(exception);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public ServerServiceDefinition getServiceDefinition() {\n"
-          + "    return serviceImpl.bindService();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void reset() {\n"
-          + "    serviceImpl.reset();\n"
-          + "  }\n"
-          + "}\n";
 }

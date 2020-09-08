@@ -48,6 +48,7 @@ java_proto_library(
     data = [
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
+        "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
     deps = [
