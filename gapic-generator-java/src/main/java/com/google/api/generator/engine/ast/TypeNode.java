@@ -139,6 +139,15 @@ public abstract class TypeNode implements AstNode {
         && !type.equals(TypeNode.NULL);
   }
 
+  public static boolean isNumericType(TypeNode type) {
+    return type.equals(TypeNode.INT)
+        || type.equals(TypeNode.LONG)
+        || type.equals(TypeNode.DOUBLE)
+        || type.equals(TypeNode.SHORT)
+        || type.equals(TypeNode.FLOAT)
+        || type.equals(TypeNode.CHAR);
+  }
+
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
   }
