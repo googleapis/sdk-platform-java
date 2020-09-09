@@ -35,6 +35,7 @@ TESTS = [
     "SuperObjectValueTest",
     "WhileStatementTest",
     "ArithmeticOperationExprTest",
+    "UnaryOperationExprTest",
 ]
 
 filegroup(
