@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -110,6 +111,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String OPERATOR_NOT_EQUAL_TO = "!=";
   private static final String OPERATOR_INCREMENT = "++";
   private static final String OPERATOR_LOGICAL_NOT = "!";
+  private static final String OPERATOR_LOGICAL_AND = "&&";
+  private static final String OPERATOR_LOGICAL_OR = "||";
 
   private final StringBuffer buffer = new StringBuffer();
   private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
@@ -405,6 +408,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       unaryOperationExpr.expr().accept(this);
       operator(unaryOperationExpr.operatorKind());
     }
+  }
+
+  @Override
+  public void visit(LogicalOperationExpr logicalOperationExpr) {
+    logicalOperationExpr.lhsExpr().accept(this);
+    space();
+    operator(logicalOperationExpr.operatorKind());
+    space();
+    logicalOperationExpr.rhsExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -904,6 +916,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         break;
       case ARITHMETIC_ADDITION:
         buffer.append(OPERATOR_ADDITION);
+        break;
+      case LOGICAL_AND:
+        buffer.append(OPERATOR_LOGICAL_AND);
+        break;
+      case LOGICAL_OR:
+        buffer.append(OPERATOR_LOGICAL_OR);
         break;
     }
   }

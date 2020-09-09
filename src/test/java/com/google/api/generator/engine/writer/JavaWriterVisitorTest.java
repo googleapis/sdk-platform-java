@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -2055,6 +2056,37 @@ public class JavaWriterVisitorTest {
         UnaryOperationExpr.logicalNotWithExpr(methodInvocationExpr);
     logicalNotOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("!isEmpty()");
+  }
+
+  @Test
+  public void writeLogicalOperationExpr_LogicalAnd() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));
+    VaporReference ref =
+        VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
+    TypeNode classType = TypeNode.withReference(ref);
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isValid")
+            .setExprReferenceExpr(ValueExpr.withValue(ThisObjectValue.withType(classType)))
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    LogicalOperationExpr logicalOperationExpr = LogicalOperationExpr.logicalAndWithExprs(lhsExpr, rhsExpr);
+    logicalOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("isEmpty && this.isValid()");
+  }
+
+  @Test
+  public void writeLogicalOperationExpr_LogicalOr() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isGood", TypeNode.BOOLEAN));
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isValid")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    LogicalOperationExpr logicalOperationExpr = LogicalOperationExpr.logicalOrWithExprs(lhsExpr, rhsExpr);
+    logicalOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("isGood || isValid()");
+>>>>>>> 593e2e99 (Add LogicalOperationExpr and unit test)
   }
 
   private static String createLines(int numLines) {
