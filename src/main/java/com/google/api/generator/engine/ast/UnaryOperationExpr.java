@@ -95,7 +95,6 @@ public abstract class UnaryOperationExpr implements OperationExpr {
   private static boolean isValidIncrementType(TypeNode exprType) {
     // Increment (++) can be applied on numeric types(int, double, float, long, short, char)
     // and its boxed type (exclude Boolean)
-    return TypeNode.isNumericType(exprType)
-        || (TypeNode.isBoxedType(exprType) && !exprType.equals(TypeNode.BOOLEAN_OBJECT));
+    return TypeNode.isNumericType(exprType);
   }
 }

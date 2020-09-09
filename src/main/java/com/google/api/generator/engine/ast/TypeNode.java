@@ -17,11 +17,9 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -68,14 +66,6 @@ public abstract class TypeNode implements AstNode {
       withReference(ConcreteReference.withClazz(Short.class));
 
   private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
-  private static final Set<TypeNode> NUMERIC_TYPE_SET =
-      ImmutableSet.of(
-          TypeNode.INT,
-          TypeNode.DOUBLE,
-          TypeNode.LONG,
-          TypeNode.SHORT,
-          TypeNode.FLOAT,
-          TypeNode.CHAR);
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 
@@ -136,11 +126,12 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isNumericType(TypeNode type) {
-    return NUMERIC_TYPE_SET.contains(type);
-  }
-
-  public static boolean isBoxedType(TypeNode type) {
-    return BOXED_TYPE_MAP.containsValue(type);
+    return type.equals(TypeNode.INT)
+        || type.equals(TypeNode.LONG)
+        || type.equals(TypeNode.DOUBLE)
+        || type.equals(TypeNode.SHORT)
+        || type.equals(TypeNode.FLOAT)
+        || type.equals(TypeNode.CHAR);
   }
 
   public boolean isPrimitiveType() {
