@@ -30,11 +30,11 @@ import org.junit.Test;
 public class FileDiffInfraDummyTest {
   // Add two simple tests for testing the file-diff infra.
   // 1. The two unit tests create simple gapic classes since here is gapic/composer folder.
-  // 2. Two unit tests are created because we have the case of two expceted strings comparison
+  // 2. Two unit tests are created because we have the case of two expected strings comparison
   // in one test class e.g. ResourceNameHelperClassComposer. In that case, two golden files will be
   // created.
   //
-  // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and tested well.
+  // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and well-tested.
   @Test
   public void simpleGapicClass() {
     ClassDefinition classDef =
