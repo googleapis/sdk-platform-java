@@ -1,0 +1,17 @@
+package(default_visibility = ["//visibility:public"])
+filegroup(
+    name = "diff_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "diff",
+    srcs = [
+        ":diff_files",
+    ],
+    deps = [
+        "@com_google_guava_guava//jar",
+        "@io_github_java_diff_utils//jar",
+        "@google_java_format_all_deps//jar",
+    ],
+)

@@ -13,6 +13,7 @@ JAVA_SRCS = [
 TEST_SRCS = [
     "//src/test/java/com/google/api/generator/engine:engine_files",
     "//src/test/java/com/google/api/generator/gapic:gapic_files",
+    "//src/test/java/com/google/api/generator/diff:diff_files",
 ]
 
 # ============= Proto wrappers =================
