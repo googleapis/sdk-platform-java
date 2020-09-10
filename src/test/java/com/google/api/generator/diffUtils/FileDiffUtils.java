@@ -25,22 +25,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FileDiffUtils {
-  public static List<String> diffFileAndString(Path goldenFilePath, String actualContent) {
-    List<String> codegen = Arrays.asList(actualContent.split("\\r?\\n"));
-    List<String> golden = null;
+  public static List<String> diffFileAndString(Path goldenFilePath, String codegen) {
+    List<String> revised = Arrays.asList(codegen.split("\\r?\\n"));
+    List<String> original = null;
     try {
-      golden = Files.readAllLines(goldenFilePath);
+      original = Files.readAllLines(goldenFilePath);
     } catch (IOException e) {
-      throw new GoldenFileNotFoundException(
-          String.format("Golden File %s is not found.", goldenFilePath));
+      throw new GoldenFileReadException(
+          String.format("Error occurs when reading golden file %s", goldenFilePath));
     }
-    return diffTwoStringLists(golden, codegen);
+    return diffTwoStringLists(original, revised);
   }
 
-  public static List<String> diffTwoStrings(String expected, String actual) {
-    List<String> codegen = Arrays.asList(actual.split("\\r?\\n"));
-    List<String> golden = Arrays.asList(expected.split("\\r?\\n"));
-    return diffTwoStringLists(golden, codegen);
+  public static List<String> diffTwoStrings(String expectedStr, String actualStr) {
+    List<String> revised = Arrays.asList(actualStr.split("\\r?\\n"));
+    List<String> original = Arrays.asList(expectedStr.split("\\r?\\n"));
+    return diffTwoStringLists(original, revised);
   }
 
   private static List<String> diffTwoStringLists(List<String> original, List<String> revised) {
@@ -48,23 +48,21 @@ public class FileDiffUtils {
     try {
       diff = DiffUtils.diff(original, revised);
     } catch (DiffException e) {
-      throw new FileDiffException(
-          "Could not compute the difference between actual codegen and golden file.");
+      throw new ComputeDiffException("Could not compute the differences.");
     }
-
     List<String> unifiedDiff =
         UnifiedDiffUtils.generateUnifiedDiff("golden", "codegen", original, diff, 2);
     return unifiedDiff;
   }
 
-  private static class GoldenFileNotFoundException extends RuntimeException {
-    public GoldenFileNotFoundException(String errorMessage) {
+  private static class GoldenFileReadException extends RuntimeException {
+    public GoldenFileReadException(String errorMessage) {
       super(errorMessage);
     }
   }
 
-  private static class FileDiffException extends RuntimeException {
-    public FileDiffException(String errorMessage) {
+  private static class ComputeDiffException extends RuntimeException {
+    public ComputeDiffException(String errorMessage) {
       super(errorMessage);
     }
   }
