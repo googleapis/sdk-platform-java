@@ -74,7 +74,9 @@ import javax.annotation.Generated;
 public class ServiceClientClassComposer implements ClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String CLIENT_CLASS_NAME_PATTERN = "%sClient";
+  private static final String CALLABLE_NAME_PATTERN = "%sCallable";
+  private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
+  private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
 
   private ServiceClientClassComposer() {}
 
@@ -558,7 +560,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     MethodInvocationExpr methodReturnExpr =
         MethodInvocationExpr.builder()
-            .setMethodName(String.format("%sCallable", methodName))
+            .setMethodName(String.format(CALLABLE_NAME_PATTERN, methodName))
             .build();
     methodReturnExpr =
         MethodInvocationExpr.builder()
@@ -666,6 +668,7 @@ public class ServiceClientClassComposer implements ClassComposer {
           rawCallableReturnType = types.get("UnaryCallable");
       }
     }
+
     // Set generics.
     TypeNode returnType =
         TypeNode.withReference(
@@ -691,10 +694,10 @@ public class ServiceClientClassComposer implements ClassComposer {
     String rawMethodName = JavaStyle.toLowerCamelCase(method.name());
     String methodName =
         isLroCallable
-            ? String.format("%sOperationCallabke", rawMethodName)
+            ? String.format(OPERATION_CALLABLE_NAME_PATTERN, rawMethodName)
             : isPaged
-                ? String.format("%sPagedCallable", rawMethodName)
-                : String.format("%sCallable", rawMethodName);
+                ? String.format(PAGED_CALLABLE_NAME_PATTERN, rawMethodName)
+                : String.format(CALLABLE_NAME_PATTERN, rawMethodName);
     TypeNode stubType = types.get(String.format("%sStub", serviceName));
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
@@ -946,6 +949,6 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static String getClientClassName(String serviceName) {
 
-    return String.format(CLIENT_CLASS_NAME_PATTERN, serviceName);
+    return String.format("%sClient", serviceName);
   }
 }
