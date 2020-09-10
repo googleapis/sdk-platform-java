@@ -1,0 +1,21 @@
+package(default_visibility = ["//visibility:public"])
+
+TESTS = [
+    "FileDiffInfraDummyTest",
+]
+
+filegroup(
+    name = "dummy_files",
+    srcs = ["{0}.java".format(f) for f in TESTS],
+)
+
+[java_test(
+    name = test_name,
+    srcs = ["{0}.java".format(test_name)],
+    test_class = "com.google.api.generator.gapic.dummy.{0}".format(test_name),
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
+        "@junit_junit//jar",
+    ],
+) for test_name in TESTS]
