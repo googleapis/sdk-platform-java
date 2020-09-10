@@ -1,3 +1,17 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
@@ -6,10 +20,7 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import org.junit.Test;
 
 public class RelationalOperationExprTest {
-  /**
-   * =============================== Equality Operators: LHS data type is numeric
-   * ===============================
-   */
+  /** ==================== Equality Operators: LHS data type is numeric ======================= */
   @Test
   public void equalToOperationExpr_validBasic() {
     // LHS: numeric type, RHS: matched numeric type
@@ -76,10 +87,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =============================== Quality Operators: LHS data type is Boxed Type
-   * ===============================
-   */
+  /** =================== Equality Operators: LHS data type is Boxed Type ====================== */
   @Test
   public void equalToOperationExpr_validBoxedWithMatchedBoxedType() {
     // LHS: Boxed type, RHS: Matched Boxed
@@ -135,10 +143,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =============================== Equality Operators: LHS data type is boolean
-   * ===============================
-   */
+  /** ==================== Equality Operators: LHS data type is boolean ======================= */
   @Test
   public void equalToOperationExpr_validRHSBooleanBoxedType() {
     // LHS: boolean type, RHS: boolean boxed Type
@@ -213,10 +218,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.notEqualToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =============================== Equality Operators: LHS data type is Array
-   * ===============================
-   */
+  /** ===================== Equality Operators: LHS data type is Array ======================== */
   @Test
   public void equalToOperationExpr_validArrayWithMatchedType() {
     // LHS: Array with numeric type, RHS: Array with matched numeric type
@@ -280,10 +282,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =============================== Equality Operators: LHS data type is reference type
-   * ===============================
-   */
+  /** ================== Equality Operators: LHS data type is reference type =================== */
   @Test
   public void equalToOperationExpr_validReferenceWithMatchedType() {
     // LHS: String type, RHS: matched String type
@@ -337,10 +336,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =============================== Equality Operators: LHS data type is Object or null
-   * ===============================
-   */
+  /** ================== Equality Operators: LHS data type is Object or null =================== */
   @Test
   public void equalToOperationExpr_validObjectWithAnyObjectType() {
     // LHS: object type, RHS: any reference type
