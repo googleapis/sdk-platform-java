@@ -13,6 +13,6 @@ java_library(
     deps = [
         "//src/test/java/com/google/api/generator/diffUtils",
         "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar"
+        "@junit_junit//jar",
     ],
 )
