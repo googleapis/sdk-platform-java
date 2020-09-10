@@ -1,4 +1,5 @@
 package(default_visibility = ["//visibility:public"])
+
 filegroup(
     name = "assert_files",
     srcs = glob(["*.java"]),
@@ -12,7 +13,7 @@ java_library(
     deps = [
         "//src/test/java/com/google/api/generator/diff",
         "@com_google_guava_guava//jar",
-        "@io_github_java_diff_utils//jar",
         "@google_java_format_all_deps//jar",
+        "@io_github_java_diff_utils//jar",
     ],
 )
