@@ -64,14 +64,11 @@ public abstract class LogicalOperationExpr implements OperationExpr {
       OperatorKind operator = logicalOperationExpr.operatorKind();
       final String errorMsg =
           String.format(
-              "Logical operator %s can not be applied to %s, %s.",
+              "Logical operator %s is valid only on boolean or its boxed type, found %s, %s.",
               operator, lhsExprType.toString(), rhsExprType.toString());
-      Preconditions.checkState(isValidLogicalType(lhsExprType, rhsExprType), errorMsg);
+      Preconditions.checkState(
+          lhsExprType.equals(TypeNode.BOOLEAN) && rhsExprType.equals(TypeNode.BOOLEAN), errorMsg);
       return logicalOperationExpr;
-    }
-
-    private boolean isValidLogicalType(TypeNode lhsType, TypeNode rhsType) {
-      return lhsType.equals(TypeNode.BOOLEAN) && rhsType.equals(TypeNode.BOOLEAN);
     }
   }
 }
