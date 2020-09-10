@@ -148,6 +148,11 @@ public abstract class TypeNode implements AstNode {
         || type.equals(TypeNode.CHAR);
   }
 
+  public static boolean isBoxedType(TypeNode type) {
+    return type.typeKind().equals(TypeKind.OBJECT)
+        && type.reference().name().matches("Boolean|Character|Integer|Float|Double|Short|Long");
+  }
+
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
   }

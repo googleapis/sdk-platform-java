@@ -36,6 +36,7 @@ TESTS = [
     "WhileStatementTest",
     "ArithmeticOperationExprTest",
     "UnaryOperationExprTest",
+    "RelationalOperationExprTest",
 ]
 
 filegroup(
