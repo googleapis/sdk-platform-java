@@ -48,6 +48,7 @@ import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -393,6 +394,17 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     operator(arithmeticOperationExpr.operatorKind());
     space();
     arithmeticOperationExpr.rhsExpr().accept(this);
+  }
+
+  @Override
+  public void visit(UnaryOperationExpr unaryOperationExpr) {
+    if (unaryOperationExpr.operatorKind().isPrefixOperator()) {
+      operator(unaryOperationExpr.operatorKind());
+      unaryOperationExpr.expr().accept(this);
+    } else {
+      unaryOperationExpr.expr().accept(this);
+      operator(unaryOperationExpr.operatorKind());
+    }
   }
 
   /** =============================== STATEMENTS =============================== */

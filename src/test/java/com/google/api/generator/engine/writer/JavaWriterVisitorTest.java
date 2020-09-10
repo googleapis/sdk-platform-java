@@ -55,6 +55,7 @@ import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.Value;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -2031,6 +2032,29 @@ public class JavaWriterVisitorTest {
 
     assignmentExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("super.name = super.getName()");
+  }
+
+  @Test
+  public void writeUnaryOperationExpr_postfixIncrement() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());
+    UnaryOperationExpr postIncrementOperationExpr =
+        UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
+    postIncrementOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("i++");
+  }
+
+  @Test
+  public void writeUnaryOperationExpr_logicalNot() {
+    MethodInvocationExpr methodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isEmpty")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    UnaryOperationExpr logicalNotOperationExpr =
+        UnaryOperationExpr.logicalNotWithExpr(methodInvocationExpr);
+    logicalNotOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("!isEmpty()");
   }
 
   private static String createLines(int numLines) {
