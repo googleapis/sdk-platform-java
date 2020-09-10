@@ -105,9 +105,8 @@ public abstract class RelationalOperationExpr implements OperationExpr {
       if (lhsType.equals(TypeNode.VOID) || rhsType.equals(TypeNode.VOID)) {
         return false;
       }
-
       // If the expressions' type are array, the types should be array and matched, or either is
-      // null;
+      // null type;
       if (lhsType.isArray() || rhsType.isArray()) {
         if (lhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.NULL)) {
           return true;
@@ -118,7 +117,6 @@ public abstract class RelationalOperationExpr implements OperationExpr {
         }
         return lhsType.equals(rhsType);
       }
-
       // If lhs expression type is boolean or its boxed type, rhs should be boolean or boxed or null
       // or new Object
       if (lhsType.equals(TypeNode.BOOLEAN)) {
@@ -126,7 +124,6 @@ public abstract class RelationalOperationExpr implements OperationExpr {
             || rhsType.equals(TypeNode.NULL)
             || rhsType.equals(TypeNode.OBJECT);
       }
-
       // If lhs expression type is numeric type (char, byte, short, int, long, double), the rhs
       // expression type should be any numeric type or any numeric boxed type
       // if lhs is boxed numeric type, rhs could be null or Object;
@@ -137,7 +134,6 @@ public abstract class RelationalOperationExpr implements OperationExpr {
         return TypeNode.isBoxedType(lhsType)
             && (rhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.OBJECT));
       }
-
       // If lhs expression type is new Object or null, the rhs type should be a reference type or
       // null or boxed type;
       if (TypeNode.OBJECT.equals(lhsType) || TypeNode.NULL.equals(lhsType)) {
@@ -145,7 +141,6 @@ public abstract class RelationalOperationExpr implements OperationExpr {
             || rhsType.equals(TypeNode.NULL)
             || TypeNode.isBoxedType(rhsType);
       }
-
       // If lhs expression type is reference type, the rhs type should match lhs or null or new
       // Object.
       if (TypeNode.isReferenceType(lhsType)) {
@@ -153,7 +148,6 @@ public abstract class RelationalOperationExpr implements OperationExpr {
             || rhsType.equals(TypeNode.NULL)
             || rhsType.equals(TypeNode.OBJECT);
       }
-
       return lhsType.equals(rhsType);
     }
   }
