@@ -6,7 +6,7 @@ filegroup(
 )
 
 java_library(
-    name = "assert",
+    name = "assertUtils",
     srcs = [
         ":assert_files",
     ],

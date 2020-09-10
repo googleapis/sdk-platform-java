@@ -20,17 +20,17 @@ import java.util.List;
 import junit.framework.AssertionFailedError;
 
 public class Assert {
-  public void assertCodeEquals(Path goldenPath, String codegen) {
+  public static void assertCodeEquals(Path goldenPath, String codegen) {
     List<String> diffList = FileDiffUtils.diffFileAndString(goldenPath, codegen);
     if (!diffList.isEmpty()) {
-      throw new AssertionFailedError("Differences found: " + diffList);
+      throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
     }
   }
 
-  public void assertCodeEquals(String expected, String codegen) {
+  public static void assertCodeEquals(String expected, String codegen) {
     List<String> diffList = FileDiffUtils.diffTwoStrings(expected, codegen);
     if (!diffList.isEmpty()) {
-      throw new AssertionFailedError("Differences found: " + diffList);
+      throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
     }
   }
 }

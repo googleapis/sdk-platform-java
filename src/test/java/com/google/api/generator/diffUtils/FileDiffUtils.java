@@ -53,7 +53,7 @@ public class FileDiffUtils {
     }
 
     List<String> unifiedDiff =
-        UnifiedDiffUtils.generateUnifiedDiff("codegen", "golden", original, diff, 2);
+        UnifiedDiffUtils.generateUnifiedDiff("golden", "codegen", original, diff, 2);
     return unifiedDiff;
   }
 
