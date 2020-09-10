@@ -73,6 +73,8 @@ import javax.annotation.Generated;
 
 public class ServiceClientClassComposer implements ClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
+  private static final String CLIENT_CLASS_NAME_PATTERN = "%sClient";
 
   private ServiceClientClassComposer() {}
 
@@ -425,6 +427,9 @@ public class ServiceClientClassComposer implements ClassComposer {
         javaMethods.add(createLroAsyncMethod(service.name(), method, types));
         javaMethods.add(createLroCallable(service.name(), method, types));
       }
+      if (method.isPaged()) {
+        javaMethods.add(createPagedCallableMethod(service.name(), method, types));
+      }
       javaMethods.add(createCallableMethod(service.name(), method, types));
     }
     return javaMethods;
@@ -622,16 +627,25 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static MethodDefinition createLroCallable(
       String serviceName, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(serviceName, method, types, true);
+    return createCallableMethod(serviceName, method, types, true, false);
   }
 
   private static MethodDefinition createCallableMethod(
       String serviceName, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(serviceName, method, types, false);
+    return createCallableMethod(serviceName, method, types, false, false);
+  }
+
+  private static MethodDefinition createPagedCallableMethod(
+      String serviceName, Method method, Map<String, TypeNode> types) {
+    return createCallableMethod(serviceName, method, types, false, true);
   }
 
   private static MethodDefinition createCallableMethod(
-      String serviceName, Method method, Map<String, TypeNode> types, boolean isLroCallable) {
+      String serviceName,
+      Method method,
+      Map<String, TypeNode> types,
+      boolean isLroCallable,
+      boolean isPaged) {
     TypeNode rawCallableReturnType = null;
     if (isLroCallable) {
       rawCallableReturnType = types.get("OperationCallable");
@@ -652,7 +666,6 @@ public class ServiceClientClassComposer implements ClassComposer {
           rawCallableReturnType = types.get("UnaryCallable");
       }
     }
-
     // Set generics.
     TypeNode returnType =
         TypeNode.withReference(
@@ -664,14 +677,24 @@ public class ServiceClientClassComposer implements ClassComposer {
                             method.inputType().reference(),
                             method.lro().responseType().reference(),
                             method.lro().metadataType().reference())
-                        : Arrays.asList(
-                            method.inputType().reference(), method.outputType().reference())));
+                        : isPaged
+                            ? Arrays.asList(
+                                method.inputType().reference(),
+                                types
+                                    .get(
+                                        String.format(
+                                            PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+                                    .reference())
+                            : Arrays.asList(
+                                method.inputType().reference(), method.outputType().reference())));
 
     String rawMethodName = JavaStyle.toLowerCamelCase(method.name());
     String methodName =
         isLroCallable
             ? String.format("%sOperationCallabke", rawMethodName)
-            : String.format("%sCallable", rawMethodName);
+            : isPaged
+                ? String.format("%sPagedCallable", rawMethodName)
+                : String.format("%sCallable", rawMethodName);
     TypeNode stubType = types.get(String.format("%sStub", serviceName));
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
@@ -884,6 +907,21 @@ public class ServiceClientClassComposer implements ClassComposer {
                 .setName("OperationsClient")
                 .setPakkage("com.google.longrunning")
                 .build()));
+    // Pagination types.
+    types.putAll(
+        service.methods().stream()
+            .filter(m -> m.isPaged())
+            .collect(
+                Collectors.toMap(
+                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
+                    m ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+                                .setPakkage(service.pakkage())
+                                .setEnclosingClassName(getClientClassName(service.name()))
+                                .setIsStaticImport(true)
+                                .build()))));
     return types;
   }
 
@@ -904,5 +942,10 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static Variable createVariable(String name, TypeNode type) {
     return Variable.builder().setName(name).setType(type).build();
+  }
+
+  private static String getClientClassName(String serviceName) {
+
+    return String.format(CLIENT_CLASS_NAME_PATTERN, serviceName);
   }
 }
