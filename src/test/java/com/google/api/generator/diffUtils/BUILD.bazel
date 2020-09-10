@@ -6,7 +6,7 @@ filegroup(
 )
 
 java_library(
-    name = "diff",
+    name = "diffUtils",
     srcs = [
         ":diff_files",
     ],

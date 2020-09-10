@@ -11,9 +11,8 @@ java_library(
         ":assert_files",
     ],
     deps = [
-        "//src/test/java/com/google/api/generator/diff",
-        "@com_google_guava_guava//jar",
-        "@google_java_format_all_deps//jar",
+        "//src/test/java/com/google/api/generator/diffUtils",
         "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar"
     ],
 )

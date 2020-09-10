@@ -14,15 +14,23 @@
 
 package com.google.api.generator.assertUtils;
 
+import com.google.api.generator.diffUtils.FileDiffUtils;
+import java.nio.file.Path;
 import java.util.List;
-
-import com.google.api.generator.diff.FileDiffUtils;
+import junit.framework.AssertionFailedError;
 
 public class Assert {
-    public void assertCodeEquals(String actualContent, String goldenPath){
-        List<String> diffList = FileDiffUtils.diffStringAndFile(actualContent, goldenPath);
-        if(!diffList.isEmpty()){
-            throw new AssertionFailedError("Difference found: " + diffList);
-        }
+  public void assertCodeEquals(Path goldenPath, String codegen) {
+    List<String> diffList = FileDiffUtils.diffFileAndString(goldenPath, codegen);
+    if (!diffList.isEmpty()) {
+      throw new AssertionFailedError("Differences found: " + diffList);
     }
+  }
+
+  public void assertCodeEquals(String expected, String codegen) {
+    List<String> diffList = FileDiffUtils.diffTwoStrings(expected, codegen);
+    if (!diffList.isEmpty()) {
+      throw new AssertionFailedError("Differences found: " + diffList);
+    }
+  }
 }
