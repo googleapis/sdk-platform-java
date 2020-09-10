@@ -4,7 +4,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
 @AutoValue
-public abstract class LogicalOperationExpr implements OperationExpr{
+public abstract class LogicalOperationExpr implements OperationExpr {
 
   public abstract Expr lhsExpr();
 

@@ -2070,7 +2070,8 @@ public class JavaWriterVisitorTest {
             .setExprReferenceExpr(ValueExpr.withValue(ThisObjectValue.withType(classType)))
             .setReturnType(TypeNode.BOOLEAN)
             .build();
-    LogicalOperationExpr logicalOperationExpr = LogicalOperationExpr.logicalAndWithExprs(lhsExpr, rhsExpr);
+    LogicalOperationExpr logicalOperationExpr =
+        LogicalOperationExpr.logicalAndWithExprs(lhsExpr, rhsExpr);
     logicalOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("isEmpty && this.isValid()");
   }
@@ -2083,10 +2084,10 @@ public class JavaWriterVisitorTest {
             .setMethodName("isValid")
             .setReturnType(TypeNode.BOOLEAN)
             .build();
-    LogicalOperationExpr logicalOperationExpr = LogicalOperationExpr.logicalOrWithExprs(lhsExpr, rhsExpr);
+    LogicalOperationExpr logicalOperationExpr =
+        LogicalOperationExpr.logicalOrWithExprs(lhsExpr, rhsExpr);
     logicalOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("isGood || isValid()");
->>>>>>> 593e2e99 (Add LogicalOperationExpr and unit test)
   }
 
   private static String createLines(int numLines) {
