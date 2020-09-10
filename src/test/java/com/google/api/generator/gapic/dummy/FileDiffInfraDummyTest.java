@@ -71,6 +71,15 @@ public class FileDiffInfraDummyTest {
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
+  // Add a simple test for two strings comparison.
+  @Test
+  public void simpleLineComment() {
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    LineComment lineComment = LineComment.withComment("test strings comparison.");
+    lineComment.accept(visitor);
+    Assert.assertCodeEquals("// test strings comparison.", visitor.write());
+  }
+
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
 
