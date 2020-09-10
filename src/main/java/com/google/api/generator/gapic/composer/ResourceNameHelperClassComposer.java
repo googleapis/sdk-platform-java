@@ -39,6 +39,7 @@ import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
@@ -833,9 +834,8 @@ public class ResourceNameHelperClassComposer {
     Expr isNullCheck =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(
-                Arrays.asList(valueVarExpr, ValueExpr.withValue(NullObjectValue.create())))
+            .setMethodName("isNull")
+            .setArguments(valueVarExpr)
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     Statement listAddEmptyStringStatement =
@@ -966,7 +966,6 @@ public class ResourceNameHelperClassComposer {
 
     // Innermost if-blocks.
     List<Statement> tokenIfStatements = new ArrayList<>();
-    ValueExpr nullValExpr = ValueExpr.withValue(NullObjectValue.create());
     for (String token : getTokenSet(tokenHierarchies)) {
       VariableExpr tokenVarExpr = patternTokenVarExprs.get(token);
       Preconditions.checkNotNull(
@@ -979,14 +978,14 @@ public class ResourceNameHelperClassComposer {
               .setMethodName("put")
               .setArguments(ValueExpr.withValue(tokenStrVal), tokenVarExpr)
               .build();
-      // TODO(miraleung): Use neq operator here.
-      MethodInvocationExpr notNullCheckExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-              .setMethodName("notTodoEquals")
-              .setArguments(tokenVarExpr, nullValExpr)
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
+      Expr notNullCheckExpr =
+          UnaryOperationExpr.logicalNotWithExpr(
+              MethodInvocationExpr.builder()
+                  .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                  .setMethodName("isNull")
+                  .setArguments(tokenVarExpr)
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build());
       tokenIfStatements.add(
           IfStatement.builder()
               .setConditionExpr(notNullCheckExpr)
@@ -1017,8 +1016,8 @@ public class ResourceNameHelperClassComposer {
     MethodInvocationExpr fieldValuesMapNullCheckExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(fieldValuesMapVarExpr, nullValExpr)
+            .setMethodName("isNull")
+            .setArguments(fieldValuesMapVarExpr)
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     IfStatement fieldValuesMapIfStatement =
@@ -1101,15 +1100,15 @@ public class ResourceNameHelperClassComposer {
     }
 
     VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
-    // TODO(miraleung): Use neq operator, then swap the ternary exprs and do the following:
     // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
-    MethodInvocationExpr fixedValueNullCheck =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(fixedValueVarExpr, ValueExpr.withValue(NullObjectValue.create()))
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
+    Expr fixedValueNullCheck =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                .setMethodName("isNull")
+                .setArguments(fixedValueVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
 
     MethodInvocationExpr instantiateExpr =
         MethodInvocationExpr.builder()
@@ -1122,9 +1121,8 @@ public class ResourceNameHelperClassComposer {
     TernaryExpr returnExpr =
         TernaryExpr.builder()
             .setConditionExpr(fixedValueNullCheck)
-            // TODO(miraleung): Swap these when using the neq operator.
-            .setThenExpr(instantiateExpr)
-            .setElseExpr(fixedValueVarExpr)
+            .setElseExpr(instantiateExpr)
+            .setThenExpr(fixedValueVarExpr)
             .build();
 
     return MethodDefinition.builder()
