@@ -14,13 +14,13 @@
 
 package com.google.api.generator.gapic.dummy;
 
-import com.google.api.generator.assertUtils.Assert;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.test.framework.Assert;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;

@@ -12,23 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.assertUtils;
+package com.google.api.generator.test.framework;
 
-import com.google.api.generator.diffUtils.FileDiffUtils;
 import java.nio.file.Path;
 import java.util.List;
 import junit.framework.AssertionFailedError;
 
 public class Assert {
   public static void assertCodeEquals(Path goldenPath, String codegen) {
-    List<String> diffList = FileDiffUtils.diffFileAndString(goldenPath, codegen);
+    List<String> diffList = Differ.diff(goldenPath, codegen);
     if (!diffList.isEmpty()) {
       throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
     }
   }
 
   public static void assertCodeEquals(String expected, String codegen) {
-    List<String> diffList = FileDiffUtils.diffTwoStrings(expected, codegen);
+    List<String> diffList = Differ.diff(expected, codegen);
     if (!diffList.isEmpty()) {
       throw new AssertionFailedError("Differences found: \n" + String.join("\n", diffList));
     }

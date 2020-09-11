@@ -1,16 +1,17 @@
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "diff_files",
+    name = "framework_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "diffUtils",
+    name = "framework",
     srcs = [
-        ":diff_files",
+        ":framework_files",
     ],
     deps = [
         "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
     ],
 )

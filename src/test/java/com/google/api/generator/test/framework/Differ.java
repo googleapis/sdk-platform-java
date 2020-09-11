@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.diffUtils;
+package com.google.api.generator.test.framework;
 
 import com.github.difflib.DiffUtils;
 import com.github.difflib.UnifiedDiffUtils;
@@ -24,8 +24,8 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileDiffUtils {
-  public static List<String> diffFileAndString(Path goldenFilePath, String codegen) {
+public class Differ {
+  public static List<String> diff(Path goldenFilePath, String codegen) {
     List<String> revised = Arrays.asList(codegen.split("\\r?\\n"));
     List<String> original = null;
     try {
@@ -37,7 +37,7 @@ public class FileDiffUtils {
     return diffTwoStringLists(original, revised);
   }
 
-  public static List<String> diffTwoStrings(String expectedStr, String actualStr) {
+  public static List<String> diff(String expectedStr, String actualStr) {
     List<String> revised = Arrays.asList(actualStr.split("\\r?\\n"));
     List<String> original = Arrays.asList(expectedStr.split("\\r?\\n"));
     return diffTwoStringLists(original, revised);
