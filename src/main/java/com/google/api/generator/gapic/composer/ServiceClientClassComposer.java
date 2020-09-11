@@ -680,7 +680,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         TypeNode.withReference(
             rawCallableReturnType
                 .reference()
-                .copyAndSetGenerics(getGenericsFromCallable(callableMethodKind, method, types)));
+                .copyAndSetGenerics(getGenericsForCallable(callableMethodKind, method, types)));
 
     String rawMethodName = JavaStyle.toLowerCamelCase(method.name());
     String methodName = getCallableName(callableMethodKind, rawMethodName);
@@ -937,7 +937,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     return String.format("%sClient", serviceName);
   }
 
-  private static List<Reference> getGenericsFromCallable(
+  private static List<Reference> getGenericsForCallable(
       CallableMethodKind kind, Method method, Map<String, TypeNode> types) {
     if (kind.equals(CallableMethodKind.LRO)) {
       return Arrays.asList(
