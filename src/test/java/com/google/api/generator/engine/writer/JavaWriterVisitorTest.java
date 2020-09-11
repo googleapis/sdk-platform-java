@@ -2059,7 +2059,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLogicalOperationExpr_LogicalAnd() {
+  public void writeLogicalOperationExpr_logicalAnd() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
@@ -2077,7 +2077,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeLogicalOperationExpr_LogicalOr() {
+  public void writeLogicalOperationExpr_logicalOr() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isGood", TypeNode.BOOLEAN));
     MethodInvocationExpr rhsExpr =
         MethodInvocationExpr.builder()
