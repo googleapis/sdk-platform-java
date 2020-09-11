@@ -7,5 +7,6 @@ filegroup(
         "//src/test/java/com/google/api/generator/gapic/dummy:dummy_files",
         "//src/test/java/com/google/api/generator/gapic/model:model_files",
         "//src/test/java/com/google/api/generator/gapic/protoparser:protoparser_files",
+        "//src/test/java/com/google/api/generator/gapic/utils:utils_files",
     ],
 )
