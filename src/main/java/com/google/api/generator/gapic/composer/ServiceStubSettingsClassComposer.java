@@ -108,6 +108,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
+import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
 // TODO(miraleung): Refactor ClassComposer's interface.
@@ -153,7 +154,10 @@ public class ServiceStubSettingsClassComposer {
   }
 
   public GapicClass generate(
-      Service service, GapicServiceConfig serviceConfig, Map<String, Message> messageTypes) {
+      Service service,
+      @Nullable GapicServiceConfig serviceConfig,
+      Map<String, Message> messageTypes) {
+    // TODO(miraleung): Robustify this against a null serviceConfig.
     String pakkage = String.format("%s.stub", service.pakkage());
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     Map<String, VariableExpr> methodSettingsMemberVarExprs =
@@ -215,7 +219,8 @@ public class ServiceStubSettingsClassComposer {
     // Creates class variables <method>Settings, e.g. echoSettings.
     // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
-      boolean hasBatchingSettings = serviceConfig.hasBatchingSetting(service, method);
+      boolean hasBatchingSettings =
+          !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
       TypeNode settingsType =
           getCallSettingsType(method, types, hasBatchingSettings, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
@@ -304,7 +309,9 @@ public class ServiceStubSettingsClassComposer {
 
     for (Method method : service.methods()) {
       Optional<GapicBatchingSettings> batchingSettingOpt =
-          serviceConfig.getBatchingSetting(service, method);
+          Objects.isNull(serviceConfig)
+              ? Optional.empty()
+              : serviceConfig.getBatchingSetting(service, method);
       if (batchingSettingOpt.isPresent()) {
         statements.add(
             exprToStatementFn.apply(
@@ -1125,7 +1132,8 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static ClassDefinition createNestedBuilderClass(
-      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+      Service service, @Nullable GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+    // TODO(miraleung): Robustify this against a null serviceConfig.
     String thisClassName = getThisClassName(service.name());
     TypeNode outerThisClassType = types.get(thisClassName);
 
@@ -1235,7 +1243,8 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static MethodDefinition createNestedClassInitDefaultsMethod(
-      Service service, GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+      Service service, @Nullable GapicServiceConfig serviceConfig, Map<String, TypeNode> types) {
+    // TODO(miraleung): Robustify this against a null serviceConfig.
     TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
     VariableExpr builderVarExpr =
         VariableExpr.withVariable(
@@ -1248,7 +1257,7 @@ public class ServiceStubSettingsClassComposer {
       if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
         continue;
       }
-      if (serviceConfig.hasBatchingSetting(service, method)) {
+      if (!Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method)) {
         Optional<GapicBatchingSettings> batchingSettingOpt =
             serviceConfig.getBatchingSetting(service, method);
         Preconditions.checkState(
