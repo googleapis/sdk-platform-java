@@ -6,6 +6,8 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/composer:composer_files",
         "//src/main/java/com/google/api/generator/gapic/model:model_files",
         "//src/main/java/com/google/api/generator/gapic/protoparser:protoparser_files",
+        "//src/main/java/com/google/api/generator/gapic/protowriter:protowriter_files",
+        "//src/main/java/com/google/api/generator/gapic/utils:utils_files",
     ],
 )
 
