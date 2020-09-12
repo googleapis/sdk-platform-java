@@ -172,24 +172,6 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void notEqualToOperationExpr_validBooleanToNewObjectType() {
-    // LHS: boolean type, RHS: new Object
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
-    NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
-    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
-    // No exception thrown, so we succeeded.
-  }
-
-  @Test
-  public void notEqualToOperationExpr_validBooleanToNullType() {
-    // LHS: boolean type, RHS: null
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
-    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
-    // No exception thrown, so we succeeded.
-  }
-
-  @Test
   public void notEqualToOperationExpr_validBooleanBoxedToNullType() {
     // LHS: boolean boxed type, RHS: null
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "x");
@@ -216,6 +198,26 @@ public class RelationalOperationExprTest {
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.notEqualToWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void equalToOperationExpr_invalidBooleanWithNullType() {
+    // LHS: boolean type, RHS: null type
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
+    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void equalToOperationExpr_invalidBooleanWithObjectType() {
+    // LHS: boolean type, RHS: object type
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.OBJECT, "y");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
   /** ===================== Equality Operators: LHS data type is Array ======================== */

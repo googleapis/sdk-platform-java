@@ -101,54 +101,35 @@ public abstract class RelationalOperationExpr implements OperationExpr {
     // isValidEqualityType checks expressions' type for equality operator (==) and non-equality
     // operator (!=).
     private boolean isValidEqualityType(TypeNode lhsType, TypeNode rhsType) {
-      // The Operators can not be applied on void type.
-      if (lhsType.equals(TypeNode.VOID) || rhsType.equals(TypeNode.VOID)) {
-        return false;
-      }
+      // If the expression's types are matched, return true
+      if (lhsType.equals(rhsType)) return true;
+
       // If the expressions' type are array, the types should be array and matched, or either is
       // null type;
       if (lhsType.isArray() || rhsType.isArray()) {
-        if (lhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.NULL)) {
-          return true;
-        }
-        if ((lhsType.isArray() && !rhsType.isArray())
-            || (!lhsType.isArray() && rhsType.isArray())) {
-          return false;
-        }
-        return lhsType.equals(rhsType);
+        return lhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.NULL);
       }
-      // If lhs expression type is boolean or its boxed type, rhs should be boolean or boxed or null
-      // or new Object
-      if (lhsType.equals(TypeNode.BOOLEAN)) {
-        return rhsType.equals(lhsType)
-            || rhsType.equals(TypeNode.NULL)
-            || rhsType.equals(TypeNode.OBJECT);
-      }
+
       // If lhs expression type is numeric type (char, byte, short, int, long, double), the rhs
       // expression type should be any numeric type or any numeric boxed type
-      // if lhs is boxed numeric type, rhs could be null or Object;
-      if (TypeNode.isNumericType(lhsType)) {
-        if (TypeNode.isNumericType(rhsType)) {
-          return true;
-        }
-        return TypeNode.isBoxedType(lhsType)
-            && (rhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.OBJECT));
-      }
+      if (TypeNode.isNumericType(lhsType) && TypeNode.isNumericType(rhsType)) return true;
+
       // If lhs expression type is new Object or null, the rhs type should be a reference type or
       // null or boxed type;
       if (TypeNode.OBJECT.equals(lhsType) || TypeNode.NULL.equals(lhsType)) {
         return TypeNode.isReferenceType(rhsType)
+            || rhsType.equals(TypeNode.OBJECT)
             || rhsType.equals(TypeNode.NULL)
             || TypeNode.isBoxedType(rhsType);
       }
-      // If lhs expression type is reference type, the rhs type should match lhs or null or new
-      // Object.
-      if (TypeNode.isReferenceType(lhsType)) {
-        return lhsType.equals(rhsType)
-            || rhsType.equals(TypeNode.NULL)
-            || rhsType.equals(TypeNode.OBJECT);
+
+      // If lhs expression type is Boxed type or a referenced type, rhs should be null or object,
+      // other cases have been covered in previous conditions.
+      if (TypeNode.isBoxedType(lhsType) || TypeNode.isReferenceType(lhsType)) {
+        return rhsType.equals(TypeNode.NULL) || rhsType.equals(TypeNode.OBJECT);
       }
-      return lhsType.equals(rhsType);
+
+      return false;
     }
   }
 }
