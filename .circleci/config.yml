@@ -11,11 +11,11 @@ jobs:
       - run:
           name: Build targets
           command: |
-            bazel build //...
+            bazel --batch build //...
       - run:
           name: Test targets
           command: |
-            bazel test //...
+            bazel --batch test //... --noshow_progress
       - store_test_results:
           path:  ~/.cache/bazel
   google-java-format:
@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Java Linter
           command: |
-            bazel build //:google_java_format_verification
+            bazel --batch  build //:google_java_format_verification
   license-header:
     docker:
       - image: circleci/golang:1.13

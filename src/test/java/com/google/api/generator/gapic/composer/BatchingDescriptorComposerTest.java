@@ -140,7 +140,7 @@ public class BatchingDescriptorComposerTest {
             "List<String> subresponseElements = new ArrayList<>();\n",
             "long subresponseCount = responder.getMessageCount();\n",
             "for (int i = 0; i < subresponseCount; i++) {\n",
-            "subresponseElements.add(batchResponse.getMessageIds(batchMessageIndex));\n",
+            "subresponseElements.add(batchResponse.getMessageIds(batchMessageIndex++));\n",
             "}\n",
             "PublishResponse response ="
                 + " PublishResponse.newBuilder().addAllMessageIds(subresponseElements).build();\n",

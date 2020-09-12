@@ -87,7 +87,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Running Java linter..."
-  bazel build --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
+  bazel --batch build --disk_cache="$BAZEL_CACHE_DIR" //:google_java_format_verification
   FORMAT_STATUS=$?
   if [ $FORMAT_STATUS != 0 ]
   then
@@ -100,7 +100,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] || [ $NUM_BAZEL_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking the build..."
-  bazel build --disk_cache="$BAZEL_CACHE_DIR" //...
+  bazel --batch build --disk_cache="$BAZEL_CACHE_DIR" //...
   BUILD_STATUS=$?
   if [ $BUILD_STATUS != 0 ]
   then
@@ -112,7 +112,7 @@ fi
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
   echo_status "Checking tests..."
-  bazel test --disk_cache="$BAZEL_CACHE_DIR" //...
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //...
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
