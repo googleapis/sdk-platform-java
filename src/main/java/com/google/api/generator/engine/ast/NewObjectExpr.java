@@ -20,6 +20,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @AutoValue
 public abstract class NewObjectExpr implements Expr {
@@ -56,16 +57,24 @@ public abstract class NewObjectExpr implements Expr {
 
     public abstract Builder setIsGeneric(boolean isGeneric);
 
-    // Private accessor.
+    // Private accessors.
     abstract TypeNode type();
-    // Private accessor.
+
     abstract boolean isGeneric();
+
+    abstract ImmutableList<Expr> arguments();
 
     abstract NewObjectExpr autoBuild();
 
     public NewObjectExpr build() {
       Preconditions.checkState(
           TypeNode.isReferenceType(type()), "New object expression should be reference types.");
+
+      Preconditions.checkState(
+          arguments().stream().allMatch(e -> !Objects.isNull(e)),
+          String.format(
+              "Found null argument for the \"new\" constructor of %s", type().reference().name()));
+
       // Only the case where generics() is empty and isGeneric() is false, we set isGeneric() to
       // false. Otherwise, isGeneric() should be true.
       setIsGeneric(isGeneric() || !type().reference().generics().isEmpty());
