@@ -24,7 +24,6 @@ filegroup(
     ],
     test_class = "com.google.api.generator.gapic.protoparser.{0}".format(test_name),
     deps = [
-        "//:rpc_java_proto",
         "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator:autovalue",
         "//src/main/java/com/google/api/generator/engine/ast",
@@ -34,6 +33,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/utils",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
+        "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",
         "@com_google_truth_truth//jar",
