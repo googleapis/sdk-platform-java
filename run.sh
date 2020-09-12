@@ -59,10 +59,10 @@ then
 fi
 
 # Build if needed.
-if [[ "${FLAGS_use_cached}" == 0 ]] || [[ ! -f bazel-bin/protoc-gen-gapic-java ]]
+if [[ "${FLAGS_use_cached}" == 0 ]] || [[ ! -f bazel-bin/protoc-gen-java_gapic ]]
 then
   echo_success "Rebuilding the microgenerator..."
-  bazel build :protoc-gen-gapic-java
+  bazel build :protoc-gen-java_gapic
   if [[ $? -ne 0 ]]
   then
     echo_error "Build failed."
@@ -75,9 +75,9 @@ fi
 # Run protoc.
 protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" \
     -I="${FLAGS_googleapis}/google/longrunning" \
-    --plugin=bazel-bin/protoc-gen-gapic-java ${FLAGS_protos}/*.proto \
-    --gapic-java_out="${FLAGS_out}" \
-    --gapic-java_opt="${FLAGS_service_config},${FLAGS_gapic_config}" \
+    --plugin=bazel-bin/protoc-gen-java_gapic ${FLAGS_protos}/*.proto \
+    --java_gapic_out="${FLAGS_out}" \
+    --java_gapic_opt="${FLAGS_service_config},${FLAGS_gapic_config}" \
     --experimental_allow_proto3_optional
 
 echo_success "Output files written to ${FLAGS_out}"

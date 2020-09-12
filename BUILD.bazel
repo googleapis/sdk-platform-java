@@ -28,7 +28,7 @@ java_proto_library(
 # ============= Binary targets ================
 
 java_binary(
-    name = "protoc-gen-gapic-java",
+    name = "protoc-gen-java_gapic",
     srcs = [
         "//src/main/java/com/google/api/generator:generator_files",
     ],
