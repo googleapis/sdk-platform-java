@@ -4,6 +4,8 @@ load(
     "google_java_format_verification",
 )
 
+package(default_visibility = ["//visibility:public"])
+
 JAVA_SRCS = [
     "//src/main/java/com/google/api/generator:generator_files",
     "//src/main/java/com/google/api/generator/engine:engine_files",

@@ -1081,13 +1081,19 @@ public class ResourceNameHelperClassComposer {
     if (!hasVariants) {
       String token = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList()).get(0);
       String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
+      Preconditions.checkNotNull(
+          patternTokenVarExprs.get(token),
+          String.format(
+              "No expression found for token %s amongst values %s",
+              javaTokenVarName, patternTokenVarExprs.toString()));
+
       MethodInvocationExpr returnInstantiateExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(templateFinalVarExprs.get(0))
               .setMethodName("instantiate")
               .setArguments(
                   ValueExpr.withValue(StringObjectValue.withValue(token)),
-                  patternTokenVarExprs.get(javaTokenVarName))
+                  patternTokenVarExprs.get(token))
               .setReturnType(TypeNode.STRING)
               .build();
       return MethodDefinition.builder()
