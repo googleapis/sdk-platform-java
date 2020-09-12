@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -333,7 +334,7 @@ public class BatchingDescriptorComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(batchResponseVarExpr)
               .setMethodName(getSubresponseFieldMethodName)
-              .setArguments(batchMessageIndexVarExpr)
+              .setArguments(UnaryOperationExpr.postfixIncrementWithExpr(batchMessageIndexVarExpr))
               .build();
       innerSubresponseForExprs.add(
           MethodInvocationExpr.builder()
