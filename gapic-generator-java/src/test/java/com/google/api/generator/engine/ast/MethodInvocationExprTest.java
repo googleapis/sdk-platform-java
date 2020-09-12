@@ -37,6 +37,28 @@ public class MethodInvocationExprTest {
   }
 
   @Test
+  public void validBuildMethodInvocationExpr_hasArguments() {
+    Reference stringRef = ConcreteReference.withClazz(String.class);
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ArrayList.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
+
+    MethodInvocationExpr.builder()
+        .setMethodName("addNumbers")
+        .setArguments(
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("2").build()))
+        .setReturnType(returnType)
+        .build();
+    // No exception thrown, we're good.
+  }
+
+  @Test
   public void validBuildMethodInvocationExpr_staticReference() {
     TypeNode someType =
         TypeNode.withReference(
@@ -85,5 +107,28 @@ public class MethodInvocationExprTest {
               .setReturnType(TypeNode.STRING)
               .build();
         });
+  }
+
+  @Test
+  public void invalidBuildMethodInvocationExpr_nullArgument() {
+    Reference stringRef = ConcreteReference.withClazz(String.class);
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ArrayList.class)
+                .setGenerics(Arrays.asList(stringRef))
+                .build());
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            MethodInvocationExpr.builder()
+                .setMethodName("addNumbers")
+                .setArguments(
+                    ValueExpr.withValue(
+                        PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                    null)
+                .setReturnType(returnType)
+                .build());
   }
 }
