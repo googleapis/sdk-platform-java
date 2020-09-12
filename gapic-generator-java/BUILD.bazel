@@ -1,3 +1,5 @@
+package(default_visibility = ["//visibility:public"])
+
 load(
     "//:gapic_generator_java.bzl",
     "google_java_format",
