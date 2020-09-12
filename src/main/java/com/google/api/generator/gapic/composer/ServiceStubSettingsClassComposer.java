@@ -531,8 +531,8 @@ public class ServiceStubSettingsClassComposer {
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
                 TypeNode.withReference(ConcreteReference.withClazz(Objects.class)))
-            .setMethodName("equals")
-            .setArguments(getResponsesListExpr, ValueExpr.withValue(NullObjectValue.create()))
+            .setMethodName("isNull")
+            .setArguments(getResponsesListExpr)
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     Expr thenExpr =
