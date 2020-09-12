@@ -57,9 +57,6 @@ public class ServiceClientClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    System.out.println(visitor.write());
-    System.out.println(EXPECTED_CLASS_STRING);
-
     assertEquals(EXPECTED_CLASS_STRING, visitor.write());
   }
 
