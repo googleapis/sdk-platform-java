@@ -19,6 +19,7 @@ import com.google.common.base.Preconditions;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -115,6 +116,12 @@ public abstract class MethodInvocationExpr implements Expr {
           methodInvocationExpr.exprReferenceExpr() == null
               || methodInvocationExpr.staticReferenceType() == null,
           "Only the expression reference or the static reference can be set, not both");
+
+      Preconditions.checkState(
+          methodInvocationExpr.arguments().stream().allMatch(e -> !Objects.isNull(e)),
+          String.format(
+              "Found null expression in arguments for %s",
+              methodInvocationExpr.methodIdentifier().name()));
 
       return methodInvocationExpr;
     }
