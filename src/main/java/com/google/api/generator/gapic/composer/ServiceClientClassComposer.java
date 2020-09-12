@@ -79,7 +79,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
 
-  enum CallableMethodKind {
+  private enum CallableMethodKind {
     REGULAR,
     LRO,
     PAGED,
