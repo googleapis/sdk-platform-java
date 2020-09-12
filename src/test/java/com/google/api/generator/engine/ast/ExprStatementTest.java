@@ -75,17 +75,17 @@ public class ExprStatementTest {
   public void invalidExprStatement_variable() {
     Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
-    assertInvalidExprStatement_(varExpr);
+    assertInvalidExprStatement(varExpr);
   }
 
   @Test
   public void invalidExprStatement_value() {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
-    assertInvalidExprStatement_(valueExpr);
+    assertInvalidExprStatement(valueExpr);
   }
 
-  private static void assertInvalidExprStatement_(Expr expr) {
+  private static void assertInvalidExprStatement(Expr expr) {
     assertThrows(
         IllegalStateException.class,
         () -> {
