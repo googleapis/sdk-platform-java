@@ -1,3 +1,5 @@
+load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
+
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
@@ -16,23 +18,23 @@ java_library(
     ],
 )
 
-load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
-
 # run_single_junit
 java_binary(
     name = "run_single_junit_binary",
-    jvm_flags = ["-Xmx512m"],
     srcs = [":framework_files"],
+    jvm_flags = ["-Xmx512m"],
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     visibility = ["//visibility:public"],
-    runtime_deps = ["@junit_junit//jar", "@io_github_java_diff_utils//jar"],
+    runtime_deps = [
+        "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
+    ],
     deps = [
         ":framework",
-        "@junit_junit//jar",
         "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
     ],
 )
-
 
 run_single_JUnit(
     name = "ComposerTest_JUnit",
