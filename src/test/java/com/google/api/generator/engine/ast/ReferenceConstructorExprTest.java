@@ -33,6 +33,24 @@ public class ReferenceConstructorExprTest {
   }
 
   @Test
+  public void validReferenceConstructorExpr_hasArguments() {
+    VaporReference ref =
+        VaporReference.builder()
+            .setName("Student")
+            .setPakkage("com.google.example.examples.v1")
+            .build();
+    TypeNode typeNode = TypeNode.withReference(ref);
+    ReferenceConstructorExpr.thisBuilder()
+        .setType(typeNode)
+        .setArguments(
+            ValueExpr.withValue(StringObjectValue.withValue("Stu Dent")),
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("12345678").build()))
+        .build();
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
   public void validReferenceConstructorExpr_superConstructorBasic() {
     VaporReference ref =
         VaporReference.builder()
@@ -60,5 +78,22 @@ public class ReferenceConstructorExprTest {
         () -> {
           ReferenceConstructorExpr.superBuilder().setType(TypeNode.NULL).build();
         });
+  }
+
+  @Test
+  public void invalidReferenceConstructorExpr_nullArgument() {
+    VaporReference ref =
+        VaporReference.builder()
+            .setName("Student")
+            .setPakkage("com.google.example.examples.v1")
+            .build();
+    TypeNode typeNode = TypeNode.withReference(ref);
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ReferenceConstructorExpr.thisBuilder()
+                .setType(typeNode)
+                .setArguments(ValueExpr.withValue(StringObjectValue.withValue("Stu Dent")), null)
+                .build());
   }
 }

@@ -205,6 +205,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     MethodDefinition createMethodOne =
         MethodDefinition.builder()
+            .setHeaderCommentStatements(ServiceClientCommentComposer.CREATE_METHOD_NO_ARG_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -222,6 +223,8 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     methods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.CREATE_METHOD_SETTINGS_ARG_COMMENT)
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -251,6 +254,9 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     methods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.createCreateMethodStubArgComment(
+                    settingsVarExpr.type()))
             .setAnnotations(Arrays.asList(betaAnnotation))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
@@ -338,6 +344,8 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     methods.add(
         MethodDefinition.constructorBuilder()
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.PROTECTED_CONSTRUCTOR_SETTINGS_ARG_COMMENT)
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -387,8 +395,9 @@ public class ServiceClientClassComposer implements ClassComposer {
     Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
     methodNameToTypes.put("getSettings", types.get(String.format("%sSettings", service.name())));
     methodNameToTypes.put("getStub", types.get(String.format("%sStub", service.name())));
+    String getOperationsClientMethodName = "getOperationsClient";
     if (hasLroClient) {
-      methodNameToTypes.put("getOperationsClient", types.get("OperationsClient"));
+      methodNameToTypes.put(getOperationsClientMethodName, types.get("OperationsClient"));
     }
     AnnotationNode betaStubAnnotation =
         AnnotationNode.builder()
@@ -403,7 +412,13 @@ public class ServiceClientClassComposer implements ClassComposer {
               String methodName = e.getKey();
               TypeNode methodReturnType = e.getValue();
               String returnVariableName = JavaStyle.toLowerCamelCase(methodName.substring(3));
-              return MethodDefinition.builder()
+              MethodDefinition.Builder methodBuilder = MethodDefinition.builder();
+              if (methodName.equals(getOperationsClientMethodName)) {
+                methodBuilder =
+                    methodBuilder.setHeaderCommentStatements(
+                        ServiceClientCommentComposer.GET_OPERATIONS_CLIENT_METHOD_COMMENT);
+              }
+              return methodBuilder
                   .setAnnotations(
                       methodName.equals("getStub")
                           ? Arrays.asList(betaStubAnnotation)

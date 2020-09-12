@@ -24,11 +24,11 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.util.List;
 
 public class Generator {
-  public static CodeGeneratorResponse generateGapic(
-      CodeGeneratorRequest request, String outputFilePath) {
+  public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);
-    CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilePath);
+    String outputFilename = "temp-codegen.srcjar";
+    CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilename);
     return response;
   }
 }

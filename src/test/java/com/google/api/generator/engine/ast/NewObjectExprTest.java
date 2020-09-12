@@ -40,6 +40,24 @@ public class NewObjectExprTest {
   }
 
   @Test
+  public void validNewObjectValue_hasArgument() {
+    VaporReference ref =
+        VaporReference.builder()
+            .setName("Student")
+            .setPakkage("com.google.example.examples.v1")
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    NewObjectExpr.builder()
+        .setType(type)
+        .setArguments(
+            ValueExpr.withValue(StringObjectValue.withValue("Stu Dent")),
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("12345678").build()))
+        .build();
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
   public void validNewObjectExpr_edgeCase() {
     // isGeneric() is false, but generics() is not empty.
     // The expression is still valid, we will set isGeneric() as true for the users.
@@ -129,5 +147,22 @@ public class NewObjectExprTest {
         () -> {
           NewObjectExpr.builder().setIsGeneric(false).setType(TypeNode.NULL).build();
         });
+  }
+
+  @Test
+  public void invalidNewObjectValue_nullArgument() {
+    VaporReference ref =
+        VaporReference.builder()
+            .setName("Student")
+            .setPakkage("com.google.example.examples.v1")
+            .build();
+    TypeNode type = TypeNode.withReference(ref);
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            NewObjectExpr.builder()
+                .setType(type)
+                .setArguments(ValueExpr.withValue(StringObjectValue.withValue("Stu Dent")), null)
+                .build());
   }
 }
