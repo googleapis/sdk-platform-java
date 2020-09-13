@@ -21,6 +21,9 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -50,6 +53,7 @@ public class FileDiffInfraDummyTest {
     classDef.accept(visitor);
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
+    saveCodegenToFile(visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -68,6 +72,7 @@ public class FileDiffInfraDummyTest {
     classDef.accept(visitor);
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
+    saveCodegenToFile(visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -77,8 +82,11 @@ public class FileDiffInfraDummyTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     LineComment lineComment = LineComment.withComment("test strings comparison.");
     lineComment.accept(visitor);
+    saveCodegenToFile(visitor.write());
     Assert.assertCodeEquals("// test strings comparison.", visitor.write());
   }
+
+  private static final String TEST_CLASS_NAME = "FileDiffInfraDummyTest";
 
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
@@ -94,4 +102,22 @@ public class FileDiffInfraDummyTest {
           + "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
           + "See the License for the specific language governing permissions and\n"
           + "limitations under the License.";
+
+  private static void saveCodegenToFile(String codegen) {
+    try {
+      File myObj = new File(TEST_CLASS_NAME + ".output");
+      if (myObj.createNewFile()) {
+        System.out.println("File created: " + myObj.getName());
+      } else {
+        System.out.println("File already exists.");
+      }
+      FileWriter myWriter = new FileWriter(TEST_CLASS_NAME + ".output");
+      myWriter.write(codegen);
+      myWriter.close();
+      System.out.println("Successfully wrote to the file.");
+    } catch (IOException e) {
+      System.out.println("An File creation error occurred.");
+      e.printStackTrace();
+    }
+  }
 }

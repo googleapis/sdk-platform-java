@@ -14,16 +14,16 @@
 
 package com.google.api.generator.test.framework;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Request;
+import org.junit.runner.Result;
+
 public class SingleJUnitTestRunner {
-  // public static void main(String... args) throws ClassNotFoundException {
-  //   String className = args[0];
-  //   Request request = Request.aClass(Class.forName(className));
+  public static void main(String... args) throws ClassNotFoundException {
+    String className = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest";
+    Request request = Request.aClass(Class.forName(className));
 
-  //   Result result = new JUnitCore().run(request);
-  //   System.exit(result.wasSuccessful() ? 0 : 1);
-  // }
-
-  public static void main(String... args) {
-    System.out.println("Hello, you are almost there!");
+    Result result = new JUnitCore().run(request);
+    System.exit(result.wasSuccessful() ? 0 : 1);
   }
 }
