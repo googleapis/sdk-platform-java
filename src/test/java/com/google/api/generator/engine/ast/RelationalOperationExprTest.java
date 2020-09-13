@@ -125,10 +125,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * =================== Equality Operators: LHS data type is numeric boxed type
-   * ======================
-   */
+  /** =============== Equality Operators: LHS data type is numeric boxed type ================ */
   @Test
   public void equalToOperationExpr_validBoxedWithMatchedBoxedType() {
     // LHS: Boxed type, RHS: Matched Boxed.
@@ -218,10 +215,7 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /**
-   * ==================== Equality Operators: LHS data type is boolean or its boxed type
-   * =======================
-   */
+  /** ============= Equality Operators: LHS data type is boolean or its boxed type ============== */
   @Test
   public void equalToOperationExpr_validBooleanType() {
     // LHS: boolean type, RHS: boolean Type.
