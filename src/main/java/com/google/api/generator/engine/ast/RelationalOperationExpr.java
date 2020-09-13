@@ -116,7 +116,7 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
       // If lhs expression type is new Object or null, the rhs type should be a reference type or
       // null or boxed type;
-      if (TypeNode.OBJECT.equals(lhsType) || TypeNode.NULL.equals(lhsType)) {
+      if (lhsType.equals(TypeNode.OBJECT) || lhsType.equals(TypeNode.NULL)) {
         return TypeNode.isReferenceType(rhsType)
             || rhsType.equals(TypeNode.OBJECT)
             || rhsType.equals(TypeNode.NULL)
