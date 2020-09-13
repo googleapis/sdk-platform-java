@@ -35,7 +35,7 @@ below are temporary and better ones will be coming.
 4.  Build this plugin.
 
     ```sh
-    bazel build :protoc-gen-gapic-java
+    bazel build :protoc-gen-java_gapic
     ```
 
 5.  Run the plugin. At this stage, it will not do anything except write
@@ -43,7 +43,7 @@ below are temporary and better ones will be coming.
 
     ```
     protoc -I=${PROTOC_INCLUDE_DIR} -I=${GOOGLEAPIS_DIR} -I=${YOUR_PROTO_DIR} \
-        --plugin=bazel-bin/protoc-gen-gapic-java ~/dev/googleapis/google/showcase/v1test/*.proto \
+        --plugin=bazel-bin/protoc-gen-java_gapic ~/dev/googleapis/google/showcase/v1test/*.proto \
         --gapic-java_out=/tmp/test
     ```
 

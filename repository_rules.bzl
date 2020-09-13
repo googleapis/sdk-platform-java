@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-def _com_google_api_codegen_properties_impl(ctx):
+def _com_google_api_generator_properties_impl(ctx):
     props_path = ctx.path(ctx.attr.file)
     result = ctx.execute(["cat", props_path])
 
@@ -36,13 +36,12 @@ PROPERTIES = {props_as_map}
      """.format(
         properties_file = props_name,
         props_as_map = str(props_as_map),
-     )
+    )
     ctx.file("BUILD.bazel", "")
     ctx.file("%s.bzl" % props_name, dependencies_bzl)
 
-
-com_google_api_codegen_properties = repository_rule(
-    implementation = _com_google_api_codegen_properties_impl,
+com_google_api_generator_properties = repository_rule(
+    implementation = _com_google_api_generator_properties_impl,
     attrs = {
         "file": attr.label(),
     },

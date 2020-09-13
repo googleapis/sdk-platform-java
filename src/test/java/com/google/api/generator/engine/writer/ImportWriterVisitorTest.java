@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -968,6 +969,25 @@ public class ImportWriterVisitorTest {
             createLines(2),
             "import com.google.api.generator.engine.SomeClass;\n",
             "import com.google.api.generator.engine.ast.Expr;\n\n"));
+  }
+  
+  @Test
+  public void writeLogicalOperationExprImports() {
+    MethodInvocationExpr lhsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(
+                TypeNode.withReference(ConcreteReference.withClazz(UnaryOperationExpr.class)))
+            .setMethodName("isValid")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+    VariableExpr rhsExpr =
+        VariableExpr.builder().setVariable(createVariable("isGood", TypeNode.BOOLEAN)).build();
+    LogicalOperationExpr logicalOperationExpr =
+        LogicalOperationExpr.logicalAndWithExprs(lhsExpr, rhsExpr);
+    logicalOperationExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        "import com.google.api.generator.engine.ast.UnaryOperationExpr;\n\n");
   }
 
   private static TypeNode createType(Class clazz) {
