@@ -2097,7 +2097,7 @@ public class JavaWriterVisitorTest {
     notEqualToOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("SomeClass.getName() != null");
   }
-  
+
   @Test
   public void writeLogicalOperationExpr_logicalAnd() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));

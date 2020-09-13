@@ -970,7 +970,7 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.SomeClass;\n",
             "import com.google.api.generator.engine.ast.Expr;\n\n"));
   }
-  
+
   @Test
   public void writeLogicalOperationExprImports() {
     MethodInvocationExpr lhsExpr =

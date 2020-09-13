@@ -419,7 +419,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     space();
     relationalOperationExpr.rhsExpr().accept(this);
   }
-  
+
   @Override
   public void visit(LogicalOperationExpr logicalOperationExpr) {
     logicalOperationExpr.lhsExpr().accept(this);
