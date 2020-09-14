@@ -72,6 +72,14 @@ public class ExprStatementTest {
   }
 
   @Test
+  public void validExprStatement_unaryOperation() {
+    assertValidExprStatement(
+        UnaryOperationExpr.postfixIncrementWithExpr(
+            VariableExpr.withVariable(
+                Variable.builder().setType(TypeNode.INT).setName("i").build())));
+  }
+
+  @Test
   public void invalidExprStatement_variable() {
     Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();
@@ -83,6 +91,15 @@ public class ExprStatementTest {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     assertInvalidExprStatement(valueExpr);
+  }
+
+  @Test
+  public void invalidExprStatement_logicalNotUnaryOperator() {
+    Expr logicalNotExpr =
+        UnaryOperationExpr.logicalNotWithExpr(
+            VariableExpr.withVariable(
+                Variable.builder().setType(TypeNode.BOOLEAN).setName("foo").build()));
+    assertInvalidExprStatement(logicalNotExpr);
   }
 
   private static void assertInvalidExprStatement(Expr expr) {
