@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
@@ -2089,6 +2090,36 @@ public class JavaWriterVisitorTest {
     logicalOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("isGood || isValid()");
   }
+
+  @Test
+  public void writeAssignmentOperationExpr_multiplyAndAssignment() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("h", TypeNode.INT));
+    ValueExpr rhsExpr = ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
+    AssignmentOperationExpr assignmentOperationExpr = AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr);
+    assignmentOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("h *= 1000003");
+  }
+
+  @Test
+  public void writeAssignmentOperationExpr_bitwiseExclusiveOrAndAssignment() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("h", TypeNode.INT));
+    TypeNode objectType = TypeNode.withReference(
+        VaporReference.builder()
+            .setName("Objects")
+            .setPakkage("java.lang.Object")
+            .build());
+    MethodInvocationExpr rhsExpr = MethodInvocationExpr
+        .builder()
+        .setReturnType(TypeNode.INT)
+        .setMethodName("hashCode")
+        .setStaticReferenceType(objectType)
+        .setArguments(Arrays.asList(VariableExpr.withVariable(createVariable("fixedValue", TypeNode.OBJECT))))
+        .build();
+    AssignmentOperationExpr assignmentOperationExpr = AssignmentOperationExpr.bitwiseExclusiveOrAndAssignmentWithExprs(lhsExpr, rhsExpr);
+    assignmentOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
+  }
+
 
   private static String createLines(int numLines) {
     return new String(new char[numLines]).replace("\0", "%s");
