@@ -149,8 +149,7 @@ public abstract class TypeNode implements AstNode {
   }
 
   public static boolean isBoxedType(TypeNode type) {
-    return type.typeKind().equals(TypeKind.OBJECT)
-        && type.reference().name().matches("Boolean|Character|Integer|Float|Double|Short|Long");
+    return isReferenceType(type) && BOXED_TYPE_MAP.containsValue(type);
   }
 
   public boolean isPrimitiveType() {
