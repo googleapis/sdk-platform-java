@@ -102,7 +102,7 @@ public class ExprStatementTest {
     assertInvalidExprStatement_(logicalNotExpr);
   }
 
-  private static void assertInvalidExprStatement_(Expr expr) {
+  private static void assertInvalidExprStatement(Expr expr) {
     assertThrows(
         IllegalStateException.class,
         () -> {
