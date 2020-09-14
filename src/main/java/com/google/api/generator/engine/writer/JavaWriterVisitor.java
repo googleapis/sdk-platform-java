@@ -945,9 +945,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       case UNARY_LOGICAL_NOT:
         buffer.append(OPERATOR_LOGICAL_NOT);
         break;
-      case ARITHMETIC_ADDITION:
-        buffer.append(OPERATOR_ADDITION);
-        break;
       case LOGICAL_AND:
         buffer.append(OPERATOR_LOGICAL_AND);
         break;

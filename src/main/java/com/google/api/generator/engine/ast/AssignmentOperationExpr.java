@@ -23,6 +23,16 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
         .setLhsExpr(lhsExpr)
         .setRhsExpr(rhsExpr)
         .setOperatorKind(OperatorKind.ASSIGNMENT_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT)
+        .setType(lhsExpr.type())
+        .build();
+  }
+
+  public static AssignmentOperationExpr multiplyAndAssignmentWithExprs(Expr lhsExpr, Expr rhsExpr) {
+    return builder()
+        .setLhsExpr(lhsExpr)
+        .setRhsExpr(rhsExpr)
+        .setOperatorKind(OperatorKind.ASSIGNMENT_MULTIPLY_AND_ASSIGNMENT)
+        .setType(lhsExpr.type())
         .build();
   }
 
@@ -32,11 +42,6 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
 
   @AutoValue.Builder
   abstract static class Builder {
-    long a = (long) 129840234;
-    char c = 'r';
-    byte e = (byte) 232341;
-    double f = 23.2;
-    double y = c ^= e;
     // Private setter.
     abstract Builder setLhsExpr(Expr expr);
 
