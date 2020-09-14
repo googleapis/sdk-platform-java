@@ -99,7 +99,7 @@ public class ExprStatementTest {
         UnaryOperationExpr.logicalNotWithExpr(
             VariableExpr.withVariable(
                 Variable.builder().setType(TypeNode.BOOLEAN).setName("foo").build()));
-    assertInvalidExprStatement_(logicalNotExpr);
+    assertInvalidExprStatement(logicalNotExpr);
   }
 
   private static void assertInvalidExprStatement(Expr expr) {
