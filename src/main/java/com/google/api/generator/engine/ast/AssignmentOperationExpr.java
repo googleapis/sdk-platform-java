@@ -1,6 +1,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
 @AutoValue
 public abstract class AssignmentOperationExpr implements OperationExpr {
@@ -65,8 +66,24 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
           String.format(
               "Assignment operator %s can not be applied to %s, %s.",
               operator, lhsExprType.toString(), rhsExprType.toString());
-      // TODO: valid type
+      if (operator.equals(OperatorKind.ASSIGNMENT_MULTIPLY_AND_ASSIGNMENT)) {
+        Preconditions.checkState(
+            isValidMultiplyAndAssignmentType(lhsExprType, rhsExprType), errorMsg);
+      }
       return assignmentOperationExpr;
+    }
+
+    private boolean isValidMultiplyAndAssignmentType(TypeNode lhsType, TypeNode rhsType) {
+      if (lhsType.equals(rhsType)) {
+        return true;
+      }
+      if (TypeNode.isNumericType(lhsType)) {
+        return TypeNode.isNumericType(rhsType);
+      }
+      if (TypeNode.isBoxedType(lhsType)) {
+        return rhsType.equals(TypeNode.NULL);
+      }
+      return false;
     }
   }
 }

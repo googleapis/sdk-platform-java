@@ -1,5 +1,7 @@
 package com.google.api.generator.engine.ast;
 
+import static org.junit.Assert.assertThrows;
+
 import org.junit.Test;
 
 public class AssignmentOperationExprTest {
@@ -7,20 +9,21 @@ public class AssignmentOperationExprTest {
   /** =========== Multiply And Assignment Operators: LHS data type is numeric ================= */
   @Test
   public void multiplyAndAssignmentOperationExpr_validNumericMatched() {
-    int a = 1;
-    double b = 2;
-    char c = 'e';
-    float f = 5.99f;
-    short s = 5000;
-    long l = 15000000000L;
-    boolean bool = false;
-    Integer ao = new Integer(4);
-    Float fo = new Float(f);
+    // int a = 1;
+    // double b = 2;
+    // char c = 'e';
+    // float f = 5.99f;
+    // short s = 5000;
+    // long l = 15000000000L;
+    // boolean bool = false;
+    // Integer ao = new Integer(4);
+    // Float fo = new Float(f);
     Boolean bo = new Boolean(false);
-    int[] ar = new int[3];
-    String word = "avc";
-    boolean we = a < word;
+    // int[] ar = new int[3];
+    // String word = "avc";
+    // boolean we = a < word;
     // No need swap test case.
+    // boolean c = bo < new Object();
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -95,12 +98,11 @@ public class AssignmentOperationExprTest {
   }
 
   /** ==== Multiply And Assignment Operators: LHS data type is boolean and its boxed type ===== */
-
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanType() {
+  public void multiplyAndAssignmentOperationExpr_invalidBooleanWithNumericType() {
     // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanType".
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
-    VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr));
@@ -147,7 +149,7 @@ public class AssignmentOperationExprTest {
   }
   /** ======== Multiply And Assignment Operators: LHS data type is Object Type ============ */
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithNewObject() {
+  public void multiplyAndAssignmentOperationExpr_invalidNewObjectWithNumeric() {
     // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithNewObject".
     NewObjectExpr lhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -166,11 +168,9 @@ public class AssignmentOperationExprTest {
         () -> AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr));
   }
 
-
   private VariableExpr createVariableExpr(TypeNode type, String name) {
     Variable variable = Variable.builder().setName(name).setType(type).build();
     VariableExpr variableExpr = VariableExpr.withVariable(variable);
     return variableExpr;
   }
-
 }
