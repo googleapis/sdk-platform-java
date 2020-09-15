@@ -102,7 +102,9 @@ public abstract class RelationalOperationExpr implements OperationExpr {
     // operator (!=).
     private boolean isValidEqualityType(TypeNode lhsType, TypeNode rhsType) {
       // If the expression's types are matched, return true
-      if (lhsType.equals(rhsType)) return true;
+      if (lhsType.equals(rhsType)) {
+        return true;
+      }
 
       // If the expressions' type are array, the types should be array and matched, or either is
       // null type;
@@ -112,15 +114,16 @@ public abstract class RelationalOperationExpr implements OperationExpr {
 
       // If lhs expression type is numeric type (char, byte, short, int, long, double), the rhs
       // expression type should be any numeric type or any numeric boxed type
-      if (TypeNode.isNumericType(lhsType) && TypeNode.isNumericType(rhsType)) return true;
+      if (TypeNode.isNumericType(lhsType) && TypeNode.isNumericType(rhsType)) {
+        return true;
+      }
 
       // If lhs expression type is new Object or null, the rhs type should be a reference type or
       // null or boxed type;
       if (lhsType.equals(TypeNode.OBJECT) || lhsType.equals(TypeNode.NULL)) {
         return TypeNode.isReferenceType(rhsType)
             || rhsType.equals(TypeNode.OBJECT)
-            || rhsType.equals(TypeNode.NULL)
-            || TypeNode.isBoxedType(rhsType);
+            || rhsType.equals(TypeNode.NULL);
       }
 
       // If lhs expression type is Boxed type or a referenced type, rhs should be null or object,
