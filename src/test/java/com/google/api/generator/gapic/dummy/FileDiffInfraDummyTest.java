@@ -34,6 +34,9 @@ public class FileDiffInfraDummyTest {
   // created.
   //
   // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and well-tested.
+  private static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
+
   @Test
   public void simpleClass() {
     ClassDefinition classDef =
@@ -79,9 +82,6 @@ public class FileDiffInfraDummyTest {
     lineComment.accept(visitor);
     Assert.assertCodeEquals("// test strings comparison.", visitor.write());
   }
-
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
 
   private static final String APACHE_LICENSE_STRING =
       "Copyright 2020 Google LLC\n\n"
