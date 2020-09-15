@@ -16,7 +16,7 @@ genrule(
         "basic.proto",
     ],
     outs = ["basic_proto.descriptor"],
-    cmd = ("protoc --include_source_info --include_imports --descriptor_set_out=$@ $(SRCS)"),
+    cmd = "protoc --include_source_info --include_imports --descriptor_set_out=$@ $(SRCS)",
     message = "Generating proto descriptor",
 )
 
