@@ -1,5 +1,3 @@
-load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
-
 package(default_visibility = ["//visibility:public"])
 
 filegroup(

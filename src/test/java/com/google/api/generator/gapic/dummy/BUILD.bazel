@@ -1,3 +1,5 @@
+load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
+
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
@@ -15,10 +17,10 @@ java_library(
         ":dummy_files",
     ],
     deps = [
-        "@io_github_java_diff_utils//jar",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/test/java/com/google/api/generator/test/framework",
+        "@io_github_java_diff_utils//jar",
         "@junit_junit//jar",
     ],
 )
@@ -36,24 +38,22 @@ java_library(
     ],
 ) for test_name in TESTS]
 
-load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
-
 # run_single_junit
 java_binary(
     name = "run_single_junit_binary",
     srcs = [
-        "//src/test/java/com/google/api/generator/test/framework:framework_files",
         ":dummy_files",
+        "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     visibility = ["//visibility:public"],
     deps = [
-        "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar",
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/test/java/com/google/api/generator/test/framework",
+        "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
     ],
 )
 
