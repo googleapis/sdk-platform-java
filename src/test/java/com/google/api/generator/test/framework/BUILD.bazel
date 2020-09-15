@@ -17,27 +17,3 @@ java_library(
         "@junit_junit//jar",
     ],
 )
-
-# run_single_junit
-java_binary(
-    name = "run_single_junit_binary",
-    srcs = [":framework_files"],
-    jvm_flags = ["-Xmx512m"],
-    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
-    visibility = ["//visibility:public"],
-    runtime_deps = [
-        "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar",
-    ],
-    deps = [
-        ":framework",
-        "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar",
-    ],
-)
-
-run_single_JUnit(
-    name = "ComposerTest_JUnit",
-    srcs = [":framework_files"],
-    tool = "//src/test/java/com/google/api/generator/test/framework:run_single_junit_binary",
-)

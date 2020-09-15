@@ -4,3 +4,10 @@ filegroup(
     name = "goldens_files",
     srcs = glob(["*.golden"]),
 )
+
+genrule(
+  name = "copy_of_golden",
+  srcs = ["FileDiffInfraDummyTestClassWithHeader.golden"],
+  outs = ["copy_of_golden.golden"],
+  cmd = "cp $< $@",
+)
