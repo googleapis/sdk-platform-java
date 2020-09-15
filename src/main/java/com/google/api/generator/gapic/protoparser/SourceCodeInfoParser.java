@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.protoparser;
 
+import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableList;
@@ -60,72 +61,72 @@ public class SourceCodeInfoParser {
 
   /** Gets the location of a message, if available. */
   @Nullable
-  public Location getLocation(Descriptor message) {
+  public SourceCodeInfoLocation getLocation(Descriptor message) {
     FileDescriptor file = message.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(message));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(message)));
   }
 
   /** Gets the location of a field, if available. */
   @Nullable
-  public Location getLocation(FieldDescriptor field) {
+  public SourceCodeInfoLocation getLocation(FieldDescriptor field) {
     FileDescriptor file = field.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(field));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(field)));
   }
 
   /** Gets the location of a service, if available. */
   @Nullable
-  public Location getLocation(ServiceDescriptor service) {
+  public SourceCodeInfoLocation getLocation(ServiceDescriptor service) {
     FileDescriptor file = service.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(service));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(service)));
   }
 
   /** Gets the location of a method, if available. */
   @Nullable
-  public Location getLocation(MethodDescriptor method) {
+  public SourceCodeInfoLocation getLocation(MethodDescriptor method) {
     FileDescriptor file = method.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(method));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(method)));
   }
 
   /** Gets the location of an enum type, if available. */
   @Nullable
-  public Location getLocation(EnumDescriptor enumType) {
+  public SourceCodeInfoLocation getLocation(EnumDescriptor enumType) {
     FileDescriptor file = enumType.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(enumType));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(enumType)));
   }
 
   /** Gets the location of an enum value, if available. */
   @Nullable
-  public Location getLocation(EnumValueDescriptor enumValue) {
+  public SourceCodeInfoLocation getLocation(EnumValueDescriptor enumValue) {
     FileDescriptor file = enumValue.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(enumValue));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(enumValue)));
   }
 
   /** Gets the location of a oneof, if available. */
   @Nullable
-  public Location getLocation(OneofDescriptor oneof) {
+  public SourceCodeInfoLocation getLocation(OneofDescriptor oneof) {
     FileDescriptor file = oneof.getFile();
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return getLocation(file, buildPath(oneof));
+    return SourceCodeInfoLocation.create(getLocation(file, buildPath(oneof)));
   }
 
   // -----------------------------------------------------------------------------
