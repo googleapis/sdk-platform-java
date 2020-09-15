@@ -25,10 +25,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Differ {
-  private static final String LINE_BREAK = "\\r?\\n";
+  private static final String LINE_SPLITTER = "\\r?\\n";
 
   public static List<String> diff(Path goldenFilePath, String codegen) {
-    List<String> revised = Arrays.asList(codegen.split(LINE_BREAK));
+    List<String> revised = Arrays.asList(codegen.split(LINE_SPLITTER));
     List<String> original = null;
     try {
       original = Files.readAllLines(goldenFilePath);
@@ -40,8 +40,8 @@ public class Differ {
   }
 
   public static List<String> diff(String expectedStr, String actualStr) {
-    List<String> revised = Arrays.asList(actualStr.split(LINE_BREAK));
-    List<String> original = Arrays.asList(expectedStr.split(LINE_BREAK));
+    List<String> revised = Arrays.asList(actualStr.split(LINE_SPLITTER));
+    List<String> original = Arrays.asList(expectedStr.split(LINE_SPLITTER));
     return diffTwoStringLists(original, revised);
   }
 
