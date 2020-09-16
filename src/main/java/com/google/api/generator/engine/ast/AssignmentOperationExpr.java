@@ -70,20 +70,39 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
         Preconditions.checkState(
             isValidMultiplyAndAssignmentType(lhsExprType, rhsExprType), errorMsg);
       }
+      if (operator.equals(OperatorKind.ASSIGNMENT_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT)) {
+        Preconditions.checkState(
+            isValidBitwiseExclusiveOrAndAssignmentType(lhsExprType, rhsExprType), errorMsg);
+      }
       return assignmentOperationExpr;
     }
 
     private boolean isValidMultiplyAndAssignmentType(TypeNode lhsType, TypeNode rhsType) {
-      if (lhsType.equals(rhsType)) {
-        return true;
-      }
-      if (TypeNode.isNumericType(lhsType)) {
+      if (TypeNode.isNumericType(lhsType) && !TypeNode.isBoxedType(lhsType)) {
         return TypeNode.isNumericType(rhsType);
       }
-      if (TypeNode.isBoxedType(lhsType)) {
-        return rhsType.equals(TypeNode.NULL);
+      if (lhsType.equals(TypeNode.INT_OBJECT)) {
+        return TypeNode.isNumericType(rhsType)
+            && !(rhsType.equals(TypeNode.LONG)
+                || rhsType.equals(TypeNode.FLOAT)
+                || rhsType.equals(TypeNode.DOUBLE));
+      }
+      if (lhsType.equals(TypeNode.LONG_OBJECT)) {
+        return TypeNode.isNumericType(rhsType)
+            && !(rhsType.equals(TypeNode.FLOAT) || rhsType.equals(TypeNode.DOUBLE));
+      }
+      if (lhsType.equals(TypeNode.FLOAT_OBJECT)) {
+        return TypeNode.isNumericType(rhsType) && !rhsType.equals(TypeNode.DOUBLE);
+      }
+      if (lhsType.equals(TypeNode.DOUBLE_OBJECT)) {
+        return TypeNode.isNumericType(rhsType);
       }
       return false;
+    }
+
+    // TODO(summerji): Complete the type-checking for ^= and unit test.
+    private boolean isValidBitwiseExclusiveOrAndAssignmentType(TypeNode lhsType, TypeNode rhsType) {
+      return true;
     }
   }
 }
