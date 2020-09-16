@@ -1,3 +1,17 @@
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertThrows;
@@ -9,152 +23,13 @@ public class AssignmentOperationExprTest {
   /** =========== Multiply And Assignment Operators: LHS data type is numeric ================= */
   @Test
   public void multiplyAndAssignmentOperationExpr_validNumericMatched() {
-    // int a = 1;
-    // double b = 2;
-    // char c = 'e';
-    // float f = 5.99f;
-    // short s = 5000;
-    // long l = 15000000000L;
-    // boolean bool = false;
-    // byte bbb = '1';
-    // Byte bbbo = new Byte(bbb);
-    // Integer ao = new Integer(4);
-    // Float fo = new Float(f);
-    // Character co = new Character('c');
-    // Double doo = new Double(122.3);
-    // Boolean bo = new Boolean(false);
-    // Long lo = new Long(4l);
-    // Short so = new Short(s);
-    // int[] ar = new int[3];
-    // String word = "avc";
-    // a *= b;
-    // a *= c;
-    // a *= f;
-    // a *= s;
-    // a *= fo;
-    // a *= co;
-    // a *= doo;
-    // a *= ao;
-    // a *= bbb;
-    // a *= bbbo;
-    // // a *= bool; invalid
-    // l *= a;
-    // l *= b;
-    // l *= c;
-    // l *= f;
-    // l *= s;
-    // l *= ao;
-    // l *= co;
-    // l *= fo;
-    // l *= doo;
-    // s *= a;
-    // s *= l;
-    // s *= f;
-    // s *= c;
-    // s *= b;
-    // ao *= a;
-    // ao *= s;
-    // ao *= f;
-    // ao *= b;
-    // ao *= c;
-    // ao *= l;
-    // ao *= bbb;
-    // ao *= co;
-    // ao *= fo;
-    // ao *= doo;
-    // ao *= lo;
-    // ao *= bbbo;
-    // doo *= a;
-    // doo *= b;
-    // doo *= c;
-    // doo *= f;
-    // doo *= s;
-    // doo *= l;
-    // doo *= bbb;
-    // doo *= ao;
-    // doo *= fo;
-    // doo *= co;
-    // doo *= bbbo;
-    // co *= a;
-    // co *= b;
-    // co *= f;
-    // co *= s;
-    // co *= bbb;
-    // co *= l;
-    // co *= c;
-    // co *= ao;
-    // co *= bo;
-    // co *= fo;
-    // lo *= ao;
-    // lo *= a;
-    // lo *= l;
-    // lo *= c;
-    // lo *= s;
-    // lo *= bbb;
-    // lo *= doo;
-    // lo *= fo;
-    // lo *= f;
-    // lo *= b;
-    // lo *= co;
-    // lo *= bbbo;
-    // lo *= lo;
-    // lo *= co;
-    // lo *= so;
-    // so *= a;
-    // so *= b;
-    // so *= f;
-    // so *= l;
-    // so *= so;
-    // so *= s;
-    // so *= bbb;
-    // so *= ao;
-    // so *= fo;
-    // so *= doo;
-    // so *= co;
-    // so *= ao;
-    // bbbo *= a;
-    // bbbo *= f;
-    // bbbo *= b;
-    // bbbo *= c;
-    // bbbo *= s;
-    // bbbo *= l;
-    // bbbo *= ao;
-    // bbbo *= fo;
-    // bbbo *= doo;
-    // fo *= ao;
-    // fo *= fo;
-    // fo *= co;
-    // fo *= a;
-    // fo *= a;
-    // fo *= fo;
-    // fo *= c;
-    // fo *= co;
-    // fo *= bbbo;
-    // fo *= b;
-    // fo *= lo;
-    // fo *= doo;
-    // fo *= lo;
-    // fo *= co;
-    // fo *= so;
-    // fo *= a;
-    // doo *= a;
-    // doo *= b;
-    // doo *= f;
-    // doo *= s;
-    // doo *= c;
-    // doo *= l;
-    // doo *= bbb;
-    // doo *= ao;
-    // doo *= fo;
-    // doo *= so;
-    // doo *= bbbo;
-    // boolean wpeo = (fo *= co) instanceof Float;
     // No need swap test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
+
 
   @Test
   public void multiplyAndAssignmentOperationExpr_validNumericUnmatched() {
