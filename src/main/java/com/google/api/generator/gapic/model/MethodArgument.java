@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 @AutoValue
-public abstract class MethodArgument {
+public abstract class MethodArgument implements Comparable<MethodArgument> {
   public abstract String name();
 
   public abstract TypeNode type();
@@ -31,6 +31,15 @@ public abstract class MethodArgument {
 
   // Returns true if this is a resource name helper tyep.
   public abstract boolean isResourceNameHelper();
+
+  @Override
+  public int compareTo(MethodArgument other) {
+    int compareVal = type().compareTo(other.type());
+    if (compareVal == 0) {
+      compareVal = name().compareTo(other.name());
+    }
+    return compareVal;
+  }
 
   public static Builder builder() {
     return new AutoValue_MethodArgument.Builder()
