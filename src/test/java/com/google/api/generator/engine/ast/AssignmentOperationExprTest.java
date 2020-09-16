@@ -61,6 +61,7 @@ public class AssignmentOperationExprTest {
     // No exception thrown, so we succeeded.
   }
 
+
   @Test
   public void multiplyAndAssignmentOperationExpr_validNumericUnmatched() {
     // No need swap test case.
