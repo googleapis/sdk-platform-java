@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class MethodArgument {
@@ -31,6 +32,13 @@ public abstract class MethodArgument {
 
   // Returns true if this is a resource name helper tyep.
   public abstract boolean isResourceNameHelper();
+
+  @Nullable
+  public abstract String description();
+
+  public boolean hasDescription() {
+    return description() != null;
+  }
 
   public static Builder builder() {
     return new AutoValue_MethodArgument.Builder()
@@ -47,6 +55,8 @@ public abstract class MethodArgument {
     public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
 
     public abstract Builder setIsResourceNameHelper(boolean isResourceNameHelper);
+
+    public abstract Builder setDescription(String description);
 
     public abstract MethodArgument build();
   }
