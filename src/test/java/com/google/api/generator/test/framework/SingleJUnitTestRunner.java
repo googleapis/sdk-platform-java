@@ -27,17 +27,11 @@ public class SingleJUnitTestRunner {
     try {
       clazz = Class.forName(className);
     } catch (ClassNotFoundException e) {
-      System.out.println("Class not found " + e);
       System.exit(1);
     }
-    System.out.println("class created : " + clazz);
     Request request = Request.aClass(clazz);
-    System.out.println("request created : " + request);
     Result result = new JUnitCore().run(request);
-    System.out.println("Hey test successful ? " + result.wasSuccessful());
-    System.out.println("Test result " + result.getFailures());
     System.setProperty(className + ".update_golden", "false");
-    System.out.println("property reset : " + System.getProperty(className + ".update_golden"));
     System.exit(result.wasSuccessful() ? 0 : 1);
   }
 }

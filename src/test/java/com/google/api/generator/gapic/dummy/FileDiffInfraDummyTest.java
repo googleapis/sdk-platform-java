@@ -21,10 +21,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
+import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -43,7 +40,8 @@ public class FileDiffInfraDummyTest {
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
   private static final String TEST_CLASS_NAME =
       "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest";
-  private static final boolean UPDATE_GOLDEN = getProperty();
+  private static final boolean UPDATE_GOLDEN =
+      Utils.getProperty(TEST_CLASS_NAME + ".update_golden");
 
   @Test
   public void simpleClass() {
@@ -63,7 +61,7 @@ public class FileDiffInfraDummyTest {
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
     System.out.println("update golden? " + UPDATE_GOLDEN);
-    updateGoldenFile(goldeFilePath, visitor.write());
+    Utils.updateGoldenFile(goldeFilePath, visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -83,7 +81,8 @@ public class FileDiffInfraDummyTest {
     classDef.accept(visitor);
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
-    updateGoldenFile(goldeFilePath, visitor.write());
+    System.out.println("update golden? " + UPDATE_GOLDEN);
+    Utils.updateGoldenFile(goldeFilePath, visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -98,9 +97,7 @@ public class FileDiffInfraDummyTest {
   }
 
   private static boolean getProperty() {
-    // System.setProperty(TEST_CLASS_NAME + ".update_golden", "true");
     String property = System.getProperty(TEST_CLASS_NAME + ".update_golden");
-    System.out.println("property: " + property);
     if (property != null) {
       return property.equals("true");
     }
@@ -118,23 +115,4 @@ public class FileDiffInfraDummyTest {
           + "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
           + "See the License for the specific language governing permissions and\n"
           + "limitations under the License.";
-
-  private static void updateGoldenFile(Path goldenFilePath, String codegen) {
-    System.out.println("updating golden file: " + goldenFilePath.toString());
-    File goldenFile = goldenFilePath.toFile();
-    FileWriter myWriter = null;
-    try {
-      if (Files.exists(goldenFilePath.toAbsolutePath())) {
-        System.out.println("golden file exists !");
-        goldenFile.delete();
-      }
-      goldenFile.createNewFile();
-      myWriter = new FileWriter(goldenFile, false);
-      myWriter.write(codegen);
-      myWriter.flush();
-      myWriter.close();
-    } catch (IOException e) {
-      System.out.println("A File creation error occurred." + e);
-    }
-  }
 }
