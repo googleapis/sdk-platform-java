@@ -51,9 +51,9 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Path goldeFilePath =
+    Path goldenFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
-    Assert.assertCodeEquals(goldeFilePath, visitor.write());
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
@@ -69,9 +69,9 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Path goldeFilePath =
+    Path goldenFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
-    Assert.assertCodeEquals(goldeFilePath, visitor.write());
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   // Add a simple test for two strings comparison.
