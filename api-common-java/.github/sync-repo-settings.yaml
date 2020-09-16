@@ -1,0 +1,23 @@
+rebaseMergeAllowed: true
+squashMergeAllowed: true
+mergeCommitAllowed: false
+branchProtectionRules:
+- pattern: master
+  isAdminEnforced: true
+  requiredStatusCheckContexts:
+    - 'continuous-integration/travis-ci'
+    - 'codecov/patch'
+    - 'codecov/project'
+    - 'cla/google'
+  requiredApprovingReviewCount: 1
+  requiresCodeOwnerReviews: true
+  requiresStrictStatusChecks: true
+permissionRules:
+  - team: Googlers
+    permission: pull
+  - team: yoshi-java
+    permission: push
+  - team: yoshi-java-admins
+    permission: admin
+  - team: yoshi-admins
+    permission: admin
