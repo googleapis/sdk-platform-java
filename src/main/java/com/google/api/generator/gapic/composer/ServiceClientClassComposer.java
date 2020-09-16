@@ -565,6 +565,8 @@ public class ServiceClientClassComposer implements ClassComposer {
 
       javaMethods.add(
           MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  ServiceClientCommentComposer.createRpcMethodHeaderComment(method, signature))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setReturnType(methodOutputType)
@@ -595,6 +597,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     javaMethods.add(
         MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setReturnType(methodOutputType)
@@ -608,6 +612,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static MethodDefinition createLroAsyncMethod(
       String serviceName, Method method, Map<String, TypeNode> types) {
+    // TODO(miraleung): Create variants as well.
     Preconditions.checkState(
         method.hasLro(), String.format("Method %s does not have an LRO", method.name()));
     String methodName = JavaStyle.toLowerCamelCase(method.name());
@@ -642,6 +647,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setReturnType(returnType)
@@ -713,6 +720,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
+        .setHeaderCommentStatements(
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)
