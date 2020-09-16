@@ -1,5 +1,3 @@
-load("//:rules_bazel/java/java_diff_test.bzl", "run_single_JUnit")
-
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
@@ -45,6 +43,8 @@ java_binary(
         ":dummy_files",
         "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
+    data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
+    args = ["com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest", "true"],
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
     visibility = ["//visibility:public"],
@@ -54,11 +54,7 @@ java_binary(
         "//src/test/java/com/google/api/generator/test/framework",
         "@io_github_java_diff_utils//jar",
         "@junit_junit//jar",
+        "@org_hamcrest_hamcrest_core//jar",
     ],
 )
 
-run_single_JUnit(
-    name = "DummyTest_JUnit",
-    srcs = ["//src/test/java/com/google/api/generator/test/framework:framework_files"],
-    tool = "//src/test/java/com/google/api/generator/gapic/dummy:run_single_junit_binary",
-)
