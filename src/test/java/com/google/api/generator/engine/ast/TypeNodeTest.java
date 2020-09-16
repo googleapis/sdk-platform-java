@@ -136,6 +136,7 @@ public class TypeNodeTest {
 
     // Reference and reference. Sorted alphabetically by package.
     assertThat(TypeNode.BOOLEAN_OBJECT.compareTo(TypeNode.INT_OBJECT)).isLessThan(0);
+    assertThat(TypeNode.BOOLEAN_OBJECT.compareTo(TypeNode.STRING)).isLessThan(0);
     assertThat(
             TypeNode.BOOLEAN_OBJECT.compareTo(
                 TypeNode.withReference(ConcreteReference.withClazz(Arrays.class))))

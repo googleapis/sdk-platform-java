@@ -110,13 +110,6 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
 
     // Both are reference types.
     // TODO(miraleung): Replace this with a proper reference Comaparator.
-    System.out.println(
-        String.format(
-            "DEL: %s comapre to %s: %d",
-            reference().fullName(),
-            other.reference().fullName(),
-            reference().fullName().compareTo(other.reference().fullName())));
-
     return reference().fullName().compareTo(other.reference().fullName());
   }
 
