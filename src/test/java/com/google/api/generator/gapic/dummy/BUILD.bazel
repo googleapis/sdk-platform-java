@@ -1,3 +1,5 @@
+load("//:rules_bazel/java/java_diff_test.bzl", "update_golden")
+
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
@@ -58,17 +60,15 @@ java_binary(
     ],
 )
 
-load("//:rules_bazel/java/java_diff_test.bzl", "update_golden")
-
 TEST_CLASS_NAME = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"
 
 update_golden(
     name = "DummyTest_JUnit",
-    test_class_name = TEST_CLASS_NAME,
     srcs = [
-        "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",
         ":dummy_files",
-        "//src/test/java/com/google/api/generator/test/framework:framework_files"
+        "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",
+        "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
-    golden_files = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"]
+    golden_files = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
+    test_class_name = TEST_CLASS_NAME,
 )
