@@ -47,7 +47,6 @@ def _overwrite_golden_impl(ctx):
     script_content = """\
     #!/bin/bash
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
-    echo {unit_test_results}
     unzip -ao {unit_test_results} -d src/test/java
     """.format(
         unit_test_results = ctx.file.unit_test_results.path,

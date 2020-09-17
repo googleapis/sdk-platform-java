@@ -69,5 +69,5 @@ update_golden(
         "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
     test_class_name = TEST_CLASS_NAME,
-    test_runner = "//src/test/java/com/google/api/generator/gapic/dummy:junit_runner_binary"
+    test_runner = "//src/test/java/com/google/api/generator/gapic/dummy:junit_runner_binary",
 )
