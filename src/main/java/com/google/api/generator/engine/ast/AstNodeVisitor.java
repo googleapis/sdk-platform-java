@@ -55,6 +55,8 @@ public interface AstNodeVisitor {
 
   public void visit(UnaryOperationExpr unaryOperationExpr);
 
+  public void visit(RelationalOperationExpr relationalOperationExpr);
+
   public void visit(LogicalOperationExpr logicalOperationExpr);
 
   /** =============================== COMMENT =============================== */
