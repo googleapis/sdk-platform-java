@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class MethodArgument {
+public abstract class MethodArgument implements Comparable<MethodArgument> {
   public abstract String name();
 
   public abstract TypeNode type();
@@ -38,6 +38,15 @@ public abstract class MethodArgument {
 
   public boolean hasDescription() {
     return description() != null;
+  }
+
+  @Override
+  public int compareTo(MethodArgument other) {
+    int compareVal = type().compareTo(other.type());
+    if (compareVal == 0) {
+      compareVal = name().compareTo(other.name());
+    }
+    return compareVal;
   }
 
   public static Builder builder() {
