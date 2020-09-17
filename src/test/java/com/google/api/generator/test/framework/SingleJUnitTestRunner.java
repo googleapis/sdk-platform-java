@@ -21,8 +21,6 @@ import org.junit.runner.Result;
 public class SingleJUnitTestRunner {
   public static void main(String... args) {
     String className = args[0];
-    boolean update_golden = args[1].equals("true");
-    System.setProperty(className + ".update_golden", "true");
     Class clazz = null;
     try {
       clazz = Class.forName(className);
@@ -31,7 +29,12 @@ public class SingleJUnitTestRunner {
     }
     Request request = Request.aClass(clazz);
     Result result = new JUnitCore().run(request);
-    System.setProperty(className + ".update_golden", "false");
-    System.exit(result.wasSuccessful() ? 0 : 1);
+    if (result.wasSuccessful()) {
+      System.out.println("\n \n SUCCESS!!!!! \n \n");
+    } else {
+      System.out.println("Tests result: " + result);
+
+      System.out.println("Tests have failures: " + result.getFailures());
+    }
   }
 }

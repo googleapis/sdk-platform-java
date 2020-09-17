@@ -1,20 +1,36 @@
-def _test_srcjar_impl(ctx):
-    print("=========== label name:")
-    print(ctx.attr.test_class_name)
+def _run_unit_impl(ctx):
     test_class_name = ctx.attr.test_class_name
-    arguments = []
+    arguments = [test_class_name]
     inputs = ctx.files.srcs
-    attr = ctx.attr 
+    output = ctx.outputs.output
     test_runner = ctx.executable.test_runner
-    ctx.actions.run(
+    golden_files = ctx.files.golden_files
+    print(golden_files)
+
+    command = """
+    mkdir local_tmp &&
+    echo '\n \n \n hahahhaha \n \n \n' >> {output} &&
+    less {output} &&
+    ls &&
+    ls local_tmp &&
+    TEST_CLI_HOME="$(pwd)/local_tmp" \
+    {test_runner_path} $@ &&
+    ls local_tmp
+        """.format(
+            test_runner_path = test_runner.path,
+            output=output.path,
+            golden_files = golden_files,
+        )
+    print(command)
+    ctx.actions.run_shell(
         inputs = inputs,
-        outputs = [ctx.outputs.output],
-        arguments = arguments + ["%s" % test_class_name] + ["true"],
-        progress_message = "%s: `%s %s`" % (ctx.label, test_runner.path, " ".join(arguments)),
-        executable = test_runner,
+        outputs = [output],
+        arguments = arguments,
+        tools = [test_runner],
+        command = command,
     )
 
-test_srcjar = rule(
+run_junit = rule(
     attrs = {
         "test_class_name": attr.string(mandatory=True),
         "srcs": attr.label_list(
@@ -26,17 +42,19 @@ test_srcjar = rule(
             executable = True,
             cfg = "host",
         ),
-        "output_suffix": attr.string(mandatory = False, default = ".testoutput.zip"),
+        "output_suffix": attr.string(mandatory = False, default = ".testoutput.txt"),
+        "golden_files": attr.label_list(mandatory =True, allow_files = True),
     },
     outputs = {
         "output": "%{name}%{output_suffix}",
     },
-    implementation = _test_srcjar_impl,  
+    implementation = _run_unit_impl,  
 )
 
-def run_single_junit(name, test_class_name, srcs):
-    test_srcjar(
+def update_golden(name, test_class_name, srcs, golden_files):
+    run_junit(
         name = name,
         test_class_name = test_class_name,
         srcs = srcs,
+        golden_files = golden_files,
     )

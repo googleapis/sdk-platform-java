@@ -38,10 +38,6 @@ public class FileDiffInfraDummyTest {
 
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
-  private static final String TEST_CLASS_NAME =
-      "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest";
-  private static final boolean UPDATE_GOLDEN =
-      Utils.getProperty(TEST_CLASS_NAME + ".update_golden");
 
   @Test
   public void simpleClass() {
@@ -58,10 +54,9 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
+    Utils.saveToFile("FileDiffInfraDummyTestSimpleClass.golden", visitor.write());
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
-    System.out.println("update golden? " + UPDATE_GOLDEN);
-    Utils.updateGoldenFile(goldeFilePath, visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -79,10 +74,11 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
+    // save the generated code to a file.
+    Utils.saveToFile("FileDiffInfraDummyTestClassWithHeader.golden", visitor.write());
+    // update the goldens if the system flag `test_class_name.update_golden` is true.
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
-    System.out.println("update golden? " + UPDATE_GOLDEN);
-    Utils.updateGoldenFile(goldeFilePath, visitor.write());
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
@@ -94,14 +90,6 @@ public class FileDiffInfraDummyTest {
     LineComment lineComment = LineComment.withComment("test strings comparison.");
     lineComment.accept(visitor);
     Assert.assertCodeEquals("// test strings comparison.", visitor.write());
-  }
-
-  private static boolean getProperty() {
-    String property = System.getProperty(TEST_CLASS_NAME + ".update_golden");
-    if (property != null) {
-      return property.equals("true");
-    }
-    return false;
   }
 
   private static final String APACHE_LICENSE_STRING =

@@ -19,15 +19,41 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Utils {
 
-  public static boolean getProperty(String key) {
-    String property = System.getProperty(key);
-    if (property != null) {
-      return property.equals("true");
+  public static void saveToFile(String fileName, String codegen) {
+    String TEST_UNDECLARED_OUTPUTS_DIR = System.getenv("TEST_CLI_HOME");
+    // Map<String, String> env = System.getenv();
+    // // Java 8
+    // //env.forEach((k, v) -> System.out.println(k + ":" + v));
+
+    // // Classic way to loop a map
+    // for (Map.Entry<String, String> entry : env.entrySet()) {
+    //     System.out.println(entry.getKey() + " : " + entry.getValue());
+    // }
+
+    // Path testOutputPath = Paths.get(TEST_UNDECLARED_OUTPUTS_DIR, fileName);
+    System.out.println(
+        "TEST_UNDECLARED_OUTPUTS_DIR value: it's changing! " + TEST_UNDECLARED_OUTPUTS_DIR);
+    Path testOutputPath = Paths.get(TEST_UNDECLARED_OUTPUTS_DIR, fileName);
+    System.out.println("testOutputPath: " + testOutputPath.toAbsolutePath());
+    try {
+      File createdFile = testOutputPath.toFile();
+      if (createdFile.createNewFile()) {
+        System.out.println("File created: " + createdFile.getName());
+      } else {
+        System.out.println("File did not get created :(");
+      }
+      FileWriter myWriter = new FileWriter(createdFile);
+      myWriter.write(codegen);
+      myWriter.flush();
+      myWriter.close();
+    } catch (IOException e) {
+      System.out.println("Error occured when saving codegen to file" + fileName);
     }
-    return false;
+    System.out.println("Saved to file!");
   }
 
   public static void updateGoldenFile(Path goldenFilePath, String codegen) {

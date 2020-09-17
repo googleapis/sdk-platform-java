@@ -43,10 +43,7 @@ java_binary(
         ":dummy_files",
         "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
-    args = [
-        "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest",
-        "true",
-    ],
+    args = ["com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"],
     data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
@@ -59,4 +56,19 @@ java_binary(
         "@junit_junit//jar",
         "@org_hamcrest_hamcrest_core//jar",
     ],
+)
+
+load("//:rules_bazel/java/java_diff_test.bzl", "update_golden")
+
+TEST_CLASS_NAME = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"
+
+update_golden(
+    name = "DummyTest_JUnit",
+    test_class_name = TEST_CLASS_NAME,
+    srcs = [
+        "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",
+        ":dummy_files",
+        "//src/test/java/com/google/api/generator/test/framework:framework_files"
+    ],
+    golden_files = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"]
 )
