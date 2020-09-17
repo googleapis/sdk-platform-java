@@ -5,7 +5,9 @@ def _run_unit_impl(ctx):
     output = ctx.outputs.output
     test_runner = ctx.executable.test_runner
     golden_files = ctx.files.golden_files
-    print(golden_files)
+    golden_file_path = []
+    for f in golden_files:
+        golden_file_path.append(f.path)
 
     command = """
     mkdir local_tmp &&
@@ -16,12 +18,13 @@ def _run_unit_impl(ctx):
     TEST_CLI_HOME="$(pwd)/local_tmp" \
     {test_runner_path} $@ &&
     ls local_tmp
+    echo {golden_file_path}
         """.format(
             test_runner_path = test_runner.path,
             output=output.path,
-            golden_files = golden_files,
+            golden_file_path = golden_file_path[0],
         )
-    print(command)
+
     ctx.actions.run_shell(
         inputs = inputs,
         outputs = [output],
