@@ -32,8 +32,6 @@ public class SingleJUnitTestRunner {
     if (result.wasSuccessful()) {
       System.out.println("\n \n SUCCESS!!!!! \n \n");
     } else {
-      System.out.println("Tests result: " + result);
-
       System.out.println("Tests have failures: " + result.getFailures());
     }
   }

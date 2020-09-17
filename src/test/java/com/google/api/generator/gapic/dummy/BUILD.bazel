@@ -40,12 +40,11 @@ java_library(
 
 # run_single_junit
 java_binary(
-    name = "run_single_junit_binary",
+    name = "junit_runner_binary",
     srcs = [
         ":dummy_files",
         "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
-    args = ["com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"],
     data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
     jvm_flags = ["-Xmx512m"],
     main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
@@ -63,12 +62,12 @@ java_binary(
 TEST_CLASS_NAME = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"
 
 update_golden(
-    name = "DummyTest_JUnit",
+    name = "FileDiffInfraDummyTest.update",
     srcs = [
         ":dummy_files",
         "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
-    golden_files = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
     test_class_name = TEST_CLASS_NAME,
+    test_runner = "//src/test/java/com/google/api/generator/gapic/dummy:junit_runner_binary"
 )

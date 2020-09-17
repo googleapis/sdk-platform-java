@@ -54,7 +54,10 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Utils.saveToFile("FileDiffInfraDummyTestSimpleClass.golden", visitor.write());
+    Utils.saveToFile(
+        "com/google/api/generator/gapic/dummy/goldens/",
+        "FileDiffInfraDummyTestSimpleClass.golden",
+        visitor.write());
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
@@ -75,7 +78,10 @@ public class FileDiffInfraDummyTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
     // save the generated code to a file.
-    Utils.saveToFile("FileDiffInfraDummyTestClassWithHeader.golden", visitor.write());
+    Utils.saveToFile(
+        "com/google/api/generator/gapic/dummy/goldens/",
+        "FileDiffInfraDummyTestClassWithHeader.golden",
+        visitor.write());
     // update the goldens if the system flag `test_class_name.update_golden` is true.
     Path goldeFilePath =
         Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
