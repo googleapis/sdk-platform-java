@@ -53,14 +53,13 @@ public abstract class RelationalOperationExpr implements OperationExpr {
         .build();
   }
 
-  // TODO(summerji): Add convenience wrapper lessThanWithExprs
-  // public static RelationalOperationExpr lessThanWithExprs(Expr lhsExpr, Expr rhsExpr) {
-  //   return builder()
-  //       .setLhsExpr(lhsExpr)
-  //       .setRhsExpr(rhsExpr)
-  //       .setOperatorKind(OperatorKind.RELATIONAL_LESS_THAN)
-  //       .build();
-  // }
+  public static RelationalOperationExpr lessThanWithExprs(Expr lhsExpr, Expr rhsExpr) {
+    return builder()
+        .setLhsExpr(lhsExpr)
+        .setRhsExpr(rhsExpr)
+        .setOperatorKind(OperatorKind.RELATIONAL_LESS_THAN)
+        .build();
+  }
 
   private static Builder builder() {
     return new AutoValue_RelationalOperationExpr.Builder();
@@ -93,6 +92,10 @@ public abstract class RelationalOperationExpr implements OperationExpr {
       if (operator.equals(OperatorKind.RELATIONAL_EQUAL_TO)
           || operator.equals(OperatorKind.RELATIONAL_NOT_EQUAL_TO)) {
         Preconditions.checkState(isValidEqualityType(lhsExprType, rhsExprType), errorMsg);
+      }
+
+      if (operator.equals(OperatorKind.RELATIONAL_LESS_THAN)) {
+        Preconditions.checkState(isValidRelationalType(lhsExprType, rhsExprType), errorMsg);
       }
 
       return relationalOperationExpr;
@@ -133,6 +136,15 @@ public abstract class RelationalOperationExpr implements OperationExpr {
       }
 
       return false;
+    }
+
+    // isValidRelationalType checks expressions' types for relational operators (<, >, <=, >=).
+    // The <, >, <=, and >= can be used with primitive data types that can be represented in
+    // numbers.
+    // It will work with char, byte, short, int, long, float, double, but not with boolean.
+    // These operators are not supported for objects.
+    private boolean isValidRelationalType(TypeNode lhsType, TypeNode rhsType) {
+      return TypeNode.isNumericType(lhsType) && TypeNode.isNumericType(rhsType);
     }
   }
 }
