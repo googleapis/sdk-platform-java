@@ -40,6 +40,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.OperatorKind;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -408,6 +409,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       unaryOperationExpr.expr().accept(this);
       operator(unaryOperationExpr.operatorKind());
     }
+  }
+
+  @Override
+  public void visit(RelationalOperationExpr relationalOperationExpr) {
+    relationalOperationExpr.lhsExpr().accept(this);
+    space();
+    operator(relationalOperationExpr.operatorKind());
+    space();
+    relationalOperationExpr.rhsExpr().accept(this);
   }
 
   @Override
