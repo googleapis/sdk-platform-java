@@ -473,7 +473,26 @@ public class ServiceClientClassComposer implements ClassComposer {
     Preconditions.checkNotNull(
         inputMessage, String.format("Message %s not found", methodInputTypeName));
 
-    for (List<MethodArgument> signature : method.methodSignatures()) {
+    // Make the method signature order deterministic, which helps with unit testing and per-version
+    // diffs.
+    List<List<MethodArgument>> sortedMethodSignatures =
+        method.methodSignatures().stream()
+            .sorted(
+                (s1, s2) -> {
+                  if (s1.size() != s2.size()) {
+                    return s1.size() - s2.size();
+                  }
+                  for (int i = 0; i < s1.size(); i++) {
+                    int compareVal = s1.get(i).compareTo(s2.get(i));
+                    if (compareVal != 0) {
+                      return compareVal;
+                    }
+                  }
+                  return 0;
+                })
+            .collect(Collectors.toList());
+
+    for (List<MethodArgument> signature : sortedMethodSignatures) {
       // Get the argument list.
       List<VariableExpr> arguments =
           signature.stream()
