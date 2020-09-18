@@ -1,6 +1,5 @@
 def _junit_output_impl(ctx):
     test_class_name = ctx.attr.test_class_name
-    arguments = [test_class_name]
     inputs = ctx.files.srcs
     output = ctx.outputs.output
     test_runner = ctx.executable.test_runner
@@ -18,7 +17,7 @@ def _junit_output_impl(ctx):
     ctx.actions.run_shell(
         inputs = inputs,
         outputs = [output],
-        arguments = arguments,
+        arguments = [test_class_name],
         tools = [test_runner],
         command = command,
     )

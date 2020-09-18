@@ -11,20 +11,6 @@ filegroup(
     srcs = ["{0}.java".format(f) for f in TESTS],
 )
 
-java_library(
-    name = "dummy",
-    srcs = [
-        ":dummy_files",
-    ],
-    deps = [
-        "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
-        "//src/test/java/com/google/api/generator/test/framework",
-        "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar",
-    ],
-)
-
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
@@ -38,7 +24,7 @@ java_library(
     ],
 ) for test_name in TESTS]
 
-# run_single_junit
+# JUnit runner binary, this is used to generate test output for updating goldens files.
 java_binary(
     name = "junit_runner_binary",
     srcs = [
@@ -61,6 +47,8 @@ java_binary(
 
 TEST_CLASS_NAME = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"
 
+# Run `bazel run src/test/java/com/google/api/generator/gapic/dummy:FileDiffInfraDummyTest.update`
+# to update goldens as expected generated code.
 update_golden(
     name = "FileDiffInfraDummyTest.update",
     srcs = [

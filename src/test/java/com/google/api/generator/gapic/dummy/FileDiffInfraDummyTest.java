@@ -35,7 +35,6 @@ public class FileDiffInfraDummyTest {
   // created.
   //
   // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and well-tested.
-
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
   private static final String GOLDENFILES_SIMPLE_CLASS = "FileDiffInfraDummyTestSimpleClass.golden";
@@ -57,8 +56,8 @@ public class FileDiffInfraDummyTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_SIMPLE_CLASS, visitor.write());
-    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SIMPLE_CLASS);
-    Assert.assertCodeEquals(goldeFilePath, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SIMPLE_CLASS);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
@@ -76,8 +75,8 @@ public class FileDiffInfraDummyTest {
     classDef.accept(visitor);
     // Save the generated code to a file for updating goldens if needed.
     Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_CLASS_WITH_HEADER, visitor.write());
-    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_CLASS_WITH_HEADER);
-    Assert.assertCodeEquals(goldeFilePath, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_CLASS_WITH_HEADER);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   // Add a simple test for two strings comparison.
