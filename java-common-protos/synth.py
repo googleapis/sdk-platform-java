@@ -14,32 +14,81 @@
 
 """This script is used to synthesize generated parts of this library."""
 
-import synthtool as s
-from synthtool import gcp
-from synthtool.sources import git
-import synthtool.languages.java as java
+import os
 from pathlib import Path
+import tempfile
+from typing import Union
 
-gapic = gcp.GAPICBazel()
-googleapis = Path("/home/chingor/code/googleapis")
+import synthtool as s
+from synthtool.languages import java
+from synthtool.sources import git
+from synthtool import logger, shell
 
-proto_targets = ["api", "cloud/audit", "geo/type", "logging/type", "longrunning", "rpc", "rpc/context", "type"]
-for path in proto_targets:
-    target = path.replace("/", "-")
-    target = f"google-{target}-java"
-    library = gapic.java_library(
-        service=target,
-        version="unused",
-        proto_path=f"google/{path}:", #google-iam-{version}-logging-java',
-        bazel_target=f"//google/{path}:{target}",
+GOOGLEAPIS_URL = git.make_repo_clone_url("googleapis/googleapis")
+
+logger.debug("Cloning googleapis.")
+googleapis = git.clone(GOOGLEAPIS_URL)
+
+def bazel_build(target: str, cwd: Union[Path, str]) -> Path:
+    """Build a bazel target and return the output build directory."""
+    old_cwd = os.getcwd()
+    os.chdir(str(cwd))
+
+    bazel_run_args = [
+        "bazel",
+        "--max_idle_secs=240",
+        "build",
+        target,
+    ]
+
+    logger.debug(f"Generating code for: {target}.")
+    shell.run(bazel_run_args)
+
+    output_dir = Path(f"bazel-bin{os.path.sep}{target[2:].split(':')[0]}").resolve()
+    os.chdir(old_cwd)
+
+    return output_dir
+
+def build_proto(target):
+    """Build a proto build target and copy all generate source files."""
+    output = bazel_build(
+        target=target,
+        cwd=googleapis,
     )
 
-    library = library / target
-    java.fix_proto_headers(library / f"proto-{target}")
-    s.copy(library / f"proto-{target}" / "src", "proto-google-common-protos/src", required=True)
+    src_output = Path(tempfile.mkdtemp())
+    for proto_jar in output.glob("*-speed-src.jar"):
+        logger.debug(f"unzipping: {os.path.basename(proto_jar)}")
+        shell.run(["unzip", "-o", proto_jar, "-d", src_output / "src"])
 
-    java.fix_grpc_headers(library / f"grpc-{target}", package_name=None)
-    s.copy(library / f"grpc-{target}" / "src", "grpc-google-common-protos/src")
+    java.fix_proto_headers(src_output)
+    s.copy(src_output / "src/com", "proto-google-common-protos/src/main/java/com")
+
+def build_grpc(target):
+    """Build a grpc build target and copy all generate source files."""
+    output = bazel_build(
+        target=target,
+        cwd=googleapis,
+    )
+
+    src_output = Path(tempfile.mkdtemp())
+    for proto_jar in output.glob("*grpc-src.jar"):
+        logger.debug(f"unzipping: {os.path.basename(proto_jar)}")
+        shell.run(["unzip", "-o", proto_jar, "-d", src_output / "src"])
+
+    java.fix_grpc_headers(src_output, "")
+    s.copy(src_output / "src/com", "grpc-google-common-protos/src/main/java/com")
+
+build_proto("//google/api:api_java_proto")
+build_proto("//google/cloud/audit:audit_java_proto")
+build_proto("//google/geo/type:viewport_java_proto")
+build_proto("//google/logging/type:type_java_proto")
+build_proto("//google/longrunning:longrunning_java_proto")
+build_proto("//google/rpc:rpc_java_proto")
+build_proto("//google/rpc/context:attribute_context_java_proto")
+build_proto("//google/type:type_java_proto")
+
+build_grpc("//google/longrunning:longrunning_java_grpc")
 
 java.format_code("proto-google-common-protos/src")
 java.format_code("grpc-google-common-protos/src")
