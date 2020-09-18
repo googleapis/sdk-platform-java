@@ -38,10 +38,12 @@ public class FileDiffInfraDummyTest {
 
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
+  private static final String GOLDENFILES_SIMPLE_CLASS = "FileDiffInfraDummyTestSimpleClass.golden";
+  private static final String GOLDENFILES_CLASS_WITH_HEADER =
+      "FileDiffInfraDummyTestClassWithHeader.golden";
 
   @Test
   public void simpleClass() {
-    System.out.println("Running simple class");
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setHeaderCommentStatements(
@@ -54,18 +56,13 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Utils.saveToFile(
-        "com/google/api/generator/gapic/dummy/goldens/",
-        "FileDiffInfraDummyTestSimpleClass.golden",
-        visitor.write());
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
+    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_SIMPLE_CLASS, visitor.write());
+    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SIMPLE_CLASS);
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
   @Test
   public void classWithHeader() {
-    System.out.println("Running class with header test");
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setFileHeader(
@@ -77,21 +74,15 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    // save the generated code to a file.
-    Utils.saveToFile(
-        "com/google/api/generator/gapic/dummy/goldens/",
-        "FileDiffInfraDummyTestClassWithHeader.golden",
-        visitor.write());
-    // update the goldens if the system flag `test_class_name.update_golden` is true.
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
+    // Save the generated code to a file for updating goldens if needed.
+    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_CLASS_WITH_HEADER, visitor.write());
+    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_CLASS_WITH_HEADER);
     Assert.assertCodeEquals(goldeFilePath, visitor.write());
   }
 
   // Add a simple test for two strings comparison.
   @Test
   public void simpleLineComment() {
-    System.out.println("Running simple line comment test.");
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     LineComment lineComment = LineComment.withComment("test strings comparison.");
     lineComment.accept(visitor);

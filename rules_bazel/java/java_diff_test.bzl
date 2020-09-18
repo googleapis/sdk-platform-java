@@ -7,7 +7,7 @@ def _junit_output_impl(ctx):
 
     command = """
     mkdir local_tmp  
-    TEST_CLI_HOME="$(pwd)/local_tmp" \
+    TEST_OUTPUT_HOME="$(pwd)/local_tmp" \
     {test_runner_path} $@ &&
     cd local_tmp 
     zip -r ../{output} .

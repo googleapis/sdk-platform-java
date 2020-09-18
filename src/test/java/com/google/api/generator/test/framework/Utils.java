@@ -22,29 +22,35 @@ import java.nio.file.Paths;
 
 public class Utils {
 
-  public static void saveToFile(String dirName, String fileName, String codegen) {
-    System.out.println("dirname: " + dirName);
-
-    String outputDir = System.getenv("TEST_CLI_HOME");
-    Path testOutputPath = Paths.get(outputDir, dirName);
-    testOutputPath.toFile().mkdirs();
-    testOutputPath = Paths.get(outputDir, dirName, fileName);
-
-    System.out.println("testOutputPath: " + testOutputPath.toString());
+  public static void saveCodegenToFile(Class clazz, String fileName, String codegen) {
+    // This system environment variable `TEST_OUTPUT_HOME` is used to specify a folder
+    // which contains generated output from JUnit test.
+    // It will be set when running `bazel run testTarget.update` command.
+    String testOutputHome = System.getenv("TEST_OUTPUT_HOME");
+    // For example: com/google/api/generator/gapic/dummy/goldens/
+    String relativeGoldenDir = getTestoutGoldenDir(clazz);
+    Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);
+    testOutputDir.toFile().mkdirs();
     try {
-      File createdFile = testOutputPath.toFile();
-      if (createdFile.createNewFile()) {
-        System.out.println("File created: " + createdFile.getName());
-      } else {
-        System.out.println("File did not get created :(");
-      }
-      FileWriter myWriter = new FileWriter(createdFile);
+      File testOutputFile = Paths.get(testOutputHome, relativeGoldenDir, fileName).toFile();
+      FileWriter myWriter = new FileWriter(testOutputFile);
       myWriter.write(codegen);
       myWriter.flush();
       myWriter.close();
     } catch (IOException e) {
-      System.out.println("Error occured when saving codegen to file" + fileName);
+      throw new SaveCodegenToFileException(
+          String.format(
+              "Error occured when saving codegen to file %s/%s", relativeGoldenDir, fileName));
     }
-    System.out.println("Saved to file! ");
+  }
+
+  private static String getTestoutGoldenDir(Class clazz) {
+    return clazz.getPackage().getName().replace(".", "/") + "/goldens/";
+  }
+
+  private static class SaveCodegenToFileException extends RuntimeException {
+    public SaveCodegenToFileException(String errorMessage) {
+      super(errorMessage);
+    }
   }
 }

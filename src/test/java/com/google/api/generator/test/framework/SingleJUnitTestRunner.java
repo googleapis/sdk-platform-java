@@ -20,19 +20,32 @@ import org.junit.runner.Result;
 
 public class SingleJUnitTestRunner {
   public static void main(String... args) {
+    if (args.length < 1) {
+      throw new MissingRequiredArgException("Missing the JUnit class name argument.");
+    }
     String className = args[0];
     Class clazz = null;
     try {
       clazz = Class.forName(className);
     } catch (ClassNotFoundException e) {
-      System.exit(1);
+      throw new JUnitClassNotFoundException(
+          String.format("JUnit test class %s is not found.", className));
     }
-    Request request = Request.aClass(clazz);
-    Result result = new JUnitCore().run(request);
-    if (result.wasSuccessful()) {
-      System.out.println("\n \n SUCCESS!!!!! \n \n");
-    } else {
+    Result result = new JUnitCore().run(Request.aClass(clazz));
+    if (!result.wasSuccessful()) {
       System.out.println("Tests have failures: " + result.getFailures());
+    }
+  }
+
+  private static class JUnitClassNotFoundException extends RuntimeException {
+    public JUnitClassNotFoundException(String errorMessage) {
+      super(errorMessage);
+    }
+  }
+
+  private static class MissingRequiredArgException extends RuntimeException {
+    public MissingRequiredArgException(String errorMessage) {
+      super(errorMessage);
     }
   }
 }
