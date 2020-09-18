@@ -19,35 +19,37 @@ import com.google.common.base.Preconditions;
 
 @AutoValue
 public abstract class AssignmentOperationExpr implements OperationExpr {
-  public abstract Expr lhsExpr();
+  public abstract VariableExpr variableExpr();
 
-  public abstract Expr rhsExpr();
+  public abstract Expr valueExpr();
 
   public abstract OperatorKind operatorKind();
 
-  public abstract TypeNode type();
+  @Override
+  public TypeNode type() {
+    return variableExpr().type();
+  }
 
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
   }
 
-  public static AssignmentOperationExpr bitwiseExclusiveOrAndAssignmentWithExprs(
-      Expr lhsExpr, Expr rhsExpr) {
+  public static AssignmentOperationExpr xorAssignmentWithExprs(
+      VariableExpr variableExpr, Expr valueExpr) {
     return builder()
-        .setLhsExpr(lhsExpr)
-        .setRhsExpr(rhsExpr)
-        .setOperatorKind(OperatorKind.ASSIGNMENT_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT)
-        .setType(lhsExpr.type())
+        .setVariableExpr(variableExpr)
+        .setValueExpr(valueExpr)
+        .setOperatorKind(OperatorKind.ASSIGNMENT_XOR)
         .build();
   }
 
-  public static AssignmentOperationExpr multiplyAndAssignmentWithExprs(Expr lhsExpr, Expr rhsExpr) {
+  public static AssignmentOperationExpr multiplyAssignmentWithExprs(
+      VariableExpr variableExpr, Expr valueExpr) {
     return builder()
-        .setLhsExpr(lhsExpr)
-        .setRhsExpr(rhsExpr)
-        .setOperatorKind(OperatorKind.ASSIGNMENT_MULTIPLY_AND_ASSIGNMENT)
-        .setType(lhsExpr.type())
+        .setVariableExpr(variableExpr)
+        .setValueExpr(valueExpr)
+        .setOperatorKind(OperatorKind.ASSIGNMENT_MULTIPLY)
         .build();
   }
 
@@ -58,64 +60,85 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
   @AutoValue.Builder
   abstract static class Builder {
     // Private setter.
-    abstract Builder setLhsExpr(Expr expr);
+    abstract Builder setVariableExpr(VariableExpr variableExpr);
 
     // Private setter.
-    abstract Builder setRhsExpr(Expr expr);
+    abstract Builder setValueExpr(Expr valueExpr);
 
     // Private setter.
     abstract Builder setOperatorKind(OperatorKind operator);
-
-    // Private setter.
-    abstract Builder setType(TypeNode type);
 
     abstract AssignmentOperationExpr autoBuild();
 
     private AssignmentOperationExpr build() {
       AssignmentOperationExpr assignmentOperationExpr = autoBuild();
-      TypeNode lhsExprType = assignmentOperationExpr.lhsExpr().type();
-      TypeNode rhsExprType = assignmentOperationExpr.rhsExpr().type();
+      TypeNode lhsType = assignmentOperationExpr.variableExpr().variable().type();
+      TypeNode rhsType =
+          assignmentOperationExpr.valueExpr() instanceof VariableExpr
+              ? ((VariableExpr) assignmentOperationExpr.valueExpr()).variable().type()
+              : assignmentOperationExpr.valueExpr().type();
       OperatorKind operator = assignmentOperationExpr.operatorKind();
-      final String errorMsg =
+
+      // Check if the variable exprs have been declared, if yes, throw error.
+      Preconditions.checkState(
+          !assignmentOperationExpr.variableExpr().isDecl()
+              && (assignmentOperationExpr.valueExpr() instanceof VariableExpr
+                  ? !((VariableExpr) assignmentOperationExpr.valueExpr()).isDecl()
+                  : true),
+          String.format(
+              "Variable `%s` should not be declaration in the variable expression.",
+              assignmentOperationExpr.variableExpr().variable().name()));
+
+      // TYPE_CHECK_ERROR_MSG is type checking error message for operators.
+      final String TYPE_CHECK_ERROR_MSG =
           String.format(
               "Assignment operator %s can not be applied to %s, %s.",
-              operator, lhsExprType.toString(), rhsExprType.toString());
-      if (operator.equals(OperatorKind.ASSIGNMENT_MULTIPLY_AND_ASSIGNMENT)) {
+              operator, lhsType.toString(), rhsType.toString());
+
+      // Check type for multiply and assignment operator (*=).
+      if (operator.equals(OperatorKind.ASSIGNMENT_MULTIPLY)) {
         Preconditions.checkState(
-            isValidMultiplyAndAssignmentType(lhsExprType, rhsExprType), errorMsg);
+            isValidMultiplyAssignmentType(lhsType, rhsType), TYPE_CHECK_ERROR_MSG);
       }
-      if (operator.equals(OperatorKind.ASSIGNMENT_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT)) {
-        Preconditions.checkState(
-            isValidBitwiseExclusiveOrAndAssignmentType(lhsExprType, rhsExprType), errorMsg);
+
+      // Check type for XOR and assignment operator (^=).
+      // TODO(summerji): Complete the type-checking for ^= and unit test.
+      if (operator.equals(OperatorKind.ASSIGNMENT_XOR)) {
+        Preconditions.checkState(isValidXORAssignmentType(lhsType, rhsType), TYPE_CHECK_ERROR_MSG);
       }
       return assignmentOperationExpr;
     }
 
-    private boolean isValidMultiplyAndAssignmentType(TypeNode lhsType, TypeNode rhsType) {
-      if (TypeNode.isNumericType(lhsType) && !TypeNode.isBoxedType(lhsType)) {
-        return TypeNode.isNumericType(rhsType);
+    // isValidMultiplyAssignmentType validates the types for LHS variable expr and RHS expr.
+    // *= can be only applied on Primitive numeric type.
+    private boolean isValidMultiplyAssignmentType(TypeNode variableType, TypeNode valueType) {
+      // LHS is numeric type, RHS should be any numeric type or any numeric boxed type.
+      if (TypeNode.isNumericType(variableType) && !TypeNode.isBoxedType(variableType)) {
+        return TypeNode.isNumericType(valueType);
       }
-      if (lhsType.equals(TypeNode.INT_OBJECT)) {
-        return TypeNode.isNumericType(rhsType)
-            && !(rhsType.equals(TypeNode.LONG)
-                || rhsType.equals(TypeNode.FLOAT)
-                || rhsType.equals(TypeNode.DOUBLE));
+      // LHS is integer boxed type, RHS should be any numeric type except long, float, double.
+      if (variableType.equals(TypeNode.INT_OBJECT)) {
+        return TypeNode.isNumericType(valueType)
+            && !(valueType.equals(TypeNode.LONG) || TypeNode.isFloatingPointType(valueType));
       }
-      if (lhsType.equals(TypeNode.LONG_OBJECT)) {
-        return TypeNode.isNumericType(rhsType)
-            && !(rhsType.equals(TypeNode.FLOAT) || rhsType.equals(TypeNode.DOUBLE));
+      // LHS is long boxed type, RHS should be any numeric type except float, double.
+      if (variableType.equals(TypeNode.LONG_OBJECT)) {
+        return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
       }
-      if (lhsType.equals(TypeNode.FLOAT_OBJECT)) {
-        return TypeNode.isNumericType(rhsType) && !rhsType.equals(TypeNode.DOUBLE);
+      // LHS is integer boxed type, RHS should be any numeric type except double.
+      if (variableType.equals(TypeNode.FLOAT_OBJECT)) {
+        return TypeNode.isNumericType(valueType) && !valueType.equals(TypeNode.DOUBLE);
       }
-      if (lhsType.equals(TypeNode.DOUBLE_OBJECT)) {
-        return TypeNode.isNumericType(rhsType);
+      // LHS is integer boxed type, RHS should be any numeric type or any numeric boxed type.
+      if (variableType.equals(TypeNode.DOUBLE_OBJECT)) {
+        return TypeNode.isNumericType(valueType);
       }
+      // *= operator does not support boxed Short, Character, Byte, null, reference, void type.
       return false;
     }
 
     // TODO(summerji): Complete the type-checking for ^= and unit test.
-    private boolean isValidBitwiseExclusiveOrAndAssignmentType(TypeNode lhsType, TypeNode rhsType) {
+    private boolean isValidXORAssignmentType(TypeNode variableType, TypeNode valueType) {
       return true;
     }
   }

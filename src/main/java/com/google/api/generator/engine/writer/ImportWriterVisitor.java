@@ -243,8 +243,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(AssignmentOperationExpr assignmentOperationExpr) {
-    assignmentOperationExpr.lhsExpr().accept(this);
-    assignmentOperationExpr.rhsExpr().accept(this);
+    assignmentOperationExpr.variableExpr().accept(this);
+    assignmentOperationExpr.valueExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */

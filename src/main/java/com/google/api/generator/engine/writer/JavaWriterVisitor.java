@@ -115,7 +115,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String OPERATOR_LOGICAL_NOT = "!";
   private static final String OPERATOR_LOGICAL_AND = "&&";
   private static final String OPERATOR_LOGICAL_OR = "||";
-  private static final String OPERATOR_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT = "^=";
+  private static final String OPERATOR_XOR = "^=";
   private static final String OPERATOR_MULTIPLE_AND_ASSIGNMENT = "*=";
 
   private final StringBuffer buffer = new StringBuffer();
@@ -434,11 +434,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(AssignmentOperationExpr assignmentOperationExpr) {
-    assignmentOperationExpr.lhsExpr().accept(this);
+    assignmentOperationExpr.variableExpr().accept(this);
     space();
     operator(assignmentOperationExpr.operatorKind());
     space();
-    assignmentOperationExpr.rhsExpr().accept(this);
+    assignmentOperationExpr.valueExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -927,10 +927,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       case ARITHMETIC_ADDITION:
         buffer.append(OPERATOR_ADDITION);
         break;
-      case ASSIGNMENT_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT:
-        buffer.append(OPERATOR_BITWISE_EXCLUSIVE_OR_AND_ASSIGNMENT);
+      case ASSIGNMENT_XOR:
+        buffer.append(OPERATOR_XOR);
         break;
-      case ASSIGNMENT_MULTIPLY_AND_ASSIGNMENT:
+      case ASSIGNMENT_MULTIPLY:
         buffer.append(OPERATOR_MULTIPLE_AND_ASSIGNMENT);
         break;
       case RELATIONAL_EQUAL_TO:

@@ -2132,20 +2132,20 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeAssignmentOperationExpr_multiplyAndAssignment() {
-    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("h", TypeNode.INT));
+  public void writeAssignmentOperationExpr_multiplyAssignment() {
+    VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
     ValueExpr rhsExpr =
         ValueExpr.withValue(
             PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
     AssignmentOperationExpr assignmentOperationExpr =
-        AssignmentOperationExpr.multiplyAndAssignmentWithExprs(lhsExpr, rhsExpr);
+        AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
     assignmentOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("h *= 1000003");
   }
 
   @Test
-  public void writeAssignmentOperationExpr_bitwiseExclusiveOrAndAssignment() {
-    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("h", TypeNode.INT));
+  public void writeAssignmentOperationExpr_xorAssignment() {
+    VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
     TypeNode objectType =
         TypeNode.withReference(
             VaporReference.builder().setName("Objects").setPakkage("java.lang.Object").build());
@@ -2159,7 +2159,7 @@ public class JavaWriterVisitorTest {
                     VariableExpr.withVariable(createVariable("fixedValue", TypeNode.OBJECT))))
             .build();
     AssignmentOperationExpr assignmentOperationExpr =
-        AssignmentOperationExpr.bitwiseExclusiveOrAndAssignmentWithExprs(lhsExpr, rhsExpr);
+        AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr);
     assignmentOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
   }
