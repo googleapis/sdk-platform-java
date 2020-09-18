@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -134,7 +135,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
-    methods.addAll(createConstructorMethods(service, types));
+    methods.addAll(createConstructorMethods(service, types, hasLroClient));
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(createServiceMethods(service, messageTypes, types));
     methods.addAll(createBackgroundResourceMethods(service, types));
@@ -274,7 +275,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createConstructorMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, Map<String, TypeNode> types, boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     String thisClientName = String.format("%sClient", service.name());
     String settingsName = String.format("%sSettings", service.name());
@@ -342,7 +343,9 @@ public class ServiceClientClassComposer implements ClassComposer {
                     .setReturnType(operationsClientVarExpr.type())
                     .build())
             .build();
-    ctorAssignmentExprs.add(operationsClientAssignExpr);
+    if (hasLroClient) {
+      ctorAssignmentExprs.add(operationsClientAssignExpr);
+    }
 
     methods.add(
         MethodDefinition.constructorBuilder()
@@ -370,7 +373,9 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setVariableExpr(stubVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(stubVarExpr)
             .build());
-    ctorAssignmentExprs.add(operationsClientAssignExpr);
+    if (hasLroClient) {
+      ctorAssignmentExprs.add(operationsClientAssignExpr);
+    }
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
             .setType(types.get("BetaApi"))
@@ -533,8 +538,8 @@ public class ServiceClientClassComposer implements ClassComposer {
         if (argument.isResourceNameHelper()) {
           MethodInvocationExpr isNullCheckExpr =
               MethodInvocationExpr.builder()
-                  .setStaticReferenceType(types.get("Strings"))
-                  .setMethodName("isNullOrEmpty")
+                  .setStaticReferenceType(types.get("Objects"))
+                  .setMethodName("isNull")
                   .setArguments(Arrays.asList(argVarExpr))
                   .setReturnType(TypeNode.BOOLEAN)
                   .build();
@@ -893,6 +898,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             InterruptedException.class,
             IOException.class,
             MoreExecutors.class,
+            Objects.class,
             Operation.class,
             OperationFuture.class,
             OperationCallable.class,
