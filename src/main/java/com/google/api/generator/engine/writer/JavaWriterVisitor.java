@@ -110,6 +110,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String OPERATOR_ADDITION = "+";
   private static final String OPERATOR_EQUAL_TO = "==";
   private static final String OPERATOR_NOT_EQUAL_TO = "!=";
+  private static final String OPERATOR_LESS_THAN = "<";
   private static final String OPERATOR_INCREMENT = "++";
   private static final String OPERATOR_LOGICAL_NOT = "!";
   private static final String OPERATOR_LOGICAL_AND = "&&";
@@ -917,6 +918,9 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         break;
       case RELATIONAL_NOT_EQUAL_TO:
         buffer.append(OPERATOR_NOT_EQUAL_TO);
+        break;
+      case RELATIONAL_LESS_THAN:
+        buffer.append(OPERATOR_LESS_THAN);
         break;
       case UNARY_POST_INCREMENT:
         buffer.append(OPERATOR_INCREMENT);

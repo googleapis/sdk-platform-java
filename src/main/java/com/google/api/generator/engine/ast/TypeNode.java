@@ -145,7 +145,8 @@ public abstract class TypeNode implements AstNode {
         || type.equals(TypeNode.DOUBLE)
         || type.equals(TypeNode.SHORT)
         || type.equals(TypeNode.FLOAT)
-        || type.equals(TypeNode.CHAR);
+        || type.equals(TypeNode.CHAR)
+        || type.equals(TypeNode.BYTE);
   }
 
   public static boolean isBoxedType(TypeNode type) {
