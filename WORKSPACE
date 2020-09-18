@@ -21,6 +21,7 @@ com_google_api_generator_properties(
     file = "//:dependencies.properties",
 )
 
+load("@com_google_api_generator_properties//:dependencies.properties.bzl", "PROPERTIES")
 load("//:repositories.bzl", "com_google_api_generator_repositories")
 
 com_google_api_generator_repositories()
@@ -47,27 +48,22 @@ switched_rules_by_language(
     java = True,
 )
 
-# TODO(miraleung): When the gax-java Bazel build PRs are submitted, do the following:
-# - Rename the next rule.
-# - Use these rules in build files:
-#  -  "@com_google_api_gax_java//gax",
-#  - "@com_google_api_gax_java//gax-grpc:gax_grpc",
-_gax_java_version = "1.58.2"
+_gax_java_version = PROPERTIES["version.com_google_gax_java"]
 
 http_archive(
-    name = "com_google_api_gax_java_temp",
+    name = "com_google_api_gax_java",
     strip_prefix = "gax-java-%s" % _gax_java_version,
     urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
 )
 
-load("@com_google_api_gax_java_temp//:repository_rules.bzl", "com_google_api_gax_java_properties")
+load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
 
 com_google_api_gax_java_properties(
     name = "com_google_api_gax_java_properties",
-    file = "@com_google_api_gax_java_temp//:dependencies.properties",
+    file = "@com_google_api_gax_java//:dependencies.properties",
 )
 
-load("@com_google_api_gax_java_temp//:repositories.bzl", "com_google_api_gax_java_repositories")
+load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_repositories")
 
 com_google_api_gax_java_repositories()
 
