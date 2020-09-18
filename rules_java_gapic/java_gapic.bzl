@@ -1,4 +1,4 @@
-# Copyright 2019 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -88,8 +88,6 @@ def java_gapic_library(
     # Currently a no-op.
     if service_yaml:
         file_args_dict[service_yaml] = "gapic-service-config"
-
-    #file_args = ["%s=%s" % (k, v) for k, v in file_args_dict.items()]
 
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
