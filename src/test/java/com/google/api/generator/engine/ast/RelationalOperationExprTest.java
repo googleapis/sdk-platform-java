@@ -20,7 +20,6 @@ import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import org.junit.Test;
 
 public class RelationalOperationExprTest {
-  /** ================================= Equality Operators ==================================== */
   /** ==================== Equality Operators: LHS data type is numeric ======================= */
   @Test
   public void equalToOperationExpr_validBasic() {
@@ -133,7 +132,7 @@ public class RelationalOperationExprTest {
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
-    RelationalOperationExpr.equalToWithExprs(rhsExpr, rhsExpr);
+    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
 
@@ -144,7 +143,7 @@ public class RelationalOperationExprTest {
     // "notEqualToOperationExpr_validMatchedNumericBoxTYpe".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT, "y");
-    RelationalOperationExpr.equalToWithExprs(rhsExpr, rhsExpr);
+    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
 
@@ -772,8 +771,8 @@ public class RelationalOperationExprTest {
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
   }
 
-  /** ================================= Less Than Operators ==================================== */
   /** ================== Less Than Operators: expr types are numeric types =================== */
+  // The expression types on LHS or RHS could be any numeric type or any numeric boxed type.
   @Test
   public void lessThanOperationExpr_validMatchedNumericType() {
     // LHS: Numeric type, RHS: Matched numeric type.
@@ -785,7 +784,7 @@ public class RelationalOperationExprTest {
   }
 
   @Test
-  public void lessThanOperationExpr_validUnMatchedNumericType() {
+  public void lessThanOperationExpr_validUnmatchedNumericType() {
     // LHS: Numeric type, RHS: Unmatched numeric type.
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
@@ -855,6 +854,7 @@ public class RelationalOperationExprTest {
   }
 
   /** ================= Less Than Operators: expr types are non-numeric types ================== */
+  // Invalid if any of expression type on LHS or RHS is non-numeric type or non numeric boxed type.
   @Test
   public void lessThanOperationExpr_invalidNumericTypeWithNullType() {
     // LHS: Null type, RHS: Numeric type.
