@@ -61,7 +61,7 @@ def _overwrite_golden_impl(ctx):
 overwrite_golden = rule(
     attrs = {
         "unit_test_results": attr.label(
-            mandatory = False,
+            mandatory = True,
             allow_single_file = True),
     },
     outputs = {
