@@ -18,6 +18,8 @@ import java.util.EnumSet;
 
 public enum OperatorKind {
   ARITHMETIC_ADDITION,
+  LOGICAL_AND,
+  LOGICAL_OR,
   RELATIONAL_EQUAL_TO,
   RELATIONAL_NOT_EQUAL_TO,
   UNARY_LOGICAL_NOT,

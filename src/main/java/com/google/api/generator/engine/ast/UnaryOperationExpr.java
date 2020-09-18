@@ -30,6 +30,10 @@ public abstract class UnaryOperationExpr implements OperationExpr {
     visitor.visit(this);
   }
 
+  public boolean isPostfixIncrement() {
+    return operatorKind().equals(OperatorKind.UNARY_POST_INCREMENT);
+  }
+
   public static UnaryOperationExpr postfixIncrementWithExpr(Expr expr) {
     return builder()
         .setExpr(expr)
