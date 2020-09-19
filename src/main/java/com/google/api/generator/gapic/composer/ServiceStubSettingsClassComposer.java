@@ -1144,9 +1144,7 @@ public class ServiceStubSettingsClassComposer {
             ConcreteReference.builder()
                 .setClazz(StubSettings.Builder.class)
                 .setGenerics(
-                    Arrays.asList(
-                            types.get(getServiceStubTypeName(service.name())), types.get(className))
-                        .stream()
+                    Arrays.asList(types.get(thisClassName), types.get(className)).stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
                 .build());
