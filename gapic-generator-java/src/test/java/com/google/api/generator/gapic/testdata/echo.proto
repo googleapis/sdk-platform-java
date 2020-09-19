@@ -136,6 +136,7 @@ message Foobar {
     pattern: "projects/{project}/foobars/{foobar}"
     pattern: "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}"
     pattern: "foobars/{foobar}"
+    pattern: "bar_foos/{bar_foo}/foobars/{foobar}"
     pattern: "*"
   };
 
