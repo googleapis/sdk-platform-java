@@ -170,7 +170,12 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
         || type.equals(TypeNode.DOUBLE)
         || type.equals(TypeNode.SHORT)
         || type.equals(TypeNode.FLOAT)
-        || type.equals(TypeNode.CHAR);
+        || type.equals(TypeNode.CHAR)
+        || type.equals(TypeNode.BYTE);
+  }
+
+  public static boolean isBoxedType(TypeNode type) {
+    return isReferenceType(type) && BOXED_TYPE_MAP.containsValue(type);
   }
 
   public boolean isPrimitiveType() {
