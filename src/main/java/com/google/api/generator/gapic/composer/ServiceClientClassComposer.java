@@ -20,12 +20,15 @@ import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -37,6 +40,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TernaryExpr;
@@ -46,6 +50,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.LongrunningOperation;
@@ -106,11 +111,12 @@ public class ServiceClientClassComposer implements ClassComposer {
                 ServiceClientCommentComposer.createClassHeaderComments(service))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
-            .setImplementsTypes(createClassImplements(types))
+            .setScope(ScopeNode.PUBLIC)
             .setName(className)
+            .setImplementsTypes(createClassImplements(types))
             .setStatements(createFieldDeclarations(service, types, hasLroClient))
             .setMethods(createClassMethods(service, messageTypes, types, hasLroClient))
-            .setScope(ScopeNode.PUBLIC)
+            .setNestedClasses(createNestedPagingClasses(service, messageTypes, types))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -875,6 +881,229 @@ public class ServiceClientClassComposer implements ClassComposer {
     return methods;
   }
 
+  private static List<ClassDefinition> createNestedPagingClasses(
+      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+    List<ClassDefinition> nestedClasses = new ArrayList<>();
+    for (Method method : service.methods()) {
+      if (!method.isPaged()) {
+        continue;
+      }
+      nestedClasses.add(createNestedRpcPagedResponseClass(method, messageTypes, types));
+    }
+
+    return nestedClasses;
+  }
+
+  private static ClassDefinition createNestedRpcPagedResponseClass(
+      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+    Preconditions.checkState(
+        method.isPaged(), String.format("Expected method %s to be paged", method.name()));
+
+    String className = String.format("%sPagedResponse", JavaStyle.toUpperCamelCase(method.name()));
+    TypeNode thisClassType = types.get(className);
+
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+    TypeNode repeatedResponseType = null;
+    for (Field field : methodOutputMessage.fields()) {
+      if (field.isRepeated() && !field.isMap()) {
+        Reference repeatedGenericRef = field.type().reference().generics().get(0);
+        repeatedResponseType = TypeNode.withReference(repeatedGenericRef);
+        break;
+      }
+    }
+
+    Preconditions.checkNotNull(
+        repeatedResponseType,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+
+    String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
+    TypeNode methodPageType = types.get(String.format("%sPage", upperJavaMethodName));
+    TypeNode classExtendsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(AbstractPagedListResponse.class)
+                .setGenerics(
+                    Arrays.asList(
+                            method.inputType(),
+                            method.outputType(),
+                            repeatedResponseType,
+                            methodPageType,
+                            types.get(String.format("%sFixedSizeCollection", upperJavaMethodName)))
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+
+    // createAsync method - variables.
+    VariableExpr contextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("context")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(PageContext.class)
+                            .setGenerics(
+                                Arrays.asList(
+                                        method.inputType(),
+                                        method.outputType(),
+                                        repeatedResponseType)
+                                    .stream()
+                                    .map(t -> t.reference())
+                                    .collect(Collectors.toList()))
+                            .build()))
+                .build());
+    VariableExpr futureResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("futureResponse")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .build());
+
+    VariableExpr futurePageVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("futurePage")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(Arrays.asList(methodPageType.reference()))
+                            .build()))
+                .build());
+
+    // createAsync method - assignment expression.
+    MethodInvocationExpr createPageAsyncExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(methodPageType)
+            .setMethodName("createEmptyPage")
+            .build();
+    createPageAsyncExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(createPageAsyncExpr)
+            .setMethodName("createPageAsync")
+            .setArguments(contextVarExpr, futureResponseVarExpr)
+            .setReturnType(futurePageVarExpr.type())
+            .build();
+    AssignmentExpr futurePageAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(futurePageVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(createPageAsyncExpr)
+            .build();
+
+    // createAsync method - anonymous class expression.
+    VariableExpr inputVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("input").setType(methodPageType).build());
+    TypeNode anonClassType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFunction.class)
+                .setGenerics(Arrays.asList(methodPageType.reference(), thisClassType.reference()))
+                .build());
+    Expr pageToTransformExpr =
+        AnonymousClassExpr.builder()
+            .setType(anonClassType)
+            .setMethods(
+                Arrays.asList(
+                    MethodDefinition.builder()
+                        .setIsOverride(true)
+                        .setScope(ScopeNode.PUBLIC)
+                        .setReturnType(thisClassType)
+                        .setName("apply")
+                        .setArguments(inputVarExpr.toBuilder().setIsDecl(true).build())
+                        .setReturnExpr(
+                            NewObjectExpr.builder()
+                                .setType(thisClassType)
+                                .setArguments(inputVarExpr)
+                                .build())
+                        .build()))
+            .build();
+
+    // createAsync method - return expression.
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(Arrays.asList(types.get(className).reference()))
+                .build());
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(types.get("ApiFutures"))
+            .setMethodName("transform")
+            .setArguments(
+                futurePageVarExpr,
+                pageToTransformExpr,
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(types.get("MoreExecutors"))
+                    .setMethodName("directExecutor")
+                    .build())
+            .setReturnType(returnType)
+            .build();
+
+    MethodDefinition createAsyncMethod =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("createAsync")
+            .setArguments(
+                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setBody(Arrays.asList(ExprStatement.withExpr(futurePageAssignExpr)))
+            .setReturnExpr(returnExpr)
+            .build();
+
+    // Private constructor.
+    VariableExpr pageVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("page").setType(methodPageType).build());
+    MethodDefinition privateCtor =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PRIVATE)
+            .setReturnType(thisClassType)
+            .setArguments(pageVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        // Shortcut.
+                        ReferenceConstructorExpr.superBuilder()
+                            .setType(methodPageType)
+                            .setArguments(
+                                pageVarExpr,
+                                MethodInvocationExpr.builder()
+                                    .setStaticReferenceType(
+                                        types.get(
+                                            String.format(
+                                                "%sFixedSizeCollection", upperJavaMethodName)))
+                                    .setMethodName("createEmptyCollection")
+                                    .build())
+                            .build())))
+            .build();
+
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.add(createAsyncMethod);
+    javaMethods.add(privateCtor);
+
+    return ClassDefinition.builder()
+        .setIsNested(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setExtendsType(classExtendsType)
+        .setName(className)
+        .setMethods(javaMethods)
+        .build();
+  }
+
   private static Map<String, TypeNode> createTypes(
       Service service, Map<String, Message> messageTypes) {
     Map<String, TypeNode> types = new HashMap<>();
@@ -887,6 +1116,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createConcreteTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
+            AbstractPagedListResponse.class,
             ApiFunction.class,
             ApiFuture.class,
             ApiFutures.class,
@@ -939,6 +1169,27 @@ public class ServiceClientClassComposer implements ClassComposer {
                                 .setName(String.format(t, service.name()))
                                 .setPakkage(service.pakkage())
                                 .build()))));
+
+    // Nested class types.
+    for (Method method : service.methods()) {
+      if (!method.isPaged()) {
+        continue;
+      }
+      types.putAll(
+          Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection").stream()
+              .collect(
+                  Collectors.toMap(
+                      t -> String.format(t, JavaStyle.toUpperCamelCase(method.name())),
+                      t ->
+                          TypeNode.withReference(
+                              VaporReference.builder()
+                                  .setName(
+                                      String.format(t, JavaStyle.toUpperCamelCase(method.name())))
+                                  .setEnclosingClassName(getClientClassName(service.name()))
+                                  .setPakkage(service.pakkage())
+                                  .setIsStaticImport(true) // Same class, so they won't be imported.
+                                  .build()))));
+    }
     // LRO Gapic-generated types.
     types.put(
         "OperationsClient",
