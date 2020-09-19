@@ -17,14 +17,20 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 class ServiceClientCommentComposer {
   // Tokens.
   private static final String COLON = ":";
+  private static final String EMPTY_STRING = "";
+  private static final String API_EXCEPTION_TYPE_NAME = "com.google.api.gax.rpc.ApiException";
+  private static final String EXCEPTION_CONDITION = "if the remote call fails";
 
   // Constants.
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
@@ -48,6 +54,8 @@ class ServiceClientCommentComposer {
       "To customize credentials:";
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
+
+  private static final String METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING = "Sample code:";
 
   private static final List<String> SERVICE_DESCRIPTION_SURFACE_DESCRIPTION =
       Arrays.asList(
@@ -131,6 +139,53 @@ class ServiceClientCommentComposer {
   static CommentStatement createCreateMethodStubArgComment(TypeNode settingsType) {
     return toSimpleComment(
         String.format(CREATE_METHOD_STUB_ARG_PATTERN, settingsType.reference().name()));
+  }
+
+  static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, List<MethodArgument> methodArguments) {
+    JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
+
+    if (method.hasDescription()) {
+      methodJavadocBuilder.addComment(method.description());
+    }
+
+    methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
+    // TODO(summerji): Add sample code here.
+
+    if (methodArguments.isEmpty()) {
+      methodJavadocBuilder.addParam(
+          "request", "The request object containing all of the parameters for the API call.");
+    } else {
+      for (MethodArgument argument : methodArguments) {
+        methodJavadocBuilder.addParam(
+            argument.name(), argument.hasDescription() ? argument.description() : EMPTY_STRING);
+      }
+    }
+
+    methodJavadocBuilder.setThrows(API_EXCEPTION_TYPE_NAME, EXCEPTION_CONDITION);
+
+    return Arrays.asList(
+        CommentComposer.AUTO_GENERATED_METHOD_COMMENT,
+        CommentStatement.withComment(methodJavadocBuilder.build()));
+  }
+
+  static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList());
+  }
+
+  static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
+    JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
+
+    if (method.hasDescription()) {
+      methodJavadocBuilder.addComment(method.description());
+    }
+
+    methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
+    // TODO(summerji): Add sample code here.
+
+    return Arrays.asList(
+        CommentComposer.AUTO_GENERATED_METHOD_COMMENT,
+        CommentStatement.withComment(methodJavadocBuilder.build()));
   }
 
   private static CommentStatement toSimpleComment(String comment) {
