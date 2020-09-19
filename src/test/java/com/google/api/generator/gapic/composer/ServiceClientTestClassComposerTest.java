@@ -102,7 +102,7 @@ public class ServiceClientTestClassComposerTest {
           + "  public void setUp() throws IOException {\n"
           + "    mockServiceHelper.reset();\n"
           + "    channelProvider = mockServiceHelper.createChannelProvider();\n"
-          + "    settings =\n"
+          + "    EchoSettings settings =\n"
           + "        EchoSettings.newBuilder()\n"
           + "            .setTransportChannelProvider(channelProvider)\n"
           + "            .setCredentialsProvider(NoCredentialsProvider.create())\n"

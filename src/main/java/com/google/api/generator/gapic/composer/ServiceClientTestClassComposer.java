@@ -326,7 +326,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     Expr initLocalSettingsExpr =
         AssignmentExpr.builder()
-            .setVariableExpr(localSettingsVarExpr)
+            .setVariableExpr(localSettingsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(settingsBuilderExpr)
             .build();
 
