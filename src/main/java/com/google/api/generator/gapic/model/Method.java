@@ -42,6 +42,9 @@ public abstract class Method {
   @Nullable
   public abstract LongrunningOperation lro();
 
+  @Nullable
+  public abstract String description();
+
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
@@ -50,7 +53,9 @@ public abstract class Method {
     return lro() != null;
   }
 
-  // TODO(miraleung): Parse annotations, comments.
+  public boolean hasDescription() {
+    return description() != null;
+  }
 
   public static Builder builder() {
     return new AutoValue_Method.Builder()
@@ -83,6 +88,8 @@ public abstract class Method {
     public abstract Builder setStream(Stream stream);
 
     public abstract Builder setLro(LongrunningOperation lro);
+
+    public abstract Builder setDescription(String description);
 
     public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
 
