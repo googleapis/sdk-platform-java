@@ -17,9 +17,9 @@ package com.google.api.generator.gapic.protoparser;
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
+import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.FileDescriptorSet;
-import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
@@ -46,48 +46,47 @@ public class SourceCodeInfoParserTest {
 
   @Test
   public void getServiceInfo() {
-    Location location = parser.getLocation(protoFile.findServiceByName("FooService"));
+    SourceCodeInfoLocation location = parser.getLocation(protoFile.findServiceByName("FooService"));
     assertEquals(
-        " This is a service description.\n It takes up multiple lines, like so.\n",
+        "This is a service description. It takes up multiple lines, like so.",
         location.getLeadingComments());
 
     location = parser.getLocation(protoFile.findServiceByName("BarService"));
-    assertEquals(" This is another service description.\n", location.getLeadingComments());
+    assertEquals("This is another service description.", location.getLeadingComments());
   }
 
   @Test
   public void getMethodInfo() {
     ServiceDescriptor service = protoFile.findServiceByName("FooService");
-    Location location = parser.getLocation(service.findMethodByName("FooMethod"));
+    SourceCodeInfoLocation location = parser.getLocation(service.findMethodByName("FooMethod"));
     assertEquals(
-        " FooMethod does something.\n This comment also takes up multiple lines.\n",
+        "FooMethod does something. This comment also takes up multiple lines.",
         location.getLeadingComments());
 
     service = protoFile.findServiceByName("BarService");
     location = parser.getLocation(service.findMethodByName("BarMethod"));
-    assertEquals(" BarMethod does another thing.\n", location.getLeadingComments());
+    assertEquals("BarMethod does another thing.", location.getLeadingComments());
   }
 
   @Test
   public void getOuterMessageInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
-    Location location = parser.getLocation(message);
+    SourceCodeInfoLocation location = parser.getLocation(message);
     assertEquals(
-        " This is a message descxription.\n"
-            + " Lorum ipsum dolor sit amet consectetur adipiscing elit.\n",
+        "This is a message descxription. Lorum ipsum dolor sit amet consectetur adipiscing elit.",
         location.getLeadingComments());
 
     // Fields.
     location = parser.getLocation(message.findFieldByName("field_one"));
     assertEquals(
-        " This is a field description for field_one.\n"
-            + " And here is the second line of that description.\n",
+        "This is a field description for field_one. And here is the second line of that"
+            + " description.",
         location.getLeadingComments());
-    assertEquals(" A field trailing comment.\n", location.getTrailingComments());
+    assertEquals("A field trailing comment.", location.getTrailingComments());
 
     location = parser.getLocation(message.findFieldByName("field_two"));
-    assertEquals(" This is another field description.\n", location.getLeadingComments());
-    assertEquals(" Another field trailing comment.\n", location.getTrailingComments());
+    assertEquals("This is another field description.", location.getLeadingComments());
+    assertEquals("Another field trailing comment.", location.getTrailingComments());
   }
 
   @Test
@@ -96,52 +95,52 @@ public class SourceCodeInfoParserTest {
     assertThat(message).isNotNull();
     message = message.findNestedTypeByName("BarMessage");
 
-    Location location = parser.getLocation(message);
+    SourceCodeInfoLocation location = parser.getLocation(message);
     assertEquals(
-        " This is an inner message description for BarMessage.\n", location.getLeadingComments());
+        "This is an inner message description for BarMessage.", location.getLeadingComments());
 
     // Fields.
     location = parser.getLocation(message.findFieldByName("field_three"));
-    assertEquals(" A third leading comment for field_three.\n", location.getLeadingComments());
+    assertEquals("A third leading comment for field_three.", location.getLeadingComments());
 
     location = parser.getLocation(message.findFieldByName("field_two"));
-    assertEquals("\n This is a block comment for field_two.\n", location.getLeadingComments());
+    assertEquals("This is a block comment for field_two.", location.getLeadingComments());
   }
 
   @Test
   public void getOuterEnumInfo() {
     EnumDescriptor protoEnum = protoFile.findEnumTypeByName("OuterEnum");
-    Location location = parser.getLocation(protoEnum);
-    assertEquals(" This is an outer enum.\n", location.getLeadingComments());
+    SourceCodeInfoLocation location = parser.getLocation(protoEnum);
+    assertEquals("This is an outer enum.", location.getLeadingComments());
 
     // Enum fields.
     location = parser.getLocation(protoEnum.findValueByName("VALUE_UNSPECIFIED"));
-    assertEquals(" Another unspecified value.\n", location.getLeadingComments());
+    assertEquals("Another unspecified value.", location.getLeadingComments());
   }
 
   @Test
   public void getInnerEnumInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     EnumDescriptor protoEnum = message.findEnumTypeByName("FoodEnum");
-    Location location = parser.getLocation(protoEnum);
-    assertEquals(" An inner enum.\n", location.getLeadingComments());
+    SourceCodeInfoLocation location = parser.getLocation(protoEnum);
+    assertEquals("An inner enum.", location.getLeadingComments());
 
     // Enum fields.
     location = parser.getLocation(protoEnum.findValueByName("RICE"));
-    assertEquals(" 😋 🍚.\n", location.getLeadingComments());
+    assertEquals("😋 🍚.", location.getLeadingComments());
     location = parser.getLocation(protoEnum.findValueByName("CHOCOLATE"));
-    assertEquals(" 🤤 🍫.\n", location.getLeadingComments());
+    assertEquals("🤤 🍫.", location.getLeadingComments());
   }
 
   @Test
   public void getOnoeofInfo() {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     OneofDescriptor protoOneof = message.getOneofs().get(0);
-    Location location = parser.getLocation(protoOneof);
-    assertEquals(" An inner oneof.\n", location.getLeadingComments());
+    SourceCodeInfoLocation location = parser.getLocation(protoOneof);
+    assertEquals("An inner oneof.", location.getLeadingComments());
 
     location = parser.getLocation(protoOneof.getField(0));
-    assertEquals(" An InnerOneof comment for its field.\n", location.getLeadingComments());
+    assertEquals("An InnerOneof comment for its field.", location.getLeadingComments());
   }
 
   /**
