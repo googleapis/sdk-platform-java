@@ -33,6 +33,7 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
   // Returns true if this is a resource name helper tyep.
   public abstract boolean isResourceNameHelper();
 
+
   @Nullable
   public abstract String description();
 

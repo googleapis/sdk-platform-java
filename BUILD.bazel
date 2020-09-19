@@ -1,10 +1,10 @@
-package(default_visibility = ["//visibility:public"])
-
 load(
     "//:gapic_generator_java.bzl",
     "google_java_format",
     "google_java_format_verification",
 )
+
+package(default_visibility = ["//visibility:public"])
 
 JAVA_SRCS = [
     "//src/main/java/com/google/api/generator:generator_files",
@@ -15,6 +15,7 @@ JAVA_SRCS = [
 TEST_SRCS = [
     "//src/test/java/com/google/api/generator/engine:engine_files",
     "//src/test/java/com/google/api/generator/gapic:gapic_files",
+    "//src/test/java/com/google/api/generator/test/framework:framework_files",
 ]
 
 # ============= Proto wrappers =================
