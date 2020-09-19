@@ -24,7 +24,7 @@ public class Utils {
   /**
    * Save the generated code from JUnit test to a file for updating goldens. These files will be
    * saved as a zip file, then unzipped to overwrite goldens files. The relative path
-   * `com/google/..` which is identical with the location of goldens files will help us easily
+   * `com/google/..` which is identical with the location of goldens files which will help us easily
    * replace the original goldens. For example:
    * `src/test/java/com/google/api/generator/gapic/composer/ComposerTest.java` will save the
    * generated code into a file called `ComposerTest.golden` at
@@ -39,7 +39,6 @@ public class Utils {
     // which contains generated output from JUnit test.
     // It will be set when running `bazel run testTarget.update` command.
     String testOutputHome = System.getenv("TEST_OUTPUT_HOME");
-    // For example: com/google/api/generator/gapic/dummy/goldens/
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);
     testOutputDir.toFile().mkdirs();

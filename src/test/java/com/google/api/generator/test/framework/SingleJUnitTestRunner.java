@@ -19,9 +19,11 @@ import org.junit.runner.Request;
 import org.junit.runner.Result;
 
 public class SingleJUnitTestRunner {
-  // SingleJUnitTestRunner runs a JUnit test whose name is passed through `args`
-  // when `bazel run //:testTarget.update` for updating goldens files.
+  // SingleJUnitTestRunner runs single JUnit test whose class name is passed through `args`.
+  // This is used to prepare codegen for updating goldens files.
   public static void main(String... args) {
+    // Check whether the test class name is passed correctly e.g.
+    // `com.google.api.generator.gapic.composer.ComposerTest`
     if (args.length < 1) {
       throw new MissingRequiredArgException("Missing the JUnit class name argument.");
     }
