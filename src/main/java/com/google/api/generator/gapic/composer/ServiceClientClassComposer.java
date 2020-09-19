@@ -466,7 +466,10 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
-    TypeNode methodOutputType = method.outputType();
+    TypeNode methodOutputType =
+        method.isPaged()
+            ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            : method.outputType();
     String methodInputTypeName = methodInputType.reference().name();
 
     Message inputMessage = messageTypes.get(methodInputTypeName);
@@ -602,11 +605,12 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setVariable(Variable.builder().setName("request").setType(methodInputType).build())
             .setIsDecl(true)
             .build();
-
+    String callableMethodName =
+        method.isPaged()
+            ? String.format(PAGED_CALLABLE_NAME_PATTERN, methodName)
+            : String.format(CALLABLE_NAME_PATTERN, methodName);
     MethodInvocationExpr methodReturnExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName(String.format(CALLABLE_NAME_PATTERN, methodName))
-            .build();
+        MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
     methodReturnExpr =
         MethodInvocationExpr.builder()
             .setMethodName("call")

@@ -55,7 +55,9 @@ class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
 
+
   private static final String METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING = "Sample code:";
+
 
   private static final List<String> SERVICE_DESCRIPTION_SURFACE_DESCRIPTION =
       Arrays.asList(
