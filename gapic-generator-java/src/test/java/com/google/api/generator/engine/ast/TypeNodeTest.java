@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
@@ -110,6 +111,36 @@ public class TypeNodeTest {
                 Arrays.asList(
                     ConcreteReference.wildcardWithUpperBound(TypeNode.STRING.reference())))
             .build());
+  }
+
+  @Test
+  public void compareTypes() {
+    // Primitive and primitive.
+    // Can't compare objects to themselves, so this test is omitted.
+    assertThat(TypeNode.INT.compareTo(TypeNode.BOOLEAN)).isGreaterThan(0);
+    assertThat(TypeNode.BOOLEAN.compareTo(TypeNode.INT)).isLessThan(0);
+
+    // Primitive and null.
+    assertThat(TypeNode.INT.compareTo(TypeNode.NULL)).isLessThan(0);
+    assertThat(TypeNode.NULL.compareTo(TypeNode.INT)).isGreaterThan(0);
+
+    // Primitive and reference.
+    assertThat(TypeNode.INT.compareTo(TypeNode.INT_OBJECT)).isLessThan(0);
+    assertThat(TypeNode.INT.compareTo(TypeNode.STRING)).isLessThan(0);
+    assertThat(TypeNode.INT_OBJECT.compareTo(TypeNode.INT)).isGreaterThan(0);
+
+    // Reference and null.
+    // No test for null against null because we can't compare objects to themselves.
+    assertThat(TypeNode.INT_OBJECT.compareTo(TypeNode.NULL)).isGreaterThan(0);
+    assertThat(TypeNode.NULL.compareTo(TypeNode.BOOLEAN_OBJECT)).isLessThan(0);
+
+    // Reference and reference. Sorted alphabetically by package.
+    assertThat(TypeNode.BOOLEAN_OBJECT.compareTo(TypeNode.INT_OBJECT)).isLessThan(0);
+    assertThat(TypeNode.BOOLEAN_OBJECT.compareTo(TypeNode.STRING)).isLessThan(0);
+    assertThat(
+            TypeNode.BOOLEAN_OBJECT.compareTo(
+                TypeNode.withReference(ConcreteReference.withClazz(Arrays.class))))
+        .isLessThan(0);
   }
 
   @Test
