@@ -162,7 +162,7 @@ public class ServiceSettingsClassComposerTest {
           + "\n"
           + "  public static final EchoSettings create(EchoStubSettings stub) throws IOException"
           + " {\n"
-          + "    return new EchoStubSettings.Builder(stub.toBuilder()).build();\n"
+          + "    return new EchoSettings.Builder(stub.toBuilder()).build();\n"
           + "  }\n"
           + "\n"
           + "  /** Returns a builder for the default ExecutorProvider for this service. */\n"
