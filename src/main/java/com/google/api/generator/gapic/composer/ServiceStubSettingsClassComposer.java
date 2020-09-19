@@ -350,6 +350,7 @@ public class ServiceStubSettingsClassComposer {
               "No method found for message type %s for method %s among %s",
               pagedResponseMessageKey, method.name(), messageTypes.keySet()));
       TypeNode repeatedResponseType = null;
+      String repeatedFieldName = null;
       for (Field field : pagedResponseMessage.fields()) {
         Preconditions.checkState(
             field != null,
@@ -360,6 +361,7 @@ public class ServiceStubSettingsClassComposer {
               !field.type().reference().generics().isEmpty(),
               String.format("No generics found for field reference %s", field.type().reference()));
           repeatedResponseType = TypeNode.withReference(field.type().reference().generics().get(0));
+          repeatedFieldName = field.name();
         }
       }
       Preconditions.checkNotNull(
@@ -387,7 +389,12 @@ public class ServiceStubSettingsClassComposer {
 
       descExprs.add(
           createPagedListDescriptorAssignExpr(
-              pagedListDescVarExpr, method, repeatedResponseType, types));
+              pagedListDescVarExpr,
+              method,
+              repeatedResponseType,
+              repeatedFieldName,
+              messageTypes,
+              types));
       factoryExprs.add(
           createPagedListResponseFactoryAssignExpr(
               pagedListDescVarExpr, method, repeatedResponseType, types));
@@ -401,6 +408,8 @@ public class ServiceStubSettingsClassComposer {
       VariableExpr pagedListDescVarExpr,
       Method method,
       TypeNode repeatedResponseType,
+      String repeatedFieldName,
+      Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
     MethodDefinition.Builder methodStarterBuilder =
         MethodDefinition.builder().setIsOverride(true).setScope(ScopeNode.PUBLIC);
@@ -524,7 +533,8 @@ public class ServiceStubSettingsClassComposer {
     Expr getResponsesListExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(payloadVarExpr)
-            .setMethodName("getResponsesList")
+            .setMethodName(
+                String.format("get%sList", JavaStyle.toUpperCamelCase(repeatedFieldName)))
             .setReturnType(returnType)
             .build();
     Expr conditionExpr =
