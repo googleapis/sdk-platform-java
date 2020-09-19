@@ -321,6 +321,7 @@ def java_gapic_assembly_gradle_pkg(
         if "_java_gapic" in dep:
             _put_dep_in_a_bucket(dep, client_deps, processed_deps)
             _put_dep_in_a_bucket("%s_test" % dep, client_test_deps, processed_deps)
+            _put_dep_in_a_bucket("%s_resource_name" % dep, proto_deps, processed_deps)
         elif dep.endswith("_java_grpc"):
             _put_dep_in_a_bucket(dep, grpc_deps, processed_deps)
         else:
