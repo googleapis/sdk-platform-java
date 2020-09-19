@@ -487,10 +487,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     String methodInputTypeName = methodInputType.reference().name();
-
-    Message inputMessage = messageTypes.get(methodInputTypeName);
-    Preconditions.checkNotNull(
-        inputMessage, String.format("Message %s not found", methodInputTypeName));
+    Reference listRef = ConcreteReference.withClazz(List.class);
+    Reference mapRef = ConcreteReference.withClazz(Map.class);
 
     // Make the method signature order deterministic, which helps with unit testing and per-version
     // diffs.
@@ -543,7 +541,16 @@ public class ServiceClientClassComposer implements ClassComposer {
       for (MethodArgument argument : signature) {
         String argumentName = JavaStyle.toLowerCamelCase(argument.name());
         TypeNode argumentType = argument.type();
-        String setterMethodName = String.format("set%s", JavaStyle.toUpperCamelCase(argumentName));
+        String setterMethodVariantPattern = "set%s";
+        if (TypeNode.isReferenceType(argumentType)) {
+          if (listRef.isSupertypeOrEquals(argumentType.reference())) {
+            setterMethodVariantPattern = "addAll%s";
+          } else if (mapRef.isSupertypeOrEquals(argumentType.reference())) {
+            setterMethodVariantPattern = "putAll%s";
+          }
+        }
+        String setterMethodName =
+            String.format(setterMethodVariantPattern, JavaStyle.toUpperCamelCase(argumentName));
 
         Expr argVarExpr =
             VariableExpr.withVariable(
