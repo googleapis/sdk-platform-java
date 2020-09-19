@@ -54,8 +54,15 @@ public abstract class ResourceName {
   @Nullable
   public abstract String parentMessageName();
 
+  @Nullable
+  public abstract String description();
+
   public boolean hasParentMessageName() {
     return parentMessageName() != null;
+  }
+
+  public boolean hasDescription() {
+    return description() != null;
   }
 
   public String resourceTypeName() {
@@ -92,6 +99,7 @@ public abstract class ResourceName {
     }
 
     ResourceName other = (ResourceName) o;
+    // Exclude the description from the resource name because it's just a comment.
     return variableName().equals(other.variableName())
         && pakkage().equals(other.pakkage())
         && resourceTypeString().equals(other.resourceTypeString())
@@ -124,6 +132,8 @@ public abstract class ResourceName {
     public abstract Builder setPatterns(List<String> patterns);
 
     public abstract Builder setParentMessageName(String parentMessageName);
+
+    public abstract Builder setDescription(String description);
 
     // Private setters.
     abstract Builder setType(TypeNode type);

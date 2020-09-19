@@ -31,6 +31,13 @@ public abstract class Field {
   @Nullable
   public abstract ResourceReference resourceReference();
 
+  @Nullable
+  public abstract String description();
+
+  public boolean hasDescription() {
+    return description() != null;
+  }
+
   public boolean hasResourceReference() {
     return type().equals(TypeNode.STRING) && resourceReference() != null;
   }
@@ -50,6 +57,8 @@ public abstract class Field {
     public abstract Builder setIsMap(boolean isMap);
 
     public abstract Builder setResourceReference(ResourceReference resourceReference);
+
+    public abstract Builder setDescription(String description);
 
     public abstract Field build();
   }

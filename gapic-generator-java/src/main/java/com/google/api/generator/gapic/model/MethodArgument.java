@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class MethodArgument implements Comparable<MethodArgument> {
@@ -31,6 +32,13 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
 
   // Returns true if this is a resource name helper tyep.
   public abstract boolean isResourceNameHelper();
+
+  @Nullable
+  public abstract String description();
+
+  public boolean hasDescription() {
+    return description() != null;
+  }
 
   @Override
   public int compareTo(MethodArgument other) {
@@ -56,6 +64,8 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
     public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
 
     public abstract Builder setIsResourceNameHelper(boolean isResourceNameHelper);
+
+    public abstract Builder setDescription(String description);
 
     public abstract MethodArgument build();
   }

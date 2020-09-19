@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -55,6 +56,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,6 +65,9 @@ public class Parser {
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
+
+  // Allow other parsers to access this.
+  protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
@@ -147,7 +152,17 @@ public class Parser {
               List<String> oauthScopes =
                   Arrays.asList(serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
 
-              return Service.builder()
+              Service.Builder serviceBuilder = Service.builder();
+              if (fileDescriptor.toProto().hasSourceCodeInfo()) {
+                SourceCodeInfoLocation protoServiceLocation =
+                    SOURCE_CODE_INFO_PARSER.getLocation(s);
+                if (!Objects.isNull(protoServiceLocation)
+                    && !Strings.isNullOrEmpty(protoServiceLocation.getLeadingComments())) {
+                  serviceBuilder.setDescription(protoServiceLocation.getLeadingComments());
+                }
+              }
+
+              return serviceBuilder
                   .setName(s.getName())
                   .setDefaultHost(defaultHost)
                   .setOauthScopes(oauthScopes)
@@ -244,8 +259,18 @@ public class Parser {
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
+      Method.Builder methodBuilder = Method.builder();
+      if (protoMethod.getFile().toProto().hasSourceCodeInfo()) {
+        SourceCodeInfoLocation protoMethodLocation =
+            SOURCE_CODE_INFO_PARSER.getLocation(protoMethod);
+        if (!Objects.isNull(protoMethodLocation)
+            && !Strings.isNullOrEmpty(protoMethodLocation.getLeadingComments())) {
+          methodBuilder.setDescription(protoMethodLocation.getLeadingComments());
+        }
+      }
+
       methods.add(
-          Method.builder()
+          methodBuilder
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
@@ -358,7 +383,17 @@ public class Parser {
       }
     }
 
-    return Field.builder()
+    Field.Builder fieldBuilder = Field.builder();
+    if (fieldDescriptor.getFile().toProto().hasSourceCodeInfo()) {
+      SourceCodeInfoLocation protoFieldLocation =
+          SOURCE_CODE_INFO_PARSER.getLocation(fieldDescriptor);
+      if (!Objects.isNull(protoFieldLocation)
+          && !Strings.isNullOrEmpty(protoFieldLocation.getLeadingComments())) {
+        fieldBuilder.setDescription(protoFieldLocation.getLeadingComments());
+      }
+    }
+
+    return fieldBuilder
         .setName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsRepeated(fieldDescriptor.isRepeated())
