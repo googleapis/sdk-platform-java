@@ -1,0 +1,17 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "framework_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "framework",
+    srcs = [
+        ":framework_files",
+    ],
+    deps = [
+        "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
+    ],
+)
