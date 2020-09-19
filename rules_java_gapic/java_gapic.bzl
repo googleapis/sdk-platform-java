@@ -19,6 +19,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_srcjar_name = ctx.label.name
     output_main = ctx.outputs.main
     output_test = ctx.outputs.test
+    output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
 
     output_dir_name = ctx.label.name
@@ -30,17 +31,20 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     unzip -q temp-codegen.srcjar -d {output_dir_path}
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
-    zip -r -j {output_srcjar_name}.srcjar {output_dir_path}/src/main/* {output_dir_path}/proto/src/main/*
+    zip -r -j {output_srcjar_name}.srcjar {output_dir_path}/src/main/*
+    zip -r -j {output_srcjar_name}-resource-name.srcjar {output_dir_path}/proto/src/main/*
     zip -r -j {output_srcjar_name}-tests.srcjar {output_dir_path}/src/test/*
     mv {output_srcjar_name}.srcjar {output_main}
+    mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
-        output_main = output_main.path,
         formatter = formatter,
         output_dir_name = output_dir_name,
         output_dir_path = output_dir_path,
+        output_main = output_main.path,
+        output_resource_name = output_resource_name.path,
         output_test = output_test.path,
     )
 
@@ -48,7 +52,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
         inputs = [gapic_srcjar],
         tools = [formatter],
         command = script,
-        outputs = [output_main, output_test],
+        outputs = [output_main, output_resource_name, output_test],
     )
 
 _java_gapic_postprocess_srcjar = rule(
@@ -62,6 +66,7 @@ _java_gapic_postprocess_srcjar = rule(
     },
     outputs = {
         "main": "%{name}.srcjar",
+        "resource_name": "%{name}-resource-name.srcjar",
         "test": "%{name}-test.srcjar",
     },
     implementation = _java_gapic_postprocess_srcjar_impl,
@@ -111,8 +116,21 @@ def java_gapic_library(
         **kwargs
     )
 
+    resource_name_name = "%s_resource_name" % name
+    resource_name_deps = [resource_name_name]
+    native.java_library(
+        name = resource_name_name,
+        srcs = ["%s-resource-name.srcjar" % srcjar_name],
+        deps = [
+            "@com_google_api_api_common//jar",
+            "@com_google_guava_guava//jar",
+            "@javax_annotation_javax_annotation_api//jar",
+        ],
+        **kwargs
+    )
+
     # General additional deps.
-    actual_deps = deps + [
+    actual_deps = deps + resource_name_deps + [
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_protobuf//:protobuf_java",
