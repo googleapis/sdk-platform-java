@@ -102,7 +102,7 @@ public class ServiceClientTestClassComposerTest {
           + "  public void setUp() throws IOException {\n"
           + "    mockServiceHelper.reset();\n"
           + "    channelProvider = mockServiceHelper.createChannelProvider();\n"
-          + "    settings =\n"
+          + "    EchoSettings settings =\n"
           + "        EchoSettings.newBuilder()\n"
           + "            .setTransportChannelProvider(channelProvider)\n"
           + "            .setCredentialsProvider(NoCredentialsProvider.create())\n"
@@ -111,7 +111,7 @@ public class ServiceClientTestClassComposerTest {
           + "  }\n"
           + "\n"
           + "  @After\n"
-          + "  public static void tearDown() throws Exception {\n"
+          + "  public void tearDown() throws Exception {\n"
           + "    client.close();\n"
           + "  }\n"
           + "}\n";
