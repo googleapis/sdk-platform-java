@@ -52,7 +52,7 @@ java_proto_library(
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
-        "@com_google_api_gax_java//jar",
+        "@com_google_api_gax_java//gax",
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
         "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
         "@com_google_googleapis//google/rpc:rpc_java_proto",
