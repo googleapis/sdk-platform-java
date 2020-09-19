@@ -230,6 +230,7 @@ public class Parser {
   }
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
+    @VisibleForTesting String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -238,14 +239,19 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-      resourceNames.putAll(parseResourceNames(fileDescriptor));
+      resourceNames.putAll(parseResourceNames(fileDescriptor, javaPackage));
     }
     return resourceNames;
   }
 
-  // Convenience wrapper for package-external unit tests.
+  // Convenience wrapper for package-external unit tests. DO NOT ADD NEW FUNCTIONALITY HERE.
   public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
-    return ResourceNameParser.parseResourceNames(fileDescriptor);
+    return parseResourceNames(fileDescriptor, TypeParser.getPackage(fileDescriptor));
+  }
+
+  public static Map<String, ResourceName> parseResourceNames(
+      FileDescriptor fileDescriptor, String javaPackage) {
+    return ResourceNameParser.parseResourceNames(fileDescriptor, javaPackage);
   }
 
   @VisibleForTesting
@@ -427,5 +433,33 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     return fileDescriptors;
+  }
+
+  private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+    Map<String, Integer> javaPackageCount = new HashMap<>();
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+
+      String javaPackage = fileDescriptor.getOptions().getJavaPackage();
+      if (Strings.isNullOrEmpty(javaPackage)) {
+        continue;
+      }
+      if (javaPackageCount.containsKey(javaPackage)) {
+        javaPackageCount.put(javaPackage, javaPackageCount.get(javaPackage) + 1);
+      } else {
+        javaPackageCount.put(javaPackage, 1);
+      }
+    }
+
+    String finalJavaPackage =
+        javaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+    Preconditions.checkState(
+        !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
+    return finalJavaPackage;
   }
 }
