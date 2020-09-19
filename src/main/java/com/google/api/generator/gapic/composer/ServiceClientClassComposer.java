@@ -20,6 +20,7 @@ import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.BidiStreamingCallable;
@@ -40,6 +41,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -912,6 +914,9 @@ public class ServiceClientClassComposer implements ClassComposer {
           createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, types));
       nestedClasses.add(
           createNestedRpcPageClass(method, repeatedResponseType, messageTypes, types));
+      nestedClasses.add(
+          createNestedRpcFixedSizeCollectionClass(
+              method, repeatedResponseType, messageTypes, types));
     }
 
     return nestedClasses;
@@ -1249,6 +1254,115 @@ public class ServiceClientClassComposer implements ClassComposer {
     javaMethods.add(createEmptyPageMethod);
     javaMethods.add(createPageMethod);
     javaMethods.add(createPageAsyncMethod);
+
+    return ClassDefinition.builder()
+        .setIsNested(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setExtendsType(classExtendsType)
+        .setName(className)
+        .setMethods(javaMethods)
+        .build();
+  }
+
+  private static ClassDefinition createNestedRpcFixedSizeCollectionClass(
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
+    String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
+    String className = String.format("%sFixedSizeCollection", upperJavaMethodName);
+    TypeNode classType = types.get(className);
+    TypeNode methodPageType = types.get(String.format("%sPage", upperJavaMethodName));
+
+    TypeNode classExtendsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(AbstractFixedSizeCollection.class)
+                .setGenerics(
+                    Arrays.asList(
+                            method.inputType(),
+                            method.outputType(),
+                            repeatedResponseType,
+                            methodPageType,
+                            classType)
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+
+    // Private constructor.
+    VariableExpr pagesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("pages")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(Arrays.asList(methodPageType.reference()))
+                            .build()))
+                .build());
+    VariableExpr collectionSizeVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("collectionSize").setType(TypeNode.INT).build());
+
+    MethodDefinition privateCtor =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PRIVATE)
+            .setReturnType(classType)
+            .setArguments(
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        ReferenceConstructorExpr.superBuilder()
+                            .setType(classExtendsType)
+                            .setArguments(pagesVarExpr, collectionSizeVarExpr)
+                            .build())))
+            .build();
+
+    // createEmptyCollection method.
+    MethodDefinition createEmptyCollectionMethod =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setReturnType(classType)
+            .setName("createEmptyCollection")
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(classType)
+                    .setArguments(
+                        ValueExpr.withValue(NullObjectValue.create()),
+                        ValueExpr.withValue(
+                            PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
+                    .build())
+            .build();
+
+    // createCollection method.
+    MethodDefinition createCollectionMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(classType)
+            .setName("createCollection")
+            .setArguments(
+                Arrays.asList(pagesVarExpr, collectionSizeVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(classType)
+                    .setArguments(pagesVarExpr, collectionSizeVarExpr)
+                    .build())
+            .build();
+
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.add(privateCtor);
+    javaMethods.add(createEmptyCollectionMethod);
+    javaMethods.add(createCollectionMethod);
 
     return ClassDefinition.builder()
         .setIsNested(true)
