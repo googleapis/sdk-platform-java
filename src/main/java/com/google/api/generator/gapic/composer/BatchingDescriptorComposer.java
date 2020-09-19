@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
@@ -149,7 +150,14 @@ public class BatchingDescriptorComposer {
 
   private static MethodDefinition createGetRequestBuilderMethod(
       Method method, GapicBatchingSettings batchingSettings) {
-    TypeNode builderType = toType(REQUEST_BUILDER_REF, method.inputType());
+    TypeNode builderType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setEnclosingClassName(method.inputType().reference().name())
+                .setName("Builder")
+                .setPakkage(method.inputType().reference().pakkage())
+                .build());
+
     VariableExpr builderVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(builderType).setName("builder").build());
@@ -220,9 +228,10 @@ public class BatchingDescriptorComposer {
                     .build())
             .build();
 
+    TypeNode anonClassType = toType(REQUEST_BUILDER_REF, method.inputType());
     AnonymousClassExpr requestBuilderAnonClassExpr =
         AnonymousClassExpr.builder()
-            .setType(builderType)
+            .setType(anonClassType)
             .setStatements(
                 Arrays.asList(
                     ExprStatement.withExpr(
@@ -237,7 +246,7 @@ public class BatchingDescriptorComposer {
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
-        .setReturnType(builderType)
+        .setReturnType(anonClassType)
         .setName("getRequestBuilder")
         .setReturnExpr(requestBuilderAnonClassExpr)
         .build();
