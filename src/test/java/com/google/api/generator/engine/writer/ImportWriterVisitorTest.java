@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.SuperObjectValue;
@@ -937,6 +938,37 @@ public class ImportWriterVisitorTest {
     UnaryOperationExpr unaryOperationExpr = UnaryOperationExpr.postfixIncrementWithExpr(expr);
     unaryOperationExpr.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+  }
+
+  @Test
+  public void writeRelationalOperationExprImports() {
+    MethodInvocationExpr lhsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .setMethodName("getSomething")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setStaticReferenceType(someType)
+            .setReturnType(TypeNode.STRING)
+            .build();
+    RelationalOperationExpr relationalOperationExpr =
+        RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
+    relationalOperationExpr.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            createLines(2),
+            "import com.google.api.generator.engine.SomeClass;\n",
+            "import com.google.api.generator.engine.ast.Expr;\n\n"));
   }
 
   @Test
