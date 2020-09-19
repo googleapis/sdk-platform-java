@@ -7,13 +7,14 @@ def _junit_output_impl(ctx):
     command = """
     mkdir local_tmp  
     TEST_OUTPUT_HOME="$(pwd)/local_tmp" \
-    {test_runner_path} $@ &&
+    {test_runner_path} $@
     cd local_tmp 
     zip -r ../{output} .
-        """.format(
-            test_runner_path = test_runner.path,
-            output=output.path,
-        )
+    """.format(
+        test_runner_path = test_runner.path,
+        output=output.path,
+    )
+
     ctx.actions.run_shell(
         inputs = inputs,
         outputs = [output],
@@ -43,7 +44,7 @@ junit_output_zip = rule(
 )
     
 def _overwrite_golden_impl(ctx):
-    script_content = """\
+    script_content = """
     #!/bin/bash
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
     unzip -ao {unit_test_results} -d src/test/java
