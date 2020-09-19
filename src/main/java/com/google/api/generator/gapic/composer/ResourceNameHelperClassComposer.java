@@ -312,6 +312,18 @@ public class ResourceNameHelperClassComposer {
                 .setValueExpr(checkNotNullExpr)
                 .build());
       }
+      // Initialize the rest to null.
+      ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+      for (String token : getTokenSet(tokenHierarchies)) {
+        if (tokens.contains(token)) {
+          continue;
+        }
+        bodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(patternTokenVarExprs.get(token))
+                .setValueExpr(nullExpr)
+                .build());
+      }
 
       if (hasVariants) {
         AssignmentExpr pathTemplateAssignExpr =
