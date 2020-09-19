@@ -25,10 +25,9 @@ public class Utils {
    * Save the generated code from JUnit test to a file for updating goldens. These files will be
    * saved as a zip file, then unzipped to overwrite goldens files. The relative path
    * `com/google/..` which is identical with the location of goldens files will help us easily
-   * replace the original goldens.
-   *
-   * <p>For example: `src/test/java/com/google/api/generator/gapic/composer/ComposerTest.java` will
-   * save the generated code into a file called `ComposerTest.golden` at
+   * replace the original goldens. For example:
+   * `src/test/java/com/google/api/generator/gapic/composer/ComposerTest.java` will save the
+   * generated code into a file called `ComposerTest.golden` at
    * `$TEST_OUTPUT_HOME/com/google/api/generator/gapic/composer/goldens/ComposerTest.golden`.
    *
    * @param clazz the test class.
