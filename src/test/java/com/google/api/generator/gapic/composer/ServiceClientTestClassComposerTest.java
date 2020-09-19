@@ -111,7 +111,7 @@ public class ServiceClientTestClassComposerTest {
           + "  }\n"
           + "\n"
           + "  @After\n"
-          + "  public static void tearDown() throws Exception {\n"
+          + "  public void tearDown() throws Exception {\n"
           + "    client.close();\n"
           + "  }\n"
           + "}\n";

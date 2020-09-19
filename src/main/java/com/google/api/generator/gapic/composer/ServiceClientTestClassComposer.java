@@ -365,7 +365,6 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("After"))))
         .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
         .setName("tearDown")
         .setThrowsExceptions(
