@@ -20,6 +20,7 @@ import com.google.api.core.ApiFutures;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
@@ -43,6 +44,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.SuperObjectValue;
 import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -75,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
@@ -892,36 +895,42 @@ public class ServiceClientClassComposer implements ClassComposer {
       if (!method.isPaged()) {
         continue;
       }
-      nestedClasses.add(createNestedRpcPagedResponseClass(method, messageTypes, types));
+      // Find the repeated field.
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      TypeNode repeatedResponseType = null;
+      for (Field field : methodOutputMessage.fields()) {
+        if (field.isRepeated() && !field.isMap()) {
+          Reference repeatedGenericRef = field.type().reference().generics().get(0);
+          repeatedResponseType = TypeNode.withReference(repeatedGenericRef);
+          break;
+        }
+      }
+
+      Preconditions.checkNotNull(
+          repeatedResponseType,
+          String.format(
+              "No repeated field found on message %s for method %s",
+              methodOutputMessage.name(), method.name()));
+
+      nestedClasses.add(
+          createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, types));
+      nestedClasses.add(
+          createNestedRpcPageClass(method, repeatedResponseType, messageTypes, types));
     }
 
     return nestedClasses;
   }
 
   private static ClassDefinition createNestedRpcPagedResponseClass(
-      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
     Preconditions.checkState(
         method.isPaged(), String.format("Expected method %s to be paged", method.name()));
 
     String className = String.format("%sPagedResponse", JavaStyle.toUpperCamelCase(method.name()));
     TypeNode thisClassType = types.get(className);
-
-    // Find the repeated field.
-    Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
-    TypeNode repeatedResponseType = null;
-    for (Field field : methodOutputMessage.fields()) {
-      if (field.isRepeated() && !field.isMap()) {
-        Reference repeatedGenericRef = field.type().reference().generics().get(0);
-        repeatedResponseType = TypeNode.withReference(repeatedGenericRef);
-        break;
-      }
-    }
-
-    Preconditions.checkNotNull(
-        repeatedResponseType,
-        String.format(
-            "No repeated field found on message %s for method %s",
-            methodOutputMessage.name(), method.name()));
 
     String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
     TypeNode methodPageType = types.get(String.format("%sPage", upperJavaMethodName));
@@ -1097,6 +1106,153 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.add(createAsyncMethod);
     javaMethods.add(privateCtor);
+
+    return ClassDefinition.builder()
+        .setIsNested(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(true)
+        .setExtendsType(classExtendsType)
+        .setName(className)
+        .setMethods(javaMethods)
+        .build();
+  }
+
+  private static ClassDefinition createNestedRpcPageClass(
+      Method method,
+      TypeNode repeatedResponseType,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
+    Preconditions.checkState(
+        method.isPaged(), String.format("Expected method %s to be paged", method.name()));
+
+    String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
+    String className = String.format("%sPage", upperJavaMethodName);
+    TypeNode classType = types.get(className);
+    TypeNode classExtendsType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(AbstractPage.class)
+                .setGenerics(
+                    Arrays.asList(
+                            method.inputType(),
+                            method.outputType(),
+                            repeatedResponseType,
+                            classType)
+                        .stream()
+                        .map(t -> t.reference())
+                        .collect(Collectors.toList()))
+                .build());
+
+    // Private constructor.
+    VariableExpr contextVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("context")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(PageContext.class)
+                            .setGenerics(
+                                Arrays.asList(
+                                        method.inputType(),
+                                        method.outputType(),
+                                        repeatedResponseType)
+                                    .stream()
+                                    .map(t -> t.reference())
+                                    .collect(Collectors.toList()))
+                            .build()))
+                .build());
+    VariableExpr responseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("response").setType(method.outputType()).build());
+    MethodDefinition privateCtor =
+        MethodDefinition.constructorBuilder()
+            .setScope(ScopeNode.PRIVATE)
+            .setReturnType(classType)
+            .setArguments(
+                Arrays.asList(contextVarExpr, responseVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(
+                        ReferenceConstructorExpr.superBuilder()
+                            .setType(classExtendsType)
+                            .setArguments(contextVarExpr, responseVarExpr)
+                            .build())))
+            .build();
+
+    // createEmptyPage method.
+    ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+    MethodDefinition createEmptyPageMethod =
+        MethodDefinition.builder()
+            .setScope(ScopeNode.PRIVATE)
+            .setIsStatic(true)
+            .setReturnType(classType)
+            .setName("createEmptyPage")
+            .setReturnExpr(
+                NewObjectExpr.builder().setType(classType).setArguments(nullExpr, nullExpr).build())
+            .build();
+
+    // createPage method.
+    MethodDefinition createPageMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(classType)
+            .setName("createPage")
+            .setArguments(
+                Arrays.asList(contextVarExpr, responseVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(
+                NewObjectExpr.builder()
+                    .setType(classType)
+                    .setArguments(contextVarExpr, responseVarExpr)
+                    .build())
+            .build();
+
+    // createPageAsync method.
+    Function<TypeNode, TypeNode> futureTypeFn =
+        t ->
+            TypeNode.withReference(
+                ConcreteReference.builder()
+                    .setClazz(ApiFuture.class)
+                    .setGenerics(Arrays.asList(t.reference()))
+                    .build());
+    VariableExpr futureResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName("futureResponse")
+                .setType(futureTypeFn.apply(method.outputType()))
+                .build());
+    TypeNode futurePageType = futureTypeFn.apply(classType);
+    MethodDefinition createPageAsyncMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(futurePageType)
+            .setName("createPageAsync")
+            .setArguments(
+                Arrays.asList(contextVarExpr, futureResponseVarExpr).stream()
+                    .map(e -> e.toBuilder().setIsDecl(true).build())
+                    .collect(Collectors.toList()))
+            .setReturnExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        ValueExpr.withValue(SuperObjectValue.withType(classExtendsType)))
+                    .setMethodName("createPageAsync")
+                    .setArguments(contextVarExpr, futureResponseVarExpr)
+                    .setReturnType(futurePageType)
+                    .build())
+            .build();
+
+    // Build the class.
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    javaMethods.add(privateCtor);
+    javaMethods.add(createEmptyPageMethod);
+    javaMethods.add(createPageMethod);
+    javaMethods.add(createPageAsyncMethod);
 
     return ClassDefinition.builder()
         .setIsNested(true)
