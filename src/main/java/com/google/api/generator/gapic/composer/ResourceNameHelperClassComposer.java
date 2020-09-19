@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -166,11 +167,15 @@ public class ResourceNameHelperClassComposer {
       List<List<String>> tokenHierarchies) {
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     return tokenSet.stream()
-        .map(
-            t ->
-                VariableExpr.withVariable(
-                    Variable.builder().setName(t).setType(TypeNode.STRING).build()))
-        .collect(Collectors.toMap(v -> v.variable().identifier().name(), v -> v));
+        .collect(
+            Collectors.toMap(
+                t -> t,
+                t ->
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName(JavaStyle.toLowerCamelCase(t))
+                            .setType(TypeNode.STRING)
+                            .build())));
   }
 
   private static List<Statement> createClassStatements(
@@ -281,19 +286,6 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    if (hasVariants) {
-      MethodDefinition deprecatedCtor =
-          MethodDefinition.constructorBuilder()
-              .setScope(ScopeNode.PROTECTED)
-              .setAnnotations(
-                  Arrays.asList(
-                      AnnotationNode.withType(
-                          TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
-              .setReturnType(thisClassType)
-              .build();
-      javaMethods.add(deprecatedCtor);
-    }
-
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       List<Expr> bodyExprs = new ArrayList<>();
@@ -476,6 +468,7 @@ public class ResourceNameHelperClassComposer {
       MethodInvocationExpr returnExpr =
           MethodInvocationExpr.builder().setMethodName(builderMethodName).build();
       for (String token : tokens) {
+        String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
         returnExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(returnExpr)
@@ -484,7 +477,10 @@ public class ResourceNameHelperClassComposer {
                 .setArguments(
                     Arrays.asList(
                         VariableExpr.withVariable(
-                            Variable.builder().setName(token).setType(TypeNode.STRING).build())))
+                            Variable.builder()
+                                .setName(javaTokenVarName)
+                                .setType(TypeNode.STRING)
+                                .build())))
                 .build();
       }
       returnExpr =
@@ -888,7 +884,7 @@ public class ResourceNameHelperClassComposer {
     VariableExpr formattedStringVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("formattedString").setType(TypeNode.STRING).build());
-    MethodInvocationExpr returnOrExpr =
+    Expr returnOrExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(templateFinalVarExprs.get(0))
             .setMethodName("matches")
@@ -896,20 +892,15 @@ public class ResourceNameHelperClassComposer {
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     for (int i = 1; i < templateFinalVarExprs.size(); i++) {
-      // TODO(miraleung): Use actual or operations here.
       returnOrExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(returnOrExpr)
-              .setMethodName("todoOr")
-              .setArguments(
-                  Arrays.asList(
-                      MethodInvocationExpr.builder()
-                          .setExprReferenceExpr(templateFinalVarExprs.get(i))
-                          .setMethodName("matches")
-                          .setArguments(Arrays.asList(formattedStringVarExpr))
-                          .build()))
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
+          LogicalOperationExpr.logicalOrWithExprs(
+              returnOrExpr,
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(templateFinalVarExprs.get(i))
+                  .setMethodName("matches")
+                  .setArguments(Arrays.asList(formattedStringVarExpr))
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build());
     }
 
     return MethodDefinition.builder()
