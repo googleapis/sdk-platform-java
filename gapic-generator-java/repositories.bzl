@@ -99,24 +99,6 @@ def com_google_api_generator_repositories():
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
-    # TODO(miraleung): Remove these gax imports when gax-java's Bazel build PRs have been submitted.
-    _gax_java_version = PROPERTIES["version.com_google_gax_java"]
-
-    # Use the Maven artifact because a full bazel-build requires pulling in many transitive deps.
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_java",
-        artifact = "com.google.api:gax:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_grpc",
-        artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
     # grpc-proto doesn't have releases, so we use hashes instead.
     _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
     _maybe(
