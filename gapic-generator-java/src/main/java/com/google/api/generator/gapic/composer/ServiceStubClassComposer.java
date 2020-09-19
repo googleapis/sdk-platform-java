@@ -159,7 +159,7 @@ public class ServiceStubClassComposer implements ClassComposer {
             (isLroCallable ? "Operation" : isPaged ? "Paged" : ""));
     List<Reference> genericRefs = new ArrayList<>();
     genericRefs.add(method.inputType().reference());
-    if (method.hasLro()) {
+    if (method.hasLro() && isLroCallable) {
       genericRefs.add(method.lro().responseType().reference());
       genericRefs.add(method.lro().metadataType().reference());
     } else if (isPaged) {
