@@ -148,4 +148,26 @@ public class TypeNodeTest {
     assertThrows(
         IllegalStateException.class, () -> TypeNode.withReference(ConcreteReference.wildcard()));
   }
+
+  @Test
+  public void isBoxedType_basic() {
+    assertTrue(TypeNode.isBoxedType(TypeNode.INT_OBJECT));
+    assertTrue(TypeNode.isBoxedType(TypeNode.BOOLEAN_OBJECT));
+    assertTrue(TypeNode.isBoxedType(TypeNode.DOUBLE_OBJECT));
+    assertTrue(
+        TypeNode.isBoxedType(TypeNode.withReference(ConcreteReference.withClazz(Long.class))));
+
+    assertFalse(TypeNode.isBoxedType(TypeNode.BOOLEAN));
+    assertFalse(TypeNode.isBoxedType(TypeNode.INT));
+    assertFalse(TypeNode.isBoxedType(TypeNode.FLOAT));
+
+    assertFalse(TypeNode.isBoxedType(TypeNode.STRING));
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    assertFalse(TypeNode.isBoxedType(someType));
+  }
 }
