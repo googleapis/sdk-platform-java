@@ -141,6 +141,7 @@ public class ResourceReferenceParser {
             "%s/%s",
             resourceTypeString.substring(0, resourceTypeString.indexOf(SLASH)),
             JavaStyle.toUpperCamelCase(parentVariableName));
+
     ResourceName parentResourceName =
         ResourceName.builder()
             .setVariableName(parentVariableName)
