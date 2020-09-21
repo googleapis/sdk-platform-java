@@ -29,6 +29,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.SourceCodeInfoLocation;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -55,6 +56,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,6 +65,9 @@ public class Parser {
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
+
+  // Allow other parsers to access this.
+  protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
     public GapicParserException(String errorMessage) {
@@ -147,7 +152,17 @@ public class Parser {
               List<String> oauthScopes =
                   Arrays.asList(serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
 
-              return Service.builder()
+              Service.Builder serviceBuilder = Service.builder();
+              if (fileDescriptor.toProto().hasSourceCodeInfo()) {
+                SourceCodeInfoLocation protoServiceLocation =
+                    SOURCE_CODE_INFO_PARSER.getLocation(s);
+                if (!Objects.isNull(protoServiceLocation)
+                    && !Strings.isNullOrEmpty(protoServiceLocation.getLeadingComments())) {
+                  serviceBuilder.setDescription(protoServiceLocation.getLeadingComments());
+                }
+              }
+
+              return serviceBuilder
                   .setName(s.getName())
                   .setDefaultHost(defaultHost)
                   .setOauthScopes(oauthScopes)
@@ -215,6 +230,7 @@ public class Parser {
   }
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
+    @VisibleForTesting String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -223,14 +239,19 @@ public class Parser {
               fileDescriptors.get(fileToGenerate),
               "Missing file descriptor for [%s]",
               fileToGenerate);
-      resourceNames.putAll(parseResourceNames(fileDescriptor));
+      resourceNames.putAll(parseResourceNames(fileDescriptor, javaPackage));
     }
     return resourceNames;
   }
 
-  // Convenience wrapper for package-external unit tests.
+  // Convenience wrapper for package-external unit tests. DO NOT ADD NEW FUNCTIONALITY HERE.
   public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
-    return ResourceNameParser.parseResourceNames(fileDescriptor);
+    return parseResourceNames(fileDescriptor, TypeParser.getPackage(fileDescriptor));
+  }
+
+  public static Map<String, ResourceName> parseResourceNames(
+      FileDescriptor fileDescriptor, String javaPackage) {
+    return ResourceNameParser.parseResourceNames(fileDescriptor, javaPackage);
   }
 
   @VisibleForTesting
@@ -244,8 +265,18 @@ public class Parser {
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
+      Method.Builder methodBuilder = Method.builder();
+      if (protoMethod.getFile().toProto().hasSourceCodeInfo()) {
+        SourceCodeInfoLocation protoMethodLocation =
+            SOURCE_CODE_INFO_PARSER.getLocation(protoMethod);
+        if (!Objects.isNull(protoMethodLocation)
+            && !Strings.isNullOrEmpty(protoMethodLocation.getLeadingComments())) {
+          methodBuilder.setDescription(protoMethodLocation.getLeadingComments());
+        }
+      }
+
       methods.add(
-          Method.builder()
+          methodBuilder
               .setName(protoMethod.getName())
               .setInputType(inputType)
               .setOutputType(TypeParser.parseType(protoMethod.getOutputType()))
@@ -358,7 +389,17 @@ public class Parser {
       }
     }
 
-    return Field.builder()
+    Field.Builder fieldBuilder = Field.builder();
+    if (fieldDescriptor.getFile().toProto().hasSourceCodeInfo()) {
+      SourceCodeInfoLocation protoFieldLocation =
+          SOURCE_CODE_INFO_PARSER.getLocation(fieldDescriptor);
+      if (!Objects.isNull(protoFieldLocation)
+          && !Strings.isNullOrEmpty(protoFieldLocation.getLeadingComments())) {
+        fieldBuilder.setDescription(protoFieldLocation.getLeadingComments());
+      }
+    }
+
+    return fieldBuilder
         .setName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
         .setIsRepeated(fieldDescriptor.isRepeated())
@@ -392,5 +433,33 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     return fileDescriptors;
+  }
+
+  private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+    Map<String, Integer> javaPackageCount = new HashMap<>();
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    for (String fileToGenerate : request.getFileToGenerateList()) {
+      FileDescriptor fileDescriptor =
+          Preconditions.checkNotNull(
+              fileDescriptors.get(fileToGenerate),
+              "Missing file descriptor for [%s]",
+              fileToGenerate);
+
+      String javaPackage = fileDescriptor.getOptions().getJavaPackage();
+      if (Strings.isNullOrEmpty(javaPackage)) {
+        continue;
+      }
+      if (javaPackageCount.containsKey(javaPackage)) {
+        javaPackageCount.put(javaPackage, javaPackageCount.get(javaPackage) + 1);
+      } else {
+        javaPackageCount.put(javaPackage, 1);
+      }
+    }
+
+    String finalJavaPackage =
+        javaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+    Preconditions.checkState(
+        !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
+    return finalJavaPackage;
   }
 }

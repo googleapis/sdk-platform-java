@@ -2060,6 +2060,60 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeRelationalOperationExpr_equalTo() {
+    VariableExpr variableExprLHS =
+        VariableExpr.withVariable(
+            Variable.builder().setType(TypeNode.BOOLEAN_OBJECT).setName("isGood").build());
+    MethodInvocationExpr methodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("isBad")
+            .setReturnType(TypeNode.BOOLEAN)
+            .build();
+
+    RelationalOperationExpr equalToOperationExpr =
+        RelationalOperationExpr.equalToWithExprs(variableExprLHS, methodInvocationExpr);
+    equalToOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("isGood == isBad()");
+  }
+
+  @Test
+  public void writeRelationOperationExpr_notEqualTo() {
+    TypeNode someType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("SomeClass")
+                .setPakkage("com.google.api.generator.engine")
+                .build());
+    MethodInvocationExpr lhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getName")
+            .setStaticReferenceType(someType)
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+
+    RelationalOperationExpr notEqualToOperationExpr =
+        RelationalOperationExpr.notEqualToWithExprs(lhsExpr, rhsExpr);
+    notEqualToOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("SomeClass.getName() != null");
+  }
+
+  @Test
+  public void writeRelationalOperationExpr_lessThan() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("i", TypeNode.INT));
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getMaxNumber")
+            .setReturnType(TypeNode.INT)
+            .build();
+
+    RelationalOperationExpr lessThanWithExprs =
+        RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    lessThanWithExprs.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("i < getMaxNumber()");
+  }
+
+  @Test
   public void writeLogicalOperationExpr_logicalAnd() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));
     VaporReference ref =

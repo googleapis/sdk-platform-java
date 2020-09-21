@@ -326,7 +326,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     Expr initLocalSettingsExpr =
         AssignmentExpr.builder()
-            .setVariableExpr(localSettingsVarExpr)
+            .setVariableExpr(localSettingsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(settingsBuilderExpr)
             .build();
 
@@ -365,7 +365,6 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("After"))))
         .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
         .setName("tearDown")
         .setThrowsExceptions(

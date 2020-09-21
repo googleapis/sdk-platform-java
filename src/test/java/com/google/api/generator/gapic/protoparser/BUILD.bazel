@@ -8,6 +8,7 @@ TESTS = [
     "ResourceNameParserTest",
     "ResourceReferenceParserTest",
     "ServiceConfigParserTest",
+    "SourceCodeInfoParserTest",
 ]
 
 filegroup(
@@ -19,6 +20,7 @@ filegroup(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/testdata:basic_proto_descriptor",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],

@@ -48,6 +48,7 @@ public class ResourceReferenceParserTest {
   public void parseParentResourceName_createFromPattern() {
     String resourceNamePackage = String.format("%s.common", MAIN_PACKAGE);
     String domainName = "cloudbilling.googleapis.com";
+    String description = "This is the resource name description";
     String resourceTypeString = String.format("%s/BillingAccount", domainName);
     String parentResourceTypeString = String.format("%s/Project", domainName);
     Map<String, ResourceName> patternsToResourceNames = new HashMap<>();
@@ -59,6 +60,7 @@ public class ResourceReferenceParserTest {
             MAIN_PACKAGE,
             resourceNamePackage,
             resourceTypeString,
+            description,
             patternsToResourceNames);
     assertTrue(parentResourceNameOpt.isPresent());
 
@@ -67,6 +69,7 @@ public class ResourceReferenceParserTest {
     assertEquals(Arrays.asList(parentPattern), parentResourceName.patterns());
     assertEquals(parentResourceTypeString, parentResourceName.resourceTypeString());
     assertEquals(resourceNamePackage, parentResourceName.pakkage());
+    assertEquals(description, parentResourceName.description());
     assertEquals(
         TypeNode.withReference(
             VaporReference.builder()
@@ -93,6 +96,7 @@ public class ResourceReferenceParserTest {
         ResourceReferenceParser.parseParentResourceName(
             "projects/{project}/folders/{folder}/documents/{document}",
             MAIN_PACKAGE,
+            null,
             MAIN_PACKAGE,
             "cloudresourcemanager.googleapis.com/Document",
             patternsToResourceNames);
@@ -109,6 +113,7 @@ public class ResourceReferenceParserTest {
         ResourceReferenceParser.parseParentResourceName(
             "projects/{project}/billingAccounts",
             MAIN_PACKAGE,
+            null,
             MAIN_PACKAGE,
             "cloudbilling.googleapis.com/Feature",
             new HashMap<String, ResourceName>());

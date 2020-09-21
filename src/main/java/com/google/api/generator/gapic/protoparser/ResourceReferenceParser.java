@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import javax.annotation.Nullable;
 
 public class ResourceReferenceParser {
   private static final String EMPTY_STRING = "";
@@ -39,6 +40,7 @@ public class ResourceReferenceParser {
   public static List<ResourceName> parseResourceNames(
       ResourceReference resourceReference,
       String servicePackage,
+      @Nullable String description,
       Map<String, ResourceName> resourceNames,
       Map<String, ResourceName> patternsToResourceNames) {
     ResourceName resourceName = resourceNames.get(resourceReference.resourceTypeString());
@@ -62,6 +64,7 @@ public class ResourceReferenceParser {
               servicePackage,
               resourceName.pakkage(),
               resourceName.resourceTypeString(),
+              description,
               patternsToResourceNames);
       // Prevent duplicates.
       if (parentResourceNameOpt.isPresent()
@@ -80,6 +83,7 @@ public class ResourceReferenceParser {
       String servicePackage,
       String resourcePackage,
       String resourceTypeString,
+      @Nullable String description,
       Map<String, ResourceName> patternsToResourceNames) {
     Optional<String> parentPatternOpt = parseParentPattern(pattern);
     if (!parentPatternOpt.isPresent()) {
@@ -137,12 +141,14 @@ public class ResourceReferenceParser {
             "%s/%s",
             resourceTypeString.substring(0, resourceTypeString.indexOf(SLASH)),
             JavaStyle.toUpperCamelCase(parentVariableName));
+
     ResourceName parentResourceName =
         ResourceName.builder()
             .setVariableName(parentVariableName)
             .setPakkage(pakkage)
             .setResourceTypeString(parentResourceTypeString)
             .setPatterns(Arrays.asList(parentPattern))
+            .setDescription(description)
             .build();
     patternsToResourceNames.put(parentPattern, parentResourceName);
 
