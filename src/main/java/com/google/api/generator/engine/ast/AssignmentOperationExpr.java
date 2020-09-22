@@ -110,20 +110,20 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
         return TypeNode.isNumericType(valueType);
       }
       // LHS is integer boxed type, RHS should be any numeric type except long, float, double.
-      if (variableType.equals(TypeNode.INT_OBJECT)) {
+      if (variableType.equals(TypeNode.INT)) {
         return TypeNode.isNumericType(valueType)
             && !(valueType.equals(TypeNode.LONG) || TypeNode.isFloatingPointType(valueType));
       }
       // LHS is long boxed type, RHS should be any numeric type except float, double.
-      if (variableType.equals(TypeNode.LONG_OBJECT)) {
+      if (variableType.equals(TypeNode.LONG)) {
         return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
       }
       // LHS is integer boxed type, RHS should be any numeric type except double.
-      if (variableType.equals(TypeNode.FLOAT_OBJECT)) {
+      if (variableType.equals(TypeNode.FLOAT)) {
         return TypeNode.isNumericType(valueType) && !valueType.equals(TypeNode.DOUBLE);
       }
       // LHS is integer boxed type, RHS should be any numeric type or any numeric boxed type.
-      if (variableType.equals(TypeNode.DOUBLE_OBJECT)) {
+      if (variableType.equals(TypeNode.DOUBLE)) {
         return TypeNode.isNumericType(valueType);
       }
       // *= operator does not support boxed Short, Character, Byte, null, reference, void type.
