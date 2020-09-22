@@ -36,7 +36,7 @@ public class SaveCodegen {
   public static void saveCodegenToFile(Class clazz, String fileName, String codegen) {
     // This system environment variable `TEST_OUTPUT_HOME` is used to specify a folder
     // which contains generated output from JUnit test.
-    // It will be set when running `bazel run testTarget.update` command.
+    // It will be set when running `bazel run testTarget_update` command.
     String testOutputHome = System.getenv("TEST_OUTPUT_HOME");
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);

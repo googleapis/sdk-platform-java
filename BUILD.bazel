@@ -47,7 +47,7 @@ java_binary(
 )
 
 # JUnit runner binary, this is used to generate test output for updating goldens files.
-# Run `bazel run testTarget.update` will trigger this runner.
+# Run `bazel run testTarget_update` will trigger this runner.
 java_binary(
     name = "junit_runner",
     srcs = [
