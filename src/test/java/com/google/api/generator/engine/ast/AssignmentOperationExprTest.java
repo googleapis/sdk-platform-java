@@ -19,41 +19,9 @@ import static org.junit.Assert.assertThrows;
 import org.junit.Test;
 
 public class AssignmentOperationExprTest {
-  /** =========== Multiply And Assignment Operators: Variable is declaration ================ */
-  @Test
-  public void multiplyAndAssignmentOperationExpr_invalidVariableExprIsDecl() {
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
-    VariableExpr lhsExpr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
-    assertThrows(
-        IllegalStateException.class,
-        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
-  }
-
-  @Test
-  public void multiplyAndAssignmentOperationExpr_invalidValueExprIsDecl() {
-    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
-    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
-    VariableExpr rhsExpr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
-    assertThrows(
-        IllegalStateException.class,
-        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
-  }
-
-  @Test
-  public void multiplyAndAssignmentOperationExpr_invalidVariableExprAndValueExprIsDecl() {
-    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
-    VariableExpr lhsExpr = VariableExpr.builder().setVariable(lVariable).setIsDecl(true).build();
-    Variable rVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
-    VariableExpr rhsExpr = VariableExpr.builder().setVariable(rVariable).setIsDecl(true).build();
-    assertThrows(
-        IllegalStateException.class,
-        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
-  }
-
   /** ========= Multiply And Assignment Operators: VariableExpr is numeric types ============== */
   @Test
-  public void multiplyAndAssignmentOperationExpr_validNumericMatched() {
+  public void validMultiplyAndAssignmentOperationExpr_numericMatched() {
     // No need swap test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
@@ -62,7 +30,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validNumericUnmatched() {
+  public void validMultiplyAndAssignmentOperationExpr_numericUnmatched() {
     // No need swap test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     ValueExpr rhsExpr = createValueExpr(TypeNode.INT, "5");
@@ -71,8 +39,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validNumericMatchedBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validIntegerMatchedBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_numericMatchedBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerMatchedBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -80,8 +48,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validNumericUnmatchedBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validIntegerBoxedWithShortType".
+  public void validMultiplyAndAssignmentOperationExpr_numericUnmatchedBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerBoxedWithShortType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -89,8 +57,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validNumericWithFloatType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithFloatType".
+  public void validMultiplyAndAssignmentOperationExpr_numericWithFloatType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerBoxedWithFloatType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -98,8 +66,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validDoubleWithIntegerBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithDoubleType".
+  public void validMultiplyAndAssignmentOperationExpr_doubleWithIntegerBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerBoxedWithDoubleType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -107,8 +75,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validDoubleWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidLongBoxedWithDoubleType".
+  public void validMultiplyAndAssignmentOperationExpr_doubleWithLongBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_longBoxedWithDoubleType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -116,8 +84,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validLongWithIntegerBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithLongType".
+  public void validMultiplyAndAssignmentOperationExpr_longWithIntegerBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithLongType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -125,8 +93,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validFloatBoxedWithIntegerType".
+  public void validMultiplyAndAssignmentOperationExpr_integerWithFloatBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_floatBoxedWithIntegerType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -134,8 +102,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidLongBoxedWithFloatType".
+  public void validMultiplyAndAssignmentOperationExpr_validFloatWithLongBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_longBoxedWithFloatType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -143,8 +111,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidBooleanBoxedWithNumericType".
+  public void invalidMultiplyAndAssignmentOperationExpr_numericWithBooleanBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_booleanBoxedWithNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "y");
     assertThrows(
@@ -153,8 +121,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanType".
+  public void invalidMultiplyAndAssignmentOperationExpr_numericWithBooleanType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_numericWithBooleanType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
     assertThrows(
@@ -163,8 +131,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithReferenceType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidReferencedWithNumericType".
+  public void invalidMultiplyAndAssignmentOperationExpr_numericWithReferenceType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_feferencedWithNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -173,7 +141,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidNumericWithNewObject() {
+  public void invalidMultiplyAndAssignmentOperationExpr_NumericWithNewObject() {
     // No Need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -184,8 +152,8 @@ public class AssignmentOperationExprTest {
 
   /** ==== Multiply And Assignment Operators: LHS data type is boolean and its boxed type ===== */
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidBooleanWithNumericType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanType".
+  public void invalidMultiplyAndAssignmentOperationExpr_booleanWithNumericType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_numericWithBooleanType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
@@ -194,8 +162,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidBooleanBoxedWithNumericType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithBooleanBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_booleanBoxedWithNumericType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_numericWithBooleanBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "x");
     ValueExpr rhsExpr = createValueExpr(TypeNode.INT, "5");
     assertThrows(
@@ -206,8 +174,8 @@ public class AssignmentOperationExprTest {
   /** ======== Multiply And Assignment Operators: LHS data type is Integer Box Type ============ */
   // RHS should be int, char, short, byte or these types' boxed types.
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerMatchedBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validNumericMatchedBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_integerMatchedBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_numericMatchedBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     ValueExpr rhsExpr = createValueExpr(TypeNode.INT, "5");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -215,8 +183,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerBoxedWithShortType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validNumericUnmatchedBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_integerBoxedWithShortType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_numericUnmatchedBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.SHORT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -224,8 +192,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerBoxedWithShortBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validShortBoxedWithIntegerBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_integerBoxedWithShortBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_shortBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.SHORT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -233,8 +201,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerBoxedWithCharacterBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validShortBoxedWithIntegerBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_integerBoxedWithCharacterBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_shortBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -242,8 +210,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validIntegerBoxedWithByteBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validByteBoxedWithIntegerBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_integerBoxedWithByteBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_byteBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BYTE_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -251,8 +219,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithFloatType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validNumericWithFloatType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithFloatType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_numericWithFloatType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT, "y");
     assertThrows(
@@ -261,8 +229,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validFloatBoxedWithIntegerBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithFloatBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_floatBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -271,8 +239,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithDoubleType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validDoubleWithIntegerBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithDoubleType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_doubleWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE, "y");
     assertThrows(
@@ -281,8 +249,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithDoubleBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validDoubleBoxedWithIntegerBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithDoubleBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_doubleBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     assertThrows(
@@ -291,8 +259,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithLongType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validLongWithIntegerBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithLongType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_longWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG, "y");
     assertThrows(
@@ -301,8 +269,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validLongBoxedWithIntegerBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithLongBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_longBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     assertThrows(
@@ -313,8 +281,8 @@ public class AssignmentOperationExprTest {
   /** ==== Multiply And Assignment Operators: LHS data type is Float boxed type ====== */
   // RHS could be numeric or numeric boxed type, beside double and its boxed type.
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatBoxedWithIntegerType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validIntegerWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithIntegerType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     ValueExpr rhsExpr = createValueExpr(TypeNode.INT, "5");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -322,8 +290,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatBoxedWithIntegerBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithIntegerBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -331,8 +299,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatBoxedWithCharBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidCharBoxedWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithCharBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_charBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -340,8 +308,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatBoxedWithByteBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidByteBoxedWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithByteBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_byteBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BYTE_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -349,8 +317,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validFloatBoxedWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidLongBoxedWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithLongBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_longBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -358,8 +326,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithDoubleBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validDoubleBoxedWithFloatBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_floatBoxedWithDoubleBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_doubleBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     assertThrows(
@@ -368,7 +336,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithObjectType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithObjectType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -378,7 +346,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithNullType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithNullType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -388,8 +356,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithReferenceType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidReferenceWithFloatBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithReferenceType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_referenceWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -400,8 +368,8 @@ public class AssignmentOperationExprTest {
   /** ==== Multiply And Assignment Operators: LHS data type is Short/Char/Byte Boxed Type ====== */
   // RHS has no valid type.
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidByteBoxedWithIntegerBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validIntegerBoxedWithByteBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_byteBoxedWithIntegerBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_integerBoxedWithByteBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BYTE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     assertThrows(
@@ -410,9 +378,9 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidShortBoxedWithIntegerBoxedType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_shortBoxedWithIntegerBoxedType() {
     // Swap test case in
-    // "multiplyAndAssignmentOperationExpr_validCharacterBoxedWithIntegerBoxedType".
+    // "validMultiplyAndAssignmentOperationExpr_validCharacterBoxedWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.SHORT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     assertThrows(
@@ -421,9 +389,9 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validCharacterBoxedWithIntegerBoxedType() {
+  public void validMultiplyAndAssignmentOperationExpr_characterBoxedWithIntegerBoxedType() {
     // Swap test case in
-    // "multiplyAndAssignmentOperationExpr_validIntegerBoxedWithCharacterBoxedType".
+    // "validMultiplyAndAssignmentOperationExpr_integerBoxedWithCharacterBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     assertThrows(
@@ -432,8 +400,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidCharBoxedWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithFloatBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_charBoxedWithFloatBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithFloatBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -442,8 +410,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidByteBoxedWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validFloatBoxedWithByteBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_byteBoxedWithFloatBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_floatBoxedWithByteBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BYTE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -454,9 +422,9 @@ public class AssignmentOperationExprTest {
   /** ======== Multiply And Assignment Operators: LHS data type is Double Boxed Type ============ */
   // RHS could be any numeric type or numeric boxed type.
   @Test
-  public void multiplyAndAssignmentOperationExpr_validDoubleBoxedWithIntegerBoxedType() {
+  public void validMultiplyAndAssignmentOperationExpr_doubleBoxedWithIntegerBoxedType() {
     // Swap test case in
-    // "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithDoubleBoxedType".
+    // "invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithDoubleBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -464,8 +432,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validDoubleBoxedWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithDoubleBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_doubleBoxedWithFloatBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithDoubleBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -473,8 +441,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_validDoubleBoxedWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidLongBoxedWithDoubleBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_doubleBoxedWithLongBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_longBoxedWithDoubleBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -482,8 +450,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidDoubleBoxedWithReferenceType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidReferenceWithDoubleBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithReferenceType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_referenceWithDoubleBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     ValueExpr valueExpr = ValueExpr.withValue(StringObjectValue.withValue("abc"));
     assertThrows(
@@ -492,7 +460,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidDoubleBoxedWithNullType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithNullType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     ValueExpr valueExprExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -502,7 +470,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidDoubleBoxedWithOjectType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithOjectType() {
     // No need swap test.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -513,8 +481,8 @@ public class AssignmentOperationExprTest {
 
   /** ======== Multiply And Assignment Operators: LHS data type is Long boxed type ============ */
   @Test
-  public void multiplyAndAssignmentOperationExpr_validLongBoxedWithIntegerBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidIntegerBoxedWithLongBoxedType".
+  public void validMultiplyAndAssignmentOperationExpr_longBoxedWithIntegerBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_integerBoxedWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
@@ -522,8 +490,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validFloatBoxedWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithFloatBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_floatBoxedWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -532,8 +500,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithFloatType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validFloatWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithFloatType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_floatWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT, "y");
     assertThrows(
@@ -542,8 +510,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithDoubleBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validDoubleBoxedWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithDoubleBoxedType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_doubleBoxedWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     assertThrows(
@@ -552,8 +520,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithDoubleType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_validDoubleWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithDoubleType() {
+    // Swap test case in "validMultiplyAndAssignmentOperationExpr_doubleWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE, "y");
     assertThrows(
@@ -562,8 +530,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithNullType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNullWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithNullType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_nullWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
     assertThrows(
@@ -572,7 +540,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithObjectType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithObjectType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -582,8 +550,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidLongBoxedWithReferenceType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidReferenceWithLongBoxedType".
+  public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithReferenceType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_referenceWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -593,8 +561,8 @@ public class AssignmentOperationExprTest {
 
   /** ======== Multiply And Assignment Operators: LHS data type is Reference Type ============ */
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidReferencedWithNumericType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidNumericWithReferenceType".
+  public void invalidMultiplyAndAssignmentOperationExpr_referencedWithNumericType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_numericWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE, "y");
     assertThrows(
@@ -603,8 +571,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidReferenceWithFloatBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidFloatBoxedWithReferenceType".
+  public void invalidMultiplyAndAssignmentOperationExpr_referenceWithFloatBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -613,8 +581,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidReferenceWithLongBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidLongBoxedWithReferenceType".
+  public void invalidMultiplyAndAssignmentOperationExpr_referenceWithLongBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_longBoxedWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
     assertThrows(
@@ -623,8 +591,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidReferenceWithDoubleBoxedType() {
-    // Swap test case in "multiplyAndAssignmentOperationExpr_invalidDoubleBoxedWithReferenceType".
+  public void invalidMultiplyAndAssignmentOperationExpr_referenceWithDoubleBoxedType() {
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     assertThrows(
@@ -632,9 +600,41 @@ public class AssignmentOperationExprTest {
         () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
   }
 
+  /** =========== Multiply And Assignment Operators: Variable is declaration ================ */
+  @Test
+  public void invalidMultiplyAndAssignmentOperationExpr_variableExprIsDecl() {
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr lhsExpr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
+    assertThrows(
+        IllegalStateException.class,
+        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void invalidMultiplyAndAssignmentOperationExpr_valueExprIsDecl() {
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
+    Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr rhsExpr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void invalidMultiplyAndAssignmentOperationExpr_variableExprAndValueExprIsDecl() {
+    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr lhsExpr = VariableExpr.builder().setVariable(lVariable).setIsDecl(true).build();
+    Variable rVariable = Variable.builder().setName("y").setType(TypeNode.INT).build();
+    VariableExpr rhsExpr = VariableExpr.builder().setVariable(rVariable).setIsDecl(true).build();
+    assertThrows(
+        IllegalStateException.class,
+        () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
+  }
+
   /** ======================= Multiply And Assignment Operators: Void type ===================== */
   @Test
-  public void multiplyAndAssignmentOperationExpr_invalidWithOneVoidType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_voidType() {
     // No need swap case.
     VariableExpr lhsExprExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     MethodInvocationExpr rhsExpr =

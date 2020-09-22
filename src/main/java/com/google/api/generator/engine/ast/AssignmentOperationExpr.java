@@ -73,38 +73,31 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
     private AssignmentOperationExpr build() {
       AssignmentOperationExpr assignmentOperationExpr = autoBuild();
       TypeNode lhsType = assignmentOperationExpr.variableExpr().variable().type();
-      TypeNode rhsType =
-          assignmentOperationExpr.valueExpr() instanceof VariableExpr
-              ? ((VariableExpr) assignmentOperationExpr.valueExpr()).variable().type()
-              : assignmentOperationExpr.valueExpr().type();
+      TypeNode rhsType = assignmentOperationExpr.valueExpr().type();
       OperatorKind operator = assignmentOperationExpr.operatorKind();
 
       // Check if the variable exprs have been declared, if yes, throw error.
       Preconditions.checkState(
-          !assignmentOperationExpr.variableExpr().isDecl()
-              && (assignmentOperationExpr.valueExpr() instanceof VariableExpr
-                  ? !((VariableExpr) assignmentOperationExpr.valueExpr()).isDecl()
-                  : true),
+          !assignmentOperationExpr.variableExpr().isDecl(),
           String.format(
               "Variable `%s` should not be declaration in the variable expression.",
               assignmentOperationExpr.variableExpr().variable().name()));
 
-      // TYPE_CHECK_ERROR_MSG is type checking error message for operators.
-      final String TYPE_CHECK_ERROR_MSG =
+      // errorMsg is type checking error message for operators.
+      final String errorMsg =
           String.format(
               "Assignment operator %s can not be applied to %s, %s.",
               operator, lhsType.toString(), rhsType.toString());
 
       // Check type for multiply and assignment operator (*=).
       if (operator.equals(OperatorKind.ASSIGNMENT_MULTIPLY)) {
-        Preconditions.checkState(
-            isValidMultiplyAssignmentType(lhsType, rhsType), TYPE_CHECK_ERROR_MSG);
+        Preconditions.checkState(isValidMultiplyAssignmentType(lhsType, rhsType), errorMsg);
       }
 
       // Check type for XOR and assignment operator (^=).
       // TODO(summerji): Complete the type-checking for ^= and unit test.
       if (operator.equals(OperatorKind.ASSIGNMENT_XOR)) {
-        Preconditions.checkState(isValidXORAssignmentType(lhsType, rhsType), TYPE_CHECK_ERROR_MSG);
+        Preconditions.checkState(isValidXORAssignmentType(lhsType, rhsType), errorMsg);
       }
       return assignmentOperationExpr;
     }
