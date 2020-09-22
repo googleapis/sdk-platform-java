@@ -29,7 +29,7 @@ TEST_CLASS_NAME = "com.google.api.generator.gapic.dummy.FileDiffInfraDummyTest"
 # Run `bazel run src/test/java/com/google/api/generator/gapic/dummy:FileDiffInfraDummyTest.update`
 # to update goldens as expected generated code.
 updated_golden(
-    name = "FileDiffInfraDummyTest.update",
+    name = "FileDiffInfraDummyTest_update",
     srcs = [
         ":dummy_files",
         "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",

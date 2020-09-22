@@ -9,6 +9,7 @@ def _junit_output_impl(ctx):
     TEST_OUTPUT_HOME="$(pwd)/local_tmp" \
     {test_runner_path} $@
     cd local_tmp 
+    # Zip all files under local_tmp with all nested parent folders except for local_tmp itself.
     zip -r ../{output} .
     """.format(
         test_runner_path = test_runner.path,

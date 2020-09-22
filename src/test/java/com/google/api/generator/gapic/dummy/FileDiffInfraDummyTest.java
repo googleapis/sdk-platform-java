@@ -21,7 +21,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.SaveCodegen;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -53,7 +53,7 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_SIMPLE_CLASS, visitor.write());
+    SaveCodegen.saveCodegenToFile(this.getClass(), GOLDENFILES_SIMPLE_CLASS, visitor.write());
     Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SIMPLE_CLASS);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
@@ -72,7 +72,7 @@ public class FileDiffInfraDummyTest {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
     // Save the generated code to a file for updating goldens if needed.
-    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_CLASS_WITH_HEADER, visitor.write());
+    SaveCodegen.saveCodegenToFile(this.getClass(), GOLDENFILES_CLASS_WITH_HEADER, visitor.write());
     Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_CLASS_WITH_HEADER);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
