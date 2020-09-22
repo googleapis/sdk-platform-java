@@ -35,15 +35,14 @@ junit_output_zip = rule(
             executable = True,
             cfg = "host",
         ),
-        "output_suffix": attr.string(mandatory = False, default = ".zip"),
     },
     outputs = {
-        "output": "%{name}%{output_suffix}",
+        "output": "%{name}%.zip",
     },
     implementation = _junit_output_impl,  
 )
     
-def _overwrite_golden_impl(ctx):
+def _overwritten_golden_impl(ctx):
     script_content = """
     #!/bin/bash
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
@@ -59,7 +58,7 @@ def _overwrite_golden_impl(ctx):
     return [DefaultInfo(executable = ctx.outputs.bin)]
 
 
-overwrite_golden = rule(
+overwritten_golden = rule(
     attrs = {
         "unit_test_results": attr.label(
             mandatory = True,
@@ -69,18 +68,18 @@ overwrite_golden = rule(
         "bin": "%{name}.sh",
     },
     executable = True,
-    implementation = _overwrite_golden_impl,
+    implementation = _overwritten_golden_impl,
 )
 
-def update_golden(name, test_class_name, test_runner, srcs):
-    jnuit_output_name = "%s_output" % name
+def updated_golden(name, test_class_name, srcs):
+    junit_output_name = "%s_output" % name
     junit_output_zip(
-        name = jnuit_output_name,
+        name = junit_output_name,
         test_class_name = test_class_name,
-        test_runner = test_runner,
+        test_runner = "//:junit_runner",
         srcs = srcs,
     )
-    overwrite_golden(
+    overwritten_golden(
         name = name,
-        unit_test_results = ":%s" % jnuit_output_name
+        unit_test_results = ":%s" % junit_output_name
     )
