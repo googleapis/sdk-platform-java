@@ -35,11 +35,9 @@ public class FileDiffInfraDummyTest {
   // created.
   //
   // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and well-tested.
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
-  private static final String GOLDENFILES_SIMPLE_CLASS = "FileDiffInfraDummyTestSimpleClass.golden";
-  private static final String GOLDENFILES_CLASS_WITH_HEADER =
-      "FileDiffInfraDummyTestClassWithHeader.golden";
+  private final String GOLDENFILES_DIRECTORY = getGoldenDir();
+  private final String GOLDENFILES_SIMPLE_CLASS = getClassName() + "SimpleClass.golden";
+  private final String GOLDENFILES_CLASS_WITH_HEADER = getClassName() + "ClassWithHeader.golden";
 
   @Test
   public void simpleClass() {
@@ -86,6 +84,16 @@ public class FileDiffInfraDummyTest {
     LineComment lineComment = LineComment.withComment("test strings comparison.");
     lineComment.accept(visitor);
     Assert.assertCodeEquals("// test strings comparison.", visitor.write());
+  }
+
+  private String getGoldenDir() {
+    return "src/test/java/"
+        + this.getClass().getPackage().getName().replace(".", "/")
+        + "/goldens/";
+  }
+
+  private String getClassName() {
+    return this.getClass().getSimpleName();
   }
 
   private static final String APACHE_LICENSE_STRING =

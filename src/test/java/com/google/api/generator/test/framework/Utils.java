@@ -14,7 +14,6 @@
 
 package com.google.api.generator.test.framework;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -42,12 +41,9 @@ public class Utils {
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     Path testOutputDir = Paths.get(testOutputHome, relativeGoldenDir);
     testOutputDir.toFile().mkdirs();
-    try {
-      File testOutputFile = Paths.get(testOutputHome, relativeGoldenDir, fileName).toFile();
-      FileWriter myWriter = new FileWriter(testOutputFile);
+    try (FileWriter myWriter =
+        new FileWriter(Paths.get(testOutputHome, relativeGoldenDir, fileName).toFile())) {
       myWriter.write(codegen);
-      myWriter.flush();
-      myWriter.close();
     } catch (IOException e) {
       throw new SaveCodegenToFileException(
           String.format(
