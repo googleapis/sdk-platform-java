@@ -24,6 +24,10 @@ public abstract class Field {
 
   public abstract TypeNode type();
 
+  public abstract boolean isMessage();
+
+  public abstract boolean isEnum();
+
   public abstract boolean isRepeated();
 
   public abstract boolean isMap();
@@ -43,7 +47,11 @@ public abstract class Field {
   }
 
   public static Builder builder() {
-    return new AutoValue_Field.Builder().setIsRepeated(false).setIsMap(false);
+    return new AutoValue_Field.Builder()
+        .setIsMessage(false)
+        .setIsEnum(false)
+        .setIsRepeated(false)
+        .setIsMap(false);
   }
 
   @AutoValue.Builder
@@ -51,6 +59,10 @@ public abstract class Field {
     public abstract Builder setName(String name);
 
     public abstract Builder setType(TypeNode type);
+
+    public abstract Builder setIsMessage(boolean isMessage);
+
+    public abstract Builder setIsEnum(boolean isEnum);
 
     public abstract Builder setIsRepeated(boolean isRepeated);
 
