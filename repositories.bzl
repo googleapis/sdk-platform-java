@@ -116,6 +116,16 @@ def com_google_api_generator_repositories():
         artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
+    
+    # This hamcrest-core dependency is for running JUnit test manually, before JUnit 4.11 it's wrapped along with JUnit package. 
+    # But now it has to be explicitly added.
+    _maybe(
+        jvm_maven_import_external,
+        name = "hamcrest-core",
+        artifact = "org.hamcrest:hamcrest-core:1.3",
+        server_urls = ["https://repo.maven.apache.org/maven2/"],
+    )
+    
 
     # grpc-proto doesn't have releases, so we use hashes instead.
     _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
