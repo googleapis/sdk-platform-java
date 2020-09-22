@@ -35,15 +35,35 @@ import java.util.Set;
 
 public class ResourceNameParser {
   /** Returns a map of resource types (strings) to ResourceName POJOs. */
-  public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
-    Map<String, ResourceName> resourceNames = parseResourceNamesFromFile(fileDescriptor);
-    String pakkage = TypeParser.getPackage(fileDescriptor);
+  public static Map<String, ResourceName> parseResourceNames(
+      FileDescriptor fileDescriptor, String javaPackage) {
+    Map<String, ResourceName> resourceNames =
+        parseResourceNamesFromFile(fileDescriptor, javaPackage);
+    String pakkage = fileDescriptor.getOptions().getJavaPackage();
+    if (Strings.isNullOrEmpty(pakkage)) {
+      pakkage = javaPackage;
+    }
     resourceNames.putAll(parseResourceNamesFromMessages(fileDescriptor.getMessageTypes(), pakkage));
     return resourceNames;
   }
 
+  // Convenience wrapper for uni tests. DO NOT ADD ANY NEW FUNCTIONALITY HERE.
+  @VisibleForTesting
+  public static Map<String, ResourceName> parseResourceNames(FileDescriptor fileDescriptor) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return parseResourceNames(fileDescriptor, pakkage);
+  }
+
+  // Convenience wrapper for uni tests. DO NOT ADD ANY NEW FUNCTIONALITY HERE.
   @VisibleForTesting
   static Map<String, ResourceName> parseResourceNamesFromFile(FileDescriptor fileDescriptor) {
+    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return parseResourceNamesFromFile(fileDescriptor, pakkage);
+  }
+
+  @VisibleForTesting
+  static Map<String, ResourceName> parseResourceNamesFromFile(
+      FileDescriptor fileDescriptor, String javaPackage) {
     Map<String, ResourceName> typeStringToResourceNames = new HashMap<>();
     FileOptions fileOptions = fileDescriptor.getOptions();
     if (fileOptions.getExtensionCount(ResourceProto.resourceDefinition) <= 0) {
@@ -51,9 +71,8 @@ public class ResourceNameParser {
     }
     List<ResourceDescriptor> protoResources =
         fileOptions.getExtension(ResourceProto.resourceDefinition);
-    String pakkage = TypeParser.getPackage(fileDescriptor);
     for (ResourceDescriptor protoResource : protoResources) {
-      Optional<ResourceName> resourceNameModelOpt = createResourceName(protoResource, pakkage);
+      Optional<ResourceName> resourceNameModelOpt = createResourceName(protoResource, javaPackage);
       if (!resourceNameModelOpt.isPresent()) {
         continue;
       }

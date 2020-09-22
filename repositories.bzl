@@ -99,22 +99,13 @@ def com_google_api_generator_repositories():
         server_urls = ["https://repo.maven.apache.org/maven2/"],
     )
 
-    # TODO(miraleung): Remove these gax imports when gax-java's Bazel build PRs have been submitted.
-    _gax_java_version = PROPERTIES["version.com_google_gax_java"]
-
-    # Use the Maven artifact because a full bazel-build requires pulling in many transitive deps.
+    # grpc-proto doesn't have releases, so we use hashes instead.
+    _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
     _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_java",
-        artifact = "com.google.api:gax:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_grpc",
-        artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
+        http_archive,
+        name = "io_grpc_proto",
+        urls = ["https://github.com/grpc/grpc-proto/archive/%s.zip" % _io_grpc_proto_prefix],
+        strip_prefix = "grpc-proto-%s" % _io_grpc_proto_prefix,
     )
     
     # This hamcrest-core dependency is for running JUnit test manually, before JUnit 4.11 it's wrapped along with JUnit package. 
@@ -124,16 +115,6 @@ def com_google_api_generator_repositories():
         name = "hamcrest-core",
         artifact = "org.hamcrest:hamcrest-core:1.3",
         server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-    
-
-    # grpc-proto doesn't have releases, so we use hashes instead.
-    _io_grpc_proto_prefix = "0020624375a8ee4c7dd9b3e513e443b90bc28990"  # Aug. 20, 2020.
-    _maybe(
-        http_archive,
-        name = "io_grpc_proto",
-        urls = ["https://github.com/grpc/grpc-proto/archive/%s.zip" % _io_grpc_proto_prefix],
-        strip_prefix = "grpc-proto-%s" % _io_grpc_proto_prefix,
     )
 
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):

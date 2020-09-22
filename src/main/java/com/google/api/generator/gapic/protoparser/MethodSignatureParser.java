@@ -25,7 +25,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +67,8 @@ public class MethodSignatureParser {
         // For resource names, this will be empty.
         List<TypeNode> argumentTypePathAcc = new ArrayList<>();
         // There should be more than one type returned only when we encounter a reousrce name.
-        List<TypeNode> argumentTypes =
-            parseTypeFromArgumentName(
+        Map<TypeNode, String> argumentTypes =
+            parseTypeAndCommentFromArgumentName(
                 argumentName,
                 servicePackage,
                 inputMessage,
@@ -84,14 +83,15 @@ public class MethodSignatureParser {
         argumentNames.add(actualArgumentName);
         argumentNameToOverloads.put(
             actualArgumentName,
-            argumentTypes.stream()
+            argumentTypes.entrySet().stream()
                 .map(
-                    type ->
+                    e ->
                         MethodArgument.builder()
                             .setName(actualArgumentName)
-                            .setType(type)
+                            .setDescription(e.getValue()) // May be null.
+                            .setType(e.getKey())
                             .setIsResourceNameHelper(
-                                argumentTypes.size() > 1 && !type.equals(TypeNode.STRING))
+                                argumentTypes.size() > 1 && !e.getKey().equals(TypeNode.STRING))
                             .setNestedTypes(argumentTypePathAcc)
                             .build())
                 .collect(Collectors.toList()));
@@ -143,7 +143,7 @@ public class MethodSignatureParser {
     return methodArgs;
   }
 
-  private static List<TypeNode> parseTypeFromArgumentName(
+  private static Map<TypeNode, String> parseTypeAndCommentFromArgumentName(
       String argumentName,
       String servicePackage,
       Message inputMessage,
@@ -153,6 +153,8 @@ public class MethodSignatureParser {
       List<TypeNode> argumentTypePathAcc,
       Set<ResourceName> outputArgResourceNames) {
 
+    // Comment values may be null.
+    Map<TypeNode, String> typeToComment = new HashMap<>();
     int dotIndex = argumentName.indexOf(DOT);
     if (dotIndex < 1) {
       Field field = inputMessage.fieldMap().get(argumentName);
@@ -162,19 +164,27 @@ public class MethodSignatureParser {
               "Field %s not found from input message %s values %s",
               argumentName, inputMessage.name(), inputMessage.fieldMap().keySet()));
       if (!field.hasResourceReference()) {
-        return Arrays.asList(field.type());
+        typeToComment.put(field.type(), field.description());
+        return typeToComment;
       }
 
       // Parse the resource name tyeps.
       List<ResourceName> resourceNameArgs =
           ResourceReferenceParser.parseResourceNames(
-              field.resourceReference(), servicePackage, resourceNames, patternsToResourceNames);
+              field.resourceReference(),
+              servicePackage,
+              field.description(),
+              resourceNames,
+              patternsToResourceNames);
       outputArgResourceNames.addAll(resourceNameArgs);
-      List<TypeNode> allFieldTypes = new ArrayList<>();
-      allFieldTypes.add(TypeNode.STRING);
-      allFieldTypes.addAll(
-          resourceNameArgs.stream().map(r -> r.type()).collect(Collectors.toList()));
-      return allFieldTypes;
+      typeToComment.put(
+          TypeNode.STRING,
+          resourceNameArgs.isEmpty() ? null : resourceNameArgs.get(0).description());
+      typeToComment.putAll(
+          resourceNameArgs.stream()
+              .collect(
+                  Collectors.toMap(r -> r.type(), r -> r.hasDescription() ? r.description() : "")));
+      return typeToComment;
     }
 
     Preconditions.checkState(
@@ -204,7 +214,7 @@ public class MethodSignatureParser {
             "Message type %s for field reference %s invalid", firstFieldTypeName, firstFieldName));
 
     argumentTypePathAcc.add(firstFieldType);
-    return parseTypeFromArgumentName(
+    return parseTypeAndCommentFromArgumentName(
         remainingArgumentName,
         servicePackage,
         firstFieldMessage,

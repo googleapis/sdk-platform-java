@@ -283,7 +283,7 @@ public class GrpcServiceStubClassComposerTest {
           + "            pagedExpandTransportSettings, settings.pagedExpandSettings(),"
           + " clientContext);\n"
           + "    this.pagedExpandPagedCallable =\n"
-          + "        callableFactory.createUnaryCallable(\n"
+          + "        callableFactory.createPagedCallable(\n"
           + "            pagedExpandTransportSettings, settings.pagedExpandSettings(),"
           + " clientContext);\n"
           + "    this.waitCallable =\n"

@@ -132,7 +132,7 @@ public class RelationalOperationExprTest {
     // No need swap LHS and RHS test case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
-    RelationalOperationExpr.equalToWithExprs(rhsExpr, rhsExpr);
+    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
 
@@ -143,7 +143,7 @@ public class RelationalOperationExprTest {
     // "notEqualToOperationExpr_validMatchedNumericBoxTYpe".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT, "y");
-    RelationalOperationExpr.equalToWithExprs(rhsExpr, rhsExpr);
+    RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
 
@@ -769,6 +769,215 @@ public class RelationalOperationExprTest {
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
+  }
+
+  /** ================== Less Than Operators: expr types are numeric types =================== */
+  // The expression types on LHS or RHS could be any numeric type or any numeric boxed type.
+  @Test
+  public void lessThanOperationExpr_validMatchedNumericType() {
+    // LHS: Numeric type, RHS: Matched numeric type.
+    // No need swap LHS and RHS test case.
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validUnmatchedNumericType() {
+    // LHS: Numeric type, RHS: Unmatched numeric type.
+    // No need swap LHS and RHS test case.
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.SHORT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validMatchedNumericBoxedType() {
+    // LHS: Numeric type, RHS: Matched numeric type.
+    // Swap case in "lessThanOperationExpr_validNumericBoxedTypeWithMatchedNumericType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validNumericBoxedTypeWithMatchedNumericType() {
+    // LHS: Numeric boxed type, RHS: Matched numeric type.
+    // Swap case in "lessThanOperationExpr_validMatchedNumericBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR_OBJECT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validUnmatchedNumericBoxedType() {
+    // LHS: Numeric type, RHS: Unmatched numeric boxed type.
+    // Swap case in "lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedUnBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedUnBoxedType() {
+    // LHS: Numeric boxed type, RHS: Unmatched numeric type.
+    // Swap case in "lessThanOperationExpr_validUnmatchedNumericBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.BYTE, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validNumericBoxedTypeWithMatchedBoxedType() {
+    // LHS: Numeric boxed type, RHS: Matched numeric boxed type.
+    // No need swap case.
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  @Test
+  public void lessThanOperationExpr_validNumericBoxedTypeWithUnmatchedBoxedType() {
+    // LHS: Numeric boxed type, RHS: Unmatched numeric boxed type.
+    // No need swap case.
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "y");
+    RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    // No exception thrown, so we succeeded.
+  }
+
+  /** ================= Less Than Operators: expr types are non-numeric types ================== */
+  // Invalid if any of expression type on LHS or RHS is non-numeric type or non numeric boxed type.
+  @Test
+  public void lessThanOperationExpr_invalidNumericTypeWithNullType() {
+    // LHS: Null type, RHS: Numeric type.
+    // Swap case in "lessThanOperationExpr_invalidNumericWithNullType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
+    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNumericBoxedTypeWithNullType() {
+    // LHS: Numeric boxed type, RHS: Null type.
+    // Swap case in "lessThanOperationExpr_invalidNullWithNumericBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNumericTypeWithObjectType() {
+    // LHS: Numeric type, RHS: Object Type.
+    // Swap case in "lessThanOperationExpr_invalidObjectNumericType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
+    NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNumericBoxedTypeWithObjectType() {
+    // LHS: Numeric boxed type, RHS: Object Type.
+    // Swap case in "lessThanOperationExpr_invalidObjectNumericBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNumericBoxedTypeWithReferenceType() {
+    // LHS: Numeric boxed type, RHS: Reference Type.
+    // Swap case in "lessThanOperationExpr_invalidReferenceTypeWithNumericBoxedType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidReferenceTypeWithNumericBoxedType() {
+    // LHS: Reference type, RHS: Numeric boxed Type.
+    // Swap case in "lessThanOperationExpr_invalidNumericBoxedTypeWithReferenceType".
+    VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidObjectNumericType() {
+    // LHS: Object type, RHS: Numeric Type.
+    // Swap case in "lessThanOperationExpr_invalidNumericTypeWithObjectType".
+    NewObjectExpr lhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "x");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidObjectNumericBoxedType() {
+    // LHS: Object type, RHS: Numeric boxed Type.
+    // Swap case in "lessThanOperationExpr_invalidNumericBoxedTypeWithObjectType".
+    NewObjectExpr lhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNumericWithNullType() {
+    // LHS: Null type, RHS: Numeric box type.
+
+    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "x");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidNullWithNumericBoxedType() {
+    // LHS: Null type, RHS: Numeric box type.
+    // Swap case in "lessThanOperationExpr_invalidNumericTypeWithNullType".
+    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
+  public void lessThanOperationExpr_invalidVoidType() {
+    // LHS: Null type, RHS: Numeric box type.
+    // No need swap case
+    MethodInvocationExpr lhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("doNothing")
+            .setReturnType(TypeNode.VOID)
+            .build();
+    VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
+    assertThrows(
+        IllegalStateException.class,
+        () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
   }
 
   private VariableExpr createVariableExpr(TypeNode type, String name) {

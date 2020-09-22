@@ -2099,6 +2099,21 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeRelationalOperationExpr_lessThan() {
+    VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("i", TypeNode.INT));
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getMaxNumber")
+            .setReturnType(TypeNode.INT)
+            .build();
+
+    RelationalOperationExpr lessThanWithExprs =
+        RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr);
+    lessThanWithExprs.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("i < getMaxNumber()");
+  }
+
+  @Test
   public void writeLogicalOperationExpr_logicalAnd() {
     VariableExpr lhsExpr = VariableExpr.withVariable(createVariable("isEmpty", TypeNode.BOOLEAN));
     VaporReference ref =
