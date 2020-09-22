@@ -483,6 +483,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -506,6 +507,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -815,6 +817,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the custom field is set.
    */
+  @java.lang.Override
   public boolean hasCustom() {
     return patternCase_ == 8;
   }
@@ -832,6 +835,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The custom.
    */
+  @java.lang.Override
   public com.google.api.CustomHttpPattern getCustom() {
     if (patternCase_ == 8) {
       return (com.google.api.CustomHttpPattern) pattern_;
@@ -850,6 +854,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.CustomHttpPattern custom = 8;</code>
    */
+  @java.lang.Override
   public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
     if (patternCase_ == 8) {
       return (com.google.api.CustomHttpPattern) pattern_;
@@ -874,6 +879,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The body.
    */
+  @java.lang.Override
   public java.lang.String getBody() {
     java.lang.Object ref = body_;
     if (ref instanceof java.lang.String) {
@@ -900,6 +906,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for body.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getBodyBytes() {
     java.lang.Object ref = body_;
     if (ref instanceof java.lang.String) {
@@ -929,6 +936,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The responseBody.
    */
+  @java.lang.Override
   public java.lang.String getResponseBody() {
     java.lang.Object ref = responseBody_;
     if (ref instanceof java.lang.String) {
@@ -955,6 +963,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for responseBody.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResponseBodyBytes() {
     java.lang.Object ref = responseBody_;
     if (ref instanceof java.lang.String) {
@@ -980,6 +989,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.HttpRule> getAdditionalBindingsList() {
     return additionalBindings_;
   }
@@ -994,6 +1004,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.HttpRuleOrBuilder>
       getAdditionalBindingsOrBuilderList() {
     return additionalBindings_;
@@ -1009,6 +1020,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public int getAdditionalBindingsCount() {
     return additionalBindings_.size();
   }
@@ -1023,6 +1035,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRule getAdditionalBindings(int index) {
     return additionalBindings_.get(index);
   }
@@ -1037,6 +1050,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule additional_bindings = 11;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRuleOrBuilder getAdditionalBindingsOrBuilder(int index) {
     return additionalBindings_.get(index);
   }
@@ -1959,6 +1973,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The get.
      */
+    @java.lang.Override
     public java.lang.String getGet() {
       java.lang.Object ref = "";
       if (patternCase_ == 2) {
@@ -1987,6 +2002,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for get.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getGetBytes() {
       java.lang.Object ref = "";
       if (patternCase_ == 2) {
@@ -2080,6 +2096,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The put.
      */
+    @java.lang.Override
     public java.lang.String getPut() {
       java.lang.Object ref = "";
       if (patternCase_ == 3) {
@@ -2107,6 +2124,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for put.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPutBytes() {
       java.lang.Object ref = "";
       if (patternCase_ == 3) {
@@ -2197,6 +2215,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The post.
      */
+    @java.lang.Override
     public java.lang.String getPost() {
       java.lang.Object ref = "";
       if (patternCase_ == 4) {
@@ -2224,6 +2243,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for post.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPostBytes() {
       java.lang.Object ref = "";
       if (patternCase_ == 4) {
@@ -2314,6 +2334,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The delete.
      */
+    @java.lang.Override
     public java.lang.String getDelete() {
       java.lang.Object ref = "";
       if (patternCase_ == 5) {
@@ -2341,6 +2362,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for delete.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDeleteBytes() {
       java.lang.Object ref = "";
       if (patternCase_ == 5) {
@@ -2431,6 +2453,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The patch.
      */
+    @java.lang.Override
     public java.lang.String getPatch() {
       java.lang.Object ref = "";
       if (patternCase_ == 6) {
@@ -2458,6 +2481,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for patch.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPatchBytes() {
       java.lang.Object ref = "";
       if (patternCase_ == 6) {
@@ -2556,6 +2580,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the custom field is set.
      */
+    @java.lang.Override
     public boolean hasCustom() {
       return patternCase_ == 8;
     }
@@ -2573,6 +2598,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The custom.
      */
+    @java.lang.Override
     public com.google.api.CustomHttpPattern getCustom() {
       if (customBuilder_ == null) {
         if (patternCase_ == 8) {
@@ -2722,6 +2748,7 @@ public final class HttpRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.CustomHttpPattern custom = 8;</code>
      */
+    @java.lang.Override
     public com.google.api.CustomHttpPatternOrBuilder getCustomOrBuilder() {
       if ((patternCase_ == 8) && (customBuilder_ != null)) {
         return customBuilder_.getMessageOrBuilder();

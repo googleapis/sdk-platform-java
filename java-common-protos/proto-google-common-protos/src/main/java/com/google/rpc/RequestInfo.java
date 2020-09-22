@@ -132,6 +132,7 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The requestId.
    */
+  @java.lang.Override
   public java.lang.String getRequestId() {
     java.lang.Object ref = requestId_;
     if (ref instanceof java.lang.String) {
@@ -155,6 +156,7 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for requestId.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRequestIdBytes() {
     java.lang.Object ref = requestId_;
     if (ref instanceof java.lang.String) {
@@ -181,6 +183,7 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The servingData.
    */
+  @java.lang.Override
   public java.lang.String getServingData() {
     java.lang.Object ref = servingData_;
     if (ref instanceof java.lang.String) {
@@ -204,6 +207,7 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for servingData.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getServingDataBytes() {
     java.lang.Object ref = servingData_;
     if (ref instanceof java.lang.String) {

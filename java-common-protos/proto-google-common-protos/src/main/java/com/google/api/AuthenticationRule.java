@@ -164,6 +164,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -187,6 +188,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -212,6 +214,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * @return Whether the oauth field is set.
    */
+  @java.lang.Override
   public boolean hasOauth() {
     return oauth_ != null;
   }
@@ -226,6 +229,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * @return The oauth.
    */
+  @java.lang.Override
   public com.google.api.OAuthRequirements getOauth() {
     return oauth_ == null ? com.google.api.OAuthRequirements.getDefaultInstance() : oauth_;
   }
@@ -238,6 +242,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>.google.api.OAuthRequirements oauth = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.OAuthRequirementsOrBuilder getOauthOrBuilder() {
     return getOauth();
   }
@@ -255,6 +260,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * @return The allowWithoutCredential.
    */
+  @java.lang.Override
   public boolean getAllowWithoutCredential() {
     return allowWithoutCredential_;
   }
@@ -270,6 +276,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.AuthRequirement> getRequirementsList() {
     return requirements_;
   }
@@ -282,6 +289,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.AuthRequirementOrBuilder>
       getRequirementsOrBuilderList() {
     return requirements_;
@@ -295,6 +303,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
+  @java.lang.Override
   public int getRequirementsCount() {
     return requirements_.size();
   }
@@ -307,6 +316,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthRequirement getRequirements(int index) {
     return requirements_.get(index);
   }
@@ -319,6 +329,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <code>repeated .google.api.AuthRequirement requirements = 7;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthRequirementOrBuilder getRequirementsOrBuilder(int index) {
     return requirements_.get(index);
   }
@@ -1043,6 +1054,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * @return The allowWithoutCredential.
      */
+    @java.lang.Override
     public boolean getAllowWithoutCredential() {
       return allowWithoutCredential_;
     }

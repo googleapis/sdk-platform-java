@@ -119,57 +119,6 @@ public interface EndpointOrBuilder
    *
    *
    * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @return A list containing the features.
-   */
-  java.util.List<java.lang.String> getFeaturesList();
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @return The count of features.
-   */
-  int getFeaturesCount();
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @param index The index of the element to return.
-   * @return The features at the given index.
-   */
-  java.lang.String getFeatures(int index);
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @param index The index of the value to return.
-   * @return The bytes of the features at the given index.
-   */
-  com.google.protobuf.ByteString getFeaturesBytes(int index);
-
-  /**
-   *
-   *
-   * <pre>
    * The specification of an Internet routable address of API frontend that will
    * handle requests to this [API
    * Endpoint](https://cloud.google.com/apis/design/glossary). It should be

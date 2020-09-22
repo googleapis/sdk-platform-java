@@ -284,6 +284,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -306,6 +307,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -331,6 +333,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The url.
      */
+    @java.lang.Override
     public java.lang.String getUrl() {
       java.lang.Object ref = url_;
       if (ref instanceof java.lang.String) {
@@ -353,6 +356,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for url.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getUrlBytes() {
       java.lang.Object ref = url_;
       if (ref instanceof java.lang.String) {
@@ -970,6 +974,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.rpc.Help.Link> getLinksList() {
     return links_;
   }
@@ -982,6 +987,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.rpc.Help.LinkOrBuilder> getLinksOrBuilderList() {
     return links_;
   }
@@ -994,6 +1000,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
+  @java.lang.Override
   public int getLinksCount() {
     return links_.size();
   }
@@ -1006,6 +1013,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.Help.Link getLinks(int index) {
     return links_.get(index);
   }
@@ -1018,6 +1026,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.Help.Link links = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.Help.LinkOrBuilder getLinksOrBuilder(int index) {
     return links_.get(index);
   }

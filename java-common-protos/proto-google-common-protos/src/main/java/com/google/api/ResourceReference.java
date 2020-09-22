@@ -131,12 +131,21 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *         type: "pubsub.googleapis.com/Topic"
    *       }];
    *     }
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   * Example:
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
    * </pre>
    *
    * <code>string type = 1;</code>
    *
    * @return The type.
    */
+  @java.lang.Override
   public java.lang.String getType() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -159,12 +168,21 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *         type: "pubsub.googleapis.com/Topic"
    *       }];
    *     }
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   * Example:
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
    * </pre>
    *
    * <code>string type = 1;</code>
    *
    * @return The bytes for type.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -198,6 +216,7 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *
    * @return The childType.
    */
+  @java.lang.Override
   public java.lang.String getChildType() {
     java.lang.Object ref = childType_;
     if (ref instanceof java.lang.String) {
@@ -228,6 +247,7 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for childType.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getChildTypeBytes() {
     java.lang.Object ref = childType_;
     if (ref instanceof java.lang.String) {
@@ -580,6 +600,14 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     * Occasionally, a field may reference an arbitrary resource. In this case,
+     * APIs use the special value * in their resource reference.
+     * Example:
+     *     message GetIamPolicyRequest {
+     *       string resource = 2 [(google.api.resource_reference) = {
+     *         type: "*"
+     *       }];
+     *     }
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -606,6 +634,14 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
+     *       }];
+     *     }
+     * Occasionally, a field may reference an arbitrary resource. In this case,
+     * APIs use the special value * in their resource reference.
+     * Example:
+     *     message GetIamPolicyRequest {
+     *       string resource = 2 [(google.api.resource_reference) = {
+     *         type: "*"
      *       }];
      *     }
      * </pre>
@@ -636,6 +672,14 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     * Occasionally, a field may reference an arbitrary resource. In this case,
+     * APIs use the special value * in their resource reference.
+     * Example:
+     *     message GetIamPolicyRequest {
+     *       string resource = 2 [(google.api.resource_reference) = {
+     *         type: "*"
+     *       }];
+     *     }
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -663,6 +707,14 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     * Occasionally, a field may reference an arbitrary resource. In this case,
+     * APIs use the special value * in their resource reference.
+     * Example:
+     *     message GetIamPolicyRequest {
+     *       string resource = 2 [(google.api.resource_reference) = {
+     *         type: "*"
+     *       }];
+     *     }
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -684,6 +736,14 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
+     *       }];
+     *     }
+     * Occasionally, a field may reference an arbitrary resource. In this case,
+     * APIs use the special value * in their resource reference.
+     * Example:
+     *     message GetIamPolicyRequest {
+     *       string resource = 2 [(google.api.resource_reference) = {
+     *         type: "*"
      *       }];
      *     }
      * </pre>

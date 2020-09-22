@@ -186,6 +186,37 @@ public interface DocumentationOrBuilder
    *
    *
    * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @return The serviceRootUrl.
+   */
+  java.lang.String getServiceRootUrl();
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @return The bytes for serviceRootUrl.
+   */
+  com.google.protobuf.ByteString getServiceRootUrlBytes();
+
+  /**
+   *
+   *
+   * <pre>
    * Declares a single overview page. For example:
    * &lt;pre&gt;&lt;code&gt;documentation:
    *   summary: ...

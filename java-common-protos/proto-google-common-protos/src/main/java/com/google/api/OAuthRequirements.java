@@ -138,6 +138,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
    *
    * @return The canonicalScopes.
    */
+  @java.lang.Override
   public java.lang.String getCanonicalScopes() {
     java.lang.Object ref = canonicalScopes_;
     if (ref instanceof java.lang.String) {
@@ -164,6 +165,7 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for canonicalScopes.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCanonicalScopesBytes() {
     java.lang.Object ref = canonicalScopes_;
     if (ref instanceof java.lang.String) {

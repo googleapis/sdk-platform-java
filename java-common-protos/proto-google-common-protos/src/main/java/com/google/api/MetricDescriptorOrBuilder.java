@@ -53,9 +53,19 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined metric types have the DNS name
-   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-   * use a natural hierarchical grouping. For example:
+   * URL-encoded.
+   * All service defined metrics must be prefixed with the service name, in the
+   * format of `{service name}/{relative metric name}`, such as
+   * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+   * name must follow:
+   * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+   *   allowed.
+   * * The maximum number of characters allowed for the relative_metric_name is
+   *   100.
+   * All user-defined metric types have the DNS name
+   * `custom.googleapis.com`, `external.googleapis.com`, or
+   * `logging.googleapis.com/user/`.
+   * Metric types should use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -71,9 +81,19 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined metric types have the DNS name
-   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-   * use a natural hierarchical grouping. For example:
+   * URL-encoded.
+   * All service defined metrics must be prefixed with the service name, in the
+   * format of `{service name}/{relative metric name}`, such as
+   * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+   * name must follow:
+   * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+   *   allowed.
+   * * The maximum number of characters allowed for the relative_metric_name is
+   *   100.
+   * All user-defined metric types have the DNS name
+   * `custom.googleapis.com`, `external.googleapis.com`, or
+   * `logging.googleapis.com/user/`.
+   * Metric types should use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -90,7 +110,13 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -105,7 +131,13 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -120,7 +152,13 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -135,7 +173,13 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -150,7 +194,13 @@ public interface MetricDescriptorOrBuilder
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -231,7 +281,7 @@ public interface MetricDescriptorOrBuilder
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   * Alternatively, if you want a custome metric to record data in a more
+   * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -244,6 +294,7 @@ public interface MetricDescriptorOrBuilder
    * * `min`   minute
    * * `h`     hour
    * * `d`     day
+   * * `1`     dimensionless
    * **Prefixes (PREFIX)**
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
@@ -324,7 +375,7 @@ public interface MetricDescriptorOrBuilder
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   * Alternatively, if you want a custome metric to record data in a more
+   * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -337,6 +388,7 @@ public interface MetricDescriptorOrBuilder
    * * `min`   minute
    * * `h`     hour
    * * `d`     day
+   * * `1`     dimensionless
    * **Prefixes (PREFIX)**
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
@@ -517,4 +569,71 @@ public interface MetricDescriptorOrBuilder
    * @return The launchStage.
    */
   com.google.api.LaunchStage getLaunchStage();
+
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @return A list containing the monitoredResourceTypes.
+   */
+  java.util.List<java.lang.String> getMonitoredResourceTypesList();
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @return The count of monitoredResourceTypes.
+   */
+  int getMonitoredResourceTypesCount();
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The monitoredResourceTypes at the given index.
+   */
+  java.lang.String getMonitoredResourceTypes(int index);
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the monitoredResourceTypes at the given index.
+   */
+  com.google.protobuf.ByteString getMonitoredResourceTypesBytes(int index);
 }

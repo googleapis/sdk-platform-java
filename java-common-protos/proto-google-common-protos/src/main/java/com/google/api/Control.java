@@ -124,6 +124,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The environment.
    */
+  @java.lang.Override
   public java.lang.String getEnvironment() {
     java.lang.Object ref = environment_;
     if (ref instanceof java.lang.String) {
@@ -147,6 +148,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for environment.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getEnvironmentBytes() {
     java.lang.Object ref = environment_;
     if (ref instanceof java.lang.String) {

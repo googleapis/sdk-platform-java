@@ -377,6 +377,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The monitoredResource.
      */
+    @java.lang.Override
     public java.lang.String getMonitoredResource() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -400,6 +401,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for monitoredResource.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMonitoredResourceBytes() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -1214,6 +1216,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Logging.LoggingDestination> getProducerDestinationsList() {
     return producerDestinations_;
   }
@@ -1229,6 +1232,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
       getProducerDestinationsOrBuilderList() {
     return producerDestinations_;
@@ -1245,6 +1249,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public int getProducerDestinationsCount() {
     return producerDestinations_.size();
   }
@@ -1260,6 +1265,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.Logging.LoggingDestination getProducerDestinations(int index) {
     return producerDestinations_.get(index);
   }
@@ -1275,6 +1281,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.Logging.LoggingDestinationOrBuilder getProducerDestinationsOrBuilder(
       int index) {
     return producerDestinations_.get(index);
@@ -1294,6 +1301,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Logging.LoggingDestination> getConsumerDestinationsList() {
     return consumerDestinations_;
   }
@@ -1309,6 +1317,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Logging.LoggingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
@@ -1325,6 +1334,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public int getConsumerDestinationsCount() {
     return consumerDestinations_.size();
   }
@@ -1340,6 +1350,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.Logging.LoggingDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
@@ -1355,6 +1366,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Logging.LoggingDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.Logging.LoggingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index) {
     return consumerDestinations_.get(index);

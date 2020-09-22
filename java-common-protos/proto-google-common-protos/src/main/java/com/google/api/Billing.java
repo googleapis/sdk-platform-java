@@ -24,21 +24,31 @@ package com.google.api;
  * <pre>
  * Billing related configuration of the service.
  * The following example shows how to configure monitored resources and metrics
- * for billing:
+ * for billing, `consumer_destinations` is the only supported destination and
+ * the monitored resources need at least one label key
+ * `cloud.googleapis.com/location` to indicate the location of the billing
+ * usage, using different monitored resources between monitoring and billing is
+ * recommended so they can be evolved independently:
  *     monitored_resources:
- *     - type: library.googleapis.com/branch
+ *     - type: library.googleapis.com/billing_branch
  *       labels:
- *       - key: /city
- *         description: The city where the library branch is located in.
- *       - key: /name
- *         description: The name of the branch.
+ *       - key: cloud.googleapis.com/location
+ *         description: |
+ *           Predefined label to support billing location restriction.
+ *       - key: city
+ *         description: |
+ *           Custom label to define the city where the library branch is located
+ *           in.
+ *       - key: name
+ *         description: Custom label to define the name of the library branch.
  *     metrics:
  *     - name: library.googleapis.com/book/borrowed_count
  *       metric_kind: DELTA
  *       value_type: INT64
+ *       unit: "1"
  *     billing:
  *       consumer_destinations:
- *       - monitored_resource: library.googleapis.com/branch
+ *       - monitored_resource: library.googleapis.com/billing_branch
  *         metrics:
  *         - library.googleapis.com/book/borrowed_count
  * </pre>
@@ -345,6 +355,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The monitoredResource.
      */
+    @java.lang.Override
     public java.lang.String getMonitoredResource() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -368,6 +379,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for monitoredResource.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMonitoredResourceBytes() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -1156,6 +1168,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Billing.BillingDestination> getConsumerDestinationsList() {
     return consumerDestinations_;
   }
@@ -1171,6 +1184,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Billing.BillingDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
@@ -1187,6 +1201,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
+  @java.lang.Override
   public int getConsumerDestinationsCount() {
     return consumerDestinations_.size();
   }
@@ -1202,6 +1217,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
+  @java.lang.Override
   public com.google.api.Billing.BillingDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
@@ -1217,6 +1233,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Billing.BillingDestination consumer_destinations = 8;</code>
    */
+  @java.lang.Override
   public com.google.api.Billing.BillingDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index) {
     return consumerDestinations_.get(index);
@@ -1388,21 +1405,31 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Billing related configuration of the service.
    * The following example shows how to configure monitored resources and metrics
-   * for billing:
+   * for billing, `consumer_destinations` is the only supported destination and
+   * the monitored resources need at least one label key
+   * `cloud.googleapis.com/location` to indicate the location of the billing
+   * usage, using different monitored resources between monitoring and billing is
+   * recommended so they can be evolved independently:
    *     monitored_resources:
-   *     - type: library.googleapis.com/branch
+   *     - type: library.googleapis.com/billing_branch
    *       labels:
-   *       - key: /city
-   *         description: The city where the library branch is located in.
-   *       - key: /name
-   *         description: The name of the branch.
+   *       - key: cloud.googleapis.com/location
+   *         description: |
+   *           Predefined label to support billing location restriction.
+   *       - key: city
+   *         description: |
+   *           Custom label to define the city where the library branch is located
+   *           in.
+   *       - key: name
+   *         description: Custom label to define the name of the library branch.
    *     metrics:
    *     - name: library.googleapis.com/book/borrowed_count
    *       metric_kind: DELTA
    *       value_type: INT64
+   *       unit: "1"
    *     billing:
    *       consumer_destinations:
-   *       - monitored_resource: library.googleapis.com/branch
+   *       - monitored_resource: library.googleapis.com/billing_branch
    *         metrics:
    *         - library.googleapis.com/book/borrowed_count
    * </pre>

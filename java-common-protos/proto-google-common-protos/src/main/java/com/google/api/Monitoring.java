@@ -377,6 +377,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The monitoredResource.
      */
+    @java.lang.Override
     public java.lang.String getMonitoredResource() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -400,6 +401,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for monitoredResource.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMonitoredResourceBytes() {
       java.lang.Object ref = monitoredResource_;
       if (ref instanceof java.lang.String) {
@@ -1192,6 +1194,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Monitoring.MonitoringDestination>
       getProducerDestinationsList() {
     return producerDestinations_;
@@ -1210,6 +1213,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder>
       getProducerDestinationsOrBuilderList() {
     return producerDestinations_;
@@ -1228,6 +1232,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public int getProducerDestinationsCount() {
     return producerDestinations_.size();
   }
@@ -1245,6 +1250,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.Monitoring.MonitoringDestination getProducerDestinations(int index) {
     return producerDestinations_.get(index);
   }
@@ -1262,6 +1268,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination producer_destinations = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.Monitoring.MonitoringDestinationOrBuilder getProducerDestinationsOrBuilder(
       int index) {
     return producerDestinations_.get(index);
@@ -1283,6 +1290,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Monitoring.MonitoringDestination>
       getConsumerDestinationsList() {
     return consumerDestinations_;
@@ -1301,6 +1309,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Monitoring.MonitoringDestinationOrBuilder>
       getConsumerDestinationsOrBuilderList() {
     return consumerDestinations_;
@@ -1319,6 +1328,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public int getConsumerDestinationsCount() {
     return consumerDestinations_.size();
   }
@@ -1336,6 +1346,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.Monitoring.MonitoringDestination getConsumerDestinations(int index) {
     return consumerDestinations_.get(index);
   }
@@ -1353,6 +1364,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Monitoring.MonitoringDestination consumer_destinations = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.Monitoring.MonitoringDestinationOrBuilder getConsumerDestinationsOrBuilder(
       int index) {
     return consumerDestinations_.get(index);

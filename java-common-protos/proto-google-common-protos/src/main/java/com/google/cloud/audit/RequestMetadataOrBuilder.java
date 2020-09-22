@@ -28,6 +28,14 @@ public interface RequestMetadataOrBuilder
    *
    * <pre>
    * The IP address of the caller.
+   * For caller from internet, this will be public IPv4 or IPv6 address.
+   * For caller from a Compute Engine VM with external IP address, this
+   * will be the VM's external IP address. For caller from a Compute
+   * Engine VM without external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will
+   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+   * redacted to "gce-internal-ip".
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>
@@ -40,6 +48,14 @@ public interface RequestMetadataOrBuilder
    *
    * <pre>
    * The IP address of the caller.
+   * For caller from internet, this will be public IPv4 or IPv6 address.
+   * For caller from a Compute Engine VM with external IP address, this
+   * will be the VM's external IP address. For caller from a Compute
+   * Engine VM without external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will
+   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+   * redacted to "gce-internal-ip".
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>
@@ -90,4 +106,136 @@ public interface RequestMetadataOrBuilder
    * @return The bytes for callerSuppliedUserAgent.
    */
   com.google.protobuf.ByteString getCallerSuppliedUserAgentBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @return The callerNetwork.
+   */
+  java.lang.String getCallerNetwork();
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @return The bytes for callerNetwork.
+   */
+  com.google.protobuf.ByteString getCallerNetworkBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   *
+   * @return Whether the requestAttributes field is set.
+   */
+  boolean hasRequestAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   *
+   * @return The requestAttributes.
+   */
+  com.google.rpc.context.AttributeContext.Request getRequestAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   */
+  com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestAttributesOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   *
+   * @return Whether the destinationAttributes field is set.
+   */
+  boolean hasDestinationAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   *
+   * @return The destinationAttributes.
+   */
+  com.google.rpc.context.AttributeContext.Peer getDestinationAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   */
+  com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationAttributesOrBuilder();
 }

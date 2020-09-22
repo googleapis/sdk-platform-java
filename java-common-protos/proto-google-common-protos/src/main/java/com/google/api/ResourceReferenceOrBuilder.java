@@ -34,6 +34,14 @@ public interface ResourceReferenceOrBuilder
    *         type: "pubsub.googleapis.com/Topic"
    *       }];
    *     }
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   * Example:
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
+   *       }];
+   *     }
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -50,6 +58,14 @@ public interface ResourceReferenceOrBuilder
    *     message Subscription {
    *       string topic = 2 [(google.api.resource_reference) = {
    *         type: "pubsub.googleapis.com/Topic"
+   *       }];
+   *     }
+   * Occasionally, a field may reference an arbitrary resource. In this case,
+   * APIs use the special value * in their resource reference.
+   * Example:
+   *     message GetIamPolicyRequest {
+   *       string resource = 2 [(google.api.resource_reference) = {
+   *         type: "*"
    *       }];
    *     }
    * </pre>

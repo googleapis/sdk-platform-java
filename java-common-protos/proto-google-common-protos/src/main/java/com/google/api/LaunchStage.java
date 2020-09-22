@@ -43,6 +43,26 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
+   * The feature is not yet implemented. Users can not use it.
+   * </pre>
+   *
+   * <code>UNIMPLEMENTED = 6;</code>
+   */
+  UNIMPLEMENTED(6),
+  /**
+   *
+   *
+   * <pre>
+   * Prelaunch features are hidden from users and are only visible internally.
+   * </pre>
+   *
+   * <code>PRELAUNCH = 7;</code>
+   */
+  PRELAUNCH(7),
+  /**
+   *
+   *
+   * <pre>
    * Early Access features are limited to a closed group of testers. To use
    * these features, you must sign up in advance and sign a Trusted Tester
    * agreement (which includes confidentiality provisions). These features may
@@ -123,6 +143,26 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
    * <code>LAUNCH_STAGE_UNSPECIFIED = 0;</code>
    */
   public static final int LAUNCH_STAGE_UNSPECIFIED_VALUE = 0;
+  /**
+   *
+   *
+   * <pre>
+   * The feature is not yet implemented. Users can not use it.
+   * </pre>
+   *
+   * <code>UNIMPLEMENTED = 6;</code>
+   */
+  public static final int UNIMPLEMENTED_VALUE = 6;
+  /**
+   *
+   *
+   * <pre>
+   * Prelaunch features are hidden from users and are only visible internally.
+   * </pre>
+   *
+   * <code>PRELAUNCH = 7;</code>
+   */
+  public static final int PRELAUNCH_VALUE = 7;
   /**
    *
    *
@@ -221,6 +261,10 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
     switch (value) {
       case 0:
         return LAUNCH_STAGE_UNSPECIFIED;
+      case 6:
+        return UNIMPLEMENTED;
+      case 7:
+        return PRELAUNCH;
       case 1:
         return EARLY_ACCESS;
       case 2:
@@ -248,6 +292,10 @@ public enum LaunchStage implements com.google.protobuf.ProtocolMessageEnum {
       };
 
   public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+    if (this == UNRECOGNIZED) {
+      throw new java.lang.IllegalStateException(
+          "Can't get the descriptor of an unrecognized enum value.");
+    }
     return getDescriptor().getValues().get(ordinal());
   }
 

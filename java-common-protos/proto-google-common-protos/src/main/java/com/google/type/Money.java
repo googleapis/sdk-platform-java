@@ -131,6 +131,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The currencyCode.
    */
+  @java.lang.Override
   public java.lang.String getCurrencyCode() {
     java.lang.Object ref = currencyCode_;
     if (ref instanceof java.lang.String) {
@@ -153,6 +154,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for currencyCode.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCurrencyCodeBytes() {
     java.lang.Object ref = currencyCode_;
     if (ref instanceof java.lang.String) {
@@ -179,6 +181,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The units.
    */
+  @java.lang.Override
   public long getUnits() {
     return units_;
   }
@@ -201,6 +204,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The nanos.
    */
+  @java.lang.Override
   public int getNanos() {
     return nanos_;
   }
@@ -663,6 +667,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The units.
      */
+    @java.lang.Override
     public long getUnits() {
       return units_;
     }
@@ -721,6 +726,7 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The nanos.
      */
+    @java.lang.Override
     public int getNanos() {
       return nanos_;
     }

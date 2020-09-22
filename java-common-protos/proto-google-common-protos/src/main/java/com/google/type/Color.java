@@ -244,6 +244,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The red.
    */
+  @java.lang.Override
   public float getRed() {
     return red_;
   }
@@ -261,6 +262,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The green.
    */
+  @java.lang.Override
   public float getGreen() {
     return green_;
   }
@@ -278,6 +280,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The blue.
    */
+  @java.lang.Override
   public float getBlue() {
     return blue_;
   }
@@ -303,6 +306,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the alpha field is set.
    */
+  @java.lang.Override
   public boolean hasAlpha() {
     return alpha_ != null;
   }
@@ -325,6 +329,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The alpha.
    */
+  @java.lang.Override
   public com.google.protobuf.FloatValue getAlpha() {
     return alpha_ == null ? com.google.protobuf.FloatValue.getDefaultInstance() : alpha_;
   }
@@ -345,6 +350,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.FloatValue alpha = 4;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.FloatValueOrBuilder getAlphaOrBuilder() {
     return getAlpha();
   }
@@ -832,6 +838,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The red.
      */
+    @java.lang.Override
     public float getRed() {
       return red_;
     }
@@ -883,6 +890,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The green.
      */
+    @java.lang.Override
     public float getGreen() {
       return green_;
     }
@@ -934,6 +942,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The blue.
      */
+    @java.lang.Override
     public float getBlue() {
       return blue_;
     }

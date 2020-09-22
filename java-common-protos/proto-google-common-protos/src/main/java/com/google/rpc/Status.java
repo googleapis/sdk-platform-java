@@ -145,6 +145,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The code.
    */
+  @java.lang.Override
   public int getCode() {
     return code_;
   }
@@ -164,6 +165,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The message.
    */
+  @java.lang.Override
   public java.lang.String getMessage() {
     java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
@@ -188,6 +190,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for message.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMessageBytes() {
     java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
@@ -212,6 +215,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.protobuf.Any> getDetailsList() {
     return details_;
   }
@@ -225,6 +229,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getDetailsOrBuilderList() {
     return details_;
   }
@@ -238,6 +243,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
+  @java.lang.Override
   public int getDetailsCount() {
     return details_.size();
   }
@@ -251,6 +257,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.Any getDetails(int index) {
     return details_.get(index);
   }
@@ -264,6 +271,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any details = 3;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getDetailsOrBuilder(int index) {
     return details_.get(index);
   }
@@ -667,6 +675,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The code.
      */
+    @java.lang.Override
     public int getCode() {
       return code_;
     }

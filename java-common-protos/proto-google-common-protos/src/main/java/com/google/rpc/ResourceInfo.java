@@ -148,6 +148,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The resourceType.
    */
+  @java.lang.Override
   public java.lang.String getResourceType() {
     java.lang.Object ref = resourceType_;
     if (ref instanceof java.lang.String) {
@@ -172,6 +173,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for resourceType.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResourceTypeBytes() {
     java.lang.Object ref = resourceType_;
     if (ref instanceof java.lang.String) {
@@ -199,6 +201,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The resourceName.
    */
+  @java.lang.Override
   public java.lang.String getResourceName() {
     java.lang.Object ref = resourceName_;
     if (ref instanceof java.lang.String) {
@@ -223,6 +226,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for resourceName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResourceNameBytes() {
     java.lang.Object ref = resourceName_;
     if (ref instanceof java.lang.String) {
@@ -250,6 +254,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The owner.
    */
+  @java.lang.Override
   public java.lang.String getOwner() {
     java.lang.Object ref = owner_;
     if (ref instanceof java.lang.String) {
@@ -274,6 +279,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for owner.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getOwnerBytes() {
     java.lang.Object ref = owner_;
     if (ref instanceof java.lang.String) {
@@ -301,6 +307,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -325,6 +332,7 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {

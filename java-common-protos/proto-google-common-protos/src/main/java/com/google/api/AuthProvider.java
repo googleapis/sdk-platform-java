@@ -172,6 +172,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The id.
    */
+  @java.lang.Override
   public java.lang.String getId() {
     java.lang.Object ref = id_;
     if (ref instanceof java.lang.String) {
@@ -196,6 +197,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for id.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getIdBytes() {
     java.lang.Object ref = id_;
     if (ref instanceof java.lang.String) {
@@ -225,6 +227,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The issuer.
    */
+  @java.lang.Override
   public java.lang.String getIssuer() {
     java.lang.Object ref = issuer_;
     if (ref instanceof java.lang.String) {
@@ -251,6 +254,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for issuer.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getIssuerBytes() {
     java.lang.Object ref = issuer_;
     if (ref instanceof java.lang.String) {
@@ -286,6 +290,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The jwksUri.
    */
+  @java.lang.Override
   public java.lang.String getJwksUri() {
     java.lang.Object ref = jwksUri_;
     if (ref instanceof java.lang.String) {
@@ -318,6 +323,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for jwksUri.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getJwksUriBytes() {
     java.lang.Object ref = jwksUri_;
     if (ref instanceof java.lang.String) {
@@ -339,11 +345,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * The list of JWT
    * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
    * that are allowed to access. A JWT containing any of these audiences will
-   * be accepted. When this setting is absent, only JWTs with audience
-   * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-   * will be accepted. For example, if no audiences are in the setting,
-   * LibraryService API will only accept JWTs with the following audience
-   * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+   * be accepted. When this setting is absent, JWTs with audiences:
+   *   - "https://[service.name]/[google.protobuf.Api.name]"
+   *   - "https://[service.name]/"
+   * will be accepted.
+   * For example, if no audiences are in the setting, LibraryService API will
+   * accept JWTs with the following audiences:
+   *   -
+   *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+   *   - https://library-example.googleapis.com/
    * Example:
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
@@ -353,6 +363,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The audiences.
    */
+  @java.lang.Override
   public java.lang.String getAudiences() {
     java.lang.Object ref = audiences_;
     if (ref instanceof java.lang.String) {
@@ -371,11 +382,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * The list of JWT
    * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
    * that are allowed to access. A JWT containing any of these audiences will
-   * be accepted. When this setting is absent, only JWTs with audience
-   * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-   * will be accepted. For example, if no audiences are in the setting,
-   * LibraryService API will only accept JWTs with the following audience
-   * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+   * be accepted. When this setting is absent, JWTs with audiences:
+   *   - "https://[service.name]/[google.protobuf.Api.name]"
+   *   - "https://[service.name]/"
+   * will be accepted.
+   * For example, if no audiences are in the setting, LibraryService API will
+   * accept JWTs with the following audiences:
+   *   -
+   *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+   *   - https://library-example.googleapis.com/
    * Example:
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
@@ -385,6 +400,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for audiences.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAudiencesBytes() {
     java.lang.Object ref = audiences_;
     if (ref instanceof java.lang.String) {
@@ -411,6 +427,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The authorizationUrl.
    */
+  @java.lang.Override
   public java.lang.String getAuthorizationUrl() {
     java.lang.Object ref = authorizationUrl_;
     if (ref instanceof java.lang.String) {
@@ -434,6 +451,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for authorizationUrl.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAuthorizationUrlBytes() {
     java.lang.Object ref = authorizationUrl_;
     if (ref instanceof java.lang.String) {
@@ -470,6 +488,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.JwtLocation> getJwtLocationsList() {
     return jwtLocations_;
   }
@@ -495,6 +514,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.JwtLocationOrBuilder>
       getJwtLocationsOrBuilderList() {
     return jwtLocations_;
@@ -521,6 +541,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
+  @java.lang.Override
   public int getJwtLocationsCount() {
     return jwtLocations_.size();
   }
@@ -546,6 +567,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
+  @java.lang.Override
   public com.google.api.JwtLocation getJwtLocations(int index) {
     return jwtLocations_.get(index);
   }
@@ -571,6 +593,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.JwtLocation jwt_locations = 6;</code>
    */
+  @java.lang.Override
   public com.google.api.JwtLocationOrBuilder getJwtLocationsOrBuilder(int index) {
     return jwtLocations_.get(index);
   }
@@ -1414,11 +1437,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
-     * be accepted. When this setting is absent, only JWTs with audience
-     * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-     * will be accepted. For example, if no audiences are in the setting,
-     * LibraryService API will only accept JWTs with the following audience
-     * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+     * be accepted. When this setting is absent, JWTs with audiences:
+     *   - "https://[service.name]/[google.protobuf.Api.name]"
+     *   - "https://[service.name]/"
+     * will be accepted.
+     * For example, if no audiences are in the setting, LibraryService API will
+     * accept JWTs with the following audiences:
+     *   -
+     *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+     *   - https://library-example.googleapis.com/
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
@@ -1446,11 +1473,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
-     * be accepted. When this setting is absent, only JWTs with audience
-     * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-     * will be accepted. For example, if no audiences are in the setting,
-     * LibraryService API will only accept JWTs with the following audience
-     * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+     * be accepted. When this setting is absent, JWTs with audiences:
+     *   - "https://[service.name]/[google.protobuf.Api.name]"
+     *   - "https://[service.name]/"
+     * will be accepted.
+     * For example, if no audiences are in the setting, LibraryService API will
+     * accept JWTs with the following audiences:
+     *   -
+     *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+     *   - https://library-example.googleapis.com/
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
@@ -1478,11 +1509,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
-     * be accepted. When this setting is absent, only JWTs with audience
-     * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-     * will be accepted. For example, if no audiences are in the setting,
-     * LibraryService API will only accept JWTs with the following audience
-     * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+     * be accepted. When this setting is absent, JWTs with audiences:
+     *   - "https://[service.name]/[google.protobuf.Api.name]"
+     *   - "https://[service.name]/"
+     * will be accepted.
+     * For example, if no audiences are in the setting, LibraryService API will
+     * accept JWTs with the following audiences:
+     *   -
+     *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+     *   - https://library-example.googleapis.com/
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
@@ -1509,11 +1544,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
-     * be accepted. When this setting is absent, only JWTs with audience
-     * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-     * will be accepted. For example, if no audiences are in the setting,
-     * LibraryService API will only accept JWTs with the following audience
-     * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+     * be accepted. When this setting is absent, JWTs with audiences:
+     *   - "https://[service.name]/[google.protobuf.Api.name]"
+     *   - "https://[service.name]/"
+     * will be accepted.
+     * For example, if no audiences are in the setting, LibraryService API will
+     * accept JWTs with the following audiences:
+     *   -
+     *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+     *   - https://library-example.googleapis.com/
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
@@ -1536,11 +1575,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
-     * be accepted. When this setting is absent, only JWTs with audience
-     * "https://[Service_name][google.api.Service.name]/[API_name][google.protobuf.Api.name]"
-     * will be accepted. For example, if no audiences are in the setting,
-     * LibraryService API will only accept JWTs with the following audience
-     * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
+     * be accepted. When this setting is absent, JWTs with audiences:
+     *   - "https://[service.name]/[google.protobuf.Api.name]"
+     *   - "https://[service.name]/"
+     * will be accepted.
+     * For example, if no audiences are in the setting, LibraryService API will
+     * accept JWTs with the following audiences:
+     *   -
+     *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
+     *   - https://library-example.googleapis.com/
      * Example:
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com

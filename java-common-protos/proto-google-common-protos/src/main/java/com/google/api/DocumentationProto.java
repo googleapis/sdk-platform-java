@@ -49,18 +49,19 @@ public final class DocumentationProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\036google/api/documentation.proto\022\ngoogle"
-          + ".api\"\241\001\n\rDocumentation\022\017\n\007summary\030\001 \001(\t\022"
+          + ".api\"\273\001\n\rDocumentation\022\017\n\007summary\030\001 \001(\t\022"
           + "\037\n\005pages\030\005 \003(\0132\020.google.api.Page\022,\n\005rule"
           + "s\030\003 \003(\0132\035.google.api.DocumentationRule\022\036"
-          + "\n\026documentation_root_url\030\004 \001(\t\022\020\n\010overvi"
-          + "ew\030\002 \001(\t\"[\n\021DocumentationRule\022\020\n\010selecto"
-          + "r\030\001 \001(\t\022\023\n\013description\030\002 \001(\t\022\037\n\027deprecat"
-          + "ion_description\030\003 \001(\t\"I\n\004Page\022\014\n\004name\030\001 "
-          + "\001(\t\022\017\n\007content\030\002 \001(\t\022\"\n\010subpages\030\003 \003(\0132\020"
-          + ".google.api.PageBt\n\016com.google.apiB\022Docu"
-          + "mentationProtoP\001ZEgoogle.golang.org/genp"
-          + "roto/googleapis/api/serviceconfig;servic"
-          + "econfig\242\002\004GAPIb\006proto3"
+          + "\n\026documentation_root_url\030\004 \001(\t\022\030\n\020servic"
+          + "e_root_url\030\006 \001(\t\022\020\n\010overview\030\002 \001(\t\"[\n\021Do"
+          + "cumentationRule\022\020\n\010selector\030\001 \001(\t\022\023\n\013des"
+          + "cription\030\002 \001(\t\022\037\n\027deprecation_descriptio"
+          + "n\030\003 \001(\t\"I\n\004Page\022\014\n\004name\030\001 \001(\t\022\017\n\007content"
+          + "\030\002 \001(\t\022\"\n\010subpages\030\003 \003(\0132\020.google.api.Pa"
+          + "geBt\n\016com.google.apiB\022DocumentationProto"
+          + "P\001ZEgoogle.golang.org/genproto/googleapi"
+          + "s/api/serviceconfig;serviceconfig\242\002\004GAPI"
+          + "b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -70,7 +71,7 @@ public final class DocumentationProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_Documentation_descriptor,
             new java.lang.String[] {
-              "Summary", "Pages", "Rules", "DocumentationRootUrl", "Overview",
+              "Summary", "Pages", "Rules", "DocumentationRootUrl", "ServiceRootUrl", "Overview",
             });
     internal_static_google_api_DocumentationRule_descriptor =
         getDescriptor().getMessageTypes().get(1);

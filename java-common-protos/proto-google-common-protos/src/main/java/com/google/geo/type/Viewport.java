@@ -167,6 +167,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the low field is set.
    */
+  @java.lang.Override
   public boolean hasLow() {
     return low_ != null;
   }
@@ -181,6 +182,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The low.
    */
+  @java.lang.Override
   public com.google.type.LatLng getLow() {
     return low_ == null ? com.google.type.LatLng.getDefaultInstance() : low_;
   }
@@ -193,6 +195,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.LatLng low = 1;</code>
    */
+  @java.lang.Override
   public com.google.type.LatLngOrBuilder getLowOrBuilder() {
     return getLow();
   }
@@ -210,6 +213,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the high field is set.
    */
+  @java.lang.Override
   public boolean hasHigh() {
     return high_ != null;
   }
@@ -224,6 +228,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The high.
    */
+  @java.lang.Override
   public com.google.type.LatLng getHigh() {
     return high_ == null ? com.google.type.LatLng.getDefaultInstance() : high_;
   }
@@ -236,6 +241,7 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.LatLng high = 2;</code>
    */
+  @java.lang.Override
   public com.google.type.LatLngOrBuilder getHighOrBuilder() {
     return getHigh();
   }

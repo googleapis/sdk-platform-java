@@ -133,6 +133,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.HttpRule> getRulesList() {
     return rules_;
   }
@@ -146,6 +147,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.HttpRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
@@ -159,6 +161,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -172,6 +175,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRule getRules(int index) {
     return rules_.get(index);
   }
@@ -185,6 +189,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.HttpRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.HttpRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
@@ -206,6 +211,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The fullyDecodeReservedExpansion.
    */
+  @java.lang.Override
   public boolean getFullyDecodeReservedExpansion() {
     return fullyDecodeReservedExpansion_;
   }
@@ -955,6 +961,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The fullyDecodeReservedExpansion.
      */
+    @java.lang.Override
     public boolean getFullyDecodeReservedExpansion() {
       return fullyDecodeReservedExpansion_;
     }

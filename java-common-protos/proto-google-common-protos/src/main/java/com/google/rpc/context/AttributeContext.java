@@ -49,7 +49,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     super(builder);
   }
 
-  private AttributeContext() {}
+  private AttributeContext() {
+    extensions_ = java.util.Collections.emptyList();
+  }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
@@ -70,6 +72,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
+    int mutable_bitField0_ = 0;
     com.google.protobuf.UnknownFieldSet.Builder unknownFields =
         com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
@@ -192,6 +195,16 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
               break;
             }
+          case 66:
+            {
+              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+                extensions_ = new java.util.ArrayList<com.google.protobuf.Any>();
+                mutable_bitField0_ |= 0x00000001;
+              }
+              extensions_.add(
+                  input.readMessage(com.google.protobuf.Any.parser(), extensionRegistry));
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -206,6 +219,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     } catch (java.io.IOException e) {
       throw new com.google.protobuf.InvalidProtocolBufferException(e).setUnfinishedMessage(this);
     } finally {
+      if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        extensions_ = java.util.Collections.unmodifiableList(extensions_);
+      }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
     }
@@ -538,6 +554,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The ip.
      */
+    @java.lang.Override
     public java.lang.String getIp() {
       java.lang.Object ref = ip_;
       if (ref instanceof java.lang.String) {
@@ -560,6 +577,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for ip.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIpBytes() {
       java.lang.Object ref = ip_;
       if (ref instanceof java.lang.String) {
@@ -585,6 +603,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The port.
      */
+    @java.lang.Override
     public long getPort() {
       return port_;
     }
@@ -623,6 +642,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
+    @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -630,6 +650,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return internalGetLabels().getMap().containsKey(key);
     }
     /** Use {@link #getLabelsMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getLabels() {
       return getLabelsMap();
@@ -643,6 +664,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
@@ -655,6 +677,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -672,6 +695,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 6;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -698,6 +722,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The principal.
      */
+    @java.lang.Override
     public java.lang.String getPrincipal() {
       java.lang.Object ref = principal_;
       if (ref instanceof java.lang.String) {
@@ -722,6 +747,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for principal.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalBytes() {
       java.lang.Object ref = principal_;
       if (ref instanceof java.lang.String) {
@@ -749,6 +775,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The regionCode.
      */
+    @java.lang.Override
     public java.lang.String getRegionCode() {
       java.lang.Object ref = regionCode_;
       if (ref instanceof java.lang.String) {
@@ -773,6 +800,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for regionCode.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getRegionCodeBytes() {
       java.lang.Object ref = regionCode_;
       if (ref instanceof java.lang.String) {
@@ -1317,6 +1345,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The port.
        */
+      @java.lang.Override
       public long getPort() {
         return port_;
       }
@@ -1390,6 +1419,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
+      @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -1397,6 +1427,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return internalGetLabels().getMap().containsKey(key);
       }
       /** Use {@link #getLabelsMap()} instead. */
+      @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getLabels() {
         return getLabelsMap();
@@ -1410,6 +1441,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
+      @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
         return internalGetLabels().getMap();
       }
@@ -1422,6 +1454,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
+      @java.lang.Override
       public java.lang.String getLabelsOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
@@ -1439,6 +1472,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 6;</code>
        */
+      @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -2043,6 +2077,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The service.
      */
+    @java.lang.Override
     public java.lang.String getService() {
       java.lang.Object ref = service_;
       if (ref instanceof java.lang.String) {
@@ -2067,6 +2102,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for service.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServiceBytes() {
       java.lang.Object ref = service_;
       if (ref instanceof java.lang.String) {
@@ -2094,6 +2130,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The operation.
      */
+    @java.lang.Override
     public java.lang.String getOperation() {
       java.lang.Object ref = operation_;
       if (ref instanceof java.lang.String) {
@@ -2118,6 +2155,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for operation.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getOperationBytes() {
       java.lang.Object ref = operation_;
       if (ref instanceof java.lang.String) {
@@ -2144,6 +2182,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The protocol.
      */
+    @java.lang.Override
     public java.lang.String getProtocol() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -2167,6 +2206,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for protocol.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -2193,6 +2233,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The version.
      */
+    @java.lang.Override
     public java.lang.String getVersion() {
       java.lang.Object ref = version_;
       if (ref instanceof java.lang.String) {
@@ -2216,6 +2257,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for version.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getVersionBytes() {
       java.lang.Object ref = version_;
       if (ref instanceof java.lang.String) {
@@ -3150,10 +3192,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3173,10 +3215,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3196,10 +3238,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3220,10 +3262,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3573,6 +3615,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The principal.
      */
+    @java.lang.Override
     public java.lang.String getPrincipal() {
       java.lang.Object ref = principal_;
       if (ref instanceof java.lang.String) {
@@ -3599,6 +3642,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for principal.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPrincipalBytes() {
       java.lang.Object ref = principal_;
       if (ref instanceof java.lang.String) {
@@ -3621,10 +3665,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3646,10 +3690,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3671,10 +3715,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3697,10 +3741,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
-     * *  The services intended to receive the credential such as
-     *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+     * *  The services intended to receive the credential. For example,
+     *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
-     *    ["https://www.googleapis.com/auth/cloud-platform"]
+     *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
      * Consult the documentation for the credential issuer to determine the
@@ -3732,6 +3776,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The presenter.
      */
+    @java.lang.Override
     public java.lang.String getPresenter() {
       java.lang.Object ref = presenter_;
       if (ref instanceof java.lang.String) {
@@ -3757,6 +3802,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for presenter.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPresenterBytes() {
       java.lang.Object ref = presenter_;
       if (ref instanceof java.lang.String) {
@@ -3794,6 +3840,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the claims field is set.
      */
+    @java.lang.Override
     public boolean hasClaims() {
       return claims_ != null;
     }
@@ -3820,6 +3867,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The claims.
      */
+    @java.lang.Override
     public com.google.protobuf.Struct getClaims() {
       return claims_ == null ? com.google.protobuf.Struct.getDefaultInstance() : claims_;
     }
@@ -3844,6 +3892,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Struct claims = 4;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.StructOrBuilder getClaimsOrBuilder() {
       return getClaims();
     }
@@ -4507,10 +4556,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4532,10 +4581,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4557,10 +4606,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4583,10 +4632,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4609,10 +4658,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4642,10 +4691,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4674,10 +4723,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4703,10 +4752,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -4731,10 +4780,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
-       * *  The services intended to receive the credential such as
-       *    ["pubsub.googleapis.com", "storage.googleapis.com"]
+       * *  The services intended to receive the credential. For example,
+       *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
-       *    ["https://www.googleapis.com/auth/cloud-platform"]
+       *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
        * Consult the documentation for the credential issuer to determine the
@@ -6031,6 +6080,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The id.
      */
+    @java.lang.Override
     public java.lang.String getId() {
       java.lang.Object ref = id_;
       if (ref instanceof java.lang.String) {
@@ -6055,6 +6105,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for id.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getIdBytes() {
       java.lang.Object ref = id_;
       if (ref instanceof java.lang.String) {
@@ -6080,6 +6131,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The method.
      */
+    @java.lang.Override
     public java.lang.String getMethod() {
       java.lang.Object ref = method_;
       if (ref instanceof java.lang.String) {
@@ -6102,6 +6154,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for method.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getMethodBytes() {
       java.lang.Object ref = method_;
       if (ref instanceof java.lang.String) {
@@ -6150,6 +6203,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -6157,6 +6211,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return internalGetHeaders().getMap().containsKey(key);
     }
     /** Use {@link #getHeadersMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
       return getHeadersMap();
@@ -6172,6 +6227,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
       return internalGetHeaders().getMap();
     }
@@ -6186,6 +6242,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.lang.String getHeadersOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -6205,6 +6262,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -6229,6 +6287,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The path.
      */
+    @java.lang.Override
     public java.lang.String getPath() {
       java.lang.Object ref = path_;
       if (ref instanceof java.lang.String) {
@@ -6251,6 +6310,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for path.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getPathBytes() {
       java.lang.Object ref = path_;
       if (ref instanceof java.lang.String) {
@@ -6276,6 +6336,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The host.
      */
+    @java.lang.Override
     public java.lang.String getHost() {
       java.lang.Object ref = host_;
       if (ref instanceof java.lang.String) {
@@ -6298,6 +6359,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for host.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHostBytes() {
       java.lang.Object ref = host_;
       if (ref instanceof java.lang.String) {
@@ -6323,6 +6385,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The scheme.
      */
+    @java.lang.Override
     public java.lang.String getScheme() {
       java.lang.Object ref = scheme_;
       if (ref instanceof java.lang.String) {
@@ -6345,6 +6408,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for scheme.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSchemeBytes() {
       java.lang.Object ref = scheme_;
       if (ref instanceof java.lang.String) {
@@ -6371,6 +6435,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The query.
      */
+    @java.lang.Override
     public java.lang.String getQuery() {
       java.lang.Object ref = query_;
       if (ref instanceof java.lang.String) {
@@ -6394,6 +6459,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for query.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getQueryBytes() {
       java.lang.Object ref = query_;
       if (ref instanceof java.lang.String) {
@@ -6420,6 +6486,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the time field is set.
      */
+    @java.lang.Override
     public boolean hasTime() {
       return time_ != null;
     }
@@ -6435,6 +6502,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The time.
      */
+    @java.lang.Override
     public com.google.protobuf.Timestamp getTime() {
       return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
     }
@@ -6448,6 +6516,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp time = 9;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
       return getTime();
     }
@@ -6465,6 +6534,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The size.
      */
+    @java.lang.Override
     public long getSize() {
       return size_;
     }
@@ -6485,6 +6555,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The protocol.
      */
+    @java.lang.Override
     public java.lang.String getProtocol() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -6510,6 +6581,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for protocol.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getProtocolBytes() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -6536,6 +6608,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The reason.
      */
+    @java.lang.Override
     public java.lang.String getReason() {
       java.lang.Object ref = reason_;
       if (ref instanceof java.lang.String) {
@@ -6559,6 +6632,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for reason.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getReasonBytes() {
       java.lang.Object ref = reason_;
       if (ref instanceof java.lang.String) {
@@ -6585,6 +6659,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the auth field is set.
      */
+    @java.lang.Override
     public boolean hasAuth() {
       return auth_ != null;
     }
@@ -6600,6 +6675,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The auth.
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.Auth getAuth() {
       return auth_ == null
           ? com.google.rpc.context.AttributeContext.Auth.getDefaultInstance()
@@ -6615,6 +6691,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.rpc.context.AttributeContext.Auth auth = 13;</code>
      */
+    @java.lang.Override
     public com.google.rpc.context.AttributeContext.AuthOrBuilder getAuthOrBuilder() {
       return getAuth();
     }
@@ -7430,6 +7507,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -7437,6 +7515,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return internalGetHeaders().getMap().containsKey(key);
       }
       /** Use {@link #getHeadersMap()} instead. */
+      @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
         return getHeadersMap();
@@ -7452,6 +7531,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
         return internalGetHeaders().getMap();
       }
@@ -7466,6 +7546,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.lang.String getHeadersOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
@@ -7485,6 +7566,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -8188,6 +8270,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The size.
        */
+      @java.lang.Override
       public long getSize() {
         return size_;
       }
@@ -8988,6 +9071,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The code.
      */
+    @java.lang.Override
     public long getCode() {
       return code_;
     }
@@ -9005,6 +9089,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The size.
      */
+    @java.lang.Override
     public long getSize() {
       return size_;
     }
@@ -9045,6 +9130,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public boolean containsHeaders(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -9052,6 +9138,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return internalGetHeaders().getMap().containsKey(key);
     }
     /** Use {@link #getHeadersMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
       return getHeadersMap();
@@ -9067,6 +9154,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
       return internalGetHeaders().getMap();
     }
@@ -9081,6 +9169,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.lang.String getHeadersOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -9100,6 +9189,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; headers = 3;</code>
      */
+    @java.lang.Override
     public java.lang.String getHeadersOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -9125,6 +9215,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the time field is set.
      */
+    @java.lang.Override
     public boolean hasTime() {
       return time_ != null;
     }
@@ -9140,6 +9231,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The time.
      */
+    @java.lang.Override
     public com.google.protobuf.Timestamp getTime() {
       return time_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : time_;
     }
@@ -9153,6 +9245,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Timestamp time = 4;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.TimestampOrBuilder getTimeOrBuilder() {
       return getTime();
     }
@@ -9578,6 +9671,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The code.
        */
+      @java.lang.Override
       public long getCode() {
         return code_;
       }
@@ -9629,6 +9723,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * @return The size.
        */
+      @java.lang.Override
       public long getSize() {
         return size_;
       }
@@ -9706,6 +9801,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public boolean containsHeaders(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -9713,6 +9809,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return internalGetHeaders().getMap().containsKey(key);
       }
       /** Use {@link #getHeadersMap()} instead. */
+      @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getHeaders() {
         return getHeadersMap();
@@ -9728,6 +9825,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getHeadersMap() {
         return internalGetHeaders().getMap();
       }
@@ -9742,6 +9840,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.lang.String getHeadersOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
@@ -9761,6 +9860,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; headers = 3;</code>
        */
+      @java.lang.Override
       public java.lang.String getHeadersOrThrow(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -10393,6 +10493,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The service.
      */
+    @java.lang.Override
     public java.lang.String getService() {
       java.lang.Object ref = service_;
       if (ref instanceof java.lang.String) {
@@ -10417,6 +10518,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for service.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getServiceBytes() {
       java.lang.Object ref = service_;
       if (ref instanceof java.lang.String) {
@@ -10451,6 +10553,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The name.
      */
+    @java.lang.Override
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -10482,6 +10585,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for name.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getNameBytes() {
       java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
@@ -10509,6 +10613,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The type.
      */
+    @java.lang.Override
     public java.lang.String getType() {
       java.lang.Object ref = type_;
       if (ref instanceof java.lang.String) {
@@ -10533,6 +10638,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * @return The bytes for type.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
       java.lang.Object ref = type_;
       if (ref instanceof java.lang.String) {
@@ -10580,6 +10686,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
+    @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -10587,6 +10694,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return internalGetLabels().getMap().containsKey(key);
     }
     /** Use {@link #getLabelsMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getLabels() {
       return getLabelsMap();
@@ -10601,6 +10709,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
@@ -10614,6 +10723,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -10632,6 +10742,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *
      * <code>map&lt;string, string&gt; labels = 4;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -11461,6 +11572,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
+      @java.lang.Override
       public boolean containsLabels(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -11468,6 +11580,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return internalGetLabels().getMap().containsKey(key);
       }
       /** Use {@link #getLabelsMap()} instead. */
+      @java.lang.Override
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String> getLabels() {
         return getLabelsMap();
@@ -11482,6 +11595,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
+      @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
         return internalGetLabels().getMap();
       }
@@ -11495,6 +11609,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
+      @java.lang.Override
       public java.lang.String getLabelsOrDefault(
           java.lang.String key, java.lang.String defaultValue) {
         if (key == null) {
@@ -11513,6 +11628,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *
        * <code>map&lt;string, string&gt; labels = 4;</code>
        */
+      @java.lang.Override
       public java.lang.String getLabelsOrThrow(java.lang.String key) {
         if (key == null) {
           throw new java.lang.NullPointerException();
@@ -11652,6 +11768,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the origin field is set.
    */
+  @java.lang.Override
   public boolean hasOrigin() {
     return origin_ != null;
   }
@@ -11668,6 +11785,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The origin.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getOrigin() {
     return origin_ == null
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
@@ -11684,6 +11802,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer origin = 7;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.PeerOrBuilder getOriginOrBuilder() {
     return getOrigin();
   }
@@ -11703,6 +11822,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the source field is set.
    */
+  @java.lang.Override
   public boolean hasSource() {
     return source_ != null;
   }
@@ -11719,6 +11839,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The source.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getSource() {
     return source_ == null
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
@@ -11735,6 +11856,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer source = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.PeerOrBuilder getSourceOrBuilder() {
     return getSource();
   }
@@ -11754,6 +11876,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the destination field is set.
    */
+  @java.lang.Override
   public boolean hasDestination() {
     return destination_ != null;
   }
@@ -11770,6 +11893,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The destination.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Peer getDestination() {
     return destination_ == null
         ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
@@ -11786,6 +11910,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Peer destination = 2;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationOrBuilder() {
     return getDestination();
   }
@@ -11803,6 +11928,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the request field is set.
    */
+  @java.lang.Override
   public boolean hasRequest() {
     return request_ != null;
   }
@@ -11817,6 +11943,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The request.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Request getRequest() {
     return request_ == null
         ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
@@ -11831,6 +11958,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Request request = 3;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestOrBuilder() {
     return getRequest();
   }
@@ -11848,6 +11976,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the response field is set.
    */
+  @java.lang.Override
   public boolean hasResponse() {
     return response_ != null;
   }
@@ -11862,6 +11991,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The response.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Response getResponse() {
     return response_ == null
         ? com.google.rpc.context.AttributeContext.Response.getDefaultInstance()
@@ -11876,6 +12006,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Response response = 4;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.ResponseOrBuilder getResponseOrBuilder() {
     return getResponse();
   }
@@ -11895,6 +12026,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the resource field is set.
    */
+  @java.lang.Override
   public boolean hasResource() {
     return resource_ != null;
   }
@@ -11911,6 +12043,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The resource.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Resource getResource() {
     return resource_ == null
         ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
@@ -11927,6 +12060,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Resource resource = 5;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceOrBuilder() {
     return getResource();
   }
@@ -11944,6 +12078,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the api field is set.
    */
+  @java.lang.Override
   public boolean hasApi() {
     return api_ != null;
   }
@@ -11958,6 +12093,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * @return The api.
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.Api getApi() {
     return api_ == null ? com.google.rpc.context.AttributeContext.Api.getDefaultInstance() : api_;
   }
@@ -11970,8 +12106,77 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
    */
+  @java.lang.Override
   public com.google.rpc.context.AttributeContext.ApiOrBuilder getApiOrBuilder() {
     return getApi();
+  }
+
+  public static final int EXTENSIONS_FIELD_NUMBER = 8;
+  private java.util.List<com.google.protobuf.Any> extensions_;
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  @java.lang.Override
+  public java.util.List<com.google.protobuf.Any> getExtensionsList() {
+    return extensions_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
+    return extensions_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  @java.lang.Override
+  public int getExtensionsCount() {
+    return extensions_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  @java.lang.Override
+  public com.google.protobuf.Any getExtensions(int index) {
+    return extensions_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  @java.lang.Override
+  public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
+    return extensions_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -12009,6 +12214,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     if (origin_ != null) {
       output.writeMessage(7, getOrigin());
     }
+    for (int i = 0; i < extensions_.size(); i++) {
+      output.writeMessage(8, extensions_.get(i));
+    }
     unknownFields.writeTo(output);
   }
 
@@ -12038,6 +12246,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     }
     if (origin_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getOrigin());
+    }
+    for (int i = 0; i < extensions_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(8, extensions_.get(i));
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -12082,6 +12293,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     if (hasApi()) {
       if (!getApi().equals(other.getApi())) return false;
     }
+    if (!getExtensionsList().equals(other.getExtensionsList())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -12120,6 +12332,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     if (hasApi()) {
       hash = (37 * hash) + API_FIELD_NUMBER;
       hash = (53 * hash) + getApi().hashCode();
+    }
+    if (getExtensionsCount() > 0) {
+      hash = (37 * hash) + EXTENSIONS_FIELD_NUMBER;
+      hash = (53 * hash) + getExtensionsList().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -12272,7 +12488,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     }
 
     private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {}
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
+        getExtensionsFieldBuilder();
+      }
     }
 
     @java.lang.Override
@@ -12320,6 +12538,12 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         api_ = null;
         apiBuilder_ = null;
       }
+      if (extensionsBuilder_ == null) {
+        extensions_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
+      } else {
+        extensionsBuilder_.clear();
+      }
       return this;
     }
 
@@ -12347,6 +12571,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public com.google.rpc.context.AttributeContext buildPartial() {
       com.google.rpc.context.AttributeContext result =
           new com.google.rpc.context.AttributeContext(this);
+      int from_bitField0_ = bitField0_;
       if (originBuilder_ == null) {
         result.origin_ = origin_;
       } else {
@@ -12381,6 +12606,15 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         result.api_ = api_;
       } else {
         result.api_ = apiBuilder_.build();
+      }
+      if (extensionsBuilder_ == null) {
+        if (((bitField0_ & 0x00000001) != 0)) {
+          extensions_ = java.util.Collections.unmodifiableList(extensions_);
+          bitField0_ = (bitField0_ & ~0x00000001);
+        }
+        result.extensions_ = extensions_;
+      } else {
+        result.extensions_ = extensionsBuilder_.build();
       }
       onBuilt();
       return result;
@@ -12452,6 +12686,33 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (other.hasApi()) {
         mergeApi(other.getApi());
       }
+      if (extensionsBuilder_ == null) {
+        if (!other.extensions_.isEmpty()) {
+          if (extensions_.isEmpty()) {
+            extensions_ = other.extensions_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+          } else {
+            ensureExtensionsIsMutable();
+            extensions_.addAll(other.extensions_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.extensions_.isEmpty()) {
+          if (extensionsBuilder_.isEmpty()) {
+            extensionsBuilder_.dispose();
+            extensionsBuilder_ = null;
+            extensions_ = other.extensions_;
+            bitField0_ = (bitField0_ & ~0x00000001);
+            extensionsBuilder_ =
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
+                    ? getExtensionsFieldBuilder()
+                    : null;
+          } else {
+            extensionsBuilder_.addAllMessages(other.extensions_);
+          }
+        }
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -12480,6 +12741,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
       return this;
     }
+
+    private int bitField0_;
 
     private com.google.rpc.context.AttributeContext.Peer origin_;
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -13850,6 +14113,348 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         api_ = null;
       }
       return apiBuilder_;
+    }
+
+    private java.util.List<com.google.protobuf.Any> extensions_ = java.util.Collections.emptyList();
+
+    private void ensureExtensionsIsMutable() {
+      if (!((bitField0_ & 0x00000001) != 0)) {
+        extensions_ = new java.util.ArrayList<com.google.protobuf.Any>(extensions_);
+        bitField0_ |= 0x00000001;
+      }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.protobuf.Any,
+            com.google.protobuf.Any.Builder,
+            com.google.protobuf.AnyOrBuilder>
+        extensionsBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public java.util.List<com.google.protobuf.Any> getExtensionsList() {
+      if (extensionsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(extensions_);
+      } else {
+        return extensionsBuilder_.getMessageList();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public int getExtensionsCount() {
+      if (extensionsBuilder_ == null) {
+        return extensions_.size();
+      } else {
+        return extensionsBuilder_.getCount();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public com.google.protobuf.Any getExtensions(int index) {
+      if (extensionsBuilder_ == null) {
+        return extensions_.get(index);
+      } else {
+        return extensionsBuilder_.getMessage(index);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder setExtensions(int index, com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.set(index, value);
+        onChanged();
+      } else {
+        extensionsBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder setExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder addExtensions(com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.add(value);
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder addExtensions(int index, com.google.protobuf.Any value) {
+      if (extensionsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureExtensionsIsMutable();
+        extensions_.add(index, value);
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder addExtensions(com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.add(builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder addExtensions(int index, com.google.protobuf.Any.Builder builderForValue) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        extensionsBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder addAllExtensions(java.lang.Iterable<? extends com.google.protobuf.Any> values) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, extensions_);
+        onChanged();
+      } else {
+        extensionsBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder clearExtensions() {
+      if (extensionsBuilder_ == null) {
+        extensions_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000001);
+        onChanged();
+      } else {
+        extensionsBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public Builder removeExtensions(int index) {
+      if (extensionsBuilder_ == null) {
+        ensureExtensionsIsMutable();
+        extensions_.remove(index);
+        onChanged();
+      } else {
+        extensionsBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public com.google.protobuf.Any.Builder getExtensionsBuilder(int index) {
+      return getExtensionsFieldBuilder().getBuilder(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
+      if (extensionsBuilder_ == null) {
+        return extensions_.get(index);
+      } else {
+        return extensionsBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
+      if (extensionsBuilder_ != null) {
+        return extensionsBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(extensions_);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public com.google.protobuf.Any.Builder addExtensionsBuilder() {
+      return getExtensionsFieldBuilder().addBuilder(com.google.protobuf.Any.getDefaultInstance());
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public com.google.protobuf.Any.Builder addExtensionsBuilder(int index) {
+      return getExtensionsFieldBuilder()
+          .addBuilder(index, com.google.protobuf.Any.getDefaultInstance());
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Supports extensions for advanced use cases, such as logs and metrics.
+     * </pre>
+     *
+     * <code>repeated .google.protobuf.Any extensions = 8;</code>
+     */
+    public java.util.List<com.google.protobuf.Any.Builder> getExtensionsBuilderList() {
+      return getExtensionsFieldBuilder().getBuilderList();
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.protobuf.Any,
+            com.google.protobuf.Any.Builder,
+            com.google.protobuf.AnyOrBuilder>
+        getExtensionsFieldBuilder() {
+      if (extensionsBuilder_ == null) {
+        extensionsBuilder_ =
+            new com.google.protobuf.RepeatedFieldBuilderV3<
+                com.google.protobuf.Any,
+                com.google.protobuf.Any.Builder,
+                com.google.protobuf.AnyOrBuilder>(
+                extensions_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+        extensions_ = null;
+      }
+      return extensionsBuilder_;
     }
 
     @java.lang.Override

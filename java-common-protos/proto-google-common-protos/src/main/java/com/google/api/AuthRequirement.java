@@ -133,6 +133,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * @return The providerId.
    */
+  @java.lang.Override
   public java.lang.String getProviderId() {
     java.lang.Object ref = providerId_;
     if (ref instanceof java.lang.String) {
@@ -157,6 +158,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for providerId.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getProviderIdBytes() {
     java.lang.Object ref = providerId_;
     if (ref instanceof java.lang.String) {
@@ -194,6 +196,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * @return The audiences.
    */
+  @java.lang.Override
   public java.lang.String getAudiences() {
     java.lang.Object ref = audiences_;
     if (ref instanceof java.lang.String) {
@@ -228,6 +231,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for audiences.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAudiencesBytes() {
     java.lang.Object ref = audiences_;
     if (ref instanceof java.lang.String) {

@@ -144,6 +144,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -171,6 +172,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -196,6 +198,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -218,6 +221,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -244,6 +248,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The deprecationDescription.
    */
+  @java.lang.Override
   public java.lang.String getDeprecationDescription() {
     java.lang.Object ref = deprecationDescription_;
     if (ref instanceof java.lang.String) {
@@ -267,6 +272,7 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for deprecationDescription.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDeprecationDescriptionBytes() {
     java.lang.Object ref = deprecationDescription_;
     if (ref instanceof java.lang.String) {

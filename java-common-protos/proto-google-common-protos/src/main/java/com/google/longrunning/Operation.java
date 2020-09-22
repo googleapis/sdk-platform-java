@@ -220,6 +220,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -244,6 +245,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -272,6 +274,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the metadata field is set.
    */
+  @java.lang.Override
   public boolean hasMetadata() {
     return metadata_ != null;
   }
@@ -289,6 +292,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The metadata.
    */
+  @java.lang.Override
   public com.google.protobuf.Any getMetadata() {
     return metadata_ == null ? com.google.protobuf.Any.getDefaultInstance() : metadata_;
   }
@@ -304,6 +308,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any metadata = 2;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getMetadataOrBuilder() {
     return getMetadata();
   }
@@ -323,6 +328,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The done.
    */
+  @java.lang.Override
   public boolean getDone() {
     return done_;
   }
@@ -339,6 +345,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the error field is set.
    */
+  @java.lang.Override
   public boolean hasError() {
     return resultCase_ == 4;
   }
@@ -353,6 +360,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The error.
    */
+  @java.lang.Override
   public com.google.rpc.Status getError() {
     if (resultCase_ == 4) {
       return (com.google.rpc.Status) result_;
@@ -368,6 +376,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.rpc.Status error = 4;</code>
    */
+  @java.lang.Override
   public com.google.rpc.StatusOrBuilder getErrorOrBuilder() {
     if (resultCase_ == 4) {
       return (com.google.rpc.Status) result_;
@@ -394,6 +403,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the response field is set.
    */
+  @java.lang.Override
   public boolean hasResponse() {
     return resultCase_ == 5;
   }
@@ -415,6 +425,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The response.
    */
+  @java.lang.Override
   public com.google.protobuf.Any getResponse() {
     if (resultCase_ == 5) {
       return (com.google.protobuf.Any) result_;
@@ -437,6 +448,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Any response = 5;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getResponseOrBuilder() {
     if (resultCase_ == 5) {
       return (com.google.protobuf.Any) result_;
@@ -1221,6 +1233,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The done.
      */
+    @java.lang.Override
     public boolean getDone() {
       return done_;
     }
@@ -1278,6 +1291,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the error field is set.
      */
+    @java.lang.Override
     public boolean hasError() {
       return resultCase_ == 4;
     }
@@ -1292,6 +1306,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The error.
      */
+    @java.lang.Override
     public com.google.rpc.Status getError() {
       if (errorBuilder_ == null) {
         if (resultCase_ == 4) {
@@ -1421,6 +1436,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.rpc.Status error = 4;</code>
      */
+    @java.lang.Override
     public com.google.rpc.StatusOrBuilder getErrorOrBuilder() {
       if ((resultCase_ == 4) && (errorBuilder_ != null)) {
         return errorBuilder_.getMessageOrBuilder();
@@ -1484,6 +1500,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the response field is set.
      */
+    @java.lang.Override
     public boolean hasResponse() {
       return resultCase_ == 5;
     }
@@ -1505,6 +1522,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The response.
      */
+    @java.lang.Override
     public com.google.protobuf.Any getResponse() {
       if (responseBuilder_ == null) {
         if (resultCase_ == 5) {
@@ -1676,6 +1694,7 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.protobuf.Any response = 5;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.AnyOrBuilder getResponseOrBuilder() {
       if ((resultCase_ == 5) && (responseBuilder_ != null)) {
         return responseBuilder_.getMessageOrBuilder();

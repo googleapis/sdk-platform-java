@@ -53,7 +53,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   private Endpoint() {
     name_ = "";
     aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     target_ = "";
   }
 
@@ -104,16 +103,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
               aliases_.add(s);
               break;
             }
-          case 34:
-            {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                features_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              features_.add(s);
-              break;
-            }
           case 40:
             {
               allowCors_ = input.readBool();
@@ -142,9 +131,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
         aliases_ = aliases_.getUnmodifiableView();
-      }
-      if (((mutable_bitField0_ & 0x00000002) != 0)) {
-        features_ = features_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -176,6 +162,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -198,6 +185,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -287,67 +275,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     return aliases_.getByteString(index);
   }
 
-  public static final int FEATURES_FIELD_NUMBER = 4;
-  private com.google.protobuf.LazyStringList features_;
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @return A list containing the features.
-   */
-  public com.google.protobuf.ProtocolStringList getFeaturesList() {
-    return features_;
-  }
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @return The count of features.
-   */
-  public int getFeaturesCount() {
-    return features_.size();
-  }
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @param index The index of the element to return.
-   * @return The features at the given index.
-   */
-  public java.lang.String getFeatures(int index) {
-    return features_.get(index);
-  }
-  /**
-   *
-   *
-   * <pre>
-   * The list of features enabled on this endpoint.
-   * </pre>
-   *
-   * <code>repeated string features = 4;</code>
-   *
-   * @param index The index of the value to return.
-   * @return The bytes of the features at the given index.
-   */
-  public com.google.protobuf.ByteString getFeaturesBytes(int index) {
-    return features_.getByteString(index);
-  }
-
   public static final int TARGET_FIELD_NUMBER = 101;
   private volatile java.lang.Object target_;
   /**
@@ -365,6 +292,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The target.
    */
+  @java.lang.Override
   public java.lang.String getTarget() {
     java.lang.Object ref = target_;
     if (ref instanceof java.lang.String) {
@@ -391,6 +319,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for target.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTargetBytes() {
     java.lang.Object ref = target_;
     if (ref instanceof java.lang.String) {
@@ -421,6 +350,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The allowCors.
    */
+  @java.lang.Override
   public boolean getAllowCors() {
     return allowCors_;
   }
@@ -444,9 +374,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     }
     for (int i = 0; i < aliases_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, aliases_.getRaw(i));
-    }
-    for (int i = 0; i < features_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, features_.getRaw(i));
     }
     if (allowCors_ != false) {
       output.writeBool(5, allowCors_);
@@ -474,14 +401,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       size += dataSize;
       size += 1 * getAliasesList().size();
     }
-    {
-      int dataSize = 0;
-      for (int i = 0; i < features_.size(); i++) {
-        dataSize += computeStringSizeNoTag(features_.getRaw(i));
-      }
-      size += dataSize;
-      size += 1 * getFeaturesList().size();
-    }
     if (allowCors_ != false) {
       size += com.google.protobuf.CodedOutputStream.computeBoolSize(5, allowCors_);
     }
@@ -505,7 +424,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
     if (!getName().equals(other.getName())) return false;
     if (!getAliasesList().equals(other.getAliasesList())) return false;
-    if (!getFeaturesList().equals(other.getFeaturesList())) return false;
     if (!getTarget().equals(other.getTarget())) return false;
     if (getAllowCors() != other.getAllowCors()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
@@ -524,10 +442,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     if (getAliasesCount() > 0) {
       hash = (37 * hash) + ALIASES_FIELD_NUMBER;
       hash = (53 * hash) + getAliasesList().hashCode();
-    }
-    if (getFeaturesCount() > 0) {
-      hash = (37 * hash) + FEATURES_FIELD_NUMBER;
-      hash = (53 * hash) + getFeaturesList().hashCode();
     }
     hash = (37 * hash) + TARGET_FIELD_NUMBER;
     hash = (53 * hash) + getTarget().hashCode();
@@ -691,8 +605,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
       aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
-      features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
       target_ = "";
 
       allowCors_ = false;
@@ -729,11 +641,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         bitField0_ = (bitField0_ & ~0x00000001);
       }
       result.aliases_ = aliases_;
-      if (((bitField0_ & 0x00000002) != 0)) {
-        features_ = features_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.features_ = features_;
       result.target_ = target_;
       result.allowCors_ = allowCors_;
       onBuilt();
@@ -796,16 +703,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
         } else {
           ensureAliasesIsMutable();
           aliases_.addAll(other.aliases_);
-        }
-        onChanged();
-      }
-      if (!other.features_.isEmpty()) {
-        if (features_.isEmpty()) {
-          features_ = other.features_;
-          bitField0_ = (bitField0_ & ~0x00000002);
-        } else {
-          ensureFeaturesIsMutable();
-          features_.addAll(other.features_);
         }
         onChanged();
       }
@@ -1157,174 +1054,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringList features_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
-
-    private void ensureFeaturesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
-        features_ = new com.google.protobuf.LazyStringArrayList(features_);
-        bitField0_ |= 0x00000002;
-      }
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @return A list containing the features.
-     */
-    public com.google.protobuf.ProtocolStringList getFeaturesList() {
-      return features_.getUnmodifiableView();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @return The count of features.
-     */
-    public int getFeaturesCount() {
-      return features_.size();
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param index The index of the element to return.
-     * @return The features at the given index.
-     */
-    public java.lang.String getFeatures(int index) {
-      return features_.get(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param index The index of the value to return.
-     * @return The bytes of the features at the given index.
-     */
-    public com.google.protobuf.ByteString getFeaturesBytes(int index) {
-      return features_.getByteString(index);
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param index The index to set the value at.
-     * @param value The features to set.
-     * @return This builder for chaining.
-     */
-    public Builder setFeatures(int index, java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureFeaturesIsMutable();
-      features_.set(index, value);
-      onChanged();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param value The features to add.
-     * @return This builder for chaining.
-     */
-    public Builder addFeatures(java.lang.String value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      ensureFeaturesIsMutable();
-      features_.add(value);
-      onChanged();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param values The features to add.
-     * @return This builder for chaining.
-     */
-    public Builder addAllFeatures(java.lang.Iterable<java.lang.String> values) {
-      ensureFeaturesIsMutable();
-      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, features_);
-      onChanged();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @return This builder for chaining.
-     */
-    public Builder clearFeatures() {
-      features_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
-      return this;
-    }
-    /**
-     *
-     *
-     * <pre>
-     * The list of features enabled on this endpoint.
-     * </pre>
-     *
-     * <code>repeated string features = 4;</code>
-     *
-     * @param value The bytes of the features to add.
-     * @return This builder for chaining.
-     */
-    public Builder addFeaturesBytes(com.google.protobuf.ByteString value) {
-      if (value == null) {
-        throw new NullPointerException();
-      }
-      checkByteStringIsUtf8(value);
-      ensureFeaturesIsMutable();
-      features_.add(value);
-      onChanged();
-      return this;
-    }
-
     private java.lang.Object target_ = "";
     /**
      *
@@ -1468,6 +1197,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The allowCors.
      */
+    @java.lang.Override
     public boolean getAllowCors() {
       return allowCors_;
     }

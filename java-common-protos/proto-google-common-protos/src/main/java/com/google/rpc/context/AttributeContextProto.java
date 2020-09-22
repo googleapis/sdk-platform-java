@@ -81,58 +81,60 @@ public final class AttributeContextProto {
   static {
     java.lang.String[] descriptorData = {
       "\n*google/rpc/context/attribute_context.p"
-          + "roto\022\022google.rpc.context\032\034google/protobu"
-          + "f/struct.proto\032\037google/protobuf/timestam"
-          + "p.proto\"\306\014\n\020AttributeContext\0229\n\006origin\030\007"
-          + " \001(\0132).google.rpc.context.AttributeConte"
-          + "xt.Peer\0229\n\006source\030\001 \001(\0132).google.rpc.con"
-          + "text.AttributeContext.Peer\022>\n\013destinatio"
-          + "n\030\002 \001(\0132).google.rpc.context.AttributeCo"
-          + "ntext.Peer\022=\n\007request\030\003 \001(\0132,.google.rpc"
-          + ".context.AttributeContext.Request\022?\n\010res"
-          + "ponse\030\004 \001(\0132-.google.rpc.context.Attribu"
-          + "teContext.Response\022?\n\010resource\030\005 \001(\0132-.g"
-          + "oogle.rpc.context.AttributeContext.Resou"
-          + "rce\0225\n\003api\030\006 \001(\0132(.google.rpc.context.At"
-          + "tributeContext.Api\032\276\001\n\004Peer\022\n\n\002ip\030\001 \001(\t\022"
-          + "\014\n\004port\030\002 \001(\003\022E\n\006labels\030\006 \003(\01325.google.r"
-          + "pc.context.AttributeContext.Peer.LabelsE"
-          + "ntry\022\021\n\tprincipal\030\007 \001(\t\022\023\n\013region_code\030\010"
-          + " \001(\t\032-\n\013LabelsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu"
-          + "e\030\002 \001(\t:\0028\001\032L\n\003Api\022\017\n\007service\030\001 \001(\t\022\021\n\to"
-          + "peration\030\002 \001(\t\022\020\n\010protocol\030\003 \001(\t\022\017\n\007vers"
-          + "ion\030\004 \001(\t\032\177\n\004Auth\022\021\n\tprincipal\030\001 \001(\t\022\021\n\t"
-          + "audiences\030\002 \003(\t\022\021\n\tpresenter\030\003 \001(\t\022\'\n\006cl"
-          + "aims\030\004 \001(\0132\027.google.protobuf.Struct\022\025\n\ra"
-          + "ccess_levels\030\005 \003(\t\032\357\002\n\007Request\022\n\n\002id\030\001 \001"
-          + "(\t\022\016\n\006method\030\002 \001(\t\022J\n\007headers\030\003 \003(\01329.go"
-          + "ogle.rpc.context.AttributeContext.Reques"
-          + "t.HeadersEntry\022\014\n\004path\030\004 \001(\t\022\014\n\004host\030\005 \001"
-          + "(\t\022\016\n\006scheme\030\006 \001(\t\022\r\n\005query\030\007 \001(\t\022(\n\004tim"
-          + "e\030\t \001(\0132\032.google.protobuf.Timestamp\022\014\n\004s"
-          + "ize\030\n \001(\003\022\020\n\010protocol\030\013 \001(\t\022\016\n\006reason\030\014 "
-          + "\001(\t\0227\n\004auth\030\r \001(\0132).google.rpc.context.A"
-          + "ttributeContext.Auth\032.\n\014HeadersEntry\022\013\n\003"
-          + "key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\032\315\001\n\010Respons"
-          + "e\022\014\n\004code\030\001 \001(\003\022\014\n\004size\030\002 \001(\003\022K\n\007headers"
-          + "\030\003 \003(\0132:.google.rpc.context.AttributeCon"
-          + "text.Response.HeadersEntry\022(\n\004time\030\004 \001(\013"
-          + "2\032.google.protobuf.Timestamp\032.\n\014HeadersE"
-          + "ntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\032\261\001\n"
-          + "\010Resource\022\017\n\007service\030\001 \001(\t\022\014\n\004name\030\002 \001(\t"
-          + "\022\014\n\004type\030\003 \001(\t\022I\n\006labels\030\004 \003(\01329.google."
-          + "rpc.context.AttributeContext.Resource.La"
-          + "belsEntry\032-\n\013LabelsEntry\022\013\n\003key\030\001 \001(\t\022\r\n"
-          + "\005value\030\002 \001(\t:\0028\001B\213\001\n\026com.google.rpc.cont"
-          + "extB\025AttributeContextProtoP\001ZUgoogle.gol"
-          + "ang.org/genproto/googleapis/rpc/context/"
-          + "attribute_context;attribute_context\370\001\001b\006"
-          + "proto3"
+          + "roto\022\022google.rpc.context\032\031google/protobu"
+          + "f/any.proto\032\034google/protobuf/struct.prot"
+          + "o\032\037google/protobuf/timestamp.proto\"\360\014\n\020A"
+          + "ttributeContext\0229\n\006origin\030\007 \001(\0132).google"
+          + ".rpc.context.AttributeContext.Peer\0229\n\006so"
+          + "urce\030\001 \001(\0132).google.rpc.context.Attribut"
+          + "eContext.Peer\022>\n\013destination\030\002 \001(\0132).goo"
+          + "gle.rpc.context.AttributeContext.Peer\022=\n"
+          + "\007request\030\003 \001(\0132,.google.rpc.context.Attr"
+          + "ibuteContext.Request\022?\n\010response\030\004 \001(\0132-"
+          + ".google.rpc.context.AttributeContext.Res"
+          + "ponse\022?\n\010resource\030\005 \001(\0132-.google.rpc.con"
+          + "text.AttributeContext.Resource\0225\n\003api\030\006 "
+          + "\001(\0132(.google.rpc.context.AttributeContex"
+          + "t.Api\022(\n\nextensions\030\010 \003(\0132\024.google.proto"
+          + "buf.Any\032\276\001\n\004Peer\022\n\n\002ip\030\001 \001(\t\022\014\n\004port\030\002 \001"
+          + "(\003\022E\n\006labels\030\006 \003(\01325.google.rpc.context."
+          + "AttributeContext.Peer.LabelsEntry\022\021\n\tpri"
+          + "ncipal\030\007 \001(\t\022\023\n\013region_code\030\010 \001(\t\032-\n\013Lab"
+          + "elsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001"
+          + "\032L\n\003Api\022\017\n\007service\030\001 \001(\t\022\021\n\toperation\030\002 "
+          + "\001(\t\022\020\n\010protocol\030\003 \001(\t\022\017\n\007version\030\004 \001(\t\032\177"
+          + "\n\004Auth\022\021\n\tprincipal\030\001 \001(\t\022\021\n\taudiences\030\002"
+          + " \003(\t\022\021\n\tpresenter\030\003 \001(\t\022\'\n\006claims\030\004 \001(\0132"
+          + "\027.google.protobuf.Struct\022\025\n\raccess_level"
+          + "s\030\005 \003(\t\032\357\002\n\007Request\022\n\n\002id\030\001 \001(\t\022\016\n\006metho"
+          + "d\030\002 \001(\t\022J\n\007headers\030\003 \003(\01329.google.rpc.co"
+          + "ntext.AttributeContext.Request.HeadersEn"
+          + "try\022\014\n\004path\030\004 \001(\t\022\014\n\004host\030\005 \001(\t\022\016\n\006schem"
+          + "e\030\006 \001(\t\022\r\n\005query\030\007 \001(\t\022(\n\004time\030\t \001(\0132\032.g"
+          + "oogle.protobuf.Timestamp\022\014\n\004size\030\n \001(\003\022\020"
+          + "\n\010protocol\030\013 \001(\t\022\016\n\006reason\030\014 \001(\t\0227\n\004auth"
+          + "\030\r \001(\0132).google.rpc.context.AttributeCon"
+          + "text.Auth\032.\n\014HeadersEntry\022\013\n\003key\030\001 \001(\t\022\r"
+          + "\n\005value\030\002 \001(\t:\0028\001\032\315\001\n\010Response\022\014\n\004code\030\001"
+          + " \001(\003\022\014\n\004size\030\002 \001(\003\022K\n\007headers\030\003 \003(\0132:.go"
+          + "ogle.rpc.context.AttributeContext.Respon"
+          + "se.HeadersEntry\022(\n\004time\030\004 \001(\0132\032.google.p"
+          + "rotobuf.Timestamp\032.\n\014HeadersEntry\022\013\n\003key"
+          + "\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\032\261\001\n\010Resource\022\017"
+          + "\n\007service\030\001 \001(\t\022\014\n\004name\030\002 \001(\t\022\014\n\004type\030\003 "
+          + "\001(\t\022I\n\006labels\030\004 \003(\01329.google.rpc.context"
+          + ".AttributeContext.Resource.LabelsEntry\032-"
+          + "\n\013LabelsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001("
+          + "\t:\0028\001B\213\001\n\026com.google.rpc.contextB\025Attrib"
+          + "uteContextProtoP\001ZUgoogle.golang.org/gen"
+          + "proto/googleapis/rpc/context/attribute_c"
+          + "ontext;attribute_context\370\001\001b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
             descriptorData,
             new com.google.protobuf.Descriptors.FileDescriptor[] {
+              com.google.protobuf.AnyProto.getDescriptor(),
               com.google.protobuf.StructProto.getDescriptor(),
               com.google.protobuf.TimestampProto.getDescriptor(),
             });
@@ -142,7 +144,14 @@ public final class AttributeContextProto {
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_rpc_context_AttributeContext_descriptor,
             new java.lang.String[] {
-              "Origin", "Source", "Destination", "Request", "Response", "Resource", "Api",
+              "Origin",
+              "Source",
+              "Destination",
+              "Request",
+              "Response",
+              "Resource",
+              "Api",
+              "Extensions",
             });
     internal_static_google_rpc_context_AttributeContext_Peer_descriptor =
         internal_static_google_rpc_context_AttributeContext_descriptor.getNestedTypes().get(0);
@@ -241,6 +250,7 @@ public final class AttributeContextProto {
             new java.lang.String[] {
               "Key", "Value",
             });
+    com.google.protobuf.AnyProto.getDescriptor();
     com.google.protobuf.StructProto.getDescriptor();
     com.google.protobuf.TimestampProto.getDescriptor();
   }

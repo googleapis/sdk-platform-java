@@ -96,4 +96,5 @@ java.format_code("grpc-google-common-protos/src")
 java.common_templates(excludes=[
   'README.md',
   'samples/*',
+  '.github/workflows/samples.yaml',
 ])

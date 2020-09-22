@@ -135,6 +135,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The year.
    */
+  @java.lang.Override
   public int getYear() {
     return year_;
   }
@@ -153,6 +154,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The month.
    */
+  @java.lang.Override
   public int getMonth() {
     return month_;
   }
@@ -172,6 +174,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The day.
    */
+  @java.lang.Override
   public int getDay() {
     return day_;
   }
@@ -534,6 +537,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The year.
      */
+    @java.lang.Override
     public int getYear() {
       return year_;
     }
@@ -588,6 +592,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The month.
      */
+    @java.lang.Override
     public int getMonth() {
       return month_;
     }
@@ -643,6 +648,7 @@ public final class Date extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The day.
      */
+    @java.lang.Override
     public int getDay() {
       return day_;
     }

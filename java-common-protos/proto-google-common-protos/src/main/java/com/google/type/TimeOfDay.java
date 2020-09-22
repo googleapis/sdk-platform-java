@@ -135,6 +135,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The hours.
    */
+  @java.lang.Override
   public int getHours() {
     return hours_;
   }
@@ -152,6 +153,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The minutes.
    */
+  @java.lang.Override
   public int getMinutes() {
     return minutes_;
   }
@@ -170,6 +172,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The seconds.
    */
+  @java.lang.Override
   public int getSeconds() {
     return seconds_;
   }
@@ -187,6 +190,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The nanos.
    */
+  @java.lang.Override
   public int getNanos() {
     return nanos_;
   }
@@ -559,6 +563,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The hours.
      */
+    @java.lang.Override
     public int getHours() {
       return hours_;
     }
@@ -612,6 +617,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The minutes.
      */
+    @java.lang.Override
     public int getMinutes() {
       return minutes_;
     }
@@ -664,6 +670,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The seconds.
      */
+    @java.lang.Override
     public int getSeconds() {
       return seconds_;
     }
@@ -717,6 +724,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The nanos.
      */
+    @java.lang.Override
     public int getNanos() {
       return nanos_;
     }

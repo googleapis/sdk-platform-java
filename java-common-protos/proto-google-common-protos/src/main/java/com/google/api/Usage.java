@@ -217,6 +217,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.UsageRule> getRulesList() {
     return rules_;
   }
@@ -230,6 +231,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.UsageRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
@@ -243,6 +245,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -256,6 +259,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
+  @java.lang.Override
   public com.google.api.UsageRule getRules(int index) {
     return rules_.get(index);
   }
@@ -269,6 +273,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.UsageRule rules = 6;</code>
    */
+  @java.lang.Override
   public com.google.api.UsageRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
@@ -292,6 +297,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The producerNotificationChannel.
    */
+  @java.lang.Override
   public java.lang.String getProducerNotificationChannel() {
     java.lang.Object ref = producerNotificationChannel_;
     if (ref instanceof java.lang.String) {
@@ -320,6 +326,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for producerNotificationChannel.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getProducerNotificationChannelBytes() {
     java.lang.Object ref = producerNotificationChannel_;
     if (ref instanceof java.lang.String) {

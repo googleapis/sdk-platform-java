@@ -245,6 +245,10 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
         };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
 
@@ -290,6 +294,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The key.
    */
+  @java.lang.Override
   public java.lang.String getKey() {
     java.lang.Object ref = key_;
     if (ref instanceof java.lang.String) {
@@ -312,6 +317,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for key.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getKeyBytes() {
     java.lang.Object ref = key_;
     if (ref instanceof java.lang.String) {
@@ -337,6 +343,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The enum numeric value on the wire for valueType.
    */
+  @java.lang.Override
   public int getValueTypeValue() {
     return valueType_;
   }
@@ -351,6 +358,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The valueType.
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptor.ValueType getValueType() {
     @SuppressWarnings("deprecation")
     com.google.api.LabelDescriptor.ValueType result =
@@ -371,6 +379,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -393,6 +402,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -863,6 +873,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      *
      * @return The enum numeric value on the wire for valueType.
      */
+    @java.lang.Override
     public int getValueTypeValue() {
       return valueType_;
     }
@@ -879,6 +890,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setValueTypeValue(int value) {
+
       valueType_ = value;
       onChanged();
       return this;
@@ -894,6 +906,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      *
      * @return The valueType.
      */
+    @java.lang.Override
     public com.google.api.LabelDescriptor.ValueType getValueType() {
       @SuppressWarnings("deprecation")
       com.google.api.LabelDescriptor.ValueType result =

@@ -25,6 +25,15 @@ package com.google.api;
  * Defines a metric type and its schema. Once a metric descriptor is created,
  * deleting or altering it stops data collection and makes the metric type's
  * existing data unusable.
+ * The following are specific rules for service defined Monitoring metric
+ * descriptors:
+ * * `type`, `metric_kind`, `value_type`, `description`, `display_name`,
+ *   `launch_stage` fields are all required. The `unit` field must be specified
+ *   if the `value_type` is any of DOUBLE, INT64, DISTRIBUTION.
+ * * Maximum of default 500 metric descriptors per service is allowed.
+ * * Maximum of default 10 labels per metric descriptor is allowed.
+ * The default maximum limit can be overridden. Please follow
+ * https://cloud.google.com/monitoring/quotas
  * </pre>
  *
  * Protobuf type {@code google.api.MetricDescriptor}
@@ -49,6 +58,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     description_ = "";
     displayName_ = "";
     launchStage_ = 0;
+    monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
@@ -164,6 +174,16 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
               launchStage_ = rawValue;
               break;
             }
+          case 106:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                monitoredResourceTypes_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              monitoredResourceTypes_.add(s);
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -180,6 +200,9 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
         labels_ = java.util.Collections.unmodifiableList(labels_);
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        monitoredResourceTypes_ = monitoredResourceTypes_.getUnmodifiableView();
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -349,6 +372,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
 
@@ -594,6 +621,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
 
@@ -635,8 +666,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-     * The launch stage of the metric definition.
+     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
@@ -649,8 +679,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-     * The launch stage of the metric definition.
+     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
@@ -874,14 +903,14 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-     * The launch stage of the metric definition.
+     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @return The enum numeric value on the wire for launchStage.
      */
+    @java.lang.Override
     @java.lang.Deprecated
     public int getLaunchStageValue() {
       return launchStage_;
@@ -890,14 +919,14 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-     * The launch stage of the metric definition.
+     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @return The launchStage.
      */
+    @java.lang.Override
     @java.lang.Deprecated
     public com.google.api.LaunchStage getLaunchStage() {
       @SuppressWarnings("deprecation")
@@ -921,6 +950,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the samplePeriod field is set.
      */
+    @java.lang.Override
     public boolean hasSamplePeriod() {
       return samplePeriod_ != null;
     }
@@ -938,6 +968,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The samplePeriod.
      */
+    @java.lang.Override
     public com.google.protobuf.Duration getSamplePeriod() {
       return samplePeriod_ == null
           ? com.google.protobuf.Duration.getDefaultInstance()
@@ -955,6 +986,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Duration sample_period = 2;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getSamplePeriodOrBuilder() {
       return getSamplePeriod();
     }
@@ -974,6 +1006,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return Whether the ingestDelay field is set.
      */
+    @java.lang.Override
     public boolean hasIngestDelay() {
       return ingestDelay_ != null;
     }
@@ -990,6 +1023,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The ingestDelay.
      */
+    @java.lang.Override
     public com.google.protobuf.Duration getIngestDelay() {
       return ingestDelay_ == null
           ? com.google.protobuf.Duration.getDefaultInstance()
@@ -1006,6 +1040,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <code>.google.protobuf.Duration ingest_delay = 3;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getIngestDelayOrBuilder() {
       return getIngestDelay();
     }
@@ -1393,14 +1428,14 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-       * The launch stage of the metric definition.
+       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @return The enum numeric value on the wire for launchStage.
        */
+      @java.lang.Override
       @java.lang.Deprecated
       public int getLaunchStageValue() {
         return launchStage_;
@@ -1409,8 +1444,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-       * The launch stage of the metric definition.
+       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
@@ -1420,6 +1454,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        */
       @java.lang.Deprecated
       public Builder setLaunchStageValue(int value) {
+
         launchStage_ = value;
         onChanged();
         return this;
@@ -1428,14 +1463,14 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-       * The launch stage of the metric definition.
+       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @return The launchStage.
        */
+      @java.lang.Override
       @java.lang.Deprecated
       public com.google.api.LaunchStage getLaunchStage() {
         @SuppressWarnings("deprecation")
@@ -1446,8 +1481,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-       * The launch stage of the metric definition.
+       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
@@ -1469,8 +1503,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Please use the MetricDescriptor.launch_stage instead.
-       * The launch stage of the metric definition.
+       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
@@ -1965,6 +1998,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -1987,6 +2021,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -2006,9 +2041,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined metric types have the DNS name
-   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-   * use a natural hierarchical grouping. For example:
+   * URL-encoded.
+   * All service defined metrics must be prefixed with the service name, in the
+   * format of `{service name}/{relative metric name}`, such as
+   * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+   * name must follow:
+   * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+   *   allowed.
+   * * The maximum number of characters allowed for the relative_metric_name is
+   *   100.
+   * All user-defined metric types have the DNS name
+   * `custom.googleapis.com`, `external.googleapis.com`, or
+   * `logging.googleapis.com/user/`.
+   * Metric types should use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -2018,6 +2063,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The type.
    */
+  @java.lang.Override
   public java.lang.String getType() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -2034,9 +2080,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The metric type, including its DNS name prefix. The type is not
-   * URL-encoded.  All user-defined metric types have the DNS name
-   * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-   * use a natural hierarchical grouping. For example:
+   * URL-encoded.
+   * All service defined metrics must be prefixed with the service name, in the
+   * format of `{service name}/{relative metric name}`, such as
+   * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+   * name must follow:
+   * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+   *   allowed.
+   * * The maximum number of characters allowed for the relative_metric_name is
+   *   100.
+   * All user-defined metric types have the DNS name
+   * `custom.googleapis.com`, `external.googleapis.com`, or
+   * `logging.googleapis.com/user/`.
+   * Metric types should use a natural hierarchical grouping. For example:
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -2046,6 +2102,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for type.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -2065,7 +2122,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -2074,6 +2137,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
@@ -2082,7 +2146,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -2091,6 +2161,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
@@ -2100,7 +2171,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -2109,6 +2186,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public int getLabelsCount() {
     return labels_.size();
   }
@@ -2117,7 +2195,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -2126,6 +2210,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
@@ -2134,7 +2219,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * The set of labels that can be used to describe a specific
-   * instance of this metric type. For example, the
+   * instance of this metric type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, the
    * `appengine.googleapis.com/http/server/response_latencies` metric
    * type has a label for the HTTP response code, `response_code`, so
    * you can look at latencies for successful responses or just
@@ -2143,6 +2234,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
     return labels_.get(index);
   }
@@ -2161,6 +2253,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The enum numeric value on the wire for metricKind.
    */
+  @java.lang.Override
   public int getMetricKindValue() {
     return metricKind_;
   }
@@ -2176,6 +2269,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The metricKind.
    */
+  @java.lang.Override
   public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
     @SuppressWarnings("deprecation")
     com.google.api.MetricDescriptor.MetricKind result =
@@ -2197,6 +2291,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The enum numeric value on the wire for valueType.
    */
+  @java.lang.Override
   public int getValueTypeValue() {
     return valueType_;
   }
@@ -2212,6 +2307,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The valueType.
    */
+  @java.lang.Override
   public com.google.api.MetricDescriptor.ValueType getValueType() {
     @SuppressWarnings("deprecation")
     com.google.api.MetricDescriptor.ValueType result =
@@ -2237,7 +2333,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   * Alternatively, if you want a custome metric to record data in a more
+   * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -2250,6 +2346,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `min`   minute
    * * `h`     hour
    * * `d`     day
+   * * `1`     dimensionless
    * **Prefixes (PREFIX)**
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
@@ -2313,6 +2410,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The unit.
    */
+  @java.lang.Override
   public java.lang.String getUnit() {
     java.lang.Object ref = unit_;
     if (ref instanceof java.lang.String) {
@@ -2340,7 +2438,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   * Alternatively, if you want a custome metric to record data in a more
+   * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -2353,6 +2451,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `min`   minute
    * * `h`     hour
    * * `d`     day
+   * * `1`     dimensionless
    * **Prefixes (PREFIX)**
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
@@ -2416,6 +2515,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for unit.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getUnitBytes() {
     java.lang.Object ref = unit_;
     if (ref instanceof java.lang.String) {
@@ -2441,6 +2541,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -2463,6 +2564,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -2491,6 +2593,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The displayName.
    */
+  @java.lang.Override
   public java.lang.String getDisplayName() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -2516,6 +2619,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for displayName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -2541,6 +2645,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return Whether the metadata field is set.
    */
+  @java.lang.Override
   public boolean hasMetadata() {
     return metadata_ != null;
   }
@@ -2555,6 +2660,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The metadata.
    */
+  @java.lang.Override
   public com.google.api.MetricDescriptor.MetricDescriptorMetadata getMetadata() {
     return metadata_ == null
         ? com.google.api.MetricDescriptor.MetricDescriptorMetadata.getDefaultInstance()
@@ -2569,6 +2675,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * <code>.google.api.MetricDescriptor.MetricDescriptorMetadata metadata = 10;</code>
    */
+  @java.lang.Override
   public com.google.api.MetricDescriptor.MetricDescriptorMetadataOrBuilder getMetadataOrBuilder() {
     return getMetadata();
   }
@@ -2586,6 +2693,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The enum numeric value on the wire for launchStage.
    */
+  @java.lang.Override
   public int getLaunchStageValue() {
     return launchStage_;
   }
@@ -2600,10 +2708,88 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    *
    * @return The launchStage.
    */
+  @java.lang.Override
   public com.google.api.LaunchStage getLaunchStage() {
     @SuppressWarnings("deprecation")
     com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
     return result == null ? com.google.api.LaunchStage.UNRECOGNIZED : result;
+  }
+
+  public static final int MONITORED_RESOURCE_TYPES_FIELD_NUMBER = 13;
+  private com.google.protobuf.LazyStringList monitoredResourceTypes_;
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @return A list containing the monitoredResourceTypes.
+   */
+  public com.google.protobuf.ProtocolStringList getMonitoredResourceTypesList() {
+    return monitoredResourceTypes_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @return The count of monitoredResourceTypes.
+   */
+  public int getMonitoredResourceTypesCount() {
+    return monitoredResourceTypes_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The monitoredResourceTypes at the given index.
+   */
+  public java.lang.String getMonitoredResourceTypes(int index) {
+    return monitoredResourceTypes_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Read-only. If present, then a [time
+   * series][google.monitoring.v3.TimeSeries], which is identified partially by
+   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+   * with this metric type can only be associated with one of the monitored
+   * resource types listed here.
+   * </pre>
+   *
+   * <code>repeated string monitored_resource_types = 13;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the monitoredResourceTypes at the given index.
+   */
+  public com.google.protobuf.ByteString getMonitoredResourceTypesBytes(int index) {
+    return monitoredResourceTypes_.getByteString(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -2652,6 +2838,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
       output.writeEnum(12, launchStage_);
     }
+    for (int i = 0; i < monitoredResourceTypes_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(
+          output, 13, monitoredResourceTypes_.getRaw(i));
+    }
     unknownFields.writeTo(output);
   }
 
@@ -2693,6 +2883,14 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     if (launchStage_ != com.google.api.LaunchStage.LAUNCH_STAGE_UNSPECIFIED.getNumber()) {
       size += com.google.protobuf.CodedOutputStream.computeEnumSize(12, launchStage_);
     }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < monitoredResourceTypes_.size(); i++) {
+        dataSize += computeStringSizeNoTag(monitoredResourceTypes_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getMonitoredResourceTypesList().size();
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -2721,6 +2919,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (!getMetadata().equals(other.getMetadata())) return false;
     }
     if (launchStage_ != other.launchStage_) return false;
+    if (!getMonitoredResourceTypesList().equals(other.getMonitoredResourceTypesList()))
+      return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -2756,6 +2956,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     }
     hash = (37 * hash) + LAUNCH_STAGE_FIELD_NUMBER;
     hash = (53 * hash) + launchStage_;
+    if (getMonitoredResourceTypesCount() > 0) {
+      hash = (37 * hash) + MONITORED_RESOURCE_TYPES_FIELD_NUMBER;
+      hash = (53 * hash) + getMonitoredResourceTypesList().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -2862,6 +3066,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * Defines a metric type and its schema. Once a metric descriptor is created,
    * deleting or altering it stops data collection and makes the metric type's
    * existing data unusable.
+   * The following are specific rules for service defined Monitoring metric
+   * descriptors:
+   * * `type`, `metric_kind`, `value_type`, `description`, `display_name`,
+   *   `launch_stage` fields are all required. The `unit` field must be specified
+   *   if the `value_type` is any of DOUBLE, INT64, DISTRIBUTION.
+   * * Maximum of default 500 metric descriptors per service is allowed.
+   * * Maximum of default 10 labels per metric descriptor is allowed.
+   * The default maximum limit can be overridden. Please follow
+   * https://cloud.google.com/monitoring/quotas
    * </pre>
    *
    * Protobuf type {@code google.api.MetricDescriptor}
@@ -2930,6 +3143,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       launchStage_ = 0;
 
+      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -2978,6 +3193,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         result.metadata_ = metadataBuilder_.build();
       }
       result.launchStage_ = launchStage_;
+      if (((bitField0_ & 0x00000002) != 0)) {
+        monitoredResourceTypes_ = monitoredResourceTypes_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.monitoredResourceTypes_ = monitoredResourceTypes_;
       onBuilt();
       return result;
     }
@@ -3085,6 +3305,16 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       if (other.launchStage_ != 0) {
         setLaunchStageValue(other.getLaunchStageValue());
+      }
+      if (!other.monitoredResourceTypes_.isEmpty()) {
+        if (monitoredResourceTypes_.isEmpty()) {
+          monitoredResourceTypes_ = other.monitoredResourceTypes_;
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          ensureMonitoredResourceTypesIsMutable();
+          monitoredResourceTypes_.addAll(other.monitoredResourceTypes_);
+        }
+        onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -3229,9 +3459,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined metric types have the DNS name
-     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-     * use a natural hierarchical grouping. For example:
+     * URL-encoded.
+     * All service defined metrics must be prefixed with the service name, in the
+     * format of `{service name}/{relative metric name}`, such as
+     * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+     * name must follow:
+     * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+     *   allowed.
+     * * The maximum number of characters allowed for the relative_metric_name is
+     *   100.
+     * All user-defined metric types have the DNS name
+     * `custom.googleapis.com`, `external.googleapis.com`, or
+     * `logging.googleapis.com/user/`.
+     * Metric types should use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3257,9 +3497,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined metric types have the DNS name
-     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-     * use a natural hierarchical grouping. For example:
+     * URL-encoded.
+     * All service defined metrics must be prefixed with the service name, in the
+     * format of `{service name}/{relative metric name}`, such as
+     * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+     * name must follow:
+     * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+     *   allowed.
+     * * The maximum number of characters allowed for the relative_metric_name is
+     *   100.
+     * All user-defined metric types have the DNS name
+     * `custom.googleapis.com`, `external.googleapis.com`, or
+     * `logging.googleapis.com/user/`.
+     * Metric types should use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3285,9 +3535,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined metric types have the DNS name
-     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-     * use a natural hierarchical grouping. For example:
+     * URL-encoded.
+     * All service defined metrics must be prefixed with the service name, in the
+     * format of `{service name}/{relative metric name}`, such as
+     * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+     * name must follow:
+     * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+     *   allowed.
+     * * The maximum number of characters allowed for the relative_metric_name is
+     *   100.
+     * All user-defined metric types have the DNS name
+     * `custom.googleapis.com`, `external.googleapis.com`, or
+     * `logging.googleapis.com/user/`.
+     * Metric types should use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3312,9 +3572,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined metric types have the DNS name
-     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-     * use a natural hierarchical grouping. For example:
+     * URL-encoded.
+     * All service defined metrics must be prefixed with the service name, in the
+     * format of `{service name}/{relative metric name}`, such as
+     * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+     * name must follow:
+     * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+     *   allowed.
+     * * The maximum number of characters allowed for the relative_metric_name is
+     *   100.
+     * All user-defined metric types have the DNS name
+     * `custom.googleapis.com`, `external.googleapis.com`, or
+     * `logging.googleapis.com/user/`.
+     * Metric types should use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3335,9 +3605,19 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The metric type, including its DNS name prefix. The type is not
-     * URL-encoded.  All user-defined metric types have the DNS name
-     * `custom.googleapis.com` or `external.googleapis.com`.  Metric types should
-     * use a natural hierarchical grouping. For example:
+     * URL-encoded.
+     * All service defined metrics must be prefixed with the service name, in the
+     * format of `{service name}/{relative metric name}`, such as
+     * `cloudsql.googleapis.com/database/cpu/utilization`. The relative metric
+     * name must follow:
+     * * Only upper and lower-case letters, digits, '/' and underscores '_' are
+     *   allowed.
+     * * The maximum number of characters allowed for the relative_metric_name is
+     *   100.
+     * All user-defined metric types have the DNS name
+     * `custom.googleapis.com`, `external.googleapis.com`, or
+     * `logging.googleapis.com/user/`.
+     * Metric types should use a natural hierarchical grouping. For example:
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3380,7 +3660,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3401,7 +3687,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3422,7 +3714,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3443,7 +3741,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3470,7 +3774,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3494,7 +3804,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3521,7 +3837,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3548,7 +3870,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3572,7 +3900,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3596,7 +3930,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3621,7 +3961,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3645,7 +3991,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3669,7 +4021,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3686,7 +4044,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3707,7 +4071,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3729,7 +4099,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3747,7 +4123,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3765,7 +4147,13 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * <pre>
      * The set of labels that can be used to describe a specific
-     * instance of this metric type. For example, the
+     * instance of this metric type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, the
      * `appengine.googleapis.com/http/server/response_latencies` metric
      * type has a label for the HTTP response code, `response_code`, so
      * you can look at latencies for successful responses or just
@@ -3808,6 +4196,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The enum numeric value on the wire for metricKind.
      */
+    @java.lang.Override
     public int getMetricKindValue() {
       return metricKind_;
     }
@@ -3825,6 +4214,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setMetricKindValue(int value) {
+
       metricKind_ = value;
       onChanged();
       return this;
@@ -3841,6 +4231,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The metricKind.
      */
+    @java.lang.Override
     public com.google.api.MetricDescriptor.MetricKind getMetricKind() {
       @SuppressWarnings("deprecation")
       com.google.api.MetricDescriptor.MetricKind result =
@@ -3901,6 +4292,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The enum numeric value on the wire for valueType.
      */
+    @java.lang.Override
     public int getValueTypeValue() {
       return valueType_;
     }
@@ -3918,6 +4310,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setValueTypeValue(int value) {
+
       valueType_ = value;
       onChanged();
       return this;
@@ -3934,6 +4327,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The valueType.
      */
+    @java.lang.Override
     public com.google.api.MetricDescriptor.ValueType getValueType() {
       @SuppressWarnings("deprecation")
       com.google.api.MetricDescriptor.ValueType result =
@@ -3998,7 +4392,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     * Alternatively, if you want a custome metric to record data in a more
+     * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -4011,6 +4405,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `min`   minute
      * * `h`     hour
      * * `d`     day
+     * * `1`     dimensionless
      * **Prefixes (PREFIX)**
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
@@ -4101,7 +4496,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     * Alternatively, if you want a custome metric to record data in a more
+     * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -4114,6 +4509,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `min`   minute
      * * `h`     hour
      * * `d`     day
+     * * `1`     dimensionless
      * **Prefixes (PREFIX)**
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
@@ -4204,7 +4600,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     * Alternatively, if you want a custome metric to record data in a more
+     * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -4217,6 +4613,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `min`   minute
      * * `h`     hour
      * * `d`     day
+     * * `1`     dimensionless
      * **Prefixes (PREFIX)**
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
@@ -4306,7 +4703,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     * Alternatively, if you want a custome metric to record data in a more
+     * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -4319,6 +4716,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `min`   minute
      * * `h`     hour
      * * `d`     day
+     * * `1`     dimensionless
      * **Prefixes (PREFIX)**
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
@@ -4404,7 +4802,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     * Alternatively, if you want a custome metric to record data in a more
+     * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
@@ -4417,6 +4815,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `min`   minute
      * * `h`     hour
      * * `d`     day
+     * * `1`     dimensionless
      * **Prefixes (PREFIX)**
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
@@ -4918,6 +5317,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The enum numeric value on the wire for launchStage.
      */
+    @java.lang.Override
     public int getLaunchStageValue() {
       return launchStage_;
     }
@@ -4934,6 +5334,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder setLaunchStageValue(int value) {
+
       launchStage_ = value;
       onChanged();
       return this;
@@ -4949,6 +5350,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      * @return The launchStage.
      */
+    @java.lang.Override
     public com.google.api.LaunchStage getLaunchStage() {
       @SuppressWarnings("deprecation")
       com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
@@ -4989,6 +5391,211 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public Builder clearLaunchStage() {
 
       launchStage_ = 0;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList monitoredResourceTypes_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
+
+    private void ensureMonitoredResourceTypesIsMutable() {
+      if (!((bitField0_ & 0x00000002) != 0)) {
+        monitoredResourceTypes_ =
+            new com.google.protobuf.LazyStringArrayList(monitoredResourceTypes_);
+        bitField0_ |= 0x00000002;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @return A list containing the monitoredResourceTypes.
+     */
+    public com.google.protobuf.ProtocolStringList getMonitoredResourceTypesList() {
+      return monitoredResourceTypes_.getUnmodifiableView();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @return The count of monitoredResourceTypes.
+     */
+    public int getMonitoredResourceTypesCount() {
+      return monitoredResourceTypes_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The monitoredResourceTypes at the given index.
+     */
+    public java.lang.String getMonitoredResourceTypes(int index) {
+      return monitoredResourceTypes_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the monitoredResourceTypes at the given index.
+     */
+    public com.google.protobuf.ByteString getMonitoredResourceTypesBytes(int index) {
+      return monitoredResourceTypes_.getByteString(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The monitoredResourceTypes to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMonitoredResourceTypes(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureMonitoredResourceTypesIsMutable();
+      monitoredResourceTypes_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param value The monitoredResourceTypes to add.
+     * @return This builder for chaining.
+     */
+    public Builder addMonitoredResourceTypes(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureMonitoredResourceTypesIsMutable();
+      monitoredResourceTypes_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param values The monitoredResourceTypes to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllMonitoredResourceTypes(java.lang.Iterable<java.lang.String> values) {
+      ensureMonitoredResourceTypesIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, monitoredResourceTypes_);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearMonitoredResourceTypes() {
+      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Read-only. If present, then a [time
+     * series][google.monitoring.v3.TimeSeries], which is identified partially by
+     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
+     * with this metric type can only be associated with one of the monitored
+     * resource types listed here.
+     * </pre>
+     *
+     * <code>repeated string monitored_resource_types = 13;</code>
+     *
+     * @param value The bytes of the monitoredResourceTypes to add.
+     * @return This builder for chaining.
+     */
+    public Builder addMonitoredResourceTypesBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureMonitoredResourceTypesIsMutable();
+      monitoredResourceTypes_.add(value);
       onChanged();
       return this;
     }

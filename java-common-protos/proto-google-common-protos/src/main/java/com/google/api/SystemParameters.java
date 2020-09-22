@@ -154,6 +154,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.SystemParameterRule> getRulesList() {
     return rules_;
   }
@@ -187,6 +188,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.SystemParameterRuleOrBuilder>
       getRulesOrBuilderList() {
     return rules_;
@@ -221,6 +223,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -254,6 +257,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.SystemParameterRule getRules(int index) {
     return rules_.get(index);
   }
@@ -287,6 +291,7 @@ public final class SystemParameters extends com.google.protobuf.GeneratedMessage
    *
    * <code>repeated .google.api.SystemParameterRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.SystemParameterRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }

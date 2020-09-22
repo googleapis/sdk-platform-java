@@ -150,6 +150,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -173,6 +174,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -223,6 +225,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
+  @java.lang.Override
   public boolean containsMetricCosts(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -230,6 +233,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     return internalGetMetricCosts().getMap().containsKey(key);
   }
   /** Use {@link #getMetricCostsMap()} instead. */
+  @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.Long> getMetricCosts() {
     return getMetricCostsMap();
@@ -247,6 +251,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
+  @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.Long> getMetricCostsMap() {
     return internalGetMetricCosts().getMap();
   }
@@ -263,6 +268,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
+  @java.lang.Override
   public long getMetricCostsOrDefault(java.lang.String key, long defaultValue) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -283,6 +289,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
    */
+  @java.lang.Override
   public long getMetricCostsOrThrow(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -800,6 +807,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
+    @java.lang.Override
     public boolean containsMetricCosts(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -807,6 +815,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
       return internalGetMetricCosts().getMap().containsKey(key);
     }
     /** Use {@link #getMetricCostsMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.Long> getMetricCosts() {
       return getMetricCostsMap();
@@ -824,6 +833,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.Long> getMetricCostsMap() {
       return internalGetMetricCosts().getMap();
     }
@@ -840,6 +850,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
+    @java.lang.Override
     public long getMetricCostsOrDefault(java.lang.String key, long defaultValue) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -860,6 +871,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; metric_costs = 2;</code>
      */
+    @java.lang.Override
     public long getMetricCostsOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();

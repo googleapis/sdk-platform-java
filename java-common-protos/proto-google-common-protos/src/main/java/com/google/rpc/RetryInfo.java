@@ -137,6 +137,7 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the retryDelay field is set.
    */
+  @java.lang.Override
   public boolean hasRetryDelay() {
     return retryDelay_ != null;
   }
@@ -151,6 +152,7 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The retryDelay.
    */
+  @java.lang.Override
   public com.google.protobuf.Duration getRetryDelay() {
     return retryDelay_ == null ? com.google.protobuf.Duration.getDefaultInstance() : retryDelay_;
   }
@@ -163,6 +165,7 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Duration retry_delay = 1;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.DurationOrBuilder getRetryDelayOrBuilder() {
     return getRetryDelay();
   }

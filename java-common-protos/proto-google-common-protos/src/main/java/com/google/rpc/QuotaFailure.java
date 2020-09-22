@@ -311,6 +311,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The subject.
      */
+    @java.lang.Override
     public java.lang.String getSubject() {
       java.lang.Object ref = subject_;
       if (ref instanceof java.lang.String) {
@@ -335,6 +336,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for subject.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSubjectBytes() {
       java.lang.Object ref = subject_;
       if (ref instanceof java.lang.String) {
@@ -365,6 +367,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -392,6 +395,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -1050,6 +1054,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.rpc.QuotaFailure.Violation> getViolationsList() {
     return violations_;
   }
@@ -1062,6 +1067,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.rpc.QuotaFailure.ViolationOrBuilder>
       getViolationsOrBuilderList() {
     return violations_;
@@ -1075,6 +1081,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public int getViolationsCount() {
     return violations_.size();
   }
@@ -1087,6 +1094,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.QuotaFailure.Violation getViolations(int index) {
     return violations_.get(index);
   }
@@ -1099,6 +1107,7 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.QuotaFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.QuotaFailure.ViolationOrBuilder getViolationsOrBuilder(int index) {
     return violations_.get(index);
   }

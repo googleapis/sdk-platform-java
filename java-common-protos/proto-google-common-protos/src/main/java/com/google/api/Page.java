@@ -157,6 +157,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -192,6 +193,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -218,6 +220,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The content.
    */
+  @java.lang.Override
   public java.lang.String getContent() {
     java.lang.Object ref = content_;
     if (ref instanceof java.lang.String) {
@@ -241,6 +244,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for content.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getContentBytes() {
     java.lang.Object ref = content_;
     if (ref instanceof java.lang.String) {
@@ -265,6 +269,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Page> getSubpagesList() {
     return subpages_;
   }
@@ -278,6 +283,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.PageOrBuilder> getSubpagesOrBuilderList() {
     return subpages_;
   }
@@ -291,6 +297,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
+  @java.lang.Override
   public int getSubpagesCount() {
     return subpages_.size();
   }
@@ -304,6 +311,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.Page getSubpages(int index) {
     return subpages_.get(index);
   }
@@ -317,6 +325,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page subpages = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.PageOrBuilder getSubpagesOrBuilder(int index) {
     return subpages_.get(index);
   }

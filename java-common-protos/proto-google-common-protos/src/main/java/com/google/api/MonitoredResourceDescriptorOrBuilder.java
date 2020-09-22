@@ -63,8 +63,16 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. The monitored resource type. For example, the type
-   * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   * The maximum length of this value is 256 characters.
+   * `cloudsql_database` represents databases in Google Cloud SQL.
+   * All service defined monitored resource types must be prefixed with the
+   * service name, in the format of `{service name}/{relative resource name}`.
+   * The relative resource name must follow:
+   * * Only upper and lower-case letters and digits are allowed.
+   * * It must start with upper case character and is recommended to use Upper
+   *   Camel Case style.
+   * * The maximum number of characters allowed for the relative_resource_name
+   *   is 100.
+   * Note there are legacy service monitored resources not following this rule.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -77,8 +85,16 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. The monitored resource type. For example, the type
-   * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   * The maximum length of this value is 256 characters.
+   * `cloudsql_database` represents databases in Google Cloud SQL.
+   * All service defined monitored resource types must be prefixed with the
+   * service name, in the format of `{service name}/{relative resource name}`.
+   * The relative resource name must follow:
+   * * Only upper and lower-case letters and digits are allowed.
+   * * It must start with upper case character and is recommended to use Upper
+   *   Camel Case style.
+   * * The maximum number of characters allowed for the relative_resource_name
+   *   is 100.
+   * Note there are legacy service monitored resources not following this rule.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -150,8 +166,14 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -162,8 +184,14 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -174,8 +202,14 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -186,8 +220,14 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -198,8 +238,14 @@ public interface MonitoredResourceDescriptorOrBuilder
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>

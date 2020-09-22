@@ -120,6 +120,94 @@ public interface AuditLogOrBuilder
    *
    *
    * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   *
+   * @return Whether the resourceLocation field is set.
+   */
+  boolean hasResourceLocation();
+  /**
+   *
+   *
+   * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   *
+   * @return The resourceLocation.
+   */
+  com.google.cloud.audit.ResourceLocation getResourceLocation();
+  /**
+   *
+   *
+   * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   */
+  com.google.cloud.audit.ResourceLocationOrBuilder getResourceLocationOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   *
+   * @return Whether the resourceOriginalState field is set.
+   */
+  boolean hasResourceOriginalState();
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   *
+   * @return The resourceOriginalState.
+   */
+  com.google.protobuf.Struct getResourceOriginalState();
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   */
+  com.google.protobuf.StructOrBuilder getResourceOriginalStateOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
    * The number of items returned from a List or Query API method,
    * if applicable.
    * </pre>
@@ -402,6 +490,45 @@ public interface AuditLogOrBuilder
    *
    * <pre>
    * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   *
+   * @return Whether the metadata field is set.
+   */
+  boolean hasMetadata();
+  /**
+   *
+   *
+   * <pre>
+   * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   *
+   * @return The metadata.
+   */
+  com.google.protobuf.Struct getMetadata();
+  /**
+   *
+   *
+   * <pre>
+   * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   */
+  com.google.protobuf.StructOrBuilder getMetadataOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * Deprecated, use `metadata` field instead.
+   * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
@@ -414,6 +541,7 @@ public interface AuditLogOrBuilder
    *
    *
    * <pre>
+   * Deprecated, use `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
@@ -427,6 +555,7 @@ public interface AuditLogOrBuilder
    *
    *
    * <pre>
+   * Deprecated, use `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>

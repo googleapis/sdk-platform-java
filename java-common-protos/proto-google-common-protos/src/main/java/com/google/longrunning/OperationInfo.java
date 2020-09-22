@@ -145,6 +145,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The responseType.
    */
+  @java.lang.Override
   public java.lang.String getResponseType() {
     java.lang.Object ref = responseType_;
     if (ref instanceof java.lang.String) {
@@ -172,6 +173,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for responseType.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResponseTypeBytes() {
     java.lang.Object ref = responseType_;
     if (ref instanceof java.lang.String) {
@@ -201,6 +203,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The metadataType.
    */
+  @java.lang.Override
   public java.lang.String getMetadataType() {
     java.lang.Object ref = metadataType_;
     if (ref instanceof java.lang.String) {
@@ -227,6 +230,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for metadataType.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMetadataTypeBytes() {
     java.lang.Object ref = metadataType_;
     if (ref instanceof java.lang.String) {

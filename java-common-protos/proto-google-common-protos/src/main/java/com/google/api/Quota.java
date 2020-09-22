@@ -178,6 +178,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.QuotaLimit> getLimitsList() {
     return limits_;
   }
@@ -190,6 +191,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.QuotaLimitOrBuilder> getLimitsOrBuilderList() {
     return limits_;
   }
@@ -202,6 +204,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
+  @java.lang.Override
   public int getLimitsCount() {
     return limits_.size();
   }
@@ -214,6 +217,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.QuotaLimit getLimits(int index) {
     return limits_.get(index);
   }
@@ -226,6 +230,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.QuotaLimit limits = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.QuotaLimitOrBuilder getLimitsOrBuilder(int index) {
     return limits_.get(index);
   }
@@ -242,6 +247,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.MetricRule> getMetricRulesList() {
     return metricRules_;
   }
@@ -255,6 +261,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.MetricRuleOrBuilder>
       getMetricRulesOrBuilderList() {
     return metricRules_;
@@ -269,6 +276,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
+  @java.lang.Override
   public int getMetricRulesCount() {
     return metricRules_.size();
   }
@@ -282,6 +290,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.MetricRule getMetricRules(int index) {
     return metricRules_.get(index);
   }
@@ -295,6 +304,7 @@ public final class Quota extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.MetricRule metric_rules = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.MetricRuleOrBuilder getMetricRulesOrBuilder(int index) {
     return metricRules_.get(index);
   }

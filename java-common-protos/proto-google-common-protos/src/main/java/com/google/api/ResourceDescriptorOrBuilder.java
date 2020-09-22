@@ -245,10 +245,13 @@ public interface ResourceDescriptorOrBuilder
    *
    *
    * <pre>
-   * The plural name used in the resource name, such as 'projects' for
-   * the name of 'projects/{project}'. It is the same concept of the `plural`
-   * field in k8s CRD spec
+   * The plural name used in the resource name and permission names, such as
+   * 'projects' for the resource name of 'projects/{project}' and the permission
+   * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+   * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+   * Note: The plural form is required even for singleton resources. See
+   * https://aip.dev/156
    * </pre>
    *
    * <code>string plural = 5;</code>
@@ -260,10 +263,13 @@ public interface ResourceDescriptorOrBuilder
    *
    *
    * <pre>
-   * The plural name used in the resource name, such as 'projects' for
-   * the name of 'projects/{project}'. It is the same concept of the `plural`
-   * field in k8s CRD spec
+   * The plural name used in the resource name and permission names, such as
+   * 'projects' for the resource name of 'projects/{project}' and the permission
+   * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+   * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+   * Note: The plural form is required even for singleton resources. See
+   * https://aip.dev/156
    * </pre>
    *
    * <code>string plural = 5;</code>
@@ -300,4 +306,77 @@ public interface ResourceDescriptorOrBuilder
    * @return The bytes for singular.
    */
   com.google.protobuf.ByteString getSingularBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return A list containing the style.
+   */
+  java.util.List<com.google.api.ResourceDescriptor.Style> getStyleList();
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return The count of style.
+   */
+  int getStyleCount();
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The style at the given index.
+   */
+  com.google.api.ResourceDescriptor.Style getStyle(int index);
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return A list containing the enum numeric values on the wire for style.
+   */
+  java.util.List<java.lang.Integer> getStyleValueList();
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The enum numeric value on the wire of style at the given index.
+   */
+  int getStyleValue(int index);
 }

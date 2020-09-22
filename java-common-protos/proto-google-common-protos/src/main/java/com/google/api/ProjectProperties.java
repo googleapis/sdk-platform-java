@@ -140,6 +140,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Property> getPropertiesList() {
     return properties_;
   }
@@ -152,6 +153,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.PropertyOrBuilder> getPropertiesOrBuilderList() {
     return properties_;
   }
@@ -164,6 +166,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
+  @java.lang.Override
   public int getPropertiesCount() {
     return properties_.size();
   }
@@ -176,6 +179,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.Property getProperties(int index) {
     return properties_.get(index);
   }
@@ -188,6 +192,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    *
    * <code>repeated .google.api.Property properties = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.PropertyOrBuilder getPropertiesOrBuilder(int index) {
     return properties_.get(index);
   }

@@ -224,6 +224,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The requestMethod.
    */
+  @java.lang.Override
   public java.lang.String getRequestMethod() {
     java.lang.Object ref = requestMethod_;
     if (ref instanceof java.lang.String) {
@@ -246,6 +247,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for requestMethod.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRequestMethodBytes() {
     java.lang.Object ref = requestMethod_;
     if (ref instanceof java.lang.String) {
@@ -273,6 +275,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The requestUrl.
    */
+  @java.lang.Override
   public java.lang.String getRequestUrl() {
     java.lang.Object ref = requestUrl_;
     if (ref instanceof java.lang.String) {
@@ -297,6 +300,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for requestUrl.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRequestUrlBytes() {
     java.lang.Object ref = requestUrl_;
     if (ref instanceof java.lang.String) {
@@ -323,6 +327,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The requestSize.
    */
+  @java.lang.Override
   public long getRequestSize() {
     return requestSize_;
   }
@@ -341,6 +346,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The status.
    */
+  @java.lang.Override
   public int getStatus() {
     return status_;
   }
@@ -359,6 +365,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The responseSize.
    */
+  @java.lang.Override
   public long getResponseSize() {
     return responseSize_;
   }
@@ -378,6 +385,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The userAgent.
    */
+  @java.lang.Override
   public java.lang.String getUserAgent() {
     java.lang.Object ref = userAgent_;
     if (ref instanceof java.lang.String) {
@@ -402,6 +410,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for userAgent.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getUserAgentBytes() {
     java.lang.Object ref = userAgent_;
     if (ref instanceof java.lang.String) {
@@ -428,6 +437,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The remoteIp.
    */
+  @java.lang.Override
   public java.lang.String getRemoteIp() {
     java.lang.Object ref = remoteIp_;
     if (ref instanceof java.lang.String) {
@@ -451,6 +461,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for remoteIp.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRemoteIpBytes() {
     java.lang.Object ref = remoteIp_;
     if (ref instanceof java.lang.String) {
@@ -477,6 +488,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The serverIp.
    */
+  @java.lang.Override
   public java.lang.String getServerIp() {
     java.lang.Object ref = serverIp_;
     if (ref instanceof java.lang.String) {
@@ -500,6 +512,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for serverIp.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getServerIpBytes() {
     java.lang.Object ref = serverIp_;
     if (ref instanceof java.lang.String) {
@@ -527,6 +540,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The referer.
    */
+  @java.lang.Override
   public java.lang.String getReferer() {
     java.lang.Object ref = referer_;
     if (ref instanceof java.lang.String) {
@@ -551,6 +565,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for referer.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRefererBytes() {
     java.lang.Object ref = referer_;
     if (ref instanceof java.lang.String) {
@@ -577,6 +592,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the latency field is set.
    */
+  @java.lang.Override
   public boolean hasLatency() {
     return latency_ != null;
   }
@@ -592,6 +608,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The latency.
    */
+  @java.lang.Override
   public com.google.protobuf.Duration getLatency() {
     return latency_ == null ? com.google.protobuf.Duration.getDefaultInstance() : latency_;
   }
@@ -605,6 +622,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Duration latency = 14;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.DurationOrBuilder getLatencyOrBuilder() {
     return getLatency();
   }
@@ -622,6 +640,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The cacheLookup.
    */
+  @java.lang.Override
   public boolean getCacheLookup() {
     return cacheLookup_;
   }
@@ -640,6 +659,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The cacheHit.
    */
+  @java.lang.Override
   public boolean getCacheHit() {
     return cacheHit_;
   }
@@ -659,6 +679,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The cacheValidatedWithOriginServer.
    */
+  @java.lang.Override
   public boolean getCacheValidatedWithOriginServer() {
     return cacheValidatedWithOriginServer_;
   }
@@ -677,6 +698,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The cacheFillBytes.
    */
+  @java.lang.Override
   public long getCacheFillBytes() {
     return cacheFillBytes_;
   }
@@ -694,6 +716,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The protocol.
    */
+  @java.lang.Override
   public java.lang.String getProtocol() {
     java.lang.Object ref = protocol_;
     if (ref instanceof java.lang.String) {
@@ -716,6 +739,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for protocol.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getProtocolBytes() {
     java.lang.Object ref = protocol_;
     if (ref instanceof java.lang.String) {
@@ -1511,6 +1535,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The requestSize.
      */
+    @java.lang.Override
     public long getRequestSize() {
       return requestSize_;
     }
@@ -1565,6 +1590,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The status.
      */
+    @java.lang.Override
     public int getStatus() {
       return status_;
     }
@@ -1619,6 +1645,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The responseSize.
      */
+    @java.lang.Override
     public long getResponseSize() {
       return responseSize_;
     }
@@ -2314,6 +2341,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The cacheLookup.
      */
+    @java.lang.Override
     public boolean getCacheLookup() {
       return cacheLookup_;
     }
@@ -2366,6 +2394,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The cacheHit.
      */
+    @java.lang.Override
     public boolean getCacheHit() {
       return cacheHit_;
     }
@@ -2421,6 +2450,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The cacheValidatedWithOriginServer.
      */
+    @java.lang.Override
     public boolean getCacheValidatedWithOriginServer() {
       return cacheValidatedWithOriginServer_;
     }
@@ -2477,6 +2507,7 @@ public final class HttpRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The cacheFillBytes.
      */
+    @java.lang.Override
     public long getCacheFillBytes() {
       return cacheFillBytes_;
     }

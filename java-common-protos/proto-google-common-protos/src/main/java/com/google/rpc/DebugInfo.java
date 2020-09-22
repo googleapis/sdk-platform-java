@@ -197,6 +197,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The detail.
    */
+  @java.lang.Override
   public java.lang.String getDetail() {
     java.lang.Object ref = detail_;
     if (ref instanceof java.lang.String) {
@@ -219,6 +220,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for detail.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDetailBytes() {
     java.lang.Object ref = detail_;
     if (ref instanceof java.lang.String) {

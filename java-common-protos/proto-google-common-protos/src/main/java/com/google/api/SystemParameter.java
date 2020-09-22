@@ -141,6 +141,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -163,6 +164,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -189,6 +191,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The httpHeader.
    */
+  @java.lang.Override
   public java.lang.String getHttpHeader() {
     java.lang.Object ref = httpHeader_;
     if (ref instanceof java.lang.String) {
@@ -212,6 +215,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for httpHeader.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getHttpHeaderBytes() {
     java.lang.Object ref = httpHeader_;
     if (ref instanceof java.lang.String) {
@@ -238,6 +242,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The urlQueryParameter.
    */
+  @java.lang.Override
   public java.lang.String getUrlQueryParameter() {
     java.lang.Object ref = urlQueryParameter_;
     if (ref instanceof java.lang.String) {
@@ -261,6 +266,7 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for urlQueryParameter.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getUrlQueryParameterBytes() {
     java.lang.Object ref = urlQueryParameter_;
     if (ref instanceof java.lang.String) {

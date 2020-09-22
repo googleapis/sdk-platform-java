@@ -153,6 +153,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.ContextRule> getRulesList() {
     return rules_;
   }
@@ -166,6 +167,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.ContextRuleOrBuilder> getRulesOrBuilderList() {
     return rules_;
   }
@@ -179,6 +181,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -192,6 +195,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.ContextRule getRules(int index) {
     return rules_.get(index);
   }
@@ -205,6 +209,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.ContextRule rules = 1;</code>
    */
+  @java.lang.Override
   public com.google.api.ContextRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }

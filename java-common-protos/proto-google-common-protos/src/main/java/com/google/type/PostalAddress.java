@@ -227,6 +227,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The revision.
    */
+  @java.lang.Override
   public int getRevision() {
     return revision_;
   }
@@ -248,6 +249,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The regionCode.
    */
+  @java.lang.Override
   public java.lang.String getRegionCode() {
     java.lang.Object ref = regionCode_;
     if (ref instanceof java.lang.String) {
@@ -274,6 +276,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for regionCode.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getRegionCodeBytes() {
     java.lang.Object ref = regionCode_;
     if (ref instanceof java.lang.String) {
@@ -308,6 +311,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The languageCode.
    */
+  @java.lang.Override
   public java.lang.String getLanguageCode() {
     java.lang.Object ref = languageCode_;
     if (ref instanceof java.lang.String) {
@@ -339,6 +343,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for languageCode.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getLanguageCodeBytes() {
     java.lang.Object ref = languageCode_;
     if (ref instanceof java.lang.String) {
@@ -367,6 +372,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The postalCode.
    */
+  @java.lang.Override
   public java.lang.String getPostalCode() {
     java.lang.Object ref = postalCode_;
     if (ref instanceof java.lang.String) {
@@ -392,6 +398,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for postalCode.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPostalCodeBytes() {
     java.lang.Object ref = postalCode_;
     if (ref instanceof java.lang.String) {
@@ -421,6 +428,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The sortingCode.
    */
+  @java.lang.Override
   public java.lang.String getSortingCode() {
     java.lang.Object ref = sortingCode_;
     if (ref instanceof java.lang.String) {
@@ -447,6 +455,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for sortingCode.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSortingCodeBytes() {
     java.lang.Object ref = sortingCode_;
     if (ref instanceof java.lang.String) {
@@ -478,6 +487,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The administrativeArea.
    */
+  @java.lang.Override
   public java.lang.String getAdministrativeArea() {
     java.lang.Object ref = administrativeArea_;
     if (ref instanceof java.lang.String) {
@@ -506,6 +516,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for administrativeArea.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAdministrativeAreaBytes() {
     java.lang.Object ref = administrativeArea_;
     if (ref instanceof java.lang.String) {
@@ -534,6 +545,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The locality.
    */
+  @java.lang.Override
   public java.lang.String getLocality() {
     java.lang.Object ref = locality_;
     if (ref instanceof java.lang.String) {
@@ -559,6 +571,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for locality.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getLocalityBytes() {
     java.lang.Object ref = locality_;
     if (ref instanceof java.lang.String) {
@@ -585,6 +598,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The sublocality.
    */
+  @java.lang.Override
   public java.lang.String getSublocality() {
     java.lang.Object ref = sublocality_;
     if (ref instanceof java.lang.String) {
@@ -608,6 +622,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for sublocality.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSublocalityBytes() {
     java.lang.Object ref = sublocality_;
     if (ref instanceof java.lang.String) {
@@ -835,6 +850,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The organization.
    */
+  @java.lang.Override
   public java.lang.String getOrganization() {
     java.lang.Object ref = organization_;
     if (ref instanceof java.lang.String) {
@@ -857,6 +873,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for organization.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getOrganizationBytes() {
     java.lang.Object ref = organization_;
     if (ref instanceof java.lang.String) {
@@ -1404,6 +1421,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The revision.
      */
+    @java.lang.Override
     public int getRevision() {
       return revision_;
     }

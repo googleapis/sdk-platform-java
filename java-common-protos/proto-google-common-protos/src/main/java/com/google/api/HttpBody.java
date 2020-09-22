@@ -170,6 +170,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The contentType.
    */
+  @java.lang.Override
   public java.lang.String getContentType() {
     java.lang.Object ref = contentType_;
     if (ref instanceof java.lang.String) {
@@ -192,6 +193,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for contentType.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getContentTypeBytes() {
     java.lang.Object ref = contentType_;
     if (ref instanceof java.lang.String) {
@@ -217,6 +219,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The data.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getData() {
     return data_;
   }
@@ -233,6 +236,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.protobuf.Any> getExtensionsList() {
     return extensions_;
   }
@@ -246,6 +250,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList() {
     return extensions_;
   }
@@ -259,6 +264,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
+  @java.lang.Override
   public int getExtensionsCount() {
     return extensions_.size();
   }
@@ -272,6 +278,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.Any getExtensions(int index) {
     return extensions_.get(index);
   }
@@ -285,6 +292,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any extensions = 3;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index) {
     return extensions_.get(index);
   }
@@ -817,6 +825,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The data.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getData() {
       return data_;
     }

@@ -339,6 +339,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The type.
      */
+    @java.lang.Override
     public java.lang.String getType() {
       java.lang.Object ref = type_;
       if (ref instanceof java.lang.String) {
@@ -363,6 +364,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The bytes for type.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getTypeBytes() {
       java.lang.Object ref = type_;
       if (ref instanceof java.lang.String) {
@@ -390,6 +392,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The subject.
      */
+    @java.lang.Override
     public java.lang.String getSubject() {
       java.lang.Object ref = subject_;
       if (ref instanceof java.lang.String) {
@@ -414,6 +417,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The bytes for subject.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getSubjectBytes() {
       java.lang.Object ref = subject_;
       if (ref instanceof java.lang.String) {
@@ -441,6 +445,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -465,6 +470,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -1240,6 +1246,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.rpc.PreconditionFailure.Violation> getViolationsList() {
     return violations_;
   }
@@ -1252,6 +1259,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.rpc.PreconditionFailure.ViolationOrBuilder>
       getViolationsOrBuilderList() {
     return violations_;
@@ -1265,6 +1273,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public int getViolationsCount() {
     return violations_.size();
   }
@@ -1277,6 +1286,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.PreconditionFailure.Violation getViolations(int index) {
     return violations_.get(index);
   }
@@ -1289,6 +1299,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <code>repeated .google.rpc.PreconditionFailure.Violation violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.PreconditionFailure.ViolationOrBuilder getViolationsOrBuilder(int index) {
     return violations_.get(index);
   }

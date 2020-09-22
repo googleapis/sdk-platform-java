@@ -133,6 +133,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * @return The locale.
    */
+  @java.lang.Override
   public java.lang.String getLocale() {
     java.lang.Object ref = locale_;
     if (ref instanceof java.lang.String) {
@@ -157,6 +158,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for locale.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getLocaleBytes() {
     java.lang.Object ref = locale_;
     if (ref instanceof java.lang.String) {
@@ -182,6 +184,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * @return The message.
    */
+  @java.lang.Override
   public java.lang.String getMessage() {
     java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
@@ -204,6 +207,7 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
    *
    * @return The bytes for message.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMessageBytes() {
     java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {

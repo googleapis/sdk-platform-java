@@ -170,6 +170,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * @return Whether the systemLabels field is set.
    */
+  @java.lang.Override
   public boolean hasSystemLabels() {
     return systemLabels_ != null;
   }
@@ -192,6 +193,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * @return The systemLabels.
    */
+  @java.lang.Override
   public com.google.protobuf.Struct getSystemLabels() {
     return systemLabels_ == null ? com.google.protobuf.Struct.getDefaultInstance() : systemLabels_;
   }
@@ -212,6 +214,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * <code>.google.protobuf.Struct system_labels = 1;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.StructOrBuilder getSystemLabelsOrBuilder() {
     return getSystemLabels();
   }
@@ -250,6 +253,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
+  @java.lang.Override
   public boolean containsUserLabels(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -257,6 +261,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     return internalGetUserLabels().getMap().containsKey(key);
   }
   /** Use {@link #getUserLabelsMap()} instead. */
+  @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getUserLabels() {
     return getUserLabelsMap();
@@ -270,6 +275,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getUserLabelsMap() {
     return internalGetUserLabels().getMap();
   }
@@ -282,6 +288,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
+  @java.lang.Override
   public java.lang.String getUserLabelsOrDefault(
       java.lang.String key, java.lang.String defaultValue) {
     if (key == null) {
@@ -299,6 +306,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
+  @java.lang.Override
   public java.lang.String getUserLabelsOrThrow(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -978,6 +986,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      *
      * <code>map&lt;string, string&gt; user_labels = 2;</code>
      */
+    @java.lang.Override
     public boolean containsUserLabels(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -985,6 +994,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
       return internalGetUserLabels().getMap().containsKey(key);
     }
     /** Use {@link #getUserLabelsMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getUserLabels() {
       return getUserLabelsMap();
@@ -998,6 +1008,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      *
      * <code>map&lt;string, string&gt; user_labels = 2;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getUserLabelsMap() {
       return internalGetUserLabels().getMap();
     }
@@ -1010,6 +1021,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      *
      * <code>map&lt;string, string&gt; user_labels = 2;</code>
      */
+    @java.lang.Override
     public java.lang.String getUserLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -1027,6 +1039,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      *
      * <code>map&lt;string, string&gt; user_labels = 2;</code>
      */
+    @java.lang.Override
     public java.lang.String getUserLabelsOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();

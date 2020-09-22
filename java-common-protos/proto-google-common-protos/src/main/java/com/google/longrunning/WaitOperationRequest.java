@@ -139,6 +139,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -161,6 +162,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -188,6 +190,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * @return Whether the timeout field is set.
    */
+  @java.lang.Override
   public boolean hasTimeout() {
     return timeout_ != null;
   }
@@ -204,6 +207,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * @return The timeout.
    */
+  @java.lang.Override
   public com.google.protobuf.Duration getTimeout() {
     return timeout_ == null ? com.google.protobuf.Duration.getDefaultInstance() : timeout_;
   }
@@ -218,6 +222,7 @@ public final class WaitOperationRequest extends com.google.protobuf.GeneratedMes
    *
    * <code>.google.protobuf.Duration timeout = 2;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.DurationOrBuilder getTimeoutOrBuilder() {
     return getTimeout();
   }

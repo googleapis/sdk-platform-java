@@ -300,6 +300,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The valuePrefix.
    */
+  @java.lang.Override
   public java.lang.String getValuePrefix() {
     java.lang.Object ref = valuePrefix_;
     if (ref instanceof java.lang.String) {
@@ -328,6 +329,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for valuePrefix.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getValuePrefixBytes() {
     java.lang.Object ref = valuePrefix_;
     if (ref instanceof java.lang.String) {
@@ -738,6 +740,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The header.
      */
+    @java.lang.Override
     public java.lang.String getHeader() {
       java.lang.Object ref = "";
       if (inCase_ == 1) {
@@ -765,6 +768,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for header.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getHeaderBytes() {
       java.lang.Object ref = "";
       if (inCase_ == 1) {
@@ -855,6 +859,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The query.
      */
+    @java.lang.Override
     public java.lang.String getQuery() {
       java.lang.Object ref = "";
       if (inCase_ == 2) {
@@ -882,6 +887,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for query.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getQueryBytes() {
       java.lang.Object ref = "";
       if (inCase_ == 2) {

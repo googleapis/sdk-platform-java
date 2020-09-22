@@ -90,6 +90,22 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
               granted_ = input.readBool();
               break;
             }
+          case 42:
+            {
+              com.google.rpc.context.AttributeContext.Resource.Builder subBuilder = null;
+              if (resourceAttributes_ != null) {
+                subBuilder = resourceAttributes_.toBuilder();
+              }
+              resourceAttributes_ =
+                  input.readMessage(
+                      com.google.rpc.context.AttributeContext.Resource.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(resourceAttributes_);
+                resourceAttributes_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -131,13 +147,14 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * <pre>
    * The resource being accessed, as a REST-style string. For example:
-   *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
    *
    * @return The resource.
    */
+  @java.lang.Override
   public java.lang.String getResource() {
     java.lang.Object ref = resource_;
     if (ref instanceof java.lang.String) {
@@ -154,13 +171,14 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * <pre>
    * The resource being accessed, as a REST-style string. For example:
-   *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
    *
    * @return The bytes for resource.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResourceBytes() {
     java.lang.Object ref = resource_;
     if (ref instanceof java.lang.String) {
@@ -186,6 +204,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * @return The permission.
    */
+  @java.lang.Override
   public java.lang.String getPermission() {
     java.lang.Object ref = permission_;
     if (ref instanceof java.lang.String) {
@@ -208,6 +227,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for permission.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPermissionBytes() {
     java.lang.Object ref = permission_;
     if (ref instanceof java.lang.String) {
@@ -234,8 +254,70 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    *
    * @return The granted.
    */
+  @java.lang.Override
   public boolean getGranted() {
     return granted_;
+  }
+
+  public static final int RESOURCE_ATTRIBUTES_FIELD_NUMBER = 5;
+  private com.google.rpc.context.AttributeContext.Resource resourceAttributes_;
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   *
+   * @return Whether the resourceAttributes field is set.
+   */
+  @java.lang.Override
+  public boolean hasResourceAttributes() {
+    return resourceAttributes_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   *
+   * @return The resourceAttributes.
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.Resource getResourceAttributes() {
+    return resourceAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
+        : resourceAttributes_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.ResourceOrBuilder
+      getResourceAttributesOrBuilder() {
+    return getResourceAttributes();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -261,6 +343,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     if (granted_ != false) {
       output.writeBool(3, granted_);
     }
+    if (resourceAttributes_ != null) {
+      output.writeMessage(5, getResourceAttributes());
+    }
     unknownFields.writeTo(output);
   }
 
@@ -278,6 +363,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     }
     if (granted_ != false) {
       size += com.google.protobuf.CodedOutputStream.computeBoolSize(3, granted_);
+    }
+    if (resourceAttributes_ != null) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, getResourceAttributes());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -297,6 +385,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     if (!getResource().equals(other.getResource())) return false;
     if (!getPermission().equals(other.getPermission())) return false;
     if (getGranted() != other.getGranted()) return false;
+    if (hasResourceAttributes() != other.hasResourceAttributes()) return false;
+    if (hasResourceAttributes()) {
+      if (!getResourceAttributes().equals(other.getResourceAttributes())) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -314,6 +406,10 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     hash = (53 * hash) + getPermission().hashCode();
     hash = (37 * hash) + GRANTED_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(getGranted());
+    if (hasResourceAttributes()) {
+      hash = (37 * hash) + RESOURCE_ATTRIBUTES_FIELD_NUMBER;
+      hash = (53 * hash) + getResourceAttributes().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -465,6 +561,12 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
 
       granted_ = false;
 
+      if (resourceAttributesBuilder_ == null) {
+        resourceAttributes_ = null;
+      } else {
+        resourceAttributes_ = null;
+        resourceAttributesBuilder_ = null;
+      }
       return this;
     }
 
@@ -495,6 +597,11 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       result.resource_ = resource_;
       result.permission_ = permission_;
       result.granted_ = granted_;
+      if (resourceAttributesBuilder_ == null) {
+        result.resourceAttributes_ = resourceAttributes_;
+      } else {
+        result.resourceAttributes_ = resourceAttributesBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -555,6 +662,9 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       if (other.getGranted() != false) {
         setGranted(other.getGranted());
       }
+      if (other.hasResourceAttributes()) {
+        mergeResourceAttributes(other.getResourceAttributes());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -590,7 +700,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource being accessed, as a REST-style string. For example:
-     *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+     *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * </pre>
      *
      * <code>string resource = 1;</code>
@@ -613,7 +723,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource being accessed, as a REST-style string. For example:
-     *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+     *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * </pre>
      *
      * <code>string resource = 1;</code>
@@ -636,7 +746,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource being accessed, as a REST-style string. For example:
-     *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+     *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * </pre>
      *
      * <code>string resource = 1;</code>
@@ -658,7 +768,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource being accessed, as a REST-style string. For example:
-     *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+     *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * </pre>
      *
      * <code>string resource = 1;</code>
@@ -676,7 +786,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource being accessed, as a REST-style string. For example:
-     *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+     *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * </pre>
      *
      * <code>string resource = 1;</code>
@@ -814,6 +924,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      *
      * @return The granted.
      */
+    @java.lang.Override
     public boolean getGranted() {
       return granted_;
     }
@@ -853,6 +964,229 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
       granted_ = false;
       onChanged();
       return this;
+    }
+
+    private com.google.rpc.context.AttributeContext.Resource resourceAttributes_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Resource,
+            com.google.rpc.context.AttributeContext.Resource.Builder,
+            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
+        resourceAttributesBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     *
+     * @return Whether the resourceAttributes field is set.
+     */
+    public boolean hasResourceAttributes() {
+      return resourceAttributesBuilder_ != null || resourceAttributes_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     *
+     * @return The resourceAttributes.
+     */
+    public com.google.rpc.context.AttributeContext.Resource getResourceAttributes() {
+      if (resourceAttributesBuilder_ == null) {
+        return resourceAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
+            : resourceAttributes_;
+      } else {
+        return resourceAttributesBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public Builder setResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
+      if (resourceAttributesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        resourceAttributes_ = value;
+        onChanged();
+      } else {
+        resourceAttributesBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public Builder setResourceAttributes(
+        com.google.rpc.context.AttributeContext.Resource.Builder builderForValue) {
+      if (resourceAttributesBuilder_ == null) {
+        resourceAttributes_ = builderForValue.build();
+        onChanged();
+      } else {
+        resourceAttributesBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public Builder mergeResourceAttributes(com.google.rpc.context.AttributeContext.Resource value) {
+      if (resourceAttributesBuilder_ == null) {
+        if (resourceAttributes_ != null) {
+          resourceAttributes_ =
+              com.google.rpc.context.AttributeContext.Resource.newBuilder(resourceAttributes_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          resourceAttributes_ = value;
+        }
+        onChanged();
+      } else {
+        resourceAttributesBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public Builder clearResourceAttributes() {
+      if (resourceAttributesBuilder_ == null) {
+        resourceAttributes_ = null;
+        onChanged();
+      } else {
+        resourceAttributes_ = null;
+        resourceAttributesBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public com.google.rpc.context.AttributeContext.Resource.Builder getResourceAttributesBuilder() {
+
+      onChanged();
+      return getResourceAttributesFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    public com.google.rpc.context.AttributeContext.ResourceOrBuilder
+        getResourceAttributesOrBuilder() {
+      if (resourceAttributesBuilder_ != null) {
+        return resourceAttributesBuilder_.getMessageOrBuilder();
+      } else {
+        return resourceAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Resource.getDefaultInstance()
+            : resourceAttributes_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Resource attributes used in IAM condition evaluation. This field contains
+     * resource attributes like resource type and resource name.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.request_metadata.request_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Resource,
+            com.google.rpc.context.AttributeContext.Resource.Builder,
+            com.google.rpc.context.AttributeContext.ResourceOrBuilder>
+        getResourceAttributesFieldBuilder() {
+      if (resourceAttributesBuilder_ == null) {
+        resourceAttributesBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.rpc.context.AttributeContext.Resource,
+                com.google.rpc.context.AttributeContext.Resource.Builder,
+                com.google.rpc.context.AttributeContext.ResourceOrBuilder>(
+                getResourceAttributes(), getParentForChildren(), isClean());
+        resourceAttributes_ = null;
+      }
+      return resourceAttributesBuilder_;
     }
 
     @java.lang.Override

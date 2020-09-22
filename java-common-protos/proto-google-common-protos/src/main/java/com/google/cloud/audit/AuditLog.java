@@ -200,6 +200,51 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
 
               break;
             }
+          case 146:
+            {
+              com.google.protobuf.Struct.Builder subBuilder = null;
+              if (metadata_ != null) {
+                subBuilder = metadata_.toBuilder();
+              }
+              metadata_ = input.readMessage(com.google.protobuf.Struct.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(metadata_);
+                metadata_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 154:
+            {
+              com.google.protobuf.Struct.Builder subBuilder = null;
+              if (resourceOriginalState_ != null) {
+                subBuilder = resourceOriginalState_.toBuilder();
+              }
+              resourceOriginalState_ =
+                  input.readMessage(com.google.protobuf.Struct.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(resourceOriginalState_);
+                resourceOriginalState_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 162:
+            {
+              com.google.cloud.audit.ResourceLocation.Builder subBuilder = null;
+              if (resourceLocation_ != null) {
+                subBuilder = resourceLocation_.toBuilder();
+              }
+              resourceLocation_ =
+                  input.readMessage(
+                      com.google.cloud.audit.ResourceLocation.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(resourceLocation_);
+                resourceLocation_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -250,6 +295,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The serviceName.
    */
+  @java.lang.Override
   public java.lang.String getServiceName() {
     java.lang.Object ref = serviceName_;
     if (ref instanceof java.lang.String) {
@@ -273,6 +319,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for serviceName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getServiceNameBytes() {
     java.lang.Object ref = serviceName_;
     if (ref instanceof java.lang.String) {
@@ -302,6 +349,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The methodName.
    */
+  @java.lang.Override
   public java.lang.String getMethodName() {
     java.lang.Object ref = methodName_;
     if (ref instanceof java.lang.String) {
@@ -328,6 +376,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for methodName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMethodNameBytes() {
     java.lang.Object ref = methodName_;
     if (ref instanceof java.lang.String) {
@@ -357,6 +406,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The resourceName.
    */
+  @java.lang.Override
   public java.lang.String getResourceName() {
     java.lang.Object ref = resourceName_;
     if (ref instanceof java.lang.String) {
@@ -383,6 +433,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for resourceName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getResourceNameBytes() {
     java.lang.Object ref = resourceName_;
     if (ref instanceof java.lang.String) {
@@ -393,6 +444,120 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int RESOURCE_LOCATION_FIELD_NUMBER = 20;
+  private com.google.cloud.audit.ResourceLocation resourceLocation_;
+  /**
+   *
+   *
+   * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   *
+   * @return Whether the resourceLocation field is set.
+   */
+  @java.lang.Override
+  public boolean hasResourceLocation() {
+    return resourceLocation_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   *
+   * @return The resourceLocation.
+   */
+  @java.lang.Override
+  public com.google.cloud.audit.ResourceLocation getResourceLocation() {
+    return resourceLocation_ == null
+        ? com.google.cloud.audit.ResourceLocation.getDefaultInstance()
+        : resourceLocation_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource location information.
+   * </pre>
+   *
+   * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+   */
+  @java.lang.Override
+  public com.google.cloud.audit.ResourceLocationOrBuilder getResourceLocationOrBuilder() {
+    return getResourceLocation();
+  }
+
+  public static final int RESOURCE_ORIGINAL_STATE_FIELD_NUMBER = 19;
+  private com.google.protobuf.Struct resourceOriginalState_;
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   *
+   * @return Whether the resourceOriginalState field is set.
+   */
+  @java.lang.Override
+  public boolean hasResourceOriginalState() {
+    return resourceOriginalState_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   *
+   * @return The resourceOriginalState.
+   */
+  @java.lang.Override
+  public com.google.protobuf.Struct getResourceOriginalState() {
+    return resourceOriginalState_ == null
+        ? com.google.protobuf.Struct.getDefaultInstance()
+        : resourceOriginalState_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The resource's original state before mutation. Present only for
+   * operations which have successfully modified the targeted resource(s).
+   * In general, this field should contain all changed fields, except those
+   * that are already been included in `request`, `response`, `metadata` or
+   * `service_data` fields.
+   * When the JSON object represented here has a proto equivalent,
+   * the proto name will be indicated in the `&#64;type` property.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+   */
+  @java.lang.Override
+  public com.google.protobuf.StructOrBuilder getResourceOriginalStateOrBuilder() {
+    return getResourceOriginalState();
   }
 
   public static final int NUM_RESPONSE_ITEMS_FIELD_NUMBER = 12;
@@ -409,6 +574,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The numResponseItems.
    */
+  @java.lang.Override
   public long getNumResponseItems() {
     return numResponseItems_;
   }
@@ -426,6 +592,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the status field is set.
    */
+  @java.lang.Override
   public boolean hasStatus() {
     return status_ != null;
   }
@@ -440,6 +607,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The status.
    */
+  @java.lang.Override
   public com.google.rpc.Status getStatus() {
     return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
   }
@@ -452,6 +620,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.rpc.Status status = 2;</code>
    */
+  @java.lang.Override
   public com.google.rpc.StatusOrBuilder getStatusOrBuilder() {
     return getStatus();
   }
@@ -469,6 +638,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the authenticationInfo field is set.
    */
+  @java.lang.Override
   public boolean hasAuthenticationInfo() {
     return authenticationInfo_ != null;
   }
@@ -483,6 +653,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The authenticationInfo.
    */
+  @java.lang.Override
   public com.google.cloud.audit.AuthenticationInfo getAuthenticationInfo() {
     return authenticationInfo_ == null
         ? com.google.cloud.audit.AuthenticationInfo.getDefaultInstance()
@@ -497,6 +668,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.cloud.audit.AuthenticationInfo authentication_info = 3;</code>
    */
+  @java.lang.Override
   public com.google.cloud.audit.AuthenticationInfoOrBuilder getAuthenticationInfoOrBuilder() {
     return getAuthenticationInfo();
   }
@@ -514,6 +686,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.cloud.audit.AuthorizationInfo> getAuthorizationInfoList() {
     return authorizationInfo_;
   }
@@ -528,6 +701,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.cloud.audit.AuthorizationInfoOrBuilder>
       getAuthorizationInfoOrBuilderList() {
     return authorizationInfo_;
@@ -543,6 +717,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
+  @java.lang.Override
   public int getAuthorizationInfoCount() {
     return authorizationInfo_.size();
   }
@@ -557,6 +732,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
+  @java.lang.Override
   public com.google.cloud.audit.AuthorizationInfo getAuthorizationInfo(int index) {
     return authorizationInfo_.get(index);
   }
@@ -571,6 +747,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.cloud.audit.AuthorizationInfo authorization_info = 9;</code>
    */
+  @java.lang.Override
   public com.google.cloud.audit.AuthorizationInfoOrBuilder getAuthorizationInfoOrBuilder(
       int index) {
     return authorizationInfo_.get(index);
@@ -589,6 +766,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the requestMetadata field is set.
    */
+  @java.lang.Override
   public boolean hasRequestMetadata() {
     return requestMetadata_ != null;
   }
@@ -603,6 +781,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The requestMetadata.
    */
+  @java.lang.Override
   public com.google.cloud.audit.RequestMetadata getRequestMetadata() {
     return requestMetadata_ == null
         ? com.google.cloud.audit.RequestMetadata.getDefaultInstance()
@@ -617,6 +796,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.cloud.audit.RequestMetadata request_metadata = 4;</code>
    */
+  @java.lang.Override
   public com.google.cloud.audit.RequestMetadataOrBuilder getRequestMetadataOrBuilder() {
     return getRequestMetadata();
   }
@@ -639,6 +819,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the request field is set.
    */
+  @java.lang.Override
   public boolean hasRequest() {
     return request_ != null;
   }
@@ -658,6 +839,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The request.
    */
+  @java.lang.Override
   public com.google.protobuf.Struct getRequest() {
     return request_ == null ? com.google.protobuf.Struct.getDefaultInstance() : request_;
   }
@@ -675,6 +857,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Struct request = 16;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.StructOrBuilder getRequestOrBuilder() {
     return getRequest();
   }
@@ -697,6 +880,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the response field is set.
    */
+  @java.lang.Override
   public boolean hasResponse() {
     return response_ != null;
   }
@@ -716,6 +900,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The response.
    */
+  @java.lang.Override
   public com.google.protobuf.Struct getResponse() {
     return response_ == null ? com.google.protobuf.Struct.getDefaultInstance() : response_;
   }
@@ -733,8 +918,58 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Struct response = 17;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.StructOrBuilder getResponseOrBuilder() {
     return getResponse();
+  }
+
+  public static final int METADATA_FIELD_NUMBER = 18;
+  private com.google.protobuf.Struct metadata_;
+  /**
+   *
+   *
+   * <pre>
+   * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   *
+   * @return Whether the metadata field is set.
+   */
+  @java.lang.Override
+  public boolean hasMetadata() {
+    return metadata_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   *
+   * @return The metadata.
+   */
+  @java.lang.Override
+  public com.google.protobuf.Struct getMetadata() {
+    return metadata_ == null ? com.google.protobuf.Struct.getDefaultInstance() : metadata_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Other service-specific data about the request, response, and other
+   * information associated with the current audited event.
+   * </pre>
+   *
+   * <code>.google.protobuf.Struct metadata = 18;</code>
+   */
+  @java.lang.Override
+  public com.google.protobuf.StructOrBuilder getMetadataOrBuilder() {
+    return getMetadata();
   }
 
   public static final int SERVICE_DATA_FIELD_NUMBER = 15;
@@ -743,6 +978,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
+   * Deprecated, use `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
@@ -751,6 +987,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the serviceData field is set.
    */
+  @java.lang.Override
   public boolean hasServiceData() {
     return serviceData_ != null;
   }
@@ -758,6 +995,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
+   * Deprecated, use `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
@@ -766,6 +1004,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The serviceData.
    */
+  @java.lang.Override
   public com.google.protobuf.Any getServiceData() {
     return serviceData_ == null ? com.google.protobuf.Any.getDefaultInstance() : serviceData_;
   }
@@ -773,12 +1012,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
+   * Deprecated, use `metadata` field instead.
    * Other service-specific data about the request, response, and other
    * activities.
    * </pre>
    *
    * <code>.google.protobuf.Any service_data = 15;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getServiceDataOrBuilder() {
     return getServiceData();
   }
@@ -830,6 +1071,15 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (response_ != null) {
       output.writeMessage(17, getResponse());
     }
+    if (metadata_ != null) {
+      output.writeMessage(18, getMetadata());
+    }
+    if (resourceOriginalState_ != null) {
+      output.writeMessage(19, getResourceOriginalState());
+    }
+    if (resourceLocation_ != null) {
+      output.writeMessage(20, getResourceLocation());
+    }
     unknownFields.writeTo(output);
   }
 
@@ -873,6 +1123,16 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (response_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(17, getResponse());
     }
+    if (metadata_ != null) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(18, getMetadata());
+    }
+    if (resourceOriginalState_ != null) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(19, getResourceOriginalState());
+    }
+    if (resourceLocation_ != null) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(20, getResourceLocation());
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -891,6 +1151,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (!getServiceName().equals(other.getServiceName())) return false;
     if (!getMethodName().equals(other.getMethodName())) return false;
     if (!getResourceName().equals(other.getResourceName())) return false;
+    if (hasResourceLocation() != other.hasResourceLocation()) return false;
+    if (hasResourceLocation()) {
+      if (!getResourceLocation().equals(other.getResourceLocation())) return false;
+    }
+    if (hasResourceOriginalState() != other.hasResourceOriginalState()) return false;
+    if (hasResourceOriginalState()) {
+      if (!getResourceOriginalState().equals(other.getResourceOriginalState())) return false;
+    }
     if (getNumResponseItems() != other.getNumResponseItems()) return false;
     if (hasStatus() != other.hasStatus()) return false;
     if (hasStatus()) {
@@ -913,6 +1181,10 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (hasResponse()) {
       if (!getResponse().equals(other.getResponse())) return false;
     }
+    if (hasMetadata() != other.hasMetadata()) return false;
+    if (hasMetadata()) {
+      if (!getMetadata().equals(other.getMetadata())) return false;
+    }
     if (hasServiceData() != other.hasServiceData()) return false;
     if (hasServiceData()) {
       if (!getServiceData().equals(other.getServiceData())) return false;
@@ -934,6 +1206,14 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + getMethodName().hashCode();
     hash = (37 * hash) + RESOURCE_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getResourceName().hashCode();
+    if (hasResourceLocation()) {
+      hash = (37 * hash) + RESOURCE_LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getResourceLocation().hashCode();
+    }
+    if (hasResourceOriginalState()) {
+      hash = (37 * hash) + RESOURCE_ORIGINAL_STATE_FIELD_NUMBER;
+      hash = (53 * hash) + getResourceOriginalState().hashCode();
+    }
     hash = (37 * hash) + NUM_RESPONSE_ITEMS_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashLong(getNumResponseItems());
     if (hasStatus()) {
@@ -959,6 +1239,10 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     if (hasResponse()) {
       hash = (37 * hash) + RESPONSE_FIELD_NUMBER;
       hash = (53 * hash) + getResponse().hashCode();
+    }
+    if (hasMetadata()) {
+      hash = (37 * hash) + METADATA_FIELD_NUMBER;
+      hash = (53 * hash) + getMetadata().hashCode();
     }
     if (hasServiceData()) {
       hash = (37 * hash) + SERVICE_DATA_FIELD_NUMBER;
@@ -1115,6 +1399,18 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
 
       resourceName_ = "";
 
+      if (resourceLocationBuilder_ == null) {
+        resourceLocation_ = null;
+      } else {
+        resourceLocation_ = null;
+        resourceLocationBuilder_ = null;
+      }
+      if (resourceOriginalStateBuilder_ == null) {
+        resourceOriginalState_ = null;
+      } else {
+        resourceOriginalState_ = null;
+        resourceOriginalStateBuilder_ = null;
+      }
       numResponseItems_ = 0L;
 
       if (statusBuilder_ == null) {
@@ -1153,6 +1449,12 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
         response_ = null;
         responseBuilder_ = null;
       }
+      if (metadataBuilder_ == null) {
+        metadata_ = null;
+      } else {
+        metadata_ = null;
+        metadataBuilder_ = null;
+      }
       if (serviceDataBuilder_ == null) {
         serviceData_ = null;
       } else {
@@ -1189,6 +1491,16 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       result.serviceName_ = serviceName_;
       result.methodName_ = methodName_;
       result.resourceName_ = resourceName_;
+      if (resourceLocationBuilder_ == null) {
+        result.resourceLocation_ = resourceLocation_;
+      } else {
+        result.resourceLocation_ = resourceLocationBuilder_.build();
+      }
+      if (resourceOriginalStateBuilder_ == null) {
+        result.resourceOriginalState_ = resourceOriginalState_;
+      } else {
+        result.resourceOriginalState_ = resourceOriginalStateBuilder_.build();
+      }
       result.numResponseItems_ = numResponseItems_;
       if (statusBuilder_ == null) {
         result.status_ = status_;
@@ -1223,6 +1535,11 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
         result.response_ = response_;
       } else {
         result.response_ = responseBuilder_.build();
+      }
+      if (metadataBuilder_ == null) {
+        result.metadata_ = metadata_;
+      } else {
+        result.metadata_ = metadataBuilder_.build();
       }
       if (serviceDataBuilder_ == null) {
         result.serviceData_ = serviceData_;
@@ -1290,6 +1607,12 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
         resourceName_ = other.resourceName_;
         onChanged();
       }
+      if (other.hasResourceLocation()) {
+        mergeResourceLocation(other.getResourceLocation());
+      }
+      if (other.hasResourceOriginalState()) {
+        mergeResourceOriginalState(other.getResourceOriginalState());
+      }
       if (other.getNumResponseItems() != 0L) {
         setNumResponseItems(other.getNumResponseItems());
       }
@@ -1334,6 +1657,9 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       }
       if (other.hasResponse()) {
         mergeResponse(other.getResponse());
+      }
+      if (other.hasMetadata()) {
+        mergeMetadata(other.getMetadata());
       }
       if (other.hasServiceData()) {
         mergeServiceData(other.getServiceData());
@@ -1732,6 +2058,431 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private com.google.cloud.audit.ResourceLocation resourceLocation_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.cloud.audit.ResourceLocation,
+            com.google.cloud.audit.ResourceLocation.Builder,
+            com.google.cloud.audit.ResourceLocationOrBuilder>
+        resourceLocationBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     *
+     * @return Whether the resourceLocation field is set.
+     */
+    public boolean hasResourceLocation() {
+      return resourceLocationBuilder_ != null || resourceLocation_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     *
+     * @return The resourceLocation.
+     */
+    public com.google.cloud.audit.ResourceLocation getResourceLocation() {
+      if (resourceLocationBuilder_ == null) {
+        return resourceLocation_ == null
+            ? com.google.cloud.audit.ResourceLocation.getDefaultInstance()
+            : resourceLocation_;
+      } else {
+        return resourceLocationBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public Builder setResourceLocation(com.google.cloud.audit.ResourceLocation value) {
+      if (resourceLocationBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        resourceLocation_ = value;
+        onChanged();
+      } else {
+        resourceLocationBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public Builder setResourceLocation(
+        com.google.cloud.audit.ResourceLocation.Builder builderForValue) {
+      if (resourceLocationBuilder_ == null) {
+        resourceLocation_ = builderForValue.build();
+        onChanged();
+      } else {
+        resourceLocationBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public Builder mergeResourceLocation(com.google.cloud.audit.ResourceLocation value) {
+      if (resourceLocationBuilder_ == null) {
+        if (resourceLocation_ != null) {
+          resourceLocation_ =
+              com.google.cloud.audit.ResourceLocation.newBuilder(resourceLocation_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          resourceLocation_ = value;
+        }
+        onChanged();
+      } else {
+        resourceLocationBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public Builder clearResourceLocation() {
+      if (resourceLocationBuilder_ == null) {
+        resourceLocation_ = null;
+        onChanged();
+      } else {
+        resourceLocation_ = null;
+        resourceLocationBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public com.google.cloud.audit.ResourceLocation.Builder getResourceLocationBuilder() {
+
+      onChanged();
+      return getResourceLocationFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    public com.google.cloud.audit.ResourceLocationOrBuilder getResourceLocationOrBuilder() {
+      if (resourceLocationBuilder_ != null) {
+        return resourceLocationBuilder_.getMessageOrBuilder();
+      } else {
+        return resourceLocation_ == null
+            ? com.google.cloud.audit.ResourceLocation.getDefaultInstance()
+            : resourceLocation_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource location information.
+     * </pre>
+     *
+     * <code>.google.cloud.audit.ResourceLocation resource_location = 20;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.cloud.audit.ResourceLocation,
+            com.google.cloud.audit.ResourceLocation.Builder,
+            com.google.cloud.audit.ResourceLocationOrBuilder>
+        getResourceLocationFieldBuilder() {
+      if (resourceLocationBuilder_ == null) {
+        resourceLocationBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.cloud.audit.ResourceLocation,
+                com.google.cloud.audit.ResourceLocation.Builder,
+                com.google.cloud.audit.ResourceLocationOrBuilder>(
+                getResourceLocation(), getParentForChildren(), isClean());
+        resourceLocation_ = null;
+      }
+      return resourceLocationBuilder_;
+    }
+
+    private com.google.protobuf.Struct resourceOriginalState_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Struct,
+            com.google.protobuf.Struct.Builder,
+            com.google.protobuf.StructOrBuilder>
+        resourceOriginalStateBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     *
+     * @return Whether the resourceOriginalState field is set.
+     */
+    public boolean hasResourceOriginalState() {
+      return resourceOriginalStateBuilder_ != null || resourceOriginalState_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     *
+     * @return The resourceOriginalState.
+     */
+    public com.google.protobuf.Struct getResourceOriginalState() {
+      if (resourceOriginalStateBuilder_ == null) {
+        return resourceOriginalState_ == null
+            ? com.google.protobuf.Struct.getDefaultInstance()
+            : resourceOriginalState_;
+      } else {
+        return resourceOriginalStateBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public Builder setResourceOriginalState(com.google.protobuf.Struct value) {
+      if (resourceOriginalStateBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        resourceOriginalState_ = value;
+        onChanged();
+      } else {
+        resourceOriginalStateBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public Builder setResourceOriginalState(com.google.protobuf.Struct.Builder builderForValue) {
+      if (resourceOriginalStateBuilder_ == null) {
+        resourceOriginalState_ = builderForValue.build();
+        onChanged();
+      } else {
+        resourceOriginalStateBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public Builder mergeResourceOriginalState(com.google.protobuf.Struct value) {
+      if (resourceOriginalStateBuilder_ == null) {
+        if (resourceOriginalState_ != null) {
+          resourceOriginalState_ =
+              com.google.protobuf.Struct.newBuilder(resourceOriginalState_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          resourceOriginalState_ = value;
+        }
+        onChanged();
+      } else {
+        resourceOriginalStateBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public Builder clearResourceOriginalState() {
+      if (resourceOriginalStateBuilder_ == null) {
+        resourceOriginalState_ = null;
+        onChanged();
+      } else {
+        resourceOriginalState_ = null;
+        resourceOriginalStateBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public com.google.protobuf.Struct.Builder getResourceOriginalStateBuilder() {
+
+      onChanged();
+      return getResourceOriginalStateFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    public com.google.protobuf.StructOrBuilder getResourceOriginalStateOrBuilder() {
+      if (resourceOriginalStateBuilder_ != null) {
+        return resourceOriginalStateBuilder_.getMessageOrBuilder();
+      } else {
+        return resourceOriginalState_ == null
+            ? com.google.protobuf.Struct.getDefaultInstance()
+            : resourceOriginalState_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The resource's original state before mutation. Present only for
+     * operations which have successfully modified the targeted resource(s).
+     * In general, this field should contain all changed fields, except those
+     * that are already been included in `request`, `response`, `metadata` or
+     * `service_data` fields.
+     * When the JSON object represented here has a proto equivalent,
+     * the proto name will be indicated in the `&#64;type` property.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct resource_original_state = 19;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Struct,
+            com.google.protobuf.Struct.Builder,
+            com.google.protobuf.StructOrBuilder>
+        getResourceOriginalStateFieldBuilder() {
+      if (resourceOriginalStateBuilder_ == null) {
+        resourceOriginalStateBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.protobuf.Struct,
+                com.google.protobuf.Struct.Builder,
+                com.google.protobuf.StructOrBuilder>(
+                getResourceOriginalState(), getParentForChildren(), isClean());
+        resourceOriginalState_ = null;
+      }
+      return resourceOriginalStateBuilder_;
+    }
+
     private long numResponseItems_;
     /**
      *
@@ -1745,6 +2496,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The numResponseItems.
      */
+    @java.lang.Override
     public long getNumResponseItems() {
       return numResponseItems_;
     }
@@ -3170,6 +3922,194 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
       return responseBuilder_;
     }
 
+    private com.google.protobuf.Struct metadata_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Struct,
+            com.google.protobuf.Struct.Builder,
+            com.google.protobuf.StructOrBuilder>
+        metadataBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     *
+     * @return Whether the metadata field is set.
+     */
+    public boolean hasMetadata() {
+      return metadataBuilder_ != null || metadata_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     *
+     * @return The metadata.
+     */
+    public com.google.protobuf.Struct getMetadata() {
+      if (metadataBuilder_ == null) {
+        return metadata_ == null ? com.google.protobuf.Struct.getDefaultInstance() : metadata_;
+      } else {
+        return metadataBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public Builder setMetadata(com.google.protobuf.Struct value) {
+      if (metadataBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        metadata_ = value;
+        onChanged();
+      } else {
+        metadataBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public Builder setMetadata(com.google.protobuf.Struct.Builder builderForValue) {
+      if (metadataBuilder_ == null) {
+        metadata_ = builderForValue.build();
+        onChanged();
+      } else {
+        metadataBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public Builder mergeMetadata(com.google.protobuf.Struct value) {
+      if (metadataBuilder_ == null) {
+        if (metadata_ != null) {
+          metadata_ =
+              com.google.protobuf.Struct.newBuilder(metadata_).mergeFrom(value).buildPartial();
+        } else {
+          metadata_ = value;
+        }
+        onChanged();
+      } else {
+        metadataBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public Builder clearMetadata() {
+      if (metadataBuilder_ == null) {
+        metadata_ = null;
+        onChanged();
+      } else {
+        metadata_ = null;
+        metadataBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public com.google.protobuf.Struct.Builder getMetadataBuilder() {
+
+      onChanged();
+      return getMetadataFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    public com.google.protobuf.StructOrBuilder getMetadataOrBuilder() {
+      if (metadataBuilder_ != null) {
+        return metadataBuilder_.getMessageOrBuilder();
+      } else {
+        return metadata_ == null ? com.google.protobuf.Struct.getDefaultInstance() : metadata_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Other service-specific data about the request, response, and other
+     * information associated with the current audited event.
+     * </pre>
+     *
+     * <code>.google.protobuf.Struct metadata = 18;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Struct,
+            com.google.protobuf.Struct.Builder,
+            com.google.protobuf.StructOrBuilder>
+        getMetadataFieldBuilder() {
+      if (metadataBuilder_ == null) {
+        metadataBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.protobuf.Struct,
+                com.google.protobuf.Struct.Builder,
+                com.google.protobuf.StructOrBuilder>(
+                getMetadata(), getParentForChildren(), isClean());
+        metadata_ = null;
+      }
+      return metadataBuilder_;
+    }
+
     private com.google.protobuf.Any serviceData_;
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.protobuf.Any,
@@ -3180,6 +4120,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3195,6 +4136,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3214,6 +4156,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3237,6 +4180,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3257,6 +4201,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3282,6 +4227,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3303,6 +4249,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3318,6 +4265,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>
@@ -3335,6 +4283,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
+     * Deprecated, use `metadata` field instead.
      * Other service-specific data about the request, response, and other
      * activities.
      * </pre>

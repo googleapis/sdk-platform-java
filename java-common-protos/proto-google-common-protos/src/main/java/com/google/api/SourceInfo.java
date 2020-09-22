@@ -126,6 +126,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.protobuf.Any> getSourceFilesList() {
     return sourceFiles_;
   }
@@ -138,6 +139,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.protobuf.AnyOrBuilder> getSourceFilesOrBuilderList() {
     return sourceFiles_;
   }
@@ -150,6 +152,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
+  @java.lang.Override
   public int getSourceFilesCount() {
     return sourceFiles_.size();
   }
@@ -162,6 +165,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.Any getSourceFiles(int index) {
     return sourceFiles_.get(index);
   }
@@ -174,6 +178,7 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.protobuf.Any source_files = 1;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.AnyOrBuilder getSourceFilesOrBuilder(int index) {
     return sourceFiles_.get(index);
   }

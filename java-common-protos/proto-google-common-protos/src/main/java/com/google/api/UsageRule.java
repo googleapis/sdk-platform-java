@@ -150,6 +150,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -174,6 +175,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -200,6 +202,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The allowUnregisteredCalls.
    */
+  @java.lang.Override
   public boolean getAllowUnregisteredCalls() {
     return allowUnregisteredCalls_;
   }
@@ -220,6 +223,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The skipServiceControl.
    */
+  @java.lang.Override
   public boolean getSkipServiceControl() {
     return skipServiceControl_;
   }
@@ -709,6 +713,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The allowUnregisteredCalls.
      */
+    @java.lang.Override
     public boolean getAllowUnregisteredCalls() {
       return allowUnregisteredCalls_;
     }
@@ -765,6 +770,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The skipServiceControl.
      */
+    @java.lang.Override
     public boolean getSkipServiceControl() {
       return skipServiceControl_;
     }

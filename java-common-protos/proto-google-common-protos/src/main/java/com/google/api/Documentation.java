@@ -91,6 +91,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     pages_ = java.util.Collections.emptyList();
     rules_ = java.util.Collections.emptyList();
     documentationRootUrl_ = "";
+    serviceRootUrl_ = "";
     overview_ = "";
   }
 
@@ -164,6 +165,13 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
               pages_.add(input.readMessage(com.google.api.Page.parser(), extensionRegistry));
               break;
             }
+          case 50:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              serviceRootUrl_ = s;
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -216,6 +224,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The summary.
    */
+  @java.lang.Override
   public java.lang.String getSummary() {
     java.lang.Object ref = summary_;
     if (ref instanceof java.lang.String) {
@@ -239,6 +248,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for summary.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSummaryBytes() {
     java.lang.Object ref = summary_;
     if (ref instanceof java.lang.String) {
@@ -262,6 +272,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Page> getPagesList() {
     return pages_;
   }
@@ -274,6 +285,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.PageOrBuilder> getPagesOrBuilderList() {
     return pages_;
   }
@@ -286,6 +298,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
+  @java.lang.Override
   public int getPagesCount() {
     return pages_.size();
   }
@@ -298,6 +311,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
+  @java.lang.Override
   public com.google.api.Page getPages(int index) {
     return pages_.get(index);
   }
@@ -310,6 +324,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Page pages = 5;</code>
    */
+  @java.lang.Override
   public com.google.api.PageOrBuilder getPagesOrBuilder(int index) {
     return pages_.get(index);
   }
@@ -326,6 +341,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.DocumentationRule> getRulesList() {
     return rules_;
   }
@@ -339,6 +355,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.DocumentationRuleOrBuilder>
       getRulesOrBuilderList() {
     return rules_;
@@ -353,6 +370,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -366,6 +384,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.DocumentationRule getRules(int index) {
     return rules_.get(index);
   }
@@ -379,6 +398,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.DocumentationRule rules = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.DocumentationRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
@@ -396,6 +416,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The documentationRootUrl.
    */
+  @java.lang.Override
   public java.lang.String getDocumentationRootUrl() {
     java.lang.Object ref = documentationRootUrl_;
     if (ref instanceof java.lang.String) {
@@ -418,12 +439,68 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for documentationRootUrl.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDocumentationRootUrlBytes() {
     java.lang.Object ref = documentationRootUrl_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b =
           com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
       documentationRootUrl_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SERVICE_ROOT_URL_FIELD_NUMBER = 6;
+  private volatile java.lang.Object serviceRootUrl_;
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @return The serviceRootUrl.
+   */
+  @java.lang.Override
+  public java.lang.String getServiceRootUrl() {
+    java.lang.Object ref = serviceRootUrl_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      serviceRootUrl_ = s;
+      return s;
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Specifies the service root url if the default one (the service name
+   * from the yaml file) is not suitable. This can be seen in any fully
+   * specified service urls as well as sections that show a base that other
+   * urls are relative to.
+   * </pre>
+   *
+   * <code>string service_root_url = 6;</code>
+   *
+   * @return The bytes for serviceRootUrl.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getServiceRootUrlBytes() {
+    java.lang.Object ref = serviceRootUrl_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      serviceRootUrl_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -455,6 +532,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The overview.
    */
+  @java.lang.Override
   public java.lang.String getOverview() {
     java.lang.Object ref = overview_;
     if (ref instanceof java.lang.String) {
@@ -489,6 +567,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for overview.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getOverviewBytes() {
     java.lang.Object ref = overview_;
     if (ref instanceof java.lang.String) {
@@ -530,6 +609,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < pages_.size(); i++) {
       output.writeMessage(5, pages_.get(i));
     }
+    if (!getServiceRootUrlBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, serviceRootUrl_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -554,6 +636,9 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     for (int i = 0; i < pages_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(5, pages_.get(i));
     }
+    if (!getServiceRootUrlBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, serviceRootUrl_);
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -573,6 +658,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     if (!getPagesList().equals(other.getPagesList())) return false;
     if (!getRulesList().equals(other.getRulesList())) return false;
     if (!getDocumentationRootUrl().equals(other.getDocumentationRootUrl())) return false;
+    if (!getServiceRootUrl().equals(other.getServiceRootUrl())) return false;
     if (!getOverview().equals(other.getOverview())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
@@ -597,6 +683,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
     }
     hash = (37 * hash) + DOCUMENTATION_ROOT_URL_FIELD_NUMBER;
     hash = (53 * hash) + getDocumentationRootUrl().hashCode();
+    hash = (37 * hash) + SERVICE_ROOT_URL_FIELD_NUMBER;
+    hash = (53 * hash) + getServiceRootUrl().hashCode();
     hash = (37 * hash) + OVERVIEW_FIELD_NUMBER;
     hash = (53 * hash) + getOverview().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
@@ -809,6 +897,8 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       }
       documentationRootUrl_ = "";
 
+      serviceRootUrl_ = "";
+
       overview_ = "";
 
       return this;
@@ -857,6 +947,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
         result.rules_ = rulesBuilder_.build();
       }
       result.documentationRootUrl_ = documentationRootUrl_;
+      result.serviceRootUrl_ = serviceRootUrl_;
       result.overview_ = overview_;
       onBuilt();
       return result;
@@ -967,6 +1058,10 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDocumentationRootUrl().isEmpty()) {
         documentationRootUrl_ = other.documentationRootUrl_;
+        onChanged();
+      }
+      if (!other.getServiceRootUrl().isEmpty()) {
+        serviceRootUrl_ = other.serviceRootUrl_;
         onChanged();
       }
       if (!other.getOverview().isEmpty()) {
@@ -1916,6 +2011,127 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
 
       documentationRootUrl_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object serviceRootUrl_ = "";
+    /**
+     *
+     *
+     * <pre>
+     * Specifies the service root url if the default one (the service name
+     * from the yaml file) is not suitable. This can be seen in any fully
+     * specified service urls as well as sections that show a base that other
+     * urls are relative to.
+     * </pre>
+     *
+     * <code>string service_root_url = 6;</code>
+     *
+     * @return The serviceRootUrl.
+     */
+    public java.lang.String getServiceRootUrl() {
+      java.lang.Object ref = serviceRootUrl_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        serviceRootUrl_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies the service root url if the default one (the service name
+     * from the yaml file) is not suitable. This can be seen in any fully
+     * specified service urls as well as sections that show a base that other
+     * urls are relative to.
+     * </pre>
+     *
+     * <code>string service_root_url = 6;</code>
+     *
+     * @return The bytes for serviceRootUrl.
+     */
+    public com.google.protobuf.ByteString getServiceRootUrlBytes() {
+      java.lang.Object ref = serviceRootUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        serviceRootUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies the service root url if the default one (the service name
+     * from the yaml file) is not suitable. This can be seen in any fully
+     * specified service urls as well as sections that show a base that other
+     * urls are relative to.
+     * </pre>
+     *
+     * <code>string service_root_url = 6;</code>
+     *
+     * @param value The serviceRootUrl to set.
+     * @return This builder for chaining.
+     */
+    public Builder setServiceRootUrl(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+
+      serviceRootUrl_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies the service root url if the default one (the service name
+     * from the yaml file) is not suitable. This can be seen in any fully
+     * specified service urls as well as sections that show a base that other
+     * urls are relative to.
+     * </pre>
+     *
+     * <code>string service_root_url = 6;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearServiceRootUrl() {
+
+      serviceRootUrl_ = getDefaultInstance().getServiceRootUrl();
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Specifies the service root url if the default one (the service name
+     * from the yaml file) is not suitable. This can be seen in any fully
+     * specified service urls as well as sections that show a base that other
+     * urls are relative to.
+     * </pre>
+     *
+     * <code>string service_root_url = 6;</code>
+     *
+     * @param value The bytes for serviceRootUrl to set.
+     * @return This builder for chaining.
+     */
+    public Builder setServiceRootUrlBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
+      serviceRootUrl_ = value;
       onChanged();
       return this;
     }

@@ -293,6 +293,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The field.
      */
+    @java.lang.Override
     public java.lang.String getField() {
       java.lang.Object ref = field_;
       if (ref instanceof java.lang.String) {
@@ -317,6 +318,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for field.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getFieldBytes() {
       java.lang.Object ref = field_;
       if (ref instanceof java.lang.String) {
@@ -342,6 +344,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The description.
      */
+    @java.lang.Override
     public java.lang.String getDescription() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -364,6 +367,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for description.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getDescriptionBytes() {
       java.lang.Object ref = description_;
       if (ref instanceof java.lang.String) {
@@ -997,6 +1001,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.rpc.BadRequest.FieldViolation> getFieldViolationsList() {
     return fieldViolations_;
   }
@@ -1009,6 +1014,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.rpc.BadRequest.FieldViolationOrBuilder>
       getFieldViolationsOrBuilderList() {
     return fieldViolations_;
@@ -1022,6 +1028,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
+  @java.lang.Override
   public int getFieldViolationsCount() {
     return fieldViolations_.size();
   }
@@ -1034,6 +1041,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.BadRequest.FieldViolation getFieldViolations(int index) {
     return fieldViolations_.get(index);
   }
@@ -1046,6 +1054,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.rpc.BadRequest.FieldViolation field_violations = 1;</code>
    */
+  @java.lang.Override
   public com.google.rpc.BadRequest.FieldViolationOrBuilder getFieldViolationsOrBuilder(int index) {
     return fieldViolations_.get(index);
   }

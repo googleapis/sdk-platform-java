@@ -136,6 +136,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     history_ = 0;
     plural_ = "";
     singular_ = "";
+    style_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -213,6 +214,31 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
               singular_ = s;
               break;
             }
+          case 80:
+            {
+              int rawValue = input.readEnum();
+              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                style_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              style_.add(rawValue);
+              break;
+            }
+          case 82:
+            {
+              int length = input.readRawVarint32();
+              int oldLimit = input.pushLimit(length);
+              while (input.getBytesUntilLimit() > 0) {
+                int rawValue = input.readEnum();
+                if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+                  style_ = new java.util.ArrayList<java.lang.Integer>();
+                  mutable_bitField0_ |= 0x00000002;
+                }
+                style_.add(rawValue);
+              }
+              input.popLimit(oldLimit);
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -229,6 +255,9 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
         pattern_ = pattern_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        style_ = java.util.Collections.unmodifiableList(style_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -377,6 +406,10 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
         };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
 
@@ -409,6 +442,151 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     // @@protoc_insertion_point(enum_scope:google.api.ResourceDescriptor.History)
   }
 
+  /**
+   *
+   *
+   * <pre>
+   * A flag representing a specific style that a resource claims to conform to.
+   * </pre>
+   *
+   * Protobuf enum {@code google.api.ResourceDescriptor.Style}
+   */
+  public enum Style implements com.google.protobuf.ProtocolMessageEnum {
+    /**
+     *
+     *
+     * <pre>
+     * The unspecified value. Do not use.
+     * </pre>
+     *
+     * <code>STYLE_UNSPECIFIED = 0;</code>
+     */
+    STYLE_UNSPECIFIED(0),
+    /**
+     *
+     *
+     * <pre>
+     * This resource is intended to be "declarative-friendly".
+     * Declarative-friendly resources must be more strictly consistent, and
+     * setting this to true communicates to tools that this resource should
+     * adhere to declarative-friendly expectations.
+     * Note: This is used by the API linter (linter.aip.dev) to enable
+     * additional checks.
+     * </pre>
+     *
+     * <code>DECLARATIVE_FRIENDLY = 1;</code>
+     */
+    DECLARATIVE_FRIENDLY(1),
+    UNRECOGNIZED(-1),
+    ;
+
+    /**
+     *
+     *
+     * <pre>
+     * The unspecified value. Do not use.
+     * </pre>
+     *
+     * <code>STYLE_UNSPECIFIED = 0;</code>
+     */
+    public static final int STYLE_UNSPECIFIED_VALUE = 0;
+    /**
+     *
+     *
+     * <pre>
+     * This resource is intended to be "declarative-friendly".
+     * Declarative-friendly resources must be more strictly consistent, and
+     * setting this to true communicates to tools that this resource should
+     * adhere to declarative-friendly expectations.
+     * Note: This is used by the API linter (linter.aip.dev) to enable
+     * additional checks.
+     * </pre>
+     *
+     * <code>DECLARATIVE_FRIENDLY = 1;</code>
+     */
+    public static final int DECLARATIVE_FRIENDLY_VALUE = 1;
+
+    public final int getNumber() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalArgumentException(
+            "Can't get the number of an unknown enum value.");
+      }
+      return value;
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static Style valueOf(int value) {
+      return forNumber(value);
+    }
+
+    /**
+     * @param value The numeric wire value of the corresponding enum entry.
+     * @return The enum associated with the given numeric wire value.
+     */
+    public static Style forNumber(int value) {
+      switch (value) {
+        case 0:
+          return STYLE_UNSPECIFIED;
+        case 1:
+          return DECLARATIVE_FRIENDLY;
+        default:
+          return null;
+      }
+    }
+
+    public static com.google.protobuf.Internal.EnumLiteMap<Style> internalGetValueMap() {
+      return internalValueMap;
+    }
+
+    private static final com.google.protobuf.Internal.EnumLiteMap<Style> internalValueMap =
+        new com.google.protobuf.Internal.EnumLiteMap<Style>() {
+          public Style findValueByNumber(int number) {
+            return Style.forNumber(number);
+          }
+        };
+
+    public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
+      return getDescriptor().getValues().get(ordinal());
+    }
+
+    public final com.google.protobuf.Descriptors.EnumDescriptor getDescriptorForType() {
+      return getDescriptor();
+    }
+
+    public static final com.google.protobuf.Descriptors.EnumDescriptor getDescriptor() {
+      return com.google.api.ResourceDescriptor.getDescriptor().getEnumTypes().get(1);
+    }
+
+    private static final Style[] VALUES = values();
+
+    public static Style valueOf(com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
+      if (desc.getType() != getDescriptor()) {
+        throw new java.lang.IllegalArgumentException("EnumValueDescriptor is not for this type.");
+      }
+      if (desc.getIndex() == -1) {
+        return UNRECOGNIZED;
+      }
+      return VALUES[desc.getIndex()];
+    }
+
+    private final int value;
+
+    private Style(int value) {
+      this.value = value;
+    }
+
+    // @@protoc_insertion_point(enum_scope:google.api.ResourceDescriptor.Style)
+  }
+
   public static final int TYPE_FIELD_NUMBER = 1;
   private volatile java.lang.Object type_;
   /**
@@ -429,6 +607,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The type.
    */
+  @java.lang.Override
   public java.lang.String getType() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -458,6 +637,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The bytes for type.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -597,6 +777,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The nameField.
    */
+  @java.lang.Override
   public java.lang.String getNameField() {
     java.lang.Object ref = nameField_;
     if (ref instanceof java.lang.String) {
@@ -620,6 +801,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The bytes for nameField.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameFieldBytes() {
     java.lang.Object ref = nameField_;
     if (ref instanceof java.lang.String) {
@@ -657,6 +839,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The enum numeric value on the wire for history.
    */
+  @java.lang.Override
   public int getHistoryValue() {
     return history_;
   }
@@ -683,6 +866,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The history.
    */
+  @java.lang.Override
   public com.google.api.ResourceDescriptor.History getHistory() {
     @SuppressWarnings("deprecation")
     com.google.api.ResourceDescriptor.History result =
@@ -696,16 +880,20 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    *
    * <pre>
-   * The plural name used in the resource name, such as 'projects' for
-   * the name of 'projects/{project}'. It is the same concept of the `plural`
-   * field in k8s CRD spec
+   * The plural name used in the resource name and permission names, such as
+   * 'projects' for the resource name of 'projects/{project}' and the permission
+   * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+   * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+   * Note: The plural form is required even for singleton resources. See
+   * https://aip.dev/156
    * </pre>
    *
    * <code>string plural = 5;</code>
    *
    * @return The plural.
    */
+  @java.lang.Override
   public java.lang.String getPlural() {
     java.lang.Object ref = plural_;
     if (ref instanceof java.lang.String) {
@@ -721,16 +909,20 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    *
    * <pre>
-   * The plural name used in the resource name, such as 'projects' for
-   * the name of 'projects/{project}'. It is the same concept of the `plural`
-   * field in k8s CRD spec
+   * The plural name used in the resource name and permission names, such as
+   * 'projects' for the resource name of 'projects/{project}' and the permission
+   * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+   * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+   * Note: The plural form is required even for singleton resources. See
+   * https://aip.dev/156
    * </pre>
    *
    * <code>string plural = 5;</code>
    *
    * @return The bytes for plural.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPluralBytes() {
     java.lang.Object ref = plural_;
     if (ref instanceof java.lang.String) {
@@ -758,6 +950,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The singular.
    */
+  @java.lang.Override
   public java.lang.String getSingular() {
     java.lang.Object ref = singular_;
     if (ref instanceof java.lang.String) {
@@ -782,6 +975,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * @return The bytes for singular.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSingularBytes() {
     java.lang.Object ref = singular_;
     if (ref instanceof java.lang.String) {
@@ -793,6 +987,111 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return (com.google.protobuf.ByteString) ref;
     }
   }
+
+  public static final int STYLE_FIELD_NUMBER = 10;
+  private java.util.List<java.lang.Integer> style_;
+  private static final com.google.protobuf.Internal.ListAdapter.Converter<
+          java.lang.Integer, com.google.api.ResourceDescriptor.Style>
+      style_converter_ =
+          new com.google.protobuf.Internal.ListAdapter.Converter<
+              java.lang.Integer, com.google.api.ResourceDescriptor.Style>() {
+            public com.google.api.ResourceDescriptor.Style convert(java.lang.Integer from) {
+              @SuppressWarnings("deprecation")
+              com.google.api.ResourceDescriptor.Style result =
+                  com.google.api.ResourceDescriptor.Style.valueOf(from);
+              return result == null ? com.google.api.ResourceDescriptor.Style.UNRECOGNIZED : result;
+            }
+          };
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return A list containing the style.
+   */
+  @java.lang.Override
+  public java.util.List<com.google.api.ResourceDescriptor.Style> getStyleList() {
+    return new com.google.protobuf.Internal.ListAdapter<
+        java.lang.Integer, com.google.api.ResourceDescriptor.Style>(style_, style_converter_);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return The count of style.
+   */
+  @java.lang.Override
+  public int getStyleCount() {
+    return style_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The style at the given index.
+   */
+  @java.lang.Override
+  public com.google.api.ResourceDescriptor.Style getStyle(int index) {
+    return style_converter_.convert(style_.get(index));
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @return A list containing the enum numeric values on the wire for style.
+   */
+  @java.lang.Override
+  public java.util.List<java.lang.Integer> getStyleValueList() {
+    return style_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Style flag(s) for this resource.
+   * These indicate that a resource is expected to conform to a given
+   * style. See the specific style flags for additional information.
+   * </pre>
+   *
+   * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The enum numeric value on the wire of style at the given index.
+   */
+  @java.lang.Override
+  public int getStyleValue(int index) {
+    return style_.get(index);
+  }
+
+  private int styleMemoizedSerializedSize;
 
   private byte memoizedIsInitialized = -1;
 
@@ -808,6 +1107,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output) throws java.io.IOException {
+    getSerializedSize();
     if (!getTypeBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, type_);
     }
@@ -825,6 +1125,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
     if (!getSingularBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, singular_);
+    }
+    if (getStyleList().size() > 0) {
+      output.writeUInt32NoTag(82);
+      output.writeUInt32NoTag(styleMemoizedSerializedSize);
+    }
+    for (int i = 0; i < style_.size(); i++) {
+      output.writeEnumNoTag(style_.get(i));
     }
     unknownFields.writeTo(output);
   }
@@ -858,6 +1165,18 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     if (!getSingularBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, singular_);
     }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < style_.size(); i++) {
+        dataSize += com.google.protobuf.CodedOutputStream.computeEnumSizeNoTag(style_.get(i));
+      }
+      size += dataSize;
+      if (!getStyleList().isEmpty()) {
+        size += 1;
+        size += com.google.protobuf.CodedOutputStream.computeUInt32SizeNoTag(dataSize);
+      }
+      styleMemoizedSerializedSize = dataSize;
+    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -879,6 +1198,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     if (history_ != other.history_) return false;
     if (!getPlural().equals(other.getPlural())) return false;
     if (!getSingular().equals(other.getSingular())) return false;
+    if (!style_.equals(other.style_)) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -904,6 +1224,10 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     hash = (53 * hash) + getPlural().hashCode();
     hash = (37 * hash) + SINGULAR_FIELD_NUMBER;
     hash = (53 * hash) + getSingular().hashCode();
+    if (getStyleCount() > 0) {
+      hash = (37 * hash) + STYLE_FIELD_NUMBER;
+      hash = (53 * hash) + style_.hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1151,6 +1475,8 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
       singular_ = "";
 
+      style_ = java.util.Collections.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -1187,6 +1513,11 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       result.history_ = history_;
       result.plural_ = plural_;
       result.singular_ = singular_;
+      if (((bitField0_ & 0x00000002) != 0)) {
+        style_ = java.util.Collections.unmodifiableList(style_);
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.style_ = style_;
       onBuilt();
       return result;
     }
@@ -1263,6 +1594,16 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       }
       if (!other.getSingular().isEmpty()) {
         singular_ = other.singular_;
+        onChanged();
+      }
+      if (!other.style_.isEmpty()) {
+        if (style_.isEmpty()) {
+          style_ = other.style_;
+          bitField0_ = (bitField0_ & ~0x00000002);
+        } else {
+          ensureStyleIsMutable();
+          style_.addAll(other.style_);
+        }
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -1857,6 +2198,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * @return The enum numeric value on the wire for history.
      */
+    @java.lang.Override
     public int getHistoryValue() {
       return history_;
     }
@@ -1885,6 +2227,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder setHistoryValue(int value) {
+
       history_ = value;
       onChanged();
       return this;
@@ -1912,6 +2255,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * @return The history.
      */
+    @java.lang.Override
     public com.google.api.ResourceDescriptor.History getHistory() {
       @SuppressWarnings("deprecation")
       com.google.api.ResourceDescriptor.History result =
@@ -1986,10 +2330,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The plural name used in the resource name, such as 'projects' for
-     * the name of 'projects/{project}'. It is the same concept of the `plural`
-     * field in k8s CRD spec
+     * The plural name used in the resource name and permission names, such as
+     * 'projects' for the resource name of 'projects/{project}' and the permission
+     * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+     * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+     * Note: The plural form is required even for singleton resources. See
+     * https://aip.dev/156
      * </pre>
      *
      * <code>string plural = 5;</code>
@@ -2011,10 +2358,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The plural name used in the resource name, such as 'projects' for
-     * the name of 'projects/{project}'. It is the same concept of the `plural`
-     * field in k8s CRD spec
+     * The plural name used in the resource name and permission names, such as
+     * 'projects' for the resource name of 'projects/{project}' and the permission
+     * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+     * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+     * Note: The plural form is required even for singleton resources. See
+     * https://aip.dev/156
      * </pre>
      *
      * <code>string plural = 5;</code>
@@ -2036,10 +2386,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The plural name used in the resource name, such as 'projects' for
-     * the name of 'projects/{project}'. It is the same concept of the `plural`
-     * field in k8s CRD spec
+     * The plural name used in the resource name and permission names, such as
+     * 'projects' for the resource name of 'projects/{project}' and the permission
+     * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+     * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+     * Note: The plural form is required even for singleton resources. See
+     * https://aip.dev/156
      * </pre>
      *
      * <code>string plural = 5;</code>
@@ -2060,10 +2413,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The plural name used in the resource name, such as 'projects' for
-     * the name of 'projects/{project}'. It is the same concept of the `plural`
-     * field in k8s CRD spec
+     * The plural name used in the resource name and permission names, such as
+     * 'projects' for the resource name of 'projects/{project}' and the permission
+     * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+     * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+     * Note: The plural form is required even for singleton resources. See
+     * https://aip.dev/156
      * </pre>
      *
      * <code>string plural = 5;</code>
@@ -2080,10 +2436,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      *
      * <pre>
-     * The plural name used in the resource name, such as 'projects' for
-     * the name of 'projects/{project}'. It is the same concept of the `plural`
-     * field in k8s CRD spec
+     * The plural name used in the resource name and permission names, such as
+     * 'projects' for the resource name of 'projects/{project}' and the permission
+     * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
+     * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
+     * Note: The plural form is required even for singleton resources. See
+     * https://aip.dev/156
      * </pre>
      *
      * <code>string plural = 5;</code>
@@ -2214,6 +2573,250 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       checkByteStringIsUtf8(value);
 
       singular_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.util.List<java.lang.Integer> style_ = java.util.Collections.emptyList();
+
+    private void ensureStyleIsMutable() {
+      if (!((bitField0_ & 0x00000002) != 0)) {
+        style_ = new java.util.ArrayList<java.lang.Integer>(style_);
+        bitField0_ |= 0x00000002;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @return A list containing the style.
+     */
+    public java.util.List<com.google.api.ResourceDescriptor.Style> getStyleList() {
+      return new com.google.protobuf.Internal.ListAdapter<
+          java.lang.Integer, com.google.api.ResourceDescriptor.Style>(style_, style_converter_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @return The count of style.
+     */
+    public int getStyleCount() {
+      return style_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The style at the given index.
+     */
+    public com.google.api.ResourceDescriptor.Style getStyle(int index) {
+      return style_converter_.convert(style_.get(index));
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The style to set.
+     * @return This builder for chaining.
+     */
+    public Builder setStyle(int index, com.google.api.ResourceDescriptor.Style value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureStyleIsMutable();
+      style_.set(index, value.getNumber());
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param value The style to add.
+     * @return This builder for chaining.
+     */
+    public Builder addStyle(com.google.api.ResourceDescriptor.Style value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureStyleIsMutable();
+      style_.add(value.getNumber());
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param values The style to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllStyle(
+        java.lang.Iterable<? extends com.google.api.ResourceDescriptor.Style> values) {
+      ensureStyleIsMutable();
+      for (com.google.api.ResourceDescriptor.Style value : values) {
+        style_.add(value.getNumber());
+      }
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearStyle() {
+      style_ = java.util.Collections.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000002);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @return A list containing the enum numeric values on the wire for style.
+     */
+    public java.util.List<java.lang.Integer> getStyleValueList() {
+      return java.util.Collections.unmodifiableList(style_);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The enum numeric value on the wire of style at the given index.
+     */
+    public int getStyleValue(int index) {
+      return style_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The enum numeric value on the wire of style at the given index.
+     * @return This builder for chaining.
+     */
+    public Builder setStyleValue(int index, int value) {
+      ensureStyleIsMutable();
+      style_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param value The enum numeric value on the wire for style to add.
+     * @return This builder for chaining.
+     */
+    public Builder addStyleValue(int value) {
+      ensureStyleIsMutable();
+      style_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Style flag(s) for this resource.
+     * These indicate that a resource is expected to conform to a given
+     * style. See the specific style flags for additional information.
+     * </pre>
+     *
+     * <code>repeated .google.api.ResourceDescriptor.Style style = 10;</code>
+     *
+     * @param values The enum numeric values on the wire for style to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllStyleValue(java.lang.Iterable<java.lang.Integer> values) {
+      ensureStyleIsMutable();
+      for (int value : values) {
+        style_.add(value);
+      }
       onChanged();
       return this;
     }

@@ -327,6 +327,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor getValueDescriptor() {
+      if (this == UNRECOGNIZED) {
+        throw new java.lang.IllegalStateException(
+            "Can't get the descriptor of an unrecognized enum value.");
+      }
       return getDescriptor().getValues().get(ordinal());
     }
 
@@ -421,6 +425,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The selector.
    */
+  @java.lang.Override
   public java.lang.String getSelector() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -444,6 +449,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for selector.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getSelectorBytes() {
     java.lang.Object ref = selector_;
     if (ref instanceof java.lang.String) {
@@ -483,6 +489,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The address.
    */
+  @java.lang.Override
   public java.lang.String getAddress() {
     java.lang.Object ref = address_;
     if (ref instanceof java.lang.String) {
@@ -519,6 +526,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for address.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getAddressBytes() {
     java.lang.Object ref = address_;
     if (ref instanceof java.lang.String) {
@@ -545,6 +553,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The deadline.
    */
+  @java.lang.Override
   public double getDeadline() {
     return deadline_;
   }
@@ -563,6 +572,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The minDeadline.
    */
+  @java.lang.Override
   public double getMinDeadline() {
     return minDeadline_;
   }
@@ -581,6 +591,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The operationDeadline.
    */
+  @java.lang.Override
   public double getOperationDeadline() {
     return operationDeadline_;
   }
@@ -592,6 +603,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The enum numeric value on the wire for pathTranslation.
    */
+  @java.lang.Override
   public int getPathTranslationValue() {
     return pathTranslation_;
   }
@@ -600,6 +612,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The pathTranslation.
    */
+  @java.lang.Override
   public com.google.api.BackendRule.PathTranslation getPathTranslation() {
     @SuppressWarnings("deprecation")
     com.google.api.BackendRule.PathTranslation result =
@@ -682,6 +695,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The disableAuth.
    */
+  @java.lang.Override
   public boolean getDisableAuth() {
     if (authenticationCase_ == 8) {
       return (java.lang.Boolean) authentication_;
@@ -717,6 +731,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The protocol.
    */
+  @java.lang.Override
   public java.lang.String getProtocol() {
     java.lang.Object ref = protocol_;
     if (ref instanceof java.lang.String) {
@@ -754,6 +769,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for protocol.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getProtocolBytes() {
     java.lang.Object ref = protocol_;
     if (ref instanceof java.lang.String) {
@@ -1559,6 +1575,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The deadline.
      */
+    @java.lang.Override
     public double getDeadline() {
       return deadline_;
     }
@@ -1613,6 +1630,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The minDeadline.
      */
+    @java.lang.Override
     public double getMinDeadline() {
       return minDeadline_;
     }
@@ -1667,6 +1685,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The operationDeadline.
      */
+    @java.lang.Override
     public double getOperationDeadline() {
       return operationDeadline_;
     }
@@ -1714,6 +1733,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The enum numeric value on the wire for pathTranslation.
      */
+    @java.lang.Override
     public int getPathTranslationValue() {
       return pathTranslation_;
     }
@@ -1724,6 +1744,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPathTranslationValue(int value) {
+
       pathTranslation_ = value;
       onChanged();
       return this;
@@ -1733,6 +1754,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The pathTranslation.
      */
+    @java.lang.Override
     public com.google.api.BackendRule.PathTranslation getPathTranslation() {
       @SuppressWarnings("deprecation")
       com.google.api.BackendRule.PathTranslation result =
@@ -1779,6 +1801,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The jwtAudience.
      */
+    @java.lang.Override
     public java.lang.String getJwtAudience() {
       java.lang.Object ref = "";
       if (authenticationCase_ == 7) {
@@ -1808,6 +1831,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The bytes for jwtAudience.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString getJwtAudienceBytes() {
       java.lang.Object ref = "";
       if (authenticationCase_ == 7) {

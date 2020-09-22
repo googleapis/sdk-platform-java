@@ -161,6 +161,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * @return The type.
    */
+  @java.lang.Override
   public java.lang.String getType() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -185,6 +186,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for type.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -233,6 +235,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+  @java.lang.Override
   public boolean containsLabels(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -240,6 +243,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
     return internalGetLabels().getMap().containsKey(key);
   }
   /** Use {@link #getLabelsMap()} instead. */
+  @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.String> getLabels() {
     return getLabelsMap();
@@ -255,6 +259,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
     return internalGetLabels().getMap();
   }
@@ -269,6 +274,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+  @java.lang.Override
   public java.lang.String getLabelsOrDefault(java.lang.String key, java.lang.String defaultValue) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -287,6 +293,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
+  @java.lang.Override
   public java.lang.String getLabelsOrThrow(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -818,6 +825,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
+    @java.lang.Override
     public boolean containsLabels(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -825,6 +833,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
       return internalGetLabels().getMap().containsKey(key);
     }
     /** Use {@link #getLabelsMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getLabels() {
       return getLabelsMap();
@@ -840,6 +849,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getLabelsMap() {
       return internalGetLabels().getMap();
     }
@@ -854,6 +864,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrDefault(
         java.lang.String key, java.lang.String defaultValue) {
       if (key == null) {
@@ -873,6 +884,7 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
      *
      * <code>map&lt;string, string&gt; labels = 2;</code>
      */
+    @java.lang.Override
     public java.lang.String getLabelsOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();

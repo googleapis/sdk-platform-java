@@ -174,6 +174,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The x.
    */
+  @java.lang.Override
   public double getX() {
     return x_;
   }
@@ -191,6 +192,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The y.
    */
+  @java.lang.Override
   public double getY() {
     return y_;
   }
@@ -208,6 +210,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The z.
    */
+  @java.lang.Override
   public double getZ() {
     return z_;
   }
@@ -225,6 +228,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The w.
    */
+  @java.lang.Override
   public double getW() {
     return w_;
   }
@@ -649,6 +653,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The x.
      */
+    @java.lang.Override
     public double getX() {
       return x_;
     }
@@ -700,6 +705,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The y.
      */
+    @java.lang.Override
     public double getY() {
       return y_;
     }
@@ -751,6 +757,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The z.
      */
+    @java.lang.Override
     public double getZ() {
       return z_;
     }
@@ -802,6 +809,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The w.
      */
+    @java.lang.Override
     public double getW() {
       return w_;
     }

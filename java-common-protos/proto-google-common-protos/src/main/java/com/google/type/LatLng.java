@@ -126,6 +126,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The latitude.
    */
+  @java.lang.Override
   public double getLatitude() {
     return latitude_;
   }
@@ -143,6 +144,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The longitude.
    */
+  @java.lang.Override
   public double getLongitude() {
     return longitude_;
   }
@@ -494,6 +496,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The latitude.
      */
+    @java.lang.Override
     public double getLatitude() {
       return latitude_;
     }
@@ -545,6 +548,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The longitude.
      */
+    @java.lang.Override
     public double getLongitude() {
       return longitude_;
     }

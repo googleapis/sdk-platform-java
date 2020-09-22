@@ -291,4 +291,55 @@ public interface AttributeContextOrBuilder
    * <code>.google.rpc.context.AttributeContext.Api api = 6;</code>
    */
   com.google.rpc.context.AttributeContext.ApiOrBuilder getApiOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  java.util.List<com.google.protobuf.Any> getExtensionsList();
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  com.google.protobuf.Any getExtensions(int index);
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  int getExtensionsCount();
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  java.util.List<? extends com.google.protobuf.AnyOrBuilder> getExtensionsOrBuilderList();
+  /**
+   *
+   *
+   * <pre>
+   * Supports extensions for advanced use cases, such as logs and metrics.
+   * </pre>
+   *
+   * <code>repeated .google.protobuf.Any extensions = 8;</code>
+   */
+  com.google.protobuf.AnyOrBuilder getExtensionsOrBuilder(int index);
 }

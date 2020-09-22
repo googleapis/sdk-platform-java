@@ -36,12 +36,13 @@ public final class LaunchStageProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\035google/api/launch_stage.proto\022\ngoogle."
-          + "api*j\n\013LaunchStage\022\034\n\030LAUNCH_STAGE_UNSPE"
-          + "CIFIED\020\000\022\020\n\014EARLY_ACCESS\020\001\022\t\n\005ALPHA\020\002\022\010\n"
-          + "\004BETA\020\003\022\006\n\002GA\020\004\022\016\n\nDEPRECATED\020\005BZ\n\016com.g"
-          + "oogle.apiB\020LaunchStageProtoP\001Z-google.go"
-          + "lang.org/genproto/googleapis/api;api\242\002\004G"
-          + "APIb\006proto3"
+          + "api*\214\001\n\013LaunchStage\022\034\n\030LAUNCH_STAGE_UNSP"
+          + "ECIFIED\020\000\022\021\n\rUNIMPLEMENTED\020\006\022\r\n\tPRELAUNC"
+          + "H\020\007\022\020\n\014EARLY_ACCESS\020\001\022\t\n\005ALPHA\020\002\022\010\n\004BETA"
+          + "\020\003\022\006\n\002GA\020\004\022\016\n\nDEPRECATED\020\005BZ\n\016com.google"
+          + ".apiB\020LaunchStageProtoP\001Z-google.golang."
+          + "org/genproto/googleapis/api;api\242\002\004GAPIb\006"
+          + "proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

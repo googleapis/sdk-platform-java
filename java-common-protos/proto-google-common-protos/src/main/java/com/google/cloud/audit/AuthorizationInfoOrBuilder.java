@@ -28,7 +28,7 @@ public interface AuthorizationInfoOrBuilder
    *
    * <pre>
    * The resource being accessed, as a REST-style string. For example:
-   *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
@@ -41,7 +41,7 @@ public interface AuthorizationInfoOrBuilder
    *
    * <pre>
    * The resource being accessed, as a REST-style string. For example:
-   *     bigquery.googlapis.com/projects/PROJECTID/datasets/DATASETID
+   *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * </pre>
    *
    * <code>string resource = 1;</code>
@@ -88,4 +88,51 @@ public interface AuthorizationInfoOrBuilder
    * @return The granted.
    */
   boolean getGranted();
+
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   *
+   * @return Whether the resourceAttributes field is set.
+   */
+  boolean hasResourceAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   *
+   * @return The resourceAttributes.
+   */
+  com.google.rpc.context.AttributeContext.Resource getResourceAttributes();
+  /**
+   *
+   *
+   * <pre>
+   * Resource attributes used in IAM condition evaluation. This field contains
+   * resource attributes like resource type and resource name.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.request_metadata.request_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Resource resource_attributes = 5;</code>
+   */
+  com.google.rpc.context.AttributeContext.ResourceOrBuilder getResourceAttributesOrBuilder();
 }

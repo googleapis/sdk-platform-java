@@ -206,6 +206,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -231,6 +232,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -258,6 +260,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -282,6 +285,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -314,6 +318,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The defaultLimit.
    */
+  @java.lang.Override
   public long getDefaultLimit() {
     return defaultLimit_;
   }
@@ -337,6 +342,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The maxLimit.
    */
+  @java.lang.Override
   public long getMaxLimit() {
     return maxLimit_;
   }
@@ -360,6 +366,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The freeTier.
    */
+  @java.lang.Override
   public long getFreeTier() {
     return freeTier_;
   }
@@ -370,10 +377,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-   * For duration longer than a day, only multiple of days is supported. We
-   * support only "100s" and "1d" for now. Additional support will be added in
-   * the future. "0" indicates indefinite duration.
+   * Duration of this limit in textual notation. Must be "100s" or "1d".
    * Used by group-based quotas only.
    * </pre>
    *
@@ -381,6 +385,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The duration.
    */
+  @java.lang.Override
   public java.lang.String getDuration() {
     java.lang.Object ref = duration_;
     if (ref instanceof java.lang.String) {
@@ -396,10 +401,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-   * For duration longer than a day, only multiple of days is supported. We
-   * support only "100s" and "1d" for now. Additional support will be added in
-   * the future. "0" indicates indefinite duration.
+   * Duration of this limit in textual notation. Must be "100s" or "1d".
    * Used by group-based quotas only.
    * </pre>
    *
@@ -407,6 +409,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for duration.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDurationBytes() {
     java.lang.Object ref = duration_;
     if (ref instanceof java.lang.String) {
@@ -434,6 +437,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The metric.
    */
+  @java.lang.Override
   public java.lang.String getMetric() {
     java.lang.Object ref = metric_;
     if (ref instanceof java.lang.String) {
@@ -458,6 +462,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for metric.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getMetricBytes() {
     java.lang.Object ref = metric_;
     if (ref instanceof java.lang.String) {
@@ -489,6 +494,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The unit.
    */
+  @java.lang.Override
   public java.lang.String getUnit() {
     java.lang.Object ref = unit_;
     if (ref instanceof java.lang.String) {
@@ -517,6 +523,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for unit.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getUnitBytes() {
     java.lang.Object ref = unit_;
     if (ref instanceof java.lang.String) {
@@ -564,6 +571,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
+  @java.lang.Override
   public boolean containsValues(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -571,6 +579,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
     return internalGetValues().getMap().containsKey(key);
   }
   /** Use {@link #getValuesMap()} instead. */
+  @java.lang.Override
   @java.lang.Deprecated
   public java.util.Map<java.lang.String, java.lang.Long> getValues() {
     return getValuesMap();
@@ -586,6 +595,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
+  @java.lang.Override
   public java.util.Map<java.lang.String, java.lang.Long> getValuesMap() {
     return internalGetValues().getMap();
   }
@@ -600,6 +610,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
+  @java.lang.Override
   public long getValuesOrDefault(java.lang.String key, long defaultValue) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -618,6 +629,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>map&lt;string, int64&gt; values = 10;</code>
    */
+  @java.lang.Override
   public long getValuesOrThrow(java.lang.String key) {
     if (key == null) {
       throw new java.lang.NullPointerException();
@@ -645,6 +657,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The displayName.
    */
+  @java.lang.Override
   public java.lang.String getDisplayName() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -670,6 +683,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for displayName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -1418,6 +1432,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The defaultLimit.
      */
+    @java.lang.Override
     public long getDefaultLimit() {
       return defaultLimit_;
     }
@@ -1489,6 +1504,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The maxLimit.
      */
+    @java.lang.Override
     public long getMaxLimit() {
       return maxLimit_;
     }
@@ -1558,6 +1574,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The freeTier.
      */
+    @java.lang.Override
     public long getFreeTier() {
       return freeTier_;
     }
@@ -1614,10 +1631,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-     * For duration longer than a day, only multiple of days is supported. We
-     * support only "100s" and "1d" for now. Additional support will be added in
-     * the future. "0" indicates indefinite duration.
+     * Duration of this limit in textual notation. Must be "100s" or "1d".
      * Used by group-based quotas only.
      * </pre>
      *
@@ -1640,10 +1654,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-     * For duration longer than a day, only multiple of days is supported. We
-     * support only "100s" and "1d" for now. Additional support will be added in
-     * the future. "0" indicates indefinite duration.
+     * Duration of this limit in textual notation. Must be "100s" or "1d".
      * Used by group-based quotas only.
      * </pre>
      *
@@ -1666,10 +1677,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-     * For duration longer than a day, only multiple of days is supported. We
-     * support only "100s" and "1d" for now. Additional support will be added in
-     * the future. "0" indicates indefinite duration.
+     * Duration of this limit in textual notation. Must be "100s" or "1d".
      * Used by group-based quotas only.
      * </pre>
      *
@@ -1691,10 +1699,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-     * For duration longer than a day, only multiple of days is supported. We
-     * support only "100s" and "1d" for now. Additional support will be added in
-     * the future. "0" indicates indefinite duration.
+     * Duration of this limit in textual notation. Must be "100s" or "1d".
      * Used by group-based quotas only.
      * </pre>
      *
@@ -1712,10 +1717,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Duration of this limit in textual notation. Example: "100s", "24h", "1d".
-     * For duration longer than a day, only multiple of days is supported. We
-     * support only "100s" and "1d" for now. Additional support will be added in
-     * the future. "0" indicates indefinite duration.
+     * Duration of this limit in textual notation. Must be "100s" or "1d".
      * Used by group-based quotas only.
      * </pre>
      *
@@ -2023,6 +2025,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; values = 10;</code>
      */
+    @java.lang.Override
     public boolean containsValues(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -2030,6 +2033,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
       return internalGetValues().getMap().containsKey(key);
     }
     /** Use {@link #getValuesMap()} instead. */
+    @java.lang.Override
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.Long> getValues() {
       return getValuesMap();
@@ -2045,6 +2049,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; values = 10;</code>
      */
+    @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.Long> getValuesMap() {
       return internalGetValues().getMap();
     }
@@ -2059,6 +2064,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; values = 10;</code>
      */
+    @java.lang.Override
     public long getValuesOrDefault(java.lang.String key, long defaultValue) {
       if (key == null) {
         throw new java.lang.NullPointerException();
@@ -2077,6 +2083,7 @@ public final class QuotaLimit extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>map&lt;string, int64&gt; values = 10;</code>
      */
+    @java.lang.Override
     public long getValuesOrThrow(java.lang.String key) {
       if (key == null) {
         throw new java.lang.NullPointerException();

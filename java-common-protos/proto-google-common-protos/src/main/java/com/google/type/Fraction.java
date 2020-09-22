@@ -122,6 +122,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The numerator.
    */
+  @java.lang.Override
   public long getNumerator() {
     return numerator_;
   }
@@ -140,6 +141,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The denominator.
    */
+  @java.lang.Override
   public long getDenominator() {
     return denominator_;
   }
@@ -479,6 +481,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The numerator.
      */
+    @java.lang.Override
     public long getNumerator() {
       return numerator_;
     }
@@ -531,6 +534,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The denominator.
      */
+    @java.lang.Override
     public long getDenominator() {
       return denominator_;
     }

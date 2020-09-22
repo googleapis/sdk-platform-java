@@ -172,6 +172,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The element.
    */
+  @java.lang.Override
   public java.lang.String getElement() {
     java.lang.Object ref = element_;
     if (ref instanceof java.lang.String) {
@@ -202,6 +203,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for element.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getElementBytes() {
     java.lang.Object ref = element_;
     if (ref instanceof java.lang.String) {
@@ -228,6 +230,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The oldValue.
    */
+  @java.lang.Override
   public java.lang.String getOldValue() {
     java.lang.Object ref = oldValue_;
     if (ref instanceof java.lang.String) {
@@ -251,6 +254,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for oldValue.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getOldValueBytes() {
     java.lang.Object ref = oldValue_;
     if (ref instanceof java.lang.String) {
@@ -277,6 +281,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The newValue.
    */
+  @java.lang.Override
   public java.lang.String getNewValue() {
     java.lang.Object ref = newValue_;
     if (ref instanceof java.lang.String) {
@@ -300,6 +305,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for newValue.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNewValueBytes() {
     java.lang.Object ref = newValue_;
     if (ref instanceof java.lang.String) {
@@ -325,6 +331,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The enum numeric value on the wire for changeType.
    */
+  @java.lang.Override
   public int getChangeTypeValue() {
     return changeType_;
   }
@@ -339,6 +346,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The changeType.
    */
+  @java.lang.Override
   public com.google.api.ChangeType getChangeType() {
     @SuppressWarnings("deprecation")
     com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);
@@ -357,6 +365,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Advice> getAdvicesList() {
     return advices_;
   }
@@ -370,6 +379,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.AdviceOrBuilder> getAdvicesOrBuilderList() {
     return advices_;
   }
@@ -383,6 +393,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
+  @java.lang.Override
   public int getAdvicesCount() {
     return advices_.size();
   }
@@ -396,6 +407,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
+  @java.lang.Override
   public com.google.api.Advice getAdvices(int index) {
     return advices_.get(index);
   }
@@ -409,6 +421,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Advice advices = 5;</code>
    */
+  @java.lang.Override
   public com.google.api.AdviceOrBuilder getAdvicesOrBuilder(int index) {
     return advices_.get(index);
   }
@@ -1212,6 +1225,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The enum numeric value on the wire for changeType.
      */
+    @java.lang.Override
     public int getChangeTypeValue() {
       return changeType_;
     }
@@ -1228,6 +1242,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setChangeTypeValue(int value) {
+
       changeType_ = value;
       onChanged();
       return this;
@@ -1243,6 +1258,7 @@ public final class ConfigChange extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The changeType.
      */
+    @java.lang.Override
     public com.google.api.ChangeType getChangeType() {
       @SuppressWarnings("deprecation")
       com.google.api.ChangeType result = com.google.api.ChangeType.valueOf(changeType_);

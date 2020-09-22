@@ -40,6 +40,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
   private RequestMetadata() {
     callerIp_ = "";
     callerSuppliedUserAgent_ = "";
+    callerNetwork_ = "";
   }
 
   @java.lang.Override
@@ -85,6 +86,45 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
               callerSuppliedUserAgent_ = s;
               break;
             }
+          case 26:
+            {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              callerNetwork_ = s;
+              break;
+            }
+          case 58:
+            {
+              com.google.rpc.context.AttributeContext.Request.Builder subBuilder = null;
+              if (requestAttributes_ != null) {
+                subBuilder = requestAttributes_.toBuilder();
+              }
+              requestAttributes_ =
+                  input.readMessage(
+                      com.google.rpc.context.AttributeContext.Request.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(requestAttributes_);
+                requestAttributes_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+          case 66:
+            {
+              com.google.rpc.context.AttributeContext.Peer.Builder subBuilder = null;
+              if (destinationAttributes_ != null) {
+                subBuilder = destinationAttributes_.toBuilder();
+              }
+              destinationAttributes_ =
+                  input.readMessage(
+                      com.google.rpc.context.AttributeContext.Peer.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(destinationAttributes_);
+                destinationAttributes_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           default:
             {
               if (!parseUnknownField(input, unknownFields, extensionRegistry, tag)) {
@@ -126,12 +166,21 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * <pre>
    * The IP address of the caller.
+   * For caller from internet, this will be public IPv4 or IPv6 address.
+   * For caller from a Compute Engine VM with external IP address, this
+   * will be the VM's external IP address. For caller from a Compute
+   * Engine VM without external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will
+   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+   * redacted to "gce-internal-ip".
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>
    *
    * @return The callerIp.
    */
+  @java.lang.Override
   public java.lang.String getCallerIp() {
     java.lang.Object ref = callerIp_;
     if (ref instanceof java.lang.String) {
@@ -148,12 +197,21 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * <pre>
    * The IP address of the caller.
+   * For caller from internet, this will be public IPv4 or IPv6 address.
+   * For caller from a Compute Engine VM with external IP address, this
+   * will be the VM's external IP address. For caller from a Compute
+   * Engine VM without external IP address, if the VM is in the same
+   * organization (or project) as the accessed resource, `caller_ip` will
+   * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+   * redacted to "gce-internal-ip".
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * </pre>
    *
    * <code>string caller_ip = 1;</code>
    *
    * @return The bytes for callerIp.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCallerIpBytes() {
     java.lang.Object ref = callerIp_;
     if (ref instanceof java.lang.String) {
@@ -188,6 +246,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * @return The callerSuppliedUserAgent.
    */
+  @java.lang.Override
   public java.lang.String getCallerSuppliedUserAgent() {
     java.lang.Object ref = callerSuppliedUserAgent_;
     if (ref instanceof java.lang.String) {
@@ -219,6 +278,7 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    *
    * @return The bytes for callerSuppliedUserAgent.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getCallerSuppliedUserAgentBytes() {
     java.lang.Object ref = callerSuppliedUserAgent_;
     if (ref instanceof java.lang.String) {
@@ -229,6 +289,188 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int CALLER_NETWORK_FIELD_NUMBER = 3;
+  private volatile java.lang.Object callerNetwork_;
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @return The callerNetwork.
+   */
+  @java.lang.Override
+  public java.lang.String getCallerNetwork() {
+    java.lang.Object ref = callerNetwork_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      callerNetwork_ = s;
+      return s;
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The network of the caller.
+   * Set only if the network host project is part of the same GCP organization
+   * (or project) as the accessed resource.
+   * See https://cloud.google.com/compute/docs/vpc/ for more information.
+   * This is a scheme-less URI full resource name. For example:
+   *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+   * </pre>
+   *
+   * <code>string caller_network = 3;</code>
+   *
+   * @return The bytes for callerNetwork.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getCallerNetworkBytes() {
+    java.lang.Object ref = callerNetwork_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      callerNetwork_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int REQUEST_ATTRIBUTES_FIELD_NUMBER = 7;
+  private com.google.rpc.context.AttributeContext.Request requestAttributes_;
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   *
+   * @return Whether the requestAttributes field is set.
+   */
+  @java.lang.Override
+  public boolean hasRequestAttributes() {
+    return requestAttributes_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   *
+   * @return The requestAttributes.
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.Request getRequestAttributes() {
+    return requestAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
+        : requestAttributes_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Request attributes used in IAM condition evaluation. This field contains
+   * request attributes like request time and access levels associated with
+   * the request.
+   * To get the whole view of the attributes used in IAM
+   * condition evaluation, the user must also look into
+   * `AuditLog.authentication_info.resource_attributes`.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.RequestOrBuilder getRequestAttributesOrBuilder() {
+    return getRequestAttributes();
+  }
+
+  public static final int DESTINATION_ATTRIBUTES_FIELD_NUMBER = 8;
+  private com.google.rpc.context.AttributeContext.Peer destinationAttributes_;
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   *
+   * @return Whether the destinationAttributes field is set.
+   */
+  @java.lang.Override
+  public boolean hasDestinationAttributes() {
+    return destinationAttributes_ != null;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   *
+   * @return The destinationAttributes.
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.Peer getDestinationAttributes() {
+    return destinationAttributes_ == null
+        ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
+        : destinationAttributes_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The destination of a network activity, such as accepting a TCP connection.
+   * In a multi hop network activity, the destination represents the receiver of
+   * the last hop. Only two fields are used in this message, Peer.port and
+   * Peer.ip. These fields are optionally populated by those services utilizing
+   * the IAM condition feature.
+   * </pre>
+   *
+   * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+   */
+  @java.lang.Override
+  public com.google.rpc.context.AttributeContext.PeerOrBuilder getDestinationAttributesOrBuilder() {
+    return getDestinationAttributes();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -251,6 +493,15 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     if (!getCallerSuppliedUserAgentBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, callerSuppliedUserAgent_);
     }
+    if (!getCallerNetworkBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, callerNetwork_);
+    }
+    if (requestAttributes_ != null) {
+      output.writeMessage(7, getRequestAttributes());
+    }
+    if (destinationAttributes_ != null) {
+      output.writeMessage(8, getDestinationAttributes());
+    }
     unknownFields.writeTo(output);
   }
 
@@ -265,6 +516,16 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     }
     if (!getCallerSuppliedUserAgentBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, callerSuppliedUserAgent_);
+    }
+    if (!getCallerNetworkBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, callerNetwork_);
+    }
+    if (requestAttributes_ != null) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(7, getRequestAttributes());
+    }
+    if (destinationAttributes_ != null) {
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(8, getDestinationAttributes());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -283,6 +544,15 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
 
     if (!getCallerIp().equals(other.getCallerIp())) return false;
     if (!getCallerSuppliedUserAgent().equals(other.getCallerSuppliedUserAgent())) return false;
+    if (!getCallerNetwork().equals(other.getCallerNetwork())) return false;
+    if (hasRequestAttributes() != other.hasRequestAttributes()) return false;
+    if (hasRequestAttributes()) {
+      if (!getRequestAttributes().equals(other.getRequestAttributes())) return false;
+    }
+    if (hasDestinationAttributes() != other.hasDestinationAttributes()) return false;
+    if (hasDestinationAttributes()) {
+      if (!getDestinationAttributes().equals(other.getDestinationAttributes())) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -298,6 +568,16 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     hash = (53 * hash) + getCallerIp().hashCode();
     hash = (37 * hash) + CALLER_SUPPLIED_USER_AGENT_FIELD_NUMBER;
     hash = (53 * hash) + getCallerSuppliedUserAgent().hashCode();
+    hash = (37 * hash) + CALLER_NETWORK_FIELD_NUMBER;
+    hash = (53 * hash) + getCallerNetwork().hashCode();
+    if (hasRequestAttributes()) {
+      hash = (37 * hash) + REQUEST_ATTRIBUTES_FIELD_NUMBER;
+      hash = (53 * hash) + getRequestAttributes().hashCode();
+    }
+    if (hasDestinationAttributes()) {
+      hash = (37 * hash) + DESTINATION_ATTRIBUTES_FIELD_NUMBER;
+      hash = (53 * hash) + getDestinationAttributes().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -447,6 +727,20 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
 
       callerSuppliedUserAgent_ = "";
 
+      callerNetwork_ = "";
+
+      if (requestAttributesBuilder_ == null) {
+        requestAttributes_ = null;
+      } else {
+        requestAttributes_ = null;
+        requestAttributesBuilder_ = null;
+      }
+      if (destinationAttributesBuilder_ == null) {
+        destinationAttributes_ = null;
+      } else {
+        destinationAttributes_ = null;
+        destinationAttributesBuilder_ = null;
+      }
       return this;
     }
 
@@ -476,6 +770,17 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
           new com.google.cloud.audit.RequestMetadata(this);
       result.callerIp_ = callerIp_;
       result.callerSuppliedUserAgent_ = callerSuppliedUserAgent_;
+      result.callerNetwork_ = callerNetwork_;
+      if (requestAttributesBuilder_ == null) {
+        result.requestAttributes_ = requestAttributes_;
+      } else {
+        result.requestAttributes_ = requestAttributesBuilder_.build();
+      }
+      if (destinationAttributesBuilder_ == null) {
+        result.destinationAttributes_ = destinationAttributes_;
+      } else {
+        result.destinationAttributes_ = destinationAttributesBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -533,6 +838,16 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
         callerSuppliedUserAgent_ = other.callerSuppliedUserAgent_;
         onChanged();
       }
+      if (!other.getCallerNetwork().isEmpty()) {
+        callerNetwork_ = other.callerNetwork_;
+        onChanged();
+      }
+      if (other.hasRequestAttributes()) {
+        mergeRequestAttributes(other.getRequestAttributes());
+      }
+      if (other.hasDestinationAttributes()) {
+        mergeDestinationAttributes(other.getDestinationAttributes());
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -568,6 +883,14 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * The IP address of the caller.
+     * For caller from internet, this will be public IPv4 or IPv6 address.
+     * For caller from a Compute Engine VM with external IP address, this
+     * will be the VM's external IP address. For caller from a Compute
+     * Engine VM without external IP address, if the VM is in the same
+     * organization (or project) as the accessed resource, `caller_ip` will
+     * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+     * redacted to "gce-internal-ip".
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * </pre>
      *
      * <code>string caller_ip = 1;</code>
@@ -590,6 +913,14 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * The IP address of the caller.
+     * For caller from internet, this will be public IPv4 or IPv6 address.
+     * For caller from a Compute Engine VM with external IP address, this
+     * will be the VM's external IP address. For caller from a Compute
+     * Engine VM without external IP address, if the VM is in the same
+     * organization (or project) as the accessed resource, `caller_ip` will
+     * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+     * redacted to "gce-internal-ip".
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * </pre>
      *
      * <code>string caller_ip = 1;</code>
@@ -612,6 +943,14 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * The IP address of the caller.
+     * For caller from internet, this will be public IPv4 or IPv6 address.
+     * For caller from a Compute Engine VM with external IP address, this
+     * will be the VM's external IP address. For caller from a Compute
+     * Engine VM without external IP address, if the VM is in the same
+     * organization (or project) as the accessed resource, `caller_ip` will
+     * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+     * redacted to "gce-internal-ip".
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * </pre>
      *
      * <code>string caller_ip = 1;</code>
@@ -633,6 +972,14 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * The IP address of the caller.
+     * For caller from internet, this will be public IPv4 or IPv6 address.
+     * For caller from a Compute Engine VM with external IP address, this
+     * will be the VM's external IP address. For caller from a Compute
+     * Engine VM without external IP address, if the VM is in the same
+     * organization (or project) as the accessed resource, `caller_ip` will
+     * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+     * redacted to "gce-internal-ip".
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * </pre>
      *
      * <code>string caller_ip = 1;</code>
@@ -650,6 +997,14 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * The IP address of the caller.
+     * For caller from internet, this will be public IPv4 or IPv6 address.
+     * For caller from a Compute Engine VM with external IP address, this
+     * will be the VM's external IP address. For caller from a Compute
+     * Engine VM without external IP address, if the VM is in the same
+     * organization (or project) as the accessed resource, `caller_ip` will
+     * be the VM's internal IPv4 address, otherwise the `caller_ip` will be
+     * redacted to "gce-internal-ip".
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * </pre>
      *
      * <code>string caller_ip = 1;</code>
@@ -817,6 +1172,592 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
       callerSuppliedUserAgent_ = value;
       onChanged();
       return this;
+    }
+
+    private java.lang.Object callerNetwork_ = "";
+    /**
+     *
+     *
+     * <pre>
+     * The network of the caller.
+     * Set only if the network host project is part of the same GCP organization
+     * (or project) as the accessed resource.
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
+     * This is a scheme-less URI full resource name. For example:
+     *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+     * </pre>
+     *
+     * <code>string caller_network = 3;</code>
+     *
+     * @return The callerNetwork.
+     */
+    public java.lang.String getCallerNetwork() {
+      java.lang.Object ref = callerNetwork_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        callerNetwork_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network of the caller.
+     * Set only if the network host project is part of the same GCP organization
+     * (or project) as the accessed resource.
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
+     * This is a scheme-less URI full resource name. For example:
+     *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+     * </pre>
+     *
+     * <code>string caller_network = 3;</code>
+     *
+     * @return The bytes for callerNetwork.
+     */
+    public com.google.protobuf.ByteString getCallerNetworkBytes() {
+      java.lang.Object ref = callerNetwork_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        callerNetwork_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network of the caller.
+     * Set only if the network host project is part of the same GCP organization
+     * (or project) as the accessed resource.
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
+     * This is a scheme-less URI full resource name. For example:
+     *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+     * </pre>
+     *
+     * <code>string caller_network = 3;</code>
+     *
+     * @param value The callerNetwork to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCallerNetwork(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+
+      callerNetwork_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network of the caller.
+     * Set only if the network host project is part of the same GCP organization
+     * (or project) as the accessed resource.
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
+     * This is a scheme-less URI full resource name. For example:
+     *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+     * </pre>
+     *
+     * <code>string caller_network = 3;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearCallerNetwork() {
+
+      callerNetwork_ = getDefaultInstance().getCallerNetwork();
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The network of the caller.
+     * Set only if the network host project is part of the same GCP organization
+     * (or project) as the accessed resource.
+     * See https://cloud.google.com/compute/docs/vpc/ for more information.
+     * This is a scheme-less URI full resource name. For example:
+     *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
+     * </pre>
+     *
+     * <code>string caller_network = 3;</code>
+     *
+     * @param value The bytes for callerNetwork to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCallerNetworkBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
+      callerNetwork_ = value;
+      onChanged();
+      return this;
+    }
+
+    private com.google.rpc.context.AttributeContext.Request requestAttributes_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Request,
+            com.google.rpc.context.AttributeContext.Request.Builder,
+            com.google.rpc.context.AttributeContext.RequestOrBuilder>
+        requestAttributesBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     *
+     * @return Whether the requestAttributes field is set.
+     */
+    public boolean hasRequestAttributes() {
+      return requestAttributesBuilder_ != null || requestAttributes_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     *
+     * @return The requestAttributes.
+     */
+    public com.google.rpc.context.AttributeContext.Request getRequestAttributes() {
+      if (requestAttributesBuilder_ == null) {
+        return requestAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
+            : requestAttributes_;
+      } else {
+        return requestAttributesBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public Builder setRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
+      if (requestAttributesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        requestAttributes_ = value;
+        onChanged();
+      } else {
+        requestAttributesBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public Builder setRequestAttributes(
+        com.google.rpc.context.AttributeContext.Request.Builder builderForValue) {
+      if (requestAttributesBuilder_ == null) {
+        requestAttributes_ = builderForValue.build();
+        onChanged();
+      } else {
+        requestAttributesBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public Builder mergeRequestAttributes(com.google.rpc.context.AttributeContext.Request value) {
+      if (requestAttributesBuilder_ == null) {
+        if (requestAttributes_ != null) {
+          requestAttributes_ =
+              com.google.rpc.context.AttributeContext.Request.newBuilder(requestAttributes_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          requestAttributes_ = value;
+        }
+        onChanged();
+      } else {
+        requestAttributesBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public Builder clearRequestAttributes() {
+      if (requestAttributesBuilder_ == null) {
+        requestAttributes_ = null;
+        onChanged();
+      } else {
+        requestAttributes_ = null;
+        requestAttributesBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public com.google.rpc.context.AttributeContext.Request.Builder getRequestAttributesBuilder() {
+
+      onChanged();
+      return getRequestAttributesFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    public com.google.rpc.context.AttributeContext.RequestOrBuilder
+        getRequestAttributesOrBuilder() {
+      if (requestAttributesBuilder_ != null) {
+        return requestAttributesBuilder_.getMessageOrBuilder();
+      } else {
+        return requestAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Request.getDefaultInstance()
+            : requestAttributes_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Request attributes used in IAM condition evaluation. This field contains
+     * request attributes like request time and access levels associated with
+     * the request.
+     * To get the whole view of the attributes used in IAM
+     * condition evaluation, the user must also look into
+     * `AuditLog.authentication_info.resource_attributes`.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Request request_attributes = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Request,
+            com.google.rpc.context.AttributeContext.Request.Builder,
+            com.google.rpc.context.AttributeContext.RequestOrBuilder>
+        getRequestAttributesFieldBuilder() {
+      if (requestAttributesBuilder_ == null) {
+        requestAttributesBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.rpc.context.AttributeContext.Request,
+                com.google.rpc.context.AttributeContext.Request.Builder,
+                com.google.rpc.context.AttributeContext.RequestOrBuilder>(
+                getRequestAttributes(), getParentForChildren(), isClean());
+        requestAttributes_ = null;
+      }
+      return requestAttributesBuilder_;
+    }
+
+    private com.google.rpc.context.AttributeContext.Peer destinationAttributes_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Peer,
+            com.google.rpc.context.AttributeContext.Peer.Builder,
+            com.google.rpc.context.AttributeContext.PeerOrBuilder>
+        destinationAttributesBuilder_;
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     *
+     * @return Whether the destinationAttributes field is set.
+     */
+    public boolean hasDestinationAttributes() {
+      return destinationAttributesBuilder_ != null || destinationAttributes_ != null;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     *
+     * @return The destinationAttributes.
+     */
+    public com.google.rpc.context.AttributeContext.Peer getDestinationAttributes() {
+      if (destinationAttributesBuilder_ == null) {
+        return destinationAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
+            : destinationAttributes_;
+      } else {
+        return destinationAttributesBuilder_.getMessage();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public Builder setDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
+      if (destinationAttributesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        destinationAttributes_ = value;
+        onChanged();
+      } else {
+        destinationAttributesBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public Builder setDestinationAttributes(
+        com.google.rpc.context.AttributeContext.Peer.Builder builderForValue) {
+      if (destinationAttributesBuilder_ == null) {
+        destinationAttributes_ = builderForValue.build();
+        onChanged();
+      } else {
+        destinationAttributesBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public Builder mergeDestinationAttributes(com.google.rpc.context.AttributeContext.Peer value) {
+      if (destinationAttributesBuilder_ == null) {
+        if (destinationAttributes_ != null) {
+          destinationAttributes_ =
+              com.google.rpc.context.AttributeContext.Peer.newBuilder(destinationAttributes_)
+                  .mergeFrom(value)
+                  .buildPartial();
+        } else {
+          destinationAttributes_ = value;
+        }
+        onChanged();
+      } else {
+        destinationAttributesBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public Builder clearDestinationAttributes() {
+      if (destinationAttributesBuilder_ == null) {
+        destinationAttributes_ = null;
+        onChanged();
+      } else {
+        destinationAttributes_ = null;
+        destinationAttributesBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public com.google.rpc.context.AttributeContext.Peer.Builder getDestinationAttributesBuilder() {
+
+      onChanged();
+      return getDestinationAttributesFieldBuilder().getBuilder();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    public com.google.rpc.context.AttributeContext.PeerOrBuilder
+        getDestinationAttributesOrBuilder() {
+      if (destinationAttributesBuilder_ != null) {
+        return destinationAttributesBuilder_.getMessageOrBuilder();
+      } else {
+        return destinationAttributes_ == null
+            ? com.google.rpc.context.AttributeContext.Peer.getDefaultInstance()
+            : destinationAttributes_;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The destination of a network activity, such as accepting a TCP connection.
+     * In a multi hop network activity, the destination represents the receiver of
+     * the last hop. Only two fields are used in this message, Peer.port and
+     * Peer.ip. These fields are optionally populated by those services utilizing
+     * the IAM condition feature.
+     * </pre>
+     *
+     * <code>.google.rpc.context.AttributeContext.Peer destination_attributes = 8;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+            com.google.rpc.context.AttributeContext.Peer,
+            com.google.rpc.context.AttributeContext.Peer.Builder,
+            com.google.rpc.context.AttributeContext.PeerOrBuilder>
+        getDestinationAttributesFieldBuilder() {
+      if (destinationAttributesBuilder_ == null) {
+        destinationAttributesBuilder_ =
+            new com.google.protobuf.SingleFieldBuilderV3<
+                com.google.rpc.context.AttributeContext.Peer,
+                com.google.rpc.context.AttributeContext.Peer.Builder,
+                com.google.rpc.context.AttributeContext.PeerOrBuilder>(
+                getDestinationAttributes(), getParentForChildren(), isClean());
+        destinationAttributes_ = null;
+      }
+      return destinationAttributesBuilder_;
     }
 
     @java.lang.Override

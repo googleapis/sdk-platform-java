@@ -27,9 +27,20 @@ package com.google.api;
  * descriptor for Google Compute Engine VM instances has a type of
  * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
  * `"zone"` to identify particular VM instances.
- * Different APIs can support different monitored resource types. APIs generally
- * provide a `list` method that returns the monitored resource descriptors used
- * by the API.
+ * Different services can support different monitored resource types.
+ * The following are specific rules to service defined monitored resources for
+ * Monitoring and Logging:
+ * * The `type`, `display_name`, `description`, `labels` and `launch_stage`
+ *   fields are all required.
+ * * The first label of the monitored resource descriptor must be
+ *   `resource_container`. There are legacy monitored resource descritptors
+ *   start with `project_id`.
+ * * It must include a `location` label.
+ * * Maximum of default 5 service defined monitored resource descriptors
+ *   is allowed per service.
+ * * Maximum of default 10 labels per monitored resource is allowed.
+ * The default maximum limit can be overridden. Please follow
+ * https://cloud.google.com/monitoring/quotas
  * </pre>
  *
  * Protobuf type {@code google.api.MonitoredResourceDescriptor}
@@ -183,6 +194,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -210,6 +222,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -229,14 +242,23 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. The monitored resource type. For example, the type
-   * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   * The maximum length of this value is 256 characters.
+   * `cloudsql_database` represents databases in Google Cloud SQL.
+   * All service defined monitored resource types must be prefixed with the
+   * service name, in the format of `{service name}/{relative resource name}`.
+   * The relative resource name must follow:
+   * * Only upper and lower-case letters and digits are allowed.
+   * * It must start with upper case character and is recommended to use Upper
+   *   Camel Case style.
+   * * The maximum number of characters allowed for the relative_resource_name
+   *   is 100.
+   * Note there are legacy service monitored resources not following this rule.
    * </pre>
    *
    * <code>string type = 1;</code>
    *
    * @return The type.
    */
+  @java.lang.Override
   public java.lang.String getType() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -253,14 +275,23 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. The monitored resource type. For example, the type
-   * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   * The maximum length of this value is 256 characters.
+   * `cloudsql_database` represents databases in Google Cloud SQL.
+   * All service defined monitored resource types must be prefixed with the
+   * service name, in the format of `{service name}/{relative resource name}`.
+   * The relative resource name must follow:
+   * * Only upper and lower-case letters and digits are allowed.
+   * * It must start with upper case character and is recommended to use Upper
+   *   Camel Case style.
+   * * The maximum number of characters allowed for the relative_resource_name
+   *   is 100.
+   * Note there are legacy service monitored resources not following this rule.
    * </pre>
    *
    * <code>string type = 1;</code>
    *
    * @return The bytes for type.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTypeBytes() {
     java.lang.Object ref = type_;
     if (ref instanceof java.lang.String) {
@@ -289,6 +320,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The displayName.
    */
+  @java.lang.Override
   public java.lang.String getDisplayName() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -314,6 +346,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The bytes for displayName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -340,6 +373,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -363,6 +397,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -382,12 +417,19 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
@@ -396,12 +438,19 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
@@ -411,12 +460,19 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
+  @java.lang.Override
   public int getLabelsCount() {
     return labels_.size();
   }
@@ -425,12 +481,19 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
@@ -439,12 +502,19 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * <pre>
    * Required. A set of labels used to describe instances of this monitored
-   * resource type. For example, an individual Google Cloud SQL database is
-   * identified by values for the labels `"database_id"` and `"zone"`.
+   * resource type.
+   * The label key name must follow:
+   * * Only upper and lower-case letters, digits and underscores (_) are
+   *   allowed.
+   * * Label name must start with a letter or digit.
+   * * The maximum length of a label name is 100 characters.
+   * For example, an individual Google Cloud SQL database is
+   * identified by values for the labels `database_id` and `location`.
    * </pre>
    *
    * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
     return labels_.get(index);
   }
@@ -462,6 +532,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The enum numeric value on the wire for launchStage.
    */
+  @java.lang.Override
   public int getLaunchStageValue() {
     return launchStage_;
   }
@@ -476,6 +547,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    *
    * @return The launchStage.
    */
+  @java.lang.Override
   public com.google.api.LaunchStage getLaunchStage() {
     @SuppressWarnings("deprecation")
     com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);
@@ -697,9 +769,20 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    * descriptor for Google Compute Engine VM instances has a type of
    * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
    * `"zone"` to identify particular VM instances.
-   * Different APIs can support different monitored resource types. APIs generally
-   * provide a `list` method that returns the monitored resource descriptors used
-   * by the API.
+   * Different services can support different monitored resource types.
+   * The following are specific rules to service defined monitored resources for
+   * Monitoring and Logging:
+   * * The `type`, `display_name`, `description`, `labels` and `launch_stage`
+   *   fields are all required.
+   * * The first label of the monitored resource descriptor must be
+   *   `resource_container`. There are legacy monitored resource descritptors
+   *   start with `project_id`.
+   * * It must include a `location` label.
+   * * Maximum of default 5 service defined monitored resource descriptors
+   *   is allowed per service.
+   * * Maximum of default 10 labels per monitored resource is allowed.
+   * The default maximum limit can be overridden. Please follow
+   * https://cloud.google.com/monitoring/quotas
    * </pre>
    *
    * Protobuf type {@code google.api.MonitoredResourceDescriptor}
@@ -1063,8 +1146,16 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. The monitored resource type. For example, the type
-     * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     * The maximum length of this value is 256 characters.
+     * `cloudsql_database` represents databases in Google Cloud SQL.
+     * All service defined monitored resource types must be prefixed with the
+     * service name, in the format of `{service name}/{relative resource name}`.
+     * The relative resource name must follow:
+     * * Only upper and lower-case letters and digits are allowed.
+     * * It must start with upper case character and is recommended to use Upper
+     *   Camel Case style.
+     * * The maximum number of characters allowed for the relative_resource_name
+     *   is 100.
+     * Note there are legacy service monitored resources not following this rule.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -1087,8 +1178,16 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. The monitored resource type. For example, the type
-     * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     * The maximum length of this value is 256 characters.
+     * `cloudsql_database` represents databases in Google Cloud SQL.
+     * All service defined monitored resource types must be prefixed with the
+     * service name, in the format of `{service name}/{relative resource name}`.
+     * The relative resource name must follow:
+     * * Only upper and lower-case letters and digits are allowed.
+     * * It must start with upper case character and is recommended to use Upper
+     *   Camel Case style.
+     * * The maximum number of characters allowed for the relative_resource_name
+     *   is 100.
+     * Note there are legacy service monitored resources not following this rule.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -1111,8 +1210,16 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. The monitored resource type. For example, the type
-     * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     * The maximum length of this value is 256 characters.
+     * `cloudsql_database` represents databases in Google Cloud SQL.
+     * All service defined monitored resource types must be prefixed with the
+     * service name, in the format of `{service name}/{relative resource name}`.
+     * The relative resource name must follow:
+     * * Only upper and lower-case letters and digits are allowed.
+     * * It must start with upper case character and is recommended to use Upper
+     *   Camel Case style.
+     * * The maximum number of characters allowed for the relative_resource_name
+     *   is 100.
+     * Note there are legacy service monitored resources not following this rule.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -1134,8 +1241,16 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. The monitored resource type. For example, the type
-     * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     * The maximum length of this value is 256 characters.
+     * `cloudsql_database` represents databases in Google Cloud SQL.
+     * All service defined monitored resource types must be prefixed with the
+     * service name, in the format of `{service name}/{relative resource name}`.
+     * The relative resource name must follow:
+     * * Only upper and lower-case letters and digits are allowed.
+     * * It must start with upper case character and is recommended to use Upper
+     *   Camel Case style.
+     * * The maximum number of characters allowed for the relative_resource_name
+     *   is 100.
+     * Note there are legacy service monitored resources not following this rule.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -1153,8 +1268,16 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. The monitored resource type. For example, the type
-     * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     * The maximum length of this value is 256 characters.
+     * `cloudsql_database` represents databases in Google Cloud SQL.
+     * All service defined monitored resource types must be prefixed with the
+     * service name, in the format of `{service name}/{relative resource name}`.
+     * The relative resource name must follow:
+     * * Only upper and lower-case letters and digits are allowed.
+     * * It must start with upper case character and is recommended to use Upper
+     *   Camel Case style.
+     * * The maximum number of characters allowed for the relative_resource_name
+     *   is 100.
+     * Note there are legacy service monitored resources not following this rule.
      * </pre>
      *
      * <code>string type = 1;</code>
@@ -1426,8 +1549,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1444,8 +1573,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1462,8 +1597,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1480,8 +1621,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1504,8 +1651,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1525,8 +1678,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1549,8 +1708,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1573,8 +1738,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1594,8 +1765,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1615,8 +1792,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1637,8 +1820,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1658,8 +1847,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1679,8 +1874,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1693,8 +1894,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1711,8 +1918,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1730,8 +1943,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1745,8 +1964,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1760,8 +1985,14 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * <pre>
      * Required. A set of labels used to describe instances of this monitored
-     * resource type. For example, an individual Google Cloud SQL database is
-     * identified by values for the labels `"database_id"` and `"zone"`.
+     * resource type.
+     * The label key name must follow:
+     * * Only upper and lower-case letters, digits and underscores (_) are
+     *   allowed.
+     * * Label name must start with a letter or digit.
+     * * The maximum length of a label name is 100 characters.
+     * For example, an individual Google Cloud SQL database is
+     * identified by values for the labels `database_id` and `location`.
      * </pre>
      *
      * <code>repeated .google.api.LabelDescriptor labels = 4;</code>
@@ -1799,6 +2030,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The enum numeric value on the wire for launchStage.
      */
+    @java.lang.Override
     public int getLaunchStageValue() {
       return launchStage_;
     }
@@ -1815,6 +2047,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * @return This builder for chaining.
      */
     public Builder setLaunchStageValue(int value) {
+
       launchStage_ = value;
       onChanged();
       return this;
@@ -1830,6 +2063,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      *
      * @return The launchStage.
      */
+    @java.lang.Override
     public com.google.api.LaunchStage getLaunchStage() {
       @SuppressWarnings("deprecation")
       com.google.api.LaunchStage result = com.google.api.LaunchStage.valueOf(launchStage_);

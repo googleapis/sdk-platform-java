@@ -151,6 +151,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The expression.
    */
+  @java.lang.Override
   public java.lang.String getExpression() {
     java.lang.Object ref = expression_;
     if (ref instanceof java.lang.String) {
@@ -176,6 +177,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for expression.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getExpressionBytes() {
     java.lang.Object ref = expression_;
     if (ref instanceof java.lang.String) {
@@ -203,6 +205,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The title.
    */
+  @java.lang.Override
   public java.lang.String getTitle() {
     java.lang.Object ref = title_;
     if (ref instanceof java.lang.String) {
@@ -227,6 +230,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for title.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getTitleBytes() {
     java.lang.Object ref = title_;
     if (ref instanceof java.lang.String) {
@@ -253,6 +257,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -276,6 +281,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -302,6 +308,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The location.
    */
+  @java.lang.Override
   public java.lang.String getLocation() {
     java.lang.Object ref = location_;
     if (ref instanceof java.lang.String) {
@@ -325,6 +332,7 @@ public final class Expr extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for location.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getLocationBytes() {
     java.lang.Object ref = location_;
     if (ref instanceof java.lang.String) {

@@ -339,6 +339,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The min.
      */
+    @java.lang.Override
     public double getMin() {
       return min_;
     }
@@ -356,6 +357,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The max.
      */
+    @java.lang.Override
     public double getMax() {
       return max_;
     }
@@ -709,6 +711,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The min.
        */
+      @java.lang.Override
       public double getMin() {
         return min_;
       }
@@ -760,6 +763,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The max.
        */
+      @java.lang.Override
       public double getMax() {
         return max_;
       }
@@ -1280,6 +1284,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The numFiniteBuckets.
        */
+      @java.lang.Override
       public int getNumFiniteBuckets() {
         return numFiniteBuckets_;
       }
@@ -1297,6 +1302,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The width.
        */
+      @java.lang.Override
       public double getWidth() {
         return width_;
       }
@@ -1314,6 +1320,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The offset.
        */
+      @java.lang.Override
       public double getOffset() {
         return offset_;
       }
@@ -1695,6 +1702,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The numFiniteBuckets.
          */
+        @java.lang.Override
         public int getNumFiniteBuckets() {
           return numFiniteBuckets_;
         }
@@ -1746,6 +1754,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The width.
          */
+        @java.lang.Override
         public double getWidth() {
           return width_;
         }
@@ -1797,6 +1806,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The offset.
          */
+        @java.lang.Override
         public double getOffset() {
           return offset_;
         }
@@ -2051,6 +2061,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The numFiniteBuckets.
        */
+      @java.lang.Override
       public int getNumFiniteBuckets() {
         return numFiniteBuckets_;
       }
@@ -2068,6 +2079,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The growthFactor.
        */
+      @java.lang.Override
       public double getGrowthFactor() {
         return growthFactor_;
       }
@@ -2085,6 +2097,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The scale.
        */
+      @java.lang.Override
       public double getScale() {
         return scale_;
       }
@@ -2467,6 +2480,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The numFiniteBuckets.
          */
+        @java.lang.Override
         public int getNumFiniteBuckets() {
           return numFiniteBuckets_;
         }
@@ -2518,6 +2532,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The growthFactor.
          */
+        @java.lang.Override
         public double getGrowthFactor() {
           return growthFactor_;
         }
@@ -2569,6 +2584,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          *
          * @return The scale.
          */
+        @java.lang.Override
         public double getScale() {
           return scale_;
         }
@@ -2837,6 +2853,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return A list containing the bounds.
        */
+      @java.lang.Override
       public java.util.List<java.lang.Double> getBoundsList() {
         return bounds_;
       }
@@ -3469,6 +3486,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the linearBuckets field is set.
      */
+    @java.lang.Override
     public boolean hasLinearBuckets() {
       return optionsCase_ == 1;
     }
@@ -3483,6 +3501,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The linearBuckets.
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.Linear getLinearBuckets() {
       if (optionsCase_ == 1) {
         return (com.google.api.Distribution.BucketOptions.Linear) options_;
@@ -3498,6 +3517,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.LinearOrBuilder getLinearBucketsOrBuilder() {
       if (optionsCase_ == 1) {
         return (com.google.api.Distribution.BucketOptions.Linear) options_;
@@ -3517,6 +3537,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the exponentialBuckets field is set.
      */
+    @java.lang.Override
     public boolean hasExponentialBuckets() {
       return optionsCase_ == 2;
     }
@@ -3531,6 +3552,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The exponentialBuckets.
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.Exponential getExponentialBuckets() {
       if (optionsCase_ == 2) {
         return (com.google.api.Distribution.BucketOptions.Exponential) options_;
@@ -3546,6 +3568,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.ExponentialOrBuilder
         getExponentialBucketsOrBuilder() {
       if (optionsCase_ == 2) {
@@ -3566,6 +3589,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the explicitBuckets field is set.
      */
+    @java.lang.Override
     public boolean hasExplicitBuckets() {
       return optionsCase_ == 3;
     }
@@ -3580,6 +3604,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The explicitBuckets.
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.Explicit getExplicitBuckets() {
       if (optionsCase_ == 3) {
         return (com.google.api.Distribution.BucketOptions.Explicit) options_;
@@ -3595,6 +3620,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
      */
+    @java.lang.Override
     public com.google.api.Distribution.BucketOptions.ExplicitOrBuilder
         getExplicitBucketsOrBuilder() {
       if (optionsCase_ == 3) {
@@ -4049,6 +4075,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return Whether the linearBuckets field is set.
        */
+      @java.lang.Override
       public boolean hasLinearBuckets() {
         return optionsCase_ == 1;
       }
@@ -4063,6 +4090,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The linearBuckets.
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Linear getLinearBuckets() {
         if (linearBucketsBuilder_ == null) {
           if (optionsCase_ == 1) {
@@ -4196,6 +4224,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.api.Distribution.BucketOptions.Linear linear_buckets = 1;</code>
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.LinearOrBuilder getLinearBucketsOrBuilder() {
         if ((optionsCase_ == 1) && (linearBucketsBuilder_ != null)) {
           return linearBucketsBuilder_.getMessageOrBuilder();
@@ -4256,6 +4285,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return Whether the exponentialBuckets field is set.
        */
+      @java.lang.Override
       public boolean hasExponentialBuckets() {
         return optionsCase_ == 2;
       }
@@ -4270,6 +4300,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The exponentialBuckets.
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Exponential getExponentialBuckets() {
         if (exponentialBucketsBuilder_ == null) {
           if (optionsCase_ == 2) {
@@ -4406,6 +4437,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.api.Distribution.BucketOptions.Exponential exponential_buckets = 2;</code>
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.ExponentialOrBuilder
           getExponentialBucketsOrBuilder() {
         if ((optionsCase_ == 2) && (exponentialBucketsBuilder_ != null)) {
@@ -4467,6 +4499,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return Whether the explicitBuckets field is set.
        */
+      @java.lang.Override
       public boolean hasExplicitBuckets() {
         return optionsCase_ == 3;
       }
@@ -4481,6 +4514,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The explicitBuckets.
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.Explicit getExplicitBuckets() {
         if (explicitBucketsBuilder_ == null) {
           if (optionsCase_ == 3) {
@@ -4616,6 +4650,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <code>.google.api.Distribution.BucketOptions.Explicit explicit_buckets = 3;</code>
        */
+      @java.lang.Override
       public com.google.api.Distribution.BucketOptions.ExplicitOrBuilder
           getExplicitBucketsOrBuilder() {
         if ((optionsCase_ == 3) && (explicitBucketsBuilder_ != null)) {
@@ -4986,6 +5021,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The value.
      */
+    @java.lang.Override
     public double getValue() {
       return value_;
     }
@@ -5003,6 +5039,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the timestamp field is set.
      */
+    @java.lang.Override
     public boolean hasTimestamp() {
       return timestamp_ != null;
     }
@@ -5017,6 +5054,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The timestamp.
      */
+    @java.lang.Override
     public com.google.protobuf.Timestamp getTimestamp() {
       return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
     }
@@ -5029,6 +5067,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.protobuf.Timestamp timestamp = 2;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
       return getTimestamp();
     }
@@ -5050,6 +5089,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any attachments = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Any> getAttachmentsList() {
       return attachments_;
     }
@@ -5068,6 +5108,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any attachments = 3;</code>
      */
+    @java.lang.Override
     public java.util.List<? extends com.google.protobuf.AnyOrBuilder>
         getAttachmentsOrBuilderList() {
       return attachments_;
@@ -5087,6 +5128,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any attachments = 3;</code>
      */
+    @java.lang.Override
     public int getAttachmentsCount() {
       return attachments_.size();
     }
@@ -5105,6 +5147,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any attachments = 3;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.Any getAttachments(int index) {
       return attachments_.get(index);
     }
@@ -5123,6 +5166,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>repeated .google.protobuf.Any attachments = 3;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.AnyOrBuilder getAttachmentsOrBuilder(int index) {
       return attachments_.get(index);
     }
@@ -5552,6 +5596,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * @return The value.
        */
+      @java.lang.Override
       public double getValue() {
         return value_;
       }
@@ -6302,6 +6347,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The count.
    */
+  @java.lang.Override
   public long getCount() {
     return count_;
   }
@@ -6320,6 +6366,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The mean.
    */
+  @java.lang.Override
   public double getMean() {
     return mean_;
   }
@@ -6342,6 +6389,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The sumOfSquaredDeviation.
    */
+  @java.lang.Override
   public double getSumOfSquaredDeviation() {
     return sumOfSquaredDeviation_;
   }
@@ -6360,6 +6408,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the range field is set.
    */
+  @java.lang.Override
   public boolean hasRange() {
     return range_ != null;
   }
@@ -6375,6 +6424,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The range.
    */
+  @java.lang.Override
   public com.google.api.Distribution.Range getRange() {
     return range_ == null ? com.google.api.Distribution.Range.getDefaultInstance() : range_;
   }
@@ -6388,6 +6438,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Distribution.Range range = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.Distribution.RangeOrBuilder getRangeOrBuilder() {
     return getRange();
   }
@@ -6406,6 +6457,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the bucketOptions field is set.
    */
+  @java.lang.Override
   public boolean hasBucketOptions() {
     return bucketOptions_ != null;
   }
@@ -6421,6 +6473,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bucketOptions.
    */
+  @java.lang.Override
   public com.google.api.Distribution.BucketOptions getBucketOptions() {
     return bucketOptions_ == null
         ? com.google.api.Distribution.BucketOptions.getDefaultInstance()
@@ -6436,6 +6489,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
    */
+  @java.lang.Override
   public com.google.api.Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder() {
     return getBucketOptions();
   }
@@ -6465,6 +6519,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * @return A list containing the bucketCounts.
    */
+  @java.lang.Override
   public java.util.List<java.lang.Long> getBucketCountsList() {
     return bucketCounts_;
   }
@@ -6535,6 +6590,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.Distribution.Exemplar> getExemplarsList() {
     return exemplars_;
   }
@@ -6547,6 +6603,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.Distribution.ExemplarOrBuilder>
       getExemplarsOrBuilderList() {
     return exemplars_;
@@ -6560,6 +6617,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
+  @java.lang.Override
   public int getExemplarsCount() {
     return exemplars_.size();
   }
@@ -6572,6 +6630,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
+  @java.lang.Override
   public com.google.api.Distribution.Exemplar getExemplars(int index) {
     return exemplars_.get(index);
   }
@@ -6584,6 +6643,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.Distribution.Exemplar exemplars = 10;</code>
    */
+  @java.lang.Override
   public com.google.api.Distribution.ExemplarOrBuilder getExemplarsOrBuilder(int index) {
     return exemplars_.get(index);
   }
@@ -7116,6 +7176,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The count.
      */
+    @java.lang.Override
     public long getCount() {
       return count_;
     }
@@ -7172,6 +7233,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The mean.
      */
+    @java.lang.Override
     public double getMean() {
       return mean_;
     }
@@ -7230,6 +7292,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The sumOfSquaredDeviation.
      */
+    @java.lang.Override
     public double getSumOfSquaredDeviation() {
       return sumOfSquaredDeviation_;
     }

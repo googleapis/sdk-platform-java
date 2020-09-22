@@ -161,6 +161,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The name.
    */
+  @java.lang.Override
   public java.lang.String getName() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -186,6 +187,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for name.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
@@ -211,6 +213,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.LabelDescriptor> getLabelsList() {
     return labels_;
   }
@@ -225,6 +228,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.LabelDescriptorOrBuilder>
       getLabelsOrBuilderList() {
     return labels_;
@@ -240,6 +244,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public int getLabelsCount() {
     return labels_.size();
   }
@@ -254,6 +259,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptor getLabels(int index) {
     return labels_.get(index);
   }
@@ -268,6 +274,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.LabelDescriptor labels = 2;</code>
    */
+  @java.lang.Override
   public com.google.api.LabelDescriptorOrBuilder getLabelsOrBuilder(int index) {
     return labels_.get(index);
   }
@@ -286,6 +293,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The description.
    */
+  @java.lang.Override
   public java.lang.String getDescription() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -309,6 +317,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for description.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDescriptionBytes() {
     java.lang.Object ref = description_;
     if (ref instanceof java.lang.String) {
@@ -335,6 +344,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The displayName.
    */
+  @java.lang.Override
   public java.lang.String getDisplayName() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {
@@ -358,6 +368,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The bytes for displayName.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getDisplayNameBytes() {
     java.lang.Object ref = displayName_;
     if (ref instanceof java.lang.String) {

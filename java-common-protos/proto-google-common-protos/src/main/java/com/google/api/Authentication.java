@@ -152,6 +152,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.AuthenticationRule> getRulesList() {
     return rules_;
   }
@@ -165,6 +166,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.AuthenticationRuleOrBuilder>
       getRulesOrBuilderList() {
     return rules_;
@@ -179,6 +181,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
+  @java.lang.Override
   public int getRulesCount() {
     return rules_.size();
   }
@@ -192,6 +195,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthenticationRule getRules(int index) {
     return rules_.get(index);
   }
@@ -205,6 +209,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthenticationRule rules = 3;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthenticationRuleOrBuilder getRulesOrBuilder(int index) {
     return rules_.get(index);
   }
@@ -220,6 +225,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<com.google.api.AuthProvider> getProvidersList() {
     return providers_;
   }
@@ -232,6 +238,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
+  @java.lang.Override
   public java.util.List<? extends com.google.api.AuthProviderOrBuilder>
       getProvidersOrBuilderList() {
     return providers_;
@@ -245,6 +252,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
+  @java.lang.Override
   public int getProvidersCount() {
     return providers_.size();
   }
@@ -257,6 +265,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthProvider getProviders(int index) {
     return providers_.get(index);
   }
@@ -269,6 +278,7 @@ public final class Authentication extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>repeated .google.api.AuthProvider providers = 4;</code>
    */
+  @java.lang.Override
   public com.google.api.AuthProviderOrBuilder getProvidersOrBuilder(int index) {
     return providers_.get(index);
   }

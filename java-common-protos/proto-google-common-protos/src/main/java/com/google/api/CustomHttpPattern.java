@@ -129,6 +129,7 @@ public final class CustomHttpPattern extends com.google.protobuf.GeneratedMessag
    *
    * @return The kind.
    */
+  @java.lang.Override
   public java.lang.String getKind() {
     java.lang.Object ref = kind_;
     if (ref instanceof java.lang.String) {
@@ -151,6 +152,7 @@ public final class CustomHttpPattern extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for kind.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getKindBytes() {
     java.lang.Object ref = kind_;
     if (ref instanceof java.lang.String) {
@@ -176,6 +178,7 @@ public final class CustomHttpPattern extends com.google.protobuf.GeneratedMessag
    *
    * @return The path.
    */
+  @java.lang.Override
   public java.lang.String getPath() {
     java.lang.Object ref = path_;
     if (ref instanceof java.lang.String) {
@@ -198,6 +201,7 @@ public final class CustomHttpPattern extends com.google.protobuf.GeneratedMessag
    *
    * @return The bytes for path.
    */
+  @java.lang.Override
   public com.google.protobuf.ByteString getPathBytes() {
     java.lang.Object ref = path_;
     if (ref instanceof java.lang.String) {
