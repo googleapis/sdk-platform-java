@@ -1,4 +1,4 @@
-workspace(name = "com_google_api_generator")
+workspace(name = "gapic_generator_java")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -14,17 +14,17 @@ http_archive(
     ],
 )
 
-load("//:repository_rules.bzl", "com_google_api_generator_properties")
+load("//:repository_rules.bzl", "gapic_generator_java_properties")
 
-com_google_api_generator_properties(
-    name = "com_google_api_generator_properties",
+gapic_generator_java_properties(
+    name = "gapic_generator_java_properties",
     file = "//:dependencies.properties",
 )
 
-load("@com_google_api_generator_properties//:dependencies.properties.bzl", "PROPERTIES")
-load("//:repositories.bzl", "com_google_api_generator_repositories")
+load("@gapic_generator_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("//:repositories.bzl", "gapic_generator_java_repositories")
 
-com_google_api_generator_repositories()
+gapic_generator_java_repositories()
 
 # protobuf
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
