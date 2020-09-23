@@ -77,6 +77,36 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
+  public void writeReferenceTypeImports_basic() {
+    TypeNode.withReference(ConcreteReference.withClazz(List.class)).accept(writerVisitor);
+    assertEquals("import java.util.List;\n\n", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder().setName("FooBar").setPakkage("com.foo.bar").build())
+        .accept(writerVisitor);
+    assertEquals("import com.foo.bar.FooBar;\n\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeReferenceTypeImports_useFullName() {
+    TypeNode.withReference(
+            ConcreteReference.builder().setClazz(List.class).setUseFullName(true).build())
+        .accept(writerVisitor);
+    assertEquals("", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder()
+                .setName("FooBar")
+                .setPakkage("com.foo.bar")
+                .setUseFullName(true)
+                .build())
+        .accept(writerVisitor);
+    assertEquals("", writerVisitor.write());
+  }
+
+  @Test
   public void writeNewObjectExprImports_basic() {
     // [Constructing] `new ArrayList<>()`
     NewObjectExpr newObjectExpr =

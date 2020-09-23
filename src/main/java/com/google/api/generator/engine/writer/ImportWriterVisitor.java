@@ -108,7 +108,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
 
     List<Reference> refs = new ArrayList<>(type.reference().generics());
-    refs.add(type.reference());
+    if (!type.reference().useFullName()) {
+      refs.add(type.reference());
+    }
     references(refs);
   }
 
@@ -377,6 +379,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
       // Don't need to import this.
+      if (ref.useFullName()) {
+        continue;
+      }
       if (!ref.isStaticImport()
           && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage))) {
         continue;

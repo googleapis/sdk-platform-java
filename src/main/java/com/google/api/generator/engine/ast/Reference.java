@@ -27,6 +27,8 @@ public interface Reference {
 
   String pakkage();
 
+  boolean useFullName();
+
   @Nullable
   String enclosingClassName();
 

@@ -107,6 +107,36 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeReferenceType_basic() {
+    TypeNode.withReference(ConcreteReference.withClazz(List.class)).accept(writerVisitor);
+    assertEquals("List", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder().setName("FooBar").setPakkage("com.foo.bar").build())
+        .accept(writerVisitor);
+    assertEquals("FooBar", writerVisitor.write());
+  }
+
+  @Test
+  public void writeReferenceType_useFullName() {
+    TypeNode.withReference(
+            ConcreteReference.builder().setClazz(List.class).setUseFullName(true).build())
+        .accept(writerVisitor);
+    assertEquals("java.util.List", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder()
+                .setName("FooBar")
+                .setPakkage("com.foo.bar")
+                .setUseFullName(true)
+                .build())
+        .accept(writerVisitor);
+    assertEquals("com.foo.bar.FooBar", writerVisitor.write());
+  }
+
+  @Test
   public void writeAnnotation_simple() {
     AnnotationNode annotation = AnnotationNode.OVERRIDE;
     annotation.accept(writerVisitor);
