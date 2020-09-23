@@ -63,7 +63,7 @@ public class SessionName implements ResourceName {
   public static List<String> toStringList(List<SessionName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (SessionName value : values) {
-      if (Objects.equals(value, null)) {
+      if (Objects.isNull(value)) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -78,11 +78,11 @@ public class SessionName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.equals(fieldValuesMap, null)) {
+    if (Objects.isNull(fieldValuesMap)) {
       synchronized (this) {
-        if (Objects.equals(fieldValuesMap, null)) {
+        if (Objects.isNull(fieldValuesMap)) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (Objects.notTodoEquals(session, null)) {
+          if (!Objects.isNull(session)) {
             fieldMapBuilder.put("session", session);
           }
           fieldValuesMap = fieldMapBuilder.build();

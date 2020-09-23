@@ -131,9 +131,9 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<LogEntry> extractResources(ListLogEntriesResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getEntriesList())
                   ? ImmutableList.<LogEntry>of()
-                  : payload.getResponsesList();
+                  : payload.getEntriesList();
             }
           };
   private static final PagedListDescriptor<
@@ -179,9 +179,9 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             @Override
             public Iterable<MonitoredResourceDescriptor> extractResources(
                 ListMonitoredResourceDescriptorsResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getResourceDescriptorsList())
                   ? ImmutableList.<MonitoredResourceDescriptor>of()
-                  : payload.getResponsesList();
+                  : payload.getResourceDescriptorsList();
             }
           };
   private static final PagedListDescriptor<ListLogsRequest, ListLogsResponse, String>
@@ -214,9 +214,9 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<String> extractResources(ListLogsResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getLogNamesList())
                   ? ImmutableList.<String>of()
-                  : payload.getResponsesList();
+                  : payload.getLogNamesList();
             }
           };
   private static final PagedListResponseFactory<
@@ -294,7 +294,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             @Override
             public RequestBuilder<WriteLogEntriesRequest> getRequestBuilder() {
               return new RequestBuilder<WriteLogEntriesRequest>() {
-                private RequestBuilder<WriteLogEntriesRequest> builder;
+                private WriteLogEntriesRequest.Builder builder;
 
                 @Override
                 public void appendRequest(WriteLogEntriesRequest request) {
@@ -452,7 +452,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
   }
 
   /** Builder for LoggingServiceV2StubSettings. */
-  public static class Builder extends StubSettings.Builder<LoggingServiceV2Stub, Builder> {
+  public static class Builder extends StubSettings.Builder<LoggingServiceV2StubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<DeleteLogRequest, Empty> deleteLogSettings;
     private final BatchingCallSettings.Builder<WriteLogEntriesRequest, WriteLogEntriesResponse>

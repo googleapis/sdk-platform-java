@@ -38,7 +38,7 @@ public class EchoClientTest {
   public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
-    settings =
+    EchoSettings settings =
         EchoSettings.newBuilder()
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -47,7 +47,7 @@ public class EchoClientTest {
   }
 
   @After
-  public static void tearDown() throws Exception {
+  public void tearDown() throws Exception {
     client.close();
   }
 }

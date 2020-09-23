@@ -116,7 +116,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getResponsesList())
                   ? ImmutableList.<EchoResponse>of()
                   : payload.getResponsesList();
             }
@@ -263,7 +263,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   }
 
   /** Builder for EchoStubSettings. */
-  public static class Builder extends StubSettings.Builder<EchoStub, Builder> {
+  public static class Builder extends StubSettings.Builder<EchoStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings;
     private final ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings;

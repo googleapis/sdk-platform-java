@@ -14,15 +14,12 @@
 
 package com.google.api.generator.gapic.composer;
 
-import static junit.framework.Assert.assertEquals;
-
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
-import java.io.IOException;
-import java.nio.file.Files;
+import com.google.api.generator.test.framework.Assert;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -32,9 +29,10 @@ import org.junit.Test;
 public class ComposerTest {
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/composer/goldens/";
+  private static final String GOLDENFILES_NAME = "ComposerTest.golden";
 
   @Test
-  public void gapicClass_addApacheLicense() throws IOException {
+  public void gapicClass_addApacheLicense() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -45,8 +43,7 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, "ComposerTest.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(visitor.write(), expectedClassString);
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

@@ -135,9 +135,9 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<Topic> extractResources(ListTopicsResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getTopicsList())
                   ? ImmutableList.<Topic>of()
-                  : payload.getResponsesList();
+                  : payload.getTopicsList();
             }
           };
   private static final PagedListDescriptor<
@@ -176,9 +176,9 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSubscriptionsResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getSubscriptionsList())
                   ? ImmutableList.<String>of()
-                  : payload.getResponsesList();
+                  : payload.getSubscriptionsList();
             }
           };
   private static final PagedListDescriptor<
@@ -214,9 +214,9 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSnapshotsResponse payload) {
-              return Objects.equals(payload.getResponsesList(), null)
+              return Objects.isNull(payload.getSnapshotsList())
                   ? ImmutableList.<String>of()
-                  : payload.getResponsesList();
+                  : payload.getSnapshotsList();
             }
           };
   private static final PagedListResponseFactory<
@@ -288,7 +288,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
         @Override
         public RequestBuilder<PublishRequest> getRequestBuilder() {
           return new RequestBuilder<PublishRequest>() {
-            private RequestBuilder<PublishRequest> builder;
+            private PublishRequest.Builder builder;
 
             @Override
             public void appendRequest(PublishRequest request) {
@@ -315,7 +315,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
             List<String> subresponseElements = new ArrayList<>();
             long subresponseCount = responder.getMessageCount();
             for (int i = 0; i < subresponseCount; i++) {
-              subresponseElements.add(batchResponse.getMessageIds(batchMessageIndex));
+              subresponseElements.add(batchResponse.getMessageIds(batchMessageIndex++));
             }
             PublishResponse response =
                 PublishResponse.newBuilder().addAllMessageIds(subresponseElements).build();
@@ -475,7 +475,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   /** Builder for PublisherStubSettings. */
-  public static class Builder extends StubSettings.Builder<PublisherStub, Builder> {
+  public static class Builder extends StubSettings.Builder<PublisherStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<Topic, Topic> createTopicSettings;
     private final UnaryCallSettings.Builder<UpdateTopicRequest, Topic> updateTopicSettings;

@@ -22,27 +22,22 @@ public class MockEchoImpl extends EchoImplBase {
     responses = new LinkedList<>();
   }
 
-  @Override
   public List<AbstractMessage> getRequests() {
     return requests;
   }
 
-  @Override
   public void addResponse(AbstractMessage response) {
     responses.add(response);
   }
 
-  @Override
   public void setResponses(List<AbstractMessage> responses) {
     this.responses = new LinkedList<Object>(responses);
   }
 
-  @Override
   public void addException(Exception exception) {
     responses.add(exception);
   }
 
-  @Override
   public void reset() {
     requests = new ArrayList<>();
     responses = new LinkedList<>();

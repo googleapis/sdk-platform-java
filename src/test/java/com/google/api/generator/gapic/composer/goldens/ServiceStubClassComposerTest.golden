@@ -1,11 +1,14 @@
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
+
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
@@ -52,6 +55,10 @@ public abstract class EchoStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: chatAgainCallable()");
   }
 
+  public UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse> pagedExpandPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: pagedExpandPagedCallable()");
+  }
+
   public UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
     throw new UnsupportedOperationException("Not implemented: pagedExpandCallable()");
   }
@@ -60,7 +67,7 @@ public abstract class EchoStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: waitOperationCallable()");
   }
 
-  public UnaryCallable<WaitRequest, WaitResponse, WaitMetadata> waitCallable() {
+  public UnaryCallable<WaitRequest, Operation> waitCallable() {
     throw new UnsupportedOperationException("Not implemented: waitCallable()");
   }
 

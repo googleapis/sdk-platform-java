@@ -22,11 +22,10 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.test.framework.Assert;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -41,6 +40,8 @@ public class GrpcServiceCallableFactoryClassComposerTest {
   private FileDescriptor echoFileDescriptor;
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/composer/goldens/";
+  private static final String GOLDENFILES_NAME =
+      "GrpcServiceCallableFactoryClassComposerTest.golden";
 
   @Before
   public void setUp() {
@@ -50,7 +51,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
   }
 
   @Test
-  public void generateServiceClasses() throws IOException {
+  public void generateServiceClasses() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -63,9 +64,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "GrpcServiceCallableFactoryClassComposerTest.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(expectedClassString, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

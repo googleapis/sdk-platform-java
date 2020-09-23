@@ -27,6 +27,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.test.framework.Assert;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -37,7 +38,6 @@ import com.google.pubsub.v1.PubsubProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import google.cloud.CommonResources;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -54,6 +54,12 @@ public class ServiceStubSettingsClassComposerTest {
       "src/test/java/com/google/api/generator/gapic/composer/goldens/";
   private static final String TESTFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/testdata/";
+  private static final String GOLDENFILES_NAME_LOGGING =
+      "ServiceStubSettingsClassComposerTestLogging.golden";
+  private static final String GOLDENFILES_NAME_ECHO =
+      "ServiceStubSettingsClassComposerTestEcho.golden";
+  private static final String GOLDENFILES_NAME_PUBLISHER =
+      "ServiceStubSettingsClassComposerTestPublisher.golden";
 
   @Test
   public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
@@ -97,10 +103,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "ServiceStubSettingsClassComposerTestLogging.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(expectedClassString, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_LOGGING);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
@@ -140,10 +144,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "ServiceStubSettingsClassComposerTestPublisher.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(expectedClassString, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_PUBLISHER);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
@@ -171,10 +173,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldeFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "ServiceStubSettingsClassComposerTestEcho.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(expectedClassString, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_ECHO);
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   private static List<Service> parseServices(

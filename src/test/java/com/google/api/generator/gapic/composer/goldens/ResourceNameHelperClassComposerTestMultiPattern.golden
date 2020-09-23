@@ -22,19 +22,21 @@ public class FoobarName implements ResourceName {
           "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}");
   private static final PathTemplate FOOBAR =
       PathTemplate.createWithoutUrlEncoding("foobars/{foobar}");
+  private static final PathTemplate BAR_FOO_FOOBAR =
+      PathTemplate.createWithoutUrlEncoding("bar_foos/{bar_foo}/foobars/{foobar}");
   private volatile Map<String, String> fieldValuesMap;
   private PathTemplate pathTemplate;
   private String fixedValue;
   private final String project;
   private final String foobar;
   private final String variant;
-
-  @Deprecated
-  protected FoobarName() {}
+  private final String barFoo;
 
   private FoobarName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     foobar = Preconditions.checkNotNull(builder.getFoobar());
+    variant = null;
+    barFoo = null;
     pathTemplate = PROJECT_FOOBAR;
   }
 
@@ -42,12 +44,24 @@ public class FoobarName implements ResourceName {
     project = Preconditions.checkNotNull(builder.getProject());
     variant = Preconditions.checkNotNull(builder.getVariant());
     foobar = Preconditions.checkNotNull(builder.getFoobar());
+    barFoo = null;
     pathTemplate = PROJECT_VARIANT_FOOBAR;
   }
 
   private FoobarName(FoobarBuilder builder) {
     foobar = Preconditions.checkNotNull(builder.getFoobar());
+    project = null;
+    variant = null;
+    barFoo = null;
     pathTemplate = FOOBAR;
+  }
+
+  private FoobarName(BarFooFoobarBuilder builder) {
+    barFoo = Preconditions.checkNotNull(builder.getBarFoo());
+    foobar = Preconditions.checkNotNull(builder.getFoobar());
+    project = null;
+    variant = null;
+    pathTemplate = BAR_FOO_FOOBAR;
   }
 
   public String getProject() {
@@ -60,6 +74,10 @@ public class FoobarName implements ResourceName {
 
   public String getVariant() {
     return variant;
+  }
+
+  public String getBarFoo() {
+    return barFoo;
   }
 
   public static Builder newBuilder() {
@@ -79,6 +97,11 @@ public class FoobarName implements ResourceName {
   @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FoobarBuilder newFoobarBuilder() {
     return new FoobarBuilder();
+  }
+
+  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
+  public static BarFooFoobarBuilder newBarFooFoobarBuilder() {
+    return new BarFooFoobarBuilder();
   }
 
   public Builder toBuilder() {
@@ -109,6 +132,11 @@ public class FoobarName implements ResourceName {
     return newFoobarBuilder().setFoobar(foobar).build();
   }
 
+  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
+  public static FoobarName ofBarFooFoobarBuilder(String barFoo, String foobar) {
+    return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build();
+  }
+
   public static String format(String project, String foobar) {
     return newBuilder().setProject(project).setFoobar(foobar).build().toString();
   }
@@ -134,6 +162,11 @@ public class FoobarName implements ResourceName {
     return newFoobarBuilder().setFoobar(foobar).build().toString();
   }
 
+  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
+  public static String formatBarFooFoobarBuilder(String barFoo, String foobar) {
+    return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build().toString();
+  }
+
   public static FoobarName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
@@ -148,6 +181,9 @@ public class FoobarName implements ResourceName {
     } else if (FOOBAR.matches(formattedString)) {
       Map<String, String> matchMap = FOOBAR.match(formattedString);
       return ofFoobarBuilder(matchMap.get("foobar"));
+    } else if (BAR_FOO_FOOBAR.matches(formattedString)) {
+      Map<String, String> matchMap = BAR_FOO_FOOBAR.match(formattedString);
+      return ofBarFooFoobarBuilder(matchMap.get("bar_foo"), matchMap.get("foobar"));
     }
     throw new ValidationException("FoobarName.parse: formattedString not in valid format");
   }
@@ -163,7 +199,7 @@ public class FoobarName implements ResourceName {
   public static List<String> toStringList(List<FoobarName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (FoobarName value : values) {
-      if (Objects.equals(value, null)) {
+      if (Objects.isNull(value)) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -173,26 +209,29 @@ public class FoobarName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_FOOBAR
-        .matches(formattedString)
-        .todoOr(PROJECT_VARIANT_FOOBAR.matches(formattedString))
-        .todoOr(FOOBAR.matches(formattedString));
+    return PROJECT_FOOBAR.matches(formattedString)
+        || PROJECT_VARIANT_FOOBAR.matches(formattedString)
+        || FOOBAR.matches(formattedString)
+        || BAR_FOO_FOOBAR.matches(formattedString);
   }
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.equals(fieldValuesMap, null)) {
+    if (Objects.isNull(fieldValuesMap)) {
       synchronized (this) {
-        if (Objects.equals(fieldValuesMap, null)) {
+        if (Objects.isNull(fieldValuesMap)) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (Objects.notTodoEquals(project, null)) {
+          if (!Objects.isNull(project)) {
             fieldMapBuilder.put("project", project);
           }
-          if (Objects.notTodoEquals(foobar, null)) {
+          if (!Objects.isNull(foobar)) {
             fieldMapBuilder.put("foobar", foobar);
           }
-          if (Objects.notTodoEquals(variant, null)) {
+          if (!Objects.isNull(variant)) {
             fieldMapBuilder.put("variant", variant);
+          }
+          if (!Objects.isNull(barFoo)) {
+            fieldMapBuilder.put("bar_foo", barFoo);
           }
           fieldValuesMap = fieldMapBuilder.build();
         }
@@ -207,9 +246,7 @@ public class FoobarName implements ResourceName {
 
   @Override
   public String toString() {
-    return Objects.equals(fixedValue, null)
-        ? pathTemplate.instantiate(getFieldValuesMap())
-        : fixedValue;
+    return !Objects.isNull(fixedValue) ? fixedValue : pathTemplate.instantiate(getFieldValuesMap());
   }
 
   /** Builder for projects/{project}/foobars/{foobar}. */
@@ -303,6 +340,37 @@ public class FoobarName implements ResourceName {
     }
 
     public FoobarBuilder setFoobar(String foobar) {
+      this.foobar = foobar;
+      return this;
+    }
+
+    public FoobarName build() {
+      return new FoobarName(this);
+    }
+  }
+
+  /** Builder for bar_foos/{bar_foo}/foobars/{foobar}. */
+  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
+  public static class BarFooFoobarBuilder {
+    private String barFoo;
+    private String foobar;
+
+    private BarFooFoobarBuilder() {}
+
+    public String getBarFoo() {
+      return barFoo;
+    }
+
+    public String getFoobar() {
+      return foobar;
+    }
+
+    public BarFooFoobarBuilder setBarFoo(String barFoo) {
+      this.barFoo = barFoo;
+      return this;
+    }
+
+    public BarFooFoobarBuilder setFoobar(String foobar) {
       this.foobar = foobar;
       return this;
     }

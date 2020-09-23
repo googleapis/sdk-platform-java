@@ -90,7 +90,7 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   }
 
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
-    return new EchoStubSettings.Builder(stub.toBuilder()).build();
+    return new EchoSettings.Builder(stub.toBuilder()).build();
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
