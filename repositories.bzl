@@ -107,15 +107,6 @@ def com_google_api_generator_repositories():
         urls = ["https://github.com/grpc/grpc-proto/archive/%s.zip" % _io_grpc_proto_prefix],
         strip_prefix = "grpc-proto-%s" % _io_grpc_proto_prefix,
     )
-    
-    # This hamcrest-core dependency is for running JUnit test manually, before JUnit 4.11 it's wrapped along with JUnit package. 
-    # But now it has to be explicitly added.
-    _maybe(
-        jvm_maven_import_external,
-        name = "hamcrest-core",
-        artifact = "org.hamcrest:hamcrest-core:1.3",
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
 
 def _maybe(repo_rule, name, strip_repo_prefix = "", **kwargs):
     if not name.startswith(strip_repo_prefix):

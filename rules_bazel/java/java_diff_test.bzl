@@ -10,6 +10,7 @@ def _junit_output_impl(ctx):
     {test_runner_path} $@
     cd local_tmp 
     # Zip all files under local_tmp with all nested parent folders except for local_tmp itself.
+    # Zip files because there are cases that one Junit test can produce multiple goldens.
     zip -r ../{output} .
     """.format(
         test_runner_path = test_runner.path,
