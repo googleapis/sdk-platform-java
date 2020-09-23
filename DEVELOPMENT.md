@@ -24,29 +24,26 @@ below are temporary and better ones will be coming.
     ```sh
     cp gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta
     ```
-3.  Add the new microgenerator rules to the protobuf directory's `BUILD.bazel` file
-    as follows:
-    
+
+3.  Add the new microgenerator rules to the protobuf directory's `BUILD.bazel`
+    file as follows:
+
     ```python
     load(
         "@com_google_googleapis_imports//:imports.bzl",
         # Existing rules here.
-        # The left-side name is simply an alias, we can use anything here.
-        java_microgen_gapic_assembly_gradle_pkg = "java_microgenerator_gapic_assembly_gradle_pkg",
-        java_microgen_gapic_library = "java_microgenerator_gapic_library",
-        java_microgen_gapic_test = "java_microgenerator_gapic_test",
+        "java_gapic_assembly_gradle_pkg2",
+        "java_gapic_library2",
     )
 
     # This should either replace the existing monolith target or have a unique name
     # that includes "java_gapic".
-    java_microgen_gapic_library(
+    java_gapic_library2(
         name = "showcase_java_gapic",
         srcs = [":showcase_proto_with_info"],
         # The gapic_yaml file is needed only for APIs that have batching configs.
-        gapic_yaml = "showcase_gapic.yaml",
         grpc_service_config = "showcase_grpc_service_config.json",
         package = "google.showcase.v1beta1",
-        service_yaml = "showcase.yaml",
         test_deps = [
             ":showcase_java_grpc",
         ],
@@ -55,8 +52,9 @@ below are temporary and better ones will be coming.
         ],
     )
 
-    java_microgen_gapic_assembly_gradle_pkg(
-        name = "google-cloud-showcase-v1beta1-java-microgen",
+    java_gapic_assembly_gradle_pkg2(
+        # This name should be unique from the existing target name.
+        name = "google-cloud-showcase-v1beta1-java",
         deps = [
             # This is the new microgen target above.
             ":showcase_java_gapic",
