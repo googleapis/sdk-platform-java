@@ -10,6 +10,21 @@ filegroup(
     srcs = glob(["*_gapic.yaml"]),
 )
 
+genrule(
+    name = "basic_proto_descriptor",
+    srcs = [
+        "basic.proto",
+    ],
+    outs = ["basic_proto.descriptor"],
+    # CircleCI does not have protoc installed.
+    cmd = "$(location @com_google_protobuf//:protoc) " +
+          "--include_source_info --include_imports --descriptor_set_out=$@ $(SRCS)",
+    message = "Generating proto descriptor",
+    tools = [
+        "@com_google_protobuf//:protoc",
+    ],
+)
+
 proto_library(
     name = "showcase_proto",
     srcs = [

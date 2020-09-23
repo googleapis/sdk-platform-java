@@ -15,9 +15,9 @@
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_jar")
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:jvm.bzl", "jvm_maven_import_external")
-load("@com_google_api_codegen_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("@com_google_api_generator_properties//:dependencies.properties.bzl", "PROPERTIES")
 
-def com_google_api_codegen_repositories():
+def com_google_api_generator_repositories():
     # Import dependencies shared between Gradle and Bazel (i.e. maven dependencies)
     for name, artifact in PROPERTIES.items():
         _maybe(
@@ -32,7 +32,6 @@ def com_google_api_codegen_repositories():
     # Import Bazel-only dependencies (Gradle version will import maven artifacts of same
     # version, while Bazel will depend on Bazel workspaces). The versions are shared in the
     # properties file.
-
     _protobuf_version = PROPERTIES["version.com_google_protobuf"]
     _maybe(
         http_archive,
@@ -47,13 +46,6 @@ def com_google_api_codegen_repositories():
         artifact = "com.google.googlejavaformat:google-java-format:jar:all-deps:%s" % PROPERTIES["version.google_java_format"],
         server_urls = ["https://repo.maven.apache.org/maven2/", "http://repo1.maven.org/maven2/"],
         licenses = ["notice", "reciprocal"],
-    )
-
-    _maybe(
-        http_archive,
-        name = "com_google_protoc_java_resource_names_plugin",
-        strip_prefix = "protoc-java-resource-names-plugin-3fb2ec9b778f62646c05a7b960c893464c7791c0",
-        urls = ["https://github.com/googleapis/protoc-java-resource-names-plugin/archive/3fb2ec9b778f62646c05a7b960c893464c7791c0.zip"],
     )
 
     _maybe(
@@ -105,32 +97,6 @@ def com_google_api_codegen_repositories():
         name = "com_google_api_api_common",
         artifact = "com.google.api:api-common:%s" % _api_common_java_version,
         server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
-    _gax_java_version = PROPERTIES["version.com_google_gax_java"]
-
-    # Use the Maven artifact because a full bazel-build requires pulling in many transitive deps.
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_java",
-        artifact = "com.google.api:gax:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
-    _maybe(
-        jvm_maven_import_external,
-        name = "com_google_api_gax_grpc",
-        artifact = "com.google.api:gax-grpc:%s" % _gax_java_version,
-        server_urls = ["https://repo.maven.apache.org/maven2/"],
-    )
-
-    # gRPC.
-    _io_grpc_version = PROPERTIES["version.io_grpc_java"]
-    _maybe(
-        http_archive,
-        name = "io_grpc_java",
-        urls = ["https://github.com/grpc/grpc-java/archive/v%s.zip" % _io_grpc_version],
-        strip_prefix = "grpc-java-%s" % _io_grpc_version,
     )
 
     # grpc-proto doesn't have releases, so we use hashes instead.

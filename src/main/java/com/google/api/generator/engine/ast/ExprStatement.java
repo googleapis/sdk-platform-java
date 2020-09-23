@@ -53,9 +53,11 @@ public abstract class ExprStatement implements Statement {
                 || (expr instanceof ReferenceConstructorExpr)
                 || (expr instanceof AssignmentExpr)
                 || (expr instanceof ThrowExpr)
-                || (expr instanceof ReturnExpr),
+                || (expr instanceof ReturnExpr)
+                || (expr instanceof UnaryOperationExpr
+                    && ((UnaryOperationExpr) expr).isPostfixIncrement()),
             "Expression statements must be either a method invocation, assignment, throw, "
-                + "this/super constructor, or return expression");
+                + "this/super constructor, return, or unary post-fix operation expression");
       }
       return exprStatement;
     }

@@ -15,8 +15,10 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class Service {
@@ -32,7 +34,12 @@ public abstract class Service {
 
   public abstract ImmutableList<Method> methods();
 
-  // TODO(miraleung): Get comments.
+  @Nullable
+  public abstract String description();
+
+  public boolean hasDescription() {
+    return !Strings.isNullOrEmpty(description());
+  }
 
   public static Builder builder() {
     return new AutoValue_Service.Builder().setMethods(ImmutableList.of());
@@ -51,6 +58,8 @@ public abstract class Service {
     public abstract Builder setProtoPakkage(String pakkage);
 
     public abstract Builder setMethods(List<Method> methods);
+
+    public abstract Builder setDescription(String description);
 
     public abstract Service build();
   }

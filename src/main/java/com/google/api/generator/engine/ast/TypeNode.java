@@ -23,7 +23,7 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
-public abstract class TypeNode implements AstNode {
+public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   static final Reference EXCEPTION_REFERENCE = ConcreteReference.withClazz(Exception.class);
   public static final Reference WILDCARD_REFERENCE = ConcreteReference.wildcard();
 
@@ -88,6 +88,31 @@ public abstract class TypeNode implements AstNode {
   @Nullable
   public abstract Reference reference();
 
+  @Override
+  public int compareTo(TypeNode other) {
+    // Ascending order of name.
+    if (isPrimitiveType()) {
+      if (other.isPrimitiveType()) {
+        return typeKind().name().compareTo(other.typeKind().name());
+      }
+      // b is a reference type or null, so a < b.
+      return -1;
+    }
+
+    if (this.equals(TypeNode.NULL)) {
+      // Can't self-compare, so we don't need to check whether the other one is TypeNode.NULL.
+      return other.isPrimitiveType() ? 1 : -1;
+    }
+
+    if (other.isPrimitiveType() || other.equals(TypeNode.NULL)) {
+      return 1;
+    }
+
+    // Both are reference types.
+    // TODO(miraleung): Replace this with a proper reference Comaparator.
+    return reference().fullName().compareTo(other.reference().fullName());
+  }
+
   public static Builder builder() {
     return new AutoValue_TypeNode.Builder().setIsArray(false);
   }
@@ -137,6 +162,24 @@ public abstract class TypeNode implements AstNode {
         && type.typeKind().equals(TypeKind.OBJECT)
         && type.reference() != null
         && !type.equals(TypeNode.NULL);
+  }
+
+  public static boolean isNumericType(TypeNode type) {
+    return type.equals(TypeNode.INT)
+        || type.equals(TypeNode.LONG)
+        || type.equals(TypeNode.DOUBLE)
+        || type.equals(TypeNode.SHORT)
+        || type.equals(TypeNode.FLOAT)
+        || type.equals(TypeNode.CHAR)
+        || type.equals(TypeNode.BYTE);
+  }
+
+  public static boolean isFloatingPointType(TypeNode type) {
+    return type.equals(TypeNode.DOUBLE) || type.equals(TypeNode.FLOAT);
+  }
+
+  public static boolean isBoxedType(TypeNode type) {
+    return isReferenceType(type) && BOXED_TYPE_MAP.containsValue(type);
   }
 
   public boolean isPrimitiveType() {

@@ -155,7 +155,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
   private static MethodDefinition createGetRequestsMethod() {
     return MethodDefinition.builder()
-        .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(requestsVarExpr.type())
         .setName("getRequests")
@@ -177,7 +176,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
             .setExprReferenceExpr(responsesVarExpr)
             .build();
     return MethodDefinition.builder()
-        .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("addResponse")
@@ -220,7 +218,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
                     .build())
             .build();
     return MethodDefinition.builder()
-        .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("setResponses")
@@ -243,7 +240,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
             .setExprReferenceExpr(responsesVarExpr)
             .build();
     return MethodDefinition.builder()
-        .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("addException")
@@ -254,7 +250,6 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
   private static MethodDefinition createResetMethod() {
     return MethodDefinition.builder()
-        .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("reset")

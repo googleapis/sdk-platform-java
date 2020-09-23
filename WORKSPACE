@@ -1,4 +1,4 @@
-workspace(name = "com_google_api_codegen")
+workspace(name = "com_google_api_generator")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
@@ -14,36 +14,59 @@ http_archive(
     ],
 )
 
-load("//:repository_rules.bzl", "com_google_api_codegen_properties")
+load("//:repository_rules.bzl", "com_google_api_generator_properties")
 
-com_google_api_codegen_properties(
-    name = "com_google_api_codegen_properties",
+com_google_api_generator_properties(
+    name = "com_google_api_generator_properties",
     file = "//:dependencies.properties",
 )
 
-load("//:repositories.bzl", "com_google_api_codegen_repositories")
+load("@com_google_api_generator_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("//:repositories.bzl", "com_google_api_generator_repositories")
 
-com_google_api_codegen_repositories()
+com_google_api_generator_repositories()
 
 # protobuf
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
 
-# gRPC.
-load("@io_grpc_java//:repositories.bzl", "grpc_java_repositories")
-
-grpc_java_repositories()
-
-# Resource names plugin.
-load(
-    "@com_google_protoc_java_resource_names_plugin//:repositories.bzl",
-    "com_google_protoc_java_resource_names_plugin_repositories",
+# Java dependencies.
+# Import the monolith so we can transitively use its gapic rules for googleapis.
+http_archive(
+    name = "com_google_api_codegen",
+    strip_prefix = "gapic-generator-2.4.6",
+    urls = ["https://github.com/googleapis/gapic-generator/archive/v2.4.6.zip"],
 )
+
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 switched_rules_by_language(
     name = "com_google_googleapis_imports",
+    gapic = True,
+    grpc = True,
+    java = True,
 )
 
-com_google_protoc_java_resource_names_plugin_repositories(omit_com_google_protobuf = True)
+_gax_java_version = PROPERTIES["version.com_google_gax_java"]
+
+http_archive(
+    name = "com_google_api_gax_java",
+    strip_prefix = "gax-java-%s" % _gax_java_version,
+    urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
+)
+
+load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
+
+com_google_api_gax_java_properties(
+    name = "com_google_api_gax_java_properties",
+    file = "@com_google_api_gax_java//:dependencies.properties",
+)
+
+load("@com_google_api_gax_java//:repositories.bzl", "com_google_api_gax_java_repositories")
+
+com_google_api_gax_java_repositories()
+
+load("@io_grpc_grpc_java//:repositories.bzl", "grpc_java_repositories")
+
+grpc_java_repositories()

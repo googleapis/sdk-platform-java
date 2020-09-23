@@ -230,8 +230,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("Builder")
-                .setEnclosingClassName(String.format("%sStubSettings", service.name()))
-                .setPakkage(String.format("%s.stub", service.pakkage()))
+                .setEnclosingClassName(String.format("%sSettings", service.name()))
+                .setPakkage(service.pakkage())
                 .build());
     Expr returnMethodExpr =
         NewObjectExpr.builder()

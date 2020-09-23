@@ -711,7 +711,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
     // Special handling for pagination methods.
     if (callableVarExprType.reference().generics().size() == 2
-        && callableVarExprType.reference().generics().get(0).name().endsWith("PagedResponse")) {
+        && callableVarExprType.reference().generics().get(1).name().endsWith("PagedResponse")) {
       streamName = "Paged";
     } else {
       if (typeName.startsWith("Client")) {

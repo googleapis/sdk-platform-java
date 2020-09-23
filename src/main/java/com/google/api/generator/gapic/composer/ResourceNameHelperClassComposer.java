@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
+import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -39,6 +40,7 @@ import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
@@ -165,11 +167,15 @@ public class ResourceNameHelperClassComposer {
       List<List<String>> tokenHierarchies) {
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     return tokenSet.stream()
-        .map(
-            t ->
-                VariableExpr.withVariable(
-                    Variable.builder().setName(t).setType(TypeNode.STRING).build()))
-        .collect(Collectors.toMap(v -> v.variable().identifier().name(), v -> v));
+        .collect(
+            Collectors.toMap(
+                t -> t,
+                t ->
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName(JavaStyle.toLowerCamelCase(t))
+                            .setType(TypeNode.STRING)
+                            .build())));
   }
 
   private static List<Statement> createClassStatements(
@@ -280,19 +286,6 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    if (hasVariants) {
-      MethodDefinition deprecatedCtor =
-          MethodDefinition.constructorBuilder()
-              .setScope(ScopeNode.PROTECTED)
-              .setAnnotations(
-                  Arrays.asList(
-                      AnnotationNode.withType(
-                          TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
-              .setReturnType(thisClassType)
-              .build();
-      javaMethods.add(deprecatedCtor);
-    }
-
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       List<Expr> bodyExprs = new ArrayList<>();
@@ -317,6 +310,18 @@ public class ResourceNameHelperClassComposer {
             AssignmentExpr.builder()
                 .setVariableExpr(patternTokenVarExprs.get(token))
                 .setValueExpr(checkNotNullExpr)
+                .build());
+      }
+      // Initialize the rest to null.
+      ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+      for (String token : getTokenSet(tokenHierarchies)) {
+        if (tokens.contains(token)) {
+          continue;
+        }
+        bodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(patternTokenVarExprs.get(token))
+                .setValueExpr(nullExpr)
                 .build());
       }
 
@@ -475,6 +480,7 @@ public class ResourceNameHelperClassComposer {
       MethodInvocationExpr returnExpr =
           MethodInvocationExpr.builder().setMethodName(builderMethodName).build();
       for (String token : tokens) {
+        String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
         returnExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(returnExpr)
@@ -483,7 +489,10 @@ public class ResourceNameHelperClassComposer {
                 .setArguments(
                     Arrays.asList(
                         VariableExpr.withVariable(
-                            Variable.builder().setName(token).setType(TypeNode.STRING).build())))
+                            Variable.builder()
+                                .setName(javaTokenVarName)
+                                .setType(TypeNode.STRING)
+                                .build())))
                 .build();
       }
       returnExpr =
@@ -833,9 +842,8 @@ public class ResourceNameHelperClassComposer {
     Expr isNullCheck =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(
-                Arrays.asList(valueVarExpr, ValueExpr.withValue(NullObjectValue.create())))
+            .setMethodName("isNull")
+            .setArguments(valueVarExpr)
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     Statement listAddEmptyStringStatement =
@@ -888,7 +896,7 @@ public class ResourceNameHelperClassComposer {
     VariableExpr formattedStringVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("formattedString").setType(TypeNode.STRING).build());
-    MethodInvocationExpr returnOrExpr =
+    Expr returnOrExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(templateFinalVarExprs.get(0))
             .setMethodName("matches")
@@ -896,20 +904,15 @@ public class ResourceNameHelperClassComposer {
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     for (int i = 1; i < templateFinalVarExprs.size(); i++) {
-      // TODO(miraleung): Use actual or operations here.
       returnOrExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(returnOrExpr)
-              .setMethodName("todoOr")
-              .setArguments(
-                  Arrays.asList(
-                      MethodInvocationExpr.builder()
-                          .setExprReferenceExpr(templateFinalVarExprs.get(i))
-                          .setMethodName("matches")
-                          .setArguments(Arrays.asList(formattedStringVarExpr))
-                          .build()))
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
+          LogicalOperationExpr.logicalOrWithExprs(
+              returnOrExpr,
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(templateFinalVarExprs.get(i))
+                  .setMethodName("matches")
+                  .setArguments(Arrays.asList(formattedStringVarExpr))
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build());
     }
 
     return MethodDefinition.builder()
@@ -966,7 +969,6 @@ public class ResourceNameHelperClassComposer {
 
     // Innermost if-blocks.
     List<Statement> tokenIfStatements = new ArrayList<>();
-    ValueExpr nullValExpr = ValueExpr.withValue(NullObjectValue.create());
     for (String token : getTokenSet(tokenHierarchies)) {
       VariableExpr tokenVarExpr = patternTokenVarExprs.get(token);
       Preconditions.checkNotNull(
@@ -979,14 +981,14 @@ public class ResourceNameHelperClassComposer {
               .setMethodName("put")
               .setArguments(ValueExpr.withValue(tokenStrVal), tokenVarExpr)
               .build();
-      // TODO(miraleung): Use neq operator here.
-      MethodInvocationExpr notNullCheckExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-              .setMethodName("notTodoEquals")
-              .setArguments(tokenVarExpr, nullValExpr)
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
+      Expr notNullCheckExpr =
+          UnaryOperationExpr.logicalNotWithExpr(
+              MethodInvocationExpr.builder()
+                  .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                  .setMethodName("isNull")
+                  .setArguments(tokenVarExpr)
+                  .setReturnType(TypeNode.BOOLEAN)
+                  .build());
       tokenIfStatements.add(
           IfStatement.builder()
               .setConditionExpr(notNullCheckExpr)
@@ -1017,8 +1019,8 @@ public class ResourceNameHelperClassComposer {
     MethodInvocationExpr fieldValuesMapNullCheckExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(fieldValuesMapVarExpr, nullValExpr)
+            .setMethodName("isNull")
+            .setArguments(fieldValuesMapVarExpr)
             .setReturnType(TypeNode.BOOLEAN)
             .build();
     IfStatement fieldValuesMapIfStatement =
@@ -1082,13 +1084,19 @@ public class ResourceNameHelperClassComposer {
     if (!hasVariants) {
       String token = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList()).get(0);
       String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
+      Preconditions.checkNotNull(
+          patternTokenVarExprs.get(token),
+          String.format(
+              "No expression found for token %s amongst values %s",
+              javaTokenVarName, patternTokenVarExprs.toString()));
+
       MethodInvocationExpr returnInstantiateExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(templateFinalVarExprs.get(0))
               .setMethodName("instantiate")
               .setArguments(
                   ValueExpr.withValue(StringObjectValue.withValue(token)),
-                  patternTokenVarExprs.get(javaTokenVarName))
+                  patternTokenVarExprs.get(token))
               .setReturnType(TypeNode.STRING)
               .build();
       return MethodDefinition.builder()
@@ -1101,15 +1109,15 @@ public class ResourceNameHelperClassComposer {
     }
 
     VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
-    // TODO(miraleung): Use neq operator, then swap the ternary exprs and do the following:
     // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
-    MethodInvocationExpr fixedValueNullCheck =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("equals")
-            .setArguments(fixedValueVarExpr, ValueExpr.withValue(NullObjectValue.create()))
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
+    Expr fixedValueNullCheck =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                .setMethodName("isNull")
+                .setArguments(fixedValueVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
 
     MethodInvocationExpr instantiateExpr =
         MethodInvocationExpr.builder()
@@ -1122,9 +1130,8 @@ public class ResourceNameHelperClassComposer {
     TernaryExpr returnExpr =
         TernaryExpr.builder()
             .setConditionExpr(fixedValueNullCheck)
-            // TODO(miraleung): Swap these when using the neq operator.
-            .setThenExpr(instantiateExpr)
-            .setElseExpr(fixedValueVarExpr)
+            .setElseExpr(instantiateExpr)
+            .setThenExpr(fixedValueVarExpr)
             .build();
 
     return MethodDefinition.builder()

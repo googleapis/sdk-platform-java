@@ -53,6 +53,14 @@ public interface AstNodeVisitor {
 
   public void visit(ArithmeticOperationExpr arithmeticOperationExpr);
 
+  public void visit(UnaryOperationExpr unaryOperationExpr);
+
+  public void visit(RelationalOperationExpr relationalOperationExpr);
+
+  public void visit(LogicalOperationExpr logicalOperationExpr);
+
+  public void visit(AssignmentOperationExpr assignmentOperationExpr);
+
   /** =============================== COMMENT =============================== */
   public void visit(LineComment lineComment);
 

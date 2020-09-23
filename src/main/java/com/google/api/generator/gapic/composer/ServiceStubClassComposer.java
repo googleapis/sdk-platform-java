@@ -48,6 +48,7 @@ import javax.annotation.Generated;
 public class ServiceStubClassComposer implements ClassComposer {
   private static final ServiceStubClassComposer INSTANCE = new ServiceStubClassComposer();
   private static final String DOT = ".";
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private ServiceStubClassComposer() {}
 
@@ -110,6 +111,9 @@ public class ServiceStubClassComposer implements ClassComposer {
       if (method.hasLro()) {
         javaMethods.add(createOperationCallableGetter(method, types));
       }
+      if (method.isPaged()) {
+        javaMethods.add(createPagedCallableGetter(method, types));
+      }
       javaMethods.add(createCallableGetter(method, types));
     }
     return javaMethods;
@@ -117,15 +121,20 @@ public class ServiceStubClassComposer implements ClassComposer {
 
   private static MethodDefinition createOperationCallableGetter(
       Method method, Map<String, TypeNode> types) {
-    return createCallableGetterHelper(method, types, true);
+    return createCallableGetterHelper(method, types, true, false);
+  }
+
+  private static MethodDefinition createPagedCallableGetter(
+      Method method, Map<String, TypeNode> types) {
+    return createCallableGetterHelper(method, types, false, true);
   }
 
   private static MethodDefinition createCallableGetter(Method method, Map<String, TypeNode> types) {
-    return createCallableGetterHelper(method, types, false);
+    return createCallableGetterHelper(method, types, false, false);
   }
 
   private static MethodDefinition createCallableGetterHelper(
-      Method method, Map<String, TypeNode> types, boolean isLroCallable) {
+      Method method, Map<String, TypeNode> types, boolean isLroCallable, boolean isPaged) {
     TypeNode returnType;
     switch (method.stream()) {
       case CLIENT:
@@ -146,12 +155,16 @@ public class ServiceStubClassComposer implements ClassComposer {
     String methodName =
         String.format(
             "%s%sCallable",
-            JavaStyle.toLowerCamelCase(method.name()), (isLroCallable ? "Operation" : ""));
+            JavaStyle.toLowerCamelCase(method.name()),
+            (isLroCallable ? "Operation" : isPaged ? "Paged" : ""));
     List<Reference> genericRefs = new ArrayList<>();
     genericRefs.add(method.inputType().reference());
-    if (method.hasLro()) {
+    if (method.hasLro() && isLroCallable) {
       genericRefs.add(method.lro().responseType().reference());
       genericRefs.add(method.lro().metadataType().reference());
+    } else if (isPaged) {
+      genericRefs.add(
+          types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name())).reference());
     } else {
       genericRefs.add(method.outputType().reference());
     }
@@ -237,6 +250,22 @@ public class ServiceStubClassComposer implements ClassComposer {
                 .setName("OperationsStub")
                 .setPakkage("com.google.longrunning.stub")
                 .build()));
+    // Pagination types.
+    types.putAll(
+        service.methods().stream()
+            .filter(m -> m.isPaged())
+            .collect(
+                Collectors.toMap(
+                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
+                    m ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+                                .setPakkage(service.pakkage())
+                                .setEnclosingClassName(getClientClassName(service.name()))
+                                .setIsStaticImport(true)
+                                .build()))));
+
     return types;
   }
 
@@ -248,5 +277,9 @@ public class ServiceStubClassComposer implements ClassComposer {
                 .setType(types.get("UnsupportedOperationException"))
                 .setMessageExpr(String.format("Not implemented: %s()", methodName))
                 .build()));
+  }
+
+  private static String getClientClassName(String serviceName) {
+    return String.format("%sClient", serviceName);
   }
 }
