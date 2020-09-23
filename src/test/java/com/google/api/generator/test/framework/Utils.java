@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class SaveCodegen {
+public class Utils {
   /**
    * Save the generated code from JUnit test to a file for updating goldens. These files will be
    * saved as a zip file, then unzipped to overwrite goldens files. The relative path
@@ -53,6 +53,14 @@ public class SaveCodegen {
 
   private static String getTestoutGoldenDir(Class clazz) {
     return clazz.getPackage().getName().replace(".", "/") + "/goldens/";
+  }
+
+  public static String getGoldenDir(Class clazz) {
+    return "src/test/java/" + clazz.getPackage().getName().replace(".", "/") + "/goldens/";
+  }
+
+  public static String getClassName(Class clazz) {
+    return clazz.getSimpleName();
   }
 
   public static class SaveCodegenToFileException extends RuntimeException {
