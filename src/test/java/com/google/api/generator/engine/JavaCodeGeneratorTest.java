@@ -14,8 +14,6 @@
 
 package com.google.api.generator.engine;
 
-import static junit.framework.Assert.assertEquals;
-
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -51,9 +49,9 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.test.framework.Assert;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -66,6 +64,7 @@ import org.junit.Test;
 public class JavaCodeGeneratorTest {
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/engine/goldens/";
+  private static final String GOLDENFILES_NAME = "JavaCodeGeneratorTest.golden";
   // Create shared VaporReferences.
   private static final VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
   private static final VaporReference bookKindRef =
@@ -101,7 +100,7 @@ public class JavaCodeGeneratorTest {
   private static final Variable bookKindVar = createVarFromVaporRef(bookKindRef, "bookKind");
 
   @Test
-  public void validJavaClass() throws IOException {
+  public void validJavaClass() {
     // Create outer class variableDecls.
     // [code] private static final String serviceName = "LibraryServiceStub";
     VariableExpr serviceName = createServiceNameVarExpr();
@@ -174,9 +173,8 @@ public class JavaCodeGeneratorTest {
             .build();
     JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     libraryServiceStubClass.accept(javaWriterVisitor);
-    Path goldeFilePath = Paths.get(GOLDENFILES_DIRECTORY, "JavaCodeGeneratorTest.golden");
-    String expectedClassString = new String(Files.readAllBytes(goldeFilePath));
-    assertEquals(javaWriterVisitor.write(), expectedClassString);
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Assert.assertCodeEquals(goldenFilePath, javaWriterVisitor.write());
   }
 
   // Private helpers.
