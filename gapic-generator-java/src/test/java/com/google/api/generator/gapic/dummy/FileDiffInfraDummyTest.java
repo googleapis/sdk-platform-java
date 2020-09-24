@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -34,8 +35,11 @@ public class FileDiffInfraDummyTest {
   // created.
   //
   // TODO(xiaozhenliu): remove this test class once the file-diff infra is in place and well-tested.
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/dummy/goldens/";
+  private final String GOLDENFILES_DIRECTORY = Utils.getGoldenDir(this.getClass());
+  private final String GOLDENFILES_SIMPLE_CLASS =
+      Utils.getClassName(this.getClass()) + "SimpleClass.golden";
+  private final String GOLDENFILES_CLASS_WITH_HEADER =
+      Utils.getClassName(this.getClass()) + "ClassWithHeader.golden";
 
   @Test
   public void simpleClass() {
@@ -51,8 +55,8 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Path goldenFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestSimpleClass.golden");
+    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_SIMPLE_CLASS, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SIMPLE_CLASS);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -69,8 +73,9 @@ public class FileDiffInfraDummyTest {
             .build();
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     classDef.accept(visitor);
-    Path goldenFilePath =
-        Paths.get(GOLDENFILES_DIRECTORY, "FileDiffInfraDummyTestClassWithHeader.golden");
+    // Save the generated code to a file for updating goldens if needed.
+    Utils.saveCodegenToFile(this.getClass(), GOLDENFILES_CLASS_WITH_HEADER, visitor.write());
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_CLASS_WITH_HEADER);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
