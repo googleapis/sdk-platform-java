@@ -644,7 +644,7 @@ public class AssignmentOperationExprTest {
         () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExprExpr, rhsExpr));
   }
 
-  /** ===================== XOR Assignment Operators: boolean type =========================== */
+  /** =================== XOR Assignment Operators: boolean type ======================= */
   @Test
   public void validXORAssignmentOperationExpr_booleanType() {
     // No need swap case.
@@ -731,7 +731,7 @@ public class AssignmentOperationExprTest {
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));
   }
 
-  /** ========= XOR Assignment Operators: LHS is non-floating-point numeric types ============ */
+  /** ======= XOR Assignment Operators: LHS is non-floating-point numeric types ========= */
   @Test
   public void validXORAssignmentOperationExpr_integerWithCharType() {
     // No need swap case.
@@ -996,7 +996,7 @@ public class AssignmentOperationExprTest {
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));
   }
 
-  /** ============= XOR Assignment Operators: LHS is floating-point type ================= */
+  /** =========== XOR Assignment Operators: LHS is floating-point type =============== */
   @Test
   public void invalidXORAssignmentOperationExpr_floatWithIntegerBoxedType() {
     // Swap case in "invalidXORAssignmentOperationExpr_integerBoxedTypeWithFloatType".
@@ -1116,7 +1116,8 @@ public class AssignmentOperationExprTest {
         IllegalStateException.class,
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));
   }
-  /** ========= XOR Assignment Operators: LHS is non integer numeric boxed type =============== */
+
+  /** ======= XOR Assignment Operators: LHS is non integer numeric boxed type =========== */
   @Test
   public void invalidXORAssignmentOperationExpr_longBoxedTypeWithIntegerBoxedType() {
     // Swap case in "validXORAssignmentOperationExpr_integerBoxedTypeWithLongBoxedType".
