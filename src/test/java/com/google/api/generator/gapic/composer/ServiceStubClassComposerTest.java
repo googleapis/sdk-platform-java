@@ -36,10 +36,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceStubClassComposerTest {
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
-  private static final String GOLDENFILES_NAME = "ServiceStubClassComposerTest.golden";
-
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -63,7 +59,7 @@ public class ServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

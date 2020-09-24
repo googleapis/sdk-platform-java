@@ -50,16 +50,6 @@ import java.util.Set;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
-  private static final String TESTFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/testdata/";
-  private static final String GOLDENFILES_NAME_LOGGING =
-      "ServiceStubSettingsClassComposerTestLogging.golden";
-  private static final String GOLDENFILES_NAME_ECHO =
-      "ServiceStubSettingsClassComposerTestEcho.golden";
-  private static final String GOLDENFILES_NAME_PUBLISHER =
-      "ServiceStubSettingsClassComposerTestPublisher.golden";
 
   @Test
   public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
@@ -85,13 +75,13 @@ public class ServiceStubSettingsClassComposerTest {
         parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
 
     String filename = "logging_gapic.yaml";
-    Path path = Paths.get(TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "logging_grpc_service_config.json";
-    Path jsonPath = Paths.get(TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
     Optional<GapicServiceConfig> configOpt =
         ServiceConfigParser.parse(jsonPath.toString(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
@@ -103,7 +93,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_LOGGING);
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "LoggingServiceV2StubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -125,13 +116,13 @@ public class ServiceStubSettingsClassComposerTest {
         parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
 
     String filename = "pubsub_gapic.yaml";
-    Path path = Paths.get(TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "pubsub_grpc_service_config.json";
-    Path jsonPath = Paths.get(TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
     Optional<GapicServiceConfig> configOpt =
         ServiceConfigParser.parse(jsonPath.toString(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
@@ -144,7 +135,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_PUBLISHER);
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "PublisherStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -160,7 +152,7 @@ public class ServiceStubSettingsClassComposerTest {
         parseServices(echoFileDescriptor, echoServiceDescriptor, messageTypes, resourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
-    Path jsonPath = Paths.get(TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
     Optional<GapicServiceConfig> configOpt =
         ServiceConfigParser.parse(jsonPath.toString(), Optional.empty());
     assertTrue(configOpt.isPresent());
@@ -173,7 +165,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME_ECHO);
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 

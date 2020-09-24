@@ -37,7 +37,7 @@ java_proto_library(
 
 [java_test(
     name = test_name,
-    srcs = ["{0}.java".format(test_name)],
+    srcs = glob(["*.java"]),
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",

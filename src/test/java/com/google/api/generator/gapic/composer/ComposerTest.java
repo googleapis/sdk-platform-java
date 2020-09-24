@@ -27,10 +27,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class ComposerTest {
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
-  private static final String GOLDENFILES_NAME = "ComposerTest.golden";
-
   @Test
   public void gapicClass_addApacheLicense() {
     ClassDefinition classDef =
@@ -43,7 +39,7 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "ComposerTest.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

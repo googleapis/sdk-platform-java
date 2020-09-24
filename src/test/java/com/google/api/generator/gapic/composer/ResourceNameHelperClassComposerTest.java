@@ -41,13 +41,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResourceNameHelperClassComposerTest {
-  private static final String GOLDENFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
-  private static final String GOLDENFILES_MULTI_PATTERN =
-      "ResourceNameHelperClassComposerTestMultiPattern.golden";
-  private static final String GOLDENFILES_SINGLE_PATTERN =
-      "ResourceNameHelperClassComposerTestOnePattern.golden";
-
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -186,7 +179,7 @@ public class ResourceNameHelperClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_MULTI_PATTERN);
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "FoobarName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -211,7 +204,7 @@ public class ResourceNameHelperClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_SINGLE_PATTERN);
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
   // TODO(miraleung): Add more tests for a single pattern.
