@@ -24,6 +24,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -179,6 +180,7 @@ public class ResourceNameHelperClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "FoobarName.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "FoobarName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
@@ -204,6 +206,7 @@ public class ResourceNameHelperClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "SessionName.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }

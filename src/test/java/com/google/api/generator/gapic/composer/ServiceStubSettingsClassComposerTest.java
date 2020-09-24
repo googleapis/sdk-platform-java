@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -52,7 +53,7 @@ import org.junit.Test;
 public class ServiceStubSettingsClassComposerTest {
 
   @Test
-  public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
+  public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() {
     FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
     assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
@@ -93,6 +94,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(
+        this.getClass(), "LoggingServiceV2StubSettings.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "LoggingServiceV2StubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
@@ -135,13 +138,14 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "PublisherStubSettings.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "PublisherStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
   @Test
-  public void generateServiceStubSettingsClasses_basic() throws IOException {
+  public void generateServiceStubSettingsClasses_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertEquals(echoServiceDescriptor.getName(), "Echo");
@@ -165,6 +169,7 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "EchoStubSettings.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
