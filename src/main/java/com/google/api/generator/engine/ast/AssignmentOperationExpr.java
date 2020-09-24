@@ -95,7 +95,6 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
       }
 
       // Check type for XOR and assignment operator (^=).
-      // TODO(summerji): Complete the type-checking for ^= and unit test.
       if (operator.equals(OperatorKind.ASSIGNMENT_XOR)) {
         Preconditions.checkState(isValidXORAssignmentType(lhsType, rhsType), errorMsg);
       }
@@ -130,9 +129,26 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
       return false;
     }
 
-    // TODO(summerji): Complete the type-checking for ^= and unit test.
+    // isValidXORAssignmentType validates the types for LHS variable expr and RHS expr.
+    // ^= can be applied on boolean and non-floating-point numeric type.
     private boolean isValidXORAssignmentType(TypeNode variableType, TypeNode valueType) {
-      return true;
+      // LHS is boolean or its boxed type, RHS should be boolean or its boxed type.
+      if (variableType.equals(TypeNode.BOOLEAN)) {
+        return valueType.equals(variableType);
+      }
+      // LHS is non-floating-point numeric types, RHS should be non-float-point numeric types or
+      // their boxed types.
+      if (TypeNode.isNumericType(variableType)
+          && !TypeNode.isBoxedType(variableType)
+          && !TypeNode.isFloatingPointType(variableType)) {
+        return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
+      }
+      // LHS is integer boxed type, RHS should be non-floating-point numeric types or their boxed
+      // types.
+      if (variableType.equals(TypeNode.INT)) {
+        return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
+      }
+      return false;
     }
   }
 }
