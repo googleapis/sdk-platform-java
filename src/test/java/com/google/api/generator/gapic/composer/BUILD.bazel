@@ -18,7 +18,7 @@ TESTS = [
 
 filegroup(
     name = "composer_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
+    srcs = glob(["*.java"]),
 )
 
 java_proto_library(

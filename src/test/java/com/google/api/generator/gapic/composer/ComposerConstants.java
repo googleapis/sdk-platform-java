@@ -15,7 +15,8 @@
 package com.google.api.generator.gapic.composer;
 
 public class ComposerConstants {
-  public static final String GOLDENFILES_DIRECTORY = "src/test/java/com/google/api/generator/gapic/composer/goldens/";
-    public static final String TESTFILES_DIRECTORY =
+  public static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/gapic/composer/goldens/";
+  public static final String TESTFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/testdata/";
 }
