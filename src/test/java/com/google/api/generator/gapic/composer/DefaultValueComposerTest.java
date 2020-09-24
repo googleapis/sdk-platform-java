@@ -21,9 +21,11 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Collections;
 import java.util.Map;
@@ -207,5 +209,72 @@ public class DefaultValueComposerTest {
     assertThrows(
         IllegalStateException.class,
         () -> DefaultValueComposer.createDefaultValue(resourceName, Collections.emptyList()));
+  }
+
+  @Test
+  public void createSimpleMessage_basicPrimitivesOnly() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(echoFileDescriptor);
+    Message message = messageTypes.get("Foobar");
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            message, typeStringsToResourceNames, messageTypes);
+    expr.accept(writerVisitor);
+    assertEquals(
+        "Foobar.newBuilder().setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\")"
+            + ".toString()).setInfo(\"info3237038\").build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void createSimpleMessage_containsMessagesEnumsAndResourceName() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(echoFileDescriptor);
+    Message message = messageTypes.get("EchoRequest");
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            message, typeStringsToResourceNames, messageTypes);
+    expr.accept(writerVisitor);
+    assertEquals(
+        "EchoRequest.newBuilder().setName("
+            + "FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
+            + ".setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
+            + ".setFoobar(Foobar.newBuilder().build()).build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void createSimpleMessage_containsRepeatedField() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(echoFileDescriptor);
+    Message message = messageTypes.get("PagedExpandResponse");
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            message, typeStringsToResourceNames, messageTypes);
+    expr.accept(writerVisitor);
+    assertEquals(
+        "PagedExpandResponse.newBuilder().addAllResponses(new"
+            + " ArrayList<>()).setNextPageToken(\"next_page_token-1530815211\").build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void createSimpleMessage_onlyOneofs() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(echoFileDescriptor);
+    Message message = messageTypes.get("WaitRequest");
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            message, typeStringsToResourceNames, messageTypes);
+    expr.accept(writerVisitor);
+    assertEquals("WaitRequest.newBuilder().build()", writerVisitor.write());
   }
 }
