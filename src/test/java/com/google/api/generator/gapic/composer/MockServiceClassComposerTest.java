@@ -36,7 +36,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class MockServiceClassComposerTest {
-
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 

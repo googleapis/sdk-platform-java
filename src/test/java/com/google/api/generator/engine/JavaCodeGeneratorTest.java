@@ -64,7 +64,6 @@ import org.junit.Test;
 public class JavaCodeGeneratorTest {
   private static final String GOLDENFILES_DIRECTORY =
       "src/test/java/com/google/api/generator/engine/goldens/";
-  private static final String GOLDENFILES_NAME = "JavaCodeGeneratorTest.golden";
   // Create shared VaporReferences.
   private static final VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
   private static final VaporReference bookKindRef =
@@ -173,7 +172,7 @@ public class JavaCodeGeneratorTest {
             .build();
     JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     libraryServiceStubClass.accept(javaWriterVisitor);
-    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, GOLDENFILES_NAME);
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, "JavaCodeGeneratorTest.golden");
     Assert.assertCodeEquals(goldenFilePath, javaWriterVisitor.write());
   }
 
