@@ -21,7 +21,7 @@ import com.google.common.base.Preconditions;
 public abstract class Variable {
   public abstract IdentifierNode identifier();
 
-  public abstract TypeNode type();
+  public abstract com.google.api.generator.engine.ast.TypeNode type();
 
   abstract String name();
 

@@ -96,7 +96,7 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
 
       // Check type for XOR and assignment operator (^=).
       if (operator.equals(OperatorKind.ASSIGNMENT_XOR)) {
-        Preconditions.checkState(isValidXORAssignmentType(lhsType, rhsType), errorMsg);
+        Preconditions.checkState(isValidXorAssignmentType(lhsType, rhsType), errorMsg);
       }
       return assignmentOperationExpr;
     }
@@ -129,9 +129,9 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
       return false;
     }
 
-    // isValidXORAssignmentType validates the types for LHS variable expr and RHS expr.
+    // isValidXorAssignmentType validates the types for LHS variable expr and RHS expr.
     // ^= can be applied on boolean and non-floating-point numeric type.
-    private boolean isValidXORAssignmentType(TypeNode variableType, TypeNode valueType) {
+    private boolean isValidXorAssignmentType(TypeNode variableType, TypeNode valueType) {
       // LHS is boolean or its boxed type, RHS should be boolean or its boxed type.
       if (variableType.equals(TypeNode.BOOLEAN)) {
         return valueType.equals(variableType);
