@@ -442,7 +442,7 @@ public class ServiceClientTestClassComposer {
           javaMethods.add(
               createRpcExceptionTestMethod(
                   method,
-                  method.methodSignatures().get(i),
+                  sortedMethodSignatures.get(i),
                   i,
                   service.name(),
                   classMemberVarExprs,
