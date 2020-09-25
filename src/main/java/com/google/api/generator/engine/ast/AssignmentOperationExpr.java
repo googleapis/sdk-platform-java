@@ -136,19 +136,18 @@ public abstract class AssignmentOperationExpr implements OperationExpr {
       if (variableType.equals(TypeNode.BOOLEAN)) {
         return valueType.equals(variableType);
       }
-      // LHS is non-floating-point numeric types, RHS should be non-float-point numeric types or
-      // their boxed types.
-      if (TypeNode.isNumericType(variableType)
-          && !TypeNode.isBoxedType(variableType)
-          && !TypeNode.isFloatingPointType(variableType)) {
-        return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
-      }
       // LHS is integer boxed type, RHS should be non-floating-point numeric types or their boxed
       // types.
       if (variableType.equals(TypeNode.INT)) {
         return TypeNode.isNumericType(valueType) && !TypeNode.isFloatingPointType(valueType);
       }
-      return false;
+      // LHS is non-floating-point numeric types, RHS should be non-float-point numeric types or
+      // their boxed types.
+      return TypeNode.isNumericType(variableType)
+          && TypeNode.isNumericType(valueType)
+          && !TypeNode.isFloatingPointType(variableType)
+          && !TypeNode.isFloatingPointType(valueType)
+          && !TypeNode.isBoxedType(variableType);
     }
   }
 }

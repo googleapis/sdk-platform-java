@@ -682,8 +682,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_booleanWithNumericTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_integerWithBooleanTypes".
+  public void invalidXorAssignmentOperationExpr_booleanWithNumericTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_integerWithBooleanTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
@@ -692,8 +692,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_booleanWithIntegerBoxedTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_integerBoxedTypeWithBooleanTypes".
+  public void invalidXorAssignmentOperationExpr_booleanWithIntegerBoxedTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_integerBoxedTypeWithBooleanTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     assertThrows(
@@ -702,8 +702,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_booleanWithReferencedTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_referencedTypeWithBooleanTypes".
+  public void invalidXorAssignmentOperationExpr_booleanWithReferencedTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_referencedTypeWithBooleanTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -712,7 +712,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_booleanWithNullTypes() {
+  public void invalidXorAssignmentOperationExpr_booleanWithNullTypes() {
     // No valid swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -722,7 +722,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_booleanWithNewObjectTypes() {
+  public void invalidXorAssignmentOperationExpr_booleanWithNewObjectTypes() {
     // No valid swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -841,8 +841,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerWithDoubleTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_doubleWithIntegerTypes".
+  public void invalidXorAssignmentOperationExpr_integerWithDoubleTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_doubleWithIntegerTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE, "y");
     assertThrows(
@@ -851,8 +851,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerWithDoubleBoxedTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_doubleBoxedWithIntegerTypes".
+  public void invalidXorAssignmentOperationExpr_integerWithDoubleBoxedTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_doubleBoxedWithIntegerTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     assertThrows(
@@ -861,8 +861,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_charWithFloatTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_floatWithCharTypes".
+  public void invalidXorAssignmentOperationExpr_charWithFloatTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_floatWithCharTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT, "y");
     assertThrows(
@@ -871,8 +871,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_charWithFloatBoxedTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_floatBoxedWithCharTypes".
+  public void invalidXorAssignmentOperationExpr_charWithFloatBoxedTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_floatBoxedWithCharTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.CHAR, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "y");
     assertThrows(
@@ -881,8 +881,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerWithBooleanTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_booleanWithNumericTypes".
+  public void invalidXorAssignmentOperationExpr_integerWithBooleanTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_booleanWithNumericTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
     assertThrows(
@@ -891,7 +891,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerWithNullTypes() {
+  public void invalidXorAssignmentOperationExpr_integerWithNullTypes() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -901,8 +901,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerWithReferenceTypes() {
-    // Swap case in invalidORAssignmentOperationExpr_referenceWithCharTypes.
+  public void invalidXorAssignmentOperationExpr_integerWithReferenceTypes() {
+    // Swap case in invalidXorAssignmentOperationExpr_referenceWithCharTypes.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -1038,8 +1038,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_doubleWithIntegerTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_integerWithDoubleTypes".
+  public void invalidXorAssignmentOperationExpr_doubleWithIntegerTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_integerWithDoubleTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
@@ -1048,8 +1048,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_doubleBoxedWithIntegerTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_integerWithDoubleBoxedTypes".
+  public void invalidXorAssignmentOperationExpr_doubleBoxedWithIntegerTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_integerWithDoubleBoxedTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
@@ -1058,8 +1058,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_floatWithCharTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_charWithFloatTypes".
+  public void invalidXorAssignmentOperationExpr_floatWithCharTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_charWithFloatTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR, "y");
     assertThrows(
@@ -1068,8 +1068,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_floatBoxedTypeWithCharTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_charWithFloatBoxedTypes".
+  public void invalidXorAssignmentOperationExpr_floatBoxedTypeWithCharTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_charWithFloatBoxedTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR, "y");
     assertThrows(
@@ -1078,8 +1078,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerBoxedTypeWithBooleanTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_booleanWithIntegerBoxedTypes".
+  public void invalidXorAssignmentOperationExpr_integerBoxedTypeWithBooleanTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_booleanWithIntegerBoxedTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
     assertThrows(
@@ -1088,7 +1088,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerBoxedWithNullTypes() {
+  public void invalidXorAssignmentOperationExpr_integerBoxedWithNullTypes() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
@@ -1098,8 +1098,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerBoxedWithReferenceTypes() {
-    // Swap case in invalidORAssignmentOperationExpr_referenceWithIntegerBoxedTypes.
+  public void invalidXorAssignmentOperationExpr_integerBoxedWithReferenceTypes() {
+    // Swap case in invalidXorAssignmentOperationExpr_referenceWithIntegerBoxedTypes.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -1108,7 +1108,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_integerBoxedWithNewObjectTypes() {
+  public void invalidXorAssignmentOperationExpr_integerBoxedWithNewObjectTypes() {
     // No swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);
@@ -1160,8 +1160,8 @@ public class AssignmentOperationExprTest {
 
   /** ============= XOR Assignment Operators: LHS is non primitive type ================= */
   @Test
-  public void invalidORAssignmentOperationExpr_referencedTypeWithBooleanTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_booleanWithReferencedTypes".
+  public void invalidXorAssignmentOperationExpr_referencedTypeWithBooleanTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_booleanWithReferencedTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
     assertThrows(
@@ -1170,8 +1170,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_referencedTypeWithCharTypes() {
-    // Swap case in "invalidORAssignmentOperationExpr_integerWithReferencedTypes".
+  public void invalidXorAssignmentOperationExpr_referencedTypeWithCharTypes() {
+    // Swap case in "invalidXorAssignmentOperationExpr_integerWithReferencedTypes".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.CHAR, "y");
     assertThrows(
@@ -1180,8 +1180,8 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_ReferenceTypeWithIntegerBoxedType() {
-    // Swap case in "invalidORAssignmentOperationExpr_referenceWithIntegerBoxedType".
+  public void invalidXorAssignmentOperationExpr_ReferenceTypeWithIntegerBoxedType() {
+    // Swap case in "invalidXorAssignmentOperationExpr_referenceWithIntegerBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "y");
     assertThrows(
@@ -1190,7 +1190,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidORAssignmentOperationExpr_voidType() {
+  public void invalidXorAssignmentOperationExpr_voidType() {
     // No need swap case.
     VariableExpr lhsExprExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
     MethodInvocationExpr rhsExpr =
