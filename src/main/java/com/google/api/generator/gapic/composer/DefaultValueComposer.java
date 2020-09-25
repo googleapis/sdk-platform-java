@@ -282,4 +282,35 @@ public class DefaultValueComposer {
         .setReturnType(OPERATION_TYPE)
         .build();
   }
+
+  static Expr createSimplePagedResponse(TypeNode responseType, Expr responseElementVarExpr) {
+    Expr pagedResponseExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(responseType)
+            .setMethodName("newBuilder")
+            .build();
+    pagedResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedResponseExpr)
+            .setMethodName("setNextPageToken")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("")))
+            .build();
+    pagedResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedResponseExpr)
+            .setMethodName("addAllResponses")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Arrays.class)))
+                    .setMethodName("asList")
+                    .setArguments(responseElementVarExpr)
+                    .build())
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(pagedResponseExpr)
+        .setMethodName("build")
+        .setReturnType(responseType)
+        .build();
+  }
 }
