@@ -174,6 +174,10 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
         || type.equals(TypeNode.BYTE);
   }
 
+  public static boolean isFloatingPointType(TypeNode type) {
+    return type.equals(TypeNode.DOUBLE) || type.equals(TypeNode.FLOAT);
+  }
+
   public static boolean isBoxedType(TypeNode type) {
     return isReferenceType(type) && BOXED_TYPE_MAP.containsValue(type);
   }
