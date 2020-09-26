@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -29,6 +30,8 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.base.Preconditions;
+import com.google.longrunning.Operation;
+import com.google.protobuf.Any;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -38,6 +41,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DefaultValueComposer {
+  private static TypeNode OPERATION_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
+  private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
+
   static Expr createDefaultValue(
       MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
     if (methodArg.isResourceNameHelper()) {
@@ -235,6 +242,44 @@ public class DefaultValueComposer {
         .setExprReferenceExpr(builderExpr)
         .setMethodName("build")
         .setReturnType(message.type())
+        .build();
+  }
+
+  static Expr createSimpleOperationBuilderExpr(String name, VariableExpr responseExpr) {
+    Expr operationExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(OPERATION_TYPE)
+            .setMethodName("newBuilder")
+            .build();
+    operationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(operationExpr)
+            .setMethodName("setName")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue(name)))
+            .build();
+    operationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(operationExpr)
+            .setMethodName("setDone")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
+            .build();
+    operationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(operationExpr)
+            .setMethodName("setResponse")
+            .setArguments(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(ANY_TYPE)
+                    .setMethodName("pack")
+                    .setArguments(responseExpr)
+                    .build())
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(operationExpr)
+        .setMethodName("build")
+        .setReturnType(OPERATION_TYPE)
         .build();
   }
 }
