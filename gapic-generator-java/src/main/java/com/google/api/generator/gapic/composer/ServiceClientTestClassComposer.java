@@ -32,6 +32,7 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -69,6 +70,7 @@ import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -403,15 +405,26 @@ public class ServiceClientTestClassComposer {
       Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
-      for (int i = 0; i < method.methodSignatures().size(); i++) {
+      if (method.methodSignatures().isEmpty()) {
         javaMethods.add(
             createRpcExceptionTestMethod(
                 method,
-                method.methodSignatures().get(i),
-                i,
+                Collections.emptyList(),
+                0,
                 classMemberVarExprs,
                 resourceNames,
                 messageTypes));
+      } else {
+        for (int i = 0; i < method.methodSignatures().size(); i++) {
+          javaMethods.add(
+              createRpcExceptionTestMethod(
+                  method,
+                  method.methodSignatures().get(i),
+                  i,
+                  classMemberVarExprs,
+                  resourceNames,
+                  messageTypes));
+        }
       }
     }
     return javaMethods;
@@ -462,25 +475,74 @@ public class ServiceClientTestClassComposer {
 
     List<VariableExpr> argVarExprs = new ArrayList<>();
     List<Expr> tryBodyExprs = new ArrayList<>();
-    for (MethodArgument methodArg : methodSignature) {
+    if (methodSignature.isEmpty()) {
+      // Construct the actual request.
       VariableExpr varExpr =
           VariableExpr.withVariable(
-              Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+              Variable.builder().setType(method.inputType()).setName("request").build());
       argVarExprs.add(varExpr);
-      Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+      Message requestMessage = messageTypes.get(method.inputType().reference().name());
+      Preconditions.checkNotNull(requestMessage);
+      Expr valExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
       tryBodyExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
               .setValueExpr(valExpr)
               .build());
-      // TODO(miraleung): Empty line here.
+    } else {
+      for (MethodArgument methodArg : methodSignature) {
+        VariableExpr varExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+        argVarExprs.add(varExpr);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        tryBodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(valExpr)
+                .build());
+        // TODO(miraleung): Empty line here.
+      }
     }
-    tryBodyExprs.add(
+    String rpcJavaName = JavaStyle.toLowerCamelCase(method.name());
+    if (method.hasLro()) {
+      rpcJavaName += "Async";
+    }
+    MethodInvocationExpr rpcJavaMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(classMemberVarExprs.get("client"))
-            .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+            .setMethodName(rpcJavaName)
             .setArguments(argVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
-            .build());
+            .build();
+    if (method.hasLro()) {
+      rpcJavaMethodInvocationExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(rpcJavaMethodInvocationExpr)
+              .setMethodName("get")
+              .build();
+    }
+    tryBodyExprs.add(rpcJavaMethodInvocationExpr);
+
+    VariableExpr catchExceptionVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(
+                        TypeNode.withExceptionClazz(
+                            method.hasLro()
+                                ? ExecutionException.class
+                                : InvalidArgumentException.class))
+                    .setName("e")
+                    .build())
+            .build();
+
+    List<Statement> catchBody =
+        method.hasLro()
+            ? createRpcLroExceptionTestCatchBody(catchExceptionVarExpr)
+            : Arrays.asList(
+                CommentStatement.withComment(LineComment.withComment("Expected exception.")));
 
     // Assert a failure if no exception was raised.
     tryBodyExprs.add(
@@ -496,18 +558,8 @@ public class ServiceClientTestClassComposer {
                 tryBodyExprs.stream()
                     .map(e -> ExprStatement.withExpr(e))
                     .collect(Collectors.toList()))
-            .setCatchVariableExpr(
-                VariableExpr.builder()
-                    .setVariable(
-                        Variable.builder()
-                            .setType(TypeNode.withExceptionClazz(InvalidArgumentException.class))
-                            .setName("e")
-                            .build())
-                    .setIsDecl(true)
-                    .build())
-            .setCatchBody(
-                Arrays.asList(
-                    CommentStatement.withComment(LineComment.withComment("Expected exception."))))
+            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setCatchBody(catchBody)
             .build();
 
     return MethodDefinition.builder()
@@ -522,6 +574,87 @@ public class ServiceClientTestClassComposer {
                 ExprStatement.withExpr(addExceptionExpr),
                 tryCatchBlock))
         .build();
+  }
+
+  private static List<Statement> createRpcLroExceptionTestCatchBody(VariableExpr exceptionExpr) {
+    List<Expr> catchBodyExprs = new ArrayList<>();
+
+    Expr testExpectedValueExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                    .setName("class")
+                    .build())
+            .setStaticReferenceType(STATIC_TYPES.get("InvalidArgumentException"))
+            .build();
+    Expr getCauseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(exceptionExpr)
+            .setMethodName("getCause")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+            .build();
+    Expr testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getCauseExpr)
+            .setMethodName("getClass")
+            .build();
+
+    // Constructs `Assert.assertEquals(InvalidArgumentException.class, e.getCaus().getClass());`.
+    catchBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(testExpectedValueExpr, testActualValueExpr)
+            .build());
+
+    // Construct the apiException variable.
+    VariableExpr apiExceptionVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("InvalidArgumentException"))
+                .setName("apiException")
+                .build());
+    Expr castedCauseExpr =
+        CastExpr.builder()
+            .setType(STATIC_TYPES.get("InvalidArgumentException"))
+            .setExpr(getCauseExpr)
+            .build();
+    catchBodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(apiExceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(castedCauseExpr)
+            .build());
+
+    // Construct the last assert statement.
+    testExpectedValueExpr =
+        EnumRefExpr.builder()
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(StatusCode.Code.class)
+                        .setIsStaticImport(false)
+                        .build()))
+            .setName("INVALID_ARGUMENT")
+            .build();
+    testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiExceptionVarExpr)
+            .setMethodName("getStatusCode")
+            .build();
+    testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(testActualValueExpr)
+            .setMethodName("getCode")
+            .build();
+    catchBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(testExpectedValueExpr, testActualValueExpr)
+            .build());
+
+    return catchBodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
   /* =========================================

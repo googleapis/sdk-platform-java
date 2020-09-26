@@ -23,6 +23,7 @@ import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -184,6 +185,56 @@ public class DefaultValueComposer {
         .setMethodName(ofMethodName)
         .setArguments(argExprs)
         .setReturnType(resourceNameJavaType)
+        .build();
+  }
+
+  static Expr createSimpleMessageBuilderExpr(
+      Message message, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+    MethodInvocationExpr builderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(message.type())
+            .setMethodName("newBuilder")
+            .build();
+    for (Field field : message.fields()) {
+      if (field.isContainedInOneof() // Avoid colliding fields.
+          || ((field.isMessage() || field.isEnum()) // Avoid importing unparsed messages.
+              && !field.isRepeated()
+              && !messageTypes.containsKey(field.type().reference().name()))) {
+        continue;
+      }
+      String setterMethodNamePattern = "set%s";
+      if (field.isRepeated()) {
+        setterMethodNamePattern = field.isMap() ? "putAll%s" : "addAll%s";
+      }
+      Expr defaultExpr = null;
+      if (field.hasResourceReference()
+          && resourceNames.get(field.resourceReference().resourceTypeString()) != null) {
+        defaultExpr =
+            createDefaultValue(
+                resourceNames.get(field.resourceReference().resourceTypeString()),
+                resourceNames.values().stream().collect(Collectors.toList()));
+        defaultExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(defaultExpr)
+                .setMethodName("toString")
+                .setReturnType(TypeNode.STRING)
+                .build();
+      } else {
+        defaultExpr = createDefaultValue(field);
+      }
+      builderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(builderExpr)
+              .setMethodName(
+                  String.format(setterMethodNamePattern, JavaStyle.toUpperCamelCase(field.name())))
+              .setArguments(defaultExpr)
+              .build();
+    }
+
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(builderExpr)
+        .setMethodName("build")
+        .setReturnType(message.type())
         .build();
   }
 }
