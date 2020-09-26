@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -115,6 +116,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String OPERATOR_LOGICAL_NOT = "!";
   private static final String OPERATOR_LOGICAL_AND = "&&";
   private static final String OPERATOR_LOGICAL_OR = "||";
+  private static final String OPERATOR_XOR = "^=";
+  private static final String OPERATOR_MULTIPLE_AND_ASSIGNMENT = "*=";
 
   private final StringBuffer buffer = new StringBuffer();
   private final ImportWriterVisitor importWriterVisitor = new ImportWriterVisitor();
@@ -432,6 +435,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     operator(logicalOperationExpr.operatorKind());
     space();
     logicalOperationExpr.rhsExpr().accept(this);
+  }
+
+  @Override
+  public void visit(AssignmentOperationExpr assignmentOperationExpr) {
+    assignmentOperationExpr.variableExpr().accept(this);
+    space();
+    operator(assignmentOperationExpr.operatorKind());
+    space();
+    assignmentOperationExpr.valueExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -917,6 +929,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
 
   private void operator(OperatorKind kind) {
     switch (kind) {
+      case ARITHMETIC_ADDITION:
+        buffer.append(OPERATOR_ADDITION);
+        break;
+      case ASSIGNMENT_XOR:
+        buffer.append(OPERATOR_XOR);
+        break;
+      case ASSIGNMENT_MULTIPLY:
+        buffer.append(OPERATOR_MULTIPLE_AND_ASSIGNMENT);
+        break;
       case RELATIONAL_EQUAL_TO:
         buffer.append(OPERATOR_EQUAL_TO);
         break;
@@ -931,9 +952,6 @@ public class JavaWriterVisitor implements AstNodeVisitor {
         break;
       case UNARY_LOGICAL_NOT:
         buffer.append(OPERATOR_LOGICAL_NOT);
-        break;
-      case ARITHMETIC_ADDITION:
-        buffer.append(OPERATOR_ADDITION);
         break;
       case LOGICAL_AND:
         buffer.append(OPERATOR_LOGICAL_AND);
