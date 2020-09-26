@@ -32,6 +32,8 @@ public abstract class Field {
 
   public abstract boolean isMap();
 
+  public abstract boolean isContainedInOneof();
+
   @Nullable
   public abstract ResourceReference resourceReference();
 
@@ -51,7 +53,8 @@ public abstract class Field {
         .setIsMessage(false)
         .setIsEnum(false)
         .setIsRepeated(false)
-        .setIsMap(false);
+        .setIsMap(false)
+        .setIsContainedInOneof(false);
   }
 
   @AutoValue.Builder
@@ -67,6 +70,8 @@ public abstract class Field {
     public abstract Builder setIsRepeated(boolean isRepeated);
 
     public abstract Builder setIsMap(boolean isMap);
+
+    public abstract Builder setIsContainedInOneof(boolean isContainedInOneof);
 
     public abstract Builder setResourceReference(ResourceReference resourceReference);
 
