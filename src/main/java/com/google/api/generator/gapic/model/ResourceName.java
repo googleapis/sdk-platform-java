@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -27,6 +29,8 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class ResourceName {
   static final String SLASH = "/";
+  static final Reference RESOURCE_NAME_REF =
+      ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class);
 
   // The original binding variable name.
   // This should be in lower_snake_case in the proto, and expected to be surrounded by braces.
@@ -42,6 +46,8 @@ public abstract class ResourceName {
   public abstract String resourceTypeString();
 
   // A list of patterns such as projects/{project}/locations/{location}/resources/{this_resource}.
+  // Order is copuled to the method variants and ordering in the reosurce name helper, as well as
+  // the relevant client tests.
   public abstract ImmutableList<String> patterns();
 
   // The Java TypeNode of the resource name helper class to generate.
@@ -83,12 +89,7 @@ public abstract class ResourceName {
         .setResourceTypeString(resourceTypeString)
         .setPatterns(ImmutableList.of(ResourceNameConstants.WILDCARD_PATTERN))
         .setIsOnlyWildcard(true)
-        .setType(
-            TypeNode.withReference(
-                VaporReference.builder()
-                    .setName("ResourceName")
-                    .setPakkage("com.google.api.resourcenames")
-                    .build()))
+        .setType(TypeNode.withReference(RESOURCE_NAME_REF))
         .build();
   }
 
@@ -159,6 +160,7 @@ public abstract class ResourceName {
                 VaporReference.builder()
                     .setName(String.format("%sName", typeName))
                     .setPakkage(pakkage())
+                    .setSupertypeReference(RESOURCE_NAME_REF)
                     .build()));
       }
       return autoBuild();

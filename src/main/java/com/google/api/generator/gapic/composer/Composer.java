@@ -36,7 +36,9 @@ public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
     for (Service service : context.services()) {
-      clazzes.addAll(generateServiceClasses(service, context.serviceConfig(), context.messages()));
+      clazzes.addAll(
+          generateServiceClasses(
+              service, context.serviceConfig(), context.resourceNames(), context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
@@ -45,11 +47,12 @@ public class Composer {
   public static List<GapicClass> generateServiceClasses(
       @Nonnull Service service,
       @Nullable GapicServiceConfig serviceConfig,
+      @Nonnull Map<String, ResourceName> resourceNames,
       @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes));
     clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
-    clazzes.addAll(generateMocksAndTestClasses(service, messageTypes));
+    clazzes.addAll(generateMocksAndTestClasses(service, resourceNames, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
@@ -82,11 +85,12 @@ public class Composer {
   }
 
   public static List<GapicClass> generateMocksAndTestClasses(
-      Service service, Map<String, Message> messageTypes) {
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
     clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(ServiceClientTestClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(
+        ServiceClientTestClassComposer.instance().generate(service, resourceNames, messageTypes));
     return clazzes;
   }
 

@@ -35,6 +35,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/gapic/utils",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
+        "@com_google_api_api_common//jar",
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",
