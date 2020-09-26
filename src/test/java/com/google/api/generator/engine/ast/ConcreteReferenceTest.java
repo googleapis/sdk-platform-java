@@ -148,4 +148,89 @@ public class ConcreteReferenceTest {
         "? extends String",
         ConcreteReference.wildcardWithUpperBound(TypeNode.STRING.reference()).name());
   }
+
+  @Test
+  public void isAssignableFrom_concreteRef() {
+    assertFalse(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(ConcreteReference.withClazz(Map.class)));
+
+    assertTrue(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(ConcreteReference.withClazz(ArrayList.class)));
+    assertFalse(
+        ConcreteReference.withClazz(ArrayList.class)
+            .isAssignableFrom(ConcreteReference.withClazz(List.class)));
+    assertTrue(
+        ConcreteReference.withClazz(ArrayList.class)
+            .isAssignableFrom(ConcreteReference.withClazz(ArrayList.class)));
+
+    assertTrue(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(
+                ConcreteReference.builder()
+                    .setClazz(ArrayList.class)
+                    .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+                    .build()));
+    assertTrue(
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+            .build()
+            .isAssignableFrom(
+                ConcreteReference.builder()
+                    .setClazz(ArrayList.class)
+                    .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+                    .build()));
+    assertFalse(
+        ConcreteReference.builder()
+            .setClazz(List.class)
+            .setGenerics(Arrays.asList(ConcreteReference.withClazz(Integer.class)))
+            .build()
+            .isAssignableFrom(
+                ConcreteReference.builder()
+                    .setClazz(ArrayList.class)
+                    .setGenerics(Arrays.asList(ConcreteReference.withClazz(String.class)))
+                    .build()));
+  }
+
+  @Test
+  public void isAssignableFrom_vaporRef() {
+    assertFalse(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(
+                VaporReference.builder().setName("ArrayList").setPakkage("java.util").build()));
+    assertFalse(
+        ConcreteReference.withClazz(ArrayList.class)
+            .isAssignableFrom(
+                VaporReference.builder().setName("ArrayList").setPakkage("java.util").build()));
+  }
+
+  @Test
+  public void isAssignableFrom_vaporRefWithConcreteRefSupertype() {
+    assertTrue(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(
+                VaporReference.builder()
+                    .setName("ArrayList")
+                    .setPakkage("java.util")
+                    .setSupertypeReference(ConcreteReference.withClazz(List.class))
+                    .build()));
+    assertTrue(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(
+                VaporReference.builder()
+                    .setName("SpecialArrayList")
+                    .setPakkage("com.foo.bar")
+                    .setSupertypeReference(ConcreteReference.withClazz(ArrayList.class))
+                    .build()));
+    assertFalse(
+        ConcreteReference.withClazz(List.class)
+            .isAssignableFrom(
+                VaporReference.builder()
+                    .setName("HashMap")
+                    .setPakkage("java.util")
+                    .setSupertypeReference(ConcreteReference.withClazz(Map.class))
+                    .build()));
+  }
 }
