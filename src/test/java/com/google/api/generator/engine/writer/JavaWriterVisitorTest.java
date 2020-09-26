@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
@@ -104,6 +105,36 @@ public class JavaWriterVisitorTest {
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
     assertEquals(writerVisitor.write(), "byte[]");
+  }
+
+  @Test
+  public void writeReferenceType_basic() {
+    TypeNode.withReference(ConcreteReference.withClazz(List.class)).accept(writerVisitor);
+    assertEquals("List", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder().setName("FooBar").setPakkage("com.foo.bar").build())
+        .accept(writerVisitor);
+    assertEquals("FooBar", writerVisitor.write());
+  }
+
+  @Test
+  public void writeReferenceType_useFullName() {
+    TypeNode.withReference(
+            ConcreteReference.builder().setClazz(List.class).setUseFullName(true).build())
+        .accept(writerVisitor);
+    assertEquals("java.util.List", writerVisitor.write());
+
+    writerVisitor.clear();
+    TypeNode.withReference(
+            VaporReference.builder()
+                .setName("FooBar")
+                .setPakkage("com.foo.bar")
+                .setUseFullName(true)
+                .build())
+        .accept(writerVisitor);
+    assertEquals("com.foo.bar.FooBar", writerVisitor.write());
   }
 
   @Test
@@ -2143,6 +2174,39 @@ public class JavaWriterVisitorTest {
         LogicalOperationExpr.logicalOrWithExprs(lhsExpr, rhsExpr);
     logicalOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("isGood || isValid()");
+  }
+
+  @Test
+  public void writeAssignmentOperationExpr_multiplyAssignment() {
+    VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
+    ValueExpr rhsExpr =
+        ValueExpr.withValue(
+            PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
+    AssignmentOperationExpr assignmentOperationExpr =
+        AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr);
+    assignmentOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("h *= 1000003");
+  }
+
+  @Test
+  public void writeAssignmentOperationExpr_xorAssignment() {
+    VariableExpr lhsExpr = createVariableExpr("h", TypeNode.INT);
+    TypeNode objectType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Objects").setPakkage("java.lang.Object").build());
+    MethodInvocationExpr rhsExpr =
+        MethodInvocationExpr.builder()
+            .setReturnType(TypeNode.INT)
+            .setMethodName("hashCode")
+            .setStaticReferenceType(objectType)
+            .setArguments(
+                Arrays.asList(
+                    VariableExpr.withVariable(createVariable("fixedValue", TypeNode.OBJECT))))
+            .build();
+    AssignmentOperationExpr assignmentOperationExpr =
+        AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr);
+    assignmentOperationExpr.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
   }
 
   private static String createLines(int numLines) {

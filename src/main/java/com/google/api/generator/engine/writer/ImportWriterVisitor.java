@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
@@ -108,7 +109,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
 
     List<Reference> refs = new ArrayList<>(type.reference().generics());
-    refs.add(type.reference());
+    if (!type.reference().useFullName()) {
+      refs.add(type.reference());
+    }
     references(refs);
   }
 
@@ -238,6 +241,12 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(LogicalOperationExpr logicalOperationExpr) {
     logicalOperationExpr.lhsExpr().accept(this);
     logicalOperationExpr.rhsExpr().accept(this);
+  }
+
+  @Override
+  public void visit(AssignmentOperationExpr assignmentOperationExpr) {
+    assignmentOperationExpr.variableExpr().accept(this);
+    assignmentOperationExpr.valueExpr().accept(this);
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -377,6 +386,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
       // Don't need to import this.
+      if (ref.useFullName()) {
+        continue;
+      }
       if (!ref.isStaticImport()
           && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage))) {
         continue;

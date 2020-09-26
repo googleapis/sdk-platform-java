@@ -76,6 +76,7 @@ public class ParserTest {
             .setType(
                 TypeNode.withReference(
                     VaporReference.builder().setName("Severity").setPakkage(ECHO_PACKAGE).build()))
+            .setIsEnum(true)
             .build();
     TypeNode echoResponseType =
         TypeNode.withReference(
@@ -87,7 +88,8 @@ public class ParserTest {
             .setName(echoResponseName)
             .setFields(Arrays.asList(echoResponseContentField, echoResponseSeverityField))
             .build();
-    assertThat(messageTypes.get(echoResponseName)).isEqualTo(echoResponseMessage);
+
+    assertEquals(echoResponseMessage, messageTypes.get(echoResponseName));
   }
 
   @Test
@@ -375,10 +377,10 @@ public class ParserTest {
   }
 
   private void assertMethodArgumentEquals(
-      String name, TypeNode type, List<TypeNode> nestedTypes, MethodArgument argument) {
+      String name, TypeNode type, List<TypeNode> nestedFields, MethodArgument argument) {
     assertEquals(name, argument.name());
     assertEquals(type, argument.type());
-    assertEquals(nestedTypes, argument.nestedTypes());
+    assertEquals(nestedFields, argument.nestedFields());
   }
 
   private static Reference createStatusReference() {
