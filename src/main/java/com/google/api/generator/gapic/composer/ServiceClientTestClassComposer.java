@@ -543,6 +543,7 @@ public class ServiceClientTestClassComposer {
             ? createRpcLroExceptionTestCatchBody(catchExceptionVarExpr)
             : Arrays.asList(
                 CommentStatement.withComment(LineComment.withComment("Expected exception.")));
+
     // Assert a failure if no exception was raised.
     tryBodyExprs.add(
         MethodInvocationExpr.builder()
