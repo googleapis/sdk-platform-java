@@ -78,7 +78,14 @@ public abstract class VaporReference implements Reference {
   @Override
   public boolean isSupertypeOrEquals(Reference other) {
     // Not handling more complex cases for VaporReference.
-    return equals(other);
+    if (!(other instanceof VaporReference)) {
+      return false;
+    }
+
+    VaporReference ref = (VaporReference) other;
+    return pakkage().equals(ref.pakkage())
+        && plainName().equals(ref.plainName())
+        && Objects.equals(enclosingClassName(), ref.enclosingClassName());
   }
 
   @Override
