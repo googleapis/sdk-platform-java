@@ -46,6 +46,28 @@ java_binary(
     ],
 )
 
+# JUnit runner binary, this is used to generate test output for updating goldens files.
+# Run `bazel run testTarget_update` will trigger this runner.
+java_binary(
+    name = "junit_runner",
+    srcs = [
+        "//src/test/java/com/google/api/generator/gapic/dummy:dummy_files",
+        "//src/test/java/com/google/api/generator/test/framework:framework_files",
+    ],
+    data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
+    jvm_flags = ["-Xmx512m"],
+    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/test/java/com/google/api/generator/test/framework",
+        "@io_github_java_diff_utils//jar",
+        "@junit_junit//jar",
+        "@org_hamcrest_hamcrest_core//jar",
+    ],
+)
+
 # google-java-format
 java_binary(
     name = "google_java_format_binary",
