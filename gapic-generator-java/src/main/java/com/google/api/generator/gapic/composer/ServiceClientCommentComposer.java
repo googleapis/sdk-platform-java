@@ -157,8 +157,9 @@ class ServiceClientCommentComposer {
           "request", "The request object containing all of the parameters for the API call.");
     } else {
       for (MethodArgument argument : methodArguments) {
-        methodJavadocBuilder.addParam(
-            argument.name(), argument.hasDescription() ? argument.description() : EMPTY_STRING);
+        String description =
+            argument.field().hasDescription() ? argument.field().description() : EMPTY_STRING;
+        methodJavadocBuilder.addParam(argument.name(), description);
       }
     }
 
