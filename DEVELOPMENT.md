@@ -18,33 +18,58 @@ below are temporary and better ones will be coming.
 1.  Clone [googleapis](https://github.com/googleapis/googleapis) and
     [gapic-showcase](https://github.com/googleapis/gapic-showcase/) and install
     protoc.
+
 2.  Copy the protos from Showcase into googleapis/google/showcase.
 
     ```sh
     cp gapic-showcase/schema/google/showcase/v1beta1 googleapis/google/showcase/v1beta
     ```
 
-3.  Export tool paths.
+3.  Add the new microgenerator rules to the protobuf directory's `BUILD.bazel`
+    file as follows:
+
+    ```python
+    load(
+        "@com_google_googleapis_imports//:imports.bzl",
+        # Existing rules here.
+        "java_gapic_assembly_gradle_pkg2",
+        "java_gapic_library2",
+    )
+
+    # This should either replace the existing monolith target or have a unique name
+    # that includes "java_gapic".
+    java_gapic_library2(
+        name = "showcase_java_gapic",
+        srcs = [":showcase_proto_with_info"],
+        # The gapic_yaml file is needed only for APIs that have batching configs.
+        grpc_service_config = "showcase_grpc_service_config.json",
+        package = "google.showcase.v1beta1",
+        test_deps = [
+            ":showcase_java_grpc",
+        ],
+        deps = [
+            ":showcase_java_proto",
+        ],
+    )
+
+    java_gapic_assembly_gradle_pkg2(
+        # This name should be unique from the existing target name.
+        name = "google-cloud-showcase-v1beta1-java",
+        deps = [
+            # This is the new microgen target above.
+            ":showcase_java_gapic",
+            # The following targets already exist.
+            ":showcase_java_grpc",
+            ":showcase_java_proto",
+            ":showcase_proto",
+        ],
+    )
+    ```
+
+4.  Build the new target.
 
     ```sh
-    PROTOC_INCLUDE_DIR=/usr/local/include/google/protobuf/
-    GOOGLEAPIS_DIR=/usr/local/google/home/$USER/dev/googleapis
-    YOUR_PROTO_DIR=/usr/local/google/home/$USER/dev/googleapis/google/showcase/v1beta
-    ```
-
-4.  Build this plugin.
-
-    ```sh
-    bazel build :protoc-gen-java_gapic
-    ```
-
-5.  Run the plugin. At this stage, it will not do anything except write
-    hardcoded Java into two files.
-
-    ```
-    protoc -I=${PROTOC_INCLUDE_DIR} -I=${GOOGLEAPIS_DIR} -I=${YOUR_PROTO_DIR} \
-        --plugin=bazel-bin/protoc-gen-java_gapic ~/dev/googleapis/google/showcase/v1test/*.proto \
-        --gapic-java_out=/tmp/test
+    bazel build google/showcase/v1beta1:showcase_java_gapic
     ```
 
 ## Code Formatting
