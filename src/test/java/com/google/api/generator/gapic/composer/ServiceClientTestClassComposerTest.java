@@ -86,6 +86,7 @@ public class ServiceClientTestClassComposerTest {
           + "import com.google.rpc.Status;\n"
           + "import io.grpc.StatusRuntimeException;\n"
           + "import java.io.IOException;\n"
+          + "import java.util.ArrayList;\n"
           + "import java.util.Arrays;\n"
           + "import java.util.List;\n"
           + "import java.util.UUID;\n"
