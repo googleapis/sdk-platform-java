@@ -33,16 +33,22 @@ import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -50,13 +56,15 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
-import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +86,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ServiceClientTestClassComposer implements ClassComposer {
+// TODO(miraleung): Refactor classComposer.
+public class ServiceClientTestClassComposer {
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
   private static final String CLASS_NAME_PATTERN = "%sClientTest";
   private static final String CLIENT_VAR_NAME = "client";
@@ -94,7 +103,14 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+
+  private static final AnnotationNode TEST_ANNOTATION =
+      AnnotationNode.withType(STATIC_TYPES.get("Test"));
+  // Avoid conflicting types with com.google.rpc.Status.
+  private static final TypeNode GRPC_STATUS_TYPE =
+      TypeNode.withReference(
+          ConcreteReference.builder().setClazz(io.grpc.Status.class).setUseFullName(true).build());
 
   private ServiceClientTestClassComposer() {}
 
@@ -102,8 +118,8 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return INSTANCE;
   }
 
-  @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
     String className = String.format("%sClientTest", service.name());
@@ -118,7 +134,9 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setStatements(createClassMemberFieldDecls(classMemberVarExprs))
-            .setMethods(createClassMethods(service, classMemberVarExprs, types))
+            .setMethods(
+                createClassMethods(
+                    service, classMemberVarExprs, types, resourceNames, messageTypes))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -126,7 +144,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(staticTypes.get("Generated"))
+            .setType(STATIC_TYPES.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
@@ -140,9 +158,9 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     fields.put(
         getMockServiceVarName(service.name()),
         types.get(String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name())));
-    fields.put(SERVICE_HELPER_VAR_NAME, staticTypes.get("MockServiceHelper"));
+    fields.put(SERVICE_HELPER_VAR_NAME, STATIC_TYPES.get("MockServiceHelper"));
     fields.put(CLIENT_VAR_NAME, types.get(getClientClassName(service.name())));
-    fields.put(CHANNEL_PROVIDER_VAR_NAME, staticTypes.get("LocalChannelProvider"));
+    fields.put(CHANNEL_PROVIDER_VAR_NAME, STATIC_TYPES.get("LocalChannelProvider"));
     return fields.entrySet().stream()
         .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
   }
@@ -162,16 +180,15 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, VariableExpr> classMemberVarExprs, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createTestAdminMethods(service, classMemberVarExprs, types));
-    // TODO(miraleung): FIll this in.
-    /*
-    for (Method protoMethod : service.methods()) {
-      javaMethods.add(createTestMethod(protoMethod, classMemberVarExprs, types));
-      javaMethods.add(createExceptionTestMethod(protoMethod, classMemberVarExprs, types));
-    }
-    */
+    javaMethods.addAll(
+        createTestMethods(service, classMemberVarExprs, resourceNames, messageTypes));
     return javaMethods;
   }
 
@@ -198,7 +215,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     MethodInvocationExpr firstArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("UUID"))
+            .setStaticReferenceType(STATIC_TYPES.get("UUID"))
             .setMethodName("randomUUID")
             .build();
     firstArg =
@@ -209,8 +226,8 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     MethodInvocationExpr secondArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("Arrays"))
-            .setGenerics(Arrays.asList(staticTypes.get("MockGrpcService").reference()))
+            .setStaticReferenceType(STATIC_TYPES.get("Arrays"))
+            .setGenerics(Arrays.asList(STATIC_TYPES.get("MockGrpcService").reference()))
             .setMethodName("asList")
             .setArguments(Arrays.asList(mockServiceVarExpr))
             .build();
@@ -232,7 +249,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("BeforeClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -248,7 +265,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("AfterClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("AfterClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -314,7 +331,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .apply(
                 "setCredentialsProvider",
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(staticTypes.get("NoCredentialsProvider"))
+                    .setStaticReferenceType(STATIC_TYPES.get("NoCredentialsProvider"))
                     .setMethodName("create")
                     .build());
     settingsBuilderExpr =
@@ -343,11 +360,11 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("Before"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("Before"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("setUp")
-        .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(STATIC_TYPES.get("IOException")))
         .setBody(
             Arrays.asList(
                     resetServiceHelperExpr,
@@ -363,7 +380,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static MethodDefinition createTearDownMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("After"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("After"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("tearDown")
@@ -379,19 +396,138 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         .build();
   }
 
-  private static void createTestMethod(
-      Method protoMethod,
+  private static List<MethodDefinition> createTestMethods(
+      Service service,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, TypeNode> types) {
-    // TODO(miraleung): Fill this in.
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    for (Method method : service.methods()) {
+      for (int i = 0; i < method.methodSignatures().size(); i++) {
+        javaMethods.add(
+            createRpcExceptionTestMethod(
+                method,
+                method.methodSignatures().get(i),
+                i,
+                classMemberVarExprs,
+                resourceNames,
+                messageTypes));
+      }
+    }
+    return javaMethods;
   }
 
-  private static void createExceptionTestMethod(
-      Method protoMethod,
+  private static MethodDefinition createRpcExceptionTestMethod(
+      Method method,
+      List<MethodArgument> methodSignature,
+      int variantIndex,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, TypeNode> types) {
-    // TODO(miraleung): Fill this in.
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr exceptionVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("StatusRuntimeException"))
+                .setName("exception")
+                .build());
+
+    // First two assignment lines.
+    Expr exceptionAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(exceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("StatusRuntimeException"))
+                    .setArguments(
+                        EnumRefExpr.builder()
+                            .setType(GRPC_STATUS_TYPE)
+                            .setName("INVALID_ARGUMENT")
+                            .build())
+                    .build())
+            .build();
+    Expr addExceptionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                classMemberVarExprs.get(
+                    String.format("mock%s", JavaStyle.toUpperCamelCase(method.name()))))
+            .setMethodName("addException")
+            .setArguments(exceptionVarExpr)
+            .build();
+
+    // Try-catch block. Build the method call.
+    String exceptionTestMethodName =
+        String.format(
+            "%sExceptionTest%s",
+            JavaStyle.toLowerCamelCase(method.name()), variantIndex > 0 ? variantIndex + 1 : "");
+
+    List<VariableExpr> argVarExprs = new ArrayList<>();
+    List<Expr> tryBodyExprs = new ArrayList<>();
+    for (MethodArgument methodArg : methodSignature) {
+      VariableExpr varExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+      argVarExprs.add(varExpr);
+      Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+      tryBodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(valExpr)
+              .build());
+      // TODO(miraleung): Empty line here.
+    }
+    tryBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+            .setArguments(argVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+            .build());
+
+    // Assert a failure if no exception was raised.
+    tryBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("fail")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("No exception raised")))
+            .build());
+
+    TryCatchStatement tryCatchBlock =
+        TryCatchStatement.builder()
+            .setTryBody(
+                tryBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .setCatchVariableExpr(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder()
+                            .setType(TypeNode.withExceptionClazz(InvalidArgumentException.class))
+                            .setName("e")
+                            .build())
+                    .setIsDecl(true)
+                    .build())
+            .setCatchBody(
+                Arrays.asList(
+                    CommentStatement.withComment(LineComment.withComment("Expected exception."))))
+            .build();
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(exceptionTestMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(
+            Arrays.asList(
+                ExprStatement.withExpr(exceptionAssignExpr),
+                ExprStatement.withExpr(addExceptionExpr),
+                tryCatchBlock))
+        .build();
   }
+
+  /* =========================================
+   * Type creator methods.
+   * =========================================
+   */
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
@@ -417,19 +553,18 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             NoCredentialsProvider.class,
             Operation.class,
             ServerStreamingCallable.class,
-            Status.class,
             StatusCode.class,
             StatusRuntimeException.class,
             Test.class,
             UUID.class);
-    Map<String, TypeNode> staticTypes =
+    Map<String, TypeNode> STATIC_TYPES =
         concreteClazzes.stream()
             .collect(
                 Collectors.toMap(
                     c -> c.getSimpleName(),
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
 
-    staticTypes.putAll(
+    STATIC_TYPES.putAll(
         Arrays.asList(
                 "LocalChannelProvider",
                 "MockGrpcService",
@@ -445,7 +580,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
                                 .setName(n)
                                 .setPakkage(GRPC_TESTING_PACKAGE)
                                 .build()))));
-    return staticTypes;
+    return STATIC_TYPES;
   }
 
   private static Map<String, TypeNode> createDefaultMethodNamesToTypes() {
@@ -470,7 +605,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         "defaultGrpcTransportProviderBuilder",
         typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class));
     javaMethodNameToReturnType.put(
-        "defaultTransportChannelProvider", staticTypes.get("TransportChannelProvider"));
+        "defaultTransportChannelProvider", STATIC_TYPES.get("TransportChannelProvider"));
     return javaMethodNameToReturnType;
   }
 
