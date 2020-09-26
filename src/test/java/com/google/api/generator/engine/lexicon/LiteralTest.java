@@ -37,6 +37,7 @@ public class LiteralTest {
   public void integerDetected() {
     assertThat(Literal.isIntegerLiteral("a123")).isFalse();
     assertThat(Literal.isIntegerLiteral("123")).isTrue();
+    assertThat(Literal.isIntegerLiteral("-123")).isTrue();
     assertThat(Literal.isIntegerLiteral("123L")).isFalse();
     assertThat(Literal.isIntegerLiteral("123r")).isFalse();
     assertThat(Literal.isIntegerLiteral("123e2")).isFalse();
@@ -47,6 +48,7 @@ public class LiteralTest {
     assertThat(Literal.isLongLiteral("123")).isTrue();
     assertThat(Literal.isLongLiteral("123L")).isTrue();
     assertThat(Literal.isLongLiteral("123l")).isTrue();
+    assertThat(Literal.isLongLiteral("-123l")).isTrue();
     assertThat(Literal.isLongLiteral("123e")).isFalse();
   }
 
@@ -58,6 +60,7 @@ public class LiteralTest {
     assertThat(Literal.isFloatLiteral("0.01")).isFalse();
     assertThat(Literal.isFloatLiteral(".01")).isFalse();
     assertThat(Literal.isFloatLiteral("123.f")).isTrue();
+    assertThat(Literal.isFloatLiteral("-123.f")).isTrue();
     assertThat(Literal.isFloatLiteral("123.F")).isTrue();
     assertThat(Literal.isFloatLiteral("123.234F")).isTrue();
     assertThat(Literal.isFloatLiteral("123.234Fe-3")).isFalse();
@@ -69,11 +72,14 @@ public class LiteralTest {
     assertThat(Literal.isDoubleLiteral("123")).isTrue();
     assertThat(Literal.isDoubleLiteral("0.01")).isTrue();
     assertThat(Literal.isDoubleLiteral(".01")).isTrue();
+    assertThat(Literal.isDoubleLiteral("-.01")).isTrue();
     assertThat(Literal.isDoubleLiteral("123.0")).isTrue();
+    assertThat(Literal.isDoubleLiteral("-123.0")).isTrue();
     assertThat(Literal.isDoubleLiteral("123f")).isTrue();
     assertThat(Literal.isDoubleLiteral("123E-2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123.134E-2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123.E-2")).isTrue();
+    assertThat(Literal.isDoubleLiteral("-123.E-2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123e2")).isTrue();
     assertThat(Literal.isDoubleLiteral("123e")).isFalse();
     assertThat(Literal.isDoubleLiteral("123E-")).isFalse();
