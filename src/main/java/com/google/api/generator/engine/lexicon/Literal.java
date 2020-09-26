@@ -22,13 +22,14 @@ public class Literal {
   private static final String BOOLEAN_FALSE = "false";
   private static final String NULL_VALUE = "null";
 
-  private static final Pattern INTEGER_PATTERN = Pattern.compile("^[0-9]+$");
-  private static final Pattern LONG_PATTERN = Pattern.compile("^[0-9]+[Ll]?$");
+  private static final Pattern INTEGER_PATTERN = Pattern.compile("^\\-?[0-9]+$");
+  private static final Pattern LONG_PATTERN = Pattern.compile("^\\-?[0-9]+[Ll]?$");
   private static final Pattern FLOAT_PATTERN =
-      Pattern.compile("^[0-9]+([fF]|(\\.(([0-9]+[fF])|[fF])))?$");
+      Pattern.compile("^\\-?[0-9]+([fF]|(\\.(([0-9]+[fF])|[fF])))?$");
   private static final Pattern DOUBLE_PATTERN_ONE =
-      Pattern.compile("^[0-9]+(\\.[0-9]+)?(\\.?[eE]\\-?[0-9]+)$");
-  private static final Pattern DOUBLE_PATTERN_TWO = Pattern.compile("^\\d*\\.\\d+$|^\\d+\\.\\d*$");
+      Pattern.compile("^\\-?[0-9]+(\\.[0-9]+)?(\\.?[eE]\\-?[0-9]+)$");
+  private static final Pattern DOUBLE_PATTERN_TWO =
+      Pattern.compile("^\\-?\\d*\\.\\d+$|^\\d+\\.\\d*$");
 
   public static boolean isBooleanLiteral(String str) {
     return str.equals(BOOLEAN_TRUE) || str.equals(BOOLEAN_FALSE);

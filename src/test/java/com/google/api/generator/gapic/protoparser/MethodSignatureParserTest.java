@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -58,7 +59,12 @@ public class MethodSignatureParserTest {
     List<String> argumentNames = Arrays.asList(fooName);
 
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
-        (name, type) -> MethodArgument.builder().setName(name).setType(type).build();
+        (name, type) ->
+            MethodArgument.builder()
+                .setName(name)
+                .setType(type)
+                .setField(Field.builder().setName(name).setType(type).build())
+                .build();
     List<MethodArgument> fooArgs =
         Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
@@ -92,7 +98,12 @@ public class MethodSignatureParserTest {
     List<String> argumentNames = Arrays.asList(anInt, fooName);
 
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
-        (name, type) -> MethodArgument.builder().setName(name).setType(type).build();
+        (name, type) ->
+            MethodArgument.builder()
+                .setName(name)
+                .setType(type)
+                .setField(Field.builder().setName(name).setType(type).build())
+                .build();
     List<MethodArgument> fooArgs =
         Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
@@ -127,7 +138,12 @@ public class MethodSignatureParserTest {
     List<String> argumentNames = Arrays.asList(fooName, anInt);
 
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
-        (name, type) -> MethodArgument.builder().setName(name).setType(type).build();
+        (name, type) ->
+            MethodArgument.builder()
+                .setName(name)
+                .setType(type)
+                .setField(Field.builder().setName(name).setType(type).build())
+                .build();
     List<MethodArgument> fooArgs =
         Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))
@@ -173,7 +189,12 @@ public class MethodSignatureParserTest {
     List<String> argumentNames = Arrays.asList(fooName, anInt, barName, anotherInt);
 
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
-        (name, type) -> MethodArgument.builder().setName(name).setType(type).build();
+        (name, type) ->
+            MethodArgument.builder()
+                .setName(name)
+                .setType(type)
+                .setField(Field.builder().setName(name).setType(type).build())
+                .build();
     List<MethodArgument> fooArgs =
         Arrays.asList(TypeNode.STRING, fooTypeOne, fooTypeTwo).stream()
             .map(t -> methodArgFn.apply(fooName, t))

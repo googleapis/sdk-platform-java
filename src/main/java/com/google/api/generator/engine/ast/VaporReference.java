@@ -37,9 +37,15 @@ public abstract class VaporReference implements Reference {
   @Override
   public abstract String pakkage();
 
+  @Override
+  public abstract boolean useFullName();
+
   @Nullable
   @Override
   public abstract String enclosingClassName();
+
+  @Nullable
+  public abstract Reference supertypeReference();
 
   @Nullable
   @Override
@@ -72,12 +78,19 @@ public abstract class VaporReference implements Reference {
   @Override
   public boolean isSupertypeOrEquals(Reference other) {
     // Not handling more complex cases for VaporReference.
-    return equals(other);
+    if (!(other instanceof VaporReference)) {
+      return false;
+    }
+
+    VaporReference ref = (VaporReference) other;
+    return pakkage().equals(ref.pakkage())
+        && plainName().equals(ref.plainName())
+        && Objects.equals(enclosingClassName(), ref.enclosingClassName());
   }
 
   @Override
   public boolean isAssignableFrom(Reference other) {
-    // Not handling this for VaporReference.
+    // Not handling this yet for VaporReference.
     return false;
   }
 
@@ -117,6 +130,7 @@ public abstract class VaporReference implements Reference {
 
   public static Builder builder() {
     return new AutoValue_VaporReference.Builder()
+        .setUseFullName(false)
         .setGenerics(ImmutableList.of())
         .setIsStaticImport(false);
   }
@@ -130,11 +144,15 @@ public abstract class VaporReference implements Reference {
 
     public abstract Builder setPakkage(String pakkage);
 
+    public abstract Builder setUseFullName(boolean useFullName);
+
     public abstract Builder setGenerics(List<Reference> clazzes);
 
     public abstract Builder setEnclosingClassName(String enclosingClassName);
 
     public abstract Builder setIsStaticImport(boolean isStaticImport);
+
+    public abstract Builder setSupertypeReference(Reference supertypeReference);
 
     // Private.
     abstract Builder setPlainName(String plainName);
