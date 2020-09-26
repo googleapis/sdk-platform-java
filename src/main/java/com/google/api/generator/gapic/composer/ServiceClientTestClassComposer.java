@@ -492,27 +492,60 @@ public class ServiceClientTestClassComposer {
     // Construct the expected response.
     // TODO(miraleung): Paging here.
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    List<Expr> methodExprs = new ArrayList<>();
+
+    TypeNode repeatedResponseType = null;
+    VariableExpr responsesElementVarExpr = null;
+    if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      repeatedResponseType = findRepeatedPagedType(methodOutputMessage);
+      Preconditions.checkNotNull(
+          repeatedResponseType,
+          String.format(
+              "No repeated type found for paged method %s with output message type %s",
+              method.name(), methodOutputMessage.name()));
+      responsesElementVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(repeatedResponseType).setName("responsesElement").build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(responsesElementVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  DefaultValueComposer.createDefaultValue(
+                      Field.builder()
+                          .setType(repeatedResponseType)
+                          .setName("responsesElement")
+                          .setIsMessage(true)
+                          .build()))
+              .build());
+    }
+
     VariableExpr expectedResponseVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
-    if (messageTypes.containsKey(methodOutputType.reference().name())) {
+    if (method.isPaged()) {
       expectedResponseValExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+          DefaultValueComposer.createSimplePagedResponse(
+              method.outputType(), responsesElementVarExpr);
     } else {
-      // Wrap this in a field so we don't have to split the helper into lots of different methods,
-      // or duplicate it for VariableExpr.
-      expectedResponseValExpr =
-          DefaultValueComposer.createDefaultValue(
-              Field.builder()
-                  .setType(methodOutputType)
-                  .setIsMessage(true)
-                  .setName("expectedResponse")
-                  .build());
+      if (messageTypes.containsKey(methodOutputType.reference().name())) {
+        expectedResponseValExpr =
+            DefaultValueComposer.createSimpleMessageBuilderExpr(
+                messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+      } else {
+        // Wrap this in a field so we don't have to split the helper into lots of different methods,
+        // or duplicate it for VariableExpr.
+        expectedResponseValExpr =
+            DefaultValueComposer.createDefaultValue(
+                Field.builder()
+                    .setType(methodOutputType)
+                    .setIsMessage(true)
+                    .setName("expectedResponse")
+                    .build());
+      }
     }
 
-    List<Expr> methodExprs = new ArrayList<>();
     methodExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
@@ -588,7 +621,10 @@ public class ServiceClientTestClassComposer {
     // Call the RPC Java method.
     VariableExpr actualResponseVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setType(methodOutputType).setName("actualResponse").build());
+            Variable.builder()
+                .setType(methodOutputType)
+                .setName(method.isPaged() ? "pagedListResponse" : "actualResponse")
+                .build());
     Expr rpcJavaMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(classMemberVarExprs.get("client"))
@@ -610,12 +646,88 @@ public class ServiceClientTestClassComposer {
             .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(rpcJavaMethodInvocationExpr)
             .build());
-    methodExprs.add(
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
-            .setMethodName("assertEquals")
-            .setArguments(expectedResponseVarExpr, actualResponseVarExpr)
-            .build());
+
+    if (method.isPaged()) {
+      // Assign the resources variaqble.
+      VariableExpr resourcesVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(
+                      TypeNode.withReference(
+                          ConcreteReference.builder()
+                              .setClazz(List.class)
+                              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                              .build()))
+                  .setName("resources")
+                  .build());
+      Expr iterateAllExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(actualResponseVarExpr)
+              .setMethodName("iterateAll")
+              .build();
+      Expr resourcesValExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Lists"))
+              .setMethodName("newArrayList")
+              .setArguments(iterateAllExpr)
+              .setReturnType(resourcesVarExpr.type())
+              .build();
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(resourcesVarExpr)
+              .setValueExpr(resourcesValExpr)
+              .build());
+
+      // Assert the size is equivalent.
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(resourcesVarExpr)
+                      .setMethodName("size")
+                      .setReturnType(TypeNode.INT)
+                      .build())
+              .build());
+
+      // Assert the responses are equivalent.
+      Expr zeroExpr =
+          ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
+      Expr expectedPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(expectedResponseVarExpr)
+              .setMethodName("getResponsesList")
+              .build();
+      expectedPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(expectedPagedResponseExpr)
+              .setMethodName("get")
+              .setArguments(zeroExpr)
+              .build();
+      Expr actualPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(resourcesVarExpr)
+              .setMethodName("get")
+              .setArguments(zeroExpr)
+              .build();
+
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(expectedPagedResponseExpr, actualPagedResponseExpr)
+              .build());
+    } else {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(expectedResponseVarExpr, actualResponseVarExpr)
+              .build());
+    }
     // TODO(miraleung): Empty line here.
 
     // Construct the request checker logic.
@@ -658,7 +770,7 @@ public class ServiceClientTestClassComposer {
 
     VariableExpr actualRequestVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setType(methodOutputType).setName("actualRequest").build());
+            Variable.builder().setType(method.inputType()).setName("actualRequest").build());
     Expr getFirstRequestExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(actualRequestsVarExpr)
@@ -669,7 +781,7 @@ public class ServiceClientTestClassComposer {
             .setReturnType(STATIC_TYPES.get("AbstractMessage"))
             .build();
     getFirstRequestExpr =
-        CastExpr.builder().setType(methodOutputType).setExpr(getFirstRequestExpr).build();
+        CastExpr.builder().setType(method.inputType()).setExpr(getFirstRequestExpr).build();
     methodExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(actualRequestVarExpr.toBuilder().setIsDecl(true).build())
@@ -1435,6 +1547,16 @@ public class ServiceClientTestClassComposer {
 
     return TypeNode.withReference(
         ConcreteReference.builder().setClazz(callableClazz).setGenerics(generics).build());
+  }
+
+  private static TypeNode findRepeatedPagedType(Message message) {
+    for (Field field : message.fields()) {
+      if (field.isRepeated() && !field.isMap()) {
+        Reference repeatedGenericRef = field.type().reference().generics().get(0);
+        return TypeNode.withReference(repeatedGenericRef);
+      }
+    }
+    return null;
   }
 
   private static String getCallableMethodName(Method protoMethod) {
