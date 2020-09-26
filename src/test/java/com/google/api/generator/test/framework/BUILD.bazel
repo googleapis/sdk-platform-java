@@ -10,8 +10,10 @@ java_library(
     srcs = [
         ":framework_files",
     ],
+    data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
     deps = [
         "@io_github_java_diff_utils//jar",
         "@junit_junit//jar",
+        "@org_hamcrest_hamcrest_core//jar",
     ],
 )
