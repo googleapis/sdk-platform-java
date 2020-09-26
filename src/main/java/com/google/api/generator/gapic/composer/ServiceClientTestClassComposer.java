@@ -45,6 +45,7 @@ import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -55,6 +56,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -108,6 +110,13 @@ public class ServiceClientTestClassComposer {
       new ServiceClientTestClassComposer();
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final TypeNode LIST_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(List.class));
+  private static final TypeNode MAP_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(Map.class));
+  private static final TypeNode RESOURCE_NAME_TYPE =
+      TypeNode.withReference(
+          ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
 
   private static final AnnotationNode TEST_ANNOTATION =
       AnnotationNode.withType(STATIC_TYPES.get("Test"));
@@ -409,6 +418,15 @@ public class ServiceClientTestClassComposer {
     for (Method method : service.methods()) {
       if (method.methodSignatures().isEmpty()) {
         javaMethods.add(
+            createRpcTestMethod(
+                method,
+                Collections.emptyList(),
+                0,
+                service.name(),
+                classMemberVarExprs,
+                resourceNames,
+                messageTypes));
+        javaMethods.add(
             createRpcExceptionTestMethod(
                 method,
                 Collections.emptyList(),
@@ -440,6 +458,15 @@ public class ServiceClientTestClassComposer {
 
         for (int i = 0; i < sortedMethodSignatures.size(); i++) {
           javaMethods.add(
+              createRpcTestMethod(
+                  method,
+                  sortedMethodSignatures.get(i),
+                  i,
+                  service.name(),
+                  classMemberVarExprs,
+                  resourceNames,
+                  messageTypes));
+          javaMethods.add(
               createRpcExceptionTestMethod(
                   method,
                   sortedMethodSignatures.get(i),
@@ -452,6 +479,303 @@ public class ServiceClientTestClassComposer {
       }
     }
     return javaMethods;
+  }
+
+  private static MethodDefinition createRpcTestMethod(
+      Method method,
+      List<MethodArgument> methodSignature,
+      int variantIndex,
+      String serviceName,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    // Construct the expected response.
+    // TODO(miraleung): Paging here.
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    VariableExpr expectedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
+    Expr expectedResponseValExpr = null;
+    if (messageTypes.containsKey(methodOutputType.reference().name())) {
+      expectedResponseValExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+    } else {
+      // Wrap this in a field so we don't have to split the helper into lots of different methods,
+      // or duplicate it for VariableExpr.
+      expectedResponseValExpr =
+          DefaultValueComposer.createDefaultValue(
+              Field.builder()
+                  .setType(methodOutputType)
+                  .setIsMessage(true)
+                  .setName("expectedResponse")
+                  .build());
+    }
+
+    List<Expr> methodExprs = new ArrayList<>();
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(expectedResponseValExpr)
+            .build());
+    if (method.hasLro()) {
+      VariableExpr resultOperationVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(STATIC_TYPES.get("Operation"))
+                  .setName("resultOperation")
+                  .build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(resultOperationVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  DefaultValueComposer.createSimpleOperationBuilderExpr(
+                      String.format("%sTest", JavaStyle.toLowerCamelCase(method.name())),
+                      expectedResponseVarExpr))
+              .build());
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(resultOperationVarExpr)
+              .build());
+    } else {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(expectedResponseVarExpr)
+              .build());
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Construct the request or method arguments.
+    boolean isRequestArg = methodSignature.isEmpty();
+    VariableExpr requestVarExpr = null;
+    Message requestMessage = null;
+    List<VariableExpr> argExprs = new ArrayList<>();
+    if (isRequestArg) {
+      requestVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(method.inputType()).setName("request").build());
+      argExprs.add(requestVarExpr);
+      requestMessage = messageTypes.get(method.inputType().reference().name());
+      Preconditions.checkNotNull(requestMessage);
+      Expr valExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(valExpr)
+              .build());
+    } else {
+      for (MethodArgument methodArg : methodSignature) {
+        VariableExpr varExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+        argExprs.add(varExpr);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        methodExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(valExpr)
+                .build());
+      }
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Call the RPC Java method.
+    VariableExpr actualResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(methodOutputType).setName("actualResponse").build());
+    Expr rpcJavaMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(
+                JavaStyle.toLowerCamelCase(method.name()) + (method.hasLro() ? "Async" : ""))
+            .setArguments(argExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+            .setReturnType(actualResponseVarExpr.type())
+            .build();
+    if (method.hasLro()) {
+      rpcJavaMethodInvocationExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(rpcJavaMethodInvocationExpr)
+              .setMethodName("get")
+              .setReturnType(rpcJavaMethodInvocationExpr.type())
+              .build();
+    }
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(rpcJavaMethodInvocationExpr)
+            .build());
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(expectedResponseVarExpr, actualResponseVarExpr)
+            .build());
+    // TODO(miraleung): Empty line here.
+
+    // Construct the request checker logic.
+    VariableExpr actualRequestsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(
+                                Arrays.asList(ConcreteReference.withClazz(AbstractMessage.class)))
+                            .build()))
+                .setName("actualRequests")
+                .build());
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualRequestsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+                    .setMethodName("getRequests")
+                    .setReturnType(actualRequestsVarExpr.type())
+                    .build())
+            .build());
+
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(actualRequestsVarExpr)
+                    .setMethodName("size")
+                    .build())
+            .build());
+
+    VariableExpr actualRequestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(methodOutputType).setName("actualRequest").build());
+    Expr getFirstRequestExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(actualRequestsVarExpr)
+            .setMethodName("get")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
+            .setReturnType(STATIC_TYPES.get("AbstractMessage"))
+            .build();
+    getFirstRequestExpr =
+        CastExpr.builder().setType(methodOutputType).setExpr(getFirstRequestExpr).build();
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualRequestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getFirstRequestExpr)
+            .build());
+    // TODO(miraleung): Empty line here.
+
+    // Assert field equality.
+    if (isRequestArg) {
+      // TODO(miraleung): Replace these with a simple request object equals?
+      Preconditions.checkNotNull(requestVarExpr);
+      Preconditions.checkNotNull(requestMessage);
+      for (Field field : requestMessage.fields()) {
+        String fieldGetterMethodNamePatternTemp = "get%s";
+        if (field.isRepeated()) {
+          fieldGetterMethodNamePatternTemp = field.isMap() ? "get%sMap" : "get%sList";
+        }
+        final String fieldGetterMethodNamePattern = fieldGetterMethodNamePatternTemp;
+        Function<VariableExpr, Expr> checkExprFn =
+            v ->
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(v)
+                    .setMethodName(
+                        String.format(
+                            fieldGetterMethodNamePattern, JavaStyle.toUpperCamelCase(field.name())))
+                    .build();
+        Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
+        Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
+        methodExprs.add(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+                .setMethodName("assertEquals")
+                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .build());
+      }
+    } else {
+      for (VariableExpr argVarExpr : argExprs) {
+        Variable variable = argVarExpr.variable();
+        String fieldGetterMethodNamePattern = "get%s";
+        if (LIST_TYPE.isSupertypeOrEquals(variable.type())) {
+          fieldGetterMethodNamePattern = "get%sList";
+        } else if (MAP_TYPE.isSupertypeOrEquals(variable.type())) {
+          fieldGetterMethodNamePattern = "get%sMap";
+        }
+        Expr actualFieldExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(actualRequestVarExpr)
+                .setMethodName(
+                    String.format(
+                        fieldGetterMethodNamePattern,
+                        JavaStyle.toUpperCamelCase(variable.identifier().name())))
+                .build();
+        Expr expectedFieldExpr = argVarExpr;
+        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(argVarExpr.type())) {
+          expectedFieldExpr =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(argVarExpr)
+                  .setMethodName("toString")
+                  .build();
+        }
+        methodExprs.add(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+                .setMethodName("assertEquals")
+                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .build());
+      }
+    }
+
+    // Assert header equality.
+    Expr headerKeyExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("ApiClientHeaderProvider"))
+            .setMethodName("getDefaultApiClientHeaderKey")
+            .build();
+    Expr headerPatternExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("GaxGrpcProperties"))
+            .setMethodName("getDefaultApiClientHeaderPattern")
+            .build();
+    Expr headerSentExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("channelProvider"))
+            .setMethodName("isHeaderSent")
+            .setArguments(headerKeyExpr, headerPatternExpr)
+            .build();
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertTrue")
+            .setArguments(headerSentExpr)
+            .build());
+
+    String testMethodName =
+        String.format(
+            "%sTest%s",
+            JavaStyle.toLowerCamelCase(method.name()), variantIndex > 0 ? variantIndex + 1 : "");
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(testMethodName)
+        .setBody(
+            methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
   }
 
   private static MethodDefinition createRpcExceptionTestMethod(
