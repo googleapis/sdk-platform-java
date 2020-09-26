@@ -402,6 +402,8 @@ public class Parser {
     return fieldBuilder
         .setName(fieldDescriptor.getName())
         .setType(TypeParser.parseType(fieldDescriptor))
+        .setIsMessage(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.MESSAGE)
+        .setIsEnum(fieldDescriptor.getJavaType() == FieldDescriptor.JavaType.ENUM)
         .setIsRepeated(fieldDescriptor.isRepeated())
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
