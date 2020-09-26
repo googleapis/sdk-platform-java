@@ -85,6 +85,9 @@ public abstract class ConcreteReference implements Reference {
   }
 
   @Override
+  public abstract boolean useFullName();
+
+  @Override
   public String enclosingClassName() {
     if (!hasEnclosingClass()) {
       return null;
@@ -129,9 +132,22 @@ public abstract class ConcreteReference implements Reference {
 
   @Override
   public boolean isAssignableFrom(Reference other) {
+    if (other instanceof VaporReference && ((VaporReference) other).supertypeReference() != null) {
+      return isAssignableFrom(((VaporReference) other).supertypeReference());
+    }
+
     if (!(other instanceof ConcreteReference)) {
       return false;
     }
+
+    if (generics().size() == other.generics().size()) {
+      for (int i = 0; i < generics().size(); i++) {
+        if (!generics().get(i).isSupertypeOrEquals(other.generics().get(i))) {
+          return false;
+        }
+      }
+    }
+
     return clazz().isAssignableFrom(((ConcreteReference) other).clazz());
   }
 
@@ -178,6 +194,7 @@ public abstract class ConcreteReference implements Reference {
 
   public static Builder builder() {
     return new AutoValue_ConcreteReference.Builder()
+        .setUseFullName(false)
         .setGenerics(ImmutableList.of())
         .setIsStaticImport(false);
   }
@@ -188,6 +205,8 @@ public abstract class ConcreteReference implements Reference {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setClazz(Class clazz);
+
+    public abstract Builder setUseFullName(boolean useFullName);
 
     public abstract Builder setWildcardUpperBound(Reference reference);
 
