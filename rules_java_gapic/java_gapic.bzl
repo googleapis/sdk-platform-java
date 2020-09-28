@@ -102,7 +102,7 @@ def java_gapic_library(
     proto_custom_library(
         name = raw_srcjar_name,
         deps = srcs,
-        plugin = Label("@com_google_api_generator//:protoc-gen-%s" % _java_generator_name),
+        plugin = Label("@gapic_generator_java//:protoc-gen-%s" % _java_generator_name),
         plugin_file_args = {},
         opt_file_args = file_args_dict,
         output_type = _java_generator_name,

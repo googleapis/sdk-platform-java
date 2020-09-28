@@ -22,6 +22,7 @@ import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PagedCallSettings;
@@ -32,35 +33,48 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.StringObjectValue;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
-import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -78,7 +92,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class ServiceClientTestClassComposer implements ClassComposer {
+// TODO(miraleung): Refactor classComposer.
+public class ServiceClientTestClassComposer {
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
   private static final String CLASS_NAME_PATTERN = "%sClientTest";
   private static final String CLIENT_VAR_NAME = "client";
@@ -94,7 +109,21 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final TypeNode LIST_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(List.class));
+  private static final TypeNode MAP_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(Map.class));
+  private static final TypeNode RESOURCE_NAME_TYPE =
+      TypeNode.withReference(
+          ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
+
+  private static final AnnotationNode TEST_ANNOTATION =
+      AnnotationNode.withType(STATIC_TYPES.get("Test"));
+  // Avoid conflicting types with com.google.rpc.Status.
+  private static final TypeNode GRPC_STATUS_TYPE =
+      TypeNode.withReference(
+          ConcreteReference.builder().setClazz(io.grpc.Status.class).setUseFullName(true).build());
 
   private ServiceClientTestClassComposer() {}
 
@@ -102,8 +131,8 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     return INSTANCE;
   }
 
-  @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
     String className = String.format("%sClientTest", service.name());
@@ -118,7 +147,9 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setStatements(createClassMemberFieldDecls(classMemberVarExprs))
-            .setMethods(createClassMethods(service, classMemberVarExprs, types))
+            .setMethods(
+                createClassMethods(
+                    service, classMemberVarExprs, types, resourceNames, messageTypes))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -126,7 +157,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(staticTypes.get("Generated"))
+            .setType(STATIC_TYPES.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
@@ -140,9 +171,9 @@ public class ServiceClientTestClassComposer implements ClassComposer {
     fields.put(
         getMockServiceVarName(service.name()),
         types.get(String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name())));
-    fields.put(SERVICE_HELPER_VAR_NAME, staticTypes.get("MockServiceHelper"));
+    fields.put(SERVICE_HELPER_VAR_NAME, STATIC_TYPES.get("MockServiceHelper"));
     fields.put(CLIENT_VAR_NAME, types.get(getClientClassName(service.name())));
-    fields.put(CHANNEL_PROVIDER_VAR_NAME, staticTypes.get("LocalChannelProvider"));
+    fields.put(CHANNEL_PROVIDER_VAR_NAME, STATIC_TYPES.get("LocalChannelProvider"));
     return fields.entrySet().stream()
         .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
   }
@@ -162,16 +193,15 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, VariableExpr> classMemberVarExprs, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     javaMethods.addAll(createTestAdminMethods(service, classMemberVarExprs, types));
-    // TODO(miraleung): FIll this in.
-    /*
-    for (Method protoMethod : service.methods()) {
-      javaMethods.add(createTestMethod(protoMethod, classMemberVarExprs, types));
-      javaMethods.add(createExceptionTestMethod(protoMethod, classMemberVarExprs, types));
-    }
-    */
+    javaMethods.addAll(
+        createTestMethods(service, classMemberVarExprs, resourceNames, messageTypes));
     return javaMethods;
   }
 
@@ -198,7 +228,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     MethodInvocationExpr firstArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("UUID"))
+            .setStaticReferenceType(STATIC_TYPES.get("UUID"))
             .setMethodName("randomUUID")
             .build();
     firstArg =
@@ -209,8 +239,8 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     MethodInvocationExpr secondArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("Arrays"))
-            .setGenerics(Arrays.asList(staticTypes.get("MockGrpcService").reference()))
+            .setStaticReferenceType(STATIC_TYPES.get("Arrays"))
+            .setGenerics(Arrays.asList(STATIC_TYPES.get("MockGrpcService").reference()))
             .setMethodName("asList")
             .setArguments(Arrays.asList(mockServiceVarExpr))
             .build();
@@ -232,7 +262,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("BeforeClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("BeforeClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -248,7 +278,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static MethodDefinition createStopServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("AfterClass"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("AfterClass"))))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(TypeNode.VOID)
@@ -314,7 +344,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .apply(
                 "setCredentialsProvider",
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(staticTypes.get("NoCredentialsProvider"))
+                    .setStaticReferenceType(STATIC_TYPES.get("NoCredentialsProvider"))
                     .setMethodName("create")
                     .build());
     settingsBuilderExpr =
@@ -343,11 +373,11 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             .build();
 
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("Before"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("Before"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("setUp")
-        .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(STATIC_TYPES.get("IOException")))
         .setBody(
             Arrays.asList(
                     resetServiceHelperExpr,
@@ -363,7 +393,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
   private static MethodDefinition createTearDownMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(AnnotationNode.withType(staticTypes.get("After"))))
+        .setAnnotations(Arrays.asList(AnnotationNode.withType(STATIC_TYPES.get("After"))))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName("tearDown")
@@ -379,19 +409,912 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         .build();
   }
 
-  private static void createTestMethod(
-      Method protoMethod,
+  private static List<MethodDefinition> createTestMethods(
+      Service service,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, TypeNode> types) {
-    // TODO(miraleung): Fill this in.
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    List<MethodDefinition> javaMethods = new ArrayList<>();
+    for (Method method : service.methods()) {
+      if (method.methodSignatures().isEmpty()) {
+        javaMethods.add(
+            createRpcTestMethod(
+                method,
+                Collections.emptyList(),
+                0,
+                service.name(),
+                classMemberVarExprs,
+                resourceNames,
+                messageTypes));
+        javaMethods.add(
+            createRpcExceptionTestMethod(
+                method,
+                Collections.emptyList(),
+                0,
+                service.name(),
+                classMemberVarExprs,
+                resourceNames,
+                messageTypes));
+      } else {
+        // Make the method signature order deterministic, which helps with unit testing and
+        // per-version
+        // diffs.
+        List<List<MethodArgument>> sortedMethodSignatures =
+            method.methodSignatures().stream()
+                .sorted(
+                    (s1, s2) -> {
+                      if (s1.size() != s2.size()) {
+                        return s1.size() - s2.size();
+                      }
+                      for (int i = 0; i < s1.size(); i++) {
+                        int compareVal = s1.get(i).compareTo(s2.get(i));
+                        if (compareVal != 0) {
+                          return compareVal;
+                        }
+                      }
+                      return 0;
+                    })
+                .collect(Collectors.toList());
+
+        for (int i = 0; i < sortedMethodSignatures.size(); i++) {
+          javaMethods.add(
+              createRpcTestMethod(
+                  method,
+                  sortedMethodSignatures.get(i),
+                  i,
+                  service.name(),
+                  classMemberVarExprs,
+                  resourceNames,
+                  messageTypes));
+          javaMethods.add(
+              createRpcExceptionTestMethod(
+                  method,
+                  sortedMethodSignatures.get(i),
+                  i,
+                  service.name(),
+                  classMemberVarExprs,
+                  resourceNames,
+                  messageTypes));
+        }
+      }
+    }
+    return javaMethods;
   }
 
-  private static void createExceptionTestMethod(
-      Method protoMethod,
+  private static MethodDefinition createRpcTestMethod(
+      Method method,
+      List<MethodArgument> methodSignature,
+      int variantIndex,
+      String serviceName,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, TypeNode> types) {
-    // TODO(miraleung): Fill this in.
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    // Construct the expected response.
+    // TODO(miraleung): Paging here.
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    List<Expr> methodExprs = new ArrayList<>();
+
+    TypeNode repeatedResponseType = null;
+    VariableExpr responsesElementVarExpr = null;
+    if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      repeatedResponseType = findRepeatedPagedType(methodOutputMessage);
+      Preconditions.checkNotNull(
+          repeatedResponseType,
+          String.format(
+              "No repeated type found for paged method %s with output message type %s",
+              method.name(), methodOutputMessage.name()));
+      responsesElementVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(repeatedResponseType).setName("responsesElement").build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(responsesElementVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  DefaultValueComposer.createDefaultValue(
+                      Field.builder()
+                          .setType(repeatedResponseType)
+                          .setName("responsesElement")
+                          .setIsMessage(true)
+                          .build()))
+              .build());
+    }
+
+    VariableExpr expectedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
+    Expr expectedResponseValExpr = null;
+    if (method.isPaged()) {
+      expectedResponseValExpr =
+          DefaultValueComposer.createSimplePagedResponse(
+              method.outputType(), responsesElementVarExpr);
+    } else {
+      if (messageTypes.containsKey(methodOutputType.reference().name())) {
+        expectedResponseValExpr =
+            DefaultValueComposer.createSimpleMessageBuilderExpr(
+                messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+      } else {
+        // Wrap this in a field so we don't have to split the helper into lots of different methods,
+        // or duplicate it for VariableExpr.
+        expectedResponseValExpr =
+            DefaultValueComposer.createDefaultValue(
+                Field.builder()
+                    .setType(methodOutputType)
+                    .setIsMessage(true)
+                    .setName("expectedResponse")
+                    .build());
+      }
+    }
+
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(expectedResponseValExpr)
+            .build());
+    if (method.hasLro()) {
+      VariableExpr resultOperationVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(STATIC_TYPES.get("Operation"))
+                  .setName("resultOperation")
+                  .build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(resultOperationVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  DefaultValueComposer.createSimpleOperationBuilderExpr(
+                      String.format("%sTest", JavaStyle.toLowerCamelCase(method.name())),
+                      expectedResponseVarExpr))
+              .build());
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(resultOperationVarExpr)
+              .build());
+    } else {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(expectedResponseVarExpr)
+              .build());
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Construct the request or method arguments.
+    boolean isRequestArg = methodSignature.isEmpty();
+    VariableExpr requestVarExpr = null;
+    Message requestMessage = null;
+    List<VariableExpr> argExprs = new ArrayList<>();
+    if (isRequestArg) {
+      requestVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(method.inputType()).setName("request").build());
+      argExprs.add(requestVarExpr);
+      requestMessage = messageTypes.get(method.inputType().reference().name());
+      Preconditions.checkNotNull(requestMessage);
+      Expr valExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(valExpr)
+              .build());
+    } else {
+      for (MethodArgument methodArg : methodSignature) {
+        VariableExpr varExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+        argExprs.add(varExpr);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        methodExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(valExpr)
+                .build());
+      }
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Call the RPC Java method.
+    VariableExpr actualResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(methodOutputType)
+                .setName(method.isPaged() ? "pagedListResponse" : "actualResponse")
+                .build());
+    Expr rpcJavaMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(
+                JavaStyle.toLowerCamelCase(method.name()) + (method.hasLro() ? "Async" : ""))
+            .setArguments(argExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+            .setReturnType(actualResponseVarExpr.type())
+            .build();
+    if (method.hasLro()) {
+      rpcJavaMethodInvocationExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(rpcJavaMethodInvocationExpr)
+              .setMethodName("get")
+              .setReturnType(rpcJavaMethodInvocationExpr.type())
+              .build();
+    }
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(rpcJavaMethodInvocationExpr)
+            .build());
+
+    if (method.isPaged()) {
+      // Assign the resources variaqble.
+      VariableExpr resourcesVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(
+                      TypeNode.withReference(
+                          ConcreteReference.builder()
+                              .setClazz(List.class)
+                              .setGenerics(Arrays.asList(repeatedResponseType.reference()))
+                              .build()))
+                  .setName("resources")
+                  .build());
+      Expr iterateAllExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(actualResponseVarExpr)
+              .setMethodName("iterateAll")
+              .build();
+      Expr resourcesValExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Lists"))
+              .setMethodName("newArrayList")
+              .setArguments(iterateAllExpr)
+              .setReturnType(resourcesVarExpr.type())
+              .build();
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(resourcesVarExpr)
+              .setValueExpr(resourcesValExpr)
+              .build());
+
+      // Assert the size is equivalent.
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(
+                  ValueExpr.withValue(
+                      PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(resourcesVarExpr)
+                      .setMethodName("size")
+                      .setReturnType(TypeNode.INT)
+                      .build())
+              .build());
+
+      // Assert the responses are equivalent.
+      Expr zeroExpr =
+          ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
+      Expr expectedPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(expectedResponseVarExpr)
+              .setMethodName("getResponsesList")
+              .build();
+      expectedPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(expectedPagedResponseExpr)
+              .setMethodName("get")
+              .setArguments(zeroExpr)
+              .build();
+      Expr actualPagedResponseExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(resourcesVarExpr)
+              .setMethodName("get")
+              .setArguments(zeroExpr)
+              .build();
+
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(expectedPagedResponseExpr, actualPagedResponseExpr)
+              .build());
+    } else {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(expectedResponseVarExpr, actualResponseVarExpr)
+              .build());
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Construct the request checker logic.
+    VariableExpr actualRequestsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(
+                                Arrays.asList(ConcreteReference.withClazz(AbstractMessage.class)))
+                            .build()))
+                .setName("actualRequests")
+                .build());
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualRequestsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+                    .setMethodName("getRequests")
+                    .setReturnType(actualRequestsVarExpr.type())
+                    .build())
+            .build());
+
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(actualRequestsVarExpr)
+                    .setMethodName("size")
+                    .build())
+            .build());
+
+    VariableExpr actualRequestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("actualRequest").build());
+    Expr getFirstRequestExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(actualRequestsVarExpr)
+            .setMethodName("get")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
+            .setReturnType(STATIC_TYPES.get("AbstractMessage"))
+            .build();
+    getFirstRequestExpr =
+        CastExpr.builder().setType(method.inputType()).setExpr(getFirstRequestExpr).build();
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualRequestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getFirstRequestExpr)
+            .build());
+    // TODO(miraleung): Empty line here.
+
+    // Assert field equality.
+    if (isRequestArg) {
+      // TODO(miraleung): Replace these with a simple request object equals?
+      Preconditions.checkNotNull(requestVarExpr);
+      Preconditions.checkNotNull(requestMessage);
+      for (Field field : requestMessage.fields()) {
+        String fieldGetterMethodNamePatternTemp = "get%s";
+        if (field.isRepeated()) {
+          fieldGetterMethodNamePatternTemp = field.isMap() ? "get%sMap" : "get%sList";
+        }
+        final String fieldGetterMethodNamePattern = fieldGetterMethodNamePatternTemp;
+        Function<VariableExpr, Expr> checkExprFn =
+            v ->
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(v)
+                    .setMethodName(
+                        String.format(
+                            fieldGetterMethodNamePattern, JavaStyle.toUpperCamelCase(field.name())))
+                    .build();
+        Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
+        Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
+        methodExprs.add(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+                .setMethodName("assertEquals")
+                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .build());
+      }
+    } else {
+      for (VariableExpr argVarExpr : argExprs) {
+        Variable variable = argVarExpr.variable();
+        String fieldGetterMethodNamePattern = "get%s";
+        if (LIST_TYPE.isSupertypeOrEquals(variable.type())) {
+          fieldGetterMethodNamePattern = "get%sList";
+        } else if (MAP_TYPE.isSupertypeOrEquals(variable.type())) {
+          fieldGetterMethodNamePattern = "get%sMap";
+        }
+        Expr actualFieldExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(actualRequestVarExpr)
+                .setMethodName(
+                    String.format(
+                        fieldGetterMethodNamePattern,
+                        JavaStyle.toUpperCamelCase(variable.identifier().name())))
+                .build();
+        Expr expectedFieldExpr = argVarExpr;
+        if (RESOURCE_NAME_TYPE.isSupertypeOrEquals(argVarExpr.type())) {
+          expectedFieldExpr =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(argVarExpr)
+                  .setMethodName("toString")
+                  .build();
+        }
+        methodExprs.add(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+                .setMethodName("assertEquals")
+                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .build());
+      }
+    }
+
+    // Assert header equality.
+    Expr headerKeyExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("ApiClientHeaderProvider"))
+            .setMethodName("getDefaultApiClientHeaderKey")
+            .build();
+    Expr headerPatternExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("GaxGrpcProperties"))
+            .setMethodName("getDefaultApiClientHeaderPattern")
+            .build();
+    Expr headerSentExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("channelProvider"))
+            .setMethodName("isHeaderSent")
+            .setArguments(headerKeyExpr, headerPatternExpr)
+            .build();
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertTrue")
+            .setArguments(headerSentExpr)
+            .build());
+
+    String testMethodName =
+        String.format(
+            "%sTest%s",
+            JavaStyle.toLowerCamelCase(method.name()), variantIndex > 0 ? variantIndex + 1 : "");
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(testMethodName)
+        .setBody(
+            methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
   }
+
+  private static MethodDefinition createRpcExceptionTestMethod(
+      Method method,
+      List<MethodArgument> methodSignature,
+      int variantIndex,
+      String serviceName,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr exceptionVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("StatusRuntimeException"))
+                .setName("exception")
+                .build());
+
+    // First two assignment lines.
+    Expr exceptionAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(exceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("StatusRuntimeException"))
+                    .setArguments(
+                        EnumRefExpr.builder()
+                            .setType(GRPC_STATUS_TYPE)
+                            .setName("INVALID_ARGUMENT")
+                            .build())
+                    .build())
+            .build();
+    Expr addExceptionExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+            .setMethodName("addException")
+            .setArguments(exceptionVarExpr)
+            .build();
+
+    // Try-catch block. Build the method call.
+    String exceptionTestMethodName =
+        String.format(
+            "%sExceptionTest%s",
+            JavaStyle.toLowerCamelCase(method.name()), variantIndex > 0 ? variantIndex + 1 : "");
+
+    boolean isStreaming = !method.stream().equals(Method.Stream.NONE);
+    List<Statement> methodBody = new ArrayList<>();
+    methodBody.add(ExprStatement.withExpr(exceptionAssignExpr));
+    methodBody.add(ExprStatement.withExpr(addExceptionExpr));
+    if (isStreaming) {
+      methodBody.addAll(
+          createRpcExceptionTestStreamingStatements(
+              method, classMemberVarExprs, resourceNames, messageTypes));
+    } else {
+      methodBody.addAll(
+          createRpcExceptionTestNonStreamingStatements(
+              method, methodSignature, classMemberVarExprs, resourceNames, messageTypes));
+    }
+
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(exceptionTestMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
+        .setBody(methodBody)
+        .build();
+  }
+
+  private static List<Statement> createRpcExceptionTestStreamingStatements(
+      Method method,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    // Build the request variable and assign it.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Preconditions.checkNotNull(requestMessage);
+    Expr valExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+
+    List<Expr> exprs = new ArrayList<>();
+    exprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(valExpr)
+            .build());
+
+    // Build the responseObserver variable.
+    VariableExpr responseObserverVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        STATIC_TYPES
+                            .get("MockStreamObserver")
+                            .reference()
+                            .copyAndSetGenerics(Arrays.asList(method.outputType().reference()))))
+                .setName("responseObserver")
+                .build());
+
+    exprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("MockStreamObserver"))
+                    .setIsGeneric(true)
+                    .build())
+            .build());
+
+    // Build the callable variable and assign it.
+    VariableExpr callableVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(getCallableType(method)).setName("callable").build());
+    Expr streamingCallExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(String.format("%sCallable", JavaStyle.toLowerCamelCase(method.name())))
+            .setReturnType(callableVarExpr.type())
+            .build();
+    if (method.stream().equals(Method.Stream.SERVER)) {
+      exprs.add(streamingCallExpr);
+    } else {
+      exprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(callableVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(streamingCallExpr)
+              .build());
+    }
+
+    if (!method.stream().equals(Method.Stream.SERVER)) {
+      // Call the streaming-variant callable method.
+      VariableExpr requestObserverVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(
+                      TypeNode.withReference(
+                          STATIC_TYPES
+                              .get("ApiStreamObserver")
+                              .reference()
+                              .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
+                  .setName("requestObserver")
+                  .build());
+      exprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(callableVarExpr)
+                      .setMethodName(getCallableMethodName(method))
+                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setReturnType(requestObserverVarExpr.type())
+                      .build())
+              .build());
+
+      exprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(requestObserverVarExpr)
+              .setMethodName("onNext")
+              .setArguments(requestVarExpr)
+              .build());
+    }
+
+    List<Expr> tryBodyExprs = new ArrayList<>();
+    // TODO(v2): This variable is unused in the generated test, it can be deleted.
+    VariableExpr actualResponsesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .setName("actualResponses")
+                .build());
+
+    Expr getFutureResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseObserverVarExpr)
+            .setMethodName("future")
+            .build();
+    getFutureResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getFutureResponseExpr)
+            .setMethodName("get")
+            .setReturnType(actualResponsesVarExpr.type())
+            .build();
+    tryBodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualResponsesVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getFutureResponseExpr)
+            .build());
+    // Assert a failure if no exception was raised.
+    tryBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("fail")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("No exception thrown")))
+            .build());
+
+    VariableExpr catchExceptionVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(TypeNode.withExceptionClazz(ExecutionException.class))
+                    .setName("e")
+                    .build())
+            .build();
+
+    TryCatchStatement tryCatchBlock =
+        TryCatchStatement.builder()
+            .setTryBody(
+                tryBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setCatchBody(createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
+            .build();
+
+    List<Statement> statements = new ArrayList<>();
+    statements.addAll(
+        exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    statements.add(tryCatchBlock);
+    return statements;
+  }
+
+  private static List<Statement> createRpcExceptionTestNonStreamingStatements(
+      Method method,
+      List<MethodArgument> methodSignature,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    List<VariableExpr> argVarExprs = new ArrayList<>();
+    List<Expr> tryBodyExprs = new ArrayList<>();
+    if (methodSignature.isEmpty()) {
+      // Construct the actual request.
+      VariableExpr varExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setType(method.inputType()).setName("request").build());
+      argVarExprs.add(varExpr);
+      Message requestMessage = messageTypes.get(method.inputType().reference().name());
+      Preconditions.checkNotNull(requestMessage);
+      Expr valExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      tryBodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(valExpr)
+              .build());
+    } else {
+      for (MethodArgument methodArg : methodSignature) {
+        VariableExpr varExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+        argVarExprs.add(varExpr);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        tryBodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(valExpr)
+                .build());
+        // TODO(miraleung): Empty line here.
+      }
+    }
+    String rpcJavaName = JavaStyle.toLowerCamelCase(method.name());
+    if (method.hasLro()) {
+      rpcJavaName += "Async";
+    }
+    MethodInvocationExpr rpcJavaMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(rpcJavaName)
+            .setArguments(argVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+            .build();
+    if (method.hasLro()) {
+      rpcJavaMethodInvocationExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(rpcJavaMethodInvocationExpr)
+              .setMethodName("get")
+              .build();
+    }
+    tryBodyExprs.add(rpcJavaMethodInvocationExpr);
+
+    VariableExpr catchExceptionVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(
+                        TypeNode.withExceptionClazz(
+                            method.hasLro()
+                                ? ExecutionException.class
+                                : InvalidArgumentException.class))
+                    .setName("e")
+                    .build())
+            .build();
+
+    List<Statement> catchBody =
+        method.hasLro()
+            ? createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, false)
+            : Arrays.asList(
+                CommentStatement.withComment(LineComment.withComment("Expected exception.")));
+    // Assert a failure if no exception was raised.
+    tryBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("fail")
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("No exception raised")))
+            .build());
+
+    TryCatchStatement tryCatchBlock =
+        TryCatchStatement.builder()
+            .setTryBody(
+                tryBodyExprs.stream()
+                    .map(e -> ExprStatement.withExpr(e))
+                    .collect(Collectors.toList()))
+            .setCatchVariableExpr(catchExceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setCatchBody(catchBody)
+            .build();
+
+    return Arrays.asList(tryCatchBlock);
+  }
+
+  private static List<Statement> createRpcLroExceptionTestCatchBody(
+      VariableExpr exceptionExpr, boolean isStreaming) {
+    List<Expr> catchBodyExprs = new ArrayList<>();
+
+    Expr testExpectedValueExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder()
+                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
+                    .setName("class")
+                    .build())
+            .setStaticReferenceType(STATIC_TYPES.get("InvalidArgumentException"))
+            .build();
+    Expr getCauseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(exceptionExpr)
+            .setMethodName("getCause")
+            .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Throwable.class)))
+            .build();
+    Expr testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getCauseExpr)
+            .setMethodName("getClass")
+            .build();
+
+    if (isStreaming) {
+      InstanceofExpr checkInstanceExpr =
+          InstanceofExpr.builder()
+              .setExpr(getCauseExpr)
+              .setCheckType(STATIC_TYPES.get("InvalidArgumentException"))
+              .build();
+      catchBodyExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertTrue")
+              .setArguments(checkInstanceExpr)
+              .build());
+    } else {
+      // Constructs `Assert.assertEquals(InvalidArgumentException.class, e.getCaus().getClass());`.
+      catchBodyExprs.add(
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+              .setMethodName("assertEquals")
+              .setArguments(testExpectedValueExpr, testActualValueExpr)
+              .build());
+    }
+
+    // Construct the apiException variable.
+    VariableExpr apiExceptionVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(STATIC_TYPES.get("InvalidArgumentException"))
+                .setName("apiException")
+                .build());
+    Expr castedCauseExpr =
+        CastExpr.builder()
+            .setType(STATIC_TYPES.get("InvalidArgumentException"))
+            .setExpr(getCauseExpr)
+            .build();
+    catchBodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(apiExceptionVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(castedCauseExpr)
+            .build());
+
+    // Construct the last assert statement.
+    testExpectedValueExpr =
+        EnumRefExpr.builder()
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(StatusCode.Code.class)
+                        .setIsStaticImport(false)
+                        .build()))
+            .setName("INVALID_ARGUMENT")
+            .build();
+    testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiExceptionVarExpr)
+            .setMethodName("getStatusCode")
+            .build();
+    testActualValueExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(testActualValueExpr)
+            .setMethodName("getCode")
+            .build();
+    catchBodyExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(testExpectedValueExpr, testActualValueExpr)
+            .build());
+
+    return catchBodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  /* =========================================
+   * Type creator methods.
+   * =========================================
+   */
 
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
@@ -407,6 +1330,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             Before.class,
             BeforeClass.class,
             BidiStreamingCallable.class,
+            ClientStreamingCallable.class,
             ExecutionException.class,
             GaxGrpcProperties.class,
             Generated.class,
@@ -417,19 +1341,18 @@ public class ServiceClientTestClassComposer implements ClassComposer {
             NoCredentialsProvider.class,
             Operation.class,
             ServerStreamingCallable.class,
-            Status.class,
             StatusCode.class,
             StatusRuntimeException.class,
             Test.class,
             UUID.class);
-    Map<String, TypeNode> staticTypes =
+    Map<String, TypeNode> STATIC_TYPES =
         concreteClazzes.stream()
             .collect(
                 Collectors.toMap(
                     c -> c.getSimpleName(),
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
 
-    staticTypes.putAll(
+    STATIC_TYPES.putAll(
         Arrays.asList(
                 "LocalChannelProvider",
                 "MockGrpcService",
@@ -445,7 +1368,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
                                 .setName(n)
                                 .setPakkage(GRPC_TESTING_PACKAGE)
                                 .build()))));
-    return staticTypes;
+    return STATIC_TYPES;
   }
 
   private static Map<String, TypeNode> createDefaultMethodNamesToTypes() {
@@ -470,7 +1393,7 @@ public class ServiceClientTestClassComposer implements ClassComposer {
         "defaultGrpcTransportProviderBuilder",
         typeMakerFn.apply(InstantiatingGrpcChannelProvider.Builder.class));
     javaMethodNameToReturnType.put(
-        "defaultTransportChannelProvider", staticTypes.get("TransportChannelProvider"));
+        "defaultTransportChannelProvider", STATIC_TYPES.get("TransportChannelProvider"));
     return javaMethodNameToReturnType;
   }
 
@@ -595,6 +1518,64 @@ public class ServiceClientTestClassComposer implements ClassComposer {
 
     return TypeNode.withReference(
         ConcreteReference.builder().setClazz(callSettingsClazz).setGenerics(generics).build());
+  }
+
+  private static TypeNode getCallableType(Method protoMethod) {
+    Preconditions.checkState(
+        !protoMethod.stream().equals(Method.Stream.NONE),
+        "No callable type exists for non-streaming methods.");
+
+    Class callableClazz = ClientStreamingCallable.class;
+    switch (protoMethod.stream()) {
+      case BIDI:
+        callableClazz = BidiStreamingCallable.class;
+        break;
+      case SERVER:
+        callableClazz = ServerStreamingCallable.class;
+        break;
+      case CLIENT:
+        // Fall through.
+      case NONE:
+        // Fall through
+      default:
+        // Fall through
+    }
+
+    List<Reference> generics = new ArrayList<>();
+    generics.add(protoMethod.inputType().reference());
+    generics.add(protoMethod.outputType().reference());
+
+    return TypeNode.withReference(
+        ConcreteReference.builder().setClazz(callableClazz).setGenerics(generics).build());
+  }
+
+  private static TypeNode findRepeatedPagedType(Message message) {
+    for (Field field : message.fields()) {
+      if (field.isRepeated() && !field.isMap()) {
+        Reference repeatedGenericRef = field.type().reference().generics().get(0);
+        return TypeNode.withReference(repeatedGenericRef);
+      }
+    }
+    return null;
+  }
+
+  private static String getCallableMethodName(Method protoMethod) {
+    Preconditions.checkState(
+        !protoMethod.stream().equals(Method.Stream.NONE),
+        "No callable type exists for non-streaming methods.");
+
+    switch (protoMethod.stream()) {
+      case BIDI:
+        return "bidiStreamingCall";
+      case SERVER:
+        return "serverStreamingCall";
+      case CLIENT:
+        // Fall through.
+      case NONE:
+        // Fall through
+      default:
+        return "clientStreamingCall";
+    }
   }
 
   private static String getClientClassName(String serviceName) {

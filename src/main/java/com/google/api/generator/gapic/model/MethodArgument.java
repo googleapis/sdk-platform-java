@@ -18,27 +18,24 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class MethodArgument implements Comparable<MethodArgument> {
+  // The method argument name.
   public abstract String name();
 
+  // The type. This can be different from the associated field (e.g. for resource references).
   public abstract TypeNode type();
 
-  // Records the path of nested types in descending order, excluding type() (which would have
+  // Additional metadata.
+  public abstract Field field();
+
+  // Records the path of nested fields in descending order, excluding type() (which would have
   // appeared as the last element).
-  public abstract ImmutableList<TypeNode> nestedTypes();
+  public abstract ImmutableList<Field> nestedFields();
 
-  // Returns true if this is a resource name helper tyep.
+  // Returns true if this is a resource name helper method argument.
   public abstract boolean isResourceNameHelper();
-
-  @Nullable
-  public abstract String description();
-
-  public boolean hasDescription() {
-    return description() != null;
-  }
 
   @Override
   public int compareTo(MethodArgument other) {
@@ -51,7 +48,7 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
 
   public static Builder builder() {
     return new AutoValue_MethodArgument.Builder()
-        .setNestedTypes(ImmutableList.of())
+        .setNestedFields(ImmutableList.of())
         .setIsResourceNameHelper(false);
   }
 
@@ -61,11 +58,11 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
 
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setNestedTypes(List<TypeNode> nestedTypes);
+    public abstract Builder setField(Field field);
+
+    public abstract Builder setNestedFields(List<Field> nestedFields);
 
     public abstract Builder setIsResourceNameHelper(boolean isResourceNameHelper);
-
-    public abstract Builder setDescription(String description);
 
     public abstract MethodArgument build();
   }

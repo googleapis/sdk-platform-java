@@ -25,7 +25,12 @@ public class MethodArgumentTest {
   @Test
   public void compareMethodArguments() {
     BiFunction<String, TypeNode, MethodArgument> methodArgFn =
-        (name, type) -> MethodArgument.builder().setName(name).setType(type).build();
+        (name, type) ->
+            MethodArgument.builder()
+                .setName(name)
+                .setType(type)
+                .setField(Field.builder().setName("foobar").setType(type).build())
+                .build();
 
     // Cursory sanity-check of type-only differences, since these are already covered in the
     // TypeNode test.
