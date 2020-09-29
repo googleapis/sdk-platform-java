@@ -69,12 +69,13 @@ public abstract class GeneralForStatement implements Statement {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    // Private setter.
     abstract Builder setInitializationExpr(AssignmentExpr initializationExpr);
-
+    // Private setter.
     abstract Builder setTerminationExpr(Expr terminationExpr);
-
+    // Private setter.
     abstract Builder setIncrementExpr(Expr incrementExpr);
-
+    // Private setter.
     abstract Builder setBody(List<Statement> body);
 
     abstract GeneralForStatement autoBuild();
