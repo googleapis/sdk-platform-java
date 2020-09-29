@@ -19,22 +19,18 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class GeneralForStatement implements Statement {
-  public abstract Expr initializationExpr();
+  @Nullable
+  public abstract AssignmentExpr initializationExpr();
 
-  // TODO(summerji): Integrate OperationExpr here. Start by uncommenting the following section to
-  // replace the localVariableExpr and maxSizeExpr getters after it.
-  /*
-  // Uses the same terminology as https://docs.oracle.com/javase/tutorial/java/nutsandbolts/for.html.
+  @Nullable
   public abstract Expr terminationExpr();
+
+  @Nullable
   public abstract Expr incrementExpr();
-  */
-
-  public abstract VariableExpr localVariableExpr();
-
-  public abstract Expr maxSizeExpr();
 
   public abstract ImmutableList<Statement> body();
 
@@ -43,14 +39,26 @@ public abstract class GeneralForStatement implements Statement {
     visitor.visit(this);
   }
 
-  // Convenience wrapper.
+  // incrementWith is convenience wrapper to generate index-base for-loop with lower and upper bound
+  // and post increment on variable, like code in ```for (int i = 0; i < getMax(); i++) {..}```
+  // TODO (developer): Add more convenience wrapper for the future generation needs.
   public static GeneralForStatement incrementWith(
-      VariableExpr variableExpr, Expr maxSizeExpr, List<Statement> body) {
-    // TODO(summerji): Do some integration here, in JavaWriterVisitor, in ImportWriterVisitor, and
-    // add more tests.
+      VariableExpr localVariableExpr,
+      ValueExpr initialValueExpr,
+      Expr maxSizeExpr,
+      List<Statement> body) {
     return builder()
-        .setLocalVariableExpr(variableExpr.toBuilder().setIsDecl(false).build())
-        .setMaxSizeExpr(maxSizeExpr)
+        .setInitializationExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(localVariableExpr)
+                .setValueExpr(initialValueExpr)
+                .build())
+        .setTerminationExpr(
+            RelationalOperationExpr.lessThanWithExprs(
+                localVariableExpr.toBuilder().setIsDecl(false).build(), maxSizeExpr))
+        .setIncrementExpr(
+            UnaryOperationExpr.postfixIncrementWithExpr(
+                localVariableExpr.toBuilder().setIsDecl(false).build()))
         .setBody(body)
         .build();
   }
@@ -61,22 +69,22 @@ public abstract class GeneralForStatement implements Statement {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setInitializationExpr(Expr initializationExpr);
+    abstract Builder setInitializationExpr(AssignmentExpr initializationExpr);
 
-    public abstract Builder setBody(List<Statement> body);
+    abstract Builder setTerminationExpr(Expr terminationExpr);
 
-    // Private.
-    abstract Builder setLocalVariableExpr(VariableExpr variableExpr);
+    abstract Builder setIncrementExpr(Expr incrementExpr);
 
-    abstract Builder setMaxSizeExpr(Expr maxSizeExpr);
-
-    abstract VariableExpr localVariableExpr();
+    abstract Builder setBody(List<Statement> body);
 
     abstract GeneralForStatement autoBuild();
 
     // Type-checking will be done in the sub-expressions.
     public GeneralForStatement build() {
-      VariableExpr varExpr = localVariableExpr();
+      GeneralForStatement generalForStatement = autoBuild();
+      VariableExpr varExpr = generalForStatement.initializationExpr().variableExpr();
+      Expr terminationExpr = generalForStatement.terminationExpr();
+      Expr incrementExpr = generalForStatement.incrementExpr();
       Preconditions.checkState(
           varExpr.scope().equals(ScopeNode.LOCAL),
           String.format(
@@ -87,16 +95,18 @@ public abstract class GeneralForStatement implements Statement {
           String.format(
               "Variable %s in a general for-loop cannot be static or final",
               varExpr.variable().identifier().name()));
-      setInitializationExpr(
-          AssignmentExpr.builder()
-              .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(
-                  ValueExpr.withValue(
-                      PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build()))
-              .build());
-      // TODO(summerji): Remove the following two lines.
-      // This temporary workaround will be removed soon, so it doesn't need a test.
-      setLocalVariableExpr(varExpr.toBuilder().setIsDecl(false).build());
+      Preconditions.checkState(
+          terminationExpr.type().equals(TypeNode.BOOLEAN),
+          "Terminal expression %s must be boolean-type expression.");
+      Preconditions.checkState(
+          (incrementExpr instanceof MethodInvocationExpr)
+              || (incrementExpr instanceof AssignmentExpr)
+              || (incrementExpr instanceof AssignmentOperationExpr)
+              // TODO(developer): Currently we only support postIncrement (i++), please add
+              // postDecrement, prefixIncrement, prefixIncrement if needs.
+              || (incrementExpr instanceof UnaryOperationExpr
+                  && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
+          "Increment expression %s must be expression statement.");
       return autoBuild();
     }
   }
