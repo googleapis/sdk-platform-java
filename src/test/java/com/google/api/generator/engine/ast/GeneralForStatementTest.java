@@ -21,7 +21,7 @@ import java.util.Collections;
 import org.junit.Test;
 
 public class GeneralForStatementTest {
-  /** ================================== incrementWith ========================================= */
+  /** ============================== incrementWith ====================================== */
   @Test
   public void validGeneralForStatement_basicIsDecl() {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
@@ -101,7 +101,7 @@ public class GeneralForStatementTest {
                 variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
   }
 
-  /** ============================== Set Three Expressions ================================== */
+  /** ============================ Set Three Expressions ================================ */
   @Test
   public void validGeneralForState_buildExprs() {
     VariableExpr variableExpr =
