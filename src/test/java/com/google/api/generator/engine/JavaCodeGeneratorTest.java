@@ -50,7 +50,10 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
+<<<<<<< HEAD
 import com.google.api.generator.test.framework.Utils;
+=======
+>>>>>>> 71ac86f54a96e310580f284901e71b01a3e1f771
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;

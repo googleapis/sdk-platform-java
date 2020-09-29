@@ -69,10 +69,6 @@ import javax.annotation.Generated;
 
 public class ResourceNameHelperClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sName";
-  private static final String SLASH = "/";
-  private static final String LEFT_BRACE = "{";
-  private static final String RIGHT_BRACE = "}";
-
   private static final String BUILDER_CLASS_HEADER_PATTERN = "Builder for %s.";
 
   private static final ResourceNameHelperClassComposer INSTANCE =
@@ -89,7 +85,8 @@ public class ResourceNameHelperClassComposer {
   }
 
   public GapicClass generate(ResourceName resourceName) {
-    List<List<String>> tokenHierarchies = parseTokenHierarchy(resourceName.patterns());
+    List<List<String>> tokenHierarchies =
+        ResourceNameTokenizer.parseTokenHierarchy(resourceName.patterns());
     Map<String, TypeNode> types = createDynamicTypes(resourceName, tokenHierarchies);
     List<VariableExpr> templateFinalVarExprs = createTemplateClassMembers(tokenHierarchies);
     Map<String, VariableExpr> patternTokenVarExprs =
@@ -1446,40 +1443,6 @@ public class ResourceNameHelperClassComposer {
     return index == 0
         ? types.get("Builder")
         : types.get(getBuilderTypeName(tokenHierarchies, index));
-  }
-
-  @VisibleForTesting
-  static List<List<String>> parseTokenHierarchy(List<String> patterns) {
-    List<String> nonSlashSepStrings = Arrays.asList("}_{", "}-{", "}.{", "}~{");
-
-    List<List<String>> tokenHierachies = new ArrayList<>();
-    for (String pattern : patterns) {
-      List<String> hierarchy = new ArrayList<>();
-      Set<String> vars = PathTemplate.create(pattern).vars();
-      String[] patternTokens = pattern.split(SLASH);
-      for (String patternToken : patternTokens) {
-        if (patternToken.startsWith(LEFT_BRACE) && patternToken.endsWith(RIGHT_BRACE)) {
-          String processedPatternToken = patternToken;
-
-          // Handle non-slash separators.
-          if (nonSlashSepStrings.stream().anyMatch(s -> patternToken.contains(s))) {
-            for (String str : nonSlashSepStrings) {
-              processedPatternToken = processedPatternToken.replace(str, "_");
-            }
-          } else {
-            // Handles wildcards.
-            processedPatternToken =
-                vars.stream()
-                    .filter(v -> patternToken.contains(v))
-                    .collect(Collectors.toList())
-                    .get(0);
-          }
-          hierarchy.add(processedPatternToken.replace("{", "").replace("}", ""));
-        }
-      }
-      tokenHierachies.add(hierarchy);
-    }
-    return tokenHierachies;
   }
 
   @VisibleForTesting

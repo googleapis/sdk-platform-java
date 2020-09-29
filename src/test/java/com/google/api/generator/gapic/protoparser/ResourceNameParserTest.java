@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.protobuf.Descriptors.Descriptor;
@@ -99,10 +99,7 @@ public class ResourceNameParserTest {
     assertTrue(resourceName.isOnlyWildcard());
     assertEquals(
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName("ResourceName")
-                .setPakkage("com.google.api.resourcenames")
-                .build()),
+            ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class)),
         resourceName.type());
   }
 
