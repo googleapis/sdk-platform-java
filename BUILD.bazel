@@ -1,10 +1,10 @@
-package(default_visibility = ["//visibility:public"])
-
 load(
     "//:gapic_generator_java.bzl",
     "google_java_format",
     "google_java_format_verification",
 )
+
+package(default_visibility = ["//visibility:public"])
 
 JAVA_SRCS = [
     "//src/main/java/com/google/api/generator:generator_files",
@@ -75,6 +75,7 @@ java_binary(
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+        "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
         "//src/test/java/com/google/api/generator/gapic/composer:common_resources_java_proto",
         "@com_google_guava_guava//:com_google_guava_guava",
         "@com_google_api_gax_java//gax",

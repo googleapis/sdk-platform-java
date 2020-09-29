@@ -53,7 +53,7 @@ import org.junit.Test;
 public class ServiceStubSettingsClassComposerTest {
 
   @Test
-  public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() {
+  public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
     FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
     assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
@@ -145,7 +145,7 @@ public class ServiceStubSettingsClassComposerTest {
   }
 
   @Test
-  public void generateServiceStubSettingsClasses_basic() {
+  public void generateServiceStubSettingsClasses_basic() throws IOException {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertEquals(echoServiceDescriptor.getName(), "Echo");

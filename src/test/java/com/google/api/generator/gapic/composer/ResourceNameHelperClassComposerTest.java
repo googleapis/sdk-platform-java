@@ -53,94 +53,12 @@ public class ResourceNameHelperClassComposerTest {
   }
 
   @Test
-  public void parseTokenHierarchy_basic() {
-    List<String> patterns =
-        Arrays.asList(
-            "projects/{project}/locations/{location}/autoscalingPolicies/{autoscaling_policy}",
-            "projects/{project}/regions/{region}/autoscalingPolicies/{autoscaling_policy}",
-            "projects/{project}/autoscalingPolicies/{autoscaling_policy}");
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
-    assertEquals(3, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0))
-        .containsExactly("project", "location", "autoscaling_policy");
-    assertThat(tokenHierarchies.get(1)).containsExactly("project", "region", "autoscaling_policy");
-    assertThat(tokenHierarchies.get(2)).containsExactly("project", "autoscaling_policy");
-  }
-
-  @Test
-  public void parseTokenHierarchy_wildcards() {
-    List<String> patterns =
-        Arrays.asList(
-            "projects/{project}/metricDescriptors/{metric_descriptor=**}",
-            "organizations/{organization}/metricDescriptors/{metric_descriptor=**}",
-            "folders/{folder=**}/metricDescriptors/{metric_descriptor}");
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
-    assertEquals(3, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0)).containsExactly("project", "metric_descriptor");
-    assertThat(tokenHierarchies.get(1)).containsExactly("organization", "metric_descriptor");
-    assertThat(tokenHierarchies.get(2)).containsExactly("folder", "metric_descriptor");
-  }
-
-  @Test
-  public void parseTokenHierarchy_singletonCollection() {
-    List<String> patterns =
-        Arrays.asList(
-            "projects/{project}/agent/sessions/{session}",
-            "projects/{project}/agent/environments/{environment}/users/{user}/sessions/{session}");
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
-    assertEquals(2, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0)).containsExactly("project", "session");
-    assertThat(tokenHierarchies.get(1))
-        .containsExactly("project", "environment", "user", "session");
-  }
-
-  @Test
-  public void parseTokenHierarchy_singletonCollectionAndNonSlashSeparators() {
-    List<String> patterns =
-        Arrays.asList(
-            "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}",
-            "users/{user}/profile/blurbs/{blurb}",
-            "rooms/{room}/blurbs/{blurb}",
-            "users/{user}/profile/blurbs/legacy/{legacy_document}_{blurb}",
-            "users/{user}/profile/blurbs/legacy/{legacy_book}-{blurb}",
-            "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}");
-
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
-    assertEquals(6, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0)).containsExactly("user", "legacy_user_blurb");
-    assertThat(tokenHierarchies.get(1)).containsExactly("user", "blurb");
-    assertThat(tokenHierarchies.get(2)).containsExactly("room", "blurb");
-    assertThat(tokenHierarchies.get(3)).containsExactly("user", "legacy_document_blurb");
-    assertThat(tokenHierarchies.get(4)).containsExactly("user", "legacy_book_blurb");
-    assertThat(tokenHierarchies.get(5)).containsExactly("room", "legacy_room_blurb");
-  }
-
-  @Test
-  public void parseTokenHierarchy_invalidPatterns() {
-    List<String> patterns =
-        Arrays.asList(
-            "projects/{project}/agent/sessions/{session}/anotherSingleton",
-            "{project}/agent/environments/{environment}/users/{user}/sessions/{session}");
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
-    assertEquals(2, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0)).containsExactly("project", "session");
-    assertThat(tokenHierarchies.get(1))
-        .containsExactly("project", "environment", "user", "session");
-  }
-
-  @Test
   public void getTokenSet_basic() {
     List<String> patterns =
         Arrays.asList(
             "projects/{project}/agent/sessions/{session}",
             "projects/{project}/agent/environments/{environment}/users/{user}/sessions/{session}");
-    List<List<String>> tokenHierarchies =
-        ResourceNameHelperClassComposer.parseTokenHierarchy(patterns);
+    List<List<String>> tokenHierarchies = ResourceNameTokenizer.parseTokenHierarchy(patterns);
 
     Set<String> tokenSet = ResourceNameHelperClassComposer.getTokenSet(tokenHierarchies);
     assertEquals(

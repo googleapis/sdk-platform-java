@@ -65,17 +65,17 @@ public class MethodSignatureParser {
       // stringSig.split: ["content", "error"].
       for (String argumentName : stringSig.split(METHOD_SIGNATURE_DELIMITER)) {
         // For resource names, this will be empty.
-        List<TypeNode> argumentTypePathAcc = new ArrayList<>();
+        List<Field> argumentFieldPathAcc = new ArrayList<>();
         // There should be more than one type returned only when we encounter a reousrce name.
-        Map<TypeNode, String> argumentTypes =
-            parseTypeAndCommentFromArgumentName(
+        Map<TypeNode, Field> argumentTypes =
+            parseTypeFromArgumentName(
                 argumentName,
                 servicePackage,
                 inputMessage,
                 messageTypes,
                 resourceNames,
                 patternsToResourceNames,
-                argumentTypePathAcc,
+                argumentFieldPathAcc,
                 outputArgResourceNames);
         int dotLastIndex = argumentName.lastIndexOf(DOT);
         String actualArgumentName =
@@ -88,11 +88,11 @@ public class MethodSignatureParser {
                     e ->
                         MethodArgument.builder()
                             .setName(actualArgumentName)
-                            .setDescription(e.getValue()) // May be null.
                             .setType(e.getKey())
+                            .setField(e.getValue())
                             .setIsResourceNameHelper(
                                 argumentTypes.size() > 1 && !e.getKey().equals(TypeNode.STRING))
-                            .setNestedTypes(argumentTypePathAcc)
+                            .setNestedFields(argumentFieldPathAcc)
                             .build())
                 .collect(Collectors.toList()));
       }
@@ -143,18 +143,17 @@ public class MethodSignatureParser {
     return methodArgs;
   }
 
-  private static Map<TypeNode, String> parseTypeAndCommentFromArgumentName(
+  private static Map<TypeNode, Field> parseTypeFromArgumentName(
       String argumentName,
       String servicePackage,
       Message inputMessage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Map<String, ResourceName> patternsToResourceNames,
-      List<TypeNode> argumentTypePathAcc,
+      List<Field> argumentFieldPathAcc,
       Set<ResourceName> outputArgResourceNames) {
 
-    // Comment values may be null.
-    Map<TypeNode, String> typeToComment = new HashMap<>();
+    Map<TypeNode, Field> typeToField = new HashMap<>();
     int dotIndex = argumentName.indexOf(DOT);
     if (dotIndex < 1) {
       Field field = inputMessage.fieldMap().get(argumentName);
@@ -164,8 +163,8 @@ public class MethodSignatureParser {
               "Field %s not found from input message %s values %s",
               argumentName, inputMessage.name(), inputMessage.fieldMap().keySet()));
       if (!field.hasResourceReference()) {
-        typeToComment.put(field.type(), field.description());
-        return typeToComment;
+        typeToField.put(field.type(), field);
+        return typeToField;
       }
 
       // Parse the resource name tyeps.
@@ -177,14 +176,10 @@ public class MethodSignatureParser {
               resourceNames,
               patternsToResourceNames);
       outputArgResourceNames.addAll(resourceNameArgs);
-      typeToComment.put(
-          TypeNode.STRING,
-          resourceNameArgs.isEmpty() ? null : resourceNameArgs.get(0).description());
-      typeToComment.putAll(
-          resourceNameArgs.stream()
-              .collect(
-                  Collectors.toMap(r -> r.type(), r -> r.hasDescription() ? r.description() : "")));
-      return typeToComment;
+      typeToField.put(TypeNode.STRING, field);
+      typeToField.putAll(
+          resourceNameArgs.stream().collect(Collectors.toMap(r -> r.type(), r -> field)));
+      return typeToField;
     }
 
     Preconditions.checkState(
@@ -197,6 +192,7 @@ public class MethodSignatureParser {
     // Must be a sub-message for a type's subfield to be valid.
     Field firstField = inputMessage.fieldMap().get(firstFieldName);
 
+    // Validate the field into which we're descending.
     Preconditions.checkState(
         !firstField.isRepeated(),
         String.format("Cannot descend into repeated field %s", firstField.name()));
@@ -213,15 +209,15 @@ public class MethodSignatureParser {
         String.format(
             "Message type %s for field reference %s invalid", firstFieldTypeName, firstFieldName));
 
-    argumentTypePathAcc.add(firstFieldType);
-    return parseTypeAndCommentFromArgumentName(
+    argumentFieldPathAcc.add(firstField);
+    return parseTypeFromArgumentName(
         remainingArgumentName,
         servicePackage,
         firstFieldMessage,
         messageTypes,
         resourceNames,
         patternsToResourceNames,
-        argumentTypePathAcc,
+        argumentFieldPathAcc,
         outputArgResourceNames);
   }
 
