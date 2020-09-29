@@ -82,31 +82,38 @@ public abstract class GeneralForStatement implements Statement {
     // Type-checking will be done in the sub-expressions.
     public GeneralForStatement build() {
       GeneralForStatement generalForStatement = autoBuild();
-      VariableExpr varExpr = generalForStatement.initializationExpr().variableExpr();
+      AssignmentExpr initializationExpr = generalForStatement.initializationExpr();
       Expr terminationExpr = generalForStatement.terminationExpr();
       Expr incrementExpr = generalForStatement.incrementExpr();
-      Preconditions.checkState(
-          varExpr.scope().equals(ScopeNode.LOCAL),
-          String.format(
-              "Variable %s in a general for-loop cannot have a non-local scope",
-              varExpr.variable().identifier().name()));
-      Preconditions.checkState(
-          !varExpr.isStatic() && !varExpr.isFinal(),
-          String.format(
-              "Variable %s in a general for-loop cannot be static or final",
-              varExpr.variable().identifier().name()));
-      Preconditions.checkState(
-          terminationExpr.type().equals(TypeNode.BOOLEAN),
-          "Terminal expression %s must be boolean-type expression.");
-      Preconditions.checkState(
-          (incrementExpr instanceof MethodInvocationExpr)
-              || (incrementExpr instanceof AssignmentExpr)
-              || (incrementExpr instanceof AssignmentOperationExpr)
-              // TODO(developer): Currently we only support postIncrement (i++), please add
-              // postDecrement, prefixIncrement, prefixIncrement if needs.
-              || (incrementExpr instanceof UnaryOperationExpr
-                  && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
-          "Increment expression %s must be expression statement.");
+      if (initializationExpr != null) {
+        VariableExpr varExpr = initializationExpr.variableExpr();
+        Preconditions.checkState(
+            varExpr.scope().equals(ScopeNode.LOCAL),
+            String.format(
+                "Variable %s in a general for-loop cannot have a non-local scope",
+                varExpr.variable().identifier().name()));
+        Preconditions.checkState(
+            !varExpr.isStatic() && !varExpr.isFinal(),
+            String.format(
+                "Variable %s in a general for-loop cannot be static or final",
+                varExpr.variable().identifier().name()));
+      }
+      if (terminationExpr != null) {
+        Preconditions.checkState(
+            terminationExpr.type().equals(TypeNode.BOOLEAN),
+            "Terminal expression %s must be boolean-type expression.");
+      }
+      if (incrementExpr != null) {
+        Preconditions.checkState(
+            (incrementExpr instanceof MethodInvocationExpr)
+                || (incrementExpr instanceof AssignmentExpr)
+                || (incrementExpr instanceof AssignmentOperationExpr)
+                // TODO(developer): Currently we only support postIncrement (i++), please add
+                // postDecrement, prefixIncrement, prefixIncrement if needs.
+                || (incrementExpr instanceof UnaryOperationExpr
+                    && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
+            "Increment expression %s must be expression statement.");
+      }
       return autoBuild();
     }
   }
