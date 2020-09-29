@@ -28,6 +28,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.test.framework.Assert;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -49,9 +50,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BatchingDescriptorComposerTest {
-  private static final String TESTFILES_DIRECTORY =
-      "src/test/java/com/google/api/generator/gapic/testdata/";
-
   private JavaWriterVisitor writerVisitor;
 
   @Before
@@ -78,13 +76,13 @@ public class BatchingDescriptorComposerTest {
             serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     String filename = "pubsub_gapic.yaml";
-    Path path = Paths.get(TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "pubsub_grpc_service_config.json";
-    Path jsonPath = Paths.get(TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
     Optional<GapicServiceConfig> configOpt =
         ServiceConfigParser.parse(jsonPath.toString(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
@@ -101,74 +99,11 @@ public class BatchingDescriptorComposerTest {
             method, batchingSetting, messageTypes);
 
     batchingDescriptorExpr.accept(writerVisitor);
-    String expected =
-        createLines(
-            "private static final BatchingDescriptor<PublishRequest, PublishResponse>"
-                + " PUBLISH_BATCHING_DESC = new BatchingDescriptor<PublishRequest,"
-                + " PublishResponse>() {\n",
-            "@Override\n",
-            "public PartitionKey getBatchPartitionKey(PublishRequest request) {\n",
-            "return new PartitionKey(request.getTopic());\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public RequestBuilder<PublishRequest> getRequestBuilder() {\n",
-            "return new RequestBuilder<PublishRequest>() {\n",
-            "private PublishRequest.Builder builder;\n",
-            "@Override\n",
-            "public void appendRequest(PublishRequest request) {\n",
-            "if (Objects.isNull(builder)) {\n",
-            "builder = request.toBuilder();\n",
-            "} else {\n",
-            "builder.addAllMessages(request.getMessagesList());\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public PublishRequest build() {\n",
-            "return builder.build();\n",
-            "}\n",
-            "\n",
-            "};\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public void splitResponse(PublishResponse batchResponse, Collection<? extends"
-                + " BatchedRequestIssuer<PublishResponse>> batch) {\n",
-            "int batchMessageIndex = 0;\n",
-            "for (BatchedRequestIssuer<PublishResponse> responder : batch) {\n",
-            "List<String> subresponseElements = new ArrayList<>();\n",
-            "long subresponseCount = responder.getMessageCount();\n",
-            "for (int i = 0; i < subresponseCount; i++) {\n",
-            "subresponseElements.add(batchResponse.getMessageIds(batchMessageIndex++));\n",
-            "}\n",
-            "PublishResponse response ="
-                + " PublishResponse.newBuilder().addAllMessageIds(subresponseElements).build();\n",
-            "responder.setResponse(response);\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public void splitException(Throwable throwable, Collection<? extends"
-                + " BatchedRequestIssuer<PublishResponse>> batch) {\n",
-            "for (BatchedRequestIssuer<PublishResponse> responder : batch) {\n",
-            "responder.setException(throwable);\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public long countElements(PublishRequest request) {\n",
-            "return request.getMessagesCount();\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public long countBytes(PublishRequest request) {\n",
-            "return request.getSerializedSize();\n",
-            "}\n",
-            "\n",
-            "}");
-
-    assertEquals(expected, writerVisitor.write());
+    Path goldenFilePath =
+        Paths.get(
+            ComposerConstants.GOLDENFILES_DIRECTORY,
+            "BatchingDescriptorComposerTestSubresponse.golden");
+    Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }
 
   @Test
@@ -197,13 +132,13 @@ public class BatchingDescriptorComposerTest {
             serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     String filename = "logging_gapic.yaml";
-    Path path = Paths.get(TESTFILES_DIRECTORY, filename);
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
     assertTrue(batchingSettingsOpt.isPresent());
 
     String jsonFilename = "logging_grpc_service_config.json";
-    Path jsonPath = Paths.get(TESTFILES_DIRECTORY, jsonFilename);
+    Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
     Optional<GapicServiceConfig> configOpt =
         ServiceConfigParser.parse(jsonPath.toString(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
@@ -220,68 +155,11 @@ public class BatchingDescriptorComposerTest {
             method, batchingSetting, messageTypes);
 
     batchingDescriptorExpr.accept(writerVisitor);
-    String expected =
-        createLines(
-            "private static final BatchingDescriptor<WriteLogEntriesRequest,"
-                + " WriteLogEntriesResponse> WRITE_LOG_ENTRIES_BATCHING_DESC = new"
-                + " BatchingDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>() {\n",
-            "@Override\n",
-            "public PartitionKey getBatchPartitionKey(WriteLogEntriesRequest request) {\n",
-            "return new PartitionKey(request.getLogName(), request.getResource(),"
-                + " request.getLabels());\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public RequestBuilder<WriteLogEntriesRequest> getRequestBuilder() {\n",
-            "return new RequestBuilder<WriteLogEntriesRequest>() {\n",
-            "private WriteLogEntriesRequest.Builder builder;\n",
-            "@Override\n",
-            "public void appendRequest(WriteLogEntriesRequest request) {\n",
-            "if (Objects.isNull(builder)) {\n",
-            "builder = request.toBuilder();\n",
-            "} else {\n",
-            "builder.addAllEntries(request.getEntriesList());\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public WriteLogEntriesRequest build() {\n",
-            "return builder.build();\n",
-            "}\n",
-            "\n",
-            "};\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public void splitResponse(WriteLogEntriesResponse batchResponse, Collection<? extends"
-                + " BatchedRequestIssuer<WriteLogEntriesResponse>> batch) {\n",
-            "for (BatchedRequestIssuer<WriteLogEntriesResponse> responder : batch) {\n",
-            "WriteLogEntriesResponse response = WriteLogEntriesResponse.newBuilder().build();\n",
-            "responder.setResponse(response);\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public void splitException(Throwable throwable, Collection<? extends"
-                + " BatchedRequestIssuer<WriteLogEntriesResponse>> batch) {\n",
-            "for (BatchedRequestIssuer<WriteLogEntriesResponse> responder : batch) {\n",
-            "responder.setException(throwable);\n",
-            "}\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public long countElements(WriteLogEntriesRequest request) {\n",
-            "return request.getEntriesCount();\n",
-            "}\n",
-            "\n",
-            "@Override\n",
-            "public long countBytes(WriteLogEntriesRequest request) {\n",
-            "return request.getSerializedSize();\n",
-            "}\n",
-            "\n",
-            "}");
-
-    assertEquals(expected, writerVisitor.write());
+    Path goldenFilePath =
+        Paths.get(
+            ComposerConstants.GOLDENFILES_DIRECTORY,
+            "BatchingDescriptorComposerTestNoSubresponse.golden");
+    Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }
 
   private static Method findMethod(Service service, String methodName) {

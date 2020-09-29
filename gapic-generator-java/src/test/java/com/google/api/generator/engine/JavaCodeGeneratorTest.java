@@ -14,8 +14,6 @@
 
 package com.google.api.generator.engine;
 
-import static junit.framework.Assert.assertEquals;
-
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -51,8 +49,11 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.test.framework.Assert;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,6 +62,8 @@ import java.util.Stack;
 import org.junit.Test;
 
 public class JavaCodeGeneratorTest {
+  private static final String GOLDENFILES_DIRECTORY =
+      "src/test/java/com/google/api/generator/engine/goldens/";
   // Create shared VaporReferences.
   private static final VaporReference stubRef = createVaporReference("com.google.gax.grpc", "Stub");
   private static final VaporReference bookKindRef =
@@ -169,7 +172,8 @@ public class JavaCodeGeneratorTest {
             .build();
     JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     libraryServiceStubClass.accept(javaWriterVisitor);
-    assertEquals(javaWriterVisitor.write(), EXPECTED_CLASS_STRING);
+    Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, "JavaCodeGeneratorTest.golden");
+    Assert.assertCodeEquals(goldenFilePath, javaWriterVisitor.write());
   }
 
   // Private helpers.
@@ -744,156 +748,4 @@ public class JavaCodeGeneratorTest {
             Arrays.asList(createOverrideCreateBookMethod(novelClassRef, bookKindNovelEnumExpr)))
         .build();
   }
-
-  private static final String EXPECTED_CLASS_STRING =
-      "/*\n"
-          + " * Copyright 2020 Gagpic-generator-java\n"
-          + " *\n"
-          + " * Licensed description and license version 2.0 (the \"License\");\n"
-          + " *\n"
-          + " *    https://www.foo.bar/licenses/LICENSE-2.0\n"
-          + " *\n"
-          + " * Software distributed under the License is distributed on an \"AS IS\" BASIS.\n"
-          + " * See the License for the specific language governing permissions and\n"
-          + " * limitations under the License.\n"
-          + " */\n"
-          + "\n"
-          + "package com.google.example.library.core;\n"
-          + "\n"
-          + "import com.google.exmaple.library.LibraryService;\n"
-          + "import com.google.exmaple.library.core.LibraryServiceStub;\n"
-          + "import com.google.exmaple.library.v1.BookKind;\n"
-          + "import com.google.gax.grpc.Stub;\n"
-          + "import java.io.FileWriter;\n"
-          + "import java.io.IOException;\n"
-          + "import java.util.ArrayList;\n"
-          + "import java.util.HashMap;\n"
-          + "import java.util.List;\n"
-          + "import java.util.Stack;\n"
-          + "\n"
-          + "/**\n"
-          + " * Service Description: This is a test comment.\n"
-          + " *\n"
-          + " * <pre><code>\n"
-          + " * LibraryServiceStub libServiceStub = new LibraryServiceStub()\n"
-          + " * </code></pre>\n"
-          + " *\n"
-          + " * <ol>\n"
-          + " *   <li>A \"flattened\" method.\n"
-          + " *   <li>A \"request object\" method.\n"
-          + " *   <li>A \"callable\" method.\n"
-          + " * </ol>\n"
-          + " *\n"
-          + " * @deprecated This is a deprecated message.\n"
-          + " */\n"
-          + "@SuppressWarnings(\"all\")\n"
-          + "@Deprecated\n"
-          + "@Override\n"
-          + "public class LibraryServiceStub extends Stub implements LibraryService {\n"
-          + "  private static final String serviceName = \"LibraryServiceStub\";\n"
-          + "  protected List<Shelf> shelfList;\n"
-          + "  public static HashMap<String, Shelf> shelfMap;\n"
-          + "\n"
-          + "  public LibraryServiceStub() {\n"
-          + "    super();\n"
-          + "    this.shelfList = new ArrayList<>();\n"
-          + "    shelfMap = new HashMap<>();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public String addShelf(String name, double seriesDoubleNum) {\n"
-          + "    int seriesNum = ((int) seriesDoubleNum);\n"
-          + "    if (condition) {\n"
-          + "      return \"Series number equals to max int value.\";\n"
-          + "    }\n"
-          + "    shelfList.add(new Shelf(name, seriesNum));\n"
-          + "    if (shelfMap.containsKey(name)) {\n"
-          + "      return \"Shelf is already existing in the map.\";\n"
-          + "    }\n"
-          + "    shelfMap.put(name, new Shelf(name, seriesNum));\n"
-          + "    return \"Shelf added.\";\n"
-          + "  }\n"
-          + "\n"
-          + "  public void updateShelfMap(Shelf newShelf) throws Exception {\n"
-          + "    if (shelfMap.containsKey(newShelf.shelfName)) {\n"
-          + "      shelfMap.put(newShelf.shelfName, newShelf);\n"
-          + "    } else {\n"
-          + "      throw new Exception(\"Updating shelf is not existing in the map\");\n"
-          + "    }\n"
-          + "  }\n"
-          + "\n"
-          + "  public void printShelfListToFile(String fileName) {\n"
-          + "    StringBuilder sb = new StringBuilder();\n"
-          + "    try {\n"
-          + "      FileWriter fileWriter = new FileWriter(fileName);\n"
-          + "      for (Shelf s : shelfList) {\n"
-          + "        sb.append(s.shelfName).append(s.seriesNum);\n"
-          + "      }\n"
-          + "      fileName.write(sb.toString());\n"
-          + "      fileName.close();\n"
-          + "    } catch (IOException e) {\n"
-          + "      e.printStackTrace();\n"
-          + "    }\n"
-          + "  }\n"
-          + "\n"
-          + "  /**\n"
-          + "   * Add books to Shelf and check if there is a novel, return string message as"
-          + " whether novel books\n"
-          + "   * are added to the shelf.\n"
-          + "   *\n"
-          + "   * @param shelf The Shelf object to which books will put.\n"
-          + "   * @param stack The Stack of the BookKinds.\n"
-          + "   */\n"
-          + "  public String addBooksContainsNovel(Shelf shelf, Stack<BookKind> stack) {\n"
-          + "    boolean containsNovel = false;\n"
-          + "    while (stack.isEmpty()) {\n"
-          + "      Book addedBook = addBookToShelf(stack.pop(), shelf);\n"
-          + "      if (addedBook instanceof Novel) {\n"
-          + "        containsNovel = true;\n"
-          + "      }\n"
-          + "    }\n"
-          + "    return containsNovel ? \"Added novels\" : \"No novels added\";\n"
-          + "  }\n"
-          + "\n"
-          + "  // Private helper.\n"
-          + "  private Book addBookToShelf(BookKind bookKind, Shelf shelf) {\n"
-          + "    Book book =\n"
-          + "        new Book() {\n"
-          + "          @Override\n"
-          + "          public void createBook(int seriesNum, BookKind bookKind) {\n"
-          + "            this.seriesNum = seriesNum;\n"
-          + "            this.bookKind = bookKind;\n"
-          + "          }\n"
-          + "        };\n"
-          + "    return book;\n"
-          + "  }\n"
-          + "\n"
-          + "  public class Shelf {\n"
-          + "    public String shelfName;\n"
-          + "    public int seriesNum;\n"
-          + "    public String shelfServiceName = serviceName;\n"
-          + "\n"
-          + "    public Shelf(String shelfName, int seriesNum) {\n"
-          + "      this.shelfName = shelfName;\n"
-          + "      this.seriesNum = seriesNum;\n"
-          + "    }\n"
-          + "  }\n"
-          + "\n"
-          + "  // Test nested abstract class and abstract method.\n"
-          + "  public abstract class Book {\n"
-          + "    public BookKind bookKind;\n"
-          + "    public int seriesNum;\n"
-          + "\n"
-          + "    public abstract void createBook(int seriesNum, BookKind bookKind);\n"
-          + "  }\n"
-          + "\n"
-          + "  public class Novel extends Book {\n"
-          + "\n"
-          + "    @Override\n"
-          + "    public void createBook(int seriesNum, BookKind bookKind) {\n"
-          + "      this.seriesNum = seriesNum;\n"
-          + "      this.bookKind = BookKind.NOVEL;\n"
-          + "    }\n"
-          + "  }\n"
-          + "}\n";
 }
