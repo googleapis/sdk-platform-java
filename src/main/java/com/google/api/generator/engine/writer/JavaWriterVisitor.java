@@ -540,17 +540,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     semicolon();
     space();
 
-    generalForStatement.localVariableExpr().accept(this);
-    space();
-    buffer.append(LEFT_ANGLE);
-    space();
-    generalForStatement.maxSizeExpr().accept(this);
+    generalForStatement.terminationExpr().accept(this);
     semicolon();
     space();
 
-    generalForStatement.localVariableExpr().accept(this);
-    // TODO(summerji): Remove the following temporary workaround.
-    buffer.append("++");
+    generalForStatement.incrementExpr().accept(this);
     rightParen();
     space();
     leftBrace();

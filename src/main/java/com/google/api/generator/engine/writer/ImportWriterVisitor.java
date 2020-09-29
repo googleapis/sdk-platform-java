@@ -281,8 +281,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(GeneralForStatement generalForStatement) {
     generalForStatement.initializationExpr().accept(this);
-    generalForStatement.localVariableExpr().accept(this);
-    generalForStatement.maxSizeExpr().accept(this);
+    generalForStatement.terminationExpr().accept(this);
+    generalForStatement.incrementExpr().accept(this);
     statements(generalForStatement.body());
   }
 

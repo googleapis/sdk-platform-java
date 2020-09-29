@@ -21,18 +21,20 @@ import java.util.Collections;
 import org.junit.Test;
 
 public class GeneralForStatementTest {
-
+  /** ================================== incrementWith ========================================= */
   @Test
   public void validGeneralForStatement_basicIsDecl() {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     GeneralForStatement.incrementWith(
-        variableExpr, maxSizeExpr, Arrays.asList(createBodyStatement()));
+        variableExpr, initValue, maxSizeExpr, Arrays.asList(createBodyStatement()));
   }
 
   @Test
@@ -40,12 +42,14 @@ public class GeneralForStatementTest {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(false).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     GeneralForStatement.incrementWith(
-        variableExpr, maxSizeExpr, Arrays.asList(createBodyStatement()));
+        variableExpr, initValue, maxSizeExpr, Arrays.asList(createBodyStatement()));
   }
 
   @Test
@@ -53,25 +57,190 @@ public class GeneralForStatementTest {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(false).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
-    GeneralForStatement.incrementWith(variableExpr, maxSizeExpr, Collections.emptyList());
+    GeneralForStatement.incrementWith(
+        variableExpr, initValue, maxSizeExpr, Collections.emptyList());
   }
 
   @Test
-  public void invalidForStatement() {
-    Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
+  public void invalidForStatement_privateVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setScope(ScopeNode.PRIVATE).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     assertThrows(
         IllegalStateException.class,
         () ->
-            GeneralForStatement.incrementWith(variableExpr, maxSizeExpr, Collections.emptyList()));
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
+  @Test
+  public void invalidForStatement_staticAndFinalVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsFinal(true).setIsStatic(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
+  /** ============================== Set Three Expressions ================================== */
+  @Test
+  public void validGeneralForState_buildExprs() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    RelationalOperationExpr terminationExpr =
+        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
+    UnaryOperationExpr incrementExpr = UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
+    GeneralForStatement.builder()
+        .setInitializationExpr(initializationExpr)
+        .setTerminationExpr(terminationExpr)
+        .setIncrementExpr(incrementExpr)
+        .build();
+  }
+
+  @Test
+  public void validGeneralForState_incrementExprIsMethodInvocationEpxr() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    RelationalOperationExpr terminationExpr =
+        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
+    MethodInvocationExpr incrementExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("doNothing")
+            .setReturnType(TypeNode.INT)
+            .build();
+    GeneralForStatement.builder()
+        .setInitializationExpr(initializationExpr)
+        .setTerminationExpr(terminationExpr)
+        .setIncrementExpr(incrementExpr)
+        .build();
+  }
+
+  @Test
+  public void validGeneralForState_incrementExprIsAssignmentOperationExpr() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    RelationalOperationExpr terminationExpr =
+        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
+    AssignmentOperationExpr incrementExpr =
+        AssignmentOperationExpr.xorAssignmentWithExprs(
+            variableExpr,
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setValue("5").setType(TypeNode.INT).build()));
+    GeneralForStatement.builder()
+        .setInitializationExpr(initializationExpr)
+        .setTerminationExpr(terminationExpr)
+        .setIncrementExpr(incrementExpr)
+        .build();
+  }
+
+  @Test
+  public void validGeneralForState_incrementExprIsAssignmentExpr() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    RelationalOperationExpr terminationExpr =
+        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
+    AssignmentExpr incrementExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(variableExpr)
+            .setValueExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("5").setType(TypeNode.INT).build()))
+            .build();
+    GeneralForStatement.builder()
+        .setInitializationExpr(initializationExpr)
+        .setTerminationExpr(terminationExpr)
+        .setIncrementExpr(incrementExpr)
+        .build();
+  }
+
+  @Test
+  public void invalidGeneralForState_buildTerminalExprNotBooleanType() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    AssignmentOperationExpr terminationExpr =
+        AssignmentOperationExpr.multiplyAssignmentWithExprs(variableExpr, maxValueExpr);
+    UnaryOperationExpr incrementExpr = UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.builder()
+                .setInitializationExpr(initializationExpr)
+                .setTerminationExpr(terminationExpr)
+                .setIncrementExpr(incrementExpr)
+                .build());
+  }
+
+  @Test
+  public void invalidGeneralForState_buildIncrementExprIsNotExprStatement() {
+    VariableExpr variableExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+    AssignmentExpr initializationExpr =
+        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
+    RelationalOperationExpr terminationExpr =
+        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
+    RelationalOperationExpr incrementExpr =
+        RelationalOperationExpr.equalToWithExprs(variableExpr, maxValueExpr);
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.builder()
+                .setInitializationExpr(initializationExpr)
+                .setTerminationExpr(terminationExpr)
+                .setIncrementExpr(incrementExpr)
+                .build());
   }
 
   private static Statement createBodyStatement() {
