@@ -36,8 +36,6 @@ updated_golden(
     name = "JavaCodeGeneratorTest_update",
     srcs = [
         ":engine_files",
-        "//src/test/java/com/google/api/generator/engine/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
     test_class_name = TEST_CLASS_NAME,
 )
