@@ -80,6 +80,15 @@ public class ExprStatementTest {
   }
 
   @Test
+  public void validExprStatement_assignmentOperationExpr() {
+    VariableExpr lhsExpr =
+        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
+    ValueExpr rhsExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("5").setType(TypeNode.INT).build());
+    assertValidExprStatement(AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
+  }
+
+  @Test
   public void invalidExprStatement_variable() {
     Variable variable = Variable.builder().setType(TypeNode.INT).setName("libraryClient").build();
     VariableExpr varExpr = VariableExpr.builder().setVariable(variable).build();

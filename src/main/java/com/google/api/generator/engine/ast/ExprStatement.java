@@ -52,6 +52,7 @@ public abstract class ExprStatement implements Statement {
             (expr instanceof MethodInvocationExpr)
                 || (expr instanceof ReferenceConstructorExpr)
                 || (expr instanceof AssignmentExpr)
+                || (expr instanceof AssignmentOperationExpr)
                 || (expr instanceof ThrowExpr)
                 || (expr instanceof ReturnExpr)
                 || (expr instanceof UnaryOperationExpr
