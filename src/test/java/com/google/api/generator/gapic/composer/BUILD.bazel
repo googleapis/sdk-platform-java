@@ -1,4 +1,4 @@
-load("//:rules_bazel/java/java_diff_test.bzl", "updated_golden")
+load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -92,7 +92,7 @@ TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
 # to update goldens as expected generated code.
 # `ServiceClient*` tests are not supported now since they are still in active development.
 
-[updated_golden(
+[golden_update(
     name = test_name + "_update",
     srcs = [
         ":composer_files",

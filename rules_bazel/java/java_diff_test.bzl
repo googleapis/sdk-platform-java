@@ -73,7 +73,7 @@ overwritten_golden = rule(
     implementation = _overwritten_golden_impl,
 )
 
-def updated_golden(name, test_class_name, srcs):
+def golden_update(name, test_class_name, srcs):
     junit_output_name = "%s_output" % name
     junit_output_zip(
         name = junit_output_name,
