@@ -50,6 +50,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -172,6 +173,8 @@ public class JavaCodeGeneratorTest {
             .build();
     JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     libraryServiceStubClass.accept(javaWriterVisitor);
+    Utils.saveCodegenToFile(
+        this.getClass(), "JavaCodeGeneratorTest.golden", javaWriterVisitor.write());
     Path goldenFilePath = Paths.get(GOLDENFILES_DIRECTORY, "JavaCodeGeneratorTest.golden");
     Assert.assertCodeEquals(goldenFilePath, javaWriterVisitor.write());
   }
