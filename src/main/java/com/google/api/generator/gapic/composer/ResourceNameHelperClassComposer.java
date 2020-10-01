@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -30,7 +31,9 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -57,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -269,6 +273,7 @@ public class ResourceNameHelperClassComposer {
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
+    javaMethods.add(createEqualsMethod(resourceName, tokenHierarchies, types));
     return javaMethods;
   }
 
@@ -1137,6 +1142,112 @@ public class ResourceNameHelperClassComposer {
         .setReturnType(TypeNode.STRING)
         .setName("toString")
         .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  private static MethodDefinition createEqualsMethod(
+      ResourceName resourceName, List<List<String>> tokenHierarchies, Map<String, TypeNode> types) {
+    Variable oVariable = Variable.builder().setType(TypeNode.OBJECT).setName("o").build();
+    VariableExpr argVarExprDecl =
+        VariableExpr.builder().setIsDecl(true).setVariable(oVariable).build();
+    VariableExpr argVarExprNotDecl =
+        VariableExpr.builder().setIsDecl(false).setVariable(oVariable).build();
+    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    ValueExpr thisValueExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
+    ValueExpr trueValueExpr =
+        ValueExpr.withValue(
+            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build());
+    ValueExpr falseValueExpr =
+        ValueExpr.withValue(
+            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build());
+
+    ReturnExpr returnTrueExpr = ReturnExpr.withExpr(trueValueExpr);
+    RelationalOperationExpr oEqualsThisExpr =
+        RelationalOperationExpr.equalToWithExprs(argVarExprNotDecl, thisValueExpr);
+    RelationalOperationExpr oNotEqualsNullExpr =
+        RelationalOperationExpr.notEqualToWithExprs(
+            argVarExprNotDecl, ValueExpr.withValue(NullObjectValue.create()));
+    MethodInvocationExpr getClassMethodInvocationExpr =
+        MethodInvocationExpr.builder().setMethodName("getClass").build();
+    RelationalOperationExpr getClassEqualsExpr =
+        RelationalOperationExpr.equalToWithExprs(
+            getClassMethodInvocationExpr,
+            getClassMethodInvocationExpr
+                .toBuilder()
+                .setExprReferenceExpr(argVarExprNotDecl)
+                .build());
+    LogicalOperationExpr orLogicalExpr =
+        LogicalOperationExpr.logicalOrWithExprs(oNotEqualsNullExpr, getClassEqualsExpr);
+
+    Variable thatVariable = Variable.builder().setName("that").setType(thisClassType).build();
+    VariableExpr thatVariableExpr =
+        VariableExpr.builder().setIsDecl(true).setVariable(thatVariable).build();
+    CastExpr oCastExpr =
+        CastExpr.builder().setExpr(argVarExprNotDecl).setType(thisClassType).build();
+    AssignmentExpr thatAssignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(thatVariableExpr).setValueExpr(oCastExpr).build();
+
+    thatVariableExpr = thatVariableExpr.toBuilder().setIsDecl(false).build();
+    Set<String> tokenSet = getTokenSet(tokenHierarchies);
+    Iterator<String> itToken = tokenSet.iterator();
+    Expr curTokenExpr =
+        createObjectsEqualsForTokenMethodEpxr(
+            thisValueExpr,
+            thatVariableExpr,
+            Variable.builder()
+                .setType(TypeNode.STRING)
+                .setName(JavaStyle.toLowerCamelCase(itToken.next()))
+                .build());
+
+    while (itToken.hasNext()) {
+      Expr nextTokenExpr =
+          createObjectsEqualsForTokenMethodEpxr(
+              thisValueExpr,
+              thatVariableExpr,
+              Variable.builder()
+                  .setType(TypeNode.STRING)
+                  .setName(JavaStyle.toLowerCamelCase(itToken.next()))
+                  .build());
+      curTokenExpr = LogicalOperationExpr.logicalAndWithExprs(curTokenExpr, nextTokenExpr);
+    }
+    ReturnExpr secondIfReturnExpr = ReturnExpr.withExpr(curTokenExpr);
+
+    IfStatement firstIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(oEqualsThisExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(returnTrueExpr)))
+            .build();
+    IfStatement secondIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(orLogicalExpr)
+            .setBody(
+                Arrays.asList(
+                    ExprStatement.withExpr(thatAssignmentExpr),
+                    ExprStatement.withExpr(secondIfReturnExpr)))
+            .build();
+
+    return MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setArguments(argVarExprDecl)
+        .setReturnType(TypeNode.BOOLEAN)
+        .setName("equals")
+        .setReturnExpr(falseValueExpr)
+        .setBody(Arrays.asList(firstIfStatement, secondIfStatement))
+        .build();
+  }
+
+  private static MethodInvocationExpr createObjectsEqualsForTokenMethodEpxr(
+      Expr thisExpr, Expr thatExpr, Variable tokenVar) {
+    VariableExpr varThisExpr =
+        VariableExpr.builder().setVariable(tokenVar).setExprReferenceExpr(thisExpr).build();
+    VariableExpr varThatExpr =
+        VariableExpr.builder().setVariable(tokenVar).setExprReferenceExpr(thatExpr).build();
+    return MethodInvocationExpr.builder()
+        .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+        .setMethodName("equals")
+        .setArguments(Arrays.asList(varThisExpr, varThatExpr))
+        .setReturnType(TypeNode.BOOLEAN)
         .build();
   }
 
