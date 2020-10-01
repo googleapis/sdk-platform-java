@@ -123,45 +123,6 @@ public class GeneralForStatementTest {
   }
 
   @Test
-  public void validGeneralForState_buildWithoutExprs() {
-    // Form in `for (;;;)`
-    GeneralForStatement.builder().build();
-  }
-
-  @Test
-  public void validGeneralForState_buildWithoutTerminalExpr() {
-    VariableExpr variableExpr =
-        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
-    ValueExpr initValueExpr =
-        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
-    AssignmentExpr initializationExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
-    UnaryOperationExpr incrementExpr = UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
-    GeneralForStatement.builder()
-        .setInitializationExpr(initializationExpr)
-        .setIncrementExpr(incrementExpr)
-        .build();
-  }
-
-  @Test
-  public void validGeneralForState_withoutIncrementExpr() {
-    VariableExpr variableExpr =
-        VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
-    ValueExpr initValueExpr =
-        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
-    ValueExpr maxValueExpr =
-        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
-    AssignmentExpr initializationExpr =
-        AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(initValueExpr).build();
-    RelationalOperationExpr terminationExpr =
-        RelationalOperationExpr.lessThanWithExprs(variableExpr, maxValueExpr);
-    GeneralForStatement.builder()
-        .setInitializationExpr(initializationExpr)
-        .setTerminationExpr(terminationExpr)
-        .build();
-  }
-
-  @Test
   public void validGeneralForState_incrementExprIsMethodInvocationEpxr() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setName("i").setType(TypeNode.INT).build());
