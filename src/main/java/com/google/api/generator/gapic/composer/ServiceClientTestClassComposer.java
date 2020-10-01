@@ -609,9 +609,10 @@ public class ServiceClientTestClassComposer {
               .build());
     } else {
       for (MethodArgument methodArg : methodSignature) {
+        String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
-                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+                Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
         Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
         methodExprs.add(
@@ -1385,9 +1386,10 @@ public class ServiceClientTestClassComposer {
               .build());
     } else {
       for (MethodArgument methodArg : methodSignature) {
+        String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
-                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+                Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
         Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
         tryBodyExprs.add(
