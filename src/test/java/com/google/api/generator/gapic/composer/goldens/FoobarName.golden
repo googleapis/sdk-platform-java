@@ -249,6 +249,21 @@ public class FoobarName implements ResourceName {
     return !Objects.isNull(fixedValue) ? fixedValue : pathTemplate.instantiate(getFieldValuesMap());
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (o != null || getClass() == o.getClass()) {
+      FoobarName that = ((FoobarName) o);
+      return Objects.equals(this.project, that.project)
+          && Objects.equals(this.foobar, that.foobar)
+          && Objects.equals(this.variant, that.variant)
+          && Objects.equals(this.barFoo, that.barFoo);
+    }
+    return false;
+  }
+
   /** Builder for projects/{project}/foobars/{foobar}. */
   public static class Builder {
     private String project;
@@ -347,21 +362,6 @@ public class FoobarName implements ResourceName {
     public FoobarName build() {
       return new FoobarName(this);
     }
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o == this) {
-      return true;
-    }
-    if (o != null || getClass() == o.getClass()) {
-      FoobarName that = ((FoobarName) o);
-      return Objects.equals(this.project, that.project)
-          && Objects.equals(this.foobar, that.foobar)
-          && Objects.equals(this.variant, that.variant)
-          && Objects.equals(this.barFoo, that.barFoo);
-    }
-    return false;
   }
 
   /** Builder for bar_foos/{bar_foo}/foobars/{foobar}. */

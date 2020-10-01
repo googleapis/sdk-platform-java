@@ -1198,7 +1198,6 @@ public class ResourceNameHelperClassComposer {
                 .setType(TypeNode.STRING)
                 .setName(JavaStyle.toLowerCamelCase(itToken.next()))
                 .build());
-
     while (itToken.hasNext()) {
       Expr nextTokenExpr =
           createObjectsEqualsForTokenMethodEpxr(
@@ -1212,11 +1211,13 @@ public class ResourceNameHelperClassComposer {
     }
     ReturnExpr secondIfReturnExpr = ReturnExpr.withExpr(curTokenExpr);
 
+    // if (o == this) { return true;}
     IfStatement firstIfStatement =
         IfStatement.builder()
             .setConditionExpr(oEqualsThisExpr)
             .setBody(Arrays.asList(ExprStatement.withExpr(returnTrueExpr)))
             .build();
+    // if (o != null || getClass() == o.getClass()) { FoobarName that = ((FoobarName) o); return ..}
     IfStatement secondIfStatement =
         IfStatement.builder()
             .setConditionExpr(orLogicalExpr)
