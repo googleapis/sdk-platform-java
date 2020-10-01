@@ -22,9 +22,12 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.test.framework.Assert;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -56,52 +59,7 @@ public class MockServiceClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    assertEquals(EXPECTED_CLASS_STRING, visitor.write());
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "MockEcho.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
-
-  // TODO(miraleung): Update this when a file-diffing test mechanism is in place.
-  private static final String EXPECTED_CLASS_STRING =
-      "package com.google.showcase.v1beta1;\n"
-          + "\n"
-          + "import com.google.api.core.BetaApi;\n"
-          + "import com.google.api.gax.grpc.testing.MockGrpcService;\n"
-          + "import com.google.protobuf.AbstractMessage;\n"
-          + "import io.grpc.ServerServiceDefinition;\n"
-          + "import java.util.List;\n"
-          + "import javax.annotation.Generated;\n"
-          + "\n"
-          + "@BetaApi\n"
-          + "@Generated(\"by gapic-generator-java\")\n"
-          + "public class MockEcho implements MockGrpcService {\n"
-          + "  private final MockEchoImpl serviceImpl;\n"
-          + "\n"
-          + "  public MockEcho() {\n"
-          + "    serviceImpl = new MockEchoImpl();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public List<AbstractMessage> getRequests() {\n"
-          + "    return serviceImpl.getRequests();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addResponse(AbstractMessage response) {\n"
-          + "    serviceImpl.addResponse(response);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void addException(Exception exception) {\n"
-          + "    serviceImpl.addException(exception);\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public ServerServiceDefinition getServiceDefinition() {\n"
-          + "    return serviceImpl.bindService();\n"
-          + "  }\n"
-          + "\n"
-          + "  @Override\n"
-          + "  public void reset() {\n"
-          + "    serviceImpl.reset();\n"
-          + "  }\n"
-          + "}\n";
 }

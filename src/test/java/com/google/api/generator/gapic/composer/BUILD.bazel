@@ -20,7 +20,7 @@ TESTS = [
 
 filegroup(
     name = "composer_files",
-    srcs = ["{0}.java".format(f) for f in TESTS],
+    srcs = glob(["*.java"]),
 )
 
 java_proto_library(
@@ -39,8 +39,12 @@ java_proto_library(
 
 [java_test(
     name = test_name,
-    srcs = ["{0}.java".format(test_name)],
+    srcs = [
+        "{0}.java".format(test_name), 
+        "ComposerConstants.java",
+    ],
     data = [
+        "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
@@ -51,6 +55,7 @@ java_proto_library(
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic/composer",
+        "//src/test/java/com/google/api/generator/test/framework",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/protoparser",
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
