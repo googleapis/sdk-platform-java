@@ -98,8 +98,6 @@ TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
         ":composer_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
-        "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/test/framework:framework_files",
     ],
     test_class_name = TEST_CLASS_DIR + test_name,
 ) for test_name in UPDATE_GOLDENS_TESTS] 
