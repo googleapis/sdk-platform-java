@@ -109,6 +109,8 @@ service Echo {
       response_type: "WaitResponse"
       metadata_type: "WaitMetadata"
     };
+    option (google.api.method_signature) = "end_time";
+    option (google.api.method_signature) = "ttl";
   }
 
   // This method will block (wait) for the requested amount of time

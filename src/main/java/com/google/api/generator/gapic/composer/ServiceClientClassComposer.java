@@ -462,12 +462,12 @@ public class ServiceClientClassComposer implements ClassComposer {
       Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
-      if (method.stream().equals(Stream.NONE) && !method.hasLro()) {
+      if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(createMethodVariants(method, messageTypes, types));
+        javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroAsyncMethod(service.name(), method, types));
-        javaMethods.add(createLroCallable(service.name(), method, types));
+        javaMethods.add(createLroCallableMethod(service.name(), method, types));
       }
       if (method.isPaged()) {
         javaMethods.add(createPagedCallableMethod(service.name(), method, types));
@@ -486,6 +486,18 @@ public class ServiceClientClassComposer implements ClassComposer {
         method.isPaged()
             ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
+    if (method.hasLro()) {
+      LongrunningOperation lro = method.lro();
+      methodOutputType =
+          TypeNode.withReference(
+              types
+                  .get("OperationFuture")
+                  .reference()
+                  .copyAndSetGenerics(
+                      Arrays.asList(
+                          lro.responseType().reference(), lro.metadataType().reference())));
+    }
+
     String methodInputTypeName = methodInputType.reference().name();
     Reference listRef = ConcreteReference.withClazz(List.class);
     Reference mapRef = ConcreteReference.withClazz(Map.class);
@@ -603,7 +615,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       // Return expression.
       MethodInvocationExpr returnExpr =
           MethodInvocationExpr.builder()
-              .setMethodName(methodName)
+              .setMethodName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
               .setArguments(Arrays.asList(requestVarExpr.toBuilder().setIsDecl(false).build()))
               .setReturnType(methodOutputType)
               .build();
@@ -615,14 +627,37 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setReturnType(methodOutputType)
-              .setName(methodName)
+              .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
               .setArguments(arguments)
               .setBody(statements)
               .setReturnExpr(returnExpr)
               .build());
     }
 
-    // Finally, construct the method that accepts a request proto.
+    return javaMethods;
+  }
+
+  private static MethodDefinition createMethodDefaultMethod(
+      Method method, Map<String, TypeNode> types) {
+    String methodName = JavaStyle.toLowerCamelCase(method.name());
+    TypeNode methodInputType = method.inputType();
+    TypeNode methodOutputType =
+        method.isPaged()
+            ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            : method.outputType();
+    if (method.hasLro()) {
+      LongrunningOperation lro = method.lro();
+      methodOutputType =
+          TypeNode.withReference(
+              types
+                  .get("OperationFuture")
+                  .reference()
+                  .copyAndSetGenerics(
+                      Arrays.asList(
+                          lro.responseType().reference(), lro.metadataType().reference())));
+    }
+
+    // Construct the method that accepts a request proto.
     VariableExpr requestArgVarExpr =
         VariableExpr.builder()
             .setVariable(Variable.builder().setName("request").setType(methodInputType).build())
@@ -632,79 +667,32 @@ public class ServiceClientClassComposer implements ClassComposer {
         method.isPaged()
             ? String.format(PAGED_CALLABLE_NAME_PATTERN, methodName)
             : String.format(CALLABLE_NAME_PATTERN, methodName);
+    if (method.hasLro()) {
+      callableMethodName = String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName);
+    }
+
     MethodInvocationExpr methodReturnExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
     methodReturnExpr =
         MethodInvocationExpr.builder()
-            .setMethodName("call")
+            .setMethodName(method.hasLro() ? "futureCall" : "call")
             .setArguments(Arrays.asList(requestArgVarExpr.toBuilder().setIsDecl(false).build()))
             .setExprReferenceExpr(methodReturnExpr)
             .setReturnType(methodOutputType)
             .build();
-    javaMethods.add(
-        MethodDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
-            .setScope(ScopeNode.PUBLIC)
-            .setIsFinal(true)
-            .setReturnType(methodOutputType)
-            .setName(methodName)
-            .setArguments(Arrays.asList(requestArgVarExpr))
-            .setReturnExpr(methodReturnExpr)
-            .build());
-
-    return javaMethods;
-  }
-
-  private static MethodDefinition createLroAsyncMethod(
-      String serviceName, Method method, Map<String, TypeNode> types) {
-    // TODO(miraleung): Create variants as well.
-    Preconditions.checkState(
-        method.hasLro(), String.format("Method %s does not have an LRO", method.name()));
-    String methodName = JavaStyle.toLowerCamelCase(method.name());
-    TypeNode methodInputType = method.inputType();
-    TypeNode methodOutputType = method.outputType();
-    String methodInputTypeName = methodInputType.reference().name();
-    LongrunningOperation lro = method.lro();
-
-    VariableExpr argumentExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("request").setType(methodInputType).build())
-            .setIsDecl(true)
-            .build();
-
-    TypeNode returnType =
-        TypeNode.withReference(
-            types
-                .get("OperationFuture")
-                .reference()
-                .copyAndSetGenerics(
-                    Arrays.asList(lro.responseType().reference(), lro.metadataType().reference())));
-    MethodInvocationExpr returnExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName(String.format("%sOperationCallable", methodName))
-            .build();
-    returnExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName("futureCall")
-            .setArguments(Arrays.asList(argumentExpr.toBuilder().setIsDecl(false).build()))
-            .setExprReferenceExpr(returnExpr)
-            .setReturnType(returnType)
-            .build();
-
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
-        .setReturnType(returnType)
-        .setName(String.format("%sAsync", methodName))
-        .setArguments(Arrays.asList(argumentExpr))
-        .setReturnExpr(returnExpr)
+        .setReturnType(methodOutputType)
+        .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
+        .setArguments(Arrays.asList(requestArgVarExpr))
+        .setReturnExpr(methodReturnExpr)
         .build();
   }
 
-  private static MethodDefinition createLroCallable(
+  private static MethodDefinition createLroCallableMethod(
       String serviceName, Method method, Map<String, TypeNode> types) {
     return createCallableMethod(serviceName, method, types, CallableMethodKind.LRO);
   }
