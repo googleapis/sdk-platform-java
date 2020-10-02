@@ -416,7 +416,8 @@ public class ServiceClientTestClassComposer {
       Map<String, Message> messageTypes) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
-      if (method.methodSignatures().isEmpty()) {
+      // Ignore variants for streaming methods as well.
+      if (method.methodSignatures().isEmpty() || !method.stream().equals(Method.Stream.NONE)) {
         javaMethods.add(
             createRpcTestMethod(
                 method,
@@ -489,6 +490,10 @@ public class ServiceClientTestClassComposer {
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    if (!method.stream().equals(Method.Stream.NONE)) {
+      return createStreamingRpcTestMethod(
+          method, serviceName, classMemberVarExprs, resourceNames, messageTypes);
+    }
     // Construct the expected response.
     // TODO(miraleung): Paging here.
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
@@ -604,9 +609,10 @@ public class ServiceClientTestClassComposer {
               .build());
     } else {
       for (MethodArgument methodArg : methodSignature) {
+        String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
-                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+                Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
         Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
         methodExprs.add(
@@ -890,6 +896,242 @@ public class ServiceClientTestClassComposer {
         .build();
   }
 
+  private static MethodDefinition createStreamingRpcTestMethod(
+      Method method,
+      String serviceName,
+      Map<String, VariableExpr> classMemberVarExprs,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    List<Expr> methodExprs = new ArrayList<>();
+    VariableExpr expectedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
+    Expr expectedResponseValExpr = null;
+    if (messageTypes.containsKey(methodOutputType.reference().name())) {
+      expectedResponseValExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+    } else {
+      // Wrap this in a field so we don't have to split the helper into lots of different methods,
+      // or duplicate it for VariableExpr.
+      expectedResponseValExpr =
+          DefaultValueComposer.createDefaultValue(
+              Field.builder()
+                  .setType(methodOutputType)
+                  .setIsMessage(true)
+                  .setName("expectedResponse")
+                  .build());
+    }
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(expectedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(expectedResponseValExpr)
+            .build());
+    if (method.hasLro()) {
+      VariableExpr resultOperationVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(STATIC_TYPES.get("Operation"))
+                  .setName("resultOperation")
+                  .build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(resultOperationVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  DefaultValueComposer.createSimpleOperationBuilderExpr(
+                      String.format("%sTest", JavaStyle.toLowerCamelCase(method.name())),
+                      expectedResponseVarExpr))
+              .build());
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(resultOperationVarExpr)
+              .build());
+    } else {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setMethodName("addResponse")
+              .setArguments(expectedResponseVarExpr)
+              .build());
+    }
+    // TODO(miraleung): Empty line here.
+
+    // Construct the request or method arguments.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Preconditions.checkNotNull(requestMessage);
+    Expr valExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(valExpr)
+            .build());
+
+    // Construct the mock stream observer.
+    VariableExpr responseObserverVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        STATIC_TYPES
+                            .get("MockStreamObserver")
+                            .reference()
+                            .copyAndSetGenerics(Arrays.asList(method.outputType().reference()))))
+                .setName("responseObserver")
+                .build());
+
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                NewObjectExpr.builder()
+                    .setType(STATIC_TYPES.get("MockStreamObserver"))
+                    .setIsGeneric(true)
+                    .build())
+            .build());
+
+    // Build the callable variable and assign it.
+    VariableExpr callableVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(getCallableType(method)).setName("callable").build());
+    Expr streamingCallExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(classMemberVarExprs.get("client"))
+            .setMethodName(String.format("%sCallable", JavaStyle.toLowerCamelCase(method.name())))
+            .setReturnType(callableVarExpr.type())
+            .build();
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(callableVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(streamingCallExpr)
+            .build());
+
+    // Call the streaming-variant callable method.
+    if (method.stream().equals(Method.Stream.SERVER)) {
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callableVarExpr)
+              .setMethodName("serverStreamingCall")
+              .setArguments(requestVarExpr, responseObserverVarExpr)
+              .build());
+    } else {
+      VariableExpr requestObserverVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder()
+                  .setType(
+                      TypeNode.withReference(
+                          STATIC_TYPES
+                              .get("ApiStreamObserver")
+                              .reference()
+                              .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
+                  .setName("requestObserver")
+                  .build());
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(callableVarExpr)
+                      .setMethodName(getCallableMethodName(method))
+                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setReturnType(requestObserverVarExpr.type())
+                      .build())
+              .build());
+
+      // TODO(miraleung): Empty line here.
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(requestObserverVarExpr)
+              .setMethodName("onNext")
+              .setArguments(requestVarExpr)
+              .build());
+      methodExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(requestObserverVarExpr)
+              .setMethodName("onCompleted")
+              .build());
+    }
+
+    // Check the actual responses.
+    VariableExpr actualResponsesVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(List.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .setName("actualResponses")
+                .build());
+
+    Expr getFutureResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseObserverVarExpr)
+            .setMethodName("future")
+            .build();
+    getFutureResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(getFutureResponseExpr)
+            .setMethodName("get")
+            .setReturnType(actualResponsesVarExpr.type())
+            .build();
+    methodExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(actualResponsesVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getFutureResponseExpr)
+            .build());
+
+    // Assert the size is equivalent.
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build()),
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(actualResponsesVarExpr)
+                    .setMethodName("size")
+                    .setReturnType(TypeNode.INT)
+                    .build())
+            .build());
+
+    // Assert the responses are equivalent.
+    Expr zeroExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
+    Expr actualResponseExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(actualResponsesVarExpr)
+            .setMethodName("get")
+            .setArguments(zeroExpr)
+            .build();
+
+    methodExprs.add(
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("Assert"))
+            .setMethodName("assertEquals")
+            .setArguments(expectedResponseVarExpr, actualResponseExpr)
+            .build());
+
+    String testMethodName = String.format("%sTest", JavaStyle.toLowerCamelCase(method.name()));
+    return MethodDefinition.builder()
+        .setAnnotations(Arrays.asList(TEST_ANNOTATION))
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.VOID)
+        .setName(testMethodName)
+        .setBody(
+            methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .build();
+  }
+
   private static MethodDefinition createRpcExceptionTestMethod(
       Method method,
       List<MethodArgument> methodSignature,
@@ -938,11 +1180,11 @@ public class ServiceClientTestClassComposer {
     methodBody.add(ExprStatement.withExpr(addExceptionExpr));
     if (isStreaming) {
       methodBody.addAll(
-          createRpcExceptionTestStreamingStatements(
+          createStreamingRpcExceptionTestStatements(
               method, classMemberVarExprs, resourceNames, messageTypes));
     } else {
       methodBody.addAll(
-          createRpcExceptionTestNonStreamingStatements(
+          createRpcExceptionTestStatements(
               method, methodSignature, classMemberVarExprs, resourceNames, messageTypes));
     }
 
@@ -956,7 +1198,7 @@ public class ServiceClientTestClassComposer {
         .build();
   }
 
-  private static List<Statement> createRpcExceptionTestStreamingStatements(
+  private static List<Statement> createStreamingRpcExceptionTestStatements(
       Method method,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
@@ -1118,7 +1360,7 @@ public class ServiceClientTestClassComposer {
     return statements;
   }
 
-  private static List<Statement> createRpcExceptionTestNonStreamingStatements(
+  private static List<Statement> createRpcExceptionTestStatements(
       Method method,
       List<MethodArgument> methodSignature,
       Map<String, VariableExpr> classMemberVarExprs,
@@ -1144,9 +1386,10 @@ public class ServiceClientTestClassComposer {
               .build());
     } else {
       for (MethodArgument methodArg : methodSignature) {
+        String methodArgName = JavaStyle.toLowerCamelCase(methodArg.name());
         VariableExpr varExpr =
             VariableExpr.withVariable(
-                Variable.builder().setType(methodArg.type()).setName(methodArg.name()).build());
+                Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
         Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
         tryBodyExprs.add(
