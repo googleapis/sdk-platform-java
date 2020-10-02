@@ -1,14 +1,3 @@
 rebaseMergeAllowed: true
 squashMergeAllowed: true
 mergeCommitAllowed: false
-branchProtectionRules:
-- pattern: master
-  isAdminEnforced: false
-  requiredStatusCheckContexts:
-    - 'ci/circleci: gapic-generator-java-tests'
-    - 'ci/circleci: google-java-format'
-    - 'ci/circleci: license-header'
-    - 'cla/google'
-  requiredApprovingReviewCount: 1
-  requiresCodeOwnerReviews: true
-  requiresStrictStatusChecks: true
