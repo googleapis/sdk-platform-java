@@ -139,11 +139,6 @@ public class GeneralForStatementTest {
             .setMethodName("doNothing")
             .setReturnType(TypeNode.INT)
             .build();
-    GeneralForStatement.builder()
-        .setInitializationExpr(initializationExpr)
-        .setTerminationExpr(terminationExpr)
-        .setIncrementExpr(incrementExpr)
-        .build();
   }
 
   @Test
