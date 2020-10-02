@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.ast;
 
+import autovalue.shaded.com.google$.common.annotations.$VisibleForTesting;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -22,6 +23,14 @@ import java.util.List;
 
 @AutoValue
 public abstract class GeneralForStatement implements Statement {
+  private int i  = 0;
+  for (i = 0; i < 10; i++) {}
+
+  void foobar() {
+    for (i = 0; i < 10; i++) {
+      System.out.println("i = " + i);
+    }
+  }
   public abstract AssignmentExpr initializationExpr();
 
   public abstract Expr terminationExpr();
@@ -37,7 +46,7 @@ public abstract class GeneralForStatement implements Statement {
 
   // incrementWith is convenience wrapper to generate index-base for-loop with lower and upper bound
   // and post increment on variable, like code in ```for (int i = 0; i < getMax(); i++) {..}```
-  // TODO (developer): Add more convenience wrapper for the future generation needs.
+  // TODO (unsupported): Add more convenience wrapper for the future generation needs.
   public static GeneralForStatement incrementWith(
       VariableExpr localVariableExpr,
       ValueExpr initialValueExpr,
@@ -64,19 +73,24 @@ public abstract class GeneralForStatement implements Statement {
   }
 
   @AutoValue.Builder
-  public abstract static class Builder {
+  abstract static class Builder {
     // Private setter.
+    @$VisibleForTesting
     abstract Builder setInitializationExpr(AssignmentExpr initializationExpr);
     // Private setter.
+    @$VisibleForTesting
     abstract Builder setTerminationExpr(Expr terminationExpr);
     // Private setter.
+    @$VisibleForTesting
     abstract Builder setIncrementExpr(Expr incrementExpr);
     // Private setter.
+    @$VisibleForTesting
     abstract Builder setBody(List<Statement> body);
 
     abstract GeneralForStatement autoBuild();
 
     // Type-checking will be done in the sub-expressions.
+    @$VisibleForTesting
     public GeneralForStatement build() {
       GeneralForStatement generalForStatement = autoBuild();
       AssignmentExpr initializationExpr = generalForStatement.initializationExpr();
@@ -100,8 +114,8 @@ public abstract class GeneralForStatement implements Statement {
           (incrementExpr instanceof MethodInvocationExpr)
               || (incrementExpr instanceof AssignmentExpr)
               || (incrementExpr instanceof AssignmentOperationExpr)
-              // TODO(developer): Currently we only support postIncrement (i++), please add
-              // postDecrement, prefixIncrement, prefixIncrement if needs.
+              // TODO(unsupported): Currently we only support postIncrement (i++), please add
+              // postDecrement, prefixIncrement, prefixIncrement if needed.
               || (incrementExpr instanceof UnaryOperationExpr
                   && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
           "Increment expression %s must be either a method invocation, assignment, or unary post-fix operation expression.");
