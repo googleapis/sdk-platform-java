@@ -1147,47 +1147,46 @@ public class ResourceNameHelperClassComposer {
 
   private static MethodDefinition createEqualsMethod(
       ResourceName resourceName, List<List<String>> tokenHierarchies, Map<String, TypeNode> types) {
+    // Create method definition variables.
     Variable oVariable = Variable.builder().setType(TypeNode.OBJECT).setName("o").build();
-    VariableExpr argVarExprDecl =
-        VariableExpr.builder().setIsDecl(true).setVariable(oVariable).build();
-    VariableExpr argVarExprNotDecl =
+    VariableExpr argVarExpr =
         VariableExpr.builder().setIsDecl(false).setVariable(oVariable).build();
     TypeNode thisClassType = types.get(getThisClassName(resourceName));
     ValueExpr thisValueExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
     ValueExpr trueValueExpr =
         ValueExpr.withValue(
             PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build());
-    ValueExpr falseValueExpr =
-        ValueExpr.withValue(
-            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build());
 
+    // Create first if statement's return expression
     ReturnExpr returnTrueExpr = ReturnExpr.withExpr(trueValueExpr);
+
+    // Create second if statement's condition expression
     RelationalOperationExpr oEqualsThisExpr =
-        RelationalOperationExpr.equalToWithExprs(argVarExprNotDecl, thisValueExpr);
+        RelationalOperationExpr.equalToWithExprs(argVarExpr, thisValueExpr);
     RelationalOperationExpr oNotEqualsNullExpr =
         RelationalOperationExpr.notEqualToWithExprs(
-            argVarExprNotDecl, ValueExpr.withValue(NullObjectValue.create()));
+            argVarExpr, ValueExpr.withValue(NullObjectValue.create()));
     MethodInvocationExpr getClassMethodInvocationExpr =
         MethodInvocationExpr.builder().setMethodName("getClass").build();
     RelationalOperationExpr getClassEqualsExpr =
         RelationalOperationExpr.equalToWithExprs(
             getClassMethodInvocationExpr,
-            getClassMethodInvocationExpr
-                .toBuilder()
-                .setExprReferenceExpr(argVarExprNotDecl)
-                .build());
+            getClassMethodInvocationExpr.toBuilder().setExprReferenceExpr(argVarExpr).build());
     LogicalOperationExpr orLogicalExpr =
         LogicalOperationExpr.logicalOrWithExprs(oNotEqualsNullExpr, getClassEqualsExpr);
 
+    // Create second if statement's body assignment expression.
     Variable thatVariable = Variable.builder().setName("that").setType(thisClassType).build();
     VariableExpr thatVariableExpr =
-        VariableExpr.builder().setIsDecl(true).setVariable(thatVariable).build();
-    CastExpr oCastExpr =
-        CastExpr.builder().setExpr(argVarExprNotDecl).setType(thisClassType).build();
+        VariableExpr.builder().setIsDecl(false).setVariable(thatVariable).build();
+    CastExpr oCastExpr = CastExpr.builder().setExpr(argVarExpr).setType(thisClassType).build();
     AssignmentExpr thatAssignmentExpr =
-        AssignmentExpr.builder().setVariableExpr(thatVariableExpr).setValueExpr(oCastExpr).build();
+        AssignmentExpr.builder()
+            .setVariableExpr(thatVariableExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(oCastExpr)
+            .build();
 
-    thatVariableExpr = thatVariableExpr.toBuilder().setIsDecl(false).build();
+    // Create return expression in the second if statement's body.
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     Iterator<String> itToken = tokenSet.iterator();
     Expr curTokenExpr =
@@ -1211,13 +1210,14 @@ public class ResourceNameHelperClassComposer {
     }
     ReturnExpr secondIfReturnExpr = ReturnExpr.withExpr(curTokenExpr);
 
-    // if (o == this) { return true;}
+    // Code: if (o == this) { return true;}
     IfStatement firstIfStatement =
         IfStatement.builder()
             .setConditionExpr(oEqualsThisExpr)
             .setBody(Arrays.asList(ExprStatement.withExpr(returnTrueExpr)))
             .build();
-    // if (o != null || getClass() == o.getClass()) { FoobarName that = ((FoobarName) o); return ..}
+    // Code: if (o != null || getClass() == o.getClass()) { FoobarName that = ((FoobarName) o);
+    // return ..}
     IfStatement secondIfStatement =
         IfStatement.builder()
             .setConditionExpr(orLogicalExpr)
@@ -1227,10 +1227,15 @@ public class ResourceNameHelperClassComposer {
                     ExprStatement.withExpr(secondIfReturnExpr)))
             .build();
 
+    // Create method's return expression.
+    ValueExpr falseValueExpr =
+        ValueExpr.withValue(
+            PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build());
+
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
-        .setArguments(argVarExprDecl)
+        .setArguments(argVarExpr.toBuilder().setIsDecl(true).build())
         .setReturnType(TypeNode.BOOLEAN)
         .setName("equals")
         .setReturnExpr(falseValueExpr)
