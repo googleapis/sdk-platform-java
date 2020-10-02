@@ -39,7 +39,7 @@ junit_output_zip = rule(
         ),
     },
     outputs = {
-        "output": "%{name}%.zip",
+        "output": "%{name}.zip",
     },
     implementation = _junit_output_impl,  
 )
