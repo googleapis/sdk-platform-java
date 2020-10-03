@@ -2,24 +2,6 @@ load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 
 package(default_visibility = ["//visibility:public"])
 
-TESTS = [
-    "BatchingDescriptorComposerTest",
-    "ComposerTest",
-    "DefaultValueComposerTest",
-    "GrpcServiceCallableFactoryClassComposerTest",
-    "GrpcServiceStubClassComposerTest",
-    "MockServiceClassComposerTest",
-    "MockServiceImplClassComposerTest",
-    "ResourceNameHelperClassComposerTest",
-    "ResourceNameTokenizerTest",
-    "RetrySettingsComposerTest",
-    "ServiceClientClassComposerTest",
-    "ServiceClientTestClassComposerTest",
-    "ServiceSettingsClassComposerTest",
-    "ServiceStubSettingsClassComposerTest",
-    "ServiceStubClassComposerTest",
-]
-
 UPDATE_GOLDENS_TESTS = [
     "BatchingDescriptorComposerTest",
     "ComposerTest",
@@ -31,6 +13,36 @@ UPDATE_GOLDENS_TESTS = [
     "ServiceSettingsClassComposerTest",
     "ServiceStubSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
+]
+
+TESTS = UPDATE_GOLDENS_TESTS + [
+    "DefaultValueComposerTest",
+    "ResourceNameTokenizerTest",
+    "RetrySettingsComposerTest",
+    "ServiceClientClassComposerTest",
+    "ServiceClientTestClassComposerTest",
+]
+
+TEST_DEPS = [
+    ":common_resources_java_proto",
+    "//:service_config_java_proto",
+    "//src/main/java/com/google/api/generator/engine/ast",
+    "//src/main/java/com/google/api/generator/engine/writer",
+    "//src/main/java/com/google/api/generator/gapic/composer",
+    "//src/test/java/com/google/api/generator/test/framework:asserts",
+    "//src/test/java/com/google/api/generator/test/framework:utils",
+    "//src/main/java/com/google/api/generator/gapic/model",
+    "//src/main/java/com/google/api/generator/gapic/protoparser",
+    "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
+    "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
+    "@com_google_api_gax_java//gax",
+    "@com_google_googleapis//google/logging/v2:logging_java_proto",
+    "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
+    "@com_google_googleapis//google/rpc:rpc_java_proto",
+    "@com_google_guava_guava",
+    "@com_google_protobuf//:protobuf_java",
+    "@com_google_truth_truth//jar",
+    "@junit_junit//jar",
 ]
 
 filegroup(
@@ -55,7 +67,7 @@ java_proto_library(
 [java_test(
     name = test_name,
     srcs = [
-        "{0}.java".format(test_name), 
+        "{0}.java".format(test_name),
         "ComposerConstants.java",
     ],
     data = [
@@ -64,28 +76,8 @@ java_proto_library(
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
-    deps = [
-        ":common_resources_java_proto",
-        "//:service_config_java_proto",
-        "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
-        "//src/main/java/com/google/api/generator/gapic/composer",
-        "//src/test/java/com/google/api/generator/test/framework",
-        "//src/main/java/com/google/api/generator/gapic/model",
-        "//src/main/java/com/google/api/generator/gapic/protoparser",
-        "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
-        "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
-        "@com_google_api_gax_java//gax",
-        "@com_google_googleapis//google/logging/v2:logging_java_proto",
-        "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
-        "@com_google_googleapis//google/rpc:rpc_java_proto",
-        "@com_google_protobuf//:protobuf_java",
-        "@com_google_truth_truth//jar",
-        "@junit_junit//jar",
-    ],
+    deps = TEST_DEPS,
 ) for test_name in TESTS]
-
-
 
 TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
 # Run `bazel run src/test/java/com/google/api/generator/gapic/composer:testTargetName_update`
@@ -93,11 +85,16 @@ TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
 # `ServiceClient*` tests are not supported now since they are still in active development.
 
 [golden_update(
-    name = test_name + "_update",
+    name = "{0}_update".format(test_name),
     srcs = [
-        ":composer_files",
+        "{0}.java".format(test_name),
+        "ComposerConstants.java",
+    ],
+    data = [
+        "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
-    test_class_name = TEST_CLASS_DIR + test_name,
-) for test_name in UPDATE_GOLDENS_TESTS] 
+    test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
+    deps = TEST_DEPS,
+) for test_name in UPDATE_GOLDENS_TESTS]
