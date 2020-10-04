@@ -176,6 +176,25 @@ public class GeneralForStatementTest {
                 variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
   }
 
+  @Test
+  // invalidForStatement_localFinalVariable tests declare a final variable in initialization expr,
+  // updateExpr should throw error.
+  public void invalidForStatement_localFinalVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).setIsFinal(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
   private static Statement createBodyStatement() {
     Variable variable = Variable.builder().setName("x").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
