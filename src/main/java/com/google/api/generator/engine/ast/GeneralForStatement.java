@@ -89,13 +89,6 @@ public abstract class GeneralForStatement implements Statement {
                 localVarExpr.variable().identifier().name()));
         Preconditions.checkState(!localVarExpr.isStatic(), "Modifier 'static' not allow here.");
       }
-      // Assign a variable in for-loop initialization expression.
-      if (!localVarExpr.isDecl() && !localVarExpr.scope().equals(ScopeNode.LOCAL)) {
-        Preconditions.checkState(
-            !localVarExpr.isFinal(),
-            "Cannot assign a value to final variable %s.",
-            localVarExpr.variable().identifier().name());
-      }
       // TODO (unsupport): Uncomment the following code if public setter for the initialization,
       // termination, update expressions when needed.
       // Preconditions.checkState(
