@@ -21,7 +21,7 @@ import org.junit.Test;
 public class UnaryOperationExprTest {
   /** =============================== Logic Not Operation Expr =============================== */
   @Test
-  public void logicalNotOperationExpr_validBasic() {
+  public void validLogicalNotOperationExpr_basic() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("x").setType(TypeNode.BOOLEAN).build());
@@ -30,7 +30,7 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void logicalNot_validBoxedType() {
+  public void validLogicalNot_boxedType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("x").setType(TypeNode.BOOLEAN_OBJECT).build());
@@ -39,7 +39,7 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void logicalNot_invalidNumericType() {
+  public void invalidLogicalNot_numericType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setName("x").setType(TypeNode.INT).build());
     assertThrows(
@@ -47,7 +47,7 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void logicalNot_invalidReferenceType() {
+  public void invalidLogicalNot_referenceType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setName("x").setType(TypeNode.STRING).build());
     assertThrows(
@@ -58,7 +58,7 @@ public class UnaryOperationExprTest {
    * =============================== Post Increment Operation Expr ===============================
    */
   @Test
-  public void postIncrement_validBasic() {
+  public void validPostIncrement_basic() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setName("x").setType(TypeNode.INT).build());
     UnaryOperationExpr.postfixIncrementWithExpr(variableExpr);
@@ -66,7 +66,7 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void postIncrement_validBoxedType() {
+  public void validPostIncrement_boxedType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("x").setType(TypeNode.FLOAT_OBJECT).build());
@@ -75,7 +75,7 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void postIncrement_invalidBoxedBooleanType() {
+  public void invalidPostIncrement_boxedBooleanType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("x").setType(TypeNode.BOOLEAN_OBJECT).build());
@@ -85,9 +85,18 @@ public class UnaryOperationExprTest {
   }
 
   @Test
-  public void postIncrement_invalidReferenceType() {
+  public void invalidPostIncrement_referenceType() {
     VariableExpr variableExpr =
         VariableExpr.withVariable(Variable.builder().setName("x").setType(TypeNode.STRING).build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> UnaryOperationExpr.postfixIncrementWithExpr(variableExpr));
+  }
+
+  @Test
+  public void invalidPostIncrement_finalVariable() {
+    Variable var = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr = VariableExpr.builder().setIsFinal(true).setVariable(var).build();
     assertThrows(
         IllegalStateException.class,
         () -> UnaryOperationExpr.postfixIncrementWithExpr(variableExpr));
