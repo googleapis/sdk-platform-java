@@ -282,7 +282,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void visit(GeneralForStatement generalForStatement) {
     generalForStatement.initializationExpr().accept(this);
     generalForStatement.terminationExpr().accept(this);
-    generalForStatement.incrementExpr().accept(this);
+    generalForStatement.updateExpr().accept(this);
     statements(generalForStatement.body());
   }
 

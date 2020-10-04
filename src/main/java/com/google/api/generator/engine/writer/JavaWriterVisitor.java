@@ -544,7 +544,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     semicolon();
     space();
 
-    generalForStatement.incrementExpr().accept(this);
+    generalForStatement.updateExpr().accept(this);
     rightParen();
     space();
     leftBrace();
