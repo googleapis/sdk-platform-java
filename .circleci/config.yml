@@ -26,11 +26,12 @@ jobs:
       - run:
           name: Build targets for gapic-generator-java
           command: |
+            cd /tmp/gapic-generator-java
             bazel --batch build //...
       - run:
           name: Run unit tests for gapic-generator-java
           command: |
-            cd gapic-generator-java
+            cd /tmp/gapic-generator-java
             bazel --batch test //... --noshow_progress
             find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - store_test_results:
