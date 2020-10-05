@@ -7,12 +7,17 @@ jobs:
     environment:
       TEST_REPORTS_DIR: /tmp/workspace/bazel/reports/gapic-generator-java
       BAZEL_VERSION: 3.5.1
+      PYTHON_VERSION: 3.5.2
     machine: true
     steps:
       - checkout:
           path: gapic-generator-java
       - attach_workspace:
           at: workspace
+      - run:
+          name: Set Python version
+          command: |
+            pyenv global ${PYTHON_VERSION}
       - run:
           name: Install Bazel
           command: |
