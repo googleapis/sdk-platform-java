@@ -1,3 +1,5 @@
+load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
+
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
@@ -13,6 +15,19 @@ TESTS = [
     "RetrySettingsComposerTest",
     "ServiceClientClassComposerTest",
     "ServiceClientTestClassComposerTest",
+    "ServiceSettingsClassComposerTest",
+    "ServiceStubSettingsClassComposerTest",
+    "ServiceStubClassComposerTest",
+]
+
+UPDATE_GOLDENS_TESTS = [
+    "BatchingDescriptorComposerTest",
+    "ComposerTest",
+    "GrpcServiceCallableFactoryClassComposerTest",
+    "GrpcServiceStubClassComposerTest",
+    "MockServiceClassComposerTest",
+    "MockServiceImplClassComposerTest",
+    "ResourceNameHelperClassComposerTest",
     "ServiceSettingsClassComposerTest",
     "ServiceStubSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
@@ -69,3 +84,20 @@ java_proto_library(
         "@junit_junit//jar",
     ],
 ) for test_name in TESTS]
+
+
+
+TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
+# Run `bazel run src/test/java/com/google/api/generator/gapic/composer:testTargetName_update`
+# to update goldens as expected generated code.
+# `ServiceClient*` tests are not supported now since they are still in active development.
+
+[golden_update(
+    name = test_name + "_update",
+    srcs = [
+        ":composer_files",
+        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
+        "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
+    ],
+    test_class_name = TEST_CLASS_DIR + test_name,
+) for test_name in UPDATE_GOLDENS_TESTS] 

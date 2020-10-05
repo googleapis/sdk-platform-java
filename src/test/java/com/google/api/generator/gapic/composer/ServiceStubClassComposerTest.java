@@ -23,6 +23,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
@@ -59,6 +60,7 @@ public class ServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "EchoStub.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }

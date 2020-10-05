@@ -20,6 +20,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.framework.Utils;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -39,6 +40,7 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "ComposerTest.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "ComposerTest.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
