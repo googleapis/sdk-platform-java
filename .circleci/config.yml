@@ -3,21 +3,40 @@ version: 2.1
 # ======================= JOBS =======================
 jobs:
   gapic-generator-java-tests:
-    docker:
-      - image: l.gcr.io/google/bazel
-    working_directory: /home/circleci/project/gapic-generator-java
+    working_directory: /tmp/
+    environment:
+      TEST_REPORTS_DIR: /tmp/workspace/bazel/reports/gapic-generator-java
+      BAZEL_VERSION: 3.5.1
+    machine: true
     steps:
-      - checkout
+      - checkout:
+          path: gapic-generator-java
+      - attach_workspace:
+          at: workspace
       - run:
-          name: Build targets
+          name: Install Bazel
+          command: |
+            wget https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh -O bazel_installer.sh
+            chmod +x bazel_installer.sh
+            ./bazel_installer.sh --user
+      - run:
+          name: Make reports directory
+          command: |
+            mkdir -p ${TEST_REPORTS_DIR}
+      - run:
+          name: Build targets for gapic-generator-java
           command: |
             bazel --batch build //...
       - run:
-          name: Test targets
+          name: Run unit tests for gapic-generator-java
           command: |
+            cd gapic-generator-java
             bazel --batch test //... --noshow_progress
+            find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - store_test_results:
-          path:  ~/.cache/bazel
+          path: bazel/reports/gapic-generator-java
+      - store_artifacts:
+          path: bazel/reports/gapic-generator-java
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel
