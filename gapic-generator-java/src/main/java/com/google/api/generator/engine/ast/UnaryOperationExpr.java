@@ -72,6 +72,18 @@ public abstract class UnaryOperationExpr implements OperationExpr {
       UnaryOperationExpr unaryOperationExpr = autoBuild();
       TypeNode exprType = unaryOperationExpr.expr().type();
       OperatorKind operator = unaryOperationExpr.operatorKind();
+
+      // TODO: (summerji) Add Decl Check for variable.
+      // Add final keyword checking for post/prefix ++, -- when needed.
+      if (operator.equals(OperatorKind.UNARY_POST_INCREMENT)
+          && unaryOperationExpr.expr() instanceof VariableExpr) {
+        Preconditions.checkState(
+            !((VariableExpr) unaryOperationExpr.expr()).isFinal(),
+            String.format(
+                "Cannot assign a value to final variable '%s'.",
+                ((VariableExpr) unaryOperationExpr.expr()).variable().name()));
+      }
+
       final String errorMsg =
           String.format(
               "Unary operator %s can not be applied to %s. ", operator, exprType.toString());
