@@ -271,7 +271,7 @@ public class ResourceNameHelperClassComposer {
         createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
-    javaMethods.add(createHashCodeMethod(templateFinalVarExprs, tokenHierarchies));
+    javaMethods.add(createHashCodeMethod(tokenHierarchies));
     return javaMethods;
   }
 
@@ -1143,8 +1143,7 @@ public class ResourceNameHelperClassComposer {
         .build();
   }
 
-  private static MethodDefinition createHashCodeMethod(
-      List<VariableExpr> templateFinalVarExprs, List<List<String>> tokenHierarchies) {
+  private static MethodDefinition createHashCodeMethod(List<List<String>> tokenHierarchies) {
     List<Statement> asgmtBody = new ArrayList<>();
     // code: int h = 1;
     Variable hVar = Variable.builder().setType(TypeNode.INT).setName("h").build();
@@ -1158,12 +1157,13 @@ public class ResourceNameHelperClassComposer {
             .build();
     asgmtBody.add(ExprStatement.withExpr(hAssignmentExpr));
     // code: h *= 1000003;
+    // code: h ^= Objects.hashCode(...);
     ValueExpr numValueExpr =
         ValueExpr.withValue(
             PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
     AssignmentOperationExpr multiplyAsgmtOpExpr =
         AssignmentOperationExpr.multiplyAssignmentWithExprs(hVarExpr, numValueExpr);
-    // code: h ^= Objects.hashCode(...);
+    // If it has variants, add the multiply and xor assignment operation exprs for fixedValue.
     boolean hasVariants = tokenHierarchies.size() > 1;
     if (hasVariants) {
       VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
@@ -1173,6 +1173,7 @@ public class ResourceNameHelperClassComposer {
               AssignmentOperationExpr.xorAssignmentWithExprs(
                   hVarExpr, createObjectsHashCodeForVarMethod(fixedValueVarExpr))));
     }
+    // Add the multiply and xor assignment operation exprs for tokens.
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     tokenSet.stream()
         .forEach(
