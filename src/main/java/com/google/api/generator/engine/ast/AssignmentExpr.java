@@ -15,6 +15,7 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
 @AutoValue
 public abstract class AssignmentExpr implements Expr {
@@ -67,6 +68,15 @@ public abstract class AssignmentExpr implements Expr {
                   lhsType.reference().name(), rhsType.reference().name()));
         }
       }
+
+      if (!assignmentExpr.variableExpr().isDecl()) {
+        Preconditions.checkState(
+            !assignmentExpr.variableExpr().isFinal(),
+            String.format(
+                "Cannot assign a value to final variable '%s'.",
+                assignmentExpr.variableExpr().variable().name()));
+      }
+
       return assignmentExpr;
     }
   }
