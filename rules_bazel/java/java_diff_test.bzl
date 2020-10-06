@@ -1,48 +1,33 @@
-def _overwrite_golden_impl(ctx):
-    test_class = ctx.attr.test_class
+def _junit_output_impl(ctx):
+    test_class_name = ctx.attr.test_class_name
     inputs = ctx.files.srcs
-    goldens_output_zip = ctx.outputs.goldens_output_zip
+    output = ctx.outputs.output
     test_runner = ctx.executable.test_runner
 
-    # Generate the goldens from tests.
-    generate_goldens_script = """
-    mkdir local_tmp
-    TEST_OUTPUT_HOME="$(pwd)/local_tmp" {test_runner_path} $@
-    cd local_tmp
+    command = """
+    mkdir local_tmp  
+    TEST_OUTPUT_HOME="$(pwd)/local_tmp" \
+    {test_runner_path} $@
+    cd local_tmp 
     # Zip all files under local_tmp with all nested parent folders except for local_tmp itself.
     # Zip files because there are cases that one Junit test can produce multiple goldens.
-    zip -r ../{goldens_output_zip} .
+    zip -r ../{output} .
     """.format(
         test_runner_path = test_runner.path,
-        goldens_output_zip = goldens_output_zip.path,
+        output=output.path,
     )
 
     ctx.actions.run_shell(
         inputs = inputs,
-        outputs = [goldens_output_zip],
-        arguments = [test_class],
+        outputs = [output],
+        arguments = [test_class_name],
         tools = [test_runner],
-        command = generate_goldens_script,
+        command = command,
     )
 
-    # Overwrite the goldens.
-    golden_update_script_content = """
-    #!/bin/bash
-    cd ${{BUILD_WORKSPACE_DIRECTORY}}
-    unzip -ao {goldens_output_zip} -d src/test/java
-    """.format(
-        goldens_output_zip = goldens_output_zip.path,
-    )
-    ctx.actions.write(
-        output = ctx.outputs.golden_update_script,
-        content = golden_update_script_content,
-        is_executable = True,
-    )
-    return [DefaultInfo(executable = ctx.outputs.golden_update_script)]
-
-overwrite_golden = rule(
+junit_output_zip = rule(
     attrs = {
-        "test_class": attr.string(mandatory = True),
+        "test_class_name": attr.string(mandatory=True),
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
@@ -54,31 +39,49 @@ overwrite_golden = rule(
         ),
     },
     outputs = {
-        "goldens_output_zip": "%{name}.zip",
-        "golden_update_script": "%{name}.sh",
+        "output": "%{name}.zip",
+    },
+    implementation = _junit_output_impl,  
+)
+    
+def _overwritten_golden_impl(ctx):
+    script_content = """
+    #!/bin/bash
+    cd ${{BUILD_WORKSPACE_DIRECTORY}}
+    unzip -ao {unit_test_results} -d src/test/java
+    """.format(
+        unit_test_results = ctx.file.unit_test_results.path,
+    )
+    ctx.actions.write(
+        output = ctx.outputs.bin,
+        content = script_content,
+        is_executable = True,
+    )
+    return [DefaultInfo(executable = ctx.outputs.bin)]
+
+
+overwritten_golden = rule(
+    attrs = {
+        "unit_test_results": attr.label(
+            mandatory = True,
+            allow_single_file = True),
+    },
+    outputs = {
+        "bin": "%{name}.sh",
     },
     executable = True,
-    implementation = _overwrite_golden_impl,
+    implementation = _overwritten_golden_impl,
 )
 
-def golden_update(
-        name,
-        srcs,
-        test_class,
-        data = [],
-        deps = []):
-    golden_junit_runner_name = "%s_junit_runner" % name
-    native.java_binary(
-        name = golden_junit_runner_name,
+def golden_update(name, test_class_name, srcs):
+    junit_output_name = "%s_output" % name
+    junit_output_zip(
+        name = junit_output_name,
+        test_class_name = test_class_name,
+        test_runner = "//:junit_runner",
         srcs = srcs,
-        data = data,
-        main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
-        deps = ["//src/test/java/com/google/api/generator/test/framework:junit_runner"] + deps,
     )
-
-    overwrite_golden(
+    overwritten_golden(
         name = name,
-        test_class = test_class,
-        test_runner = ":%s" % golden_junit_runner_name,
-        srcs = srcs + data,
+        unit_test_results = ":%s" % junit_output_name
     )
