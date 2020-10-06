@@ -6,14 +6,30 @@ filegroup(
 )
 
 java_library(
-    name = "framework",
+    name = "asserts",
     srcs = [
-        ":framework_files",
+        "Assert.java",
+        "Differ.java",
     ],
-    data = ["//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files"],
     deps = [
         "@io_github_java_diff_utils//jar",
         "@junit_junit//jar",
         "@org_hamcrest_hamcrest_core//jar",
+    ],
+)
+
+java_library(
+    name = "utils",
+    srcs = ["Utils.java"],
+)
+
+java_library(
+    name = "junit_runner",
+    srcs = [
+        "SingleJUnitTestRunner.java",
+    ],
+    deps = [
+        ":utils",
+        "@junit_junit//jar",
     ],
 )
