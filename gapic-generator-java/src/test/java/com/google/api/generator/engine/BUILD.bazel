@@ -15,27 +15,30 @@ TESTS = [
     "JavaCodeGeneratorTest",
 ]
 
+TEST_DEPS = [
+    "//src/main/java/com/google/api/generator/engine/ast",
+    "//src/main/java/com/google/api/generator/engine/writer",
+    "//src/test/java/com/google/api/generator/test/framework:asserts",
+    "//src/test/java/com/google/api/generator/test/framework:utils",
+    "@junit_junit//jar",
+]
+
 [java_test(
     name = test_name,
     srcs = ["{0}.java".format(test_name)],
     data = ["//src/test/java/com/google/api/generator/engine/goldens:goldens_files"],
     test_class = "com.google.api.generator.engine.{0}".format(test_name),
-    deps = [
-        "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
-        "//src/test/java/com/google/api/generator/test/framework",
-        "@junit_junit//jar",
-    ],
+    deps = TEST_DEPS,
 ) for test_name in TESTS]
 
 TEST_CLASS_NAME = "com.google.api.generator.engine.JavaCodeGeneratorTest"
 
 # Run `bazel run src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update`
 # to update goldens as expected generated code.
-golden_update(
-    name = "JavaCodeGeneratorTest_update",
-    srcs = [
-        ":engine_files",
-    ],
-    test_class_name = TEST_CLASS_NAME,
-)
+[golden_update(
+    name = "{0}_update".format(test_name),
+    srcs = ["{0}.java".format(test_name)],
+    data = ["//src/test/java/com/google/api/generator/engine/goldens:goldens_files"],
+    test_class = "com.google.api.generator.engine.{0}".format(test_name),
+    deps = TEST_DEPS,
+) for test_name in TESTS]

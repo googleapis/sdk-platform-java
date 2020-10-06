@@ -46,50 +46,6 @@ java_binary(
     ],
 )
 
-# JUnit runner binary, this is used to generate test output for updating goldens files.
-# Run `bazel run testTarget_update` will trigger this runner.
-java_binary(
-    name = "golden_update_junit_runner",
-    srcs = [
-        "//src/test/java/com/google/api/generator/gapic/dummy:dummy_files",
-        "//src/test/java/com/google/api/generator/engine:engine_files",
-        "//src/test/java/com/google/api/generator/gapic/composer:composer_files",
-        "//src/test/java/com/google/api/generator/test/framework:framework_files",
-    ],
-    data = [
-        "//src/test/java/com/google/api/generator/gapic/dummy/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/engine/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
-        "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
-    ],
-    jvm_flags = ["-Xmx512m"],
-    main_class = "com.google.api.generator.test.framework.SingleJUnitTestRunner",
-    visibility = ["//visibility:public"],
-    deps = [
-        "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
-        "//src/test/java/com/google/api/generator/test/framework",
-        "//src/main/java/com/google/api/generator/engine/lexicon",
-        "//src/main/java/com/google/api/generator/gapic/composer",
-        "//src/main/java/com/google/api/generator/gapic/model",
-        "//src/main/java/com/google/api/generator/gapic/protoparser",
-        "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
-        "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
-        "//src/test/java/com/google/api/generator/gapic/composer:common_resources_java_proto",
-        "@com_google_guava_guava//:com_google_guava_guava",
-        "@com_google_api_gax_java//gax",
-        "@com_google_googleapis//google/logging/v2:logging_java_proto",
-        "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",
-        "@com_google_googleapis//google/rpc:rpc_java_proto",
-        "@com_google_protobuf//:protobuf_java",
-        "//:service_config_java_proto",
-        "@com_google_truth_truth//jar",
-        "@io_github_java_diff_utils//jar",
-        "@junit_junit//jar",
-        "@org_hamcrest_hamcrest_core//jar",
-    ],
-)
 
 # google-java-format
 java_binary(
