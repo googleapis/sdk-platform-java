@@ -137,6 +137,32 @@ public class AssignmentExprTest {
     assertInvalidAssignmentExpr(lVariableExpr, rVariableExpr);
   }
 
+  @Test
+  public void writeAssignmentExpr_validIsDeclFinalVariableExpr() {
+    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr lVariableExpr =
+        VariableExpr.builder().setVariable(lVariable).setIsDecl(true).setIsFinal(true).build();
+
+    ValueExpr valueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
+    assertValidAssignmentExpr(lVariableExpr, valueExpr);
+  }
+
+  @Test
+  public void writeAssignmentExpr_invalidIsNotDeclFinalVariableExpr() {
+    Variable lVariable = Variable.builder().setName("x").setType(TypeNode.INT).build();
+    VariableExpr lVariableExpr =
+        VariableExpr.builder().setVariable(lVariable).setIsDecl(false).setIsFinal(true).build();
+
+    ValueExpr valueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
+    assertThrows(
+        IllegalStateException.class,
+        () -> {
+          AssignmentExpr.builder().setVariableExpr(lVariableExpr).setValueExpr(valueExpr).build();
+        });
+  }
+
   private static void assertInvalidAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
     assertThrows(
         TypeMismatchException.class,
