@@ -44,7 +44,7 @@ junit_output_zip = rule(
     implementation = _junit_output_impl,  
 )
     
-def _overwritten_golden_impl(ctx):
+def _overwrite_golden_impl(ctx):
     script_content = """
     #!/bin/bash
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
@@ -60,7 +60,7 @@ def _overwritten_golden_impl(ctx):
     return [DefaultInfo(executable = ctx.outputs.bin)]
 
 
-overwritten_golden = rule(
+overwrite_golden = rule(
     attrs = {
         "unit_test_results": attr.label(
             mandatory = True,
@@ -70,7 +70,7 @@ overwritten_golden = rule(
         "bin": "%{name}.sh",
     },
     executable = True,
-    implementation = _overwritten_golden_impl,
+    implementation = _overwrite_golden_impl,
 )
 
 def golden_update(name, test_class_name, srcs):
@@ -78,10 +78,10 @@ def golden_update(name, test_class_name, srcs):
     junit_output_zip(
         name = junit_output_name,
         test_class_name = test_class_name,
-        test_runner = "//:junit_runner",
+        test_runner = "//:golden_update_junit_runner",
         srcs = srcs,
     )
-    overwritten_golden(
+    overwrite_golden(
         name = name,
         unit_test_results = ":%s" % junit_output_name
     )
