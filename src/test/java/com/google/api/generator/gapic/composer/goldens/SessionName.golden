@@ -120,6 +120,18 @@ public class SessionName implements ResourceName {
     h ^= Objects.hashCode(session);
     return h;
   }
+  
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (o != null || getClass() == o.getClass()) {
+      SessionName that = ((SessionName) o);
+      return Objects.equals(this.session, that.session);
+    }
+    return false;
+  }
 
   /** Builder for sessions/{session}. */
   public static class Builder {

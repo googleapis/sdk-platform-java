@@ -767,11 +767,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     newline();
     statements(methodDefinition.body());
     if (methodDefinition.returnExpr() != null) {
-      buffer.append(RETURN);
-      space();
-      methodDefinition.returnExpr().accept(this);
-      semicolon();
-      newline();
+      ExprStatement.withExpr(methodDefinition.returnExpr()).accept(this);
     }
 
     rightBrace();
