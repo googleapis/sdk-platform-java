@@ -1,4 +1,0 @@
-package com.google.showcase.v1beta1.stub;
-
-// This is a test class for file-diff infra
-public class EchoStubSettings {}
