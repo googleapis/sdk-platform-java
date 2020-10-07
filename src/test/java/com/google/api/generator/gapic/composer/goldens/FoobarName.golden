@@ -279,21 +279,6 @@ public class FoobarName implements ResourceName {
     h ^= Objects.hashCode(barFoo);
     return h;
   }
-  
-  @Override
-  public boolean equals(Object o) {
-    if (o == this) {
-      return true;
-    }
-    if (o != null || getClass() == o.getClass()) {
-      FoobarName that = ((FoobarName) o);
-      return Objects.equals(this.project, that.project)
-          && Objects.equals(this.foobar, that.foobar)
-          && Objects.equals(this.variant, that.variant)
-          && Objects.equals(this.barFoo, that.barFoo);
-    }
-    return false;
-  }
 
   /** Builder for projects/{project}/foobars/{foobar}. */
   public static class Builder {
