@@ -89,31 +89,12 @@ public abstract class GeneralForStatement implements Statement {
                 localVarExpr.variable().identifier().name()));
         Preconditions.checkState(!localVarExpr.isStatic(), "Modifier 'static' not allow here.");
       }
-      // TODO (unsupport): Uncomment the following code if public setter for the initialization,
-      // termination, update expressions when needed.
-      // Preconditions.checkState(
-      //     (initializationExpr instanceof MethodInvocationExpr)
-      //         || (incrementExpr instanceof AssignmentExpr)
-      //         || (incrementExpr instanceof AssignmentOperationExpr)
-      //         // TODO(unsupported): Currently we only support postIncrement (i++), please add
-      //         // postDecrement, prefixIncrement, prefixIncrement if needed.
-      //         || (incrementExpr instanceof UnaryOperationExpr
-      //         && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
-      //     "Initialization expression %s must be either a method invocation, assignment, or unary
-      // post-fix operation expression.");
-      // Preconditions.checkState(
-      //     terminationExpr.type().equals(TypeNode.BOOLEAN),
-      //     "Terminal expression %s must be boolean-type expression.");
-      // Preconditions.checkState(
-      //     (incrementExpr instanceof MethodInvocationExpr)
-      //         || (incrementExpr instanceof AssignmentExpr)
-      //         || (incrementExpr instanceof AssignmentOperationExpr)
-      //         // TODO(unsupported): Currently we only support postIncrement (i++), please add
-      //         // postDecrement, prefixIncrement, prefixIncrement if needed.
-      //         || (incrementExpr instanceof UnaryOperationExpr
-      //             && ((UnaryOperationExpr) incrementExpr).isPostfixIncrement()),
-      //     "Increment expression %s must be either a method invocation, assignment, or unary
-      // post-fix operation expression.");
+      // TODO (unsupport): Add type-checking for initialization, termination, update exprs if public
+      // setters for users for future needs.
+      // Initialization and update expr should belong to StatementExpressionList.
+      // Termination expr must have type boolean or Boolean. And these three exprs are optional.
+      // More details at
+      // https://docs.oracle.com/javase/specs/jls/se10/html/jls-14.html#jls-StatementExpressionList
       return autoBuild();
     }
   }
