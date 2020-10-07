@@ -280,6 +280,21 @@ public class MethodDefinitionTest {
   }
 
   @Test
+  public void validMethodDefinition_setReturnExprUsingReturnExpr() {
+    ReturnExpr returnExpr =
+        ReturnExpr.withExpr(
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build()));
+    MethodDefinition.builder()
+        .setName("foobar")
+        .setScope(ScopeNode.PUBLIC)
+        .setReturnType(TypeNode.INT_OBJECT)
+        .setBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr())))
+        .setReturnExpr(returnExpr)
+        .build();
+  }
+
+  @Test
   public void invalidMethodDefinition_badTemplateName() {
     assertThrows(
         IdentifierNode.InvalidIdentifierException.class,
