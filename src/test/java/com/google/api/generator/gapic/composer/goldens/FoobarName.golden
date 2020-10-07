@@ -264,6 +264,22 @@ public class FoobarName implements ResourceName {
     return false;
   }
 
+  @Override
+  public int hashCode() {
+    int h = 1;
+    h *= 1000003;
+    h ^= Objects.hashCode(fixedValue);
+    h *= 1000003;
+    h ^= Objects.hashCode(project);
+    h *= 1000003;
+    h ^= Objects.hashCode(foobar);
+    h *= 1000003;
+    h ^= Objects.hashCode(variant);
+    h *= 1000003;
+    h ^= Objects.hashCode(barFoo);
+    return h;
+  }
+
   /** Builder for projects/{project}/foobars/{foobar}. */
   public static class Builder {
     private String project;
