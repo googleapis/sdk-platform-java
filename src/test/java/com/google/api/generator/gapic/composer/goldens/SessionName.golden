@@ -101,6 +101,26 @@ public class SessionName implements ResourceName {
     return SESSION.instantiate("session", session);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (o == this) {
+      return true;
+    }
+    if (o != null || getClass() == o.getClass()) {
+      SessionName that = ((SessionName) o);
+      return Objects.equals(this.session, that.session);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    int h = 1;
+    h *= 1000003;
+    h ^= Objects.hashCode(session);
+    return h;
+  }
+
   /** Builder for sessions/{session}. */
   public static class Builder {
     private String session;
