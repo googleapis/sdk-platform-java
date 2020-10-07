@@ -46,7 +46,6 @@ java_binary(
     ],
 )
 
-
 # google-java-format
 java_binary(
     name = "google_java_format_binary",
