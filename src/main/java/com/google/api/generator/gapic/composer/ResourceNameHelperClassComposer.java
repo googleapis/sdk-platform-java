@@ -19,7 +19,6 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.CastExpr;
-import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -1257,74 +1256,6 @@ public class ResourceNameHelperClassComposer {
         .setMethodName("equals")
         .setArguments(Arrays.asList(varThisExpr, varThatExpr))
         .setReturnType(TypeNode.BOOLEAN)
-        .build();
-  }
-
-  private static MethodDefinition createHashCodeMethod(List<List<String>> tokenHierarchies) {
-    List<Statement> asgmtBody = new ArrayList<>();
-    // code: int h = 1;
-    Variable hVar = Variable.builder().setType(TypeNode.INT).setName("h").build();
-    VariableExpr hVarExpr = VariableExpr.builder().setVariable(hVar).build();
-    ValueExpr hValueExpr =
-        ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("1").build());
-    AssignmentExpr hAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(hVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(hValueExpr)
-            .build();
-    asgmtBody.add(ExprStatement.withExpr(hAssignmentExpr));
-    // code: h *= 1000003;
-    // code: h ^= Objects.hashCode(...);
-    ValueExpr numValueExpr =
-        ValueExpr.withValue(
-            PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
-    AssignmentOperationExpr multiplyAsgmtOpExpr =
-        AssignmentOperationExpr.multiplyAssignmentWithExprs(hVarExpr, numValueExpr);
-    // If it has variants, add the multiply and xor assignment operation exprs for fixedValue.
-    boolean hasVariants = tokenHierarchies.size() > 1;
-    if (hasVariants) {
-      VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
-      asgmtBody.add(ExprStatement.withExpr(multiplyAsgmtOpExpr));
-      asgmtBody.add(
-          ExprStatement.withExpr(
-              AssignmentOperationExpr.xorAssignmentWithExprs(
-                  hVarExpr, createObjectsHashCodeForVarMethod(fixedValueVarExpr))));
-    }
-    // Add the multiply and xor assignment operation exprs for tokens.
-    Set<String> tokenSet = getTokenSet(tokenHierarchies);
-    tokenSet.stream()
-        .forEach(
-            token -> {
-              VariableExpr tokenVarExpr =
-                  VariableExpr.withVariable(
-                      Variable.builder()
-                          .setName(JavaStyle.toLowerCamelCase(token))
-                          .setType(TypeNode.STRING)
-                          .build());
-              asgmtBody.add(ExprStatement.withExpr(multiplyAsgmtOpExpr));
-              asgmtBody.add(
-                  ExprStatement.withExpr(
-                      AssignmentOperationExpr.xorAssignmentWithExprs(
-                          hVarExpr, createObjectsHashCodeForVarMethod(tokenVarExpr))));
-            });
-
-    return MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setReturnType(TypeNode.INT)
-        .setName("hashCode")
-        .setBody(asgmtBody)
-        .setReturnExpr(hVarExpr)
-        .build();
-  }
-
-  private static MethodInvocationExpr createObjectsHashCodeForVarMethod(VariableExpr varExpr) {
-    // code: Objects.hashCode(varExpr)
-    return MethodInvocationExpr.builder()
-        .setMethodName("hashCode")
-        .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-        .setArguments(varExpr)
-        .setReturnType(TypeNode.INT)
         .build();
   }
 
