@@ -85,3 +85,23 @@ below are temporary and better ones will be coming.
     ```sh
     bazel run :google_java_format
     ```
+
+## Test Running
+
+-   Run all unit tests.
+
+    ```sh
+    bazel test //...
+    ```
+
+-   Run a single unit test like `JavaCodeGeneratorTest.java`
+
+    ```sh
+    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest
+    ```
+
+-   Update goldens files based on code generation in unit test, for example `JavaCodeGeneratorTest.java`
+
+    ```sh
+    bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
+    ```
