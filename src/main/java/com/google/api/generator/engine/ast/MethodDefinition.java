@@ -66,7 +66,7 @@ public abstract class MethodDefinition implements AstNode {
   abstract ImmutableList<String> returnTemplateNames();
 
   @Nullable
-  public abstract Expr returnExpr();
+  public abstract ReturnExpr returnExpr();
 
   abstract boolean isOverride();
 
@@ -147,7 +147,11 @@ public abstract class MethodDefinition implements AstNode {
 
     public abstract Builder setBody(List<Statement> body);
 
-    public abstract Builder setReturnExpr(Expr returnExpr);
+    public Builder setReturnExpr(Expr expr) {
+      return setReturnExpr(ReturnExpr.withExpr(expr));
+    }
+
+    public abstract Builder setReturnExpr(ReturnExpr returnExpr);
 
     public abstract Builder setIsOverride(boolean isOverride);
 
@@ -292,18 +296,14 @@ public abstract class MethodDefinition implements AstNode {
         }
 
         if (method.returnExpr() != null && !isLastStatementThrowExpr) {
-          // TODO(miraleung): Refactor this to use ReturnExpr under the covers instead.
-          Preconditions.checkState(
-              !(method.returnExpr() instanceof ReturnExpr),
-              "A method's return expression can only consist of non-ReturnExpr expressions");
           if (method.returnType().isPrimitiveType()
-              || method.returnExpr().type().isPrimitiveType()) {
+              || method.returnExpr().expr().type().isPrimitiveType()) {
             Preconditions.checkState(
-                method.returnType().equals((method.returnExpr().type())),
+                method.returnType().equals((method.returnExpr().expr().type())),
                 "Method return type does not match the return expression type");
           } else {
             Preconditions.checkState(
-                method.returnType().isSupertypeOrEquals(method.returnExpr().type()),
+                method.returnType().isSupertypeOrEquals(method.returnExpr().expr().type()),
                 "Method reference return type is not a supertype of the return expression type");
           }
         }
