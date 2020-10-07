@@ -1,3 +1,4 @@
+load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 
 package(default_visibility = ["//visibility:public"])
