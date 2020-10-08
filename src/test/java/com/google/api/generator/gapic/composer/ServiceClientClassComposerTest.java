@@ -27,28 +27,22 @@ import com.google.api.generator.test.framework.Utils;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.IdentityOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceClientClassComposerTest {
-  private ServiceDescriptor echoService;
-  private FileDescriptor echoFileDescriptor;
-
-  @Before
-  public void setUp() {
-    echoFileDescriptor = EchoOuterClass.getDescriptor();
-    echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-  }
-
   @Test
   public void generateServiceClasses() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
+    assertEquals(echoService.getName(), "Echo");
+
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -63,6 +57,29 @@ public class ServiceClientClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "EchoClient.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoClient.golden");
+    assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClasses_methodSignatureHasNestedFields() {
+    FileDescriptor fileDescriptor = IdentityOuterClass.getDescriptor();
+    ServiceDescriptor identityService = fileDescriptor.getServices().get(0);
+    assertEquals(identityService.getName(), "Identity");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(fileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
+    Service protoService = services.get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(protoService, messageTypes);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "IdentityClient.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "IdentityClient.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

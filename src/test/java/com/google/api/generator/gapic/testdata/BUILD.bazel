@@ -32,6 +32,7 @@ proto_library(
     name = "showcase_proto",
     srcs = [
         "echo.proto",
+        "identity.proto",
         "testing.proto",
     ],
     deps = [
