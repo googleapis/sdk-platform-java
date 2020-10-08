@@ -22,7 +22,7 @@ import java.util.List;
 
 @AutoValue
 public abstract class GeneralForStatement implements Statement {
-  public abstract AssignmentExpr initializationExpr();
+  public abstract Expr initializationExpr();
 
   public abstract Expr terminationExpr();
 
@@ -66,7 +66,7 @@ public abstract class GeneralForStatement implements Statement {
   @AutoValue.Builder
   abstract static class Builder {
     // Private setter.
-    abstract Builder setInitializationExpr(AssignmentExpr initializationExpr);
+    abstract Builder setInitializationExpr(Expr initializationExpr);
     // Private setter.
     abstract Builder setTerminationExpr(Expr terminationExpr);
     // Private setter.
@@ -79,15 +79,18 @@ public abstract class GeneralForStatement implements Statement {
     // Type-checking will be done in the sub-expressions.
     GeneralForStatement build() {
       GeneralForStatement generalForStatement = autoBuild();
-      VariableExpr localVarExpr = generalForStatement.initializationExpr().variableExpr();
-      // Declare a variable inside for-loop initialization expression.
-      if (localVarExpr.isDecl()) {
-        Preconditions.checkState(
-            localVarExpr.scope().equals(ScopeNode.LOCAL),
-            String.format(
-                "Variable %s declare in a general for-loop cannot have a non-local scope",
-                localVarExpr.variable().identifier().name()));
-        Preconditions.checkState(!localVarExpr.isStatic(), "Modifier 'static' not allow here.");
+      Expr initExpr = generalForStatement.initializationExpr();
+      if (initExpr instanceof AssignmentExpr) {
+        VariableExpr localVarExpr = ((AssignmentExpr) initExpr).variableExpr();
+        // Declare a variable inside for-loop initialization expression.
+        if (localVarExpr.isDecl()) {
+          Preconditions.checkState(
+              localVarExpr.scope().equals(ScopeNode.LOCAL),
+              String.format(
+                  "Variable %s declare in a general for-loop cannot have a non-local scope",
+                  localVarExpr.variable().identifier().name()));
+          Preconditions.checkState(!localVarExpr.isStatic(), "Modifier 'static' not allow here.");
+        }
       }
       // TODO (unsupport): Add type-checking for initialization, termination, update exprs if public
       // setters for users for future needs.
