@@ -64,6 +64,7 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -89,6 +90,9 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
   private static final String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static final String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
+
+  private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
+  private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
 
   private enum CallableMethodKind {
     REGULAR,
@@ -499,8 +503,6 @@ public class ServiceClientClassComposer implements ClassComposer {
     }
 
     String methodInputTypeName = methodInputType.reference().name();
-    Reference listRef = ConcreteReference.withClazz(List.class);
-    Reference mapRef = ConcreteReference.withClazz(Map.class);
 
     // Make the method signature order deterministic, which helps with unit testing and per-version
     // diffs.
@@ -544,71 +546,12 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setIsDecl(true)
               .build();
 
-      MethodInvocationExpr newBuilderExpr =
-          MethodInvocationExpr.builder()
-              .setMethodName("newBuilder")
-              .setStaticReferenceType(methodInputType)
-              .build();
-      // TODO(miraleung): Handle nested arguments and descending setters here.
-      for (MethodArgument argument : signature) {
-        String argumentName = JavaStyle.toLowerCamelCase(argument.name());
-        TypeNode argumentType = argument.type();
-        String setterMethodVariantPattern = "set%s";
-        if (TypeNode.isReferenceType(argumentType)) {
-          if (listRef.isSupertypeOrEquals(argumentType.reference())) {
-            setterMethodVariantPattern = "addAll%s";
-          } else if (mapRef.isSupertypeOrEquals(argumentType.reference())) {
-            setterMethodVariantPattern = "putAll%s";
-          }
-        }
-        String setterMethodName =
-            String.format(setterMethodVariantPattern, JavaStyle.toUpperCamelCase(argumentName));
+      Expr requestBuilderExpr = createRequestBuilderExpr(method, signature, types);
 
-        Expr argVarExpr =
-            VariableExpr.withVariable(
-                Variable.builder().setName(argumentName).setType(argumentType).build());
-
-        if (argument.isResourceNameHelper()) {
-          MethodInvocationExpr isNullCheckExpr =
-              MethodInvocationExpr.builder()
-                  .setStaticReferenceType(types.get("Objects"))
-                  .setMethodName("isNull")
-                  .setArguments(Arrays.asList(argVarExpr))
-                  .setReturnType(TypeNode.BOOLEAN)
-                  .build();
-          Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
-          MethodInvocationExpr toStringExpr =
-              MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(argVarExpr)
-                  .setMethodName("toString")
-                  .setReturnType(TypeNode.STRING)
-                  .build();
-          argVarExpr =
-              TernaryExpr.builder()
-                  .setConditionExpr(isNullCheckExpr)
-                  .setThenExpr(nullExpr)
-                  .setElseExpr(toStringExpr)
-                  .build();
-        }
-
-        newBuilderExpr =
-            MethodInvocationExpr.builder()
-                .setMethodName(setterMethodName)
-                .setArguments(Arrays.asList(argVarExpr))
-                .setExprReferenceExpr(newBuilderExpr)
-                .build();
-      }
-
-      MethodInvocationExpr builderExpr =
-          MethodInvocationExpr.builder()
-              .setMethodName("build")
-              .setExprReferenceExpr(newBuilderExpr)
-              .setReturnType(methodInputType)
-              .build();
       AssignmentExpr requestAssignmentExpr =
           AssignmentExpr.builder()
               .setVariableExpr(requestVarExpr)
-              .setValueExpr(builderExpr)
+              .setValueExpr(requestBuilderExpr)
               .build();
       List<Statement> statements = Arrays.asList(ExprStatement.withExpr(requestAssignmentExpr));
 
@@ -1371,6 +1314,75 @@ public class ServiceClientClassComposer implements ClassComposer {
         .setName(className)
         .setMethods(javaMethods)
         .build();
+  }
+
+  @VisibleForTesting
+  static Expr createRequestBuilderExpr(
+      Method method, List<MethodArgument> signature, Map<String, TypeNode> types) {
+    TypeNode methodInputType = method.inputType();
+    MethodInvocationExpr newBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("newBuilder")
+            .setStaticReferenceType(methodInputType)
+            .build();
+    // TODO(miraleung): Handle nested arguments and descending setters here.
+    for (MethodArgument argument : signature) {
+      String argumentName = JavaStyle.toLowerCamelCase(argument.name());
+      TypeNode argumentType = argument.type();
+      String setterMethodVariantPattern = "set%s";
+      if (TypeNode.isReferenceType(argumentType)) {
+        if (LIST_REFERENCE.isSupertypeOrEquals(argumentType.reference())) {
+          setterMethodVariantPattern = "addAll%s";
+        } else if (MAP_REFERENCE.isSupertypeOrEquals(argumentType.reference())) {
+          setterMethodVariantPattern = "putAll%s";
+        }
+      }
+      String setterMethodName =
+          String.format(setterMethodVariantPattern, JavaStyle.toUpperCamelCase(argumentName));
+
+      Expr argVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName(argumentName).setType(argumentType).build());
+
+      if (argument.isResourceNameHelper()) {
+        MethodInvocationExpr isNullCheckExpr =
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(types.get("Objects"))
+                .setMethodName("isNull")
+                .setArguments(Arrays.asList(argVarExpr))
+                .setReturnType(TypeNode.BOOLEAN)
+                .build();
+        Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+        MethodInvocationExpr toStringExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(argVarExpr)
+                .setMethodName("toString")
+                .setReturnType(TypeNode.STRING)
+                .build();
+        argVarExpr =
+            TernaryExpr.builder()
+                .setConditionExpr(isNullCheckExpr)
+                .setThenExpr(nullExpr)
+                .setElseExpr(toStringExpr)
+                .build();
+      }
+
+      newBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setMethodName(setterMethodName)
+              .setArguments(Arrays.asList(argVarExpr))
+              .setExprReferenceExpr(newBuilderExpr)
+              .build();
+    }
+
+    MethodInvocationExpr builderExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("build")
+            .setExprReferenceExpr(newBuilderExpr)
+            .setReturnType(methodInputType)
+            .build();
+
+    return builderExpr;
   }
 
   private static Map<String, TypeNode> createTypes(
