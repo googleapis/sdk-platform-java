@@ -1,3 +1,4 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_proto_library")
 load(
     "//:gapic_generator_java.bzl",
     "google_java_format",
@@ -45,7 +46,6 @@ java_binary(
         "@com_google_protobuf//:protobuf_java",
     ],
 )
-
 
 # google-java-format
 java_binary(
