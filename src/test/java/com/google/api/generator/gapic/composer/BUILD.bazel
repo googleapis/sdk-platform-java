@@ -11,6 +11,8 @@ UPDATE_GOLDENS_TESTS = [
     "MockServiceClassComposerTest",
     "MockServiceImplClassComposerTest",
     "ResourceNameHelperClassComposerTest",
+    "ServiceClientClassComposerTest",
+    "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
     "ServiceStubSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
@@ -20,8 +22,6 @@ TESTS = UPDATE_GOLDENS_TESTS + [
     "DefaultValueComposerTest",
     "ResourceNameTokenizerTest",
     "RetrySettingsComposerTest",
-    "ServiceClientClassComposerTest",
-    "ServiceClientTestClassComposerTest",
 ]
 
 TEST_DEPS = [
