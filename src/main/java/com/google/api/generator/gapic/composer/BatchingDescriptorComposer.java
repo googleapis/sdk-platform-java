@@ -354,10 +354,16 @@ public class BatchingDescriptorComposer {
       // TODO(miraleung): Increment batchMessageIndexVarExpr.
 
       VariableExpr forIndexVarExpr =
-          VariableExpr.withVariable(Variable.builder().setType(TypeNode.INT).setName("i").build());
+          VariableExpr.builder()
+              .setIsDecl(true)
+              .setVariable(Variable.builder().setType(TypeNode.INT).setName("i").build())
+              .build();
+      ValueExpr initValueExpr =
+          ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
       GeneralForStatement innerSubresponseForStatement =
           GeneralForStatement.incrementWith(
               forIndexVarExpr,
+              initValueExpr,
               subresponseCountVarExpr,
               innerSubresponseForExprs.stream()
                   .map(e -> ExprStatement.withExpr(e))
