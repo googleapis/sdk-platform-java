@@ -5,7 +5,7 @@ jobs:
   gapic-generator-java-tests:
     working_directory: /tmp/
     environment:
-      TEST_REPORTS_DIR: /tmp/workspace/bazel/reports/gapic-generator-java
+      TEST_REPORTS_DIR: ~/.cache/bazel
       BAZEL_VERSION: 3.5.1
       PYTHON_VERSION: 3.5.2
     machine: true
@@ -28,6 +28,7 @@ jobs:
           name: Make reports directory
           command: |
             mkdir -p ${TEST_REPORTS_DIR}
+            echo "Test reports will be stored in ${TEST_REPORTS_DIR}"
       - run:
           name: Build targets for gapic-generator-java
           command: |
@@ -40,9 +41,9 @@ jobs:
             bazel --batch test //src/test/... --noshow_progress
             find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - store_test_results:
-          path: bazel/reports/gapic-generator-java
+          path: ~/.cache/bazel
       - store_artifacts:
-          path: bazel/reports/gapic-generator-java
+          path: ~/.cache/bazel
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel

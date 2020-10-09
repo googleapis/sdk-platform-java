@@ -224,11 +224,14 @@ public class ParserTest {
             outputResourceNames);
     assertEquals(7, methodSignatures.size());
 
-    // Signature contents: ["content"].
+    // Signature contents: ["parent"].
     List<MethodArgument> methodArgs = methodSignatures.get(0);
     assertEquals(1, methodArgs.size());
     MethodArgument argument = methodArgs.get(0);
-    assertMethodArgumentEquals("content", TypeNode.STRING, ImmutableList.of(), argument);
+    TypeNode resourceNameType =
+        TypeNode.withReference(
+            ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
+    assertMethodArgumentEquals("parent", resourceNameType, ImmutableList.of(), argument);
 
     // Signature contents: ["error"].
     methodArgs = methodSignatures.get(1);
@@ -237,8 +240,35 @@ public class ParserTest {
     assertMethodArgumentEquals(
         "error", TypeNode.withReference(createStatusReference()), ImmutableList.of(), argument);
 
-    // Signature contents: ["content", "severity"].
+    // Signature contents: ["name"], resource helper variant.
     methodArgs = methodSignatures.get(2);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    TypeNode foobarNameType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("FoobarName").setPakkage(ECHO_PACKAGE).build());
+    assertMethodArgumentEquals("name", foobarNameType, ImmutableList.of(), argument);
+
+    // Signature contents: ["content"].
+    methodArgs = methodSignatures.get(3);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    assertMethodArgumentEquals("content", TypeNode.STRING, ImmutableList.of(), argument);
+
+    // Signature contents: ["name"], String variant.
+    methodArgs = methodSignatures.get(4);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
+
+    // Signature contents: ["parent"], String variant.
+    methodArgs = methodSignatures.get(5);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    assertMethodArgumentEquals("parent", TypeNode.STRING, ImmutableList.of(), argument);
+
+    // Signature contents: ["content", "severity"].
+    methodArgs = methodSignatures.get(6);
     assertEquals(2, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals("content", TypeNode.STRING, ImmutableList.of(), argument);
@@ -249,21 +279,6 @@ public class ParserTest {
             VaporReference.builder().setName("Severity").setPakkage(ECHO_PACKAGE).build()),
         ImmutableList.of(),
         argument);
-
-    // Signature contents: ["name"], resource helper variant.
-    methodArgs = methodSignatures.get(3);
-    assertEquals(1, methodArgs.size());
-    argument = methodArgs.get(0);
-    TypeNode foobarNameType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("FoobarName").setPakkage(ECHO_PACKAGE).build());
-    assertMethodArgumentEquals("name", foobarNameType, ImmutableList.of(), argument);
-
-    // Signature contents: ["name"], String variant.
-    methodArgs = methodSignatures.get(4);
-    assertEquals(1, methodArgs.size());
-    argument = methodArgs.get(0);
-    assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
   }
 
   @Test
