@@ -250,12 +250,6 @@ public class ParserTest {
         ImmutableList.of(),
         argument);
 
-    // Signature contents: ["name"], String variant.
-    methodArgs = methodSignatures.get(3);
-    assertEquals(1, methodArgs.size());
-    argument = methodArgs.get(0);
-    assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
-
     // Signature contents: ["name"], resource helper variant.
     methodArgs = methodSignatures.get(4);
     assertEquals(1, methodArgs.size());
@@ -264,6 +258,12 @@ public class ParserTest {
         TypeNode.withReference(
             VaporReference.builder().setName("FoobarName").setPakkage(ECHO_PACKAGE).build());
     assertMethodArgumentEquals("name", foobarNameType, ImmutableList.of(), argument);
+
+    // Signature contents: ["name"], String variant.
+    methodArgs = methodSignatures.get(3);
+    assertEquals(1, methodArgs.size());
+    argument = methodArgs.get(0);
+    assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
   }
 
   @Test
