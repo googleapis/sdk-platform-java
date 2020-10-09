@@ -1,3 +1,4 @@
+load("@rules_java//java:defs.bzl", "java_proto_library", "java_test")
 load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 
 package(default_visibility = ["//visibility:public"])
@@ -10,6 +11,8 @@ UPDATE_GOLDENS_TESTS = [
     "MockServiceClassComposerTest",
     "MockServiceImplClassComposerTest",
     "ResourceNameHelperClassComposerTest",
+    "ServiceClientClassComposerTest",
+    "ServiceClientTestClassComposerTest",
     "ServiceSettingsClassComposerTest",
     "ServiceStubSettingsClassComposerTest",
     "ServiceStubClassComposerTest",
@@ -19,8 +22,6 @@ TESTS = UPDATE_GOLDENS_TESTS + [
     "DefaultValueComposerTest",
     "ResourceNameTokenizerTest",
     "RetrySettingsComposerTest",
-    "ServiceClientClassComposerTest",
-    "ServiceClientTestClassComposerTest",
 ]
 
 TEST_DEPS = [

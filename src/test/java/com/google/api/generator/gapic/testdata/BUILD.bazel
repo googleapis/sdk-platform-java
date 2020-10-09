@@ -1,3 +1,6 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
+
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
@@ -29,6 +32,7 @@ proto_library(
     name = "showcase_proto",
     srcs = [
         "echo.proto",
+        "identity.proto",
         "testing.proto",
     ],
     deps = [
