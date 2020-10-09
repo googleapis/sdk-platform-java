@@ -98,7 +98,29 @@ public class MethodSignatureParser {
       }
       signatures.addAll(flattenMethodSignatureVariants(argumentNames, argumentNameToOverloads));
     }
-    return signatures;
+
+    // Make the method signature order deterministic, which helps with unit testing and per-version
+    // diffs.
+    List<List<MethodArgument>> sortedMethodSignatures =
+        signatures.stream()
+            .sorted(
+                (s1, s2) -> {
+                  // Sort by number of arguments first.
+                  if (s1.size() != s2.size()) {
+                    return s1.size() - s2.size();
+                  }
+                  // Then by MethodSignature properties.
+                  for (int i = 0; i < s1.size(); i++) {
+                    int compareVal = s1.get(i).compareTo(s2.get(i));
+                    if (compareVal != 0) {
+                      return compareVal;
+                    }
+                  }
+                  return 0;
+                })
+            .collect(Collectors.toList());
+
+    return sortedMethodSignatures;
   }
 
   @VisibleForTesting
