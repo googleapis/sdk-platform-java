@@ -37,10 +37,10 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class EchoClientTest {
-  public static MockServiceHelper mockServiceHelper;
-  public static MockEcho mockEcho;
-  public EchoClient client;
-  public LocalChannelProvider channelProvider;
+  private static MockServiceHelper mockServiceHelper;
+  private static MockEcho mockEcho;
+  private EchoClient client;
+  private LocalChannelProvider channelProvider;
 
   @BeforeClass
   public static void startStaticServer() {
