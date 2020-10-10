@@ -21,57 +21,178 @@ import java.util.Collections;
 import org.junit.Test;
 
 public class GeneralForStatementTest {
-
+  /** ============================== incrementWith ====================================== */
   @Test
+  // validGeneralForStatement_basicIsDecl tests declare a variable inside in initialization expr.
   public void validGeneralForStatement_basicIsDecl() {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     GeneralForStatement.incrementWith(
-        variableExpr, maxSizeExpr, Arrays.asList(createBodyStatement()));
+        variableExpr, initValue, maxSizeExpr, Arrays.asList(createBodyStatement()));
   }
 
   @Test
+  // validGeneralForStatement_basicIsNotDecl tests assigning a method-level local variable in
+  // initialization expr.
   public void validGeneralForStatement_basicIsNotDecl() {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(false).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     GeneralForStatement.incrementWith(
-        variableExpr, maxSizeExpr, Arrays.asList(createBodyStatement()));
+        variableExpr, initValue, maxSizeExpr, Arrays.asList(createBodyStatement()));
   }
 
   @Test
+  // validGeneralForStatement_emptyBody tests set empty body in update expr.
   public void validGeneralForStatement_emptyBody() {
     Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
         VariableExpr.builder().setVariable(variable).setIsDecl(false).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
 
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
-    GeneralForStatement.incrementWith(variableExpr, maxSizeExpr, Collections.emptyList());
+    GeneralForStatement.incrementWith(
+        variableExpr, initValue, maxSizeExpr, Collections.emptyList());
   }
 
   @Test
-  public void invalidForStatement() {
-    Variable variable = Variable.builder().setName("str").setType(TypeNode.STRING).build();
+  // validForStatement_privateNotIsDeclVariable tests assigning an instance variable with private
+  // scope.
+  public void validForStatement_privateNotIsDeclVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
     VariableExpr variableExpr =
-        VariableExpr.builder().setVariable(variable).setScope(ScopeNode.PRIVATE).build();
+        VariableExpr.builder()
+            .setIsDecl(false)
+            .setVariable(variable)
+            .setScope(ScopeNode.PRIVATE)
+            .build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
     MethodInvocationExpr maxSizeExpr =
-        MethodInvocationExpr.builder().setMethodName("maxSize").build();
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+    GeneralForStatement.incrementWith(
+        variableExpr, initValue, maxSizeExpr, Collections.emptyList());
+  }
+
+  @Test
+  // validForStatement_instanceStaticVariable tests assigning an instance variable with public scope
+  // and static modifier.
+  public void validForStatement_instanceStaticVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setIsDecl(false)
+            .setVariable(variable)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+    GeneralForStatement.incrementWith(
+        variableExpr, initValue, maxSizeExpr, Collections.emptyList());
+  }
+
+  @Test
+  // invalidForStatement_privateIsDeclVariable tests declaring a non-local variable inside of
+  // for-loop.
+  public void invalidForStatement_privateIsDeclVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setIsDecl(true)
+            .setVariable(variable)
+            .setScope(ScopeNode.PRIVATE)
+            .build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     assertThrows(
         IllegalStateException.class,
         () ->
-            GeneralForStatement.incrementWith(variableExpr, maxSizeExpr, Collections.emptyList()));
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
+  @Test
+  // invalidForStatement_staticIsDeclVariable tests declare a static local variable in
+  // initialization expr.
+  public void invalidForStatement_staticIsDeclVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).setIsStatic(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
+  @Test
+  // invalidForStatement_finalIsNotDeclVariable tests invalid case of assigning the initial value to
+  // a variable which is declared as a final instance variable.
+  public void invalidForStatement_finalIsNotDeclVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(false)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
+  }
+
+  @Test
+  // invalidForStatement_localFinalVariable tests declare a final variable in initialization expr,
+  // updateExpr should throw error.
+  public void invalidForStatement_localFinalVariable() {
+    Variable variable = Variable.builder().setName("i").setType(TypeNode.INT).build();
+    VariableExpr variableExpr =
+        VariableExpr.builder().setVariable(variable).setIsDecl(true).setIsFinal(true).build();
+    ValueExpr initValue =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    MethodInvocationExpr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
+
+    assertThrows(
+        IllegalStateException.class,
+        () ->
+            GeneralForStatement.incrementWith(
+                variableExpr, initValue, maxSizeExpr, Collections.emptyList()));
   }
 
   private static Statement createBodyStatement() {
