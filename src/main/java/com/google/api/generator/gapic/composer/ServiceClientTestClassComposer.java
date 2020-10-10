@@ -475,7 +475,6 @@ public class ServiceClientTestClassComposer {
           method, serviceName, classMemberVarExprs, resourceNames, messageTypes);
     }
     // Construct the expected response.
-    // TODO(miraleung): Paging here.
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
     List<Expr> methodExprs = new ArrayList<>();
 
@@ -483,12 +482,14 @@ public class ServiceClientTestClassComposer {
     VariableExpr responsesElementVarExpr = null;
     if (method.isPaged()) {
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
-      repeatedResponseType = findRepeatedPagedType(methodOutputMessage);
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
-          repeatedResponseType,
+          repeatedPagedResultsField,
           String.format(
-              "No repeated type found for paged method %s with output message type %s",
+              "No repeated field found for paged method %s with output message type %s",
               method.name(), methodOutputMessage.name()));
+
+      repeatedResponseType = repeatedPagedResultsField.type();
       responsesElementVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setType(repeatedResponseType).setName("responsesElement").build());
@@ -1770,16 +1771,6 @@ public class ServiceClientTestClassComposer {
 
     return TypeNode.withReference(
         ConcreteReference.builder().setClazz(callableClazz).setGenerics(generics).build());
-  }
-
-  private static TypeNode findRepeatedPagedType(Message message) {
-    for (Field field : message.fields()) {
-      if (field.isRepeated() && !field.isMap()) {
-        Reference repeatedGenericRef = field.type().reference().generics().get(0);
-        return TypeNode.withReference(repeatedGenericRef);
-      }
-    }
-    return null;
   }
 
   private static String getCallableMethodName(Method protoMethod) {

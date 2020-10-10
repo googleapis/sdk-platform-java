@@ -349,27 +349,16 @@ public class ServiceStubSettingsClassComposer {
           String.format(
               "No method found for message type %s for method %s among %s",
               pagedResponseMessageKey, method.name(), messageTypes.keySet()));
-      TypeNode repeatedResponseType = null;
-      String repeatedFieldName = null;
-      for (Field field : pagedResponseMessage.fields()) {
-        Preconditions.checkState(
-            field != null,
-            String.format("Null field found for message %s", pagedResponseMessage.name()));
-        if (field.isRepeated() && !field.isMap()) {
-          // Field is currently a List-type.
-          Preconditions.checkState(
-              !field.type().reference().generics().isEmpty(),
-              String.format("No generics found for field reference %s", field.type().reference()));
-          repeatedResponseType = TypeNode.withReference(field.type().reference().generics().get(0));
-          repeatedFieldName = field.name();
-          break;
-        }
-      }
+
+      Field repeatedPagedResultsField = pagedResponseMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
-          repeatedResponseType,
+          repeatedPagedResultsField,
           String.format(
               "No repeated type found for paged reesponse %s for method %s",
               method.outputType().reference().name(), method.name()));
+
+      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+      String repeatedFieldName = repeatedPagedResultsField.name();
 
       // Create the PAGE_STR_DESC variable.
       TypeNode pagedListDescType =
