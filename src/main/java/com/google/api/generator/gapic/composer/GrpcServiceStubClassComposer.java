@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -68,6 +69,8 @@ import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public class GrpcServiceStubClassComposer implements ClassComposer {
+  private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
+
   private static final String CLASS_NAME_PATTERN = "Grpc%sStub";
   private static final String GRPC_SERVICE_CALLABLE_FACTORY_PATTERN = "Grpc%sCallableFactory";
   private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
@@ -131,11 +134,12 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                 .setType(staticTypes.get("GrpcStubCallableFactory"))
                 .build()));
 
-    List<Statement> classStatements = new ArrayList<>();
-    classStatements.addAll(
-        createMethodDescriptorVariableDecls(service, protoMethodNameToDescriptorVarExprs));
-    classStatements.addAll(createClassMemberFieldDeclarations(callableClassMemberVarExprs));
-    classStatements.addAll(createClassMemberFieldDeclarations(classMemberVarExprs));
+    List<Statement> classStatements =
+        createClassStatements(
+            service,
+            protoMethodNameToDescriptorVarExprs,
+            callableClassMemberVarExprs,
+            classMemberVarExprs);
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -156,6 +160,25 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                     protoMethodNameToDescriptorVarExprs))
             .build();
     return GapicClass.create(kind, classDef);
+  }
+
+  private static List<Statement> createClassStatements(
+      Service service,
+      Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs,
+      Map<String, VariableExpr> callableClassMemberVarExprs,
+      Map<String, VariableExpr> classMemberVarExprs) {
+    List<Statement> classStatements = new ArrayList<>();
+    for (Statement statement :
+        createMethodDescriptorVariableDecls(service, protoMethodNameToDescriptorVarExprs)) {
+      classStatements.add(statement);
+      classStatements.add(EMPTY_LINE_STATEMENT);
+    }
+
+    classStatements.addAll(createClassMemberFieldDeclarations(callableClassMemberVarExprs));
+    classStatements.add(EMPTY_LINE_STATEMENT);
+
+    classStatements.addAll(createClassMemberFieldDeclarations(classMemberVarExprs));
+    return classStatements;
   }
 
   private static List<Statement> createMethodDescriptorVariableDecls(
@@ -520,6 +543,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     Expr thisExpr =
         ValueExpr.withValue(ThisObjectValue.withType(types.get(getThisClassName(service.name()))));
     // Body of the second constructor method.
+    List<Statement> secondCtorStatements = new ArrayList<>();
     List<Expr> secondCtorExprs = new ArrayList<>();
     secondCtorExprs.add(
         AssignmentExpr.builder()
@@ -544,6 +568,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                     .setReturnType(operationsStubClassVarExpr.type())
                     .build())
             .build());
+    secondCtorStatements.addAll(
+        secondCtorExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    secondCtorExprs.clear();
+    secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
     // Transport settings local variables.
     Map<String, VariableExpr> javaStyleMethodNameToTransportSettingsVarExprs =
@@ -578,6 +606,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                             JavaStyle.toLowerCamelCase(m.name())),
                         protoMethodNameToDescriptorVarExprs.get(m.name())))
             .collect(Collectors.toList()));
+    secondCtorStatements.addAll(
+        secondCtorExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    secondCtorExprs.clear();
+    secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
     // Initialize <method>Callable variables.
     secondCtorExprs.addAll(
@@ -594,6 +626,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                         thisExpr,
                         javaStyleMethodNameToTransportSettingsVarExprs))
             .collect(Collectors.toList()));
+    secondCtorStatements.addAll(
+        secondCtorExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    secondCtorExprs.clear();
+    secondCtorStatements.add(EMPTY_LINE_STATEMENT);
 
     // Instantiate backgroundResources.
     MethodInvocationExpr getBackgroundResourcesMethodExpr =
@@ -612,14 +648,15 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                     .setArguments(Arrays.asList(getBackgroundResourcesMethodExpr))
                     .build())
             .build());
+    secondCtorStatements.addAll(
+        secondCtorExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    secondCtorExprs.clear();
 
     // Second constructor method.
     MethodDefinition secondCtor =
         ctorMakerFn.apply(
             Arrays.asList(settingsVarExpr, clientContextVarExpr, callableFactoryVarExpr),
-            secondCtorExprs.stream()
-                .map(e -> ExprStatement.withExpr(e))
-                .collect(Collectors.toList()));
+            secondCtorStatements);
 
     return Arrays.asList(firstCtor, secondCtor);
   }
