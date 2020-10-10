@@ -86,6 +86,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
       waitOperationSettings;
   private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
+
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
           new PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>() {
@@ -121,6 +122,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
                   : payload.getResponsesList();
             }
           };
+
   private static final PagedListResponseFactory<
           PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       PAGED_EXPAND_PAGE_STR_FACT =
@@ -251,6 +253,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
   protected EchoStubSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
+
     echoSettings = settingsBuilder.echoSettings().build();
     expandSettings = settingsBuilder.expandSettings().build();
     collectSettings = settingsBuilder.collectSettings().build();
@@ -326,6 +329,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
     protected Builder(ClientContext clientContext) {
       super(clientContext);
+
       echoSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       expandSettings = ServerStreamingCallSettings.newBuilder();
       collectSettings = StreamingCallSettings.newBuilder();
@@ -335,6 +339,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings, pagedExpandSettings, waitSettings, blockSettings);
@@ -343,6 +348,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
     protected Builder(EchoStubSettings settings) {
       super(settings);
+
       echoSettings = settings.echoSettings.toBuilder();
       expandSettings = settings.expandSettings.toBuilder();
       collectSettings = settings.collectSettings.toBuilder();
@@ -352,6 +358,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = settings.waitSettings.toBuilder();
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings, pagedExpandSettings, waitSettings, blockSettings);
@@ -359,10 +366,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
     private static Builder createDefault() {
       Builder builder = new Builder(((ClientContext) null));
+
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+
       return initDefaults(builder);
     }
 
@@ -371,22 +380,27 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           .echoSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .expandSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .pagedExpandSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .waitSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
       builder
           .blockSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
       builder
           .waitOperationSettings()
           .setInitialCallSettings(
@@ -409,6 +423,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
                       .setMaxRpcTimeout(Duration.ZERO)
                       .setTotalTimeout(Duration.ofMillis(300000L))
                       .build()));
+
       return builder;
     }
 
