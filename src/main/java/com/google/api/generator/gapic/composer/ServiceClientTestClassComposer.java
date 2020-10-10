@@ -37,6 +37,7 @@ import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -94,6 +95,8 @@ import org.junit.Test;
 
 // TODO(miraleung): Refactor classComposer.
 public class ServiceClientTestClassComposer {
+  private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
+
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
   private static final String CLASS_NAME_PATTERN = "%sClientTest";
   private static final String CLIENT_VAR_NAME = "client";
@@ -565,7 +568,11 @@ public class ServiceClientTestClassComposer {
               .setArguments(expectedResponseVarExpr)
               .build());
     }
-    // TODO(miraleung): Empty line here.
+    List<Statement> methodStatements = new ArrayList<>();
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Construct the request or method arguments.
     boolean isRequestArg = methodSignature.isEmpty();
@@ -602,7 +609,10 @@ public class ServiceClientTestClassComposer {
                 .build());
       }
     }
-    // TODO(miraleung): Empty line here.
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Call the RPC Java method.
     VariableExpr actualResponseVarExpr =
@@ -658,11 +668,19 @@ public class ServiceClientTestClassComposer {
               .setArguments(iterateAllExpr)
               .setReturnType(resourcesVarExpr.type())
               .build();
-      methodExprs.add(
-          AssignmentExpr.builder()
-              .setVariableExpr(resourcesVarExpr)
-              .setValueExpr(resourcesValExpr)
-              .build());
+
+      methodStatements.addAll(
+          methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+      methodExprs.clear();
+      methodStatements.add(EMPTY_LINE_STATEMENT);
+
+      methodStatements.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(resourcesVarExpr.toBuilder().setIsDecl(true).build())
+                  .setValueExpr(resourcesValExpr)
+                  .build()));
+      methodStatements.add(EMPTY_LINE_STATEMENT);
 
       // Assert the size is equivalent.
       methodExprs.add(
@@ -714,7 +732,10 @@ public class ServiceClientTestClassComposer {
               .setArguments(expectedResponseVarExpr, actualResponseVarExpr)
               .build());
     }
-    // TODO(miraleung): Empty line here.
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Construct the request checker logic.
     VariableExpr actualRequestsVarExpr =
@@ -773,7 +794,10 @@ public class ServiceClientTestClassComposer {
             .setVariableExpr(actualRequestVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(getFirstRequestExpr)
             .build());
-    // TODO(miraleung): Empty line here.
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Assert field equality.
     if (isRequestArg) {
@@ -860,6 +884,9 @@ public class ServiceClientTestClassComposer {
             .setMethodName("assertTrue")
             .setArguments(headerSentExpr)
             .build());
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
 
     String testMethodName =
         String.format(
@@ -871,8 +898,7 @@ public class ServiceClientTestClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName(testMethodName)
-        .setBody(
-            methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(methodStatements)
         .build();
   }
 
@@ -937,7 +963,6 @@ public class ServiceClientTestClassComposer {
               .setArguments(expectedResponseVarExpr)
               .build());
     }
-    // TODO(miraleung): Empty line here.
 
     // Construct the request or method arguments.
     VariableExpr requestVarExpr =
@@ -954,6 +979,12 @@ public class ServiceClientTestClassComposer {
             .setValueExpr(valExpr)
             .build());
 
+    List<Statement> methodStatements = new ArrayList<>();
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
+
     // Construct the mock stream observer.
     VariableExpr responseObserverVarExpr =
         VariableExpr.withVariable(
@@ -967,15 +998,17 @@ public class ServiceClientTestClassComposer {
                 .setName("responseObserver")
                 .build());
 
-    methodExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                NewObjectExpr.builder()
-                    .setType(STATIC_TYPES.get("MockStreamObserver"))
-                    .setIsGeneric(true)
-                    .build())
-            .build());
+    methodStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    NewObjectExpr.builder()
+                        .setType(STATIC_TYPES.get("MockStreamObserver"))
+                        .setIsGeneric(true)
+                        .build())
+                .build()));
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Build the callable variable and assign it.
     VariableExpr callableVarExpr =
@@ -1025,7 +1058,11 @@ public class ServiceClientTestClassComposer {
                       .build())
               .build());
 
-      // TODO(miraleung): Empty line here.
+      methodStatements.addAll(
+          methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+      methodExprs.clear();
+      methodStatements.add(EMPTY_LINE_STATEMENT);
+
       methodExprs.add(
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(requestObserverVarExpr)
@@ -1038,6 +1075,10 @@ public class ServiceClientTestClassComposer {
               .setMethodName("onCompleted")
               .build());
     }
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Check the actual responses.
     VariableExpr actualResponsesVarExpr =
@@ -1101,14 +1142,18 @@ public class ServiceClientTestClassComposer {
             .setArguments(expectedResponseVarExpr, actualResponseExpr)
             .build());
 
+    methodStatements.addAll(
+        methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    methodExprs.clear();
+    methodStatements.add(EMPTY_LINE_STATEMENT);
+
     String testMethodName = String.format("%sTest", JavaStyle.toLowerCamelCase(method.name()));
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(TEST_ANNOTATION))
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName(testMethodName)
-        .setBody(
-            methodExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(methodStatements)
         .build();
   }
 
@@ -1193,12 +1238,14 @@ public class ServiceClientTestClassComposer {
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
 
-    List<Expr> exprs = new ArrayList<>();
-    exprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(valExpr)
-            .build());
+    List<Statement> statements = new ArrayList<>();
+    statements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(valExpr)
+                .build()));
+    statements.add(EMPTY_LINE_STATEMENT);
 
     // Build the responseObserver variable.
     VariableExpr responseObserverVarExpr =
@@ -1213,15 +1260,17 @@ public class ServiceClientTestClassComposer {
                 .setName("responseObserver")
                 .build());
 
-    exprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                NewObjectExpr.builder()
-                    .setType(STATIC_TYPES.get("MockStreamObserver"))
-                    .setIsGeneric(true)
-                    .build())
-            .build());
+    statements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    NewObjectExpr.builder()
+                        .setType(STATIC_TYPES.get("MockStreamObserver"))
+                        .setIsGeneric(true)
+                        .build())
+                .build()));
+    statements.add(EMPTY_LINE_STATEMENT);
 
     // Build the callable variable and assign it.
     VariableExpr callableVarExpr =
@@ -1233,17 +1282,22 @@ public class ServiceClientTestClassComposer {
             .setMethodName(String.format("%sCallable", JavaStyle.toLowerCamelCase(method.name())))
             .setReturnType(callableVarExpr.type())
             .build();
-    if (method.stream().equals(Method.Stream.SERVER)) {
-      exprs.add(streamingCallExpr);
-    } else {
-      exprs.add(
-          AssignmentExpr.builder()
-              .setVariableExpr(callableVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(streamingCallExpr)
-              .build());
-    }
 
-    if (!method.stream().equals(Method.Stream.SERVER)) {
+    List<Expr> exprs = new ArrayList<>();
+    exprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(callableVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(streamingCallExpr)
+            .build());
+
+    if (method.stream().equals(Method.Stream.SERVER)) {
+      exprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callableVarExpr)
+              .setMethodName("serverStreamingCall")
+              .setArguments(requestVarExpr, responseObserverVarExpr)
+              .build());
+    } else {
       // Call the streaming-variant callable method.
       VariableExpr requestObserverVarExpr =
           VariableExpr.withVariable(
@@ -1268,6 +1322,11 @@ public class ServiceClientTestClassComposer {
                       .build())
               .build());
 
+      statements.addAll(
+          exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+      exprs.clear();
+      statements.add(EMPTY_LINE_STATEMENT);
+
       exprs.add(
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(requestObserverVarExpr)
@@ -1275,6 +1334,10 @@ public class ServiceClientTestClassComposer {
               .setArguments(requestVarExpr)
               .build());
     }
+    statements.addAll(
+        exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    exprs.clear();
+    statements.add(EMPTY_LINE_STATEMENT);
 
     List<Expr> tryBodyExprs = new ArrayList<>();
     // TODO(v2): This variable is unused in the generated test, it can be deleted.
@@ -1333,9 +1396,6 @@ public class ServiceClientTestClassComposer {
             .setCatchBody(createRpcLroExceptionTestCatchBody(catchExceptionVarExpr, true))
             .build();
 
-    List<Statement> statements = new ArrayList<>();
-    statements.addAll(
-        exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     statements.add(tryCatchBlock);
     return statements;
   }
@@ -1435,7 +1495,7 @@ public class ServiceClientTestClassComposer {
             .setCatchBody(catchBody)
             .build();
 
-    return Arrays.asList(tryCatchBlock);
+    return Arrays.asList(EMPTY_LINE_STATEMENT, tryCatchBlock);
   }
 
   private static List<Statement> createRpcLroExceptionTestCatchBody(
