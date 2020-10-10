@@ -4,6 +4,3 @@ filegroup(
     name = "redis_goldens_files",
     srcs = glob(["*.java"]),
 )
-
-# TODO(xiaozhenliu): remove the goldens files for Redis API once the integration test
-# framework is supported and well tested.
