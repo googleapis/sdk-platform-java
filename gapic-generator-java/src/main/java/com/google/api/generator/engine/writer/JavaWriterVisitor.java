@@ -170,8 +170,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(AnnotationNode annotation) {
     buffer.append(AT);
     annotation.type().accept(this);
-    if (annotation.description() != null && !annotation.description().isEmpty()) {
-      buffer.append(String.format("(\"%s\")", annotation.description()));
+    if (annotation.descriptionExpr() != null) {
+      leftParen();
+      annotation.descriptionExpr().accept(this);
+      rightParen();
     }
     newline();
   }
