@@ -354,6 +354,7 @@ public class ServiceStubSettingsClassComposer {
           String.format(
               "No method found for message type %s for method %s among %s",
               pagedResponseMessageKey, method.name(), messageTypes.keySet()));
+
       Field repeatedPagedResultsField = pagedResponseMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,

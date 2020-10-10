@@ -34,7 +34,7 @@ public abstract class AnnotationNode implements AstNode {
   // TODO(unsupported): Any args that do not consist of a single string. However, this can easily be
   // extended to enable such support.
   @Nullable
-  public abstract String description();
+  public abstract Expr descriptionExpr();
 
   @Override
   public void accept(AstNodeVisitor visitor) {
@@ -60,7 +60,13 @@ public abstract class AnnotationNode implements AstNode {
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setDescription(String description);
+    public Builder setDescription(String description) {
+      return setDescriptionExpr(ValueExpr.withValue(StringObjectValue.withValue(description)));
+    }
+
+    // This will never be anything other than a ValueExpr-wrapped StringObjectValue because
+    // this setter is private, and called only by setDescription above.
+    abstract Builder setDescriptionExpr(Expr descriptionExpr);
 
     abstract AnnotationNode autoBuild();
 
