@@ -105,6 +105,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   private final UnaryCallSettings<DeleteTopicRequest, Empty> deleteTopicSettings;
   private final UnaryCallSettings<DetachSubscriptionRequest, DetachSubscriptionResponse>
       detachSubscriptionSettings;
+
   private static final PagedListDescriptor<ListTopicsRequest, ListTopicsResponse, Topic>
       LIST_TOPICS_PAGE_STR_DESC =
           new PagedListDescriptor<ListTopicsRequest, ListTopicsResponse, Topic>() {
@@ -140,6 +141,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
                   : payload.getTopicsList();
             }
           };
+
   private static final PagedListDescriptor<
           ListTopicSubscriptionsRequest, ListTopicSubscriptionsResponse, String>
       LIST_TOPIC_SUBSCRIPTIONS_PAGE_STR_DESC =
@@ -181,6 +183,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
                   : payload.getSubscriptionsList();
             }
           };
+
   private static final PagedListDescriptor<
           ListTopicSnapshotsRequest, ListTopicSnapshotsResponse, String>
       LIST_TOPIC_SNAPSHOTS_PAGE_STR_DESC =
@@ -219,6 +222,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
                   : payload.getSnapshotsList();
             }
           };
+
   private static final PagedListResponseFactory<
           ListTopicsRequest, ListTopicsResponse, ListTopicsPagedResponse>
       LIST_TOPICS_PAGE_STR_FACT =
@@ -235,6 +239,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
               return ListTopicsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final PagedListResponseFactory<
           ListTopicSubscriptionsRequest,
           ListTopicSubscriptionsResponse,
@@ -258,6 +263,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
               return ListTopicSubscriptionsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final PagedListResponseFactory<
           ListTopicSnapshotsRequest, ListTopicSnapshotsResponse, ListTopicSnapshotsPagedResponse>
       LIST_TOPIC_SNAPSHOTS_PAGE_STR_FACT =
@@ -278,6 +284,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
               return ListTopicSnapshotsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final BatchingDescriptor<PublishRequest, PublishResponse> PUBLISH_BATCHING_DESC =
       new BatchingDescriptor<PublishRequest, PublishResponse>() {
         @Override
@@ -463,6 +470,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
   protected PublisherStubSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
+
     createTopicSettings = settingsBuilder.createTopicSettings().build();
     updateTopicSettings = settingsBuilder.updateTopicSettings().build();
     publishSettings = settingsBuilder.publishSettings().build();
@@ -570,6 +578,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
     protected Builder(ClientContext clientContext) {
       super(clientContext);
+
       createTopicSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       updateTopicSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       publishSettings =
@@ -582,6 +591,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       listTopicSnapshotsSettings = PagedCallSettings.newBuilder(LIST_TOPIC_SNAPSHOTS_PAGE_STR_FACT);
       deleteTopicSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       detachSubscriptionSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               createTopicSettings,
@@ -598,6 +608,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
     protected Builder(PublisherStubSettings settings) {
       super(settings);
+
       createTopicSettings = settings.createTopicSettings.toBuilder();
       updateTopicSettings = settings.updateTopicSettings.toBuilder();
       publishSettings = settings.publishSettings.toBuilder();
@@ -607,6 +618,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       listTopicSnapshotsSettings = settings.listTopicSnapshotsSettings.toBuilder();
       deleteTopicSettings = settings.deleteTopicSettings.toBuilder();
       detachSubscriptionSettings = settings.detachSubscriptionSettings.toBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               createTopicSettings,
@@ -622,10 +634,12 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
     private static Builder createDefault() {
       Builder builder = new Builder(((ClientContext) null));
+
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+
       return initDefaults(builder);
     }
 
@@ -634,10 +648,12 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
           .createTopicSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_0_params"));
+
       builder
           .updateTopicSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_0_params"));
+
       builder
           .publishSettings()
           .setBatchingSettings(
@@ -650,34 +666,42 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
                           .setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)
                           .build())
                   .build());
+
       builder
           .publishSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .getTopicSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .listTopicsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .listTopicSubscriptionsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .listTopicSnapshotsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .deleteTopicSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_0_params"));
+
       builder
           .detachSubscriptionSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_0_params"));
+
       return builder;
     }
 
