@@ -1,14 +1,14 @@
+load(
+    "@com_google_googleapis_imports//:imports.bzl",
+    java_gapic_library = "java_gapic_library2",
+)
+
 package(default_visibility = ["//visibility:public"])
 
 ####################################################
 # API Library Rules
 ####################################################
 # These will eventually go away once more APIs in googleapis have been migrated to the microgenerator.
-
-load(
-    "@com_google_googleapis_imports//:imports.bzl",
-    java_gapic_library = "java_gapic_library2",
-)
 
 java_gapic_library(
     name = "asset_java_gapic",
