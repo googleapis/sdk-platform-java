@@ -42,8 +42,6 @@ jobs:
             find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - store_test_results:
           path: ~/.cache/bazel
-      - store_artifacts:
-          path: ~/.cache/bazel
   google-java-format:
     docker:
       - image: l.gcr.io/google/bazel

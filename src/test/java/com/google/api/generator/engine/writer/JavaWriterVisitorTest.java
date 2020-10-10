@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -2232,6 +2233,13 @@ public class JavaWriterVisitorTest {
         AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr);
     assignmentOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
+  }
+
+  @Test
+  public void writeEmptyLineStatement() {
+    EmptyLineStatement statement = EmptyLineStatement.create();
+    statement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "\n");
   }
 
   private static String createLines(int numLines) {
