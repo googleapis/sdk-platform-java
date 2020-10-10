@@ -87,6 +87,8 @@ public interface AstNodeVisitor {
 
   public void visit(CommentStatement commentStatement);
 
+  public void visit(EmptyLineStatement emptyLineStatement);
+
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);
 
