@@ -360,13 +360,14 @@ public class ServiceStubSettingsClassComposer {
         Preconditions.checkState(
             field != null,
             String.format("Null field found for message %s", pagedResponseMessage.name()));
-        if (field.isRepeated()) {
+        if (field.isRepeated() && !field.isMap()) {
           // Field is currently a List-type.
           Preconditions.checkState(
               !field.type().reference().generics().isEmpty(),
               String.format("No generics found for field reference %s", field.type().reference()));
           repeatedResponseType = TypeNode.withReference(field.type().reference().generics().get(0));
           repeatedFieldName = field.name();
+          break;
         }
       }
       Preconditions.checkNotNull(
