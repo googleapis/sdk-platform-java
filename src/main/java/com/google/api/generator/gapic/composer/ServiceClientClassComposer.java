@@ -503,27 +503,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     }
 
     String methodInputTypeName = methodInputType.reference().name();
-
-    // Make the method signature order deterministic, which helps with unit testing and per-version
-    // diffs.
-    List<List<MethodArgument>> sortedMethodSignatures =
-        method.methodSignatures().stream()
-            .sorted(
-                (s1, s2) -> {
-                  if (s1.size() != s2.size()) {
-                    return s1.size() - s2.size();
-                  }
-                  for (int i = 0; i < s1.size(); i++) {
-                    int compareVal = s1.get(i).compareTo(s2.get(i));
-                    if (compareVal != 0) {
-                      return compareVal;
-                    }
-                  }
-                  return 0;
-                })
-            .collect(Collectors.toList());
-
-    for (List<MethodArgument> signature : sortedMethodSignatures) {
+    for (List<MethodArgument> signature : method.methodSignatures()) {
       // Get the argument list.
       List<VariableExpr> arguments =
           signature.stream()
@@ -837,20 +817,14 @@ public class ServiceClientClassComposer implements ClassComposer {
       }
       // Find the repeated field.
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
-      TypeNode repeatedResponseType = null;
-      for (Field field : methodOutputMessage.fields()) {
-        if (field.isRepeated() && !field.isMap()) {
-          Reference repeatedGenericRef = field.type().reference().generics().get(0);
-          repeatedResponseType = TypeNode.withReference(repeatedGenericRef);
-          break;
-        }
-      }
-
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
-          repeatedResponseType,
+          repeatedPagedResultsField,
           String.format(
               "No repeated field found on message %s for method %s",
               methodOutputMessage.name(), method.name()));
+
+      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
 
       nestedClasses.add(
           createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, types));

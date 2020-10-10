@@ -37,10 +37,10 @@ import org.junit.Test;
 
 @Generated("by gapic-generator-java")
 public class EchoClientTest {
-  public static MockServiceHelper mockServiceHelper;
-  public static MockEcho mockEcho;
-  public EchoClient client;
-  public LocalChannelProvider channelProvider;
+  private static MockServiceHelper mockServiceHelper;
+  private static MockEcho mockEcho;
+  private EchoClient client;
+  private LocalChannelProvider channelProvider;
 
   @BeforeClass
   public static void startStaticServer() {
@@ -78,12 +78,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+
     EchoResponse actualResponse = client.echo(parent);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(parent.toString(), actualRequest.getParent());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -95,6 +99,7 @@ public class EchoClientTest {
   public void echoExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
       client.echo(parent);
@@ -109,12 +114,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     Status error = Status.newBuilder().build();
+
     EchoResponse actualResponse = client.echo(error);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(error, actualRequest.getError());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -126,6 +135,7 @@ public class EchoClientTest {
   public void echoExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       Status error = Status.newBuilder().build();
       client.echo(error);
@@ -140,12 +150,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+
     EchoResponse actualResponse = client.echo(name);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(name.toString(), actualRequest.getName());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -157,6 +171,7 @@ public class EchoClientTest {
   public void echoExceptionTest3() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
       client.echo(name);
@@ -171,12 +186,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     String content = "content951530617";
+
     EchoResponse actualResponse = client.echo(content);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(content, actualRequest.getContent());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -188,6 +207,7 @@ public class EchoClientTest {
   public void echoExceptionTest4() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       String content = "content951530617";
       client.echo(content);
@@ -202,12 +222,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     String name = "name3373707";
+
     EchoResponse actualResponse = client.echo(name);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(name, actualRequest.getName());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -219,6 +243,7 @@ public class EchoClientTest {
   public void echoExceptionTest5() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       String name = "name3373707";
       client.echo(name);
@@ -233,12 +258,16 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     String parent = "parent-995424086";
+
     EchoResponse actualResponse = client.echo(parent);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(parent, actualRequest.getParent());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -250,6 +279,7 @@ public class EchoClientTest {
   public void echoExceptionTest6() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       String parent = "parent-995424086";
       client.echo(parent);
@@ -264,13 +294,17 @@ public class EchoClientTest {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     String content = "content951530617";
     Severity severity = Severity.forNumber(0);
+
     EchoResponse actualResponse = client.echo(content, severity);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
     Assert.assertEquals(content, actualRequest.getContent());
     Assert.assertEquals(severity, actualRequest.getSeverity());
     Assert.assertTrue(
@@ -283,6 +317,7 @@ public class EchoClientTest {
   public void echoExceptionTest7() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       String content = "content951530617";
       Severity severity = Severity.forNumber(0);
@@ -300,9 +335,12 @@ public class EchoClientTest {
     mockEcho.addResponse(expectedResponse);
     ExpandRequest request =
         ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     ServerStreamingCallable<ExpandRequest, EchoResponse> callable = client.expandCallable();
     callable.serverStreamingCall(request, responseObserver);
+
     List<EchoResponse> actualResponses = responseObserver.future().get();
     Assert.assertEquals(1, actualResponses.size());
     Assert.assertEquals(expectedResponse, actualResponses.get(0));
@@ -314,8 +352,12 @@ public class EchoClientTest {
     mockEcho.addException(exception);
     ExpandRequest request =
         ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
-    client.expandCallable();
+
+    ServerStreamingCallable<ExpandRequest, EchoResponse> callable = client.expandCallable();
+    callable.serverStreamingCall(request, responseObserver);
+
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
       Assert.fail("No exception thrown");
@@ -337,12 +379,16 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.clientStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
     requestObserver.onCompleted();
+
     List<EchoResponse> actualResponses = responseObserver.future().get();
     Assert.assertEquals(1, actualResponses.size());
     Assert.assertEquals(expectedResponse, actualResponses.get(0));
@@ -358,11 +404,15 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.clientStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
+
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
       Assert.fail("No exception thrown");
@@ -384,12 +434,16 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.bidiStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
     requestObserver.onCompleted();
+
     List<EchoResponse> actualResponses = responseObserver.future().get();
     Assert.assertEquals(1, actualResponses.size());
     Assert.assertEquals(expectedResponse, actualResponses.get(0));
@@ -405,11 +459,15 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.bidiStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
+
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
       Assert.fail("No exception thrown");
@@ -431,12 +489,16 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatAgainCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.bidiStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
     requestObserver.onCompleted();
+
     List<EchoResponse> actualResponses = responseObserver.future().get();
     Assert.assertEquals(1, actualResponses.size());
     Assert.assertEquals(expectedResponse, actualResponses.get(0));
@@ -452,11 +514,15 @@ public class EchoClientTest {
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setFoobar(Foobar.newBuilder().build())
             .build();
+
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
+
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatAgainCallable();
     ApiStreamObserver<EchoRequest> requestObserver =
         callable.bidiStreamingCall(request, responseObserver);
+
     requestObserver.onNext(request);
+
     try {
       List<EchoResponse> actualResponses = responseObserver.future().get();
       Assert.fail("No exception thrown");
@@ -476,19 +542,25 @@ public class EchoClientTest {
             .addAllResponses(Arrays.asList(responsesElement))
             .build();
     mockEcho.addResponse(expectedResponse);
+
     PagedExpandRequest request =
         PagedExpandRequest.newBuilder()
             .setContent("content951530617")
             .setPageSize(883849137)
             .setPageToken("page_token1630607433")
             .build();
+
     PagedExpandResponse pagedListResponse = client.pagedExpand(request);
-    resources = Lists.newArrayList(pagedListResponse.iterateAll());
+
+    List<EchoResponse> resources = Lists.newArrayList(pagedListResponse.iterateAll());
+
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
+
     Assert.assertEquals(request.getContent(), actualRequest.getContent());
     Assert.assertEquals(request.getPageSize(), actualRequest.getPageSize());
     Assert.assertEquals(request.getPageToken(), actualRequest.getPageToken());
@@ -502,6 +574,7 @@ public class EchoClientTest {
   public void pagedExpandExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       PagedExpandRequest request =
           PagedExpandRequest.newBuilder()
@@ -527,12 +600,16 @@ public class EchoClientTest {
             .setResponse(Any.pack(expectedResponse))
             .build();
     mockEcho.addResponse(resultOperation);
+
     Duration ttl = Duration.newBuilder().build();
+
     WaitResponse actualResponse = client.waitAsync(ttl).get();
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     WaitRequest actualRequest = ((WaitRequest) actualRequests.get(0));
+
     Assert.assertEquals(ttl, actualRequest.getTtl());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -544,6 +621,7 @@ public class EchoClientTest {
   public void waitExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       Duration ttl = Duration.newBuilder().build();
       client.waitAsync(ttl).get();
@@ -566,12 +644,16 @@ public class EchoClientTest {
             .setResponse(Any.pack(expectedResponse))
             .build();
     mockEcho.addResponse(resultOperation);
+
     Timestamp endTime = Timestamp.newBuilder().build();
+
     WaitResponse actualResponse = client.waitAsync(endTime).get();
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     WaitRequest actualRequest = ((WaitRequest) actualRequests.get(0));
+
     Assert.assertEquals(endTime, actualRequest.getEndTime());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
@@ -583,6 +665,7 @@ public class EchoClientTest {
   public void waitExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       Timestamp endTime = Timestamp.newBuilder().build();
       client.waitAsync(endTime).get();
@@ -599,12 +682,16 @@ public class EchoClientTest {
     BlockResponse expectedResponse =
         BlockResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
+
     BlockRequest request = BlockRequest.newBuilder().build();
+
     BlockResponse actualResponse = client.block(request);
     Assert.assertEquals(expectedResponse, actualResponse);
+
     List<AbstractMessage> actualRequests = mockEcho.getRequests();
     Assert.assertEquals(1, actualRequests.size());
     BlockRequest actualRequest = ((BlockRequest) actualRequests.get(0));
+
     Assert.assertEquals(request.getResponseDelay(), actualRequest.getResponseDelay());
     Assert.assertEquals(request.getError(), actualRequest.getError());
     Assert.assertEquals(request.getSuccess(), actualRequest.getSuccess());
@@ -618,6 +705,7 @@ public class EchoClientTest {
   public void blockExceptionTest() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
+
     try {
       BlockRequest request = BlockRequest.newBuilder().build();
       client.block(request);

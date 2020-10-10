@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -169,8 +170,10 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   public void visit(AnnotationNode annotation) {
     buffer.append(AT);
     annotation.type().accept(this);
-    if (annotation.description() != null && !annotation.description().isEmpty()) {
-      buffer.append(String.format("(\"%s\")", annotation.description()));
+    if (annotation.descriptionExpr() != null) {
+      leftParen();
+      annotation.descriptionExpr().accept(this);
+      rightParen();
     }
     newline();
   }
@@ -620,6 +623,11 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(CommentStatement commentStatement) {
     commentStatement.comment().accept(this);
+  }
+
+  @Override
+  public void visit(EmptyLineStatement emptyLineStatement) {
+    newline();
   }
 
   /** =============================== COMMENT =============================== */

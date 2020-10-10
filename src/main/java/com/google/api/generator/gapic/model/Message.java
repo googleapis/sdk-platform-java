@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
@@ -44,6 +45,18 @@ public abstract class Message {
 
   public boolean hasResource() {
     return resource() != null;
+  }
+
+  /** Returns the first list repeated field in a message, unwrapped from its list type. */
+  @Nullable
+  public Field findAndUnwrapFirstRepeatedField() {
+    for (Field field : fields()) {
+      if (field.isRepeated() && !field.isMap()) {
+        Reference repeatedGenericRef = field.type().reference().generics().get(0);
+        return field.toBuilder().setType(TypeNode.withReference(repeatedGenericRef)).build();
+      }
+    }
+    return null;
   }
 
   public static Builder builder() {
