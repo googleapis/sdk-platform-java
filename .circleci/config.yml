@@ -28,17 +28,17 @@ jobs:
           name: Make reports directory
           command: |
             mkdir -p ${TEST_REPORTS_DIR}
-            echo "Test reports stored in: ${TEST_REPORTS_DIR}"
+            echo "Test reports will be stored in ${TEST_REPORTS_DIR}"
       - run:
           name: Build targets for gapic-generator-java
           command: |
             cd /tmp/gapic-generator-java
-            bazel --batch build //...
+            bazel --batch build //src/...
       - run:
           name: Run unit tests for gapic-generator-java
           command: |
             cd /tmp/gapic-generator-java
-            bazel --batch test //... --noshow_progress
+            bazel --batch test //src/test/... --noshow_progress
             find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - store_test_results:
           path: ~/.cache/bazel
