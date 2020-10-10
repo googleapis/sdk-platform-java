@@ -58,6 +58,7 @@ import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
@@ -113,6 +114,8 @@ import org.threeten.bp.Duration;
 
 // TODO(miraleung): Refactor ClassComposer's interface.
 public class ServiceStubSettingsClassComposer {
+  private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
+
   private static final String BATCHING_DESC_PATTERN = "%s_BATCHING_DESC";
   private static final String CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String GRPC_SERVICE_STUB_PATTERN = "Grpc%sStub";
@@ -301,11 +304,13 @@ public class ServiceStubSettingsClassComposer {
                             .setIsFinal(true)
                             .build()))
             .collect(Collectors.toList()));
+    statements.add(EMPTY_LINE_STATEMENT);
 
-    statements.addAll(
-        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types).stream()
-            .map(e -> exprToStatementFn.apply(e))
-            .collect(Collectors.toList()));
+    for (Expr pagingAssignExpr :
+        createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types)) {
+      statements.add(exprToStatementFn.apply(pagingAssignExpr));
+      statements.add(EMPTY_LINE_STATEMENT);
+    }
 
     for (Method method : service.methods()) {
       Optional<GapicBatchingSettings> batchingSettingOpt =
@@ -318,6 +323,7 @@ public class ServiceStubSettingsClassComposer {
                 BatchingDescriptorComposer.createBatchingDescriptorFieldDeclExpr(
                     method, batchingSettingOpt.get(), messageTypes)));
       }
+      statements.add(EMPTY_LINE_STATEMENT);
     }
 
     return statements;
@@ -328,7 +334,6 @@ public class ServiceStubSettingsClassComposer {
       GapicServiceConfig serviceConfig,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types) {
-    // TODO(miraleung): Add a test case for several such statements.
     List<Expr> descExprs = new ArrayList<>();
     List<Expr> factoryExprs = new ArrayList<>();
     for (Method method : service.methods()) {
@@ -1108,8 +1113,9 @@ public class ServiceStubSettingsClassComposer {
             .setArguments(settingsBuilderVarExpr)
             .build();
 
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(superCtorExpr);
+    List<Statement> bodyStatements = new ArrayList<>();
+    bodyStatements.add(ExprStatement.withExpr(superCtorExpr));
+    bodyStatements.add(EMPTY_LINE_STATEMENT);
 
     Function<Map.Entry<String, VariableExpr>, AssignmentExpr> varInitExprFn =
         e ->
@@ -1126,9 +1132,9 @@ public class ServiceStubSettingsClassComposer {
                         .setReturnType(e.getValue().type())
                         .build())
                 .build();
-    bodyExprs.addAll(
+    bodyStatements.addAll(
         methodSettingsMemberVarExprs.entrySet().stream()
-            .map(e -> varInitExprFn.apply(e))
+            .map(e -> ExprStatement.withExpr(varInitExprFn.apply(e)))
             .collect(Collectors.toList()));
 
     return MethodDefinition.constructorBuilder()
@@ -1136,8 +1142,7 @@ public class ServiceStubSettingsClassComposer {
         .setReturnType(thisType)
         .setArguments(settingsBuilderVarExpr.toBuilder().setIsDecl(true).build())
         .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(IOException.class)))
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(bodyStatements)
         .build();
   }
 
@@ -1258,7 +1263,7 @@ public class ServiceStubSettingsClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setType(builderType).setName("builder").build());
 
-    List<Expr> bodyExprs = new ArrayList<>();
+    List<Statement> bodyStatements = new ArrayList<>();
     // Iterate through methods twice to so we can have LRO expressions appear last.
     for (Method method : service.methods()) {
       Method.Stream streamKind = method.stream();
@@ -1275,32 +1280,38 @@ public class ServiceStubSettingsClassComposer {
                 service.name(), method.name()));
         String settingsGetterMethodName =
             String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
-        bodyExprs.add(
-            RetrySettingsComposer.createBatchingBuilderSettingsExpr(
-                settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr));
+        bodyStatements.add(
+            ExprStatement.withExpr(
+                RetrySettingsComposer.createBatchingBuilderSettingsExpr(
+                    settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr)));
+        bodyStatements.add(EMPTY_LINE_STATEMENT);
       }
 
-      bodyExprs.add(
-          RetrySettingsComposer.createSimpleBuilderSettingsExpr(
-              service,
-              serviceConfig,
-              method,
-              builderVarExpr,
-              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
-              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              RetrySettingsComposer.createSimpleBuilderSettingsExpr(
+                  service,
+                  serviceConfig,
+                  method,
+                  builderVarExpr,
+                  NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
+      bodyStatements.add(EMPTY_LINE_STATEMENT);
     }
     for (Method method : service.methods()) {
       if (!method.hasLro()) {
         continue;
       }
-      bodyExprs.add(
-          RetrySettingsComposer.createLroSettingsBuilderExpr(
-              service,
-              serviceConfig,
-              method,
-              builderVarExpr,
-              NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
-              NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR));
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              RetrySettingsComposer.createLroSettingsBuilderExpr(
+                  service,
+                  serviceConfig,
+                  method,
+                  builderVarExpr,
+                  NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_EXPR,
+                  NESTED_RETRY_PARAM_DEFINITIONS_VAR_EXPR)));
+      bodyStatements.add(EMPTY_LINE_STATEMENT);
     }
 
     return MethodDefinition.builder()
@@ -1309,8 +1320,7 @@ public class ServiceStubSettingsClassComposer {
         .setReturnType(builderType)
         .setName("initDefaults")
         .setArguments(builderVarExpr.toBuilder().setIsDecl(true).build())
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(bodyStatements)
         .setReturnExpr(builderVarExpr)
         .build();
   }
@@ -1372,13 +1382,16 @@ public class ServiceStubSettingsClassComposer {
                     .setName(t.reference().enclosingClassName())
                     .setPakkage(t.reference().pakkage())
                     .build());
-    List<Expr> ctorBodyExprs = new ArrayList<>();
-    ctorBodyExprs.add(
-        ReferenceConstructorExpr.superBuilder()
-            .setType(builderType)
-            .setArguments(clientContextVarExpr)
-            .build());
-    ctorBodyExprs.addAll(
+    List<Statement> ctorBodyStatements = new ArrayList<>();
+    ctorBodyStatements.add(
+        ExprStatement.withExpr(
+            ReferenceConstructorExpr.superBuilder()
+                .setType(builderType)
+                .setArguments(clientContextVarExpr)
+                .build()));
+    ctorBodyStatements.add(EMPTY_LINE_STATEMENT);
+
+    ctorBodyStatements.addAll(
         nestedMethodSettingsMemberVarExprs.entrySet().stream()
             .map(
                 e -> {
@@ -1394,19 +1407,21 @@ public class ServiceStubSettingsClassComposer {
                   if (!isPagedCallSettingsBuilderFn.apply(varType)) {
                     if (!isBatchingCallSettingsBuilderFn.apply(varType)) {
                       boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
-                      return AssignmentExpr.builder()
-                          .setVariableExpr(varExpr)
-                          .setValueExpr(
-                              MethodInvocationExpr.builder()
-                                  .setStaticReferenceType(
-                                      builderToCallSettingsFn.apply(varExpr.type()))
-                                  .setMethodName(
-                                      isUnaryCallSettings
-                                          ? "newUnaryCallSettingsBuilder"
-                                          : "newBuilder")
-                                  .setReturnType(varExpr.type())
-                                  .build())
-                          .build();
+                      Expr builderExpr =
+                          AssignmentExpr.builder()
+                              .setVariableExpr(varExpr)
+                              .setValueExpr(
+                                  MethodInvocationExpr.builder()
+                                      .setStaticReferenceType(
+                                          builderToCallSettingsFn.apply(varExpr.type()))
+                                      .setMethodName(
+                                          isUnaryCallSettings
+                                              ? "newUnaryCallSettingsBuilder"
+                                              : "newBuilder")
+                                      .setReturnType(varExpr.type())
+                                      .build())
+                              .build();
+                      return ExprStatement.withExpr(builderExpr);
                     }
                     Expr newBatchingSettingsExpr =
                         MethodInvocationExpr.builder()
@@ -1441,10 +1456,12 @@ public class ServiceStubSettingsClassComposer {
                             .setReturnType(varType)
                             .build();
 
-                    return AssignmentExpr.builder()
-                        .setVariableExpr(varExpr)
-                        .setValueExpr(batchingSettingsBuilderExpr)
-                        .build();
+                    Expr builderExpr =
+                        AssignmentExpr.builder()
+                            .setVariableExpr(varExpr)
+                            .setValueExpr(batchingSettingsBuilderExpr)
+                            .build();
+                    return ExprStatement.withExpr(builderExpr);
                   }
                   String memberVarName =
                       String.format(
@@ -1455,16 +1472,19 @@ public class ServiceStubSettingsClassComposer {
                               .setType(STATIC_TYPES.get("PagedListResponseFactory"))
                               .setName(memberVarName)
                               .build());
-                  return AssignmentExpr.builder()
-                      .setVariableExpr(varExpr)
-                      .setValueExpr(
-                          MethodInvocationExpr.builder()
-                              .setStaticReferenceType(builderToCallSettingsFn.apply(varExpr.type()))
-                              .setMethodName("newBuilder")
-                              .setArguments(argVar)
-                              .setReturnType(varExpr.type())
-                              .build())
-                      .build();
+                  Expr builderExpr =
+                      AssignmentExpr.builder()
+                          .setVariableExpr(varExpr)
+                          .setValueExpr(
+                              MethodInvocationExpr.builder()
+                                  .setStaticReferenceType(
+                                      builderToCallSettingsFn.apply(varExpr.type()))
+                                  .setMethodName("newBuilder")
+                                  .setArguments(argVar)
+                                  .setReturnType(varExpr.type())
+                                  .build())
+                          .build();
+                  return ExprStatement.withExpr(builderExpr);
                 })
             .collect(Collectors.toList()));
 
@@ -1491,23 +1511,23 @@ public class ServiceStubSettingsClassComposer {
                     .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
                     .build())
             .build();
-    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
+    ctorBodyStatements.add(EMPTY_LINE_STATEMENT);
 
-    ctorBodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setMethodName("initDefaults")
-            .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
-            .build());
+    ctorBodyStatements.add(ExprStatement.withExpr(unaryMethodSettingsBuildersAssignExpr));
+
+    ctorBodyStatements.add(
+        ExprStatement.withExpr(
+            MethodInvocationExpr.builder()
+                .setMethodName("initDefaults")
+                .setArguments(ValueExpr.withValue(ThisObjectValue.withType(builderType)))
+                .build()));
 
     ctorMethods.add(
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
             .setArguments(clientContextVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(
-                ctorBodyExprs.stream()
-                    .map(e -> ExprStatement.withExpr(e))
-                    .collect(Collectors.toList()))
+            .setBody(ctorBodyStatements)
             .build());
 
     // Third constructor that takes a ServivceStubSettings.
@@ -1515,43 +1535,46 @@ public class ServiceStubSettingsClassComposer {
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(outerSettingsType).setName("settings").build());
-    ctorBodyExprs = new ArrayList<>();
-    ctorBodyExprs.add(
-        ReferenceConstructorExpr.superBuilder()
-            .setType(builderType)
-            .setArguments(settingsVarExpr)
-            .build());
+    ctorBodyStatements = new ArrayList<>();
+    ctorBodyStatements.add(
+        ExprStatement.withExpr(
+            ReferenceConstructorExpr.superBuilder()
+                .setType(builderType)
+                .setArguments(settingsVarExpr)
+                .build()));
+    ctorBodyStatements.add(EMPTY_LINE_STATEMENT);
+
     // TODO(cleanup): Technically this should actually use the outer class's <method>Settings
     // members to avoid decoupling variable names.
-    ctorBodyExprs.addAll(
+    ctorBodyStatements.addAll(
         nestedMethodSettingsMemberVarExprs.values().stream()
             .map(
                 v ->
-                    AssignmentExpr.builder()
-                        .setVariableExpr(v)
-                        .setValueExpr(
-                            MethodInvocationExpr.builder()
-                                .setExprReferenceExpr(
-                                    VariableExpr.builder()
-                                        .setExprReferenceExpr(settingsVarExpr)
-                                        .setVariable(v.variable())
-                                        .build())
-                                .setMethodName("toBuilder")
-                                .setReturnType(v.type())
-                                .build())
-                        .build())
+                    ExprStatement.withExpr(
+                        AssignmentExpr.builder()
+                            .setVariableExpr(v)
+                            .setValueExpr(
+                                MethodInvocationExpr.builder()
+                                    .setExprReferenceExpr(
+                                        VariableExpr.builder()
+                                            .setExprReferenceExpr(settingsVarExpr)
+                                            .setVariable(v.variable())
+                                            .build())
+                                    .setMethodName("toBuilder")
+                                    .setReturnType(v.type())
+                                    .build())
+                            .build()))
             .collect(Collectors.toList()));
-    ctorBodyExprs.add(unaryMethodSettingsBuildersAssignExpr);
+    ctorBodyStatements.add(EMPTY_LINE_STATEMENT);
+
+    ctorBodyStatements.add(ExprStatement.withExpr(unaryMethodSettingsBuildersAssignExpr));
 
     ctorMethods.add(
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
-            .setBody(
-                ctorBodyExprs.stream()
-                    .map(e -> ExprStatement.withExpr(e))
-                    .collect(Collectors.toList()))
+            .setBody(ctorBodyStatements)
             .build());
 
     return ctorMethods;
@@ -1559,27 +1582,30 @@ public class ServiceStubSettingsClassComposer {
 
   private static MethodDefinition createNestedClassCreateDefaultMethod(
       Map<String, TypeNode> types) {
-    List<Expr> bodyExprs = new ArrayList<>();
+    List<Statement> bodyStatements = new ArrayList<>();
 
     // Initialize the builder: Builder builder = new Builder((ClientContext) null);
     TypeNode builderType = types.get(NESTED_BUILDER_CLASS_NAME);
     VariableExpr builderVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(builderType).setName("builder").build());
-    bodyExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(builderVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                NewObjectExpr.builder()
-                    .setType(builderType)
-                    .setArguments(
-                        CastExpr.builder()
-                            .setType(STATIC_TYPES.get("ClientContext"))
-                            .setExpr(ValueExpr.withValue(NullObjectValue.create()))
-                            .build())
-                    .build())
-            .build());
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(builderVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    NewObjectExpr.builder()
+                        .setType(builderType)
+                        .setArguments(
+                            CastExpr.builder()
+                                .setType(STATIC_TYPES.get("ClientContext"))
+                                .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                .build())
+                        .build())
+                .build()));
+    bodyStatements.add(EMPTY_LINE_STATEMENT);
 
+    List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(builderVarExpr)
@@ -1625,6 +1651,9 @@ public class ServiceStubSettingsClassComposer {
             .setArguments(
                 MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
             .build());
+    bodyStatements.addAll(
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    bodyStatements.add(EMPTY_LINE_STATEMENT);
 
     Expr returnExpr =
         MethodInvocationExpr.builder()
@@ -1638,8 +1667,7 @@ public class ServiceStubSettingsClassComposer {
         .setIsStatic(true)
         .setReturnType(builderType)
         .setName("createDefault")
-        .setBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setBody(bodyStatements)
         .setReturnExpr(returnExpr)
         .build();
   }
