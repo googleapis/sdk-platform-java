@@ -364,9 +364,11 @@ public class Parser {
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
-    return messageDescriptor.getFields().stream()
-        .map(f -> parseField(f, messageDescriptor))
-        .collect(Collectors.toList());
+    List<FieldDescriptor> fields = new ArrayList<>(messageDescriptor.getFields());
+    // Sort by ascending field index order. This is important for paged responses, where the first
+    // repeated type is taken.
+    fields.sort((f1, f2) -> f1.getIndex() - f2.getIndex());
+    return fields.stream().map(f -> parseField(f, messageDescriptor)).collect(Collectors.toList());
   }
 
   private static Field parseField(FieldDescriptor fieldDescriptor, Descriptor messageDescriptor) {
