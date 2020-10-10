@@ -48,6 +48,8 @@ public abstract class Field {
     return type().equals(TypeNode.STRING) && resourceReference() != null;
   }
 
+  abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_Field.Builder()
         .setIsMessage(false)

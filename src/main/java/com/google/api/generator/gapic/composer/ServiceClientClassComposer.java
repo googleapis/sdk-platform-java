@@ -817,20 +817,14 @@ public class ServiceClientClassComposer implements ClassComposer {
       }
       // Find the repeated field.
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
-      TypeNode repeatedResponseType = null;
-      for (Field field : methodOutputMessage.fields()) {
-        if (field.isRepeated() && !field.isMap()) {
-          Reference repeatedGenericRef = field.type().reference().generics().get(0);
-          repeatedResponseType = TypeNode.withReference(repeatedGenericRef);
-          break;
-        }
-      }
-
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
-          repeatedResponseType,
+          repeatedPagedResultsField,
           String.format(
               "No repeated field found on message %s for method %s",
               methodOutputMessage.name(), method.name()));
+
+      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
 
       nestedClasses.add(
           createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, types));
