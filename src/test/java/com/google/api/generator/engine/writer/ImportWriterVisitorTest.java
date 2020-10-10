@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.writer;
 
+import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -25,6 +26,7 @@ import com.google.api.generator.engine.ast.AstNode;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -1018,6 +1020,13 @@ public class ImportWriterVisitorTest {
     assertEquals(
         writerVisitor.write(),
         "import com.google.api.generator.engine.ast.UnaryOperationExpr;\n\n");
+  }
+
+  @Test
+  public void writeEmptyLineStatementImports() {
+    EmptyLineStatement statement = EmptyLineStatement.create();
+    statement.accept(writerVisitor);
+    assertThat(writerVisitor.write()).isEmpty();
   }
 
   private static TypeNode createType(Class clazz) {
