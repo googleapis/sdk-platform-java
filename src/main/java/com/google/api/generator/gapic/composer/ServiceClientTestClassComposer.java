@@ -440,31 +440,11 @@ public class ServiceClientTestClassComposer {
                 resourceNames,
                 messageTypes));
       } else {
-        // Make the method signature order deterministic, which helps with unit testing and
-        // per-version
-        // diffs.
-        List<List<MethodArgument>> sortedMethodSignatures =
-            method.methodSignatures().stream()
-                .sorted(
-                    (s1, s2) -> {
-                      if (s1.size() != s2.size()) {
-                        return s1.size() - s2.size();
-                      }
-                      for (int i = 0; i < s1.size(); i++) {
-                        int compareVal = s1.get(i).compareTo(s2.get(i));
-                        if (compareVal != 0) {
-                          return compareVal;
-                        }
-                      }
-                      return 0;
-                    })
-                .collect(Collectors.toList());
-
-        for (int i = 0; i < sortedMethodSignatures.size(); i++) {
+        for (int i = 0; i < method.methodSignatures().size(); i++) {
           javaMethods.add(
               createRpcTestMethod(
                   method,
-                  sortedMethodSignatures.get(i),
+                  method.methodSignatures().get(i),
                   i,
                   service.name(),
                   classMemberVarExprs,
@@ -473,7 +453,7 @@ public class ServiceClientTestClassComposer {
           javaMethods.add(
               createRpcExceptionTestMethod(
                   method,
-                  sortedMethodSignatures.get(i),
+                  method.methodSignatures().get(i),
                   i,
                   service.name(),
                   classMemberVarExprs,
