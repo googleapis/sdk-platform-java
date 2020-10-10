@@ -186,7 +186,7 @@ public class ServiceClientTestClassComposer {
                 ExprStatement.withExpr(
                     v.toBuilder()
                         .setIsDecl(true)
-                        .setScope(ScopeNode.PUBLIC)
+                        .setScope(ScopeNode.PRIVATE)
                         .setIsStatic(v.type().reference().name().startsWith("Mock"))
                         .build()))
         .collect(Collectors.toList());
