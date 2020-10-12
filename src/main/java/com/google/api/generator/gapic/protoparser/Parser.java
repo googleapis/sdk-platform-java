@@ -64,6 +64,7 @@ import java.util.stream.Collectors;
 public class Parser {
   private static final String COMMA = ",";
   private static final String COLON = ":";
+  private static final String DOT = ".";
   private static final String DEFAULT_PORT = "443";
 
   // Allow other parsers to access this.
@@ -320,12 +321,23 @@ public class Parser {
 
     OperationInfo lroInfo =
         methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
+
     String responseTypeName = lroInfo.getResponseType();
+    String responseTypePackage = "";
+    if (responseTypeName.contains(DOT)) {
+      responseTypeName = responseTypeName.substring(responseTypeName.lastIndexOf(DOT) + 1);
+    }
+
     String metadataTypeName = lroInfo.getMetadataType();
+    if (metadataTypeName.contains(DOT)) {
+      metadataTypeName = metadataTypeName.substring(metadataTypeName.lastIndexOf(DOT) + 1);
+    }
+
     Message responseMessage = messageTypes.get(responseTypeName);
     Message metadataMessage = messageTypes.get(metadataTypeName);
     Preconditions.checkNotNull(
         responseMessage, String.format("LRO response message %s not found", responseTypeName));
+    // TODO(miraleung): Check that the packages are equal if those strings are not empty.
     Preconditions.checkNotNull(
         metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
 
@@ -352,9 +364,11 @@ public class Parser {
   }
 
   private static List<Field> parseFields(Descriptor messageDescriptor) {
-    return messageDescriptor.getFields().stream()
-        .map(f -> parseField(f, messageDescriptor))
-        .collect(Collectors.toList());
+    List<FieldDescriptor> fields = new ArrayList<>(messageDescriptor.getFields());
+    // Sort by ascending field index order. This is important for paged responses, where the first
+    // repeated type is taken.
+    fields.sort((f1, f2) -> f1.getIndex() - f2.getIndex());
+    return fields.stream().map(f -> parseField(f, messageDescriptor)).collect(Collectors.toList());
   }
 
   private static Field parseField(FieldDescriptor fieldDescriptor, Descriptor messageDescriptor) {
