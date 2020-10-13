@@ -57,7 +57,7 @@ java_gapic_library(
 )
 
 integration_test(
-    name = "redis_test_integration",
-    path = ":redis_java_gapic",
-    deps = []
+    name = "redis_integration_test",
+    target = ":redis_java_gapic",
+    data = ["//test/integration/goldens/redis:goldens_files"],
 )
