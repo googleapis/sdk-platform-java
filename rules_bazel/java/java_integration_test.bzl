@@ -3,6 +3,7 @@ def _compare_with_goldens_test_impl(ctx):
     check_diff_script = ctx.outputs.check_diff_script
     input = ctx.attr.api_target
     srcs = ctx.files.srcs
+    api_name = ctx.attr.name
     
     script = """
     mkdir codegen_tmp
@@ -13,12 +14,13 @@ def _compare_with_goldens_test_impl(ctx):
     # Remove unneeded non-Java files, like MANIFEST
     rm -rf $(find . -type f ! -name "*.java")
     cd ..
-    diff codegen_tmp test/integration/goldens/redis/ > {diff_output}
+    diff codegen_tmp test/integration/goldens/{api_name}/ > {diff_output}
     """.format(
         diff_output = diff_output.path,
         input = input[0][JavaInfo].source_jars[0].path,
         input_resource_name = input[1][JavaInfo].source_jars[0].path,
         input_test = input[2][JavaInfo].source_jars[0].path,
+        api_name = api_name
     )
     ctx.actions.run_shell(
         inputs = srcs + [

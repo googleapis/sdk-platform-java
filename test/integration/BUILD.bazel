@@ -57,7 +57,7 @@ java_gapic_library(
 )
 
 integration_test(
-    name = "redis_integration_test",
+    name = "redis",
     target = ":redis_java_gapic",
     data = ["//test/integration/goldens/redis:goldens_files"],
 )
