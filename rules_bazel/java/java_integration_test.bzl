@@ -1,7 +1,9 @@
 def _compare_with_goldens_test_impl(ctx):
     diff_output = ctx.outputs.diff_output
     check_diff_script = ctx.outputs.check_diff_script
-    input = ctx.attr.api_target
+    gapic_library = ctx.attr.gapic_library
+    resource_name_library = ctx.attr.resource_name_library
+    test_library = ctx.attr.test_library
     srcs = ctx.files.srcs
     api_name = ctx.attr.name
     
@@ -17,16 +19,16 @@ def _compare_with_goldens_test_impl(ctx):
     diff codegen_tmp test/integration/goldens/{api_name}/ > {diff_output}
     """.format(
         diff_output = diff_output.path,
-        input = input[0][JavaInfo].source_jars[0].path,
-        input_resource_name = input[1][JavaInfo].source_jars[0].path,
-        input_test = input[2][JavaInfo].source_jars[0].path,
+        input = gapic_library[JavaInfo].source_jars[0].path,
+        input_resource_name = resource_name_library[JavaInfo].source_jars[0].path,
+        input_test = test_library[JavaInfo].source_jars[0].path,
         api_name = api_name
     )
     ctx.actions.run_shell(
         inputs = srcs + [
-            input[0][JavaInfo].source_jars[0], 
-            input[1][JavaInfo].source_jars[0], 
-            input[2][JavaInfo].source_jars[0],
+            gapic_library[JavaInfo].source_jars[0], 
+            resource_name_library[JavaInfo].source_jars[0], 
+            test_library[JavaInfo].source_jars[0],
         ],
         outputs = [diff_output],
         command = script,
@@ -55,7 +57,9 @@ def _compare_with_goldens_test_impl(ctx):
 
 compare_with_goldens_test = rule(
     attrs = {
-        "api_target": attr.label_list(),
+        "gapic_library": attr.label(),
+        "resource_name_library": attr.label(),
+        "test_library": attr.label(),
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
@@ -73,10 +77,8 @@ compare_with_goldens_test = rule(
 def integration_test(name, target, data):
     compare_with_goldens_test(
         name = name,
-        api_target = [
-            target, 
-            "%s_resource_name" % target,
-            "%s_test" % target
-        ],
+        gapic_library = target,
+        resource_name_library = "%s_resource_name" % target,
+        test_library = "%s_test" % target,
         srcs = data,
     )
