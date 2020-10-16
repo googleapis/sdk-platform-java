@@ -1,5 +1,14 @@
 # Changelog
 
+### [1.10.1](https://www.github.com/googleapis/api-common-java/compare/v1.10.0...v1.10.1) (2020-10-16)
+
+
+### Dependencies
+
+* update dependency com.google.auto.value:auto-value to v1.7.4 ([#170](https://www.github.com/googleapis/api-common-java/issues/170)) ([e6f8fef](https://www.github.com/googleapis/api-common-java/commit/e6f8fef536858c05a2b83404e8b9c774c6506894))
+* update dependency com.google.auto.value:auto-value-annotations to v1.7.4 ([#171](https://www.github.com/googleapis/api-common-java/issues/171)) ([00a12b9](https://www.github.com/googleapis/api-common-java/commit/00a12b94c44463b8f37b13cedc3a9241ec031f34))
+* update dependency com.google.errorprone:error_prone_annotations to v2.4.0 ([#172](https://www.github.com/googleapis/api-common-java/issues/172)) ([89b2a48](https://www.github.com/googleapis/api-common-java/commit/89b2a48ac22043d85c222979599522ca9397849f))
+
 ## [1.10.0](https://www.github.com/googleapis/api-common-java/compare/v1.9.3...v1.10.0) (2020-07-17)
 
 
