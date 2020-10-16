@@ -21,6 +21,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
 apply plugin: 'signing'
+apply plugin: 'maven-publish'
 apply plugin: 'com.github.sherter.google-java-format'
 apply plugin: 'io.codearte.nexus-staging'
 
@@ -198,50 +199,73 @@ signing {
 }
 
 if (project.hasProperty('ossrhUsername') && project.hasProperty('ossrhPassword')) {
-  uploadArchives {
-    repositories {
-      mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+  nexusStaging {
+    username = ossrhUsername
+    password = ossrhPassword
+    packageGroup = "com.google.api"
+  }
+}
 
-        repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-          authentication(userName: ossrhUsername, password: ossrhPassword)
-        }
+afterEvaluate {
+  publishing {
+    publications {
+      mavenJava(MavenPublication) {
+        version = project.version
 
-        snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-          authentication(userName: ossrhUsername, password: ossrhPassword)
-        }
+        from components.java
 
-        pom.project {
-          name 'API Common'
-          packaging 'jar'
-          artifactId 'api-common'
-          description 'Common utilities for Google APIs in Java'
-          url 'https://github.com/googleapis/api-common-java'
+        artifact javadocJar
+        artifact sourcesJar
+
+        pom {
+          name = 'API Common'
+          packaging = 'jar'
+          artifactId = 'api-common'
+          description = 'Common utilities for Google APIs in Java'
+          url = 'https://github.com/googleapis/api-common-java'
 
           scm {
-            url 'https://github.com/googleapis/api-common-java'
-            connection 'scm:git:https://github.com/googleapis/api-common-java.git'
+            url = 'https://github.com/googleapis/api-common-java'
+            connection = 'scm:git:https://github.com/googleapis/api-common-java.git'
           }
 
           licenses {
             license {
-              name 'BSD'
-              url 'https://github.com/googleapis/api-common-java/blob/master/LICENSE'
+              name = 'BSD'
+              url = 'https://github.com/googleapis/api-common-java/blob/master/LICENSE'
             }
           }
 
           developers {
             developer {
-              id 'GoogleAPIs'
-              name 'GoogleAPIs'
-              email 'googleapis@googlegroups.com'
-              url 'https://github.com/googleapis'
+              id = 'GoogleAPIs'
+              name = 'GoogleAPIs'
+              email = 'googleapis@googlegroups.com'
+              url = 'https://github.com/googleapis'
               organization = 'Google, Inc.'
-              organizationUrl 'https://www.google.com'
+              organizationUrl = 'https://www.google.com'
             }
           }
         }
       }
+    }
+    repositories {
+      maven {
+        url 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+        credentials {
+          username = project.hasProperty('ossrhUsername') ? project.getProperty('ossrhUsername') : null
+          password = project.hasProperty('ossrhPassword') ? project.getProperty('ossrhPassword') : null
+        }
+      }
+    }
+  }
+
+  signing {
+    if (!project.hasProperty('skip.signing')) {
+      if (project.hasProperty('signing.gnupg.executable')) {
+        useGpgCmd()
+      }
+      sign publishing.publications.mavenJava
     }
   }
 }
