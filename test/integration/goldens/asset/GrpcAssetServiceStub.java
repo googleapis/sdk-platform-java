@@ -66,6 +66,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ExportAssetsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
               .build();
+
   private static final MethodDescriptor<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistoryMethodDescriptor =
           MethodDescriptor.<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>newBuilder()
@@ -76,6 +77,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
               .setResponseMarshaller(
                   ProtoUtils.marshaller(BatchGetAssetsHistoryResponse.getDefaultInstance()))
               .build();
+
   private static final MethodDescriptor<CreateFeedRequest, Feed> createFeedMethodDescriptor =
       MethodDescriptor.<CreateFeedRequest, Feed>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -83,6 +85,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
           .setRequestMarshaller(ProtoUtils.marshaller(CreateFeedRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Feed.getDefaultInstance()))
           .build();
+
   private static final MethodDescriptor<GetFeedRequest, Feed> getFeedMethodDescriptor =
       MethodDescriptor.<GetFeedRequest, Feed>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -90,6 +93,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
           .setRequestMarshaller(ProtoUtils.marshaller(GetFeedRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Feed.getDefaultInstance()))
           .build();
+
   private static final MethodDescriptor<ListFeedsRequest, ListFeedsResponse>
       listFeedsMethodDescriptor =
           MethodDescriptor.<ListFeedsRequest, ListFeedsResponse>newBuilder()
@@ -98,6 +102,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
               .setRequestMarshaller(ProtoUtils.marshaller(ListFeedsRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(ListFeedsResponse.getDefaultInstance()))
               .build();
+
   private static final MethodDescriptor<UpdateFeedRequest, Feed> updateFeedMethodDescriptor =
       MethodDescriptor.<UpdateFeedRequest, Feed>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -105,6 +110,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
           .setRequestMarshaller(ProtoUtils.marshaller(UpdateFeedRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Feed.getDefaultInstance()))
           .build();
+
   private static final MethodDescriptor<DeleteFeedRequest, Empty> deleteFeedMethodDescriptor =
       MethodDescriptor.<DeleteFeedRequest, Empty>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -112,6 +118,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
           .setRequestMarshaller(ProtoUtils.marshaller(DeleteFeedRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
           .build();
+
   private static final MethodDescriptor<SearchAllResourcesRequest, SearchAllResourcesResponse>
       searchAllResourcesMethodDescriptor =
           MethodDescriptor.<SearchAllResourcesRequest, SearchAllResourcesResponse>newBuilder()
@@ -122,6 +129,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
               .setResponseMarshaller(
                   ProtoUtils.marshaller(SearchAllResourcesResponse.getDefaultInstance()))
               .build();
+
   private static final MethodDescriptor<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse>
       searchAllIamPoliciesMethodDescriptor =
           MethodDescriptor.<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse>newBuilder()
@@ -132,6 +140,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
               .setResponseMarshaller(
                   ProtoUtils.marshaller(SearchAllIamPoliciesResponse.getDefaultInstance()))
               .build();
+
   private final UnaryCallable<ExportAssetsRequest, Operation> exportAssetsCallable;
   private final OperationCallable<ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
       exportAssetsOperationCallable;
@@ -150,6 +159,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
       searchAllIamPoliciesCallable;
   private final UnaryCallable<SearchAllIamPoliciesRequest, SearchAllIamPoliciesPagedResponse>
       searchAllIamPoliciesPagedCallable;
+
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
   private final GrpcStubCallableFactory callableFactory;
@@ -181,6 +191,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.operationsStub = GrpcOperationsStub.create(clientContext, callableFactory);
+
     GrpcCallSettings<ExportAssetsRequest, Operation> exportAssetsTransportSettings =
         GrpcCallSettings.<ExportAssetsRequest, Operation>newBuilder()
             .setMethodDescriptor(exportAssetsMethodDescriptor)
@@ -221,6 +232,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             GrpcCallSettings.<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse>newBuilder()
                 .setMethodDescriptor(searchAllIamPoliciesMethodDescriptor)
                 .build();
+
     this.exportAssetsCallable =
         callableFactory.createUnaryCallable(
             exportAssetsTransportSettings, settings.exportAssetsSettings(), clientContext);
@@ -270,6 +282,7 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             searchAllIamPoliciesTransportSettings,
             settings.searchAllIamPoliciesSettings(),
             clientContext);
+
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
   }
