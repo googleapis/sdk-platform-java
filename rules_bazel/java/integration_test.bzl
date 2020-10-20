@@ -1,4 +1,4 @@
-def _compare_with_goldens_test_impl(ctx):
+def _diff_integration_goldens_impl(ctx):
     # Extract the Java source files from the generated 3 srcjars from API bazel target, 
     # and put them in the temporary folder `codegen_tmp`.
     # Compare the `codegen_tmp` with the goldens folder e.g `test/integration/goldens/redis`
@@ -66,7 +66,7 @@ def _compare_with_goldens_test_impl(ctx):
     return [DefaultInfo(executable = check_diff_script, runfiles = runfiles)]
 
 
-compare_with_goldens_test = rule(
+diff_integration_goldens_test = rule(
     attrs = {
         "gapic_library": attr.label(),
         "resource_name_library": attr.label(),
@@ -80,7 +80,7 @@ compare_with_goldens_test = rule(
         "diff_output": "diff_output.txt",
         "check_diff_script": "check_diff_script.sh",
     },
-    implementation = _compare_with_goldens_test_impl,
+    implementation = _diff_integration_goldens_impl,
     test = True,
 )
 
@@ -88,7 +88,7 @@ compare_with_goldens_test = rule(
 def integration_test(name, target, data):
     # Bazel target `java_gapic_library` will generate 3 source jars including the
     # the source Java code of the gapic_library, resource_name_library and test_library.
-    compare_with_goldens_test(
+    diff_integration_goldens_test(
         name = name,
         gapic_library = target,
         resource_name_library = "%s_resource_name" % target,

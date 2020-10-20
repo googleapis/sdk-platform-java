@@ -5,7 +5,7 @@ load(
 )
 
 load(
-    "//:rules_bazel/java/java_integration_test.bzl",
+    "//:rules_bazel/java/integration_test.bzl",
     "integration_test",
 )
 
