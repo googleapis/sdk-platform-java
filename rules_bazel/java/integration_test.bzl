@@ -51,12 +51,14 @@ def _diff_integration_goldens_impl(ctx):
     # is enabled, it only emits the comparison results to the test.log.
     # We could not copy the diff_output.txt to the test.log ($XML_OUTPUT_FILE) because that
     # file is not existing at the moment. It is generated once test is finished.
-    cat $PWD/test/integration/diff_output.txt
-    if [ -s $PWD/test/integration/diff_output.txt ]
+    cat $PWD/test/integration/{api_name}_diff_output.txt
+    if [ -s $PWD/test/integration/{api_name}_diff_output.txt ]
     then
         exit 1
     fi
-    """
+    """.format(
+        api_name = api_name,
+    )
 
     ctx.actions.write(
         output = check_diff_script,
@@ -77,8 +79,8 @@ diff_integration_goldens_test = rule(
         ), 
     },
     outputs = {
-        "diff_output": "diff_output.txt",
-        "check_diff_script": "check_diff_script.sh",
+        "diff_output": "%{name}_diff_output.txt",
+        "check_diff_script": "%{name}_check_diff_script.sh",
     },
     implementation = _diff_integration_goldens_impl,
     test = True,
