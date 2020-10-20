@@ -17,13 +17,7 @@ def _compare_with_goldens_test_impl(ctx):
     rm -rf $(find . -type f ! -name "*.java")
     cd ..
     diff codegen_tmp test/integration/goldens/{api_name}/ > {diff_output}
-    touch {check_diff_script}
-    if [ -s {diff_output} ]
-    then
-        echo 'exit 1' >> {check_diff_script}
-    fi
     """.format(
-        check_diff_script = check_diff_script.path,
         diff_output = diff_output.path,
         input = gapic_library[JavaInfo].source_jars[0].path,
         input_resource_name = resource_name_library[JavaInfo].source_jars[0].path,
@@ -36,10 +30,26 @@ def _compare_with_goldens_test_impl(ctx):
             resource_name_library[JavaInfo].source_jars[0], 
             test_library[JavaInfo].source_jars[0],
         ],
-        outputs = [diff_output, check_diff_script],
+        outputs = [diff_output],
         command = script,
     )
-    return [DefaultInfo(executable = check_diff_script)]
+    check_diff_script_content = """
+    cat $PWD/test/integration/diff_output.txt
+    if [ -s $PWD/test/integration/diff_output.txt ]
+    then
+        cp $PWD/test/integration/diff_output.txt $XML_OUTPUT_FILE
+        exit 1
+    else 
+        echo 'Test success!'
+    fi
+    """
+
+    ctx.actions.write(
+        output = check_diff_script,
+        content = check_diff_script_content,
+    )
+    runfiles = ctx.runfiles(files = [ctx.outputs.diff_output])
+    return [DefaultInfo(executable = check_diff_script, runfiles = runfiles)]
 
 
 compare_with_goldens_test = rule(
