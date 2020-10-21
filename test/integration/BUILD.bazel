@@ -68,3 +68,9 @@ golden_update(
     target = ":redis_java_gapic",
     data = ["//test/integration/goldens/redis:goldens_files"],
 )
+
+golden_update(
+    name = "asset_update",
+    target = ":asset_java_gapic",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+)
