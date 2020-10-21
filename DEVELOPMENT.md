@@ -113,7 +113,7 @@ the Java microgenerator and compares them with the goldens files in `test/integr
     bazel test //test/integration:redis
     ```
 
--   Update goldens files based on code generation in integration test, for example `Redis`. It generates Java source code using the Java microgenerator and overwrite the goldens files in `test/integration/goldens/redis` based on code generation.
+-   Update goldens files based on code generation in integration test, for example `Redis`. It generates Java source code using the Java microgenerator and overwrites the goldens files in `test/integration/goldens/redis` based on code generation.
 
     ```sh
     bazel run //test/integration:redis_update
