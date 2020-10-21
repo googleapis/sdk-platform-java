@@ -117,6 +117,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           SearchAllIamPoliciesResponse,
           SearchAllIamPoliciesPagedResponse>
       searchAllIamPoliciesSettings;
+
   private static final PagedListDescriptor<
           SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>
       SEARCH_ALL_RESOURCES_PAGE_STR_DESC =
@@ -157,6 +158,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
                   : payload.getResultsList();
             }
           };
+
   private static final PagedListDescriptor<
           SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse, IamPolicySearchResult>
       SEARCH_ALL_IAM_POLICIES_PAGE_STR_DESC =
@@ -197,6 +199,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
                   : payload.getResultsList();
             }
           };
+
   private static final PagedListResponseFactory<
           SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
       SEARCH_ALL_RESOURCES_PAGE_STR_FACT =
@@ -218,6 +221,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               return SearchAllResourcesPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final PagedListResponseFactory<
           SearchAllIamPoliciesRequest,
           SearchAllIamPoliciesResponse,
@@ -370,6 +374,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
   protected AssetServiceStubSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
+
     exportAssetsSettings = settingsBuilder.exportAssetsSettings().build();
     exportAssetsOperationSettings = settingsBuilder.exportAssetsOperationSettings().build();
     batchGetAssetsHistorySettings = settingsBuilder.batchGetAssetsHistorySettings().build();
@@ -470,6 +475,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
     protected Builder(ClientContext clientContext) {
       super(clientContext);
+
       exportAssetsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       exportAssetsOperationSettings = OperationCallSettings.newBuilder();
       batchGetAssetsHistorySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -481,6 +487,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       searchAllResourcesSettings = PagedCallSettings.newBuilder(SEARCH_ALL_RESOURCES_PAGE_STR_FACT);
       searchAllIamPoliciesSettings =
           PagedCallSettings.newBuilder(SEARCH_ALL_IAM_POLICIES_PAGE_STR_FACT);
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               exportAssetsSettings,
@@ -497,6 +504,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
     protected Builder(AssetServiceStubSettings settings) {
       super(settings);
+
       exportAssetsSettings = settings.exportAssetsSettings.toBuilder();
       exportAssetsOperationSettings = settings.exportAssetsOperationSettings.toBuilder();
       batchGetAssetsHistorySettings = settings.batchGetAssetsHistorySettings.toBuilder();
@@ -507,6 +515,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       deleteFeedSettings = settings.deleteFeedSettings.toBuilder();
       searchAllResourcesSettings = settings.searchAllResourcesSettings.toBuilder();
       searchAllIamPoliciesSettings = settings.searchAllIamPoliciesSettings.toBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               exportAssetsSettings,
@@ -522,10 +531,12 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
 
     private static Builder createDefault() {
       Builder builder = new Builder(((ClientContext) null));
+
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+
       return initDefaults(builder);
     }
 
@@ -534,38 +545,47 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           .exportAssetsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
       builder
           .batchGetAssetsHistorySettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .createFeedSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
       builder
           .getFeedSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .listFeedsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .updateFeedSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
       builder
           .deleteFeedSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .searchAllResourcesSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .searchAllIamPoliciesSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
       builder
           .exportAssetsOperationSettings()
           .setInitialCallSettings(
@@ -589,6 +609,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
                       .setMaxRpcTimeout(Duration.ZERO)
                       .setTotalTimeout(Duration.ofMillis(300000L))
                       .build()));
+
       return builder;
     }
 
