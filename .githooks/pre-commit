@@ -4,36 +4,34 @@
 # Set up:
 #  ln -s .githooks/pre-commit .git/hooks/pre-commit
 
+# Constants.
+BOLD="\e[1m"
+UNSET="\e[0m"
+WHITE="\e[97m"
+RED="\e[91m"
+BACK_MAGENTA="\e[45m"
+BACK_BLUE="\e[44m"
+BACK_RED="\e[41m"
+BACK_GREEN="\e[42m"
+# Check only the staged files.
+NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
+NUM_JAVA_FILES_CHANGED=$(git diff --cached --name-only "*.java" | wc -l)
+NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only "*BUILD.bazel" | wc -l)
+
 # Methods.
 function echo_error {
   ERR_MSG=$1
   HELP_MSG=$2
-  BOLD="\e[1m"
-  UNSET="\e[0m"
-  WHITE="\e[97m"
-  RED="\e[91m"
-  BACK_MAGENTA="\e[45m"
-  BACK_BLUE="\e[44m"
-  BACK_RED="\e[41m"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED Changes NOT committed. $UNSET"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_RED $WHITE $ERR_MSG $BACK_BLUE $HELP_MSG $UNSET"
 }
 
 function echo_status {
   STATUS_MSG=$1
-  BOLD="\e[1m"
-  UNSET="\e[0m"
-  WHITE="\e[97m"
-  BACK_BLUE="\e[44m"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $STATUS_MSG $UNSET"
 }
 
 function echo_success {
-  BOLD="\e[1m"
-  UNSET="\e[0m"
-  WHITE="\e[97m"
-  BACK_GREEN="\e[42m"
-  BACK_BLUE="\e[44m"
   echo -e "$BOLD $BACK_BLUE $WHITE Precommit:\t $BACK_GREEN $WHITE SUCCESS. $UNSET All checks passed!"
 }
 
@@ -65,12 +63,6 @@ if [ ! -d $BAZEL_CACHE_DIR ]
 then
   mkdir $BAZEL_CACHE_DIR
 fi
-
-# Constants.
-# Check only the staged files.
-NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
-NUM_JAVA_FILES_CHANGED=$(git diff --cached --name-only "*.java" | wc -l)
-NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only "*BUILD.bazel" | wc -l)
 
 if [ $NUM_TOTAL_FILES_CHANGED -le 0 ]
 then
