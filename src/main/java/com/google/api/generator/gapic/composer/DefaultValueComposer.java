@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
@@ -32,6 +33,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
+import com.google.protobuf.ByteString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,6 +46,8 @@ public class DefaultValueComposer {
   private static TypeNode OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
   private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
+  private static TypeNode BYTESTRING_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   static Expr createDefaultValue(
       MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
@@ -120,6 +124,13 @@ public class DefaultValueComposer {
     if (f.type().equals(TypeNode.BOOLEAN)) {
       return ValueExpr.withValue(
           PrimitiveValue.builder().setType(f.type()).setValue("true").build());
+    }
+
+    if (f.type().equals(BYTESTRING_TYPE)) {
+      return VariableExpr.builder()
+          .setStaticReferenceType(BYTESTRING_TYPE)
+          .setVariable(Variable.builder().setName("EMPTY").setType(BYTESTRING_TYPE).build())
+          .build();
     }
 
     throw new UnsupportedOperationException(

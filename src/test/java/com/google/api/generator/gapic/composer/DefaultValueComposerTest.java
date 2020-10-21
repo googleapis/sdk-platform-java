@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
@@ -24,6 +25,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -127,6 +129,18 @@ public class DefaultValueComposerTest {
     Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("true", writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_byteStringField() {
+    Field field =
+        Field.builder()
+            .setName("foobar")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(ByteString.class)))
+            .build();
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
+    expr.accept(writerVisitor);
+    assertEquals("ByteString.EMPTY", writerVisitor.write());
   }
 
   @Test
