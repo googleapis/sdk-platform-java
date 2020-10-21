@@ -100,6 +100,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       listMonitoredResourceDescriptorsSettings;
   private final PagedCallSettings<ListLogsRequest, ListLogsResponse, ListLogsPagedResponse>
       listLogsSettings;
+
   private static final PagedListDescriptor<ListLogEntriesRequest, ListLogEntriesResponse, LogEntry>
       LIST_LOG_ENTRIES_PAGE_STR_DESC =
           new PagedListDescriptor<ListLogEntriesRequest, ListLogEntriesResponse, LogEntry>() {
@@ -136,6 +137,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
                   : payload.getEntriesList();
             }
           };
+
   private static final PagedListDescriptor<
           ListMonitoredResourceDescriptorsRequest,
           ListMonitoredResourceDescriptorsResponse,
@@ -184,6 +186,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
                   : payload.getResourceDescriptorsList();
             }
           };
+
   private static final PagedListDescriptor<ListLogsRequest, ListLogsResponse, String>
       LIST_LOGS_PAGE_STR_DESC =
           new PagedListDescriptor<ListLogsRequest, ListLogsResponse, String>() {
@@ -219,6 +222,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
                   : payload.getLogNamesList();
             }
           };
+
   private static final PagedListResponseFactory<
           ListLogEntriesRequest, ListLogEntriesResponse, ListLogEntriesPagedResponse>
       LIST_LOG_ENTRIES_PAGE_STR_FACT =
@@ -235,6 +239,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
               return ListLogEntriesPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final PagedListResponseFactory<
           ListMonitoredResourceDescriptorsRequest,
           ListMonitoredResourceDescriptorsResponse,
@@ -267,6 +272,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
                   pageContext, futureResponse);
             }
           };
+
   private static final PagedListResponseFactory<
           ListLogsRequest, ListLogsResponse, ListLogsPagedResponse>
       LIST_LOGS_PAGE_STR_FACT =
@@ -282,6 +288,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
               return ListLogsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
+
   private static final BatchingDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>
       WRITE_LOG_ENTRIES_BATCHING_DESC =
           new BatchingDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>() {
@@ -443,6 +450,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
   protected LoggingServiceV2StubSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
+
     deleteLogSettings = settingsBuilder.deleteLogSettings().build();
     writeLogEntriesSettings = settingsBuilder.writeLogEntriesSettings().build();
     listLogEntriesSettings = settingsBuilder.listLogEntriesSettings().build();
@@ -509,6 +517,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
     protected Builder(ClientContext clientContext) {
       super(clientContext);
+
       deleteLogSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       writeLogEntriesSettings =
           BatchingCallSettings.newBuilder(WRITE_LOG_ENTRIES_BATCHING_DESC)
@@ -517,6 +526,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       listMonitoredResourceDescriptorsSettings =
           PagedCallSettings.newBuilder(LIST_MONITORED_RESOURCE_DESCRIPTORS_PAGE_STR_FACT);
       listLogsSettings = PagedCallSettings.newBuilder(LIST_LOGS_PAGE_STR_FACT);
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               deleteLogSettings,
@@ -529,12 +539,14 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
     protected Builder(LoggingServiceV2StubSettings settings) {
       super(settings);
+
       deleteLogSettings = settings.deleteLogSettings.toBuilder();
       writeLogEntriesSettings = settings.writeLogEntriesSettings.toBuilder();
       listLogEntriesSettings = settings.listLogEntriesSettings.toBuilder();
       listMonitoredResourceDescriptorsSettings =
           settings.listMonitoredResourceDescriptorsSettings.toBuilder();
       listLogsSettings = settings.listLogsSettings.toBuilder();
+
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               deleteLogSettings,
@@ -546,10 +558,12 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
     private static Builder createDefault() {
       Builder builder = new Builder(((ClientContext) null));
+
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setEndpoint(getDefaultEndpoint());
+
       return initDefaults(builder);
     }
 
@@ -558,6 +572,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
           .deleteLogSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .writeLogEntriesSettings()
           .setBatchingSettings(
@@ -573,22 +588,27 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
                               FlowController.LimitExceededBehavior.ThrowException)
                           .build())
                   .build());
+
       builder
           .writeLogEntriesSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .listLogEntriesSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .listMonitoredResourceDescriptorsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       builder
           .listLogsSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
       return builder;
     }
 

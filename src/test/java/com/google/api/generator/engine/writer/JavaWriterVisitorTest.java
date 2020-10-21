@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -1363,16 +1364,19 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeGeneralForStatement_basic() {
+  public void writeGeneralForStatement_basicIsDecl() {
     AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
     Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
     List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
 
     VariableExpr localVarExpr = createVariableDeclExpr("i", TypeNode.INT);
-    Expr maxSizeExpr = MethodInvocationExpr.builder().setMethodName("maxSize").build();
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("0").setType(TypeNode.INT).build());
+    Expr maxSizeExpr =
+        MethodInvocationExpr.builder().setMethodName("maxSize").setReturnType(TypeNode.INT).build();
 
     GeneralForStatement forStatement =
-        GeneralForStatement.incrementWith(localVarExpr, maxSizeExpr, body);
+        GeneralForStatement.incrementWith(localVarExpr, initValueExpr, maxSizeExpr, body);
 
     forStatement.accept(writerVisitor);
     assertEquals(
@@ -1380,6 +1384,28 @@ public class JavaWriterVisitorTest {
         String.format(
             "%s%s%s%s",
             "for (int i = 0; i < maxSize(); i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+  }
+
+  @Test
+  public void writeGeneralForStatement_basicIsNotDecl() {
+    AssignmentExpr assignExpr = createAssignmentExpr("x", "3", TypeNode.INT);
+    Statement assignExprStatement = ExprStatement.withExpr(assignExpr);
+    List<Statement> body = Arrays.asList(assignExprStatement, assignExprStatement);
+
+    VariableExpr localVarExpr = createVariableExpr("i", TypeNode.INT);
+    ValueExpr initValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("1").setType(TypeNode.INT).build());
+    ValueExpr maxValueExpr =
+        ValueExpr.withValue(PrimitiveValue.builder().setValue("10").setType(TypeNode.INT).build());
+
+    GeneralForStatement forStatement =
+        GeneralForStatement.incrementWith(localVarExpr, initValueExpr, maxValueExpr, body);
+
+    forStatement.accept(writerVisitor);
+    assertEquals(
+        writerVisitor.write(),
+        String.format(
+            "%s%s%s%s", "for (i = 1; i < 10; i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
   }
 
   @Test
@@ -2207,6 +2233,13 @@ public class JavaWriterVisitorTest {
         AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr);
     assignmentOperationExpr.accept(writerVisitor);
     assertThat(writerVisitor.write()).isEqualTo("h ^= Objects.hashCode(fixedValue)");
+  }
+
+  @Test
+  public void writeEmptyLineStatement() {
+    EmptyLineStatement statement = EmptyLineStatement.create();
+    statement.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "\n");
   }
 
   private static String createLines(int numLines) {

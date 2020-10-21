@@ -25,6 +25,7 @@ import com.google.api.generator.engine.ast.BlockStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -281,8 +282,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(GeneralForStatement generalForStatement) {
     generalForStatement.initializationExpr().accept(this);
-    generalForStatement.localVariableExpr().accept(this);
-    generalForStatement.maxSizeExpr().accept(this);
+    generalForStatement.terminationExpr().accept(this);
+    generalForStatement.updateExpr().accept(this);
     statements(generalForStatement.body());
   }
 
@@ -316,23 +317,28 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(CommentStatement commentStatement) {
-    // Do nothing
+    // Nothing to do.
+  }
+
+  @Override
+  public void visit(EmptyLineStatement emptyLineStatement) {
+    // Nothing to do.
   }
 
   /** =============================== COMMENT =============================== */
   @Override
   public void visit(LineComment lineComment) {
-    // Do nothing
+    // Nothing to do.
   }
 
   @Override
   public void visit(BlockComment blockComment) {
-    // Do nothing
+    // Nothing to do.
   }
 
   @Override
   public void visit(JavaDocComment javaDocComment) {
-    // Do nothing
+    // Nothing to do.
   }
 
   /** =============================== OTHER =============================== */
