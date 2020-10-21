@@ -57,7 +57,7 @@ def _diff_integration_goldens_impl(ctx):
         exit 1
     fi
     """.format(
-        api_name = api_name
+        api_name = api_name,
     )
 
     ctx.actions.write(
