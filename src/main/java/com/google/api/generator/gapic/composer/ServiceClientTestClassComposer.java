@@ -514,9 +514,17 @@ public class ServiceClientTestClassComposer {
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Preconditions.checkNotNull(
+          firstRepeatedField,
+          String.format(
+              "Expected paged RPC %s to have a repeated field in the response %s but found none",
+              method.name(), methodOutputMessage.name()));
+
       expectedResponseValExpr =
           DefaultValueComposer.createSimplePagedResponse(
-              method.outputType(), responsesElementVarExpr);
+              method.outputType(), firstRepeatedField.name(), responsesElementVarExpr);
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().name())) {
         expectedResponseValExpr =

@@ -11,6 +11,16 @@ load(
 package(default_visibility = ["//visibility:public"])
 
 ####################################################
+# Integration Test Rules
+####################################################
+
+integration_test(
+    name = "redis",
+    data = ["//test/integration/goldens/redis:goldens_files"],
+    target = ":redis_java_gapic",
+)
+
+####################################################
 # API Library Rules
 ####################################################
 # These will eventually go away once more APIs in googleapis have been migrated to the microgenerator.
@@ -53,10 +63,4 @@ java_gapic_library(
     deps = [
         "@com_google_googleapis//google/cloud/redis/v1:redis_java_proto",
     ],
-)
-
-integration_test(
-    name = "redis",
-    data = ["//test/integration/goldens/redis:goldens_files"],
-    target = ":redis_java_gapic",
 )
