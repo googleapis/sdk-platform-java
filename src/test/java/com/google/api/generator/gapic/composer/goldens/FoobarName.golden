@@ -173,17 +173,17 @@ public class FoobarName implements ResourceName {
     }
     if (PROJECT_FOOBAR.matches(formattedString)) {
       Map<String, String> matchMap = PROJECT_FOOBAR.match(formattedString);
-      return ofProjectFoobarBuilder(matchMap.get("project"), matchMap.get("foobar"));
+      return ofProjectFoobarName(matchMap.get("project"), matchMap.get("foobar"));
     } else if (PROJECT_VARIANT_FOOBAR.matches(formattedString)) {
       Map<String, String> matchMap = PROJECT_VARIANT_FOOBAR.match(formattedString);
-      return ofProjectVariantFoobarBuilder(
+      return ofProjectVariantFoobarName(
           matchMap.get("project"), matchMap.get("variant"), matchMap.get("foobar"));
     } else if (FOOBAR.matches(formattedString)) {
       Map<String, String> matchMap = FOOBAR.match(formattedString);
-      return ofFoobarBuilder(matchMap.get("foobar"));
+      return ofFoobarName(matchMap.get("foobar"));
     } else if (BAR_FOO_FOOBAR.matches(formattedString)) {
       Map<String, String> matchMap = BAR_FOO_FOOBAR.match(formattedString);
-      return ofBarFooFoobarBuilder(matchMap.get("bar_foo"), matchMap.get("foobar"));
+      return ofBarFooFoobarName(matchMap.get("bar_foo"), matchMap.get("foobar"));
     }
     throw new ValidationException("FoobarName.parse: formattedString not in valid format");
   }
