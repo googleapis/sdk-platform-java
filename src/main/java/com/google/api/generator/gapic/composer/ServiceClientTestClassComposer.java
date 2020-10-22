@@ -920,6 +920,7 @@ public class ServiceClientTestClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName(testMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
         .setBody(methodStatements)
         .build();
   }
@@ -1175,6 +1176,7 @@ public class ServiceClientTestClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.VOID)
         .setName(testMethodName)
+        .setThrowsExceptions(Arrays.asList(TypeNode.withExceptionClazz(Exception.class)))
         .setBody(methodStatements)
         .build();
   }
