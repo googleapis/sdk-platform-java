@@ -1,4 +1,4 @@
 # Format:
 # module:released-version:current-version
 
-api-common:1.10.1:1.10.1
+api-common:1.10.1:1.10.2-SNAPSHOT
