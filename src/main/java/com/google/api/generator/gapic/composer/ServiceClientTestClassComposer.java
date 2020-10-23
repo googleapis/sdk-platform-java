@@ -494,6 +494,7 @@ public class ServiceClientTestClassComposer {
               "No repeated field found for paged method %s with output message type %s",
               method.name(), methodOutputMessage.name()));
 
+      // Must be a non-repeated type.
       repeatedResponseType = repeatedPagedResultsField.type();
       responsesElementVarExpr =
           VariableExpr.withVariable(
@@ -506,7 +507,7 @@ public class ServiceClientTestClassComposer {
                       Field.builder()
                           .setType(repeatedResponseType)
                           .setName("responsesElement")
-                          .setIsMessage(true)
+                          .setIsMessage(!repeatedResponseType.isProtoPrimitiveType())
                           .build()))
               .build());
     }
