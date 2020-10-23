@@ -61,3 +61,10 @@ integration_test(
     target = ":redis_java_gapic",
     data = ["//test/integration/goldens/redis:goldens_files"],
 )
+
+integration_test(
+    name = "asset",
+    target = ":asset_java_gapic",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+)
+
