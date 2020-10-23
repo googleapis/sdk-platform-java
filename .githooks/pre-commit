@@ -64,6 +64,11 @@ then
   mkdir $BAZEL_CACHE_DIR
 fi
 
+# Check only the staged files.
+NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
+NUM_JAVA_FILES_CHANGED=$(git diff --cached --name-only "*.java" | wc -l)
+NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only "*BUILD.bazel" | wc -l)
+
 if [ $NUM_TOTAL_FILES_CHANGED -le 0 ]
 then
   echo_error "No new files to commit." ""
