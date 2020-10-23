@@ -13,10 +13,6 @@ BACK_MAGENTA="\e[45m"
 BACK_BLUE="\e[44m"
 BACK_RED="\e[41m"
 BACK_GREEN="\e[42m"
-# Check only the staged files.
-NUM_TOTAL_FILES_CHANGED=$(git diff --cached --name-only | wc -l)
-NUM_JAVA_FILES_CHANGED=$(git diff --cached --name-only "*.java" | wc -l)
-NUM_BAZEL_FILES_CHANGED=$(git diff --cached --name-only "*BUILD.bazel" | wc -l)
 
 # Methods.
 function echo_error {
