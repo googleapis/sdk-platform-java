@@ -64,3 +64,17 @@ java_gapic_library(
         "@com_google_googleapis//google/cloud/redis/v1:redis_java_proto",
     ],
 )
+
+java_gapic_library(
+    name = "logging_java_gapic",
+    srcs = ["@com_google_googleapis//google/logging/v2:logging_proto_with_info"],
+    grpc_service_config = "@com_google_googleapis//google/logging/v2:logging_grpc_service_config.json",
+    package = "google.logging.v2",
+    test_deps = [
+        "@com_google_googleapis//google/logging/v2:logging_java_grpc",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/logging/v2:logging_java_proto",
+    ],
+)
