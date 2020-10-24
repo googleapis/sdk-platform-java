@@ -186,6 +186,10 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
     return isPrimitiveType(typeKind());
   }
 
+  public boolean isProtoPrimitiveType() {
+    return isPrimitiveType() || this.equals(TypeNode.STRING);
+  }
+
   public boolean isSupertypeOrEquals(TypeNode other) {
     boolean oneTypeIsNull = this.equals(TypeNode.NULL) ^ other.equals(TypeNode.NULL);
     return !isPrimitiveType()
