@@ -525,7 +525,8 @@ public class ResourceNameHelperClassComposer {
               .setReturnType(returnType)
               .setName(
                   String.format(
-                      methodNameFormat, i == 0 ? "" : getBuilderTypeName(tokenHierarchies, i)))
+                      methodNameFormat,
+                      i == 0 ? "" : concatToUpperCamelCaseName(tokenHierarchies.get(i)) + "Name"))
               .setArguments(methodArgs)
               .setReturnExpr(returnExpr)
               .build());
@@ -537,7 +538,10 @@ public class ResourceNameHelperClassComposer {
                 .setIsStatic(true)
                 .setAnnotations(annotations)
                 .setReturnType(returnType)
-                .setName(String.format(methodNameFormat, getBuilderTypeName(tokens)))
+                .setName(
+                    String.format(
+                        methodNameFormat,
+                        concatToUpperCamelCaseName(tokenHierarchies.get(i)) + "Name"))
                 .setArguments(methodArgs)
                 .setReturnExpr(returnExpr)
                 .build());
