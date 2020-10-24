@@ -630,7 +630,7 @@ public class ServiceClientTestClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(
-                    method.isPaged() ? getPagedResponseType(service, method) : methodOutputType)
+                    method.isPaged() ? getPagedResponseType(method, service) : methodOutputType)
                 .setName(method.isPaged() ? "pagedListResponse" : "actualResponse")
                 .build());
     Expr rpcJavaMethodInvocationExpr =
@@ -711,11 +711,11 @@ public class ServiceClientTestClassComposer {
 
       // Assert the responses are equivalent.
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
-      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
-          firstRepeatedField,
+          repeatedPagedResultsField,
           String.format(
-              "Expected paged RPC %s to have a repeated field in the response %s but found none",
+              "No repeated field found for paged method %s with output message type %s",
               method.name(), methodOutputMessage.name()));
 
       Expr zeroExpr =
@@ -724,7 +724,8 @@ public class ServiceClientTestClassComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(expectedResponseVarExpr)
               .setMethodName(
-                  String.format("get%sList", JavaStyle.toUpperCamelCase(firstRepeatedField.name())))
+                  String.format(
+                      "get%sList", JavaStyle.toUpperCamelCase(repeatedPagedResultsField.name())))
               .build();
       expectedPagedResponseExpr =
           MethodInvocationExpr.builder()
@@ -1855,7 +1856,7 @@ public class ServiceClientTestClassComposer {
         ConcreteReference.builder().setClazz(callableClazz).setGenerics(generics).build());
   }
 
-  private static TypeNode getPagedResponseType(Service service, Method method) {
+  private static TypeNode getPagedResponseType(Method method, Service service) {
     return TypeNode.withReference(
         VaporReference.builder()
             .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
