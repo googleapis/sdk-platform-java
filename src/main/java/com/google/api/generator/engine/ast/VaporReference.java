@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
@@ -145,6 +146,10 @@ public abstract class VaporReference implements Reference {
     public abstract Builder setPakkage(String pakkage);
 
     public abstract Builder setUseFullName(boolean useFullName);
+
+    public Builder setGenerics(Reference... references) {
+      return setGenerics(Arrays.asList(references));
+    }
 
     public abstract Builder setGenerics(List<Reference> clazzes);
 
