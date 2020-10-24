@@ -294,7 +294,8 @@ public class DefaultValueComposer {
         .build();
   }
 
-  static Expr createSimplePagedResponse(TypeNode responseType, Expr responseElementVarExpr) {
+  static Expr createSimplePagedResponse(
+      TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr) {
     Expr pagedResponseExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(responseType)
@@ -309,7 +310,7 @@ public class DefaultValueComposer {
     pagedResponseExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(pagedResponseExpr)
-            .setMethodName("addAllResponses")
+            .setMethodName(String.format("addAll%s", JavaStyle.toUpperCamelCase(repeatedFieldName)))
             .setArguments(
                 MethodInvocationExpr.builder()
                     .setStaticReferenceType(
