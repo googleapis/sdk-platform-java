@@ -52,6 +52,7 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -276,6 +277,12 @@ public class Parser {
         }
       }
 
+      Optional<List<String>> httpBindingsOpt =
+          HttpRuleParser.parseHttpBindings(
+              protoMethod, messageTypes.get(inputType.reference().name()), messageTypes);
+      List<String> httpBindings =
+          httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
+
       methods.add(
           methodBuilder
               .setName(protoMethod.getName())
@@ -292,6 +299,7 @@ public class Parser {
                       messageTypes,
                       resourceNames,
                       outputArgResourceNames))
+              .setHttpBindings(httpBindings)
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
