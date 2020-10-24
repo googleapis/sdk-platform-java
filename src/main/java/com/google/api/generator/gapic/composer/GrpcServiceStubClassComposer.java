@@ -22,9 +22,11 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -51,6 +53,8 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import io.grpc.MethodDescriptor;
@@ -90,7 +94,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
   private static final GrpcServiceStubClassComposer INSTANCE = new GrpcServiceStubClassComposer();
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
 
   private GrpcServiceStubClassComposer() {}
 
@@ -117,21 +121,21 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(BACKGROUND_RESOURCES_MEMBER_NAME)
-                .setType(staticTypes.get("BackgroundResource"))
+                .setType(STATIC_TYPES.get("BackgroundResource"))
                 .build()));
     classMemberVarExprs.put(
         OPERATIONS_STUB_MEMBER_NAME,
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(OPERATIONS_STUB_MEMBER_NAME)
-                .setType(staticTypes.get("GrpcOperationsStub"))
+                .setType(STATIC_TYPES.get("GrpcOperationsStub"))
                 .build()));
     classMemberVarExprs.put(
         CALLABLE_FACTORY_MEMBER_NAME,
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(CALLABLE_FACTORY_MEMBER_NAME)
-                .setType(staticTypes.get("GrpcStubCallableFactory"))
+                .setType(STATIC_TYPES.get("GrpcStubCallableFactory"))
                 .build()));
 
     List<Statement> classStatements =
@@ -196,7 +200,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     MethodInvocationExpr methodDescriptorMaker =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
-            .setStaticReferenceType(staticTypes.get("MethodDescriptor"))
+            .setStaticReferenceType(STATIC_TYPES.get("MethodDescriptor"))
             .setGenerics(methodDescriptorVarExpr.variable().type().reference().generics())
             .build();
 
@@ -226,7 +230,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     Function<MethodInvocationExpr, MethodInvocationExpr> protoUtilsMarshallerFn =
         m ->
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(staticTypes.get("ProtoUtils"))
+                .setStaticReferenceType(STATIC_TYPES.get("ProtoUtils"))
                 .setMethodName("marshaller")
                 .setArguments(Arrays.asList(m))
                 .build();
@@ -374,7 +378,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(staticTypes.get("Generated"))
+            .setType(STATIC_TYPES.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
@@ -430,7 +434,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
 
-    TypeNode clientContextType = staticTypes.get("ClientContext");
+    TypeNode clientContextType = STATIC_TYPES.get("ClientContext");
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
@@ -439,7 +443,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("callableFactory")
-                .setType(staticTypes.get("GrpcStubCallableFactory"))
+                .setType(STATIC_TYPES.get("GrpcStubCallableFactory"))
                 .build());
 
     MethodInvocationExpr clientContextCreateMethodExpr =
@@ -492,7 +496,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
 
-    TypeNode clientContextType = staticTypes.get("ClientContext");
+    TypeNode clientContextType = STATIC_TYPES.get("ClientContext");
     VariableExpr clientContextVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("clientContext").setType(clientContextType).build());
@@ -501,7 +505,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("callableFactory")
-                .setType(staticTypes.get("GrpcStubCallableFactory"))
+                .setType(STATIC_TYPES.get("GrpcStubCallableFactory"))
                 .build());
 
     TypeNode thisClassType = types.get(getThisClassName(service.name()));
@@ -562,7 +566,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                 operationsStubClassVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(staticTypes.get("GrpcOperationsStub"))
+                    .setStaticReferenceType(STATIC_TYPES.get("GrpcOperationsStub"))
                     .setMethodName("create")
                     .setArguments(Arrays.asList(clientContextVarExpr, callableFactoryVarExpr))
                     .setReturnType(operationsStubClassVarExpr.type())
@@ -602,6 +606,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             .map(
                 m ->
                     createTransportSettingsInitExpr(
+                        m,
                         javaStyleMethodNameToTransportSettingsVarExprs.get(
                             JavaStyle.toLowerCamelCase(m.name())),
                         protoMethodNameToDescriptorVarExprs.get(m.name())))
@@ -644,7 +649,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                 backgroundResourcesVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
             .setValueExpr(
                 NewObjectExpr.builder()
-                    .setType(staticTypes.get("BackgroundResourceAggregation"))
+                    .setType(STATIC_TYPES.get("BackgroundResourceAggregation"))
                     .setArguments(Arrays.asList(getBackgroundResourcesMethodExpr))
                     .build())
             .build());
@@ -662,10 +667,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   }
 
   private static Expr createTransportSettingsInitExpr(
-      VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
+      Method method, VariableExpr transportSettingsVarExpr, VariableExpr methodDescriptorVarExpr) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(staticTypes.get("GrpcCallSettings"))
+            .setStaticReferenceType(STATIC_TYPES.get("GrpcCallSettings"))
             .setGenerics(transportSettingsVarExpr.type().reference().generics())
             .setMethodName("newBuilder")
             .build();
@@ -675,6 +680,16 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             .setMethodName("setMethodDescriptor")
             .setArguments(Arrays.asList(methodDescriptorVarExpr))
             .build();
+
+    if (method.hasHttpBindings()) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setParamsExtractor")
+              .setArguments(createRequestParamsExtractorAnonClass(method))
+              .build();
+    }
+
     callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(callSettingsBuilderExpr)
@@ -685,6 +700,111 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         .setVariableExpr(transportSettingsVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(callSettingsBuilderExpr)
         .build();
+  }
+
+  private static AnonymousClassExpr createRequestParamsExtractorAnonClass(Method method) {
+    Preconditions.checkState(
+        method.hasHttpBindings(), String.format("Method %s has no HTTP binding", method.name()));
+
+    TypeNode paramsVarType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ImmutableMap.Builder.class)
+                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
+                .build());
+    VariableExpr paramsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("params").setType(paramsVarType).build());
+    VariableExpr reqeustVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+
+    Expr paramsAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(paramsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setMethodName("builder")
+                    .setReturnType(paramsVarType)
+                    .build())
+            .build();
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(paramsAssignExpr);
+
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+
+    for (String httpBindingFieldName : method.httpBindings()) {
+      // Handle foo.bar cases by descending into the subfields.
+      MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
+          MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
+      String[] descendantFields = httpBindingFieldName.split("\\.");
+      for (int i = 0; i < descendantFields.length; i++) {
+        String currFieldName = descendantFields[i];
+        String bindingFieldMethodName =
+            String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+        requestFieldGetterExprBuilder =
+            requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
+        if (i < descendantFields.length - 1) {
+          requestFieldGetterExprBuilder =
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(requestFieldGetterExprBuilder.build());
+        }
+      }
+
+      MethodInvocationExpr requestBuilderExpr = requestFieldGetterExprBuilder.build();
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestBuilderExpr)
+              .build();
+
+      Expr paramsPutExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(paramsVarExpr)
+              .setMethodName("put")
+              .setArguments(
+                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldName)),
+                  valueOfExpr)
+              .build();
+      bodyExprs.add(paramsPutExpr);
+    }
+
+    TypeNode returnType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(Map.class)
+                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
+                .build());
+    Expr returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(paramsVarExpr)
+            .setMethodName("build")
+            .setReturnType(returnType)
+            .build();
+
+    MethodDefinition extractMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setReturnType(returnType)
+            .setName("extract")
+            .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setBody(
+                bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+            .setReturnExpr(returnExpr)
+            .build();
+
+    TypeNode anonClassType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(RequestParamsExtractor.class)
+                .setGenerics(method.inputType().reference())
+                .build());
+    return AnonymousClassExpr.builder().setType(anonClassType).setMethods(extractMethod).build();
   }
 
   private static Expr createCallableInitExpr(
@@ -845,7 +965,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             VariableExpr.withVariable(
                 Variable.builder().setName("duration").setType(TypeNode.LONG).build()),
             VariableExpr.withVariable(
-                Variable.builder().setName("unit").setType(staticTypes.get("TimeUnit")).build()));
+                Variable.builder().setName("unit").setType(STATIC_TYPES.get("TimeUnit")).build()));
     javaMethods.add(
         methodMakerStarterFn
             .apply("awaitTermination")
@@ -854,7 +974,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                 awaitTerminationArgs.stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
-            .setThrowsExceptions(Arrays.asList(staticTypes.get("InterruptedException")))
+            .setThrowsExceptions(Arrays.asList(STATIC_TYPES.get("InterruptedException")))
             .setReturnExpr(
                 MethodInvocationExpr.builder()
                     .setExprReferenceExpr(backgroundResourcesVarExpr)
@@ -881,12 +1001,14 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             GrpcCallSettings.class,
             GrpcOperationsStub.class,
             GrpcStubCallableFactory.class,
+            ImmutableMap.class,
             InterruptedException.class,
             IOException.class,
             MethodDescriptor.class,
             Operation.class,
             OperationCallable.class,
             ProtoUtils.class,
+            RequestParamsExtractor.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
             UnaryCallable.class);
@@ -934,16 +1056,16 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   }
 
   private static TypeNode getCallableType(Method protoMethod) {
-    TypeNode callableType = staticTypes.get("UnaryCallable");
+    TypeNode callableType = STATIC_TYPES.get("UnaryCallable");
     switch (protoMethod.stream()) {
       case CLIENT:
-        callableType = staticTypes.get("ClientStreamingCallable");
+        callableType = STATIC_TYPES.get("ClientStreamingCallable");
         break;
       case SERVER:
-        callableType = staticTypes.get("ServerStreamingCallable");
+        callableType = STATIC_TYPES.get("ServerStreamingCallable");
         break;
       case BIDI:
-        callableType = staticTypes.get("BidiStreamingCallable");
+        callableType = STATIC_TYPES.get("BidiStreamingCallable");
         break;
       case NONE:
         // Fall through
