@@ -27,28 +27,22 @@ import com.google.api.generator.test.framework.Utils;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.TestingOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Before;
 import org.junit.Test;
 
 public class GrpcServiceStubClassComposerTest {
-  private ServiceDescriptor echoService;
-  private FileDescriptor echoFileDescriptor;
-
-  @Before
-  public void setUp() {
-    echoFileDescriptor = EchoOuterClass.getDescriptor();
-    echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
-  }
-
   @Test
-  public void generateServiceClasses() {
+  public void generateGrpcServiceStubClass_simple() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
+    assertEquals(echoService.getName(), "Echo");
+
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -62,6 +56,30 @@ public class GrpcServiceStubClassComposerTest {
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcEchoStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateGrpcServiceStubClass_httpBindings() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+    Service testingProtoService = services.get(0);
+    GapicClass clazz =
+        GrpcServiceStubClassComposer.instance().generate(testingProtoService, messageTypes);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "GrpcTestingStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "GrpcTestingStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
