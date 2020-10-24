@@ -76,7 +76,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest() {
+  public void echoTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -112,7 +112,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest2() {
+  public void echoTest2() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -148,7 +148,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest3() {
+  public void echoTest3() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -184,7 +184,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest4() {
+  public void echoTest4() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -220,7 +220,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest5() {
+  public void echoTest5() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -256,7 +256,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest6() {
+  public void echoTest6() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -292,7 +292,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest7() {
+  public void echoTest7() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -331,7 +331,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void expandTest() {
+  public void expandTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -371,7 +371,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void collectTest() {
+  public void collectTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -426,7 +426,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void chatTest() {
+  public void chatTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -481,7 +481,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void chatAgainTest() {
+  public void chatAgainTest() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -536,7 +536,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void pagedExpandTest() {
+  public void pagedExpandTest() throws Exception {
     EchoResponse responsesElement = EchoResponse.newBuilder().build();
     PagedExpandResponse expectedResponse =
         PagedExpandResponse.newBuilder()
@@ -592,7 +592,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void waitTest() {
+  public void waitTest() throws Exception {
     WaitResponse expectedResponse =
         WaitResponse.newBuilder().setContent("content951530617").build();
     Operation resultOperation =
@@ -636,7 +636,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void waitTest2() {
+  public void waitTest2() throws Exception {
     WaitResponse expectedResponse =
         WaitResponse.newBuilder().setContent("content951530617").build();
     Operation resultOperation =
@@ -680,7 +680,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void blockTest() {
+  public void blockTest() throws Exception {
     BlockResponse expectedResponse =
         BlockResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
