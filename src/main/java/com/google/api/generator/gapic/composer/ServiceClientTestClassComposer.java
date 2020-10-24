@@ -103,11 +103,11 @@ public class ServiceClientTestClassComposer {
   private static final String GRPC_TESTING_PACKAGE = "com.google.api.gax.grpc.testing";
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_VAR_NAME_PATTERN = "mock%s";
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String STUB_SETTINGS_PATTERN = "%sSettings";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
@@ -424,18 +424,18 @@ public class ServiceClientTestClassComposer {
         javaMethods.add(
             createRpcTestMethod(
                 method,
+                service,
                 Collections.emptyList(),
                 0,
-                service.name(),
                 classMemberVarExprs,
                 resourceNames,
                 messageTypes));
         javaMethods.add(
             createRpcExceptionTestMethod(
                 method,
+                service,
                 Collections.emptyList(),
                 0,
-                service.name(),
                 classMemberVarExprs,
                 resourceNames,
                 messageTypes));
@@ -444,18 +444,18 @@ public class ServiceClientTestClassComposer {
           javaMethods.add(
               createRpcTestMethod(
                   method,
+                  service,
                   method.methodSignatures().get(i),
                   i,
-                  service.name(),
                   classMemberVarExprs,
                   resourceNames,
                   messageTypes));
           javaMethods.add(
               createRpcExceptionTestMethod(
                   method,
+                  service,
                   method.methodSignatures().get(i),
                   i,
-                  service.name(),
                   classMemberVarExprs,
                   resourceNames,
                   messageTypes));
@@ -467,12 +467,14 @@ public class ServiceClientTestClassComposer {
 
   private static MethodDefinition createRpcTestMethod(
       Method method,
+      Service service,
       List<MethodArgument> methodSignature,
       int variantIndex,
-      String serviceName,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    String serviceName = service.name();
+
     if (!method.stream().equals(Method.Stream.NONE)) {
       return createStreamingRpcTestMethod(
           method, serviceName, classMemberVarExprs, resourceNames, messageTypes);
@@ -514,9 +516,17 @@ public class ServiceClientTestClassComposer {
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Preconditions.checkNotNull(
+          firstRepeatedField,
+          String.format(
+              "Expected paged RPC %s to have a repeated field in the response %s but found none",
+              method.name(), methodOutputMessage.name()));
+
       expectedResponseValExpr =
           DefaultValueComposer.createSimplePagedResponse(
-              method.outputType(), responsesElementVarExpr);
+              method.outputType(), firstRepeatedField.name(), responsesElementVarExpr);
     } else {
       if (messageTypes.containsKey(methodOutputType.reference().name())) {
         expectedResponseValExpr =
@@ -619,7 +629,8 @@ public class ServiceClientTestClassComposer {
     VariableExpr actualResponseVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(methodOutputType)
+                .setType(
+                    method.isPaged() ? getPagedResponseType(service, method) : methodOutputType)
                 .setName(method.isPaged() ? "pagedListResponse" : "actualResponse")
                 .build());
     Expr rpcJavaMethodInvocationExpr =
@@ -699,12 +710,21 @@ public class ServiceClientTestClassComposer {
               .build());
 
       // Assert the responses are equivalent.
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Preconditions.checkNotNull(
+          firstRepeatedField,
+          String.format(
+              "Expected paged RPC %s to have a repeated field in the response %s but found none",
+              method.name(), methodOutputMessage.name()));
+
       Expr zeroExpr =
           ValueExpr.withValue(PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build());
       Expr expectedPagedResponseExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(expectedResponseVarExpr)
-              .setMethodName("getResponsesList")
+              .setMethodName(
+                  String.format("get%sList", JavaStyle.toUpperCamelCase(firstRepeatedField.name())))
               .build();
       expectedPagedResponseExpr =
           MethodInvocationExpr.builder()
@@ -1160,12 +1180,14 @@ public class ServiceClientTestClassComposer {
 
   private static MethodDefinition createRpcExceptionTestMethod(
       Method method,
+      Service service,
       List<MethodArgument> methodSignature,
       int variantIndex,
-      String serviceName,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
+    String serviceName = service.name();
+
     VariableExpr exceptionVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -1831,6 +1853,16 @@ public class ServiceClientTestClassComposer {
 
     return TypeNode.withReference(
         ConcreteReference.builder().setClazz(callableClazz).setGenerics(generics).build());
+  }
+
+  private static TypeNode getPagedResponseType(Service service, Method method) {
+    return TypeNode.withReference(
+        VaporReference.builder()
+            .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            .setPakkage(service.pakkage())
+            .setEnclosingClassName(getClientClassName(service.name()))
+            .setIsStaticImport(true)
+            .build());
   }
 
   private static String getCallableMethodName(Method protoMethod) {
