@@ -25,6 +25,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,10 +36,14 @@ import javax.annotation.Nullable;
 public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
+    Map<String, ResourceName> availableResourceNames = new HashMap<>();
+    for (ResourceName resourceName : context.helperResourceNames()) {
+      availableResourceNames.put(resourceName.resourceTypeString(), resourceName);
+    }
     for (Service service : context.services()) {
       clazzes.addAll(
           generateServiceClasses(
-              service, context.serviceConfig(), context.resourceNames(), context.messages()));
+              service, context.serviceConfig(), availableResourceNames, context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
