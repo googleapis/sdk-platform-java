@@ -93,4 +93,6 @@ public interface AstNodeVisitor {
   public void visit(MethodDefinition methodDefinition);
 
   public void visit(ClassDefinition classDefinition);
+
+  public void visit(PackageInfoDefinition packageInfoDefinition);
 }

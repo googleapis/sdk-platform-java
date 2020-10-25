@@ -44,6 +44,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
@@ -73,6 +74,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
+import javax.annotation.Generated;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -2242,6 +2244,39 @@ public class JavaWriterVisitorTest {
     assertEquals(writerVisitor.write(), "\n");
   }
 
+  @Test
+  public void writePackageInfoDefinition() {
+    PackageInfoDefinition packageInfo =
+        PackageInfoDefinition.builder()
+            .setPakkage("com.google.example.library.v1")
+            .setAnnotations(
+                AnnotationNode.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Generated.class))))
+            .setFileHeader(
+                CommentStatement.withComment(
+                    BlockComment.withComment("Lorum ipsum dolor sit amet")))
+            .setHeaderCommentStatements(
+                CommentStatement.withComment(
+                    JavaDocComment.withComment("Consecteteur adipisping elit")))
+            .build();
+
+    packageInfo.accept(writerVisitor);
+    assertEquals(
+        String.format(
+            createLines(9),
+            "/*\n",
+            " * Lorum ipsum dolor sit amet\n",
+            " */\n",
+            "\n",
+            "/** Consecteteur adipisping elit */\n",
+            "@Generated\n",
+            "package com.google.example.library.v1;\n",
+            "\n",
+            "import javax.annotation.Generated;\n"),
+        writerVisitor.write());
+  }
+
+  /** =============================== HELPERS =============================== */
   private static String createLines(int numLines) {
     return new String(new char[numLines]).replace("\0", "%s");
   }
