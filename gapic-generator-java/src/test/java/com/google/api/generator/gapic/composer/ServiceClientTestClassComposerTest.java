@@ -24,6 +24,10 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Utils;
+import com.google.logging.v2.LogEntryProto;
+import com.google.logging.v2.LoggingConfigProto;
+import com.google.logging.v2.LoggingMetricsProto;
+import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
@@ -31,6 +35,7 @@ import com.google.showcase.v1beta1.EchoOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -93,6 +98,48 @@ public class ServiceClientTestClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "SubscriberClientTest.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SubscriberClientTest.golden");
+    assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateClientTest_logging() {
+    FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
+    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
+
+    List<FileDescriptor> protoFiles =
+        Arrays.asList(
+            serviceFileDescriptor,
+            LogEntryProto.getDescriptor(),
+            LoggingConfigProto.getDescriptor(),
+            LoggingMetricsProto.getDescriptor());
+
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Map<String, Message> messageTypes = new HashMap<>();
+    for (FileDescriptor fileDescriptor : protoFiles) {
+      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
+      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
+    }
+
+    // Additional resource names.
+    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
+    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
+
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+
+    Service loggingService = services.get(0);
+    GapicClass clazz =
+        ServiceClientTestClassComposer.instance()
+            .generate(loggingService, resourceNames, messageTypes);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "LoggingClientTest.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "LoggingClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
