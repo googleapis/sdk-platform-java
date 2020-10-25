@@ -15,8 +15,10 @@
 package com.google.api.generator.gapic.protowriter;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
@@ -31,7 +33,8 @@ public class Writer {
     }
   }
 
-  public static CodeGeneratorResponse writeCode(List<GapicClass> clazzes, String outputFilePath) {
+  public static CodeGeneratorResponse writeCode(
+      List<GapicClass> clazzes, GapicPackageInfo gapicPackageInfo, String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos = null;
@@ -60,6 +63,21 @@ public class Writer {
                 "Could not write code for class %s.%s: %s",
                 clazz.packageString(), clazz.classIdentifier().name(), e.getMessage()));
       }
+    }
+
+    // Write the package info.
+    PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
+    packageInfo.accept(codeWriter);
+    String code = codeWriter.write();
+    codeWriter.clear();
+
+    String path = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
+    JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", path));
+    try {
+      jos.putNextEntry(jarEntry);
+      jos.write(code.getBytes());
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write code for package-info.java");
     }
 
     try {

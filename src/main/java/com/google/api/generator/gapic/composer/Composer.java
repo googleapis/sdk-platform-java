@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -47,6 +48,10 @@ public class Composer {
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
+  }
+
+  public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 
   public static List<GapicClass> generateServiceClasses(
@@ -130,5 +135,14 @@ public class Composer {
               return GapicClass.create(gapicClass.kind(), classWithHeader);
             })
         .collect(Collectors.toList());
+  }
+
+  private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
+    return GapicPackageInfo.with(
+        gapicPackageInfo
+            .packageInfo()
+            .toBuilder()
+            .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
+            .build());
   }
 }

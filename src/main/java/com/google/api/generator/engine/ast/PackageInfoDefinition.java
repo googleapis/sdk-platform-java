@@ -30,6 +30,8 @@ public abstract class PackageInfoDefinition implements AstNode {
 
   public abstract ImmutableList<AnnotationNode> annotations();
 
+  public abstract Builder toBuilder();
+
   @Override
   public void accept(AstNodeVisitor visitor) {
     visitor.visit(this);
