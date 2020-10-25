@@ -65,8 +65,8 @@ import java.util.stream.Collectors;
 public class Parser {
   private static final String COMMA = ",";
   private static final String COLON = ":";
-  private static final String DOT = ".";
   private static final String DEFAULT_PORT = "443";
+  private static final String DOT = ".";
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -88,6 +88,11 @@ public class Parser {
     Optional<GapicServiceConfig> serviceConfigOpt =
         ServiceConfigParser.parse(serviceConfigPath, batchingSettingsOpt);
 
+    Optional<String> serviceYamlConfigPathOpt =
+        PluginArgumentParser.parseServiceYamlConfigPath(request);
+    Optional<com.google.api.Service> serviceYamlProtoOpt =
+        ServiceYamlParser.parse(serviceYamlConfigPathOpt.get());
+
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
@@ -96,13 +101,15 @@ public class Parser {
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> services =
-        parseServices(request, messages, resourceNames, outputArgResourceNames);
+        parseServices(
+            request, messages, resourceNames, outputArgResourceNames, serviceYamlProtoOpt);
     return GapicContext.builder()
         .setServices(services)
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
+        .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
         .build();
   }
 
@@ -110,8 +117,10 @@ public class Parser {
       CodeGeneratorRequest request,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
-      Set<ResourceName> outputArgResourceNames) {
+      Set<ResourceName> outputArgResourceNames,
+      Optional<com.google.api.Service> serviceYamlProtoOpt) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+
     List<Service> services = new ArrayList<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
