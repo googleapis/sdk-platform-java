@@ -33,6 +33,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
+import com.google.protobuf.ByteString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,6 +46,8 @@ public class DefaultValueComposer {
   private static TypeNode OPERATION_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Operation.class));
   private static TypeNode ANY_TYPE = TypeNode.withReference(ConcreteReference.withClazz(Any.class));
+  private static TypeNode BYTESTRING_TYPE =
+      TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   static Expr createDefaultValue(
       MethodArgument methodArg, Map<String, ResourceName> resourceNames) {

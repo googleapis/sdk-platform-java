@@ -103,11 +103,11 @@ public class ServiceClientTestClassComposer {
   private static final String GRPC_TESTING_PACKAGE = "com.google.api.gax.grpc.testing";
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_VAR_NAME_PATTERN = "mock%s";
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String STUB_SETTINGS_PATTERN = "%sSettings";
-  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
 
   private static final ServiceClientTestClassComposer INSTANCE =
       new ServiceClientTestClassComposer();
