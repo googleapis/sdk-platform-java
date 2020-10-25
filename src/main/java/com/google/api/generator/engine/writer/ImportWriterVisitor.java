@@ -40,6 +40,7 @@ import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -56,12 +57,15 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ImportWriterVisitor implements AstNodeVisitor {
   private static final String NEWLINE = "\n";
@@ -71,14 +75,19 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   private final Set<String> imports = new TreeSet<>();
 
   private String currentPackage;
-  private String currentClassName;
+  @Nullable private String currentClassName;
 
   public void clear() {
     staticImports.clear();
     imports.clear();
   }
 
-  public void initialize(String currentPackage, String currentClassName) {
+  public void initialize(@Nonnull String currentPackage) {
+    this.currentPackage = currentPackage;
+    this.currentClassName = null;
+  }
+
+  public void initialize(@Nonnull String currentPackage, @Nonnull String currentClassName) {
     this.currentPackage = currentPackage;
     this.currentClassName = currentClassName;
   }
@@ -370,6 +379,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
   }
 
+  @Override
+  public void visit(PackageInfoDefinition packageInfoDefinition) {
+    annotations(packageInfoDefinition.annotations());
+  }
+
   /** =============================== PRIVATE HELPERS =============================== */
   private void annotations(List<AnnotationNode> annotations) {
     for (AnnotationNode annotation : annotations) {
@@ -407,7 +421,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
         continue;
       }
 
-      if (ref.isStaticImport() && ref.enclosingClassName().equals(currentClassName)) {
+      if (ref.isStaticImport()
+          && !Strings.isNullOrEmpty(currentClassName)
+          && ref.enclosingClassName().equals(currentClassName)) {
         continue;
       }
 
