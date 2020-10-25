@@ -20,6 +20,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -200,7 +201,41 @@ public class MethodSignatureParser {
       outputArgResourceNames.addAll(resourceNameArgs);
       typeToField.put(TypeNode.STRING, field);
       typeToField.putAll(
-          resourceNameArgs.stream().collect(Collectors.toMap(r -> r.type(), r -> field)));
+          resourceNameArgs.stream()
+              .collect(
+                  Collectors.toMap(
+                      r -> r.type(),
+                      r ->
+                          // Contruct a new field using the parent resource.
+                          field
+                              .toBuilder()
+                              .setResourceReference(
+                                  ResourceReference.withType(r.resourceTypeString()))
+                              .build())));
+      // Only resource name helpers should have more than one entry.
+      if (typeToField.size() > 1) {
+        typeToField.entrySet().stream()
+            .forEach(
+                e -> {
+                  // Skip string-only variants or ResourceName generics.
+                  if (e.getKey().equals(TypeNode.STRING)
+                      || e.getKey().reference().name().equals("ResourceName")) {
+                    return;
+                  }
+                  String resourceJavaTypeName = e.getKey().reference().name();
+                  String resourceTypeName = e.getValue().resourceReference().resourceTypeString();
+                  int indexOfSlash = resourceTypeName.indexOf("/");
+                  // We assume that the corresponding Java resource name helper type (i.e. the key)
+                  // ends in *Name. Check that it matches the expeced resource name type.
+                  Preconditions.checkState(
+                      resourceJavaTypeName
+                          .substring(0, resourceJavaTypeName.length() - 4)
+                          .equals(resourceTypeName.substring(indexOfSlash + 1)),
+                      String.format(
+                          "Resource Java type %s does not correspond to proto type %s",
+                          resourceJavaTypeName, resourceTypeName));
+                });
+      }
       return typeToField;
     }
 
