@@ -661,7 +661,7 @@ public class ResourceNameHelperClassComposer {
     }
 
     IfStatement.Builder ifStatementBuilder = IfStatement.builder();
-    String ofMethodNamePattern = "of%s";
+    String ofMethodNamePattern = "of%sName";
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
       MethodInvocationExpr conditionExpr =
@@ -688,7 +688,7 @@ public class ResourceNameHelperClassComposer {
       List<String> tokens = tokenHierarchies.get(i);
       MethodInvocationExpr ofMethodExpr =
           MethodInvocationExpr.builder()
-              .setMethodName(String.format(ofMethodNamePattern, getBuilderTypeName(tokens)))
+              .setMethodName(String.format(ofMethodNamePattern, concatToUpperCamelCaseName(tokens)))
               .setArguments(
                   tokens.stream()
                       .map(
