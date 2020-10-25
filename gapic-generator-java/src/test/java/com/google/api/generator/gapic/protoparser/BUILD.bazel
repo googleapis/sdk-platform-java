@@ -11,6 +11,7 @@ TESTS = [
     "ResourceNameParserTest",
     "ResourceReferenceParserTest",
     "ServiceConfigParserTest",
+    "ServiceYamlParserTest",
     "SourceCodeInfoParserTest",
 ]
 
@@ -26,6 +27,7 @@ filegroup(
         "//src/test/java/com/google/api/generator/gapic/testdata:basic_proto_descriptor",
         "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
+        "//src/test/java/com/google/api/generator/gapic/testdata:service_yaml_files",
     ],
     test_class = "com.google.api.generator.gapic.protoparser.{0}".format(test_name),
     deps = [
@@ -39,6 +41,7 @@ filegroup(
         "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
         "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
         "@com_google_api_api_common//jar",
+        "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_protobuf//:protobuf_java",
         "@com_google_protobuf//:protobuf_java_util",

@@ -27,9 +27,11 @@ public class PluginArgumentParser {
   // Synced to rules_java_gapic/java_gapic.bzl.
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
   @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
+  @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "gapic-service-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
   private static final String GAPIC_YAML_FILE_ENDING = "gapic.yaml";
+  private static final String SERVICE_YAML_FILE_ENDING = ".yaml";
 
   static Optional<String> parseJsonConfigPath(CodeGeneratorRequest request) {
     return parseJsonConfigPath(request.getParameter());
@@ -37,6 +39,10 @@ public class PluginArgumentParser {
 
   static Optional<String> parseGapicYamlConfigPath(CodeGeneratorRequest request) {
     return parseGapicYamlConfigPath(request.getParameter());
+  }
+
+  static Optional<String> parseServiceYamlConfigPath(CodeGeneratorRequest request) {
+    return parseServiceYamlConfigPath(request.getParameter());
   }
 
   /** Expects a comma-separated list of file paths. */
@@ -48,6 +54,11 @@ public class PluginArgumentParser {
   @VisibleForTesting
   static Optional<String> parseGapicYamlConfigPath(String pluginProtocArgument) {
     return parseArgument(pluginProtocArgument, KEY_GAPIC_CONFIG, GAPIC_YAML_FILE_ENDING);
+  }
+
+  @VisibleForTesting
+  static Optional<String> parseServiceYamlConfigPath(String pluginProtocArgument) {
+    return parseArgument(pluginProtocArgument, KEY_SERVICE_YAML_CONFIG, SERVICE_YAML_FILE_ENDING);
   }
 
   private static Optional<String> parseArgument(
@@ -62,7 +73,12 @@ public class PluginArgumentParser {
       }
       String keyVal = args[0];
       String valueVal = args[1];
-      if (keyVal.equals(key) && valueVal.endsWith(fileEnding)) {
+      boolean valueMeetsCriteria = keyVal.equals(key) && valueVal.endsWith(fileEnding);
+      if (fileEnding.equals(SERVICE_YAML_FILE_ENDING)) {
+        valueMeetsCriteria &= !valueVal.endsWith(GAPIC_YAML_FILE_ENDING);
+      }
+
+      if (valueMeetsCriteria) {
         return Optional.of(valueVal);
       }
     }
