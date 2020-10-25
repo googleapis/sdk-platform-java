@@ -126,10 +126,10 @@ public class DefaultValueComposer {
           PrimitiveValue.builder().setType(f.type()).setValue("true").build());
     }
 
-    if (f.type().equals(BYTESTRING_TYPE)) {
+    if (f.type().equals(TypeNode.BYTESTRING)) {
       return VariableExpr.builder()
-          .setStaticReferenceType(BYTESTRING_TYPE)
-          .setVariable(Variable.builder().setName("EMPTY").setType(BYTESTRING_TYPE).build())
+          .setStaticReferenceType(TypeNode.BYTESTRING)
+          .setVariable(Variable.builder().setName("EMPTY").setType(TypeNode.BYTESTRING).build())
           .build();
     }
 

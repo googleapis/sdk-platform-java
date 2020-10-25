@@ -343,7 +343,7 @@ public class LoggingServiceV2ClientTest {
 
   @Test
   public void listLogsTest() throws Exception {
-    String responsesElement = String.newBuilder().build();
+    String responsesElement = "responsesElement-318365110";
     ListLogsResponse expectedResponse =
         ListLogsResponse.newBuilder()
             .setNextPageToken("")
@@ -387,7 +387,7 @@ public class LoggingServiceV2ClientTest {
 
   @Test
   public void listLogsTest2() throws Exception {
-    String responsesElement = String.newBuilder().build();
+    String responsesElement = "responsesElement-318365110";
     ListLogsResponse expectedResponse =
         ListLogsResponse.newBuilder()
             .setNextPageToken("")
@@ -431,7 +431,7 @@ public class LoggingServiceV2ClientTest {
 
   @Test
   public void listLogsTest3() throws Exception {
-    String responsesElement = String.newBuilder().build();
+    String responsesElement = "responsesElement-318365110";
     ListLogsResponse expectedResponse =
         ListLogsResponse.newBuilder()
             .setNextPageToken("")
@@ -475,7 +475,7 @@ public class LoggingServiceV2ClientTest {
 
   @Test
   public void listLogsTest4() throws Exception {
-    String responsesElement = String.newBuilder().build();
+    String responsesElement = "responsesElement-318365110";
     ListLogsResponse expectedResponse =
         ListLogsResponse.newBuilder()
             .setNextPageToken("")
@@ -519,7 +519,7 @@ public class LoggingServiceV2ClientTest {
 
   @Test
   public void listLogsTest5() throws Exception {
-    String responsesElement = String.newBuilder().build();
+    String responsesElement = "responsesElement-318365110";
     ListLogsResponse expectedResponse =
         ListLogsResponse.newBuilder()
             .setNextPageToken("")
