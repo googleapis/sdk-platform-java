@@ -6,6 +6,7 @@ load(
 load(
     "//:rules_bazel/java/integration_test.bzl",
     "integration_test",
+    "golden_update",
 )
 
 package(default_visibility = ["//visibility:public"])
@@ -24,6 +25,12 @@ integration_test(
     name = "asset",
     target = ":asset_java_gapic",
     data = ["//test/integration/goldens/asset:goldens_files"],
+)
+
+golden_update(
+    name = "redis_update",
+    target = ":redis_java_gapic",
+    data = ["//test/integration/goldens/redis:goldens_files"],
 )
 
 ####################################################
