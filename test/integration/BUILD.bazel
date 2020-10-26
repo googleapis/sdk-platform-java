@@ -3,13 +3,28 @@ load(
     "proto_library_with_info",
     java_gapic_library = "java_gapic_library2",
 )
-
 load(
     "//:rules_bazel/java/integration_test.bzl",
     "integration_test",
 )
 
 package(default_visibility = ["//visibility:public"])
+
+####################################################
+# Integration Test Rules
+####################################################
+
+integration_test(
+    name = "redis",
+    data = ["//test/integration/goldens/redis:goldens_files"],
+    target = ":redis_java_gapic",
+)
+
+integration_test(
+    name = "asset",
+    target = ":asset_java_gapic",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+)
 
 ####################################################
 # API Library Rules
@@ -21,6 +36,7 @@ java_gapic_library(
     srcs = ["@com_google_googleapis//google/cloud/asset/v1:asset_proto_with_info"],
     grpc_service_config = "@com_google_googleapis//google/cloud/asset/v1:cloudasset_grpc_service_config.json",
     package = "google.cloud.asset.v1",
+    service_yaml = "@com_google_googleapis//google/cloud/asset/v1:cloudasset_v1.yaml",
     test_deps = [
         "@com_google_googleapis//google/cloud/asset/v1:asset_java_grpc",
         "@com_google_googleapis//google/iam/v1:iam_java_grpc",
@@ -48,6 +64,7 @@ java_gapic_library(
     srcs = ["redis_proto_with_info"],
     grpc_service_config = "@com_google_googleapis//google/cloud/redis/v1:redis_grpc_service_config.json",
     package = "google.cloud.redis.v1",
+    service_yaml = "@com_google_googleapis//google/cloud/redis/v1:redis_v1.yaml",
     test_deps = [
         "@com_google_googleapis//google/cloud/redis/v1:redis_java_grpc",
     ],
@@ -56,15 +73,17 @@ java_gapic_library(
     ],
 )
 
-integration_test(
-    name = "redis",
-    target = ":redis_java_gapic",
-    data = ["//test/integration/goldens/redis:goldens_files"],
+java_gapic_library(
+    name = "logging_java_gapic",
+    srcs = ["@com_google_googleapis//google/logging/v2:logging_proto_with_info"],
+    grpc_service_config = "@com_google_googleapis//google/logging/v2:logging_grpc_service_config.json",
+    package = "google.logging.v2",
+    service_yaml = "@com_google_googleapis//google/logging/v2:logging.yaml",
+    test_deps = [
+        "@com_google_googleapis//google/logging/v2:logging_java_grpc",
+    ],
+    deps = [
+        "@com_google_googleapis//google/api:api_java_proto",
+        "@com_google_googleapis//google/logging/v2:logging_java_proto",
+    ],
 )
-
-integration_test(
-    name = "asset",
-    target = ":asset_java_gapic",
-    data = ["//test/integration/goldens/asset:goldens_files"],
-)
-

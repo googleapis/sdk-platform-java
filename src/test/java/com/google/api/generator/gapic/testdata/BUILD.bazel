@@ -13,6 +13,11 @@ filegroup(
     srcs = glob(["*_gapic.yaml"]),
 )
 
+filegroup(
+    name = "service_yaml_files",
+    srcs = ["logging.yaml"],
+)
+
 genrule(
     name = "basic_proto_descriptor",
     srcs = [

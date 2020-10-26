@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.protobuf.ByteString;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -63,6 +64,9 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   public static final TypeNode LONG_OBJECT = withReference(ConcreteReference.withClazz(Long.class));
   public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
+
+  public static final TypeNode BYTESTRING =
+      TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
@@ -184,6 +188,10 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
 
   public boolean isPrimitiveType() {
     return isPrimitiveType(typeKind());
+  }
+
+  public boolean isProtoPrimitiveType() {
+    return isPrimitiveType() || this.equals(TypeNode.STRING) || this.equals(TypeNode.BYTESTRING);
   }
 
   public boolean isSupertypeOrEquals(TypeNode other) {
