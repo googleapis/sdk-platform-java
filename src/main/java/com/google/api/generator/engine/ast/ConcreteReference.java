@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
@@ -210,7 +211,11 @@ public abstract class ConcreteReference implements Reference {
 
     public abstract Builder setWildcardUpperBound(Reference reference);
 
-    public abstract Builder setGenerics(List<Reference> clazzes);
+    public Builder setGenerics(Reference... references) {
+      return setGenerics(Arrays.asList(references));
+    }
+
+    public abstract Builder setGenerics(List<Reference> references);
 
     public abstract Builder setIsStaticImport(boolean isStaticImport);
 

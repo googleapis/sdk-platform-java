@@ -525,7 +525,8 @@ public class ResourceNameHelperClassComposer {
               .setReturnType(returnType)
               .setName(
                   String.format(
-                      methodNameFormat, i == 0 ? "" : getBuilderTypeName(tokenHierarchies, i)))
+                      methodNameFormat,
+                      i == 0 ? "" : concatToUpperCamelCaseName(tokenHierarchies.get(i)) + "Name"))
               .setArguments(methodArgs)
               .setReturnExpr(returnExpr)
               .build());
@@ -537,7 +538,10 @@ public class ResourceNameHelperClassComposer {
                 .setIsStatic(true)
                 .setAnnotations(annotations)
                 .setReturnType(returnType)
-                .setName(String.format(methodNameFormat, getBuilderTypeName(tokens)))
+                .setName(
+                    String.format(
+                        methodNameFormat,
+                        concatToUpperCamelCaseName(tokenHierarchies.get(i)) + "Name"))
                 .setArguments(methodArgs)
                 .setReturnExpr(returnExpr)
                 .build());
@@ -657,7 +661,7 @@ public class ResourceNameHelperClassComposer {
     }
 
     IfStatement.Builder ifStatementBuilder = IfStatement.builder();
-    String ofMethodNamePattern = "of%s";
+    String ofMethodNamePattern = "of%sName";
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       VariableExpr templateVarExpr = templateFinalVarExprs.get(i);
       MethodInvocationExpr conditionExpr =
@@ -684,7 +688,7 @@ public class ResourceNameHelperClassComposer {
       List<String> tokens = tokenHierarchies.get(i);
       MethodInvocationExpr ofMethodExpr =
           MethodInvocationExpr.builder()
-              .setMethodName(String.format(ofMethodNamePattern, getBuilderTypeName(tokens)))
+              .setMethodName(String.format(ofMethodNamePattern, concatToUpperCamelCaseName(tokens)))
               .setArguments(
                   tokens.stream()
                       .map(

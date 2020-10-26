@@ -17,6 +17,7 @@ package com.google.api.generator.gapic;
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
@@ -27,8 +28,9 @@ public class Generator {
   public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);
+    GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
     String outputFilename = "temp-codegen.srcjar";
-    CodeGeneratorResponse response = Writer.writeCode(clazzes, outputFilename);
+    CodeGeneratorResponse response = Writer.writeCode(clazzes, packageInfo, outputFilename);
     return response;
   }
 }
