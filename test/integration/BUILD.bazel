@@ -27,6 +27,12 @@ integration_test(
     data = ["//test/integration/goldens/asset:goldens_files"],
 )
 
+golden_update(
+    name = "redis_update",
+    target = ":redis_java_gapic",
+    data = ["//test/integration/goldens/redis:goldens_files"],
+)
+
 ####################################################
 # API Library Rules
 ####################################################
