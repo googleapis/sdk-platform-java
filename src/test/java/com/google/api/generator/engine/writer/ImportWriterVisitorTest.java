@@ -19,12 +19,15 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.ArithmeticOperationExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AstNode;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
@@ -32,11 +35,13 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.InstanceofExpr;
+import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.NullObjectValue;
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -64,6 +69,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.LongStream;
+import javax.annotation.Generated;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1029,6 +1035,27 @@ public class ImportWriterVisitorTest {
     assertThat(writerVisitor.write()).isEmpty();
   }
 
+  @Test
+  public void writePackageInfoDefinitionImports() {
+    PackageInfoDefinition packageInfo =
+        PackageInfoDefinition.builder()
+            .setPakkage("com.google.example.library.v1")
+            .setAnnotations(
+                AnnotationNode.withType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Generated.class))))
+            .setFileHeader(
+                CommentStatement.withComment(
+                    BlockComment.withComment("Lorum ipsum dolor sit amet")))
+            .setHeaderCommentStatements(
+                CommentStatement.withComment(
+                    JavaDocComment.withComment("Consecteteur adipisping elit")))
+            .build();
+
+    packageInfo.accept(writerVisitor);
+    assertEquals(writerVisitor.write(), "import javax.annotation.Generated;\n\n");
+  }
+
+  /** =============================== HELPERS =============================== */
   private static TypeNode createType(Class clazz) {
     return TypeNode.withReference(ConcreteReference.withClazz(clazz));
   }

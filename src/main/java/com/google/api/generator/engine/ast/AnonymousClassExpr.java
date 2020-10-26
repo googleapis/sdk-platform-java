@@ -17,6 +17,7 @@ package com.google.api.generator.engine.ast;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +45,10 @@ public abstract class AnonymousClassExpr implements Expr {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setType(TypeNode type);
+
+    public Builder setMethods(MethodDefinition... methods) {
+      return setMethods(Arrays.asList(methods));
+    }
 
     public abstract Builder setMethods(List<MethodDefinition> methods);
 

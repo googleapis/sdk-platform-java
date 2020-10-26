@@ -38,6 +38,13 @@ public abstract class GapicContext {
   @Nullable
   public abstract GapicServiceConfig serviceConfig();
 
+  @Nullable
+  public abstract com.google.api.Service serviceYamlProto();
+
+  public boolean hasServiceYamlProto() {
+    return serviceYamlProto() != null;
+  }
+
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder();
   }
@@ -53,6 +60,8 @@ public abstract class GapicContext {
     public abstract Builder setHelperResourceNames(Set<ResourceName> helperResourceNames);
 
     public abstract Builder setServiceConfig(GapicServiceConfig serviceConfig);
+
+    public abstract Builder setServiceYamlProto(com.google.api.Service serviceYamlProto);
 
     public abstract GapicContext build();
   }
