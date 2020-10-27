@@ -367,10 +367,16 @@ public class Parser {
     Message responseMessage = messageTypes.get(responseTypeName);
     Message metadataMessage = messageTypes.get(metadataTypeName);
     Preconditions.checkNotNull(
-        responseMessage, String.format("LRO response message %s not found", responseTypeName));
+        responseMessage,
+        String.format(
+            "LRO response message %s not found on method %s",
+            responseTypeName, methodDescriptor.getName()));
     // TODO(miraleung): Check that the packages are equal if those strings are not empty.
     Preconditions.checkNotNull(
-        metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
+        metadataMessage,
+        String.format(
+            "LRO metadata message %s not found in method %s",
+            metadataTypeName, methodDescriptor.getName()));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }
