@@ -35,6 +35,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -88,7 +89,8 @@ public class ResourceNameHelperClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     ResourceName foobarResname = resourceNames.get("showcase.googleapis.com/Foobar");
     assertThat(outputResourceNames).contains(foobarResname);
@@ -114,7 +116,11 @@ public class ResourceNameHelperClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
     assertThat(outputResourceNames).contains(sessionResname);
