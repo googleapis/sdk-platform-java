@@ -74,7 +74,11 @@ public class BatchingDescriptorComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String filename = "pubsub_gapic.yaml";
     Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
@@ -132,7 +136,11 @@ public class BatchingDescriptorComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
