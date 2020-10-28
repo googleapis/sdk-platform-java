@@ -19,6 +19,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +42,11 @@ public abstract class Message {
   @Nullable
   public abstract ResourceName resource();
 
+  // The nested types in left-to-right order, if any.
+  // Example: com.google.Foo.Bar.Car.ThisType will have the outer types listed in the order
+  // [Foo, Bar, Car].
+  public abstract ImmutableList<String> outerNestedTypes();
+
   public abstract Builder toBuilder();
 
   public boolean hasResource() {
@@ -60,7 +66,7 @@ public abstract class Message {
   }
 
   public static Builder builder() {
-    return new AutoValue_Message.Builder();
+    return new AutoValue_Message.Builder().setOuterNestedTypes(Collections.emptyList());
   }
 
   @AutoValue.Builder
@@ -72,6 +78,8 @@ public abstract class Message {
     public abstract Builder setType(TypeNode type);
 
     public abstract Builder setResource(ResourceName resource);
+
+    public abstract Builder setOuterNestedTypes(List<String> outerNestedTypes);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 

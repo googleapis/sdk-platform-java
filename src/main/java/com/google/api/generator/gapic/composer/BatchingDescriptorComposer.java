@@ -153,7 +153,7 @@ public class BatchingDescriptorComposer {
     TypeNode builderType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setEnclosingClassName(method.inputType().reference().name())
+                .setEnclosingClassNames(method.inputType().reference().name())
                 .setName("Builder")
                 .setPakkage(method.inputType().reference().pakkage())
                 .build());

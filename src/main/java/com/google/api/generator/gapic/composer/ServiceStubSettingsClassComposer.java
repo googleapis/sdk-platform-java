@@ -133,6 +133,7 @@ public class ServiceStubSettingsClassComposer {
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
 
+  private static final String DOT = ".";
   private static final String LEFT_BRACE = "{";
   private static final String RIGHT_BRACE = "}";
   private static final String SLASH = "/";
@@ -1369,7 +1370,7 @@ public class ServiceStubSettingsClassComposer {
         t ->
             TypeNode.withReference(
                 VaporReference.builder()
-                    .setName(t.reference().enclosingClassName())
+                    .setName(String.join(DOT, t.reference().enclosingClassNames()))
                     .setPakkage(t.reference().pakkage())
                     .build());
     List<Statement> ctorBodyStatements = new ArrayList<>();
@@ -1845,7 +1846,7 @@ public class ServiceStubSettingsClassComposer {
             VaporReference.builder()
                 .setName(NESTED_BUILDER_CLASS_NAME)
                 .setPakkage(pakkage)
-                .setEnclosingClassName(thisClassName)
+                .setEnclosingClassNames(thisClassName)
                 .setIsStaticImport(true)
                 .build()));
 
@@ -1874,7 +1875,7 @@ public class ServiceStubSettingsClassComposer {
                             VaporReference.builder()
                                 .setName(getPagedResponseTypeName(m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(String.format("%sClient", service.name()))
+                                .setEnclosingClassNames(String.format("%sClient", service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
 

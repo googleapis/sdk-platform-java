@@ -1049,7 +1049,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(String.format("%sClient", service.name()))
+                                .setEnclosingClassNames(String.format("%sClient", service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;

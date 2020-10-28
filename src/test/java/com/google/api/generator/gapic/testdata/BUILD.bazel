@@ -60,6 +60,7 @@ proto_library(
     srcs = [
         "bad_message_resname_def.proto",
         "locker.proto",
+        "nested_message.proto",
     ],
     deps = [
         "@com_google_googleapis//google/api:annotations_proto",
