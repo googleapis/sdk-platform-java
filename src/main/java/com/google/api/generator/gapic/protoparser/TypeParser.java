@@ -28,6 +28,7 @@ import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor.JavaType;
 import com.google.protobuf.Descriptors.FileDescriptor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -115,16 +116,21 @@ public class TypeParser {
   @VisibleForTesting
   static Reference parseMessageReference(@Nonnull Descriptor messageDescriptor) {
     // TODO(miraleung): Handle deeper levels of nesting.
-    String pakkage = getPackage(messageDescriptor.getFile());
-    VaporReference.Builder messageReferenceBuilder =
-        VaporReference.builder().setName(messageDescriptor.getName()).setPakkage(pakkage);
-
-    boolean isNestedType = messageDescriptor.getContainingType() != null;
-    if (isNestedType) {
-      String enclosingClassName = messageDescriptor.getContainingType().getName();
-      messageReferenceBuilder.setEnclosingClassName(enclosingClassName);
+    List<String> outerNestedTypeNames = new ArrayList<>();
+    Descriptor containingType = messageDescriptor.getContainingType();
+    while (containingType != null) {
+      // Outermost type in the nested type hierarchy lies at index 0.
+      outerNestedTypeNames.add(0, containingType.getName());
+      containingType = containingType.getContainingType();
     }
-    Reference messageReference = messageReferenceBuilder.build();
+
+    String pakkage = getPackage(messageDescriptor.getFile());
+    Reference messageReference =
+        VaporReference.builder()
+            .setName(messageDescriptor.getName())
+            .setPakkage(pakkage)
+            .setEnclosingClassNames(outerNestedTypeNames)
+            .build();
     String protoPackage = messageDescriptor.getFile().getPackage();
     Preconditions.checkState(
         messageReference
@@ -142,17 +148,22 @@ public class TypeParser {
   static Reference parseEnumReference(@Nonnull EnumDescriptor enumDescriptor) {
     // This is similar to parseMessageReference, but we make it a separate method because
     // EnumDescriptor and Descriptor are sibling types.
+    List<String> outerNestedTypeNames = new ArrayList<>();
+    Descriptor containingType = enumDescriptor.getContainingType();
+    while (containingType != null) {
+      // Outermost type in the nested type hierarchy lies at index 0.
+      outerNestedTypeNames.add(0, containingType.getName());
+      containingType = containingType.getContainingType();
+    }
+
     // TODO(miraleung): Handle deeper levels of nesting.
     String pakkage = getPackage(enumDescriptor.getFile());
-    VaporReference.Builder enumReferenceBuilder =
-        VaporReference.builder().setName(enumDescriptor.getName()).setPakkage(pakkage);
-
-    boolean isNestedType = enumDescriptor.getContainingType() != null;
-    if (isNestedType) {
-      String enclosingClassName = enumDescriptor.getContainingType().getName();
-      enumReferenceBuilder.setEnclosingClassName(enclosingClassName);
-    }
-    Reference enumReference = enumReferenceBuilder.build();
+    Reference enumReference =
+        VaporReference.builder()
+            .setName(enumDescriptor.getName())
+            .setPakkage(pakkage)
+            .setEnclosingClassNames(outerNestedTypeNames)
+            .build();
     String protoPackage = enumDescriptor.getFile().getPackage();
     Preconditions.checkState(
         enumReference

@@ -30,7 +30,7 @@ public interface Reference {
   boolean useFullName();
 
   @Nullable
-  String enclosingClassName();
+  ImmutableList<String> enclosingClassNames();
 
   @Nullable
   Reference wildcardUpperBound();
