@@ -89,11 +89,18 @@ public abstract class ConcreteReference implements Reference {
   public abstract boolean useFullName();
 
   @Override
-  public String enclosingClassName() {
+  public ImmutableList<String> enclosingClassNames() {
     if (!hasEnclosingClass()) {
-      return null;
+      return ImmutableList.of();
     }
-    return clazz().getEnclosingClass().getSimpleName();
+    // The innermost type will be the last element in the list.
+    ImmutableList.Builder<String> listBuilder = new ImmutableList.Builder<>();
+    Class currentClz = clazz();
+    while (currentClz.getEnclosingClass() != null) {
+      listBuilder.add(currentClz.getEnclosingClass().getSimpleName());
+      currentClz = currentClz.getEnclosingClass();
+    }
+    return listBuilder.build();
   }
 
   @Override

@@ -1575,7 +1575,7 @@ public class ResourceNameHelperClassComposer {
             VaporReference.builder()
                 .setName("Builder")
                 .setPakkage(resourceName.pakkage())
-                .setEnclosingClassName(thisClassName)
+                .setEnclosingClassNames(thisClassName)
                 .setIsStaticImport(true)
                 .build()));
 
@@ -1591,7 +1591,7 @@ public class ResourceNameHelperClassComposer {
                               VaporReference.builder()
                                   .setName(s)
                                   .setPakkage(resourceName.pakkage())
-                                  .setEnclosingClassName(thisClassName)
+                                  .setEnclosingClassNames(thisClassName)
                                   .setIsStaticImport(true)
                                   .build()))));
     }
