@@ -18,7 +18,6 @@ import com.google.api.ClientProto;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -241,9 +240,7 @@ public class Parser {
     messages.put(
         messageName,
         Message.builder()
-            .setType(
-                TypeNode.withReference(
-                    VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
+            .setType(TypeParser.parseType(messageDescriptor))
             .setName(messageName)
             .setFields(parseFields(messageDescriptor))
             .setOuterNestedTypes(outerNestedTypes)
