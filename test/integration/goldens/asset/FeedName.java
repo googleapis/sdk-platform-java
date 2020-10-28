@@ -113,17 +113,17 @@ public class FeedName implements ResourceName {
   }
 
   @BetaApi("The static create methods are not stable yet and may be changed in the future.")
-  public static FeedName ofProjectFeedBuilder(String project, String feed) {
+  public static FeedName ofProjectFeedName(String project, String feed) {
     return newBuilder().setProject(project).setFeed(feed).build();
   }
 
   @BetaApi("The static create methods are not stable yet and may be changed in the future.")
-  public static FeedName ofFolderFeedBuilder(String folder, String feed) {
+  public static FeedName ofFolderFeedName(String folder, String feed) {
     return newFolderFeedBuilder().setFolder(folder).setFeed(feed).build();
   }
 
   @BetaApi("The static create methods are not stable yet and may be changed in the future.")
-  public static FeedName ofOrganizationFeedBuilder(String organization, String feed) {
+  public static FeedName ofOrganizationFeedName(String organization, String feed) {
     return newOrganizationFeedBuilder().setOrganization(organization).setFeed(feed).build();
   }
 
@@ -132,17 +132,17 @@ public class FeedName implements ResourceName {
   }
 
   @BetaApi("The static format methods are not stable yet and may be changed in the future.")
-  public static String formatProjectFeedBuilder(String project, String feed) {
+  public static String formatProjectFeedName(String project, String feed) {
     return newBuilder().setProject(project).setFeed(feed).build().toString();
   }
 
   @BetaApi("The static format methods are not stable yet and may be changed in the future.")
-  public static String formatFolderFeedBuilder(String folder, String feed) {
+  public static String formatFolderFeedName(String folder, String feed) {
     return newFolderFeedBuilder().setFolder(folder).setFeed(feed).build().toString();
   }
 
   @BetaApi("The static format methods are not stable yet and may be changed in the future.")
-  public static String formatOrganizationFeedBuilder(String organization, String feed) {
+  public static String formatOrganizationFeedName(String organization, String feed) {
     return newOrganizationFeedBuilder()
         .setOrganization(organization)
         .setFeed(feed)
@@ -156,13 +156,13 @@ public class FeedName implements ResourceName {
     }
     if (PROJECT_FEED.matches(formattedString)) {
       Map<String, String> matchMap = PROJECT_FEED.match(formattedString);
-      return ofProjectFeedBuilder(matchMap.get("project"), matchMap.get("feed"));
+      return ofProjectFeedName(matchMap.get("project"), matchMap.get("feed"));
     } else if (FOLDER_FEED.matches(formattedString)) {
       Map<String, String> matchMap = FOLDER_FEED.match(formattedString);
-      return ofFolderFeedBuilder(matchMap.get("folder"), matchMap.get("feed"));
+      return ofFolderFeedName(matchMap.get("folder"), matchMap.get("feed"));
     } else if (ORGANIZATION_FEED.matches(formattedString)) {
       Map<String, String> matchMap = ORGANIZATION_FEED.match(formattedString);
-      return ofOrganizationFeedBuilder(matchMap.get("organization"), matchMap.get("feed"));
+      return ofOrganizationFeedName(matchMap.get("organization"), matchMap.get("feed"));
     }
     throw new ValidationException("FeedName.parse: formattedString not in valid format");
   }
