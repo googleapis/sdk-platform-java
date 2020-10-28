@@ -39,6 +39,12 @@ golden_update(
     target = ":asset_java_gapic",
 )
 
+golden_update(
+    name = "asset_update",
+    target = ":asset_java_gapic",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+)
+
 ####################################################
 # API Library Rules
 ####################################################
@@ -100,3 +106,4 @@ java_gapic_library(
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
     ],
 )
+
