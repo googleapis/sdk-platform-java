@@ -56,6 +56,7 @@ def gapic_generator_java_repositories():
         urls = ["https://github.com/bazelbuild/bazel-skylib/archive/2169ae1c374aab4a09aa90e65efe1a3aad4e279b.tar.gz"],
     )
 
+    """
     _maybe(
         http_archive,
         name = "com_google_googleapis",
@@ -64,6 +65,7 @@ def gapic_generator_java_repositories():
             "https://github.com/googleapis/googleapis/archive/bda7ce951def5ae6e5c4258d0e569188dd4ae02b.zip",
         ],
     )
+    """
 
     _maybe(
         native.bind,

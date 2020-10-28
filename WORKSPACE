@@ -39,6 +39,11 @@ http_archive(
     urls = ["https://github.com/googleapis/gapic-generator/archive/v2.4.6.zip"],
 )
 
+local_repository(
+    name = "com_google_googleapis",
+    path = "/usr/local/google/home/miraleung/dev/googleapis",
+)
+
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 switched_rules_by_language(

@@ -1,6 +1,7 @@
 load(
     "@com_google_googleapis_imports//:imports.bzl",
     "proto_library_with_info",
+    java_gapic_assembly_gradle_pkg = "java_gapic_assembly_gradle_pkg2",
     java_gapic_library = "java_gapic_library2",
 )
 load(
@@ -22,8 +23,8 @@ integration_test(
 
 integration_test(
     name = "asset",
-    target = ":asset_java_gapic",
     data = ["//test/integration/goldens/asset:goldens_files"],
+    target = ":asset_java_gapic",
 )
 
 ####################################################
@@ -85,5 +86,37 @@ java_gapic_library(
     deps = [
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
+    ],
+)
+
+####################################################
+# Ads Alpha
+####################################################
+
+java_gapic_library(
+    name = "googleads_java_gapic",
+    srcs = ["@com_google_googleapis//google/ads/googleads/v5:googleads_proto_with_info"],
+    grpc_service_config = "@com_google_googleapis//google/ads/googleads/v5:googleads_grpc_service_config.json",
+    package = "google.ads.googleads.v5",
+    service_yaml = "@com_google_googleapis//google/ads/googleads/v5:googleads_v5.yaml",
+    deps = [
+        "@com_google_googleapis//google/ads/googleads/v5/enums:enums_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/resources:resources_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/services:services_java_grpc",
+        "@com_google_googleapis//google/ads/googleads/v5/services:services_java_proto",
+    ],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "googleads-java",
+    deps = [
+        ":googleads_java_gapic",
+        "@com_google_googleapis//google/ads/googleads/v5:googleads_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/common:common_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/enums:enums_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/errors:errors_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/resources:resources_java_proto",
+        "@com_google_googleapis//google/ads/googleads/v5/services:services_java_grpc",
+        "@com_google_googleapis//google/ads/googleads/v5/services:services_java_proto",
     ],
 )
