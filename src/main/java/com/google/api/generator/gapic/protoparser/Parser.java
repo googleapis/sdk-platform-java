@@ -232,11 +232,16 @@ public class Parser {
     String messageName = messageDescriptor.getName();
     if (!messageDescriptor.getNestedTypes().isEmpty()) {
       for (Descriptor nestedMessage : messageDescriptor.getNestedTypes()) {
+        if (isMapType(nestedMessage)) {
+          continue;
+        }
         outerNestedTypes.add(messageName);
         messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
       }
     }
     String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
+    List<String> fieldNames =
+        messageDescriptor.getFields().stream().map(f -> f.getName()).collect(Collectors.toList());
     messages.put(
         messageName,
         Message.builder()
@@ -246,6 +251,16 @@ public class Parser {
             .setOuterNestedTypes(outerNestedTypes)
             .build());
     return messages;
+  }
+
+  private static boolean isMapType(Descriptor messageDescriptor) {
+    List<String> fieldNames =
+        messageDescriptor.getFields().stream().map(f -> f.getName()).collect(Collectors.toList());
+    // Ends in "Entry" and has exactly two fields, named "key" and "value".
+    return messageDescriptor.getName().endsWith("Entry")
+        && fieldNames.size() == 2
+        && fieldNames.get(0).equals("key")
+        && fieldNames.get(1).equals("value");
   }
 
   /**
