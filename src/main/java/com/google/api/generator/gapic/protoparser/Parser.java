@@ -240,6 +240,8 @@ public class Parser {
       }
     }
     String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
+    List<String> fieldNames =
+        messageDescriptor.getFields().stream().map(f -> f.getName()).collect(Collectors.toList());
     messages.put(
         messageName,
         Message.builder()
