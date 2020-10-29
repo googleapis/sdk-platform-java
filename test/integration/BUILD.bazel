@@ -72,7 +72,6 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_java_proto",
         "@com_google_googleapis//google/cloud/asset/v1:asset_java_proto",
         "@com_google_googleapis//google/cloud/asset/v1:asset_proto",
-        #"@com_google_googleapis//google/iam/v1:iam_java_proto",
     ],
 )
 
