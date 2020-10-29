@@ -76,7 +76,8 @@ public class SourceCodeInfoParser {
     if (!file.toProto().hasSourceCodeInfo()) {
       return null;
     }
-    return SourceCodeInfoLocation.create(getLocation(file, buildPath(field)));
+    Location fieldLocation = getLocation(file, buildPath(field));
+    return SourceCodeInfoLocation.create(fieldLocation);
   }
 
   /** Gets the location of a service, if available. */
