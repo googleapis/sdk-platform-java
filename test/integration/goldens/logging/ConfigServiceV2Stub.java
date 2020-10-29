@@ -1,0 +1,134 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.google.logging.v2.stub;
+
+import static com.google.logging.v2.ConfigServiceV2Client.ListBucketsPagedResponse;
+import static com.google.logging.v2.ConfigServiceV2Client.ListExclusionsPagedResponse;
+import static com.google.logging.v2.ConfigServiceV2Client.ListSinksPagedResponse;
+
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CreateExclusionRequest;
+import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.DeleteExclusionRequest;
+import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.GetBucketRequest;
+import com.google.logging.v2.GetCmekSettingsRequest;
+import com.google.logging.v2.GetExclusionRequest;
+import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.ListBucketsRequest;
+import com.google.logging.v2.ListBucketsResponse;
+import com.google.logging.v2.ListExclusionsRequest;
+import com.google.logging.v2.ListExclusionsResponse;
+import com.google.logging.v2.ListSinksRequest;
+import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.LogBucket;
+import com.google.logging.v2.LogExclusion;
+import com.google.logging.v2.LogSink;
+import com.google.logging.v2.UpdateBucketRequest;
+import com.google.logging.v2.UpdateCmekSettingsRequest;
+import com.google.logging.v2.UpdateExclusionRequest;
+import com.google.logging.v2.UpdateSinkRequest;
+import com.google.protobuf.Empty;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * Base stub class for the ConfigServiceV2 service API.
+ *
+ * <p>This class is for advanced usage and reflects the underlying API directly.
+ */
+@Generated("by gapic-generator")
+public abstract class ConfigServiceV2Stub implements BackgroundResource {
+
+  public UnaryCallable<ListBucketsRequest, ListBucketsPagedResponse> listBucketsPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listBucketsPagedCallable()");
+  }
+
+  public UnaryCallable<ListBucketsRequest, ListBucketsResponse> listBucketsCallable() {
+    throw new UnsupportedOperationException("Not implemented: listBucketsCallable()");
+  }
+
+  public UnaryCallable<GetBucketRequest, LogBucket> getBucketCallable() {
+    throw new UnsupportedOperationException("Not implemented: getBucketCallable()");
+  }
+
+  public UnaryCallable<UpdateBucketRequest, LogBucket> updateBucketCallable() {
+    throw new UnsupportedOperationException("Not implemented: updateBucketCallable()");
+  }
+
+  public UnaryCallable<ListSinksRequest, ListSinksPagedResponse> listSinksPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listSinksPagedCallable()");
+  }
+
+  public UnaryCallable<ListSinksRequest, ListSinksResponse> listSinksCallable() {
+    throw new UnsupportedOperationException("Not implemented: listSinksCallable()");
+  }
+
+  public UnaryCallable<GetSinkRequest, LogSink> getSinkCallable() {
+    throw new UnsupportedOperationException("Not implemented: getSinkCallable()");
+  }
+
+  public UnaryCallable<CreateSinkRequest, LogSink> createSinkCallable() {
+    throw new UnsupportedOperationException("Not implemented: createSinkCallable()");
+  }
+
+  public UnaryCallable<UpdateSinkRequest, LogSink> updateSinkCallable() {
+    throw new UnsupportedOperationException("Not implemented: updateSinkCallable()");
+  }
+
+  public UnaryCallable<DeleteSinkRequest, Empty> deleteSinkCallable() {
+    throw new UnsupportedOperationException("Not implemented: deleteSinkCallable()");
+  }
+
+  public UnaryCallable<ListExclusionsRequest, ListExclusionsPagedResponse>
+      listExclusionsPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listExclusionsPagedCallable()");
+  }
+
+  public UnaryCallable<ListExclusionsRequest, ListExclusionsResponse> listExclusionsCallable() {
+    throw new UnsupportedOperationException("Not implemented: listExclusionsCallable()");
+  }
+
+  public UnaryCallable<GetExclusionRequest, LogExclusion> getExclusionCallable() {
+    throw new UnsupportedOperationException("Not implemented: getExclusionCallable()");
+  }
+
+  public UnaryCallable<CreateExclusionRequest, LogExclusion> createExclusionCallable() {
+    throw new UnsupportedOperationException("Not implemented: createExclusionCallable()");
+  }
+
+  public UnaryCallable<UpdateExclusionRequest, LogExclusion> updateExclusionCallable() {
+    throw new UnsupportedOperationException("Not implemented: updateExclusionCallable()");
+  }
+
+  public UnaryCallable<DeleteExclusionRequest, Empty> deleteExclusionCallable() {
+    throw new UnsupportedOperationException("Not implemented: deleteExclusionCallable()");
+  }
+
+  public UnaryCallable<GetCmekSettingsRequest, CmekSettings> getCmekSettingsCallable() {
+    throw new UnsupportedOperationException("Not implemented: getCmekSettingsCallable()");
+  }
+
+  public UnaryCallable<UpdateCmekSettingsRequest, CmekSettings> updateCmekSettingsCallable() {
+    throw new UnsupportedOperationException("Not implemented: updateCmekSettingsCallable()");
+  }
+
+  @Override
+  public abstract void close();
+}
