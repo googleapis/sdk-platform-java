@@ -16,6 +16,8 @@
 
 package com.google.cloud.redis.v1;
 
+import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.testing.LocalChannelProvider;
@@ -84,23 +86,23 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void listInstancesTest() {
+  public void listInstancesTest() throws Exception {
     Instance responsesElement = Instance.newBuilder().build();
     ListInstancesResponse expectedResponse =
         ListInstancesResponse.newBuilder()
             .setNextPageToken("")
-            .addAllResponses(Arrays.asList(responsesElement))
+            .addAllInstances(Arrays.asList(responsesElement))
             .build();
     mockCloudRedis.addResponse(expectedResponse);
 
     LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
 
-    ListInstancesResponse pagedListResponse = client.listInstances(parent);
+    ListInstancesPagedResponse pagedListResponse = client.listInstances(parent);
 
     List<Instance> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
     Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+    Assert.assertEquals(expectedResponse.getInstancesList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockCloudRedis.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -128,23 +130,23 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void listInstancesTest2() {
+  public void listInstancesTest2() throws Exception {
     Instance responsesElement = Instance.newBuilder().build();
     ListInstancesResponse expectedResponse =
         ListInstancesResponse.newBuilder()
             .setNextPageToken("")
-            .addAllResponses(Arrays.asList(responsesElement))
+            .addAllInstances(Arrays.asList(responsesElement))
             .build();
     mockCloudRedis.addResponse(expectedResponse);
 
     String parent = "parent-995424086";
 
-    ListInstancesResponse pagedListResponse = client.listInstances(parent);
+    ListInstancesPagedResponse pagedListResponse = client.listInstances(parent);
 
     List<Instance> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
     Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+    Assert.assertEquals(expectedResponse.getInstancesList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockCloudRedis.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -172,7 +174,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void getInstanceTest() {
+  public void getInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -224,7 +226,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void getInstanceTest2() {
+  public void getInstanceTest2() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -276,7 +278,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void createInstanceTest() {
+  public void createInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -342,7 +344,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void createInstanceTest2() {
+  public void createInstanceTest2() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -408,7 +410,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void updateInstanceTest() {
+  public void updateInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -471,7 +473,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void upgradeInstanceTest() {
+  public void upgradeInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -534,7 +536,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void upgradeInstanceTest2() {
+  public void upgradeInstanceTest2() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -597,7 +599,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void importInstanceTest() {
+  public void importInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -660,7 +662,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void exportInstanceTest() {
+  public void exportInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -723,7 +725,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void failoverInstanceTest() {
+  public void failoverInstanceTest() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -788,7 +790,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void failoverInstanceTest2() {
+  public void failoverInstanceTest2() throws Exception {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
@@ -853,7 +855,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void deleteInstanceTest() {
+  public void deleteInstanceTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -896,7 +898,7 @@ public class CloudRedisClientTest {
   }
 
   @Test
-  public void deleteInstanceTest2() {
+  public void deleteInstanceTest2() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     Operation resultOperation =
         Operation.newBuilder()
