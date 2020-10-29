@@ -19,12 +19,14 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,13 +37,21 @@ import javax.annotation.Nullable;
 public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
+    Map<String, ResourceName> availableResourceNames = new HashMap<>();
+    for (ResourceName resourceName : context.helperResourceNames()) {
+      availableResourceNames.put(resourceName.resourceTypeString(), resourceName);
+    }
     for (Service service : context.services()) {
       clazzes.addAll(
           generateServiceClasses(
-              service, context.serviceConfig(), context.resourceNames(), context.messages()));
+              service, context.serviceConfig(), availableResourceNames, context.messages()));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
+  }
+
+  public static GapicPackageInfo composePackageInfo(GapicContext context) {
+    return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 
   public static List<GapicClass> generateServiceClasses(
@@ -125,5 +135,14 @@ public class Composer {
               return GapicClass.create(gapicClass.kind(), classWithHeader);
             })
         .collect(Collectors.toList());
+  }
+
+  private static GapicPackageInfo addApacheLicense(GapicPackageInfo gapicPackageInfo) {
+    return GapicPackageInfo.with(
+        gapicPackageInfo
+            .packageInfo()
+            .toBuilder()
+            .setFileHeader(CommentComposer.APACHE_LICENSE_COMMENT)
+            .build());
   }
 }

@@ -41,6 +41,7 @@ import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.OperatorKind;
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
@@ -857,6 +858,26 @@ public class JavaWriterVisitor implements AstNodeVisitor {
     if (!classDefinition.isNested()) {
       buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
     }
+  }
+
+  @Override
+  public void visit(PackageInfoDefinition packageInfoDefinition) {
+    statements(packageInfoDefinition.fileHeader().stream().collect(Collectors.toList()));
+    newline();
+    statements(
+        packageInfoDefinition.headerCommentStatements().stream().collect(Collectors.toList()));
+    newline();
+
+    annotations(packageInfoDefinition.annotations());
+    buffer.append(String.format("package %s;", packageInfoDefinition.pakkage()));
+    newline();
+
+    packageInfoDefinition.accept(importWriterVisitor);
+    importWriterVisitor.initialize(packageInfoDefinition.pakkage());
+    buffer.append(importWriterVisitor.write());
+
+    // Format code.
+    buffer.replace(0, buffer.length(), JavaFormatter.format(buffer.toString()));
   }
 
   /** =============================== PRIVATE HELPERS =============================== */

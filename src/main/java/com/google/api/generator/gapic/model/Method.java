@@ -45,6 +45,10 @@ public abstract class Method {
   @Nullable
   public abstract String description();
 
+  // TODO(miraleung): May need to change this to MethodArgument, Field, or some new struct
+  // HttpBinding pending dotted reference support.
+  public abstract List<String> httpBindings();
+
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
@@ -57,10 +61,15 @@ public abstract class Method {
     return description() != null;
   }
 
+  public boolean hasHttpBindings() {
+    return !httpBindings().isEmpty();
+  }
+
   public static Builder builder() {
     return new AutoValue_Method.Builder()
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
+        .setHttpBindings(ImmutableList.of())
         .setIsPaged(false);
   }
 
@@ -90,6 +99,8 @@ public abstract class Method {
     public abstract Builder setLro(LongrunningOperation lro);
 
     public abstract Builder setDescription(String description);
+
+    public abstract Builder setHttpBindings(List<String> httpBindings);
 
     public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
 
