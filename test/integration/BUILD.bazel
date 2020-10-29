@@ -37,7 +37,8 @@ INTEGRATION_TEST_LIBRARIES = [
 ####################################################
 # API Library Rules
 ####################################################
-# These will eventually go away once more APIs in googleapis have been migrated to the microgenerator.
+# These will eventually go away once more APIs in googleapis have been migrated to the
+# microgenerator.
 
 # Asset API.
 java_gapic_library(
