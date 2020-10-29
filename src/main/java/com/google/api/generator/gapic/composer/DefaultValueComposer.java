@@ -85,7 +85,11 @@ public class DefaultValueComposer {
       ConcreteReference.Builder refBuilder =
           ConcreteReference.builder().setClazz(f.isMap() ? HashMap.class : ArrayList.class);
       if (useExplicitInitTypeInGenerics) {
-        refBuilder = refBuilder.setGenerics(f.type().reference().generics().get(0));
+        if (f.isMap()) {
+          refBuilder = refBuilder.setGenerics(f.type().reference().generics().subList(0, 2));
+        } else {
+          refBuilder = refBuilder.setGenerics(f.type().reference().generics().get(0));
+        }
       }
 
       TypeNode newType = TypeNode.withReference(refBuilder.build());
