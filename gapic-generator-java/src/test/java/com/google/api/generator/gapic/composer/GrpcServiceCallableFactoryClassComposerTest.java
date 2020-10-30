@@ -32,6 +32,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +54,8 @@ public class GrpcServiceCallableFactoryClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =

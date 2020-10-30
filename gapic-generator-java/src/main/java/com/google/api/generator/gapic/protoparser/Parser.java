@@ -130,7 +130,12 @@ public class Parser {
               fileToGenerate);
 
       services.addAll(
-          parseService(fileDescriptor, messageTypes, resourceNames, outputArgResourceNames));
+          parseService(
+              fileDescriptor,
+              messageTypes,
+              resourceNames,
+              serviceYamlProtoOpt,
+              outputArgResourceNames));
     }
 
     return services;
@@ -140,28 +145,37 @@ public class Parser {
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
       Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
 
     return fileDescriptor.getServices().stream()
         .map(
             s -> {
-              // TODO(miraleung, v2): Handle missing default_host and oauth_scopes annotations.
+              // Workaround for a missing default_host and oauth_scopes annotation from a service
+              // definition. This can happen for protos that bypass the publishing process.
+              // TODO(miraleung): Remove this workaround later?
               ServiceOptions serviceOptions = s.getOptions();
-              // The proto publishing process will insert these two fields from the 1P esrvice
-              // config YAML file, so we can assume they must be present for v1 for the
-              // microgenerator.
+              String defaultHost = null;
+              if (serviceOptions.hasExtension(ClientProto.defaultHost)) {
+                defaultHost =
+                    sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
+              } else if (serviceYamlProtoOpt.isPresent()) {
+                // Fall back to the DNS name supplied in the service .yaml config.
+                defaultHost = serviceYamlProtoOpt.get().getName();
+              }
               Preconditions.checkState(
-                  serviceOptions.hasExtension(ClientProto.defaultHost),
-                  String.format("Default host annotation not found in service %s", s.getName()));
-              Preconditions.checkState(
-                  serviceOptions.hasExtension(ClientProto.oauthScopes),
-                  String.format("Oauth scopes annotation not found in service %s", s.getName()));
+                  !Strings.isNullOrEmpty(defaultHost),
+                  String.format(
+                      "Default host not found in service YAML config file or annotation for %s",
+                      s.getName()));
 
-              String defaultHost =
-                  sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
-              List<String> oauthScopes =
-                  Arrays.asList(serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
+              List<String> oauthScopes = Collections.emptyList();
+              if (serviceOptions.hasExtension(ClientProto.oauthScopes)) {
+                oauthScopes =
+                    Arrays.asList(
+                        serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
+              }
 
               Service.Builder serviceBuilder = Service.builder();
               if (fileDescriptor.toProto().hasSourceCodeInfo()) {

@@ -81,7 +81,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -118,7 +119,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -159,7 +161,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -196,7 +199,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -236,7 +240,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -318,7 +323,8 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -379,7 +385,11 @@ public class RetrySettingsComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String filename = "pubsub_gapic.yaml";
     Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
@@ -456,7 +466,11 @@ public class RetrySettingsComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     String filename = "logging_gapic.yaml";
     Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);

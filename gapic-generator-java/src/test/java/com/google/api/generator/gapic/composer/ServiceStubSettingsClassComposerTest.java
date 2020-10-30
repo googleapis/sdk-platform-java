@@ -182,6 +182,6 @@ public class ServiceStubSettingsClassComposerTest {
       Map<String, ResourceName> resourceNames) {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     return Parser.parseService(
-        protoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        protoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
   }
 }
