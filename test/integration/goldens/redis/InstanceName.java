@@ -138,7 +138,8 @@ public class InstanceName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION_INSTANCE.instantiate("project", project);
+    return PROJECT_LOCATION_INSTANCE.instantiate(
+        "project", project, "location", location, "instance", instance);
   }
 
   @Override
