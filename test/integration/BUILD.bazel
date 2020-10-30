@@ -7,7 +7,6 @@ load(
     "//:rules_bazel/java/integration_test.bzl",
     "golden_update",
     "integration_test",
-    "golden_update",
 )
 
 package(default_visibility = ["//visibility:public"])
@@ -38,25 +37,6 @@ golden_update(
     name = "asset_update",
     data = ["//test/integration/goldens/asset:goldens_files"],
     target = ":asset_java_gapic",
-)
-
-golden_update(
-    name = "asset_update",
-    data = ["//test/integration/goldens/asset:goldens_files"],
-    data = ["//test/integration/goldens/asset:goldens_files"],
-    target = ":asset_java_gapic",
-)
-
-golden_update(
-    name = "redis_update",
-    target = ":redis_java_gapic",
-    data = ["//test/integration/goldens/redis:goldens_files"],
-)
-
-golden_update(
-    name = "asset_update",
-    target = ":asset_java_gapic",
-    data = ["//test/integration/goldens/asset:goldens_files"],
 )
 
 ####################################################
