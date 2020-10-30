@@ -16,6 +16,9 @@
 
 package com.google.cloud.asset.v1;
 
+import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllIamPoliciesPagedResponse;
+import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllResourcesPagedResponse;
+
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.testing.LocalChannelProvider;
@@ -83,7 +86,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void exportAssetsTest() {
+  public void exportAssetsTest() throws Exception {
     ExportAssetsResponse expectedResponse =
         ExportAssetsResponse.newBuilder()
             .setOutputConfig(OutputConfig.newBuilder().build())
@@ -99,7 +102,7 @@ public class AssetServiceClientTest {
 
     ExportAssetsRequest request =
         ExportAssetsRequest.newBuilder()
-            .setParent(ProjectName.of("[PROJECT]").toString())
+            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetTypes(new ArrayList<>())
             .setOutputConfig(OutputConfig.newBuilder().build())
             .build();
@@ -130,7 +133,7 @@ public class AssetServiceClientTest {
     try {
       ExportAssetsRequest request =
           ExportAssetsRequest.newBuilder()
-              .setParent(ProjectName.of("[PROJECT]").toString())
+              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .addAllAssetTypes(new ArrayList<>())
               .setOutputConfig(OutputConfig.newBuilder().build())
               .build();
@@ -144,14 +147,14 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void batchGetAssetsHistoryTest() {
+  public void batchGetAssetsHistoryTest() throws Exception {
     BatchGetAssetsHistoryResponse expectedResponse =
         BatchGetAssetsHistoryResponse.newBuilder().addAllAssets(new ArrayList<>()).build();
     mockAssetService.addResponse(expectedResponse);
 
     BatchGetAssetsHistoryRequest request =
         BatchGetAssetsHistoryRequest.newBuilder()
-            .setParent(ProjectName.of("[PROJECT]").toString())
+            .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<>())
             .setReadTimeWindow(TimeWindow.newBuilder().build())
             .build();
@@ -182,7 +185,7 @@ public class AssetServiceClientTest {
     try {
       BatchGetAssetsHistoryRequest request =
           BatchGetAssetsHistoryRequest.newBuilder()
-              .setParent(ProjectName.of("[PROJECT]").toString())
+              .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .addAllAssetNames(new ArrayList<>())
               .setReadTimeWindow(TimeWindow.newBuilder().build())
               .build();
@@ -194,7 +197,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void createFeedTest() {
+  public void createFeedTest() throws Exception {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
@@ -235,7 +238,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void getFeedTest() {
+  public void getFeedTest() throws Exception {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
@@ -276,7 +279,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void getFeedTest2() {
+  public void getFeedTest2() throws Exception {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
@@ -317,7 +320,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void listFeedsTest() {
+  public void listFeedsTest() throws Exception {
     ListFeedsResponse expectedResponse =
         ListFeedsResponse.newBuilder().addAllFeeds(new ArrayList<>()).build();
     mockAssetService.addResponse(expectedResponse);
@@ -353,7 +356,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void updateFeedTest() {
+  public void updateFeedTest() throws Exception {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
@@ -394,7 +397,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void deleteFeedTest() {
+  public void deleteFeedTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -429,7 +432,7 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void deleteFeedTest2() {
+  public void deleteFeedTest2() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -464,12 +467,12 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void searchAllResourcesTest() {
+  public void searchAllResourcesTest() throws Exception {
     ResourceSearchResult responsesElement = ResourceSearchResult.newBuilder().build();
     SearchAllResourcesResponse expectedResponse =
         SearchAllResourcesResponse.newBuilder()
             .setNextPageToken("")
-            .addAllResponses(Arrays.asList(responsesElement))
+            .addAllResults(Arrays.asList(responsesElement))
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -477,13 +480,13 @@ public class AssetServiceClientTest {
     String query = "query107944136";
     List<String> assetTypes = new ArrayList<>();
 
-    SearchAllResourcesResponse pagedListResponse =
+    SearchAllResourcesPagedResponse pagedListResponse =
         client.searchAllResources(scope, query, assetTypes);
 
     List<ResourceSearchResult> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
     Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+    Assert.assertEquals(expectedResponse.getResultsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -515,24 +518,24 @@ public class AssetServiceClientTest {
   }
 
   @Test
-  public void searchAllIamPoliciesTest() {
+  public void searchAllIamPoliciesTest() throws Exception {
     IamPolicySearchResult responsesElement = IamPolicySearchResult.newBuilder().build();
     SearchAllIamPoliciesResponse expectedResponse =
         SearchAllIamPoliciesResponse.newBuilder()
             .setNextPageToken("")
-            .addAllResponses(Arrays.asList(responsesElement))
+            .addAllResults(Arrays.asList(responsesElement))
             .build();
     mockAssetService.addResponse(expectedResponse);
 
     String scope = "scope109264468";
     String query = "query107944136";
 
-    SearchAllIamPoliciesResponse pagedListResponse = client.searchAllIamPolicies(scope, query);
+    SearchAllIamPoliciesPagedResponse pagedListResponse = client.searchAllIamPolicies(scope, query);
 
     List<IamPolicySearchResult> resources = Lists.newArrayList(pagedListResponse.iterateAll());
 
     Assert.assertEquals(1, resources.size());
-    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+    Assert.assertEquals(expectedResponse.getResultsList().get(0), resources.get(0));
 
     List<AbstractMessage> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
