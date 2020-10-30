@@ -32,3 +32,14 @@ message BarFoo {
 
   string display_name = 1;
 }
+
+// A proto with a resource definition, but missing a field titled "name" or
+// containing a resource reference.
+message Pencil {
+  option (google.api.resource) = {
+    type: "testgapic.googleapis.com/Pencil"
+    pattern: "pencils/{pencil}"
+  };
+
+  string owner = 1;
+}
