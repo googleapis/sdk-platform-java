@@ -14,8 +14,6 @@
 
 package com.google.api.generator.gapic.model;
 
-import com.google.common.escape.Escaper;
-import com.google.common.escape.Escapers;
 import com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location;
 import javax.annotation.Nonnull;
 
@@ -24,9 +22,6 @@ import javax.annotation.Nonnull;
  * additional documentation on descriptor.proto.
  */
 public class SourceCodeInfoLocation {
-  // Not a singleton because of nested-class instantiation mechanics.
-  private final NewlineEscaper ESCAPER = new NewlineEscaper();
-
   @Nonnull private final Location location;
 
   private SourceCodeInfoLocation(Location location) {
@@ -51,14 +46,5 @@ public class SourceCodeInfoLocation {
 
   private String processProtobufComment(String s) {
     return s.trim();
-  }
-
-  private class NewlineEscaper extends Escaper {
-    private final Escaper charEscaper = Escapers.builder().addEscape('\n', "").build();
-
-    @Override
-    public String escape(String sourceString) {
-      return charEscaper.escape(sourceString);
-    }
   }
 }
