@@ -1749,7 +1749,7 @@ public class ServiceClientTestClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -1864,7 +1864,7 @@ public class ServiceClientTestClassComposer {
         VaporReference.builder()
             .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             .setPakkage(service.pakkage())
-            .setEnclosingClassName(getClientClassName(service.name()))
+            .setEnclosingClassNames(getClientClassName(service.name()))
             .setIsStaticImport(true)
             .build());
   }
