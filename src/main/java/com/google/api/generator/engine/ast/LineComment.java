@@ -44,7 +44,7 @@ public abstract class LineComment implements Comment {
     public abstract LineComment autoBuild();
 
     public LineComment build() {
-      setComment(MetacharEscaper.escaper(comment()));
+      setComment(MetacharEscaper.process(comment()));
       return autoBuild();
     }
   }
