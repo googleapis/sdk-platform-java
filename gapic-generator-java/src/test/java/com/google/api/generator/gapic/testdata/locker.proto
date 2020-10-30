@@ -79,13 +79,24 @@ message Document {
     pattern: "*"
   };
 
-  // The resource name of the user.
+  // The resource name of the document.
   string name = 1;
 }
 
 message Folder {
   string name = 1 [(google.api.resource_reference).type =
                        "cloudresourcemanager.googleapis.com/Folder"];
+}
+
+message Binder {
+  option (google.api.resource) = {
+    type: "testgapic.googleapis.com/Binder"
+    pattern: "binders/{binder}"
+  };
+
+  // The resource name of the binder.
+  string binder_name = 1 [(google.api.resource_reference).type =
+                              "testgapic.googleapis.com/Binder"];
 }
 
 message GetFolderRequest {

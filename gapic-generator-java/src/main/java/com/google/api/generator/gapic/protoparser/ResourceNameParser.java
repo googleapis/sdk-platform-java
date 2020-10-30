@@ -22,9 +22,11 @@ import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileOptions;
 import com.google.protobuf.DescriptorProtos.MessageOptions;
 import com.google.protobuf.Descriptors.Descriptor;
+import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -107,12 +109,25 @@ public class ResourceNameParser {
     }
 
     ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
-    // aip.dev/4231.
+    // Validation - check that a resource name field is present.
     if (Strings.isNullOrEmpty(protoResource.getNameField())) {
-      Preconditions.checkNotNull(
-          messageTypeDescriptor.findFieldByName(ResourceNameConstants.NAME_FIELD_NAME),
+      // aip.dev/4231
+      boolean resourceNameFieldFound =
+          messageTypeDescriptor.findFieldByName(ResourceNameConstants.NAME_FIELD_NAME) != null;
+      // If this is null, look for a field with a resource reference is found.
+      // Example: AccountBudgetProposal.
+      for (FieldDescriptor fieldDescriptor : messageTypeDescriptor.getFields()) {
+        FieldOptions fieldOptions = fieldDescriptor.getOptions();
+        if (fieldOptions.hasExtension(ResourceProto.resourceReference)) {
+          resourceNameFieldFound = true;
+          break;
+        }
+      }
+      Preconditions.checkState(
+          resourceNameFieldFound,
           String.format(
-              "Message %s has a resource annotation but no \"name\" field",
+              "Message %s has a resource annotation but no field titled \"name\" or containing a"
+                  + " resource reference",
               messageTypeDescriptor.getName()));
     }
 
