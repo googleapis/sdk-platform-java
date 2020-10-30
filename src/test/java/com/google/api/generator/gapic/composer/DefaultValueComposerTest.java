@@ -273,8 +273,8 @@ public class DefaultValueComposerTest {
             message, typeStringsToResourceNames, messageTypes);
     expr.accept(writerVisitor);
     assertEquals(
-        "PagedExpandResponse.newBuilder().addAllResponses(new"
-            + " ArrayList<>()).setNextPageToken(\"next_page_token-1530815211\").build()",
+        "PagedExpandResponse.newBuilder().addAllResponses(new ArrayList<EchoResponse>())"
+            + ".setNextPageToken(\"next_page_token-1530815211\").build()",
         writerVisitor.write());
   }
 
