@@ -5,6 +5,7 @@ load(
 )
 load(
     "//:rules_bazel/java/integration_test.bzl",
+    "golden_update",
     "integration_test",
     "golden_update",
 )
@@ -23,8 +24,27 @@ integration_test(
 
 integration_test(
     name = "asset",
-    target = ":asset_java_gapic",
     data = ["//test/integration/goldens/asset:goldens_files"],
+    target = ":asset_java_gapic",
+)
+
+golden_update(
+    name = "redis_update",
+    data = ["//test/integration/goldens/redis:goldens_files"],
+    target = ":redis_java_gapic",
+)
+
+golden_update(
+    name = "asset_update",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+    target = ":asset_java_gapic",
+)
+
+golden_update(
+    name = "asset_update",
+    data = ["//test/integration/goldens/asset:goldens_files"],
+    data = ["//test/integration/goldens/asset:goldens_files"],
+    target = ":asset_java_gapic",
 )
 
 golden_update(
@@ -100,4 +120,3 @@ java_gapic_library(
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
     ],
 )
-
