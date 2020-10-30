@@ -123,7 +123,7 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project);
+    return PROJECT_LOCATION.instantiate("project", project, "location", location);
   }
 
   @Override

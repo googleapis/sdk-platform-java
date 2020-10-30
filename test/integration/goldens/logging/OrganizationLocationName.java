@@ -123,7 +123,7 @@ public class OrganizationLocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return ORGANIZATION_LOCATION.instantiate("organization", organization);
+    return ORGANIZATION_LOCATION.instantiate("organization", organization, "location", location);
   }
 
   @Override

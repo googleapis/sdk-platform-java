@@ -123,7 +123,7 @@ public class FolderLocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return FOLDER_LOCATION.instantiate("folder", folder);
+    return FOLDER_LOCATION.instantiate("folder", folder, "location", location);
   }
 
   @Override
