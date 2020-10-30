@@ -103,7 +103,7 @@ public class AssetServiceClientTest {
     ExportAssetsRequest request =
         ExportAssetsRequest.newBuilder()
             .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetTypes(new ArrayList<>())
+            .addAllAssetTypes(new ArrayList<String>())
             .setOutputConfig(OutputConfig.newBuilder().build())
             .build();
 
@@ -134,7 +134,7 @@ public class AssetServiceClientTest {
       ExportAssetsRequest request =
           ExportAssetsRequest.newBuilder()
               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-              .addAllAssetTypes(new ArrayList<>())
+              .addAllAssetTypes(new ArrayList<String>())
               .setOutputConfig(OutputConfig.newBuilder().build())
               .build();
       client.exportAssetsAsync(request).get();
@@ -149,13 +149,15 @@ public class AssetServiceClientTest {
   @Test
   public void batchGetAssetsHistoryTest() throws Exception {
     BatchGetAssetsHistoryResponse expectedResponse =
-        BatchGetAssetsHistoryResponse.newBuilder().addAllAssets(new ArrayList<>()).build();
+        BatchGetAssetsHistoryResponse.newBuilder()
+            .addAllAssets(new ArrayList<TemporalAsset>())
+            .build();
     mockAssetService.addResponse(expectedResponse);
 
     BatchGetAssetsHistoryRequest request =
         BatchGetAssetsHistoryRequest.newBuilder()
             .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetNames(new ArrayList<>())
+            .addAllAssetNames(new ArrayList<String>())
             .setReadTimeWindow(TimeWindow.newBuilder().build())
             .build();
 
@@ -186,7 +188,7 @@ public class AssetServiceClientTest {
       BatchGetAssetsHistoryRequest request =
           BatchGetAssetsHistoryRequest.newBuilder()
               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-              .addAllAssetNames(new ArrayList<>())
+              .addAllAssetNames(new ArrayList<String>())
               .setReadTimeWindow(TimeWindow.newBuilder().build())
               .build();
       client.batchGetAssetsHistory(request);
@@ -201,8 +203,8 @@ public class AssetServiceClientTest {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetNames(new ArrayList<>())
-            .addAllAssetTypes(new ArrayList<>())
+            .addAllAssetNames(new ArrayList<String>())
+            .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
@@ -242,8 +244,8 @@ public class AssetServiceClientTest {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetNames(new ArrayList<>())
-            .addAllAssetTypes(new ArrayList<>())
+            .addAllAssetNames(new ArrayList<String>())
+            .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
@@ -283,8 +285,8 @@ public class AssetServiceClientTest {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetNames(new ArrayList<>())
-            .addAllAssetTypes(new ArrayList<>())
+            .addAllAssetNames(new ArrayList<String>())
+            .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
@@ -322,7 +324,7 @@ public class AssetServiceClientTest {
   @Test
   public void listFeedsTest() throws Exception {
     ListFeedsResponse expectedResponse =
-        ListFeedsResponse.newBuilder().addAllFeeds(new ArrayList<>()).build();
+        ListFeedsResponse.newBuilder().addAllFeeds(new ArrayList<Feed>()).build();
     mockAssetService.addResponse(expectedResponse);
 
     String parent = "parent-995424086";
@@ -360,8 +362,8 @@ public class AssetServiceClientTest {
     Feed expectedResponse =
         Feed.newBuilder()
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
-            .addAllAssetNames(new ArrayList<>())
-            .addAllAssetTypes(new ArrayList<>())
+            .addAllAssetNames(new ArrayList<String>())
+            .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
