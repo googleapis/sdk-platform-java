@@ -68,6 +68,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ImportWriterVisitor implements AstNodeVisitor {
+  private static final String DOT = ".";
   private static final String NEWLINE = "\n";
   private static final String PKG_JAVA_LANG = "java.lang";
 
@@ -423,7 +424,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
       if (ref.isStaticImport()
           && !Strings.isNullOrEmpty(currentClassName)
-          && ref.enclosingClassName().equals(currentClassName)) {
+          && !ref.enclosingClassNames().isEmpty()
+          && ref.enclosingClassNames().contains(currentClassName)) {
         continue;
       }
 
@@ -432,7 +434,8 @@ public class ImportWriterVisitor implements AstNodeVisitor {
         staticImports.add(ref.fullName());
       } else {
         if (ref.hasEnclosingClass()) {
-          imports.add(String.format("%s.%s", ref.pakkage(), ref.enclosingClassName()));
+          imports.add(
+              String.format("%s.%s", ref.pakkage(), String.join(DOT, ref.enclosingClassNames())));
         } else {
           imports.add(ref.fullName());
         }

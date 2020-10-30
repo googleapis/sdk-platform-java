@@ -15,9 +15,9 @@
 package com.google.api.generator.engine.ast;
 
 import com.google.auto.value.AutoValue;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
@@ -43,7 +43,7 @@ public abstract class VaporReference implements Reference {
 
   @Nullable
   @Override
-  public abstract String enclosingClassName();
+  public abstract ImmutableList<String> enclosingClassNames();
 
   @Nullable
   public abstract Reference supertypeReference();
@@ -56,9 +56,9 @@ public abstract class VaporReference implements Reference {
 
   @Override
   public String fullName() {
-    // TODO(unsupported): Nested classes with depth greater than 1.
     if (hasEnclosingClass()) {
-      return String.format("%s.%s.%s", pakkage(), enclosingClassName(), plainName());
+      return String.format(
+          "%s.%s.%s", pakkage(), String.join(DOT, enclosingClassNames()), plainName());
     }
     return String.format("%s.%s", pakkage(), plainName());
   }
@@ -68,7 +68,7 @@ public abstract class VaporReference implements Reference {
 
   @Override
   public boolean hasEnclosingClass() {
-    return !Strings.isNullOrEmpty(enclosingClassName());
+    return !enclosingClassNames().isEmpty();
   }
 
   @Override
@@ -86,7 +86,7 @@ public abstract class VaporReference implements Reference {
     VaporReference ref = (VaporReference) other;
     return pakkage().equals(ref.pakkage())
         && plainName().equals(ref.plainName())
-        && Objects.equals(enclosingClassName(), ref.enclosingClassName());
+        && Objects.equals(enclosingClassNames(), ref.enclosingClassNames());
   }
 
   @Override
@@ -112,14 +112,14 @@ public abstract class VaporReference implements Reference {
     return pakkage().equals(ref.pakkage())
         && name().equals(ref.name())
         && generics().equals(ref.generics())
-        && Objects.equals(enclosingClassName(), ref.enclosingClassName());
+        && Objects.equals(enclosingClassNames(), ref.enclosingClassNames());
   }
 
   @Override
   public int hashCode() {
     int hash = 17 * pakkage().hashCode() + 19 * name().hashCode() + 23 * generics().hashCode();
-    if (!Strings.isNullOrEmpty(enclosingClassName())) {
-      hash += 29 * enclosingClassName().hashCode();
+    if (!enclosingClassNames().isEmpty()) {
+      hash += 29 * enclosingClassNames().hashCode();
     }
     return hash;
   }
@@ -133,7 +133,8 @@ public abstract class VaporReference implements Reference {
     return new AutoValue_VaporReference.Builder()
         .setUseFullName(false)
         .setGenerics(ImmutableList.of())
-        .setIsStaticImport(false);
+        .setIsStaticImport(false)
+        .setEnclosingClassNames(Collections.emptyList());
   }
 
   // Private.
@@ -153,7 +154,11 @@ public abstract class VaporReference implements Reference {
 
     public abstract Builder setGenerics(List<Reference> clazzes);
 
-    public abstract Builder setEnclosingClassName(String enclosingClassName);
+    public Builder setEnclosingClassNames(String... enclosingClassNames) {
+      return setEnclosingClassNames(Arrays.asList(enclosingClassNames));
+    }
+
+    public abstract Builder setEnclosingClassNames(List<String> enclosingClassNames);
 
     public abstract Builder setIsStaticImport(boolean isStaticImport);
 
@@ -166,8 +171,7 @@ public abstract class VaporReference implements Reference {
 
     abstract ImmutableList<Reference> generics();
 
-    @Nullable
-    abstract String enclosingClassName();
+    abstract ImmutableList<String> enclosingClassNames();
 
     abstract boolean isStaticImport();
 
@@ -180,11 +184,11 @@ public abstract class VaporReference implements Reference {
 
       setPlainName(name());
 
-      setIsStaticImport(enclosingClassName() != null && isStaticImport());
+      setIsStaticImport(!enclosingClassNames().isEmpty() && isStaticImport());
 
       StringBuilder sb = new StringBuilder();
-      if (enclosingClassName() != null && !isStaticImport()) {
-        sb.append(enclosingClassName());
+      if (!enclosingClassNames().isEmpty() && !isStaticImport()) {
+        sb.append(String.join(DOT, enclosingClassNames()));
         sb.append(DOT);
       }
 

@@ -230,7 +230,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("Builder")
-                .setEnclosingClassName(String.format("%sSettings", service.name()))
+                .setEnclosingClassNames(String.format("%sSettings", service.name()))
                 .setPakkage(service.pakkage())
                 .build());
     Expr returnMethodExpr =
@@ -712,7 +712,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(BUILDER_CLASS_NAME)
-                .setEnclosingClassName(getThisClassName(service.name()))
+                .setEnclosingClassNames(getThisClassName(service.name()))
                 .setPakkage(service.pakkage())
                 .setIsStaticImport(true)
                 .build()));
@@ -729,7 +729,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -828,7 +828,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VaporReference.builder()
             .setPakkage(service.pakkage())
             .setName(BUILDER_CLASS_NAME)
-            .setEnclosingClassName(getStubSettingsClassName(service.name()))
+            .setEnclosingClassNames(getStubSettingsClassName(service.name()))
             .build());
   }
 

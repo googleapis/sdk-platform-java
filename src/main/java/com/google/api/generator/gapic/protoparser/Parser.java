@@ -215,22 +215,40 @@ public class Parser {
   }
 
   public static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
-    String pakkage = TypeParser.getPackage(fileDescriptor);
-    return fileDescriptor.getMessageTypes().stream()
-        .collect(
-            Collectors.toMap(
-                md -> md.getName(),
-                md ->
-                    Message.builder()
-                        .setType(
-                            TypeNode.withReference(
-                                VaporReference.builder()
-                                    .setName(md.getName())
-                                    .setPakkage(pakkage)
-                                    .build()))
-                        .setName(md.getName())
-                        .setFields(parseFields(md))
-                        .build()));
+    // TODO(miraleung): Preserve nested type and package data in the type key.
+    Map<String, Message> messages = new HashMap<>();
+    for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
+      messages.putAll(parseMessages(messageDescriptor));
+    }
+    return messages;
+  }
+
+  private static Map<String, Message> parseMessages(Descriptor messageDescriptor) {
+    return parseMessages(messageDescriptor, new ArrayList<String>());
+  }
+
+  private static Map<String, Message> parseMessages(
+      Descriptor messageDescriptor, List<String> outerNestedTypes) {
+    Map<String, Message> messages = new HashMap<>();
+    String messageName = messageDescriptor.getName();
+    if (!messageDescriptor.getNestedTypes().isEmpty()) {
+      for (Descriptor nestedMessage : messageDescriptor.getNestedTypes()) {
+        outerNestedTypes.add(messageName);
+        messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
+      }
+    }
+    String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
+    messages.put(
+        messageName,
+        Message.builder()
+            .setType(
+                TypeNode.withReference(
+                    VaporReference.builder().setName(messageName).setPakkage(pakkage).build()))
+            .setName(messageName)
+            .setFields(parseFields(messageDescriptor))
+            .setOuterNestedTypes(outerNestedTypes)
+            .build());
+    return messages;
   }
 
   /**

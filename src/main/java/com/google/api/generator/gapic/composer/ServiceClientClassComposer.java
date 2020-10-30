@@ -1441,7 +1441,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                               VaporReference.builder()
                                   .setName(
                                       String.format(t, JavaStyle.toUpperCamelCase(method.name())))
-                                  .setEnclosingClassName(getClientClassName(service.name()))
+                                  .setEnclosingClassNames(getClientClassName(service.name()))
                                   .setPakkage(service.pakkage())
                                   .setIsStaticImport(true) // Same class, so they won't be imported.
                                   .build()))));
@@ -1466,7 +1466,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassName(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
