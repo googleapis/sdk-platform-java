@@ -52,6 +52,16 @@ public class ResourceNameTokenizerTest {
   }
 
   @Test
+  public void parseTokenHierarchy_substringsInPattern() {
+    List<String> patterns =
+        Arrays.asList(
+            "customers/{customer}/customerExtensionSettings/{customer_extension_setting}");
+    List<List<String>> tokenHierarchies = ResourceNameTokenizer.parseTokenHierarchy(patterns);
+    assertEquals(1, tokenHierarchies.size());
+    assertThat(tokenHierarchies.get(0)).containsExactly("customer", "customer_extension_setting");
+  }
+
+  @Test
   public void parseTokenHierarchy_wildcards() {
     List<String> patterns =
         Arrays.asList(
