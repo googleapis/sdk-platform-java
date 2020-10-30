@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @AutoValue
 public abstract class JavaDocComment implements Comment {
@@ -44,6 +45,8 @@ public abstract class JavaDocComment implements Comment {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    static final String PARAM_INDENT = "       ";
+
     // The lack of a getter for these local variables in the external class is WAI.
     String throwsType = null;
     String throwsDescription = null;
@@ -67,7 +70,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParam(String name, String description) {
-      paramsList.add(String.format("@param %s %s", name, description));
+      paramsList.add(String.format("@param %s %s", name, processParamComment(description)));
       return this;
     }
 
@@ -134,6 +137,43 @@ public abstract class JavaDocComment implements Comment {
           componentsList.stream().map(c -> MetacharEscaper.process(c)).collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
+    }
+
+    // TODO(miraleung): Refactor param paragraph parsing to be more robust.
+    private static String processParamComment(String rawComment) {
+      StringBuilder processedCommentBuilder = new StringBuilder();
+      String[] descriptionParagraphs = rawComment.split("\\n\\n");
+      for (int i = 0; i < descriptionParagraphs.length; i++) {
+        boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
+        // Split by listed items, then join newlines.
+        List<String> listItems =
+            Stream.of(descriptionParagraphs[i].split("\\n \\*"))
+                .map(s -> s.replace("\n", ""))
+                .collect(Collectors.toList());
+        if (startsWithItemizedList) {
+          // Remove the first asterisk.
+          listItems.set(0, listItems.get(0).substring(2));
+        }
+        if (!startsWithItemizedList) {
+          if (i == 0) {
+            processedCommentBuilder.append(String.format("%s", listItems.get(0)));
+          } else {
+            processedCommentBuilder.append(
+                String.format("%s<p> %s", PARAM_INDENT, listItems.get(0)));
+          }
+        }
+        if (listItems.size() > 1 || startsWithItemizedList) {
+          processedCommentBuilder.append(
+              String.format(
+                  "%s<ul>\n%s\n%s</ul>",
+                  PARAM_INDENT,
+                  listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()).stream()
+                      .map(li -> String.format("%s  <li>%s", PARAM_INDENT, li))
+                      .reduce("", String::concat),
+                  PARAM_INDENT));
+        }
+      }
+      return processedCommentBuilder.toString();
     }
   }
 }

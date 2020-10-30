@@ -29,7 +29,6 @@ public class MetacharEscaper extends Escaper {
           .addEscape('\b', "\\b")
           .addEscape('\r', "\\r")
           .addEscape('\f', "\\f")
-          .addEscape('\n', "\\n")
           .addEscape('\\', "\\\\")
           .build();
 
