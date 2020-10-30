@@ -105,3 +105,16 @@ below are temporary and better ones will be coming.
     ```sh
     bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
     ```
+
+-   Run a single integration test for API like `Redis`, it generates Java source code using
+the Java microgenerator and compares them with the goldens files in `test/integration/goldens/redis`.
+
+    ```sh
+    bazel test //test/integration:redis
+    ```
+
+-   Update goldens files based on code generation in integration test, for example `Redis`. It generates Java source code using the Java microgenerator and overwrites the goldens files in `test/integration/goldens/redis` based on code generation.
+
+    ```sh
+    bazel run //test/integration:redis_update
+    ```
