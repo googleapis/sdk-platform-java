@@ -50,7 +50,7 @@ public class SourceCodeInfoLocation {
   }
 
   private String processProtobufComment(String s) {
-    return ESCAPER.escape(s).trim();
+    return s.trim();
   }
 
   private class NewlineEscaper extends Escaper {

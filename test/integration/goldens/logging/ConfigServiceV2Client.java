@@ -299,10 +299,15 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period` If the retention period is decreased and the bucket is
-   * locked, FAILED_PRECONDITION will be returned. If the bucket has a LifecycleState of
-   * DELETE_REQUESTED, FAILED_PRECONDITION will be returned. A buckets region may not be modified
-   * after it is created. This method is in Beta.
+   * from the new bucket: `retention_period`
+   *
+   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
    *
@@ -316,10 +321,15 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period` If the retention period is decreased and the bucket is
-   * locked, FAILED_PRECONDITION will be returned. If the bucket has a LifecycleState of
-   * DELETE_REQUESTED, FAILED_PRECONDITION will be returned. A buckets region may not be modified
-   * after it is created. This method is in Beta.
+   * from the new bucket: `retention_period`
+   *
+   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
    */
@@ -671,8 +681,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -697,8 +709,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -720,8 +734,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -756,8 +772,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -792,8 +810,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -807,8 +827,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    */
@@ -1370,9 +1392,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router can
-   * currently only be configured for GCP organizations. Once configured, it applies to all projects
-   * and folders in the GCP organization. See [Enabling CMEK for Logs
+   * Gets the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1386,9 +1411,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router can
-   * currently only be configured for GCP organizations. Once configured, it applies to all projects
-   * and folders in the GCP organization. See [Enabling CMEK for Logs
+   * Gets the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1399,13 +1427,17 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router
-   * can currently only be configured for GCP organizations. Once configured, it applies to all
-   * projects and folders in the GCP organization.
-   * [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
+   * Updates the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
-   * is disabled. See [Enabling CMEK for Logs
+   * is disabled.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1419,13 +1451,17 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router
-   * can currently only be configured for GCP organizations. Once configured, it applies to all
-   * projects and folders in the GCP organization.
-   * [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
+   * Updates the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
-   * is disabled. See [Enabling CMEK for Logs
+   * is disabled.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
