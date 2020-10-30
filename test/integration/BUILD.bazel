@@ -87,16 +87,6 @@ java_gapic_library(
     ],
 )
 
-java_gapic_assembly_gradle_pkg(
-    name = "google-cloud-redis-v1-java",
-    deps = [
-        ":redis_java_gapic",
-        "@com_google_googleapis//google/cloud/redis/v1:redis_java_grpc",
-        "@com_google_googleapis//google/cloud/redis/v1:redis_java_proto",
-        "@com_google_googleapis//google/cloud/redis/v1:redis_proto",
-    ],
-)
-
 # Logging API
 java_gapic_library(
     name = "logging_java_gapic",
@@ -110,15 +100,5 @@ java_gapic_library(
     deps = [
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
-    ],
-)
-
-java_gapic_assembly_gradle_pkg(
-    name = "google-cloud-logging-v2-java",
-    deps = [
-        ":logging_java_gapic",
-        "@com_google_googleapis//google/logging/v2:logging_java_grpc",
-        "@com_google_googleapis//google/logging/v2:logging_java_proto",
-        "@com_google_googleapis//google/logging/v2:logging_proto",
     ],
 )
