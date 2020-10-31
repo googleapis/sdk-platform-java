@@ -112,6 +112,66 @@ then
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
+    echo_error "Unit tests failed." "Please fix them and try again."
+    exit 1
+  fi
+fi
+
+# Check integration tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_GOLDEN_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_BAZEL_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking integration tests..."
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
+    echo_error "Integration tests failed." "Please fix them and try again."
+    exit 1
+  fi
+fi
+
+# Check integration tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_GOLDEN_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_BAZEL_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking integration tests..."
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
+    echo_error "Tests failed." "Please fix them and try again."
+    exit 1
+  fi
+fi
+
+# Check integration tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_GOLDEN_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_BAZEL_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking integration tests..."
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
+    echo_error "Tests failed." "Please fix them and try again."
+    exit 1
+  fi
+fi
+
+# Check integration tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_GOLDEN_FILES_CHANGED -gt 0 ] \
+  || [ $NUM_INTEGRATION_BAZEL_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking integration tests..."
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
     echo_error "Tests failed." "Please fix them and try again."
     exit 1
   fi
