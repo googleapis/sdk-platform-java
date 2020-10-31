@@ -43,15 +43,26 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * Service Description: Configures and manages Cloud Memorystore for Redis instances Google Cloud
- * Memorystore for Redis v1 The `redis.googleapis.com` service implements the Google Cloud
- * Memorystore for Redis API and defines the following resource model for managing Redis instances:
- * &#42; The service works with a collection of cloud projects, named: `/projects/&#42;` &#42; Each
- * project has a collection of available locations, named: `/locations/&#42;` &#42; Each location
- * has a collection of Redis instances, named: `/instances/&#42;` &#42; As such, Redis instances are
- * resources of the form: `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
- * Note that location_id must be referring to a GCP `region`; for example: &#42;
- * `projects/redpepper-1290/locations/us-central1/instances/my-redis`
+ * Service Description: Configures and manages Cloud Memorystore for Redis instances
+ *
+ * <p>Google Cloud Memorystore for Redis v1
+ *
+ * <p>The `redis.googleapis.com` service implements the Google Cloud Memorystore for Redis API and
+ * defines the following resource model for managing Redis instances:
+ *
+ * <ul>
+ *   <li>The service works with a collection of cloud projects, named: `/projects/*`
+ *   <li>Each project has a collection of available locations, named: `/locations/*`
+ *   <li>Each location has a collection of Redis instances, named: `/instances/*`
+ *   <li>As such, Redis instances are resources of the form:
+ *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+ * </ul>
+ *
+ * <p>Note that location_id must be referring to a GCP `region`; for example:
+ *
+ * <ul>
+ *   <li>`projects/redpepper-1290/locations/us-central1/instances/my-redis`
+ * </ul>
  *
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
@@ -152,10 +163,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all Redis instances owned by a project in either the specified location (region) or all
-   * locations. The location should have the following format: &#42;
-   * `projects/{project_id}/locations/{location_id}` If `location_id` is specified as `-`
-   * (wildcard), then all regions available to the project are queried, and the results are
-   * aggregated.
+   * locations.
+   *
+   * <p>The location should have the following format:
+   *
+   * <ul>
+   *   <li>`projects/{project_id}/locations/{location_id}`
+   * </ul>
+   *
+   * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
+   * are queried, and the results are aggregated.
    *
    * <p>Sample code:
    *
@@ -174,10 +191,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all Redis instances owned by a project in either the specified location (region) or all
-   * locations. The location should have the following format: &#42;
-   * `projects/{project_id}/locations/{location_id}` If `location_id` is specified as `-`
-   * (wildcard), then all regions available to the project are queried, and the results are
-   * aggregated.
+   * locations.
+   *
+   * <p>The location should have the following format:
+   *
+   * <ul>
+   *   <li>`projects/{project_id}/locations/{location_id}`
+   * </ul>
+   *
+   * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
+   * are queried, and the results are aggregated.
    *
    * <p>Sample code:
    *
@@ -193,10 +216,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all Redis instances owned by a project in either the specified location (region) or all
-   * locations. The location should have the following format: &#42;
-   * `projects/{project_id}/locations/{location_id}` If `location_id` is specified as `-`
-   * (wildcard), then all regions available to the project are queried, and the results are
-   * aggregated.
+   * locations.
+   *
+   * <p>The location should have the following format:
+   *
+   * <ul>
+   *   <li>`projects/{project_id}/locations/{location_id}`
+   * </ul>
+   *
+   * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
+   * are queried, and the results are aggregated.
    *
    * <p>Sample code:
    *
@@ -210,10 +239,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all Redis instances owned by a project in either the specified location (region) or all
-   * locations. The location should have the following format: &#42;
-   * `projects/{project_id}/locations/{location_id}` If `location_id` is specified as `-`
-   * (wildcard), then all regions available to the project are queried, and the results are
-   * aggregated.
+   * locations.
+   *
+   * <p>The location should have the following format:
+   *
+   * <ul>
+   *   <li>`projects/{project_id}/locations/{location_id}`
+   * </ul>
+   *
+   * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
+   * are queried, and the results are aggregated.
    *
    * <p>Sample code:
    */
@@ -225,10 +260,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all Redis instances owned by a project in either the specified location (region) or all
-   * locations. The location should have the following format: &#42;
-   * `projects/{project_id}/locations/{location_id}` If `location_id` is specified as `-`
-   * (wildcard), then all regions available to the project are queried, and the results are
-   * aggregated.
+   * locations.
+   *
+   * <p>The location should have the following format:
+   *
+   * <ul>
+   *   <li>`projects/{project_id}/locations/{location_id}`
+   * </ul>
+   *
+   * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
+   * are queried, and the results are aggregated.
    *
    * <p>Sample code:
    */
@@ -296,13 +337,18 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a Redis instance based on the specified tier and memory size. By default, the instance
-   * is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The
-   * creation is executed asynchronously and callers may check the returned operation to track its
-   * progress. Once the operation is completed the Redis instance will be fully functional.
-   * Completed longrunning.Operation will contain the new instance object in the response field. The
-   * returned operation is automatically deleted after a few hours, so there is no need to call
-   * DeleteOperation.
+   * Creates a Redis instance based on the specified tier and memory size.
+   *
+   * <p>By default, the instance is accessible from the project's [default
+   * network](https://cloud.google.com/vpc/docs/vpc).
+   *
+   * <p>The creation is executed asynchronously and callers may check the returned operation to
+   * track its progress. Once the operation is completed the Redis instance will be fully
+   * functional. Completed longrunning.Operation will contain the new instance object in the
+   * response field.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -328,13 +374,18 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a Redis instance based on the specified tier and memory size. By default, the instance
-   * is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The
-   * creation is executed asynchronously and callers may check the returned operation to track its
-   * progress. Once the operation is completed the Redis instance will be fully functional.
-   * Completed longrunning.Operation will contain the new instance object in the response field. The
-   * returned operation is automatically deleted after a few hours, so there is no need to call
-   * DeleteOperation.
+   * Creates a Redis instance based on the specified tier and memory size.
+   *
+   * <p>By default, the instance is accessible from the project's [default
+   * network](https://cloud.google.com/vpc/docs/vpc).
+   *
+   * <p>The creation is executed asynchronously and callers may check the returned operation to
+   * track its progress. Once the operation is completed the Redis instance will be fully
+   * functional. Completed longrunning.Operation will contain the new instance object in the
+   * response field.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -360,13 +411,18 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a Redis instance based on the specified tier and memory size. By default, the instance
-   * is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The
-   * creation is executed asynchronously and callers may check the returned operation to track its
-   * progress. Once the operation is completed the Redis instance will be fully functional.
-   * Completed longrunning.Operation will contain the new instance object in the response field. The
-   * returned operation is automatically deleted after a few hours, so there is no need to call
-   * DeleteOperation.
+   * Creates a Redis instance based on the specified tier and memory size.
+   *
+   * <p>By default, the instance is accessible from the project's [default
+   * network](https://cloud.google.com/vpc/docs/vpc).
+   *
+   * <p>The creation is executed asynchronously and callers may check the returned operation to
+   * track its progress. Once the operation is completed the Redis instance will be fully
+   * functional. Completed longrunning.Operation will contain the new instance object in the
+   * response field.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -380,13 +436,18 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a Redis instance based on the specified tier and memory size. By default, the instance
-   * is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The
-   * creation is executed asynchronously and callers may check the returned operation to track its
-   * progress. Once the operation is completed the Redis instance will be fully functional.
-   * Completed longrunning.Operation will contain the new instance object in the response field. The
-   * returned operation is automatically deleted after a few hours, so there is no need to call
-   * DeleteOperation.
+   * Creates a Redis instance based on the specified tier and memory size.
+   *
+   * <p>By default, the instance is accessible from the project's [default
+   * network](https://cloud.google.com/vpc/docs/vpc).
+   *
+   * <p>The creation is executed asynchronously and callers may check the returned operation to
+   * track its progress. Once the operation is completed the Redis instance will be fully
+   * functional. Completed longrunning.Operation will contain the new instance object in the
+   * response field.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */
@@ -397,13 +458,18 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a Redis instance based on the specified tier and memory size. By default, the instance
-   * is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc). The
-   * creation is executed asynchronously and callers may check the returned operation to track its
-   * progress. Once the operation is completed the Redis instance will be fully functional.
-   * Completed longrunning.Operation will contain the new instance object in the response field. The
-   * returned operation is automatically deleted after a few hours, so there is no need to call
-   * DeleteOperation.
+   * Creates a Redis instance based on the specified tier and memory size.
+   *
+   * <p>By default, the instance is accessible from the project's [default
+   * network](https://cloud.google.com/vpc/docs/vpc).
+   *
+   * <p>The creation is executed asynchronously and callers may check the returned operation to
+   * track its progress. Once the operation is completed the Redis instance will be fully
+   * functional. Completed longrunning.Operation will contain the new instance object in the
+   * response field.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */
@@ -413,9 +479,10 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the metadata and configuration of a specific Redis instance. Completed
-   * longrunning.Operation will contain the new instance object in the response field. The returned
-   * operation is automatically deleted after a few hours, so there is no need to call
+   * Updates the metadata and configuration of a specific Redis instance.
+   *
+   * <p>Completed longrunning.Operation will contain the new instance object in the response field.
+   * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
    * <p>Sample code:
@@ -436,9 +503,10 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the metadata and configuration of a specific Redis instance. Completed
-   * longrunning.Operation will contain the new instance object in the response field. The returned
-   * operation is automatically deleted after a few hours, so there is no need to call
+   * Updates the metadata and configuration of a specific Redis instance.
+   *
+   * <p>Completed longrunning.Operation will contain the new instance object in the response field.
+   * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
    * <p>Sample code:
@@ -453,9 +521,10 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the metadata and configuration of a specific Redis instance. Completed
-   * longrunning.Operation will contain the new instance object in the response field. The returned
-   * operation is automatically deleted after a few hours, so there is no need to call
+   * Updates the metadata and configuration of a specific Redis instance.
+   *
+   * <p>Completed longrunning.Operation will contain the new instance object in the response field.
+   * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
    * <p>Sample code:
@@ -467,9 +536,10 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the metadata and configuration of a specific Redis instance. Completed
-   * longrunning.Operation will contain the new instance object in the response field. The returned
-   * operation is automatically deleted after a few hours, so there is no need to call
+   * Updates the metadata and configuration of a specific Redis instance.
+   *
+   * <p>Completed longrunning.Operation will contain the new instance object in the response field.
+   * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
    * <p>Sample code:
@@ -556,10 +626,13 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop
-   * serving during this operation. Instance state will be IMPORTING for entire operation. When
-   * complete, the instance will contain only data from the imported file. The returned operation is
-   * automatically deleted after a few hours, so there is no need to call DeleteOperation.
+   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
+   *
+   * <p>Redis may stop serving during this operation. Instance state will be IMPORTING for entire
+   * operation. When complete, the instance will contain only data from the imported file.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -578,10 +651,13 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop
-   * serving during this operation. Instance state will be IMPORTING for entire operation. When
-   * complete, the instance will contain only data from the imported file. The returned operation is
-   * automatically deleted after a few hours, so there is no need to call DeleteOperation.
+   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
+   *
+   * <p>Redis may stop serving during this operation. Instance state will be IMPORTING for entire
+   * operation. When complete, the instance will contain only data from the imported file.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -595,10 +671,13 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop
-   * serving during this operation. Instance state will be IMPORTING for entire operation. When
-   * complete, the instance will contain only data from the imported file. The returned operation is
-   * automatically deleted after a few hours, so there is no need to call DeleteOperation.
+   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
+   *
+   * <p>Redis may stop serving during this operation. Instance state will be IMPORTING for entire
+   * operation. When complete, the instance will contain only data from the imported file.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */
@@ -609,10 +688,13 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance. Redis may stop
-   * serving during this operation. Instance state will be IMPORTING for entire operation. When
-   * complete, the instance will contain only data from the imported file. The returned operation is
-   * automatically deleted after a few hours, so there is no need to call DeleteOperation.
+   * Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
+   *
+   * <p>Redis may stop serving during this operation. Instance state will be IMPORTING for entire
+   * operation. When complete, the instance will contain only data from the imported file.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */
@@ -622,9 +704,12 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Export Redis instance data into a Redis RDB format file in Cloud Storage. Redis will continue
-   * serving during this operation. The returned operation is automatically deleted after a few
-   * hours, so there is no need to call DeleteOperation.
+   * Export Redis instance data into a Redis RDB format file in Cloud Storage.
+   *
+   * <p>Redis will continue serving during this operation.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -643,9 +728,12 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Export Redis instance data into a Redis RDB format file in Cloud Storage. Redis will continue
-   * serving during this operation. The returned operation is automatically deleted after a few
-   * hours, so there is no need to call DeleteOperation.
+   * Export Redis instance data into a Redis RDB format file in Cloud Storage.
+   *
+   * <p>Redis will continue serving during this operation.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    *
@@ -659,9 +747,12 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Export Redis instance data into a Redis RDB format file in Cloud Storage. Redis will continue
-   * serving during this operation. The returned operation is automatically deleted after a few
-   * hours, so there is no need to call DeleteOperation.
+   * Export Redis instance data into a Redis RDB format file in Cloud Storage.
+   *
+   * <p>Redis will continue serving during this operation.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */
@@ -672,9 +763,12 @@ public class CloudRedisClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Export Redis instance data into a Redis RDB format file in Cloud Storage. Redis will continue
-   * serving during this operation. The returned operation is automatically deleted after a few
-   * hours, so there is no need to call DeleteOperation.
+   * Export Redis instance data into a Redis RDB format file in Cloud Storage.
+   *
+   * <p>Redis will continue serving during this operation.
+   *
+   * <p>The returned operation is automatically deleted after a few hours, so there is no need to
+   * call DeleteOperation.
    *
    * <p>Sample code:
    */

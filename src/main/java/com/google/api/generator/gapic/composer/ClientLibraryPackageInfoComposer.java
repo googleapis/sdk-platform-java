@@ -25,6 +25,9 @@ import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.annotation.Generated;
 
 public class ClientLibraryPackageInfoComposer {
@@ -73,16 +76,34 @@ public class ClientLibraryPackageInfoComposer {
           javaDocCommentBuilder.addParagraph(
               String.format("%s %s %s", DIVIDER, javaClientName, DIVIDER));
 
-      // TODO(miraleung): Paragraphs
+      // TODO(miraleung): Replace this with a comment converter when we upport CommonMark.
       if (service.hasDescription()) {
-        String[] descriptionParagraphs = service.description().split("\\r?\\n");
+        String[] descriptionParagraphs = service.description().split("\\n\\n");
         for (int i = 0; i < descriptionParagraphs.length; i++) {
-          if (i == 0) {
+          boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
+          // Split by listed items, then join newlines.
+          List<String> listItems =
+              Stream.of(descriptionParagraphs[i].split("\\n \\*"))
+                  .map(s -> s.replace("\n", ""))
+                  .collect(Collectors.toList());
+          if (startsWithItemizedList) {
+            // Remove the first asterisk.
+            listItems.set(0, listItems.get(0).substring(2));
+          }
+
+          if (!startsWithItemizedList) {
+            if (i == 0) {
+              javaDocCommentBuilder =
+                  javaDocCommentBuilder.addParagraph(
+                      String.format(SERVICE_DESCRIPTION_HEADER_PATTERN, listItems.get(0)));
+            } else {
+              javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(listItems.get(0));
+            }
+          }
+          if (listItems.size() > 1 || startsWithItemizedList) {
             javaDocCommentBuilder =
-                javaDocCommentBuilder.addParagraph(
-                    String.format(SERVICE_DESCRIPTION_HEADER_PATTERN, descriptionParagraphs[i]));
-          } else {
-            javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(descriptionParagraphs[i]);
+                javaDocCommentBuilder.addUnorderedList(
+                    listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
           }
         }
       }
