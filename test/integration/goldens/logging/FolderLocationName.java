@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.logging.v2;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.resourcenames.ResourceName;
@@ -28,20 +28,20 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class LocationName implements ResourceName {
-  private static final PathTemplate PROJECT_LOCATION =
-      PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+public class FolderLocationName implements ResourceName {
+  private static final PathTemplate FOLDER_LOCATION =
+      PathTemplate.createWithoutUrlEncoding("folders/{folder}/locations/{location}");
   private volatile Map<String, String> fieldValuesMap;
-  private final String project;
+  private final String folder;
   private final String location;
 
-  private LocationName(Builder builder) {
-    project = Preconditions.checkNotNull(builder.getProject());
+  private FolderLocationName(Builder builder) {
+    folder = Preconditions.checkNotNull(builder.getFolder());
     location = Preconditions.checkNotNull(builder.getLocation());
   }
 
-  public String getProject() {
-    return project;
+  public String getFolder() {
+    return folder;
   }
 
   public String getLocation() {
@@ -56,35 +56,35 @@ public class LocationName implements ResourceName {
     return new Builder(this);
   }
 
-  public static LocationName of(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build();
+  public static FolderLocationName of(String folder, String location) {
+    return newBuilder().setFolder(folder).setLocation(location).build();
   }
 
-  public static String format(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build().toString();
+  public static String format(String folder, String location) {
+    return newBuilder().setFolder(folder).setLocation(location).build().toString();
   }
 
-  public static LocationName parse(String formattedString) {
+  public static FolderLocationName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
     Map<String, String> matchMap =
-        PROJECT_LOCATION.validatedMatch(
-            formattedString, "LocationName.parse: formattedString not in valid format");
-    return of(matchMap.get("project"), matchMap.get("location"));
+        FOLDER_LOCATION.validatedMatch(
+            formattedString, "FolderLocationName.parse: formattedString not in valid format");
+    return of(matchMap.get("folder"), matchMap.get("location"));
   }
 
-  public static List<LocationName> parseList(List<String> formattedStrings) {
-    List<LocationName> list = new ArrayList<>(formattedStrings.size());
+  public static List<FolderLocationName> parseList(List<String> formattedStrings) {
+    List<FolderLocationName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<LocationName> values) {
+  public static List<String> toStringList(List<FolderLocationName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (LocationName value : values) {
+    for (FolderLocationName value : values) {
       if (Objects.isNull(value)) {
         list.add("");
       } else {
@@ -95,7 +95,7 @@ public class LocationName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_LOCATION.matches(formattedString);
+    return FOLDER_LOCATION.matches(formattedString);
   }
 
   @Override
@@ -104,8 +104,8 @@ public class LocationName implements ResourceName {
       synchronized (this) {
         if (Objects.isNull(fieldValuesMap)) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
-            fieldMapBuilder.put("project", project);
+          if (!Objects.isNull(folder)) {
+            fieldMapBuilder.put("folder", folder);
           }
           if (!Objects.isNull(location)) {
             fieldMapBuilder.put("location", location);
@@ -123,7 +123,7 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project, "location", location);
+    return FOLDER_LOCATION.instantiate("folder", folder, "location", location);
   }
 
   @Override
@@ -132,8 +132,8 @@ public class LocationName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      LocationName that = ((LocationName) o);
-      return Objects.equals(this.project, that.project)
+      FolderLocationName that = ((FolderLocationName) o);
+      return Objects.equals(this.folder, that.folder)
           && Objects.equals(this.location, that.location);
     }
     return false;
@@ -143,29 +143,29 @@ public class LocationName implements ResourceName {
   public int hashCode() {
     int h = 1;
     h *= 1000003;
-    h ^= Objects.hashCode(project);
+    h ^= Objects.hashCode(folder);
     h *= 1000003;
     h ^= Objects.hashCode(location);
     return h;
   }
 
-  /** Builder for projects/{project}/locations/{location}. */
+  /** Builder for folders/{folder}/locations/{location}. */
   public static class Builder {
-    private String project;
+    private String folder;
     private String location;
 
     private Builder() {}
 
-    public String getProject() {
-      return project;
+    public String getFolder() {
+      return folder;
     }
 
     public String getLocation() {
       return location;
     }
 
-    public Builder setProject(String project) {
-      this.project = project;
+    public Builder setFolder(String folder) {
+      this.folder = folder;
       return this;
     }
 
@@ -174,13 +174,13 @@ public class LocationName implements ResourceName {
       return this;
     }
 
-    private Builder(LocationName locationName) {
-      project = locationName.project;
-      location = locationName.location;
+    private Builder(FolderLocationName folderLocationName) {
+      folder = folderLocationName.folder;
+      location = folderLocationName.location;
     }
 
-    public LocationName build() {
-      return new LocationName(this);
+    public FolderLocationName build() {
+      return new FolderLocationName(this);
     }
   }
 }

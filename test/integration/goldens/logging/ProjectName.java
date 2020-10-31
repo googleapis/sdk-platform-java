@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.logging.v2;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.resourcenames.ResourceName;
@@ -28,24 +28,18 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class LocationName implements ResourceName {
-  private static final PathTemplate PROJECT_LOCATION =
-      PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+public class ProjectName implements ResourceName {
+  private static final PathTemplate PROJECT =
+      PathTemplate.createWithoutUrlEncoding("projects/{project}");
   private volatile Map<String, String> fieldValuesMap;
   private final String project;
-  private final String location;
 
-  private LocationName(Builder builder) {
+  private ProjectName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
-    location = Preconditions.checkNotNull(builder.getLocation());
   }
 
   public String getProject() {
     return project;
-  }
-
-  public String getLocation() {
-    return location;
   }
 
   public static Builder newBuilder() {
@@ -56,35 +50,35 @@ public class LocationName implements ResourceName {
     return new Builder(this);
   }
 
-  public static LocationName of(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build();
+  public static ProjectName of(String project) {
+    return newBuilder().setProject(project).build();
   }
 
-  public static String format(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build().toString();
+  public static String format(String project) {
+    return newBuilder().setProject(project).build().toString();
   }
 
-  public static LocationName parse(String formattedString) {
+  public static ProjectName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
     Map<String, String> matchMap =
-        PROJECT_LOCATION.validatedMatch(
-            formattedString, "LocationName.parse: formattedString not in valid format");
-    return of(matchMap.get("project"), matchMap.get("location"));
+        PROJECT.validatedMatch(
+            formattedString, "ProjectName.parse: formattedString not in valid format");
+    return of(matchMap.get("project"));
   }
 
-  public static List<LocationName> parseList(List<String> formattedStrings) {
-    List<LocationName> list = new ArrayList<>(formattedStrings.size());
+  public static List<ProjectName> parseList(List<String> formattedStrings) {
+    List<ProjectName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<LocationName> values) {
+  public static List<String> toStringList(List<ProjectName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (LocationName value : values) {
+    for (ProjectName value : values) {
       if (Objects.isNull(value)) {
         list.add("");
       } else {
@@ -95,7 +89,7 @@ public class LocationName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_LOCATION.matches(formattedString);
+    return PROJECT.matches(formattedString);
   }
 
   @Override
@@ -106,9 +100,6 @@ public class LocationName implements ResourceName {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
           if (!Objects.isNull(project)) {
             fieldMapBuilder.put("project", project);
-          }
-          if (!Objects.isNull(location)) {
-            fieldMapBuilder.put("location", location);
           }
           fieldValuesMap = fieldMapBuilder.build();
         }
@@ -123,7 +114,7 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project, "location", location);
+    return PROJECT.instantiate("project", project);
   }
 
   @Override
@@ -132,9 +123,8 @@ public class LocationName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      LocationName that = ((LocationName) o);
-      return Objects.equals(this.project, that.project)
-          && Objects.equals(this.location, that.location);
+      ProjectName that = ((ProjectName) o);
+      return Objects.equals(this.project, that.project);
     }
     return false;
   }
@@ -144,15 +134,12 @@ public class LocationName implements ResourceName {
     int h = 1;
     h *= 1000003;
     h ^= Objects.hashCode(project);
-    h *= 1000003;
-    h ^= Objects.hashCode(location);
     return h;
   }
 
-  /** Builder for projects/{project}/locations/{location}. */
+  /** Builder for projects/{project}. */
   public static class Builder {
     private String project;
-    private String location;
 
     private Builder() {}
 
@@ -160,27 +147,17 @@ public class LocationName implements ResourceName {
       return project;
     }
 
-    public String getLocation() {
-      return location;
-    }
-
     public Builder setProject(String project) {
       this.project = project;
       return this;
     }
 
-    public Builder setLocation(String location) {
-      this.location = location;
-      return this;
+    private Builder(ProjectName projectName) {
+      project = projectName.project;
     }
 
-    private Builder(LocationName locationName) {
-      project = locationName.project;
-      location = locationName.location;
-    }
-
-    public LocationName build() {
-      return new LocationName(this);
+    public ProjectName build() {
+      return new ProjectName(this);
     }
   }
 }

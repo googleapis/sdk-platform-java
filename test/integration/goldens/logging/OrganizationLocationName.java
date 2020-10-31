@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.logging.v2;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.resourcenames.ResourceName;
@@ -28,20 +28,20 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class LocationName implements ResourceName {
-  private static final PathTemplate PROJECT_LOCATION =
-      PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+public class OrganizationLocationName implements ResourceName {
+  private static final PathTemplate ORGANIZATION_LOCATION =
+      PathTemplate.createWithoutUrlEncoding("organizations/{organization}/locations/{location}");
   private volatile Map<String, String> fieldValuesMap;
-  private final String project;
+  private final String organization;
   private final String location;
 
-  private LocationName(Builder builder) {
-    project = Preconditions.checkNotNull(builder.getProject());
+  private OrganizationLocationName(Builder builder) {
+    organization = Preconditions.checkNotNull(builder.getOrganization());
     location = Preconditions.checkNotNull(builder.getLocation());
   }
 
-  public String getProject() {
-    return project;
+  public String getOrganization() {
+    return organization;
   }
 
   public String getLocation() {
@@ -56,35 +56,35 @@ public class LocationName implements ResourceName {
     return new Builder(this);
   }
 
-  public static LocationName of(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build();
+  public static OrganizationLocationName of(String organization, String location) {
+    return newBuilder().setOrganization(organization).setLocation(location).build();
   }
 
-  public static String format(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build().toString();
+  public static String format(String organization, String location) {
+    return newBuilder().setOrganization(organization).setLocation(location).build().toString();
   }
 
-  public static LocationName parse(String formattedString) {
+  public static OrganizationLocationName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
     Map<String, String> matchMap =
-        PROJECT_LOCATION.validatedMatch(
-            formattedString, "LocationName.parse: formattedString not in valid format");
-    return of(matchMap.get("project"), matchMap.get("location"));
+        ORGANIZATION_LOCATION.validatedMatch(
+            formattedString, "OrganizationLocationName.parse: formattedString not in valid format");
+    return of(matchMap.get("organization"), matchMap.get("location"));
   }
 
-  public static List<LocationName> parseList(List<String> formattedStrings) {
-    List<LocationName> list = new ArrayList<>(formattedStrings.size());
+  public static List<OrganizationLocationName> parseList(List<String> formattedStrings) {
+    List<OrganizationLocationName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<LocationName> values) {
+  public static List<String> toStringList(List<OrganizationLocationName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (LocationName value : values) {
+    for (OrganizationLocationName value : values) {
       if (Objects.isNull(value)) {
         list.add("");
       } else {
@@ -95,7 +95,7 @@ public class LocationName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_LOCATION.matches(formattedString);
+    return ORGANIZATION_LOCATION.matches(formattedString);
   }
 
   @Override
@@ -104,8 +104,8 @@ public class LocationName implements ResourceName {
       synchronized (this) {
         if (Objects.isNull(fieldValuesMap)) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
-            fieldMapBuilder.put("project", project);
+          if (!Objects.isNull(organization)) {
+            fieldMapBuilder.put("organization", organization);
           }
           if (!Objects.isNull(location)) {
             fieldMapBuilder.put("location", location);
@@ -123,7 +123,7 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project, "location", location);
+    return ORGANIZATION_LOCATION.instantiate("organization", organization, "location", location);
   }
 
   @Override
@@ -132,8 +132,8 @@ public class LocationName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      LocationName that = ((LocationName) o);
-      return Objects.equals(this.project, that.project)
+      OrganizationLocationName that = ((OrganizationLocationName) o);
+      return Objects.equals(this.organization, that.organization)
           && Objects.equals(this.location, that.location);
     }
     return false;
@@ -143,29 +143,29 @@ public class LocationName implements ResourceName {
   public int hashCode() {
     int h = 1;
     h *= 1000003;
-    h ^= Objects.hashCode(project);
+    h ^= Objects.hashCode(organization);
     h *= 1000003;
     h ^= Objects.hashCode(location);
     return h;
   }
 
-  /** Builder for projects/{project}/locations/{location}. */
+  /** Builder for organizations/{organization}/locations/{location}. */
   public static class Builder {
-    private String project;
+    private String organization;
     private String location;
 
     private Builder() {}
 
-    public String getProject() {
-      return project;
+    public String getOrganization() {
+      return organization;
     }
 
     public String getLocation() {
       return location;
     }
 
-    public Builder setProject(String project) {
-      this.project = project;
+    public Builder setOrganization(String organization) {
+      this.organization = organization;
       return this;
     }
 
@@ -174,13 +174,13 @@ public class LocationName implements ResourceName {
       return this;
     }
 
-    private Builder(LocationName locationName) {
-      project = locationName.project;
-      location = locationName.location;
+    private Builder(OrganizationLocationName organizationLocationName) {
+      organization = organizationLocationName.organization;
+      location = organizationLocationName.location;
     }
 
-    public LocationName build() {
-      return new LocationName(this);
+    public OrganizationLocationName build() {
+      return new OrganizationLocationName(this);
     }
   }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.logging.v2;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.resourcenames.ResourceName;
@@ -28,20 +28,21 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class LocationName implements ResourceName {
-  private static final PathTemplate PROJECT_LOCATION =
-      PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+public class BillingAccountLocationName implements ResourceName {
+  private static final PathTemplate BILLING_ACCOUNT_LOCATION =
+      PathTemplate.createWithoutUrlEncoding(
+          "billingAccounts/{billing_account}/locations/{location}");
   private volatile Map<String, String> fieldValuesMap;
-  private final String project;
+  private final String billingAccount;
   private final String location;
 
-  private LocationName(Builder builder) {
-    project = Preconditions.checkNotNull(builder.getProject());
+  private BillingAccountLocationName(Builder builder) {
+    billingAccount = Preconditions.checkNotNull(builder.getBillingAccount());
     location = Preconditions.checkNotNull(builder.getLocation());
   }
 
-  public String getProject() {
-    return project;
+  public String getBillingAccount() {
+    return billingAccount;
   }
 
   public String getLocation() {
@@ -56,35 +57,36 @@ public class LocationName implements ResourceName {
     return new Builder(this);
   }
 
-  public static LocationName of(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build();
+  public static BillingAccountLocationName of(String billingAccount, String location) {
+    return newBuilder().setBillingAccount(billingAccount).setLocation(location).build();
   }
 
-  public static String format(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build().toString();
+  public static String format(String billingAccount, String location) {
+    return newBuilder().setBillingAccount(billingAccount).setLocation(location).build().toString();
   }
 
-  public static LocationName parse(String formattedString) {
+  public static BillingAccountLocationName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
     Map<String, String> matchMap =
-        PROJECT_LOCATION.validatedMatch(
-            formattedString, "LocationName.parse: formattedString not in valid format");
-    return of(matchMap.get("project"), matchMap.get("location"));
+        BILLING_ACCOUNT_LOCATION.validatedMatch(
+            formattedString,
+            "BillingAccountLocationName.parse: formattedString not in valid format");
+    return of(matchMap.get("billing_account"), matchMap.get("location"));
   }
 
-  public static List<LocationName> parseList(List<String> formattedStrings) {
-    List<LocationName> list = new ArrayList<>(formattedStrings.size());
+  public static List<BillingAccountLocationName> parseList(List<String> formattedStrings) {
+    List<BillingAccountLocationName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<LocationName> values) {
+  public static List<String> toStringList(List<BillingAccountLocationName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (LocationName value : values) {
+    for (BillingAccountLocationName value : values) {
       if (Objects.isNull(value)) {
         list.add("");
       } else {
@@ -95,7 +97,7 @@ public class LocationName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_LOCATION.matches(formattedString);
+    return BILLING_ACCOUNT_LOCATION.matches(formattedString);
   }
 
   @Override
@@ -104,8 +106,8 @@ public class LocationName implements ResourceName {
       synchronized (this) {
         if (Objects.isNull(fieldValuesMap)) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
-            fieldMapBuilder.put("project", project);
+          if (!Objects.isNull(billingAccount)) {
+            fieldMapBuilder.put("billing_account", billingAccount);
           }
           if (!Objects.isNull(location)) {
             fieldMapBuilder.put("location", location);
@@ -123,7 +125,8 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project, "location", location);
+    return BILLING_ACCOUNT_LOCATION.instantiate(
+        "billing_account", billingAccount, "location", location);
   }
 
   @Override
@@ -132,8 +135,8 @@ public class LocationName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      LocationName that = ((LocationName) o);
-      return Objects.equals(this.project, that.project)
+      BillingAccountLocationName that = ((BillingAccountLocationName) o);
+      return Objects.equals(this.billingAccount, that.billingAccount)
           && Objects.equals(this.location, that.location);
     }
     return false;
@@ -143,29 +146,29 @@ public class LocationName implements ResourceName {
   public int hashCode() {
     int h = 1;
     h *= 1000003;
-    h ^= Objects.hashCode(project);
+    h ^= Objects.hashCode(billingAccount);
     h *= 1000003;
     h ^= Objects.hashCode(location);
     return h;
   }
 
-  /** Builder for projects/{project}/locations/{location}. */
+  /** Builder for billingAccounts/{billing_account}/locations/{location}. */
   public static class Builder {
-    private String project;
+    private String billingAccount;
     private String location;
 
     private Builder() {}
 
-    public String getProject() {
-      return project;
+    public String getBillingAccount() {
+      return billingAccount;
     }
 
     public String getLocation() {
       return location;
     }
 
-    public Builder setProject(String project) {
-      this.project = project;
+    public Builder setBillingAccount(String billingAccount) {
+      this.billingAccount = billingAccount;
       return this;
     }
 
@@ -174,13 +177,13 @@ public class LocationName implements ResourceName {
       return this;
     }
 
-    private Builder(LocationName locationName) {
-      project = locationName.project;
-      location = locationName.location;
+    private Builder(BillingAccountLocationName billingAccountLocationName) {
+      billingAccount = billingAccountLocationName.billingAccount;
+      location = billingAccountLocationName.location;
     }
 
-    public LocationName build() {
-      return new LocationName(this);
+    public BillingAccountLocationName build() {
+      return new BillingAccountLocationName(this);
     }
   }
 }

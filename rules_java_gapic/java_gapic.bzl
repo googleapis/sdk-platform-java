@@ -31,9 +31,14 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     unzip -q temp-codegen.srcjar -d {output_dir_path}
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
-    zip -r -j {output_srcjar_name}.srcjar {output_dir_path}/src/main/*
-    zip -r -j {output_srcjar_name}-resource-name.srcjar {output_dir_path}/proto/src/main/*
-    zip -r -j {output_srcjar_name}-tests.srcjar {output_dir_path}/src/test/*
+    WORKING_DIR=`pwd`
+    cd {output_dir_path}/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
+    cd $WORKING_DIR/{output_dir_path}/proto/src/main/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-resource-name.srcjar ./
+    cd $WORKING_DIR/{output_dir_path}/src/test/java
+    zip -r $WORKING_DIR/{output_srcjar_name}-tests.srcjar ./
+    cd $WORKING_DIR
     mv {output_srcjar_name}.srcjar {output_main}
     mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}

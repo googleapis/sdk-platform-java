@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.logging.v2;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.resourcenames.ResourceName;
@@ -28,24 +28,24 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class LocationName implements ResourceName {
-  private static final PathTemplate PROJECT_LOCATION =
-      PathTemplate.createWithoutUrlEncoding("projects/{project}/locations/{location}");
+public class LogMetricName implements ResourceName {
+  private static final PathTemplate PROJECT_METRIC =
+      PathTemplate.createWithoutUrlEncoding("projects/{project}/metrics/{metric}");
   private volatile Map<String, String> fieldValuesMap;
   private final String project;
-  private final String location;
+  private final String metric;
 
-  private LocationName(Builder builder) {
+  private LogMetricName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
-    location = Preconditions.checkNotNull(builder.getLocation());
+    metric = Preconditions.checkNotNull(builder.getMetric());
   }
 
   public String getProject() {
     return project;
   }
 
-  public String getLocation() {
-    return location;
+  public String getMetric() {
+    return metric;
   }
 
   public static Builder newBuilder() {
@@ -56,35 +56,35 @@ public class LocationName implements ResourceName {
     return new Builder(this);
   }
 
-  public static LocationName of(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build();
+  public static LogMetricName of(String project, String metric) {
+    return newBuilder().setProject(project).setMetric(metric).build();
   }
 
-  public static String format(String project, String location) {
-    return newBuilder().setProject(project).setLocation(location).build().toString();
+  public static String format(String project, String metric) {
+    return newBuilder().setProject(project).setMetric(metric).build().toString();
   }
 
-  public static LocationName parse(String formattedString) {
+  public static LogMetricName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
     Map<String, String> matchMap =
-        PROJECT_LOCATION.validatedMatch(
-            formattedString, "LocationName.parse: formattedString not in valid format");
-    return of(matchMap.get("project"), matchMap.get("location"));
+        PROJECT_METRIC.validatedMatch(
+            formattedString, "LogMetricName.parse: formattedString not in valid format");
+    return of(matchMap.get("project"), matchMap.get("metric"));
   }
 
-  public static List<LocationName> parseList(List<String> formattedStrings) {
-    List<LocationName> list = new ArrayList<>(formattedStrings.size());
+  public static List<LogMetricName> parseList(List<String> formattedStrings) {
+    List<LogMetricName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<LocationName> values) {
+  public static List<String> toStringList(List<LogMetricName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (LocationName value : values) {
+    for (LogMetricName value : values) {
       if (Objects.isNull(value)) {
         list.add("");
       } else {
@@ -95,7 +95,7 @@ public class LocationName implements ResourceName {
   }
 
   public static boolean isParsableFrom(String formattedString) {
-    return PROJECT_LOCATION.matches(formattedString);
+    return PROJECT_METRIC.matches(formattedString);
   }
 
   @Override
@@ -107,8 +107,8 @@ public class LocationName implements ResourceName {
           if (!Objects.isNull(project)) {
             fieldMapBuilder.put("project", project);
           }
-          if (!Objects.isNull(location)) {
-            fieldMapBuilder.put("location", location);
+          if (!Objects.isNull(metric)) {
+            fieldMapBuilder.put("metric", metric);
           }
           fieldValuesMap = fieldMapBuilder.build();
         }
@@ -123,7 +123,7 @@ public class LocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_LOCATION.instantiate("project", project, "location", location);
+    return PROJECT_METRIC.instantiate("project", project, "metric", metric);
   }
 
   @Override
@@ -132,9 +132,8 @@ public class LocationName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      LocationName that = ((LocationName) o);
-      return Objects.equals(this.project, that.project)
-          && Objects.equals(this.location, that.location);
+      LogMetricName that = ((LogMetricName) o);
+      return Objects.equals(this.project, that.project) && Objects.equals(this.metric, that.metric);
     }
     return false;
   }
@@ -145,14 +144,14 @@ public class LocationName implements ResourceName {
     h *= 1000003;
     h ^= Objects.hashCode(project);
     h *= 1000003;
-    h ^= Objects.hashCode(location);
+    h ^= Objects.hashCode(metric);
     return h;
   }
 
-  /** Builder for projects/{project}/locations/{location}. */
+  /** Builder for projects/{project}/metrics/{metric}. */
   public static class Builder {
     private String project;
-    private String location;
+    private String metric;
 
     private Builder() {}
 
@@ -160,8 +159,8 @@ public class LocationName implements ResourceName {
       return project;
     }
 
-    public String getLocation() {
-      return location;
+    public String getMetric() {
+      return metric;
     }
 
     public Builder setProject(String project) {
@@ -169,18 +168,18 @@ public class LocationName implements ResourceName {
       return this;
     }
 
-    public Builder setLocation(String location) {
-      this.location = location;
+    public Builder setMetric(String metric) {
+      this.metric = metric;
       return this;
     }
 
-    private Builder(LocationName locationName) {
-      project = locationName.project;
-      location = locationName.location;
+    private Builder(LogMetricName logMetricName) {
+      project = logMetricName.project;
+      metric = logMetricName.metric;
     }
 
-    public LocationName build() {
-      return new LocationName(this);
+    public LogMetricName build() {
+      return new LogMetricName(this);
     }
   }
 }
