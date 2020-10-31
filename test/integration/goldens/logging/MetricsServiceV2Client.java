@@ -79,14 +79,14 @@ public class MetricsServiceV2Client implements BackgroundResource {
   private final MetricsServiceV2Settings settings;
   private final MetricsServiceV2Stub stub;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of MetricsServiceV2Client with default settings. */
   public static final MetricsServiceV2Client create() throws IOException {
     return create(MetricsServiceV2Settings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of MetricsServiceV2Client, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final MetricsServiceV2Client create(MetricsServiceV2Settings settings)
       throws IOException {
@@ -94,8 +94,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(MetricsServiceV2Settings).
+   * Constructs an instance of MetricsServiceV2Client, using the given stub for making calls. This
+   * is for advanced usage - prefer using create(MetricsServiceV2Settings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final MetricsServiceV2Client create(MetricsServiceV2Stub stub) {
@@ -103,8 +103,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of MetricsServiceV2Client, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected MetricsServiceV2Client(MetricsServiceV2Settings settings) throws IOException {
     this.settings = settings;
