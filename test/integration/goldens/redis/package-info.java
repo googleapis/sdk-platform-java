@@ -29,9 +29,9 @@
  * defines the following resource model for managing Redis instances:
  *
  * <ul>
- *   <li>The service works with a collection of cloud projects, named: `/projects/*`
- *   <li>Each project has a collection of available locations, named: `/locations/*`
- *   <li>Each location has a collection of Redis instances, named: `/instances/*`
+ *   <li>The service works with a collection of cloud projects, named: `/projects/&#42;`
+ *   <li>Each project has a collection of available locations, named: `/locations/&#42;`
+ *   <li>Each location has a collection of Redis instances, named: `/instances/&#42;`
  *   <li>As such, Redis instances are resources of the form:
  *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
  * </ul>

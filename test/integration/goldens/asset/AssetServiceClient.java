@@ -493,22 +493,22 @@ public class AssetServiceClient implements BackgroundResource {
    *     <p>Examples:
    *     <ul>
    *       <li>`name:Important` to find Cloud resources whose name contains "Important" as a word.
-   *       <li>`displayName:Impor*` to find Cloud resources whose display name contains "Impor" as a
-   *           prefix.
-   *       <li>`description:*por*` to find Cloud resources whose description contains "por" as a
-   *           substring.
-   *       <li>`location:us-west*` to find Cloud resources whose location is prefixed with
+   *       <li>`displayName:Impor&#42;` to find Cloud resources whose display name contains "Impor"
+   *           as a prefix.
+   *       <li>`description:&#42;por&#42;` to find Cloud resources whose description contains "por"
+   *           as a substring.
+   *       <li>`location:us-west&#42;` to find Cloud resources whose location is prefixed with
    *           "us-west".
    *       <li>`labels:prod` to find Cloud resources whose labels contain "prod" as a key or value.
    *       <li>`labels.env:prod` to find Cloud resources that have a label "env" and its value is
    *           "prod".
-   *       <li>`labels.env:*` to find Cloud resources that have a label "env".
+   *       <li>`labels.env:&#42;` to find Cloud resources that have a label "env".
    *       <li>`Important` to find Cloud resources that contain "Important" as a word in any of the
    *           searchable fields.
-   *       <li>`Impor*` to find Cloud resources that contain "Impor" as a prefix in any of the
+   *       <li>`Impor&#42;` to find Cloud resources that contain "Impor" as a prefix in any of the
    *           searchable fields.
-   *       <li>`*por*` to find Cloud resources that contain "por" as a substring in any of the
-   *           searchable fields.
+   *       <li>`&#42;por&#42;` to find Cloud resources that contain "por" as a substring in any of
+   *           the searchable fields.
    *       <li>`Important location:(us-west1 OR global)` to find Cloud resources that contain
    *           "Important" as a word in any of the searchable fields and are also located in the
    *           "us-west1" region or the "global" location.
@@ -598,7 +598,8 @@ public class AssetServiceClient implements BackgroundResource {
    *     the specified `scope`.
    *     <p>Examples:
    *     <ul>
-   *       <li>`policy:amy@gmail.com` to find IAM policy bindings that specify user "amy@gmail.com".
+   *       <li>`policy:amy{@literal @}gmail.com` to find IAM policy bindings that specify user
+   *           "amy{@literal @}gmail.com".
    *       <li>`policy:roles/compute.admin` to find IAM policy bindings that specify the Compute
    *           Admin role.
    *       <li>`policy.role.permissions:storage.buckets.update` to find IAM policy bindings that
@@ -609,8 +610,8 @@ public class AssetServiceClient implements BackgroundResource {
    *           "organizations/123456".
    *       <li>`Important` to find IAM policy bindings that contain "Important" as a word in any of
    *           the searchable fields (except for the included permissions).
-   *       <li>`*por*` to find IAM policy bindings that contain "por" as a substring in any of the
-   *           searchable fields (except for the included permissions).
+   *       <li>`&#42;por&#42;` to find IAM policy bindings that contain "por" as a substring in any
+   *           of the searchable fields (except for the included permissions).
    *       <li>`resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are
    *           set on resources "instance1" or "instance2" and also specify user "amy".
    *     </ul>
