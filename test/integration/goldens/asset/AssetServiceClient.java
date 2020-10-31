@@ -84,22 +84,22 @@ public class AssetServiceClient implements BackgroundResource {
   private final AssetServiceStub stub;
   private final OperationsClient operationsClient;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of AssetServiceClient with default settings. */
   public static final AssetServiceClient create() throws IOException {
     return create(AssetServiceSettings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of AssetServiceClient, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final AssetServiceClient create(AssetServiceSettings settings) throws IOException {
     return new AssetServiceClient(settings);
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(AssetServiceSettings).
+   * Constructs an instance of AssetServiceClient, using the given stub for making calls. This is
+   * for advanced usage - prefer using create(AssetServiceSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final AssetServiceClient create(AssetServiceStub stub) {
@@ -107,8 +107,9 @@ public class AssetServiceClient implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of AssetServiceClient, using the given settings. This is protected so
+   * that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected AssetServiceClient(AssetServiceSettings settings) throws IOException {
     this.settings = settings;

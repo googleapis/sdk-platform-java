@@ -104,21 +104,21 @@ public class CloudRedisClient implements BackgroundResource {
   private final CloudRedisStub stub;
   private final OperationsClient operationsClient;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of CloudRedisClient with default settings. */
   public static final CloudRedisClient create() throws IOException {
     return create(CloudRedisSettings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of CloudRedisClient, using the given settings. The channels are created
+   * based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final CloudRedisClient create(CloudRedisSettings settings) throws IOException {
     return new CloudRedisClient(settings);
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
+   * Constructs an instance of CloudRedisClient, using the given stub for making calls. This is for
    * advanced usage - prefer using create(CloudRedisSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
@@ -127,8 +127,8 @@ public class CloudRedisClient implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of CloudRedisClient, using the given settings. This is protected so that
+   * it is easy to make a subclass, but otherwise, the static factory methods should be preferred.
    */
   protected CloudRedisClient(CloudRedisSettings settings) throws IOException {
     this.settings = settings;
