@@ -223,7 +223,8 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     MethodDefinition createMethodOne =
         MethodDefinition.builder()
-            .setHeaderCommentStatements(ServiceClientCommentComposer.CREATE_METHOD_NO_ARG_COMMENT)
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.createMethodNoArgComment(service.name()))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -242,7 +243,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.CREATE_METHOD_SETTINGS_ARG_COMMENT)
+                ServiceClientCommentComposer.createMethodSettingsArgComment(service.name()))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -274,7 +275,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         MethodDefinition.builder()
             .setHeaderCommentStatements(
                 ServiceClientCommentComposer.createCreateMethodStubArgComment(
-                    settingsVarExpr.type()))
+                    service.name(), settingsVarExpr.type()))
             .setAnnotations(Arrays.asList(betaAnnotation))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
@@ -365,7 +366,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.add(
         MethodDefinition.constructorBuilder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.PROTECTED_CONSTRUCTOR_SETTINGS_ARG_COMMENT)
+                ServiceClientCommentComposer.createProtectedCtorSettingsArgComment(service.name()))
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())
