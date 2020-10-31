@@ -71,7 +71,7 @@ class ServiceClientCommentComposer {
 
   // Patterns.
   private static final String CREATE_METHOD_STUB_ARG_PATTERN =
-      "Constructs an instance of EchoClient, using the given stub for making calls. This is for"
+      "Constructs an instance of %sClient, using the given stub for making calls. This is for"
           + " advanced usage - prefer using create(%s).";
 
   private static final String SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN =
@@ -80,22 +80,20 @@ class ServiceClientCommentComposer {
 
   private static final String SERVICE_DESCRIPTION_SUMMARY_PATTERN = "Service Description: %s";
 
+  private static final String CREATE_METHOD_NO_ARG_PATTERN =
+      "Constructs an instance of %sClient with default settings.";
+
+  private static final String CREATE_METHOD_SETTINGS_ARG_PATTERN =
+      "Constructs an instance of %sClient, using the given settings. The channels are"
+          + " created based  on the settings passed in, or defaults for any settings that are"
+          + " not set.";
+
+  private static final String PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN =
+      "Constructs an instance of %sClient, using the given settings. This is protected so"
+          + " that it is easy to make a subclass, but otherwise, the static factory methods"
+          + " should be preferred.";
+
   // Comments.
-  static final CommentStatement CREATE_METHOD_NO_ARG_COMMENT =
-      toSimpleComment("Constructs an instance of EchoClient with default settings.");
-
-  static final CommentStatement CREATE_METHOD_SETTINGS_ARG_COMMENT =
-      toSimpleComment(
-          "Constructs an instance of EchoClient, using the given settings. The channels are"
-              + " created based  on the settings passed in, or defaults for any settings that are"
-              + " not set.");
-
-  static final CommentStatement PROTECTED_CONSTRUCTOR_SETTINGS_ARG_COMMENT =
-      toSimpleComment(
-          "Constructs an instance of EchoClient, using the given settings. This is protected so"
-              + " that it is easy to make a subclass, but otherwise, the static factory methods"
-              + " should be preferred.");
-
   static final CommentStatement GET_OPERATIONS_CLIENT_METHOD_COMMENT =
       toSimpleComment(
           "Returns the OperationsClient that can be used to query the status of a long-running"
@@ -136,9 +134,11 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(classHeaderJavadocBuilder.build()));
   }
 
-  static CommentStatement createCreateMethodStubArgComment(TypeNode settingsType) {
+  static CommentStatement createCreateMethodStubArgComment(
+      String serviceName, TypeNode settingsType) {
     return toSimpleComment(
-        String.format(CREATE_METHOD_STUB_ARG_PATTERN, settingsType.reference().name()));
+        String.format(
+            CREATE_METHOD_STUB_ARG_PATTERN, serviceName, settingsType.reference().name()));
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
@@ -172,6 +172,18 @@ class ServiceClientCommentComposer {
 
   static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
     return createRpcMethodHeaderComment(method, Collections.emptyList());
+  }
+
+  static CommentStatement createMethodNoArgComment(String serviceName) {
+    return toSimpleComment(String.format(CREATE_METHOD_NO_ARG_PATTERN, serviceName));
+  }
+
+  static CommentStatement createProtectedCtorSettingsArgComment(String serviceName) {
+    return toSimpleComment(String.format(PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN, serviceName));
+  }
+
+  static CommentStatement createMethodSettingsArgComment(String serviceName) {
+    return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
   }
 
   static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
