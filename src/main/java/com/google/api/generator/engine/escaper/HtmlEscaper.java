@@ -39,7 +39,7 @@ public class HtmlEscaper extends Escaper {
     return charEscaper.escape(sourceString);
   }
 
-  public static String escaper(String source) {
+  public static String process(String source) {
     return SINGLETON.escape(source);
   }
 }
