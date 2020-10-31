@@ -77,7 +77,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addComment(String comment) {
-      componentsList.add(HtmlEscaper.escaper(comment));
+      componentsList.add(HtmlEscaper.process(comment));
       return this;
     }
 
@@ -86,7 +86,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(HtmlEscaper.escaper(line));
+                componentsList.add(HtmlEscaper.process(line));
               });
       componentsList.add("</code></pre>");
       return this;
@@ -131,7 +131,7 @@ public abstract class JavaDocComment implements Comment {
       // Escape component in list one by one, because we will join the components by `\n`
       // `\n` will be taken as escape character by the comment escaper.
       componentsList =
-          componentsList.stream().map(c -> MetacharEscaper.escaper(c)).collect(Collectors.toList());
+          componentsList.stream().map(c -> MetacharEscaper.process(c)).collect(Collectors.toList());
       setComment(String.join("\n", componentsList));
       return autoBuild();
     }
