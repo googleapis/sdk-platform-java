@@ -81,7 +81,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -140,7 +140,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -199,7 +199,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -258,7 +258,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -317,7 +317,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -366,7 +366,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -415,7 +415,7 @@ public class SubscriberClientTest {
             .setPushConfig(PushConfig.newBuilder().build())
             .setAckDeadlineSeconds(2135351438)
             .setRetainAckedMessages(true)
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .setEnableMessageOrdering(true)
             .setExpirationPolicy(ExpirationPolicy.newBuilder().build())
             .setFilter("filter-1274492040")
@@ -1013,7 +1013,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1053,7 +1053,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1181,7 +1181,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1224,7 +1224,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1267,7 +1267,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1310,7 +1310,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
@@ -1353,7 +1353,7 @@ public class SubscriberClientTest {
         Snapshot.newBuilder()
             .setName(SnapshotName.of("[PROJECT]", "[SNAPSHOT]").toString())
             .setTopic(TopicName.ofProjectTopicName("[PROJECT]", "[TOPIC]").toString())
-            .putAllLabels(new HashMap<String>())
+            .putAllLabels(new HashMap<String, String>())
             .build();
     mockSubscriber.addResponse(expectedResponse);
 
