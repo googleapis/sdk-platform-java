@@ -123,7 +123,7 @@ public class LogMetricName implements ResourceName {
 
   @Override
   public String toString() {
-    return PROJECT_METRIC.instantiate("project", project);
+    return PROJECT_METRIC.instantiate("project", project, "metric", metric);
   }
 
   @Override

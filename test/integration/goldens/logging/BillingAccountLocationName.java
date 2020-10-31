@@ -125,7 +125,8 @@ public class BillingAccountLocationName implements ResourceName {
 
   @Override
   public String toString() {
-    return BILLING_ACCOUNT_LOCATION.instantiate("billing_account", billingAccount);
+    return BILLING_ACCOUNT_LOCATION.instantiate(
+        "billing_account", billingAccount, "location", location);
   }
 
   @Override
