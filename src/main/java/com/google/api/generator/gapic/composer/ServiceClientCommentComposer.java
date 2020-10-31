@@ -39,10 +39,6 @@ class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
       "This class provides the ability to make remote calls to the backing service through method "
           + "calls that map to API methods. Sample code to get started:";
-  private static final String SERVICE_DESCRIPTION_CLOSE_STRING =
-      "Note: close() needs to be called on the echoClient object to clean up resources such as "
-          + "threads. In the example above, try-with-resources is used, which automatically calls "
-          + "close().";
   private static final String SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING =
       "The surface of this class includes several types of Java methods for each of the API's "
           + "methods:";
@@ -76,6 +72,11 @@ class ServiceClientCommentComposer {
   private static final String CREATE_METHOD_STUB_ARG_PATTERN =
       "Constructs an instance of %sClient, using the given stub for making calls. This is for"
           + " advanced usage - prefer using create(%s).";
+
+  private static final String SERVICE_DESCRIPTION_CLOSE_PATTERN =
+      "Note: close() needs to be called on the %sClient object to clean up resources such as "
+          + "threads. In the example above, try-with-resources is used, which automatically calls "
+          + "close().";
 
   private static final String SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN =
       "This class can be customized by passing in a custom instance of %s to create(). For"
@@ -117,7 +118,9 @@ class ServiceClientCommentComposer {
     // TODO(summerji): Add sample code here.
 
     // API surface description.
-    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CLOSE_STRING);
+    classHeaderJavadocBuilder.addParagraph(
+        String.format(
+            SERVICE_DESCRIPTION_CLOSE_PATTERN, JavaStyle.toLowerCamelCase(service.name())));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING);
     classHeaderJavadocBuilder.addOrderedList(SERVICE_DESCRIPTION_SURFACE_DESCRIPTION);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
