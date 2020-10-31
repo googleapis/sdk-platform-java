@@ -80,14 +80,14 @@ public class ConfigServiceV2Client implements BackgroundResource {
   private final ConfigServiceV2Settings settings;
   private final ConfigServiceV2Stub stub;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of ConfigServiceV2Client with default settings. */
   public static final ConfigServiceV2Client create() throws IOException {
     return create(ConfigServiceV2Settings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of ConfigServiceV2Client, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final ConfigServiceV2Client create(ConfigServiceV2Settings settings)
       throws IOException {
@@ -95,8 +95,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(ConfigServiceV2Settings).
+   * Constructs an instance of ConfigServiceV2Client, using the given stub for making calls. This is
+   * for advanced usage - prefer using create(ConfigServiceV2Settings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final ConfigServiceV2Client create(ConfigServiceV2Stub stub) {
@@ -104,8 +104,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of ConfigServiceV2Client, using the given settings. This is protected so
+   * that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected ConfigServiceV2Client(ConfigServiceV2Settings settings) throws IOException {
     this.settings = settings;
