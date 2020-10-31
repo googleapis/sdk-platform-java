@@ -34,7 +34,6 @@ INTEGRATION_TEST_LIBRARIES = [
     target = ":%s_java_gapic" % lib_name,
 ) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
-
 ####################################################
 # API Library Rules
 ####################################################
