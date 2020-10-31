@@ -21,15 +21,26 @@
  *
  * <p>======================= CloudRedisClient =======================
  *
- * <p>Service Description: Configures and manages Cloud Memorystore for Redis instances Google Cloud
- * Memorystore for Redis v1 The `redis.googleapis.com` service implements the Google Cloud
- * Memorystore for Redis API and defines the following resource model for managing Redis instances:
- * * The service works with a collection of cloud projects, named: `/projects/*` * Each project has
- * a collection of available locations, named: `/locations/*` * Each location has a collection of
- * Redis instances, named: `/instances/*` * As such, Redis instances are resources of the form:
- * `/projects/{project_id}/locations/{location_id}/instances/{instance_id}` Note that location_id
- * must be referring to a GCP `region`; for example: *
- * `projects/redpepper-1290/locations/us-central1/instances/my-redis`
+ * <p>Service Description: Configures and manages Cloud Memorystore for Redis instances
+ *
+ * <p>Google Cloud Memorystore for Redis v1
+ *
+ * <p>The `redis.googleapis.com` service implements the Google Cloud Memorystore for Redis API and
+ * defines the following resource model for managing Redis instances:
+ *
+ * <ul>
+ *   <li>The service works with a collection of cloud projects, named: `/projects/*`
+ *   <li>Each project has a collection of available locations, named: `/locations/*`
+ *   <li>Each location has a collection of Redis instances, named: `/instances/*`
+ *   <li>As such, Redis instances are resources of the form:
+ *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+ * </ul>
+ *
+ * <p>Note that location_id must be referring to a GCP `region`; for example:
+ *
+ * <ul>
+ *   <li>`projects/redpepper-1290/locations/us-central1/instances/my-redis`
+ * </ul>
  *
  * <p>Sample for CloudRedisClient:
  */
