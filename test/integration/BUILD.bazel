@@ -86,6 +86,7 @@ java_gapic_library(
     ],
 )
 
+# Logging API
 java_gapic_library(
     name = "redis_java_gapic",
     srcs = ["redis_proto_with_info"],
