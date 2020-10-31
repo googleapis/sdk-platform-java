@@ -36,7 +36,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
     cd $WORKING_DIR/{output_dir_path}/proto/src/main/java
     zip -r $WORKING_DIR/{output_srcjar_name}-resource-name.srcjar ./
-    cd $WORKING_DIR/{output_dir_path}/proto/src/test/java
+    cd $WORKING_DIR/{output_dir_path}/src/test/java
     zip -r $WORKING_DIR/{output_srcjar_name}-tests.srcjar ./
     cd $WORKING_DIR
     mv {output_srcjar_name}.srcjar {output_main}
