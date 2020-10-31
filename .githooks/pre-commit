@@ -112,7 +112,7 @@ then
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
-    echo_error "Tests failed." "Please fix them and try again."
+    echo_error "Unit tests failed." "Please fix them and try again."
     exit 1
   fi
 fi
@@ -127,7 +127,7 @@ then
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
-    echo_error "Tests failed." "Please fix them and try again."
+    echo_error "Integration tests failed." "Please fix them and try again."
     exit 1
   fi
 fi
