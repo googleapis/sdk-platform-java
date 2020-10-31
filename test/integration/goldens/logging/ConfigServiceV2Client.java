@@ -181,6 +181,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"

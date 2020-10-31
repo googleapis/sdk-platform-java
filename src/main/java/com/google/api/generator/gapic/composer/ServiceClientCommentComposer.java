@@ -169,9 +169,7 @@ class ServiceClientCommentComposer {
       for (MethodArgument argument : methodArguments) {
         // TODO(miraleung): Remove the newline replacement when we support CommonMark.
         String description =
-            argument.field().hasDescription()
-                ? argument.field().description().replace("\n", "")
-                : EMPTY_STRING;
+            argument.field().hasDescription() ? argument.field().description() : EMPTY_STRING;
         methodJavadocBuilder.addParam(argument.name(), description);
       }
     }
