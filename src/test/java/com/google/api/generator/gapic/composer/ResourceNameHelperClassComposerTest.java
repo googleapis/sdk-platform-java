@@ -25,13 +25,19 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.Utils;
+import com.google.logging.v2.LogEntryProto;
+import com.google.logging.v2.LoggingConfigProto;
+import com.google.logging.v2.LoggingMetricsProto;
+import com.google.logging.v2.LoggingProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
+import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -95,13 +101,61 @@ public class ResourceNameHelperClassComposerTest {
     ResourceName foobarResname = resourceNames.get("showcase.googleapis.com/Foobar");
     assertThat(outputResourceNames).contains(foobarResname);
 
-    Service echoProtoService = services.get(0);
     GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(foobarResname);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
     Utils.saveCodegenToFile(this.getClass(), "FoobarName.golden", visitor.write());
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "FoobarName.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateResourceNameClass_loggingOnePatternMultipleVariables() {
+    FileDescriptor serviceFileDescriptor = LoggingConfigProto.getDescriptor();
+    ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "ConfigServiceV2");
+
+    List<FileDescriptor> protoFiles =
+        Arrays.asList(
+            serviceFileDescriptor,
+            LoggingProto.getDescriptor(),
+            LogEntryProto.getDescriptor(),
+            LoggingConfigProto.getDescriptor(),
+            LoggingMetricsProto.getDescriptor());
+
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Map<String, Message> messageTypes = new HashMap<>();
+    for (FileDescriptor fileDescriptor : protoFiles) {
+      resourceNames.putAll(Parser.parseResourceNames(fileDescriptor));
+      messageTypes.putAll(Parser.parseMessages(fileDescriptor));
+    }
+
+    // Additional resource names.
+    FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
+    resourceNames.putAll(Parser.parseResourceNames(commonResourcesFileDescriptor));
+
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    ResourceName billingAccountLocationResname =
+        resourceNames.get("logging.googleapis.com/BillingAccountLocation");
+    assertThat(outputResourceNames).contains(billingAccountLocationResname);
+
+    GapicClass clazz =
+        ResourceNameHelperClassComposer.instance().generate(billingAccountLocationResname);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "BillingAccountLocationName.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "BillingAccountLocationName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -125,7 +179,6 @@ public class ResourceNameHelperClassComposerTest {
     ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
     assertThat(outputResourceNames).contains(sessionResname);
 
-    Service testingProtoService = services.get(0);
     GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(sessionResname);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
@@ -134,5 +187,4 @@ public class ResourceNameHelperClassComposerTest {
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
-  // TODO(miraleung): Add more tests for a single pattern.
 }

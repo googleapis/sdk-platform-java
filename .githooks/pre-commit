@@ -101,11 +101,24 @@ then
   fi
 fi
 
-# Check tests.
+# Check unit tests.
 if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
 then
-  echo_status "Checking tests..."
+  echo_status "Checking unit tests..."
   bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //src/test/...
+  TEST_STATUS=$?
+  if [ $TEST_STATUS != 0 ]
+  then
+    echo_error "Tests failed." "Please fix them and try again."
+    exit 1
+  fi
+fi
+
+# Check integration tests.
+if [ $NUM_JAVA_FILES_CHANGED -gt 0 ]
+then
+  echo_status "Checking integration tests..."
+  bazel --batch test --disk_cache="$BAZEL_CACHE_DIR" //test/integration/...
   TEST_STATUS=$?
   if [ $TEST_STATUS != 0 ]
   then
