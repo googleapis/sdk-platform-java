@@ -48,7 +48,7 @@ public class SourceCodeInfoParserTest {
   public void getServiceInfo() {
     SourceCodeInfoLocation location = parser.getLocation(protoFile.findServiceByName("FooService"));
     assertEquals(
-        "This is a service description. It takes up multiple lines, like so.",
+        "This is a service description.\n It takes up multiple lines, like so.",
         location.getLeadingComments());
 
     location = parser.getLocation(protoFile.findServiceByName("BarService"));
@@ -60,7 +60,7 @@ public class SourceCodeInfoParserTest {
     ServiceDescriptor service = protoFile.findServiceByName("FooService");
     SourceCodeInfoLocation location = parser.getLocation(service.findMethodByName("FooMethod"));
     assertEquals(
-        "FooMethod does something. This comment also takes up multiple lines.",
+        "FooMethod does something.\n This comment also takes up multiple lines.",
         location.getLeadingComments());
 
     service = protoFile.findServiceByName("BarService");
@@ -73,13 +73,13 @@ public class SourceCodeInfoParserTest {
     Descriptor message = protoFile.findMessageTypeByName("FooMessage");
     SourceCodeInfoLocation location = parser.getLocation(message);
     assertEquals(
-        "This is a message descxription. Lorum ipsum dolor sit amet consectetur adipiscing elit.",
+        "This is a message descxription.\n Lorum ipsum dolor sit amet consectetur adipiscing elit.",
         location.getLeadingComments());
 
     // Fields.
     location = parser.getLocation(message.findFieldByName("field_one"));
     assertEquals(
-        "This is a field description for field_one. And here is the second line of that"
+        "This is a field description for field_one.\n And here is the second line of that"
             + " description.",
         location.getLeadingComments());
     assertEquals("A field trailing comment.", location.getTrailingComments());

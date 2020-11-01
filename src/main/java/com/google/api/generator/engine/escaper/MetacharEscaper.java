@@ -29,7 +29,6 @@ public class MetacharEscaper extends Escaper {
           .addEscape('\b', "\\b")
           .addEscape('\r', "\\r")
           .addEscape('\f', "\\f")
-          .addEscape('\n', "\\n")
           .addEscape('\\', "\\\\")
           .build();
 
@@ -40,7 +39,7 @@ public class MetacharEscaper extends Escaper {
     return charEscaper.escape(sourceString);
   }
 
-  public static String escaper(String source) {
+  public static String process(String source) {
     return SINGLETON.escape(source);
   }
 }

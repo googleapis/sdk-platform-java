@@ -44,8 +44,9 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
- * <p>Note: close() needs to be called on the echoClient object to clean up resources such as
- * threads. In the example above, try-with-resources is used, which automatically calls close().
+ * <p>Note: close() needs to be called on the configServiceV2Client object to clean up resources
+ * such as threads. In the example above, try-with-resources is used, which automatically calls
+ * close().
  *
  * <p>The surface of this class includes several types of Java methods for each of the API's
  * methods:
@@ -80,14 +81,14 @@ public class ConfigServiceV2Client implements BackgroundResource {
   private final ConfigServiceV2Settings settings;
   private final ConfigServiceV2Stub stub;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of ConfigServiceV2Client with default settings. */
   public static final ConfigServiceV2Client create() throws IOException {
     return create(ConfigServiceV2Settings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of ConfigServiceV2Client, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final ConfigServiceV2Client create(ConfigServiceV2Settings settings)
       throws IOException {
@@ -95,8 +96,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(ConfigServiceV2Settings).
+   * Constructs an instance of ConfigServiceV2Client, using the given stub for making calls. This is
+   * for advanced usage - prefer using create(ConfigServiceV2Settings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final ConfigServiceV2Client create(ConfigServiceV2Stub stub) {
@@ -104,8 +105,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of ConfigServiceV2Client, using the given settings. This is protected so
+   * that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected ConfigServiceV2Client(ConfigServiceV2Settings settings) throws IOException {
     this.settings = settings;
@@ -134,12 +136,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
-   *     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations portion of the resource
-   *     must be specified, but supplying the character `-` in place of [LOCATION_ID] will return
-   *     all buckets.
+   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
+   *     <p>Note: The locations portion of the resource must be specified, but supplying the
+   *     character `-` in place of [LOCATION_ID] will return all buckets.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(BillingAccountLocationName parent) {
@@ -157,12 +159,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
-   *     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations portion of the resource
-   *     must be specified, but supplying the character `-` in place of [LOCATION_ID] will return
-   *     all buckets.
+   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
+   *     <p>Note: The locations portion of the resource must be specified, but supplying the
+   *     character `-` in place of [LOCATION_ID] will return all buckets.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(FolderLocationName parent) {
@@ -180,12 +182,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
-   *     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations portion of the resource
-   *     must be specified, but supplying the character `-` in place of [LOCATION_ID] will return
-   *     all buckets.
+   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
+   *     <p>Note: The locations portion of the resource must be specified, but supplying the
+   *     character `-` in place of [LOCATION_ID] will return all buckets.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(LocationName parent) {
@@ -203,12 +205,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
-   *     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations portion of the resource
-   *     must be specified, but supplying the character `-` in place of [LOCATION_ID] will return
-   *     all buckets.
+   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
+   *     <p>Note: The locations portion of the resource must be specified, but supplying the
+   *     character `-` in place of [LOCATION_ID] will return all buckets.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(OrganizationLocationName parent) {
@@ -226,12 +228,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
-   *     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
-   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" Note: The locations portion of the resource
-   *     must be specified, but supplying the character `-` in place of [LOCATION_ID] will return
-   *     all buckets.
+   *     "folders/[FOLDER_ID]/locations/[LOCATION_ID]"
+   *     <p>Note: The locations portion of the resource must be specified, but supplying the
+   *     character `-` in place of [LOCATION_ID] will return all buckets.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListBucketsPagedResponse listBuckets(String parent) {
@@ -299,10 +301,15 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period` If the retention period is decreased and the bucket is
-   * locked, FAILED_PRECONDITION will be returned. If the bucket has a LifecycleState of
-   * DELETE_REQUESTED, FAILED_PRECONDITION will be returned. A buckets region may not be modified
-   * after it is created. This method is in Beta.
+   * from the new bucket: `retention_period`
+   *
+   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
    *
@@ -316,10 +323,15 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a bucket. This method replaces the following fields in the existing bucket with values
-   * from the new bucket: `retention_period` If the retention period is decreased and the bucket is
-   * locked, FAILED_PRECONDITION will be returned. If the bucket has a LifecycleState of
-   * DELETE_REQUESTED, FAILED_PRECONDITION will be returned. A buckets region may not be modified
-   * after it is created. This method is in Beta.
+   * from the new bucket: `retention_period`
+   *
+   * <p>If the retention period is decreased and the bucket is locked, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
+   * returned.
+   *
+   * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
    */
@@ -334,7 +346,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -353,7 +365,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -372,7 +384,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -391,7 +403,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -410,7 +422,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -459,9 +471,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param sink_name Required. The resource name of the sink:
-   *     "projects/[PROJECT_ID]/sinks/[SINK_ID]" "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(LogSinkName sinkName) {
@@ -479,9 +493,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param sink_name Required. The resource name of the sink:
-   *     "projects/[PROJECT_ID]/sinks/[SINK_ID]" "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink getSink(String sinkName) {
@@ -521,10 +537,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource in which to create the sink: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]" Examples: `"projects/my-logging-project"`,
-   *     `"organizations/123456789"`.
+   * @param parent Required. The resource in which to create the sink:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -547,10 +563,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource in which to create the sink: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]" Examples: `"projects/my-logging-project"`,
-   *     `"organizations/123456789"`.
+   * @param parent Required. The resource in which to create the sink:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -573,10 +589,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource in which to create the sink: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]" Examples: `"projects/my-logging-project"`,
-   *     `"organizations/123456789"`.
+   * @param parent Required. The resource in which to create the sink:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -599,10 +615,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource in which to create the sink: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]" Examples: `"projects/my-logging-project"`,
-   *     `"organizations/123456789"`.
+   * @param parent Required. The resource in which to create the sink:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -625,10 +641,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource in which to create the sink: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]" Examples: `"projects/my-logging-project"`,
-   *     `"organizations/123456789"`.
+   * @param parent Required. The resource in which to create the sink:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param sink Required. The new sink, whose `name` parameter is a sink identifier that is not
    *     already in use.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -671,16 +687,20 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -697,16 +717,20 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -720,27 +744,31 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @param update_mask Optional. Field mask that specifies the fields in `sink` that need an
    *     update. A sink field will be overwritten if, and only if, it is in the update mask. `name`
-   *     and output only fields cannot be updated. An empty updateMask is temporarily treated as
-   *     using the following mask for backwards compatibility purposes:
-   *     destination,filter,includeChildren At some point in the future, behavior will be removed
-   *     and specifying an empty updateMask will be an error. For a detailed `FieldMask` definition,
-   *     see
+   *     and output only fields cannot be updated.
+   *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
+   *     compatibility purposes: destination,filter,includeChildren At some point in the future,
+   *     behavior will be removed and specifying an empty updateMask will be an error.
+   *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
-   *     Example: `updateMask=filter`.
+   *     <p>Example: `updateMask=filter`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink, FieldMask updateMask) {
@@ -756,27 +784,31 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
    * @param update_mask Optional. Field mask that specifies the fields in `sink` that need an
    *     update. A sink field will be overwritten if, and only if, it is in the update mask. `name`
-   *     and output only fields cannot be updated. An empty updateMask is temporarily treated as
-   *     using the following mask for backwards compatibility purposes:
-   *     destination,filter,includeChildren At some point in the future, behavior will be removed
-   *     and specifying an empty updateMask will be an error. For a detailed `FieldMask` definition,
-   *     see
+   *     and output only fields cannot be updated.
+   *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
+   *     compatibility purposes: destination,filter,includeChildren At some point in the future,
+   *     behavior will be removed and specifying an empty updateMask will be an error.
+   *     <p>For a detailed `FieldMask` definition, see
    *     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMask
-   *     Example: `updateMask=filter`.
+   *     <p>Example: `updateMask=filter`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogSink updateSink(String sinkName, LogSink sink, FieldMask updateMask) {
@@ -792,8 +824,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    *
@@ -807,8 +841,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates a sink. This method replaces the following fields in the existing sink with values from
-   * the new sink: `destination`, and `filter`. The updated sink might also have a new
-   * `writer_identity`; see the `unique_writer_identity` field.
+   * the new sink: `destination`, and `filter`.
+   *
+   * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
+   * field.
    *
    * <p>Sample code:
    */
@@ -824,10 +860,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteSink(LogSinkName sinkName) {
@@ -846,10 +884,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
-   *     resource and the sink identifier: "projects/[PROJECT_ID]/sinks/[SINK_ID]"
+   *     resource and the sink identifier:
+   *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
-   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]" Example: `"projects/my-project-id/sinks/my-sink-id"`.
+   *     "folders/[FOLDER_ID]/sinks/[SINK_ID]"
+   *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteSink(String sinkName) {
@@ -889,7 +929,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -908,7 +948,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -927,7 +967,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -946,7 +986,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -965,7 +1005,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1016,11 +1056,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of an existing exclusion:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(LogExclusionName name) {
@@ -1038,11 +1078,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of an existing exclusion:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion getExclusion(String name) {
@@ -1081,9 +1121,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Examples:
-   *     `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1105,9 +1145,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Examples:
-   *     `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1129,9 +1169,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Examples:
-   *     `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1153,9 +1193,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Examples:
-   *     `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1177,9 +1217,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
-   *     "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Examples:
-   *     `"projects/my-logging-project"`, `"organizations/123456789"`.
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Examples: `"projects/my-logging-project"`, `"organizations/123456789"`.
    * @param exclusion Required. The new exclusion, whose `name` parameter is an exclusion name that
    *     is not already used in the parent resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1222,19 +1262,19 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of the exclusion to update:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
    * @param update_mask Required. A non-empty list of fields to change in the existing exclusion.
    *     New values for the fields are taken from the corresponding fields in the
    *     [LogExclusion][google.logging.v2.LogExclusion] included in this request. Fields not
-   *     mentioned in `update_mask` are not changed and are ignored in the request. For example, to
-   *     change the filter and description of an exclusion, specify an `update_mask` of
-   *     `"filter,description"`.
+   *     mentioned in `update_mask` are not changed and are ignored in the request.
+   *     <p>For example, to change the filter and description of an exclusion, specify an
+   *     `update_mask` of `"filter,description"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion updateExclusion(
@@ -1255,19 +1295,19 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of the exclusion to update:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
    * @param update_mask Required. A non-empty list of fields to change in the existing exclusion.
    *     New values for the fields are taken from the corresponding fields in the
    *     [LogExclusion][google.logging.v2.LogExclusion] included in this request. Fields not
-   *     mentioned in `update_mask` are not changed and are ignored in the request. For example, to
-   *     change the filter and description of an exclusion, specify an `update_mask` of
-   *     `"filter,description"`.
+   *     mentioned in `update_mask` are not changed and are ignored in the request.
+   *     <p>For example, to change the filter and description of an exclusion, specify an
+   *     `update_mask` of `"filter,description"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogExclusion updateExclusion(
@@ -1311,11 +1351,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of an existing exclusion to delete:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteExclusion(LogExclusionName name) {
@@ -1333,11 +1373,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param name Required. The resource name of an existing exclusion to delete:
-   *     "projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/exclusions/[EXCLUSION_ID]"
-   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]" Example:
-   *     `"projects/my-project-id/exclusions/my-exclusion-id"`.
+   *     "folders/[FOLDER_ID]/exclusions/[EXCLUSION_ID]"
+   *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteExclusion(String name) {
@@ -1370,9 +1410,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router can
-   * currently only be configured for GCP organizations. Once configured, it applies to all projects
-   * and folders in the GCP organization. See [Enabling CMEK for Logs
+   * Gets the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1386,9 +1429,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router can
-   * currently only be configured for GCP organizations. Once configured, it applies to all projects
-   * and folders in the GCP organization. See [Enabling CMEK for Logs
+   * Gets the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1399,13 +1445,17 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router
-   * can currently only be configured for GCP organizations. Once configured, it applies to all
-   * projects and folders in the GCP organization.
-   * [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
+   * Updates the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
-   * is disabled. See [Enabling CMEK for Logs
+   * is disabled.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
@@ -1419,13 +1469,17 @@ public class ConfigServiceV2Client implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Updates the Logs Router CMEK settings for the given resource. Note: CMEK for the Logs Router
-   * can currently only be configured for GCP organizations. Once configured, it applies to all
-   * projects and folders in the GCP organization.
-   * [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
+   * Updates the Logs Router CMEK settings for the given resource.
+   *
+   * <p>Note: CMEK for the Logs Router can currently only be configured for GCP organizations. Once
+   * configured, it applies to all projects and folders in the GCP organization.
+   *
+   * <p>[UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1)
    * `kms_key_name` is invalid, or 2) the associated service account does not have the required
    * `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key
-   * is disabled. See [Enabling CMEK for Logs
+   * is disabled.
+   *
+   * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:

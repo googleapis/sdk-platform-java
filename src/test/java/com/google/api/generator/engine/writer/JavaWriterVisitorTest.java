@@ -595,8 +595,8 @@ public class JavaWriterVisitorTest {
     String expected =
         "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
             + " [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\\n"
-            + "\\r"
+            + "// \"Novel\\\\\"`\\b\\t\n"
+            + "// \\r"
             + "\"]']\n";
     lineComment.accept(writerVisitor);
     assertEquals(writerVisitor.write(), expected);

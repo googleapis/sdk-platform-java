@@ -46,8 +46,9 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
- * <p>Note: close() needs to be called on the echoClient object to clean up resources such as
- * threads. In the example above, try-with-resources is used, which automatically calls close().
+ * <p>Note: close() needs to be called on the loggingServiceV2Client object to clean up resources
+ * such as threads. In the example above, try-with-resources is used, which automatically calls
+ * close().
  *
  * <p>The surface of this class includes several types of Java methods for each of the API's
  * methods:
@@ -82,14 +83,14 @@ public class LoggingServiceV2Client implements BackgroundResource {
   private final LoggingServiceV2Settings settings;
   private final LoggingServiceV2Stub stub;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of LoggingServiceV2Client with default settings. */
   public static final LoggingServiceV2Client create() throws IOException {
     return create(LoggingServiceV2Settings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of LoggingServiceV2Client, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final LoggingServiceV2Client create(LoggingServiceV2Settings settings)
       throws IOException {
@@ -97,8 +98,8 @@ public class LoggingServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(LoggingServiceV2Settings).
+   * Constructs an instance of LoggingServiceV2Client, using the given stub for making calls. This
+   * is for advanced usage - prefer using create(LoggingServiceV2Settings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final LoggingServiceV2Client create(LoggingServiceV2Stub stub) {
@@ -106,8 +107,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of LoggingServiceV2Client, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected LoggingServiceV2Client(LoggingServiceV2Settings settings) throws IOException {
     this.settings = settings;
@@ -138,9 +140,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param log_name Required. The resource name of the log to delete:
-   *     "projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
+   *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
-   *     `[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
+   *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
    *     `"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"`. For more
    *     information about log names, see [LogEntry][google.logging.v2.LogEntry].
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -162,9 +164,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param log_name Required. The resource name of the log to delete:
-   *     "projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
+   *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
-   *     `[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
+   *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
    *     `"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"`. For more
    *     information about log names, see [LogEntry][google.logging.v2.LogEntry].
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -211,18 +213,20 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
-   *     `entries` that do not specify a value for `log_name`: "projects/[PROJECT_ID]/logs/[LOG_ID]"
-   *     "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
+   *     `entries` that do not specify a value for `log_name`:
+   *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
-   *     `[LOG_ID]` must be URL-encoded. For example: "projects/my-project-id/logs/syslog"
-   *     "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity" The
-   *     permission `logging.logEntries.create` is needed on each project, organization, billing
-   *     account, or folder that is receiving new log entries, whether the resource is specified in
-   *     `logName` or in an individual log entry.
+   *     <p>`[LOG_ID]` must be URL-encoded. For example:
+   *     <p>"projects/my-project-id/logs/syslog"
+   *     "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"
+   *     <p>The permission `logging.logEntries.create` is needed on each project, organization,
+   *     billing account, or folder that is receiving new log entries, whether the resource is
+   *     specified in `logName` or in an individual log entry.
    * @param resource Optional. A default monitored resource object that is assigned to all log
-   *     entries in `entries` that do not specify a value for `resource`. Example: { "type":
-   *     "gce_instance", "labels": { "zone": "us-central1-a", "instance_id": "00000000000000000000"
-   *     }} See [LogEntry][google.logging.v2.LogEntry].
+   *     entries in `entries` that do not specify a value for `resource`. Example:
+   *     <p>{ "type": "gce_instance", "labels": { "zone": "us-central1-a", "instance_id":
+   *     "00000000000000000000" }}
+   *     <p>See [LogEntry][google.logging.v2.LogEntry].
    * @param labels Optional. Default labels that are added to the `labels` field of all log entries
    *     in `entries`. If a log entry already has a label with the same key as a label in this
    *     parameter, then the log entry's label is not changed. See
@@ -231,16 +235,18 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *     list does not matter. Values supplied in this method's `log_name`, `resource`, and `labels`
    *     fields are copied into those log entries in this list that do not include values for their
    *     corresponding fields. For more information, see the [LogEntry][google.logging.v2.LogEntry]
-   *     type. If the `timestamp` or `insert_id` fields are missing in log entries, then this method
+   *     type.
+   *     <p>If the `timestamp` or `insert_id` fields are missing in log entries, then this method
    *     supplies the current time or a unique identifier, respectively. The supplied values are
    *     chosen so that, among the log entries that did not supply their own values, the entries
    *     earlier in the list will sort before the entries later in the list. See the `entries.list`
-   *     method. Log entries with timestamps that are more than the [logs retention
+   *     method.
+   *     <p>Log entries with timestamps that are more than the [logs retention
    *     period](https://cloud.google.com/logging/quota-policy) in the past or more than 24 hours in
    *     the future will not be available when calling `entries.list`. However, those log entries
    *     can still be [exported with
-   *     LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs). To improve
-   *     throughput and to avoid exceeding the [quota
+   *     LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
+   *     <p>To improve throughput and to avoid exceeding the [quota
    *     limit](https://cloud.google.com/logging/quota-policy) for calls to `entries.write`, you
    *     should try to include several log entries in this list, rather than calling this method for
    *     each individual log entry.
@@ -271,18 +277,20 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
-   *     `entries` that do not specify a value for `log_name`: "projects/[PROJECT_ID]/logs/[LOG_ID]"
-   *     "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
+   *     `entries` that do not specify a value for `log_name`:
+   *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
-   *     `[LOG_ID]` must be URL-encoded. For example: "projects/my-project-id/logs/syslog"
-   *     "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity" The
-   *     permission `logging.logEntries.create` is needed on each project, organization, billing
-   *     account, or folder that is receiving new log entries, whether the resource is specified in
-   *     `logName` or in an individual log entry.
+   *     <p>`[LOG_ID]` must be URL-encoded. For example:
+   *     <p>"projects/my-project-id/logs/syslog"
+   *     "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity"
+   *     <p>The permission `logging.logEntries.create` is needed on each project, organization,
+   *     billing account, or folder that is receiving new log entries, whether the resource is
+   *     specified in `logName` or in an individual log entry.
    * @param resource Optional. A default monitored resource object that is assigned to all log
-   *     entries in `entries` that do not specify a value for `resource`. Example: { "type":
-   *     "gce_instance", "labels": { "zone": "us-central1-a", "instance_id": "00000000000000000000"
-   *     }} See [LogEntry][google.logging.v2.LogEntry].
+   *     entries in `entries` that do not specify a value for `resource`. Example:
+   *     <p>{ "type": "gce_instance", "labels": { "zone": "us-central1-a", "instance_id":
+   *     "00000000000000000000" }}
+   *     <p>See [LogEntry][google.logging.v2.LogEntry].
    * @param labels Optional. Default labels that are added to the `labels` field of all log entries
    *     in `entries`. If a log entry already has a label with the same key as a label in this
    *     parameter, then the log entry's label is not changed. See
@@ -291,16 +299,18 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *     list does not matter. Values supplied in this method's `log_name`, `resource`, and `labels`
    *     fields are copied into those log entries in this list that do not include values for their
    *     corresponding fields. For more information, see the [LogEntry][google.logging.v2.LogEntry]
-   *     type. If the `timestamp` or `insert_id` fields are missing in log entries, then this method
+   *     type.
+   *     <p>If the `timestamp` or `insert_id` fields are missing in log entries, then this method
    *     supplies the current time or a unique identifier, respectively. The supplied values are
    *     chosen so that, among the log entries that did not supply their own values, the entries
    *     earlier in the list will sort before the entries later in the list. See the `entries.list`
-   *     method. Log entries with timestamps that are more than the [logs retention
+   *     method.
+   *     <p>Log entries with timestamps that are more than the [logs retention
    *     period](https://cloud.google.com/logging/quota-policy) in the past or more than 24 hours in
    *     the future will not be available when calling `entries.list`. However, those log entries
    *     can still be [exported with
-   *     LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs). To improve
-   *     throughput and to avoid exceeding the [quota
+   *     LogSinks](https://cloud.google.com/logging/docs/api/tasks/exporting-logs).
+   *     <p>To improve throughput and to avoid exceeding the [quota
    *     limit](https://cloud.google.com/logging/quota-policy) for calls to `entries.write`, you
    *     should try to include several log entries in this list, rather than calling this method for
    *     each individual log entry.
@@ -360,9 +370,10 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param resource_names Required. Names of one or more parent resources from which to retrieve
-   *     log entries: "projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
-   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]" Projects listed in the
-   *     `project_ids` field are added to this list.
+   *     log entries:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>Projects listed in the `project_ids` field are added to this list.
    * @param filter Optional. A filter that chooses which log entries to return. See [Advanced Logs
    *     Queries](https://cloud.google.com/logging/docs/view/advanced-queries). Only log entries
    *     that match the filter are returned. An empty filter matches all log entries in the
@@ -473,9 +484,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource name that owns the logs: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]"
+   * @param parent Required. The resource name that owns the logs:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogsPagedResponse listLogs(BillingAccountName parent) {
@@ -493,9 +504,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource name that owns the logs: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]"
+   * @param parent Required. The resource name that owns the logs:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogsPagedResponse listLogs(FolderName parent) {
@@ -513,9 +524,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource name that owns the logs: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]"
+   * @param parent Required. The resource name that owns the logs:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogsPagedResponse listLogs(OrganizationName parent) {
@@ -533,9 +544,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource name that owns the logs: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]"
+   * @param parent Required. The resource name that owns the logs:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogsPagedResponse listLogs(ProjectName parent) {
@@ -553,9 +564,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The resource name that owns the logs: "projects/[PROJECT_ID]"
-   *     "organizations/[ORGANIZATION_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]"
-   *     "folders/[FOLDER_ID]"
+   * @param parent Required. The resource name that owns the logs:
+   *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
+   *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogsPagedResponse listLogs(String parent) {

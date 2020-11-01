@@ -43,8 +43,9 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
- * <p>Note: close() needs to be called on the echoClient object to clean up resources such as
- * threads. In the example above, try-with-resources is used, which automatically calls close().
+ * <p>Note: close() needs to be called on the metricsServiceV2Client object to clean up resources
+ * such as threads. In the example above, try-with-resources is used, which automatically calls
+ * close().
  *
  * <p>The surface of this class includes several types of Java methods for each of the API's
  * methods:
@@ -79,14 +80,14 @@ public class MetricsServiceV2Client implements BackgroundResource {
   private final MetricsServiceV2Settings settings;
   private final MetricsServiceV2Stub stub;
 
-  /** Constructs an instance of EchoClient with default settings. */
+  /** Constructs an instance of MetricsServiceV2Client with default settings. */
   public static final MetricsServiceV2Client create() throws IOException {
     return create(MetricsServiceV2Settings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. The channels are created based
-   * on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of MetricsServiceV2Client, using the given settings. The channels are
+   * created based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final MetricsServiceV2Client create(MetricsServiceV2Settings settings)
       throws IOException {
@@ -94,8 +95,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given stub for making calls. This is for
-   * advanced usage - prefer using create(MetricsServiceV2Settings).
+   * Constructs an instance of MetricsServiceV2Client, using the given stub for making calls. This
+   * is for advanced usage - prefer using create(MetricsServiceV2Settings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final MetricsServiceV2Client create(MetricsServiceV2Stub stub) {
@@ -103,8 +104,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of EchoClient, using the given settings. This is protected so that it is
-   * easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   * Constructs an instance of MetricsServiceV2Client, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
    */
   protected MetricsServiceV2Client(MetricsServiceV2Settings settings) throws IOException {
     this.settings = settings;
@@ -132,7 +134,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The name of the project containing the metrics: "projects/[PROJECT_ID]"
+   * @param parent Required. The name of the project containing the metrics:
+   *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogMetricsPagedResponse listLogMetrics(ProjectName parent) {
@@ -149,7 +152,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
-   * @param parent Required. The name of the project containing the metrics: "projects/[PROJECT_ID]"
+   * @param parent Required. The name of the project containing the metrics:
+   *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogMetricsPagedResponse listLogMetrics(String parent) {
@@ -199,7 +203,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the desired metric:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric getLogMetric(LogMetricName metricName) {
@@ -217,7 +221,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the desired metric:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final LogMetric getLogMetric(String metricName) {
@@ -256,7 +260,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The resource name of the project in which to create the metric:
-   *     "projects/[PROJECT_ID]" The new metric must be provided in the request.
+   *     <p>"projects/[PROJECT_ID]"
+   *     <p>The new metric must be provided in the request.
    * @param metric Required. The new logs-based metric, which must not have an identifier that
    *     already exists.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -277,7 +282,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param parent Required. The resource name of the project in which to create the metric:
-   *     "projects/[PROJECT_ID]" The new metric must be provided in the request.
+   *     <p>"projects/[PROJECT_ID]"
+   *     <p>The new metric must be provided in the request.
    * @param metric Required. The new logs-based metric, which must not have an identifier that
    *     already exists.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -318,9 +324,10 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the metric to update:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]" The updated metric must be provided in the
-   *     request and it's `name` field must be the same as `[METRIC_ID]` If the metric does not
-   *     exist in `[PROJECT_ID]`, then a new metric is created.
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>The updated metric must be provided in the request and it's `name` field must be the
+   *     same as `[METRIC_ID]` If the metric does not exist in `[PROJECT_ID]`, then a new metric is
+   *     created.
    * @param metric Required. The updated metric.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -340,9 +347,10 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the metric to update:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]" The updated metric must be provided in the
-   *     request and it's `name` field must be the same as `[METRIC_ID]` If the metric does not
-   *     exist in `[PROJECT_ID]`, then a new metric is created.
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>The updated metric must be provided in the request and it's `name` field must be the
+   *     same as `[METRIC_ID]` If the metric does not exist in `[PROJECT_ID]`, then a new metric is
+   *     created.
    * @param metric Required. The updated metric.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -382,7 +390,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the metric to delete:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteLogMetric(LogMetricName metricName) {
@@ -400,7 +408,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * <p>Sample code:
    *
    * @param metric_name Required. The resource name of the metric to delete:
-   *     "projects/[PROJECT_ID]/metrics/[METRIC_ID]"
+   *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Empty deleteLogMetric(String metricName) {
