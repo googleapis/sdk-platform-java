@@ -51,9 +51,9 @@ import javax.annotation.Generated;
  * defines the following resource model for managing Redis instances:
  *
  * <ul>
- *   <li>The service works with a collection of cloud projects, named: `/projects/*`
- *   <li>Each project has a collection of available locations, named: `/locations/*`
- *   <li>Each location has a collection of Redis instances, named: `/instances/*`
+ *   <li>The service works with a collection of cloud projects, named: `/projects/&#42;`
+ *   <li>Each project has a collection of available locations, named: `/locations/&#42;`
+ *   <li>Each location has a collection of Redis instances, named: `/instances/&#42;`
  *   <li>As such, Redis instances are resources of the form:
  *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
  * </ul>
@@ -502,7 +502,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param update_mask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
    *     [Instance][google.cloud.redis.v1.Instance]:
-   *     <p>* `displayName` * `labels` * `memorySizeGb` * `redisConfig`
+   *     <p>&#42; `displayName` &#42; `labels` &#42; `memorySizeGb` &#42; `redisConfig`
    * @param instance Required. Update description. Only fields specified in update_mask are updated.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */

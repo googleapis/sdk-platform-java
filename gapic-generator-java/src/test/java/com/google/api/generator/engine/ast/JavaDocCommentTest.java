@@ -45,7 +45,7 @@ public class JavaDocCommentTest {
         "Service comment may include special characters: \\\\ \\t\\b\\r"
             + "&amp;\"\\f\n"
             + "`'{@literal @}&#42;/\n"
-            + "<p> title: GetBigBook: <War and Peace>\n"
+            + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
             + "<pre><code>\n"
             + "ApiFuture&lt;Shelf&gt; future ="
             + " libraryClient.createShelfCallable().futureCall(request);\n"
