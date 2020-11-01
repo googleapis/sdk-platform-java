@@ -107,7 +107,7 @@ public class HttpRuleParser {
   private static void checkHttpFieldIsValid(String binding, Message inputMessage, boolean isBody) {
     Preconditions.checkState(
         !Strings.isNullOrEmpty(binding),
-        String.format("DEL: Null or empty binding for " + inputMessage.name()));
+        String.format("Null or empty binding for " + inputMessage.name()));
     Preconditions.checkState(
         inputMessage.fieldMap().containsKey(binding),
         String.format(
