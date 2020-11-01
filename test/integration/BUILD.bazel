@@ -1,12 +1,13 @@
 load(
     "@com_google_googleapis_imports//:imports.bzl",
     "proto_library_with_info",
+    java_gapic_assembly_gradle_pkg = "java_gapic_assembly_gradle_pkg2",
     java_gapic_library = "java_gapic_library2",
 )
 load(
     "//:rules_bazel/java/integration_test.bzl",
-    "integration_test",
     "golden_update",
+    "integration_test",
 )
 
 package(default_visibility = ["//visibility:public"])
@@ -15,35 +16,31 @@ package(default_visibility = ["//visibility:public"])
 # Integration Test Rules
 ####################################################
 
-integration_test(
-    name = "redis",
-    data = ["//test/integration/goldens/redis:goldens_files"],
-    target = ":redis_java_gapic",
-)
+INTEGRATION_TEST_LIBRARIES = [
+    "asset",
+    "logging",
+    "redis",
+]
 
-integration_test(
-    name = "asset",
-    target = ":asset_java_gapic",
-    data = ["//test/integration/goldens/asset:goldens_files"],
-)
+[integration_test(
+    name = lib_name,
+    data = ["//test/integration/goldens/%s:goldens_files" % lib_name],
+    target = ":%s_java_gapic" % lib_name,
+) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
-golden_update(
-    name = "redis_update",
-    target = ":redis_java_gapic",
-    data = ["//test/integration/goldens/redis:goldens_files"],
-)
-
-golden_update(
-    name = "asset_update",
-    target = ":asset_java_gapic",
-    data = ["//test/integration/goldens/asset:goldens_files"],
-)
+[golden_update(
+    name = "%s_update" % lib_name,
+    data = ["//test/integration/goldens/%s:goldens_files" % lib_name],
+    target = ":%s_java_gapic" % lib_name,
+) for lib_name in INTEGRATION_TEST_LIBRARIES]
 
 ####################################################
 # API Library Rules
 ####################################################
-# These will eventually go away once more APIs in googleapis have been migrated to the microgenerator.
+# These will eventually go away once more APIs in googleapis have been migrated to the
+# microgenerator.
 
+# Asset API.
 java_gapic_library(
     name = "asset_java_gapic",
     srcs = ["@com_google_googleapis//google/cloud/asset/v1:asset_proto_with_info"],
@@ -57,6 +54,20 @@ java_gapic_library(
     deps = [
         "@com_google_googleapis//google/cloud/asset/v1:asset_java_proto",
         "@com_google_googleapis//google/iam/v1:iam_java_proto",
+        "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_proto",
+    ],
+)
+
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-asset-v1-java",
+    deps = [
+        ":asset_java_gapic",
+        "@com_google_googleapis//google/cloud/asset/v1:asset_java_grpc",
+        "@com_google_googleapis//google/cloud/asset/v1:asset_java_proto",
+        "@com_google_googleapis//google/cloud/asset/v1:asset_proto",
+        "@com_google_googleapis//google/cloud/orgpolicy/v1:orgpolicy_java_proto",
+        "@com_google_googleapis//google/identity/accesscontextmanager/type:type_java_proto",
+        "@com_google_googleapis//google/identity/accesscontextmanager/v1:accesscontextmanager_java_proto",
     ],
 )
 
@@ -86,6 +97,17 @@ java_gapic_library(
     ],
 )
 
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-redis-v1-java",
+    deps = [
+        ":redis_java_gapic",
+        "@com_google_googleapis//google/cloud/redis/v1:redis_java_grpc",
+        "@com_google_googleapis//google/cloud/redis/v1:redis_java_proto",
+        "@com_google_googleapis//google/cloud/redis/v1:redis_proto",
+    ],
+)
+
+# Logging API
 java_gapic_library(
     name = "logging_java_gapic",
     srcs = ["@com_google_googleapis//google/logging/v2:logging_proto_with_info"],
@@ -101,3 +123,12 @@ java_gapic_library(
     ],
 )
 
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-logging-v2-java",
+    deps = [
+        ":logging_java_gapic",
+        "@com_google_googleapis//google/logging/v2:logging_java_grpc",
+        "@com_google_googleapis//google/logging/v2:logging_java_proto",
+        "@com_google_googleapis//google/logging/v2:logging_proto",
+    ],
+)

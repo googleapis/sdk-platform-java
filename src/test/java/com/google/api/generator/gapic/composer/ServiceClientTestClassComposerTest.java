@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
 
@@ -54,7 +55,8 @@ public class ServiceClientTestClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+        Parser.parseService(
+            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
@@ -85,7 +87,11 @@ public class ServiceClientTestClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     Service subscriptionService = services.get(1);
     assertEquals("Subscriber", subscriptionService.name());
@@ -128,7 +134,11 @@ public class ServiceClientTestClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
+            serviceFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     Service loggingService = services.get(0);
     GapicClass clazz =

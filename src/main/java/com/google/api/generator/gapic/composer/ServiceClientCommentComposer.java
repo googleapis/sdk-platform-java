@@ -21,9 +21,12 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 class ServiceClientCommentComposer {
   // Tokens.
@@ -36,10 +39,6 @@ class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
       "This class provides the ability to make remote calls to the backing service through method "
           + "calls that map to API methods. Sample code to get started:";
-  private static final String SERVICE_DESCRIPTION_CLOSE_STRING =
-      "Note: close() needs to be called on the echoClient object to clean up resources such as "
-          + "threads. In the example above, try-with-resources is used, which automatically calls "
-          + "close().";
   private static final String SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING =
       "The surface of this class includes several types of Java methods for each of the API's "
           + "methods:";
@@ -71,8 +70,13 @@ class ServiceClientCommentComposer {
 
   // Patterns.
   private static final String CREATE_METHOD_STUB_ARG_PATTERN =
-      "Constructs an instance of EchoClient, using the given stub for making calls. This is for"
+      "Constructs an instance of %sClient, using the given stub for making calls. This is for"
           + " advanced usage - prefer using create(%s).";
+
+  private static final String SERVICE_DESCRIPTION_CLOSE_PATTERN =
+      "Note: close() needs to be called on the %sClient object to clean up resources such as "
+          + "threads. In the example above, try-with-resources is used, which automatically calls "
+          + "close().";
 
   private static final String SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN =
       "This class can be customized by passing in a custom instance of %s to create(). For"
@@ -80,22 +84,20 @@ class ServiceClientCommentComposer {
 
   private static final String SERVICE_DESCRIPTION_SUMMARY_PATTERN = "Service Description: %s";
 
+  private static final String CREATE_METHOD_NO_ARG_PATTERN =
+      "Constructs an instance of %sClient with default settings.";
+
+  private static final String CREATE_METHOD_SETTINGS_ARG_PATTERN =
+      "Constructs an instance of %sClient, using the given settings. The channels are"
+          + " created based  on the settings passed in, or defaults for any settings that are"
+          + " not set.";
+
+  private static final String PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN =
+      "Constructs an instance of %sClient, using the given settings. This is protected so"
+          + " that it is easy to make a subclass, but otherwise, the static factory methods"
+          + " should be preferred.";
+
   // Comments.
-  static final CommentStatement CREATE_METHOD_NO_ARG_COMMENT =
-      toSimpleComment("Constructs an instance of EchoClient with default settings.");
-
-  static final CommentStatement CREATE_METHOD_SETTINGS_ARG_COMMENT =
-      toSimpleComment(
-          "Constructs an instance of EchoClient, using the given settings. The channels are"
-              + " created based  on the settings passed in, or defaults for any settings that are"
-              + " not set.");
-
-  static final CommentStatement PROTECTED_CONSTRUCTOR_SETTINGS_ARG_COMMENT =
-      toSimpleComment(
-          "Constructs an instance of EchoClient, using the given settings. This is protected so"
-              + " that it is easy to make a subclass, but otherwise, the static factory methods"
-              + " should be preferred.");
-
   static final CommentStatement GET_OPERATIONS_CLIENT_METHOD_COMMENT =
       toSimpleComment(
           "Returns the OperationsClient that can be used to query the status of a long-running"
@@ -104,8 +106,11 @@ class ServiceClientCommentComposer {
   static List<CommentStatement> createClassHeaderComments(Service service) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
-      classHeaderJavadocBuilder.addComment(
-          String.format(SERVICE_DESCRIPTION_SUMMARY_PATTERN, service.description()));
+      classHeaderJavadocBuilder =
+          processProtobufComment(
+              service.description(),
+              classHeaderJavadocBuilder,
+              SERVICE_DESCRIPTION_SUMMARY_PATTERN);
     }
 
     // Service introduction.
@@ -113,7 +118,9 @@ class ServiceClientCommentComposer {
     // TODO(summerji): Add sample code here.
 
     // API surface description.
-    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CLOSE_STRING);
+    classHeaderJavadocBuilder.addParagraph(
+        String.format(
+            SERVICE_DESCRIPTION_CLOSE_PATTERN, JavaStyle.toLowerCamelCase(service.name())));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING);
     classHeaderJavadocBuilder.addOrderedList(SERVICE_DESCRIPTION_SURFACE_DESCRIPTION);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
@@ -136,9 +143,11 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(classHeaderJavadocBuilder.build()));
   }
 
-  static CommentStatement createCreateMethodStubArgComment(TypeNode settingsType) {
+  static CommentStatement createCreateMethodStubArgComment(
+      String serviceName, TypeNode settingsType) {
     return toSimpleComment(
-        String.format(CREATE_METHOD_STUB_ARG_PATTERN, settingsType.reference().name()));
+        String.format(
+            CREATE_METHOD_STUB_ARG_PATTERN, serviceName, settingsType.reference().name()));
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
@@ -146,7 +155,8 @@ class ServiceClientCommentComposer {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder.addComment(method.description());
+      methodJavadocBuilder =
+          processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
@@ -157,6 +167,7 @@ class ServiceClientCommentComposer {
           "request", "The request object containing all of the parameters for the API call.");
     } else {
       for (MethodArgument argument : methodArguments) {
+        // TODO(miraleung): Remove the newline replacement when we support CommonMark.
         String description =
             argument.field().hasDescription() ? argument.field().description() : EMPTY_STRING;
         methodJavadocBuilder.addParam(argument.name(), description);
@@ -174,11 +185,24 @@ class ServiceClientCommentComposer {
     return createRpcMethodHeaderComment(method, Collections.emptyList());
   }
 
+  static CommentStatement createMethodNoArgComment(String serviceName) {
+    return toSimpleComment(String.format(CREATE_METHOD_NO_ARG_PATTERN, serviceName));
+  }
+
+  static CommentStatement createProtectedCtorSettingsArgComment(String serviceName) {
+    return toSimpleComment(String.format(PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN, serviceName));
+  }
+
+  static CommentStatement createMethodSettingsArgComment(String serviceName) {
+    return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
+  }
+
   static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
-      methodJavadocBuilder.addComment(method.description());
+      methodJavadocBuilder =
+          processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
@@ -191,5 +215,43 @@ class ServiceClientCommentComposer {
 
   private static CommentStatement toSimpleComment(String comment) {
     return CommentStatement.withComment(JavaDocComment.withComment(comment));
+  }
+
+  // TODO(miraleung): Replace this with a comment converter when we upport CommonMark.
+  private static JavaDocComment.Builder processProtobufComment(
+      String rawComment, JavaDocComment.Builder originalCommentBuilder, String firstPattern) {
+    JavaDocComment.Builder commentBuilder = originalCommentBuilder;
+    String[] descriptionParagraphs = rawComment.split("\\n\\n");
+    for (int i = 0; i < descriptionParagraphs.length; i++) {
+      boolean startsWithItemizedList = descriptionParagraphs[i].startsWith(" * ");
+      // Split by listed items, then join newlines.
+      List<String> listItems =
+          Stream.of(descriptionParagraphs[i].split("\\n \\*"))
+              .map(s -> s.replace("\n", ""))
+              .collect(Collectors.toList());
+      if (startsWithItemizedList) {
+        // Remove the first asterisk.
+        listItems.set(0, listItems.get(0).substring(2));
+      }
+      if (!startsWithItemizedList) {
+        if (i == 0) {
+          if (!Strings.isNullOrEmpty(firstPattern)) {
+            commentBuilder =
+                commentBuilder.addParagraph(String.format(firstPattern, listItems.get(0)));
+          } else {
+            commentBuilder = commentBuilder.addParagraph(listItems.get(0));
+          }
+        } else {
+          commentBuilder = commentBuilder.addParagraph(listItems.get(0));
+        }
+      }
+      if (listItems.size() > 1 || startsWithItemizedList) {
+        commentBuilder =
+            commentBuilder.addUnorderedList(
+                listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
+      }
+    }
+
+    return commentBuilder;
   }
 }

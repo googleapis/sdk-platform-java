@@ -77,10 +77,22 @@ public class DefaultValueComposer {
   }
 
   static Expr createDefaultValue(Field f) {
+    return createDefaultValue(f, false);
+  }
+
+  static Expr createDefaultValue(Field f, boolean useExplicitInitTypeInGenerics) {
     if (f.isRepeated()) {
-      TypeNode newType =
-          TypeNode.withReference(
-              ConcreteReference.withClazz(f.isMap() ? HashMap.class : ArrayList.class));
+      ConcreteReference.Builder refBuilder =
+          ConcreteReference.builder().setClazz(f.isMap() ? HashMap.class : ArrayList.class);
+      if (useExplicitInitTypeInGenerics) {
+        if (f.isMap()) {
+          refBuilder = refBuilder.setGenerics(f.type().reference().generics().subList(0, 2));
+        } else {
+          refBuilder = refBuilder.setGenerics(f.type().reference().generics().get(0));
+        }
+      }
+
+      TypeNode newType = TypeNode.withReference(refBuilder.build());
       return NewObjectExpr.builder().setType(newType).setIsGeneric(true).build();
     }
 
@@ -238,7 +250,7 @@ public class DefaultValueComposer {
                 .setReturnType(TypeNode.STRING)
                 .build();
       } else {
-        defaultExpr = createDefaultValue(field);
+        defaultExpr = createDefaultValue(field, true);
       }
       builderExpr =
           MethodInvocationExpr.builder()

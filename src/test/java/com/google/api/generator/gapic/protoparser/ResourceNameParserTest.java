@@ -125,7 +125,7 @@ public class ResourceNameParserTest {
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Map<String, ResourceName> typeStringsToResourceNames =
         ResourceNameParser.parseResourceNamesFromMessages(messageDescriptors, pakkage);
-    assertEquals(1, typeStringsToResourceNames.size());
+    assertEquals(2, typeStringsToResourceNames.size());
 
     ResourceName resourceName = typeStringsToResourceNames.get("testgapic.googleapis.com/Document");
     assertEquals(2, resourceName.patterns().size());
@@ -140,7 +140,31 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_messageWithoutResourceDefinition() {
+  public void parseResourceNames_badMessageResourceNameDefinitionMissingNameField() {
+    FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
+    List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
+    Descriptor messageDescriptor = messageDescriptors.get(0);
+    String pakkage = TypeParser.getPackage(protoFileDescriptor);
+
+    assertThrows(
+        IllegalStateException.class,
+        () -> ResourceNameParser.parseResourceNameFromMessageType(messageDescriptor, pakkage));
+  }
+
+  @Test
+  public void parseResourceNameFromMessage_basicResourceDefinition() {
+    String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
+    List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
+    Descriptor documentMessageDescriptor = messageDescriptors.get(0);
+    assertEquals("Document", documentMessageDescriptor.getName());
+    Optional<ResourceName> resourceNameOpt =
+        ResourceNameParser.parseResourceNameFromMessageType(documentMessageDescriptor, pakkage);
+    assertTrue(resourceNameOpt.isPresent());
+    assertEquals("testgapic.googleapis.com/Document", resourceNameOpt.get().resourceTypeString());
+  }
+
+  @Test
+  public void parseResourceNamesFromMessage_noResourceDefinition() {
     String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
     List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
     Descriptor folderMessageDescriptor = messageDescriptors.get(1);
@@ -151,15 +175,28 @@ public class ResourceNameParserTest {
   }
 
   @Test
-  public void parseResourceNames_badMessageResourceNameDefinitionMissingNameField() {
-    FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
-    List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
-    Descriptor messageDescriptor = messageDescriptors.get(0);
-    String pakkage = TypeParser.getPackage(protoFileDescriptor);
+  public void parseResourceNameFromMessage_nonNameResourceReferenceField() {
+    String pakkage = TypeParser.getPackage(lockerServiceFileDescriptor);
+    List<Descriptor> messageDescriptors = lockerServiceFileDescriptor.getMessageTypes();
+    Descriptor binderMessageDescriptor = messageDescriptors.get(2);
+    assertEquals("Binder", binderMessageDescriptor.getName());
+    Optional<ResourceName> resourceNameOpt =
+        ResourceNameParser.parseResourceNameFromMessageType(binderMessageDescriptor, pakkage);
+    assertTrue(resourceNameOpt.isPresent());
+    assertEquals("testgapic.googleapis.com/Binder", resourceNameOpt.get().resourceTypeString());
+  }
 
+  @Test
+  public void parseResourceNamesFromMessage_noNameOrResourceReferenceField() {
+    FileDescriptor protoFileDescriptor = BadMessageResnameDefProto.getDescriptor();
+    String pakkage = TypeParser.getPackage(protoFileDescriptor);
+    List<Descriptor> messageDescriptors = protoFileDescriptor.getMessageTypes();
+    Descriptor pencilMessageDescriptor = messageDescriptors.get(1);
+    assertEquals("Pencil", pencilMessageDescriptor.getName());
     assertThrows(
-        NullPointerException.class,
-        () -> ResourceNameParser.parseResourceNameFromMessageType(messageDescriptor, pakkage));
+        IllegalStateException.class,
+        () ->
+            ResourceNameParser.parseResourceNameFromMessageType(pencilMessageDescriptor, pakkage));
   }
 
   @Test

@@ -18,7 +18,6 @@ import com.google.api.ClientProto;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -130,7 +129,12 @@ public class Parser {
               fileToGenerate);
 
       services.addAll(
-          parseService(fileDescriptor, messageTypes, resourceNames, outputArgResourceNames));
+          parseService(
+              fileDescriptor,
+              messageTypes,
+              resourceNames,
+              serviceYamlProtoOpt,
+              outputArgResourceNames));
     }
 
     return services;
@@ -140,28 +144,37 @@ public class Parser {
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
       Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
 
     return fileDescriptor.getServices().stream()
         .map(
             s -> {
-              // TODO(miraleung, v2): Handle missing default_host and oauth_scopes annotations.
+              // Workaround for a missing default_host and oauth_scopes annotation from a service
+              // definition. This can happen for protos that bypass the publishing process.
+              // TODO(miraleung): Remove this workaround later?
               ServiceOptions serviceOptions = s.getOptions();
-              // The proto publishing process will insert these two fields from the 1P esrvice
-              // config YAML file, so we can assume they must be present for v1 for the
-              // microgenerator.
+              String defaultHost = null;
+              if (serviceOptions.hasExtension(ClientProto.defaultHost)) {
+                defaultHost =
+                    sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
+              } else if (serviceYamlProtoOpt.isPresent()) {
+                // Fall back to the DNS name supplied in the service .yaml config.
+                defaultHost = serviceYamlProtoOpt.get().getName();
+              }
               Preconditions.checkState(
-                  serviceOptions.hasExtension(ClientProto.defaultHost),
-                  String.format("Default host annotation not found in service %s", s.getName()));
-              Preconditions.checkState(
-                  serviceOptions.hasExtension(ClientProto.oauthScopes),
-                  String.format("Oauth scopes annotation not found in service %s", s.getName()));
+                  !Strings.isNullOrEmpty(defaultHost),
+                  String.format(
+                      "Default host not found in service YAML config file or annotation for %s",
+                      s.getName()));
 
-              String defaultHost =
-                  sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
-              List<String> oauthScopes =
-                  Arrays.asList(serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
+              List<String> oauthScopes = Collections.emptyList();
+              if (serviceOptions.hasExtension(ClientProto.oauthScopes)) {
+                oauthScopes =
+                    Arrays.asList(
+                        serviceOptions.getExtension(ClientProto.oauthScopes).split(COMMA));
+              }
 
               Service.Builder serviceBuilder = Service.builder();
               if (fileDescriptor.toProto().hasSourceCodeInfo()) {
@@ -201,22 +214,51 @@ public class Parser {
   }
 
   public static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
-    String pakkage = TypeParser.getPackage(fileDescriptor);
-    return fileDescriptor.getMessageTypes().stream()
-        .collect(
-            Collectors.toMap(
-                md -> md.getName(),
-                md ->
-                    Message.builder()
-                        .setType(
-                            TypeNode.withReference(
-                                VaporReference.builder()
-                                    .setName(md.getName())
-                                    .setPakkage(pakkage)
-                                    .build()))
-                        .setName(md.getName())
-                        .setFields(parseFields(md))
-                        .build()));
+    // TODO(miraleung): Preserve nested type and package data in the type key.
+    Map<String, Message> messages = new HashMap<>();
+    for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
+      messages.putAll(parseMessages(messageDescriptor));
+    }
+    return messages;
+  }
+
+  private static Map<String, Message> parseMessages(Descriptor messageDescriptor) {
+    return parseMessages(messageDescriptor, new ArrayList<String>());
+  }
+
+  private static Map<String, Message> parseMessages(
+      Descriptor messageDescriptor, List<String> outerNestedTypes) {
+    Map<String, Message> messages = new HashMap<>();
+    String messageName = messageDescriptor.getName();
+    if (!messageDescriptor.getNestedTypes().isEmpty()) {
+      for (Descriptor nestedMessage : messageDescriptor.getNestedTypes()) {
+        if (isMapType(nestedMessage)) {
+          continue;
+        }
+        outerNestedTypes.add(messageName);
+        messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
+      }
+    }
+    String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
+    messages.put(
+        messageName,
+        Message.builder()
+            .setType(TypeParser.parseType(messageDescriptor))
+            .setName(messageName)
+            .setFields(parseFields(messageDescriptor))
+            .setOuterNestedTypes(outerNestedTypes)
+            .build());
+    return messages;
+  }
+
+  private static boolean isMapType(Descriptor messageDescriptor) {
+    List<String> fieldNames =
+        messageDescriptor.getFields().stream().map(f -> f.getName()).collect(Collectors.toList());
+    // Ends in "Entry" and has exactly two fields, named "key" and "value".
+    return messageDescriptor.getName().endsWith("Entry")
+        && fieldNames.size() == 2
+        && fieldNames.get(0).equals("key")
+        && fieldNames.get(1).equals("value");
   }
 
   /**
@@ -353,10 +395,16 @@ public class Parser {
     Message responseMessage = messageTypes.get(responseTypeName);
     Message metadataMessage = messageTypes.get(metadataTypeName);
     Preconditions.checkNotNull(
-        responseMessage, String.format("LRO response message %s not found", responseTypeName));
+        responseMessage,
+        String.format(
+            "LRO response message %s not found on method %s",
+            responseTypeName, methodDescriptor.getName()));
     // TODO(miraleung): Check that the packages are equal if those strings are not empty.
     Preconditions.checkNotNull(
-        metadataMessage, String.format("LRO metadata message %s not found", metadataTypeName));
+        metadataMessage,
+        String.format(
+            "LRO metadata message %s not found in method %s",
+            metadataTypeName, methodDescriptor.getName()));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }

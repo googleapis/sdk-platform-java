@@ -1090,21 +1090,25 @@ public class ResourceNameHelperClassComposer {
       List<List<String>> tokenHierarchies) {
     boolean hasVariants = tokenHierarchies.size() > 1;
     if (!hasVariants) {
-      String token = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList()).get(0);
-      String javaTokenVarName = JavaStyle.toLowerCamelCase(token);
-      Preconditions.checkNotNull(
-          patternTokenVarExprs.get(token),
-          String.format(
-              "No expression found for token %s amongst values %s",
-              javaTokenVarName, patternTokenVarExprs.toString()));
+
+      List<Expr> instantiateArgExprs = new ArrayList<>();
+      List<String> tokens = getTokenSet(tokenHierarchies).stream().collect(Collectors.toList());
+      for (int i = 0; i < tokens.size(); i++) {
+        String token = tokens.get(i);
+        Preconditions.checkNotNull(
+            patternTokenVarExprs.get(token),
+            String.format(
+                "No expression found for token %s amongst values %s",
+                token, patternTokenVarExprs.toString()));
+        instantiateArgExprs.add(ValueExpr.withValue(StringObjectValue.withValue(token)));
+        instantiateArgExprs.add(patternTokenVarExprs.get(token));
+      }
 
       MethodInvocationExpr returnInstantiateExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(templateFinalVarExprs.get(0))
               .setMethodName("instantiate")
-              .setArguments(
-                  ValueExpr.withValue(StringObjectValue.withValue(token)),
-                  patternTokenVarExprs.get(token))
+              .setArguments(instantiateArgExprs)
               .setReturnType(TypeNode.STRING)
               .build();
       return MethodDefinition.builder()
@@ -1575,7 +1579,7 @@ public class ResourceNameHelperClassComposer {
             VaporReference.builder()
                 .setName("Builder")
                 .setPakkage(resourceName.pakkage())
-                .setEnclosingClassName(thisClassName)
+                .setEnclosingClassNames(thisClassName)
                 .setIsStaticImport(true)
                 .build()));
 
@@ -1591,7 +1595,7 @@ public class ResourceNameHelperClassComposer {
                               VaporReference.builder()
                                   .setName(s)
                                   .setPakkage(resourceName.pakkage())
-                                  .setEnclosingClassName(thisClassName)
+                                  .setEnclosingClassNames(thisClassName)
                                   .setIsStaticImport(true)
                                   .build()))));
     }
