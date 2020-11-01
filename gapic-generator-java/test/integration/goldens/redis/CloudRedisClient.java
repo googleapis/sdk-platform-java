@@ -355,9 +355,15 @@ public class CloudRedisClient implements BackgroundResource {
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @param instance_id Required. The logical name of the Redis instance in the customer project
-   *     with the following restrictions: * Must contain only lowercase letters, numbers, and
-   *     hyphens. * Must start with a letter. * Must be between 1-40 characters. * Must end with a
-   *     number or a letter. * Must be unique within the customer project / location
+   *     with the following restrictions:
+   *     <ul>
+   *       <li>Must contain only lowercase letters, numbers, and hyphens.
+   *       <li>Must start with a letter.
+   *       <li>Must be between 1-40 characters.
+   *       <li>Must end with a number or a letter.
+   *       <li>Must be unique within the customer project / location
+   *     </ul>
+   *
    * @param instance Required. A Redis [Instance] resource
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -392,9 +398,15 @@ public class CloudRedisClient implements BackgroundResource {
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @param instance_id Required. The logical name of the Redis instance in the customer project
-   *     with the following restrictions: * Must contain only lowercase letters, numbers, and
-   *     hyphens. * Must start with a letter. * Must be between 1-40 characters. * Must end with a
-   *     number or a letter. * Must be unique within the customer project / location
+   *     with the following restrictions:
+   *     <ul>
+   *       <li>Must contain only lowercase letters, numbers, and hyphens.
+   *       <li>Must start with a letter.
+   *       <li>Must be between 1-40 characters.
+   *       <li>Must end with a number or a letter.
+   *       <li>Must be unique within the customer project / location
+   *     </ul>
+   *
    * @param instance Required. A Redis [Instance] resource
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -489,8 +501,8 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * @param update_mask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
-   *     [Instance][google.cloud.redis.v1.Instance]: * `displayName` * `labels` * `memorySizeGb` *
-   *     `redisConfig`
+   *     [Instance][google.cloud.redis.v1.Instance]:
+   *     <p>* `displayName` * `labels` * `memorySizeGb` * `redisConfig`
    * @param instance Required. Update description. Only fields specified in update_mask are updated.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */

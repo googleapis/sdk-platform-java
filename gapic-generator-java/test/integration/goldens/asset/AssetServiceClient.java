@@ -473,10 +473,15 @@ public class AssetServiceClient implements BackgroundResource {
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the resources within the `scope`. The caller must be granted the
    *     [`cloudasset.assets.searchAllResources`](http://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
-   *     permission on the desired scope. The allowed values are: * projects/{PROJECT_ID} (e.g.,
-   *     "projects/foo-bar") * projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
-   *     folders/{FOLDER_NUMBER} (e.g., "folders/1234567") * organizations/{ORGANIZATION_NUMBER}
-   *     (e.g., "organizations/123456")
+   *     permission on the desired scope.
+   *     <p>The allowed values are:
+   *     <ul>
+   *       <li>projects/{PROJECT_ID} (e.g., "projects/foo-bar")
+   *       <li>projects/{PROJECT_NUMBER} (e.g., "projects/12345678")
+   *       <li>folders/{FOLDER_NUMBER} (e.g., "folders/1234567")
+   *       <li>organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
+   *     </ul>
+   *
    * @param query Optional. The query statement. See [how to construct a
    *     query](http://cloud.google.com/asset-inventory/docs/searching-resources#how_to_construct_a_query)
    *     for more information. If not specified or empty, it will search all the resources within
@@ -484,20 +489,31 @@ public class AssetServiceClient implements BackgroundResource {
    *     binding, including its members, roles, and Cloud IAM conditions. The returned Cloud IAM
    *     policies will only contain the bindings that match your query. To learn more about the IAM
    *     policy structure, see [IAM policy
-   *     doc](https://cloud.google.com/iam/docs/policies#structure). Examples: * `name:Important` to
-   *     find Cloud resources whose name contains "Important" as a word. * `displayName:Impor*` to
-   *     find Cloud resources whose display name contains "Impor" as a prefix. * `description:*por*`
-   *     to find Cloud resources whose description contains "por" as a substring. *
-   *     `location:us-west*` to find Cloud resources whose location is prefixed with "us-west". *
-   *     `labels:prod` to find Cloud resources whose labels contain "prod" as a key or value. *
-   *     `labels.env:prod` to find Cloud resources that have a label "env" and its value is "prod".
-   *     * `labels.env:*` to find Cloud resources that have a label "env". * `Important` to find
-   *     Cloud resources that contain "Important" as a word in any of the searchable fields. *
-   *     `Impor*` to find Cloud resources that contain "Impor" as a prefix in any of the searchable
-   *     fields. * `*por*` to find Cloud resources that contain "por" as a substring in any of the
-   *     searchable fields. * `Important location:(us-west1 OR global)` to find Cloud resources that
-   *     contain "Important" as a word in any of the searchable fields and are also located in the
-   *     "us-west1" region or the "global" location.
+   *     doc](https://cloud.google.com/iam/docs/policies#structure).
+   *     <p>Examples:
+   *     <ul>
+   *       <li>`name:Important` to find Cloud resources whose name contains "Important" as a word.
+   *       <li>`displayName:Impor*` to find Cloud resources whose display name contains "Impor" as a
+   *           prefix.
+   *       <li>`description:*por*` to find Cloud resources whose description contains "por" as a
+   *           substring.
+   *       <li>`location:us-west*` to find Cloud resources whose location is prefixed with
+   *           "us-west".
+   *       <li>`labels:prod` to find Cloud resources whose labels contain "prod" as a key or value.
+   *       <li>`labels.env:prod` to find Cloud resources that have a label "env" and its value is
+   *           "prod".
+   *       <li>`labels.env:*` to find Cloud resources that have a label "env".
+   *       <li>`Important` to find Cloud resources that contain "Important" as a word in any of the
+   *           searchable fields.
+   *       <li>`Impor*` to find Cloud resources that contain "Impor" as a prefix in any of the
+   *           searchable fields.
+   *       <li>`*por*` to find Cloud resources that contain "por" as a substring in any of the
+   *           searchable fields.
+   *       <li>`Important location:(us-west1 OR global)` to find Cloud resources that contain
+   *           "Important" as a word in any of the searchable fields and are also located in the
+   *           "us-west1" region or the "global" location.
+   *     </ul>
+   *
    * @param asset_types Optional. A list of asset types that this request searches for. If empty, it
    *     will search all the [searchable asset
    *     types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
@@ -567,26 +583,38 @@ public class AssetServiceClient implements BackgroundResource {
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the IAM policies within the `scope`. The caller must be granted the
    *     [`cloudasset.assets.searchAllIamPolicies`](http://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
-   *     permission on the desired scope. The allowed values are: * projects/{PROJECT_ID} (e.g.,
-   *     "projects/foo-bar") * projects/{PROJECT_NUMBER} (e.g., "projects/12345678") *
-   *     folders/{FOLDER_NUMBER} (e.g., "folders/1234567") * organizations/{ORGANIZATION_NUMBER}
-   *     (e.g., "organizations/123456")
+   *     permission on the desired scope.
+   *     <p>The allowed values are:
+   *     <ul>
+   *       <li>projects/{PROJECT_ID} (e.g., "projects/foo-bar")
+   *       <li>projects/{PROJECT_NUMBER} (e.g., "projects/12345678")
+   *       <li>folders/{FOLDER_NUMBER} (e.g., "folders/1234567")
+   *       <li>organizations/{ORGANIZATION_NUMBER} (e.g., "organizations/123456")
+   *     </ul>
+   *
    * @param query Optional. The query statement. See [how to construct a
    *     query](https://cloud.google.com/asset-inventory/docs/searching-iam-policies#how_to_construct_a_query)
    *     for more information. If not specified or empty, it will search all the IAM policies within
-   *     the specified `scope`. Examples: * `policy:amy@gmail.com` to find IAM policy bindings that
-   *     specify user "amy@gmail.com". * `policy:roles/compute.admin` to find IAM policy bindings
-   *     that specify the Compute Admin role. * `policy.role.permissions:storage.buckets.update` to
-   *     find IAM policy bindings that specify a role containing "storage.buckets.update"
-   *     permission. Note that if callers don't have `iam.roles.get` access to a role's included
-   *     permissions, policy bindings that specify this role will be dropped from the search
-   *     results. * `resource:organizations/123456` to find IAM policy bindings that are set on
-   *     "organizations/123456". * `Important` to find IAM policy bindings that contain "Important"
-   *     as a word in any of the searchable fields (except for the included permissions). * `*por*`
-   *     to find IAM policy bindings that contain "por" as a substring in any of the searchable
-   *     fields (except for the included permissions). * `resource:(instance1 OR instance2)
-   *     policy:amy` to find IAM policy bindings that are set on resources "instance1" or
-   *     "instance2" and also specify user "amy".
+   *     the specified `scope`.
+   *     <p>Examples:
+   *     <ul>
+   *       <li>`policy:amy@gmail.com` to find IAM policy bindings that specify user "amy@gmail.com".
+   *       <li>`policy:roles/compute.admin` to find IAM policy bindings that specify the Compute
+   *           Admin role.
+   *       <li>`policy.role.permissions:storage.buckets.update` to find IAM policy bindings that
+   *           specify a role containing "storage.buckets.update" permission. Note that if callers
+   *           don't have `iam.roles.get` access to a role's included permissions, policy bindings
+   *           that specify this role will be dropped from the search results.
+   *       <li>`resource:organizations/123456` to find IAM policy bindings that are set on
+   *           "organizations/123456".
+   *       <li>`Important` to find IAM policy bindings that contain "Important" as a word in any of
+   *           the searchable fields (except for the included permissions).
+   *       <li>`*por*` to find IAM policy bindings that contain "por" as a substring in any of the
+   *           searchable fields (except for the included permissions).
+   *       <li>`resource:(instance1 OR instance2) policy:amy` to find IAM policy bindings that are
+   *           set on resources "instance1" or "instance2" and also specify user "amy".
+   *     </ul>
+   *
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final SearchAllIamPoliciesPagedResponse searchAllIamPolicies(String scope, String query) {
