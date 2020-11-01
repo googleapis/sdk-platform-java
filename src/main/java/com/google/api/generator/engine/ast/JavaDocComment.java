@@ -96,7 +96,7 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addParagraph(String paragraph) {
-      componentsList.add(String.format("<p> %s", paragraph));
+      componentsList.add(String.format("<p> %s", HtmlEscaper.process(paragraph)));
       return this;
     }
 
@@ -105,7 +105,7 @@ public abstract class JavaDocComment implements Comment {
       oList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", HtmlEscaper.process(s)));
               });
       componentsList.add("</ol>");
       return this;
@@ -116,7 +116,7 @@ public abstract class JavaDocComment implements Comment {
       uList.stream()
           .forEach(
               s -> {
-                componentsList.add(String.format("<li> %s", s));
+                componentsList.add(String.format("<li> %s", HtmlEscaper.process(s)));
               });
       componentsList.add("</ul>");
       return this;
@@ -126,7 +126,8 @@ public abstract class JavaDocComment implements Comment {
       // @param, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
       if (!Strings.isNullOrEmpty(throwsType)) {
-        componentsList.add(String.format("@throws %s %s", throwsType, throwsDescription));
+        componentsList.add(
+            String.format("@throws %s %s", throwsType, HtmlEscaper.process(throwsDescription)));
       }
       if (!Strings.isNullOrEmpty(deprecated)) {
         componentsList.add(String.format("@deprecated %s", deprecated));
@@ -156,10 +157,11 @@ public abstract class JavaDocComment implements Comment {
         }
         if (!startsWithItemizedList) {
           if (i == 0) {
-            processedCommentBuilder.append(String.format("%s", listItems.get(0)));
+            processedCommentBuilder.append(
+                String.format("%s", HtmlEscaper.process(listItems.get(0))));
           } else {
             processedCommentBuilder.append(
-                String.format("%s<p> %s", PARAM_INDENT, listItems.get(0)));
+                String.format("%s<p> %s", PARAM_INDENT, HtmlEscaper.process(listItems.get(0))));
           }
         }
         if (listItems.size() > 1 || startsWithItemizedList) {
@@ -168,7 +170,7 @@ public abstract class JavaDocComment implements Comment {
                   "%s<ul>\n%s\n%s</ul>",
                   PARAM_INDENT,
                   listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()).stream()
-                      .map(li -> String.format("%s  <li>%s", PARAM_INDENT, li))
+                      .map(li -> String.format("%s  <li>%s", PARAM_INDENT, HtmlEscaper.process(li)))
                       .reduce("", String::concat),
                   PARAM_INDENT));
         }
