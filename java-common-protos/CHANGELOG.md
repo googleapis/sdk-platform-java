@@ -1,5 +1,13 @@
 # Changelog
 
+### [2.0.1](https://www.github.com/googleapis/java-common-protos/compare/v2.0.0...v2.0.1) (2020-11-02)
+
+
+### Dependencies
+
+* update dependency com.google.guava:guava to v30 ([#68](https://www.github.com/googleapis/java-common-protos/issues/68)) ([744f4a7](https://www.github.com/googleapis/java-common-protos/commit/744f4a72fc373440c4ac5fa5e8b85152ca8385be))
+* update dependency io.grpc:grpc-bom to v1.33.1 ([#67](https://www.github.com/googleapis/java-common-protos/issues/67)) ([b729eb3](https://www.github.com/googleapis/java-common-protos/commit/b729eb3ca99aa510c3bb31fa5225a0f5d18edfd0))
+
 ## [2.0.0](https://www.github.com/googleapis/java-common-protos/compare/v1.18.1...v2.0.0) (2020-10-15)
 
 
