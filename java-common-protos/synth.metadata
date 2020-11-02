@@ -4,15 +4,15 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "744f4a72fc373440c4ac5fa5e8b85152ca8385be"
+        "sha": "1759fe7650869500e0d7b712fe8ef1bcc346d27a"
       }
     },
     {
       "git": {
         "name": "googleapis",
         "remote": "https://github.com/googleapis/googleapis.git",
-        "sha": "29b789912908e71d60551022a0521206794b501c",
-        "internalRef": "338275151"
+        "sha": "28e0d72b1e74a9c7e46349db53ef006540bcbdfb",
+        "internalRef": "338547917"
       }
     },
     {

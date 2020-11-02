@@ -35,7 +35,7 @@ package com.google.api;
  * `google.rpc.context.OriginContext`.
  * Available context types are defined in package
  * `google.rpc.context`.
- * This also provides mechanism to whitelist any protobuf message extension that
+ * This also provides mechanism to allowlist any protobuf message extension that
  * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
  * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
  * specific protobuf types that can appear in grpc metadata as follows in your
@@ -390,7 +390,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    * `google.rpc.context.OriginContext`.
    * Available context types are defined in package
    * `google.rpc.context`.
-   * This also provides mechanism to whitelist any protobuf message extension that
+   * This also provides mechanism to allowlist any protobuf message extension that
    * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
    * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
    * specific protobuf types that can appear in grpc metadata as follows in your

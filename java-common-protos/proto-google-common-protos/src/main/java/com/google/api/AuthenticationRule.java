@@ -254,6 +254,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * If true, the service accepts API keys without any other credential.
+   * This flag only applies to HTTP and gRPC requests.
    * </pre>
    *
    * <code>bool allow_without_credential = 5;</code>
@@ -1048,6 +1049,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * If true, the service accepts API keys without any other credential.
+     * This flag only applies to HTTP and gRPC requests.
      * </pre>
      *
      * <code>bool allow_without_credential = 5;</code>
@@ -1063,6 +1065,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * If true, the service accepts API keys without any other credential.
+     * This flag only applies to HTTP and gRPC requests.
      * </pre>
      *
      * <code>bool allow_without_credential = 5;</code>
@@ -1081,6 +1084,7 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * If true, the service accepts API keys without any other credential.
+     * This flag only applies to HTTP and gRPC requests.
      * </pre>
      *
      * <code>bool allow_without_credential = 5;</code>
