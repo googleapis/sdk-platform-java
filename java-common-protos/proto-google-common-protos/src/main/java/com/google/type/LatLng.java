@@ -22,8 +22,8 @@ package com.google.type;
  *
  *
  * <pre>
- * An object representing a latitude/longitude pair. This is expressed as a pair
- * of doubles representing degrees latitude and degrees longitude. Unless
+ * An object that represents a latitude/longitude pair. This is expressed as a
+ * pair of doubles to represent degrees latitude and degrees longitude. Unless
  * specified otherwise, this must conform to the
  * &lt;a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf"&gt;WGS84
  * standard&lt;/a&gt;. Values must be within normalized ranges.
@@ -327,8 +327,8 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An object representing a latitude/longitude pair. This is expressed as a pair
-   * of doubles representing degrees latitude and degrees longitude. Unless
+   * An object that represents a latitude/longitude pair. This is expressed as a
+   * pair of doubles to represent degrees latitude and degrees longitude. Unless
    * specified otherwise, this must conform to the
    * &lt;a href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf"&gt;WGS84
    * standard&lt;/a&gt;. Values must be within normalized ranges.

@@ -22,7 +22,7 @@ package com.google.type;
  *
  *
  * <pre>
- * Represents a day of week.
+ * Represents a day of the week.
  * </pre>
  *
  * Protobuf enum {@code google.type.DayOfWeek}
@@ -32,7 +32,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The unspecified day-of-week.
+   * The day of the week is unspecified.
    * </pre>
    *
    * <code>DAY_OF_WEEK_UNSPECIFIED = 0;</code>
@@ -42,7 +42,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Monday.
+   * Monday
    * </pre>
    *
    * <code>MONDAY = 1;</code>
@@ -52,7 +52,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Tuesday.
+   * Tuesday
    * </pre>
    *
    * <code>TUESDAY = 2;</code>
@@ -62,7 +62,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Wednesday.
+   * Wednesday
    * </pre>
    *
    * <code>WEDNESDAY = 3;</code>
@@ -72,7 +72,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Thursday.
+   * Thursday
    * </pre>
    *
    * <code>THURSDAY = 4;</code>
@@ -82,7 +82,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Friday.
+   * Friday
    * </pre>
    *
    * <code>FRIDAY = 5;</code>
@@ -92,7 +92,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Saturday.
+   * Saturday
    * </pre>
    *
    * <code>SATURDAY = 6;</code>
@@ -102,7 +102,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Sunday.
+   * Sunday
    * </pre>
    *
    * <code>SUNDAY = 7;</code>
@@ -115,7 +115,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The unspecified day-of-week.
+   * The day of the week is unspecified.
    * </pre>
    *
    * <code>DAY_OF_WEEK_UNSPECIFIED = 0;</code>
@@ -125,7 +125,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Monday.
+   * Monday
    * </pre>
    *
    * <code>MONDAY = 1;</code>
@@ -135,7 +135,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Tuesday.
+   * Tuesday
    * </pre>
    *
    * <code>TUESDAY = 2;</code>
@@ -145,7 +145,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Wednesday.
+   * Wednesday
    * </pre>
    *
    * <code>WEDNESDAY = 3;</code>
@@ -155,7 +155,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Thursday.
+   * Thursday
    * </pre>
    *
    * <code>THURSDAY = 4;</code>
@@ -165,7 +165,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Friday.
+   * Friday
    * </pre>
    *
    * <code>FRIDAY = 5;</code>
@@ -175,7 +175,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Saturday.
+   * Saturday
    * </pre>
    *
    * <code>SATURDAY = 6;</code>
@@ -185,7 +185,7 @@ public enum DayOfWeek implements com.google.protobuf.ProtocolMessageEnum {
    *
    *
    * <pre>
-   * The day-of-week of Sunday.
+   * Sunday
    * </pre>
    *
    * <code>SUNDAY = 7;</code>

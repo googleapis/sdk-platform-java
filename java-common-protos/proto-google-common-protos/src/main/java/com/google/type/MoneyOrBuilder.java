@@ -27,7 +27,7 @@ public interface MoneyOrBuilder
    *
    *
    * <pre>
-   * The 3-letter currency code defined in ISO 4217.
+   * The three-letter currency code defined in ISO 4217.
    * </pre>
    *
    * <code>string currency_code = 1;</code>
@@ -39,7 +39,7 @@ public interface MoneyOrBuilder
    *
    *
    * <pre>
-   * The 3-letter currency code defined in ISO 4217.
+   * The three-letter currency code defined in ISO 4217.
    * </pre>
    *
    * <code>string currency_code = 1;</code>

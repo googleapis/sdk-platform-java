@@ -33,6 +33,9 @@ package com.google.type;
  * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
  * DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the sRGB color
  * space.
+ * Note: when color equality needs to be decided, implementations, unless
+ * documented otherwise, will treat two colors to be equal if all their red,
+ * green, blue and alpha values each differ by at most 1e-5.
  * Example (Java):
  *      import com.google.type.Color;
  *      // ...
@@ -562,6 +565,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
    * DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the sRGB color
    * space.
+   * Note: when color equality needs to be decided, implementations, unless
+   * documented otherwise, will treat two colors to be equal if all their red,
+   * green, blue and alpha values each differ by at most 1e-5.
    * Example (Java):
    *      import com.google.type.Color;
    *      // ...

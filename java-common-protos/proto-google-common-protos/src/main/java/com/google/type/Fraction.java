@@ -115,7 +115,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * The portion of the denominator in the faction, e.g. 2 in 2/3.
+   * The numerator in the fraction, e.g. 2 in 2/3.
    * </pre>
    *
    * <code>int64 numerator = 1;</code>
@@ -474,7 +474,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The portion of the denominator in the faction, e.g. 2 in 2/3.
+     * The numerator in the fraction, e.g. 2 in 2/3.
      * </pre>
      *
      * <code>int64 numerator = 1;</code>
@@ -489,7 +489,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The portion of the denominator in the faction, e.g. 2 in 2/3.
+     * The numerator in the fraction, e.g. 2 in 2/3.
      * </pre>
      *
      * <code>int64 numerator = 1;</code>
@@ -507,7 +507,7 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * The portion of the denominator in the faction, e.g. 2 in 2/3.
+     * The numerator in the fraction, e.g. 2 in 2/3.
      * </pre>
      *
      * <code>int64 numerator = 1;</code>
