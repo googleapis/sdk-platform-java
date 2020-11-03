@@ -4,7 +4,7 @@
       "git": {
         "name": ".",
         "remote": "https://github.com/googleapis/java-common-protos.git",
-        "sha": "1759fe7650869500e0d7b712fe8ef1bcc346d27a"
+        "sha": "fda2e7be4961ef27fc0908f5dffd63b6248f0507"
       }
     },
     {
@@ -289,6 +289,9 @@
     "proto-google-common-protos/src/main/java/com/google/type/Date.java",
     "proto-google-common-protos/src/main/java/com/google/type/DateOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/DateProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/DateTime.java",
+    "proto-google-common-protos/src/main/java/com/google/type/DateTimeOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/type/DateTimeProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/DayOfWeek.java",
     "proto-google-common-protos/src/main/java/com/google/type/DayOfWeekProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/Expr.java",
@@ -297,12 +300,20 @@
     "proto-google-common-protos/src/main/java/com/google/type/Fraction.java",
     "proto-google-common-protos/src/main/java/com/google/type/FractionOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/FractionProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/Interval.java",
+    "proto-google-common-protos/src/main/java/com/google/type/IntervalOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/type/IntervalProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/LatLng.java",
     "proto-google-common-protos/src/main/java/com/google/type/LatLngOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/LatLngProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/Money.java",
     "proto-google-common-protos/src/main/java/com/google/type/MoneyOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/MoneyProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/Month.java",
+    "proto-google-common-protos/src/main/java/com/google/type/MonthProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/PhoneNumber.java",
+    "proto-google-common-protos/src/main/java/com/google/type/PhoneNumberOrBuilder.java",
+    "proto-google-common-protos/src/main/java/com/google/type/PhoneNumberProto.java",
     "proto-google-common-protos/src/main/java/com/google/type/PostalAddress.java",
     "proto-google-common-protos/src/main/java/com/google/type/PostalAddressOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/PostalAddressProto.java",
@@ -312,6 +323,8 @@
     "proto-google-common-protos/src/main/java/com/google/type/TimeOfDay.java",
     "proto-google-common-protos/src/main/java/com/google/type/TimeOfDayOrBuilder.java",
     "proto-google-common-protos/src/main/java/com/google/type/TimeOfDayProto.java",
+    "proto-google-common-protos/src/main/java/com/google/type/TimeZone.java",
+    "proto-google-common-protos/src/main/java/com/google/type/TimeZoneOrBuilder.java",
     "renovate.json"
   ]
 }

@@ -22,7 +22,8 @@ package com.google.type;
  *
  *
  * <pre>
- * Represents civil time in one of a few possible ways:
+ * Represents civil time (or occasionally physical time).
+ * This type can represent a civil time in one of a few possible ways:
  *  * When utc_offset is set and time_zone is unset: a civil time on a calendar
  *    day with a particular offset from UTC.
  *  * When time_zone is set and utc_offset is unset: a civil time on a calendar
@@ -32,6 +33,11 @@ package com.google.type;
  * The date is relative to the Proleptic Gregorian Calendar.
  * If year is 0, the DateTime is considered not to have a specific year. month
  * and day must have valid, non-zero values.
+ * This type may also be used to represent a physical time if all the date and
+ * time fields are set and either case of the `time_offset` oneof is set.
+ * Consider using `Timestamp` message for physical time instead. If your use
+ * case also would like to store the user's timezone, that can be done in
+ * another field.
  * This type is more flexible than some applications may want. Make sure to
  * document and validate your application's limitations.
  * </pre>
@@ -235,6 +241,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The year.
    */
+  @java.lang.Override
   public int getYear() {
     return year_;
   }
@@ -252,6 +259,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The month.
    */
+  @java.lang.Override
   public int getMonth() {
     return month_;
   }
@@ -270,6 +278,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The day.
    */
+  @java.lang.Override
   public int getDay() {
     return day_;
   }
@@ -289,6 +298,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The hours.
    */
+  @java.lang.Override
   public int getHours() {
     return hours_;
   }
@@ -306,6 +316,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The minutes.
    */
+  @java.lang.Override
   public int getMinutes() {
     return minutes_;
   }
@@ -324,6 +335,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The seconds.
    */
+  @java.lang.Override
   public int getSeconds() {
     return seconds_;
   }
@@ -342,6 +354,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The nanos.
    */
+  @java.lang.Override
   public int getNanos() {
     return nanos_;
   }
@@ -360,6 +373,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the utcOffset field is set.
    */
+  @java.lang.Override
   public boolean hasUtcOffset() {
     return timeOffsetCase_ == 8;
   }
@@ -376,6 +390,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The utcOffset.
    */
+  @java.lang.Override
   public com.google.protobuf.Duration getUtcOffset() {
     if (timeOffsetCase_ == 8) {
       return (com.google.protobuf.Duration) timeOffset_;
@@ -393,6 +408,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.protobuf.Duration utc_offset = 8;</code>
    */
+  @java.lang.Override
   public com.google.protobuf.DurationOrBuilder getUtcOffsetOrBuilder() {
     if (timeOffsetCase_ == 8) {
       return (com.google.protobuf.Duration) timeOffset_;
@@ -412,6 +428,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return Whether the timeZone field is set.
    */
+  @java.lang.Override
   public boolean hasTimeZone() {
     return timeOffsetCase_ == 9;
   }
@@ -426,6 +443,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * @return The timeZone.
    */
+  @java.lang.Override
   public com.google.type.TimeZone getTimeZone() {
     if (timeOffsetCase_ == 9) {
       return (com.google.type.TimeZone) timeOffset_;
@@ -441,6 +459,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    * <code>.google.type.TimeZone time_zone = 9;</code>
    */
+  @java.lang.Override
   public com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder() {
     if (timeOffsetCase_ == 9) {
       return (com.google.type.TimeZone) timeOffset_;
@@ -702,7 +721,8 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Represents civil time in one of a few possible ways:
+   * Represents civil time (or occasionally physical time).
+   * This type can represent a civil time in one of a few possible ways:
    *  * When utc_offset is set and time_zone is unset: a civil time on a calendar
    *    day with a particular offset from UTC.
    *  * When time_zone is set and utc_offset is unset: a civil time on a calendar
@@ -712,6 +732,11 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
    * The date is relative to the Proleptic Gregorian Calendar.
    * If year is 0, the DateTime is considered not to have a specific year. month
    * and day must have valid, non-zero values.
+   * This type may also be used to represent a physical time if all the date and
+   * time fields are set and either case of the `time_offset` oneof is set.
+   * Consider using `Timestamp` message for physical time instead. If your use
+   * case also would like to store the user's timezone, that can be done in
+   * another field.
    * This type is more flexible than some applications may want. Make sure to
    * document and validate your application's limitations.
    * </pre>
@@ -956,6 +981,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The year.
      */
+    @java.lang.Override
     public int getYear() {
       return year_;
     }
@@ -1009,6 +1035,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The month.
      */
+    @java.lang.Override
     public int getMonth() {
       return month_;
     }
@@ -1061,6 +1088,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The day.
      */
+    @java.lang.Override
     public int getDay() {
       return day_;
     }
@@ -1116,6 +1144,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The hours.
      */
+    @java.lang.Override
     public int getHours() {
       return hours_;
     }
@@ -1171,6 +1200,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The minutes.
      */
+    @java.lang.Override
     public int getMinutes() {
       return minutes_;
     }
@@ -1223,6 +1253,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The seconds.
      */
+    @java.lang.Override
     public int getSeconds() {
       return seconds_;
     }
@@ -1277,6 +1308,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The nanos.
      */
+    @java.lang.Override
     public int getNanos() {
       return nanos_;
     }
@@ -1336,6 +1368,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the utcOffset field is set.
      */
+    @java.lang.Override
     public boolean hasUtcOffset() {
       return timeOffsetCase_ == 8;
     }
@@ -1352,6 +1385,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The utcOffset.
      */
+    @java.lang.Override
     public com.google.protobuf.Duration getUtcOffset() {
       if (utcOffsetBuilder_ == null) {
         if (timeOffsetCase_ == 8) {
@@ -1494,6 +1528,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.protobuf.Duration utc_offset = 8;</code>
      */
+    @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getUtcOffsetOrBuilder() {
       if ((timeOffsetCase_ == 8) && (utcOffsetBuilder_ != null)) {
         return utcOffsetBuilder_.getMessageOrBuilder();
@@ -1554,6 +1589,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return Whether the timeZone field is set.
      */
+    @java.lang.Override
     public boolean hasTimeZone() {
       return timeOffsetCase_ == 9;
     }
@@ -1568,6 +1604,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * @return The timeZone.
      */
+    @java.lang.Override
     public com.google.type.TimeZone getTimeZone() {
       if (timeZoneBuilder_ == null) {
         if (timeOffsetCase_ == 9) {
@@ -1697,6 +1734,7 @@ public final class DateTime extends com.google.protobuf.GeneratedMessageV3
      *
      * <code>.google.type.TimeZone time_zone = 9;</code>
      */
+    @java.lang.Override
     public com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder() {
       if ((timeOffsetCase_ == 9) && (timeZoneBuilder_ != null)) {
         return timeZoneBuilder_.getMessageOrBuilder();
