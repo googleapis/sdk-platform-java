@@ -187,4 +187,33 @@ public class ResourceNameHelperClassComposerTest {
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "SessionName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
+
+  @Test
+  public void generateResourceNameClass_testingBlueprintPatternWithNonSlashSeparator() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    ResourceName testResname = resourceNames.get("showcase.googleapis.com/Test");
+    assertThat(outputResourceNames).contains(testResname);
+
+    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(testResname);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "TestName.golden", visitor.write());
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "TestName.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
 }

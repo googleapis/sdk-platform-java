@@ -32,6 +32,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.TestingOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -68,6 +69,36 @@ public class ServiceClientTestClassComposerTest {
     Utils.saveCodegenToFile(this.getClass(), "EchoClientTest.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "EchoClientTest.golden");
+    assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateClientTest_testingClientResnameWithOnePatternWithNonSlashSepNames() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "Testing");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    Service testingProtoService = services.get(0);
+    GapicClass clazz =
+        ServiceClientTestClassComposer.instance()
+            .generate(testingProtoService, resourceNames, messageTypes);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "TestingClientTest.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "TestingClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 

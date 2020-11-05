@@ -73,6 +73,14 @@ service Testing {
     };
   }
 
+  // Gets a testing session.
+  rpc GetTest(GetTestRequest) returns (Test) {
+    option (google.api.http) = {
+      get: "/v1beta1/{name=tests/*}"
+    };
+    option (google.api.method_signature) = "name";
+  }
+
   // List the tests of a sessesion.
   rpc ListTests(ListTestsRequest) returns (ListTestsResponse) {
     option (google.api.http) = {
@@ -243,10 +251,16 @@ message ReportSessionResponse {
   repeated TestRun test_runs = 2;
 }
 
+message GetTestRequest {
+  // The session to be retrieved.
+  string name = 1
+      [(google.api.resource_reference).type = "showcase.googleapis.com/Test"];
+}
+
 message Test {
   option (google.api.resource) = {
     type: "showcase.googleapis.com/Test"
-    pattern: "sessions/{session}/tests/{test}"
+    pattern: "sessions/{session}/tests/{shard_id}~{test_id}"
   };
 
   // The name of the test.
