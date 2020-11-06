@@ -120,8 +120,14 @@ public abstract class MethodInvocationExpr implements Expr {
       Preconditions.checkState(
           methodInvocationExpr.arguments().stream().allMatch(e -> !Objects.isNull(e)),
           String.format(
-              "Found null expression in arguments for %s",
-              methodInvocationExpr.methodIdentifier().name()));
+              "Found null expression in arguments %s for %s",
+              methodInvocationExpr.arguments(), methodInvocationExpr.methodIdentifier().name()));
+
+      Preconditions.checkState(
+          methodInvocationExpr.generics().stream().allMatch(e -> !Objects.isNull(e)),
+          String.format(
+              "Found null expression in generics %s for %s",
+              methodInvocationExpr.generics(), methodInvocationExpr.methodIdentifier().name()));
 
       return methodInvocationExpr;
     }
