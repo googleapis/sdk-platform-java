@@ -101,12 +101,12 @@ public class ResourceNameTokenizerTest {
 
     List<List<String>> tokenHierarchies = ResourceNameTokenizer.parseTokenHierarchy(patterns);
     assertEquals(6, tokenHierarchies.size());
-    assertThat(tokenHierarchies.get(0)).containsExactly("user", "legacy_user_blurb");
+    assertThat(tokenHierarchies.get(0)).containsExactly("user", "legacy_user", "blurb");
     assertThat(tokenHierarchies.get(1)).containsExactly("user", "blurb");
     assertThat(tokenHierarchies.get(2)).containsExactly("room", "blurb");
-    assertThat(tokenHierarchies.get(3)).containsExactly("user", "legacy_document_blurb");
-    assertThat(tokenHierarchies.get(4)).containsExactly("user", "legacy_book_blurb");
-    assertThat(tokenHierarchies.get(5)).containsExactly("room", "legacy_room_blurb");
+    assertThat(tokenHierarchies.get(3)).containsExactly("user", "legacy_document", "blurb");
+    assertThat(tokenHierarchies.get(4)).containsExactly("user", "legacy_book", "blurb");
+    assertThat(tokenHierarchies.get(5)).containsExactly("room", "legacy_room", "blurb");
   }
 
   @Test
