@@ -33,15 +33,16 @@ public class ComposerTest {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
-            .setName("EchoStubSettings")
+            .setName("ComposerPostProcOnFooBar")
             .setScope(ScopeNode.PUBLIC)
             .build();
     List<GapicClass> gapicClassWithHeaderList =
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ComposerTest.golden", visitor.write());
-    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "ComposerTest.golden");
+    Utils.saveCodegenToFile(this.getClass(), "ComposerPostProcOnFooBar.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "ComposerPostProcOnFooBar.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
