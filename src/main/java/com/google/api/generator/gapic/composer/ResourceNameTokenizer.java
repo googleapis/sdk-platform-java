@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -31,49 +30,50 @@ public class ResourceNameTokenizer {
   private static final String EQUALS_WILDCARD = "=*";
   private static final String EQUALS_PATH_WILDCARD = "=**";
 
-  static List<List<String>> parseTokenHierarchy(List<String> patterns) {
-    List<String> nonSlashSepStrings = Arrays.asList("}_{", "}-{", "}.{", "}~{");
+  private static final String NON_SLASH_SEP_REGEX = "\\}(_|\\-|\\.|~)\\{";
 
+  static List<List<String>> parseTokenHierarchy(List<String> patterns) {
     List<List<String>> tokenHierachies = new ArrayList<>();
     for (String pattern : patterns) {
       List<String> hierarchy = new ArrayList<>();
       Set<String> vars = PathTemplate.create(pattern).vars();
-      String[] patternTokens = pattern.split(SLASH);
-      for (String patternToken : patternTokens) {
-        if (patternToken.startsWith(LEFT_BRACE) && patternToken.endsWith(RIGHT_BRACE)) {
-          String processedPatternToken =
-              // Replacement order matters - ensure the first is not a subcomponent of the second.
-              patternToken.replace(EQUALS_PATH_WILDCARD, EMPTY).replace(EQUALS_WILDCARD, EMPTY);
+      String[] rawPatternTokens = pattern.split(SLASH);
+      List<String> patternTokens = new ArrayList<>();
 
-          // Handle non-slash separators.
-          if (nonSlashSepStrings.stream().anyMatch(s -> patternToken.contains(s))) {
-            for (String str : nonSlashSepStrings) {
-              processedPatternToken = processedPatternToken.replace(str, "_");
-            }
-          } else {
-            final int processedPatternTokenLength = processedPatternToken.length();
-            // Handles wildcards.
-            List<String> candidateVars =
-                vars.stream()
-                    // Check that the token size is within ~3 of the var, to avoid mismatching on
-                    // variables with same-named subcomponents.
-                    // Otherwise, "customer_client_link" will match with "customer".
-                    .filter(
-                        v ->
-                            patternToken.contains(v)
-                                // Accounting for braces.
-                                && processedPatternTokenLength - v.length() < 3)
-                    .collect(Collectors.toList());
-            Preconditions.checkState(
-                !candidateVars.isEmpty(),
-                String.format(
-                    "No variable candidates found for token %s in pattern %s",
-                    processedPatternToken, pattern));
-            processedPatternToken = candidateVars.get(0);
-          }
-          hierarchy.add(
-              processedPatternToken.replace(LEFT_BRACE, EMPTY).replace(RIGHT_BRACE, EMPTY));
+      // Process variables.
+      for (String rawPatternToken : rawPatternTokens) {
+        if (!rawPatternToken.startsWith(LEFT_BRACE) || !rawPatternToken.endsWith(RIGHT_BRACE)) {
+          continue;
         }
+        // Add any non-slash separated tokens in the order that they're seen.
+        for (String subToken : rawPatternToken.split(NON_SLASH_SEP_REGEX)) {
+          String processedSubToken =
+              subToken.replace(LEFT_BRACE, EMPTY).replace(RIGHT_BRACE, EMPTY);
+          if (!patternTokens.contains(processedSubToken)) {
+            patternTokens.add(processedSubToken);
+          }
+        }
+      }
+
+      for (String patternToken : patternTokens) {
+        // Handle wildcards.
+        final String processedPatternToken =
+            // Replacement order matters - ensure the first is not a subcomponent of the second.
+            patternToken.replace(EQUALS_PATH_WILDCARD, EMPTY).replace(EQUALS_WILDCARD, EMPTY);
+
+        List<String> candidateVars =
+            vars.stream()
+                // Check that the token matches the variable exactly, to avoid mismatching on
+                // variables with same-named subcomponents.
+                // Otherwise, "customer_client_link" will match with "customer".
+                .filter(v -> processedPatternToken.equals(v))
+                .collect(Collectors.toList());
+        Preconditions.checkState(
+            !candidateVars.isEmpty(),
+            String.format(
+                "No variable candidates found for token %s in pattern %s among variables %s",
+                processedPatternToken, pattern, vars));
+        hierarchy.add(processedPatternToken);
       }
       tokenHierachies.add(hierarchy);
     }
