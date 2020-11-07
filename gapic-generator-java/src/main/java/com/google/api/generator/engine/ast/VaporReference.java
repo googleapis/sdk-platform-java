@@ -178,6 +178,10 @@ public abstract class VaporReference implements Reference {
     abstract VaporReference autoBuild();
 
     public VaporReference build() {
+      String contextInfo = String.format("vapor reference %s", name());
+      NodeValidator.checkNoNullElements(generics(), "generics", contextInfo);
+      NodeValidator.checkNoNullElements(enclosingClassNames(), "enclosingClassNames", contextInfo);
+
       // Validate the name.
       IdentifierNode.builder().setName(name()).build();
       // No exception thrown, so we can proceed.
