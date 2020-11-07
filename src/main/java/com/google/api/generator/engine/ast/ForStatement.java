@@ -48,6 +48,7 @@ public abstract class ForStatement implements Statement {
 
     public ForStatement build() {
       ForStatement forStatement = autoBuild();
+      NodeValidator.checkNoNullElements(forStatement.body(), "body", "for-statement");
       Preconditions.checkState(
           forStatement.localVariableExpr().isDecl(),
           "For-statement variable must be a declaration");
