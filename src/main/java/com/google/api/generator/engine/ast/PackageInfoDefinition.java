@@ -67,6 +67,16 @@ public abstract class PackageInfoDefinition implements AstNode {
 
     public abstract Builder setAnnotations(List<AnnotationNode> annotations);
 
-    public abstract PackageInfoDefinition build();
+    abstract PackageInfoDefinition autoBuild();
+
+    public PackageInfoDefinition build() {
+      PackageInfoDefinition packageInfo = autoBuild();
+      String contextInfo = String.format("package info for %s", packageInfo.pakkage());
+      NodeValidator.checkNoNullElements(packageInfo.fileHeader(), "file header", contextInfo);
+      NodeValidator.checkNoNullElements(
+          packageInfo.headerCommentStatements(), "header comments", contextInfo);
+      NodeValidator.checkNoNullElements(packageInfo.annotations(), "annotations", contextInfo);
+      return packageInfo;
+    }
   }
 }
