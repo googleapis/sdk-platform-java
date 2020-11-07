@@ -40,6 +40,12 @@ public abstract class BlockStatement implements Statement {
 
     public abstract Builder setIsStatic(boolean isStatic);
 
-    public abstract BlockStatement build();
+    abstract BlockStatement autoBuild();
+
+    public BlockStatement build() {
+      BlockStatement blockStatement = autoBuild();
+      NodeValidator.checkNoNullElements(blockStatement.body(), "body", "block statement");
+      return autoBuild();
+    }
   }
 }
