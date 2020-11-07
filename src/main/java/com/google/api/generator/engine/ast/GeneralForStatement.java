@@ -79,6 +79,8 @@ public abstract class GeneralForStatement implements Statement {
     // Type-checking will be done in the sub-expressions.
     GeneralForStatement build() {
       GeneralForStatement generalForStatement = autoBuild();
+      NodeValidator.checkNoNullElements(
+          generalForStatement.body(), "body", "general for-statement");
       Expr initExpr = generalForStatement.initializationExpr();
       if (initExpr instanceof AssignmentExpr) {
         VariableExpr localVarExpr = ((AssignmentExpr) initExpr).variableExpr();
