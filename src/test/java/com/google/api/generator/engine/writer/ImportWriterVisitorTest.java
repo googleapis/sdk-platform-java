@@ -123,7 +123,7 @@ public class ImportWriterVisitorTest {
             .setType(TypeNode.withReference(ConcreteReference.withClazz(ArrayList.class)))
             .build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import java.util.ArrayList;\n\n");
+    assertEquals("import java.util.ArrayList;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -141,9 +141,9 @@ public class ImportWriterVisitorTest {
             .build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
-            createLines(2), "import java.io.File;\n", "import java.io.FileOutputStream;\n\n"));
+            createLines(2), "import java.io.File;\n", "import java.io.FileOutputStream;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -174,8 +174,8 @@ public class ImportWriterVisitorTest {
             .build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format(createLines(2), "import java.util.HashMap;\n", "import java.util.List;\n\n"));
+        String.format(createLines(2), "import java.util.HashMap;\n", "import java.util.List;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -203,9 +203,9 @@ public class ImportWriterVisitorTest {
             .build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
-            createLines(2), "import java.io.IOException;\n", "import java.util.HashMap;\n\n"));
+            createLines(2), "import java.io.IOException;\n", "import java.util.HashMap;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -239,12 +239,12 @@ public class ImportWriterVisitorTest {
             .build();
     ternaryExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import com.google.api.generator.engine.ast.TypeNode;\n",
-            "import com.google.common.base.Strings;\n\n"));
+            "import com.google.common.base.Strings;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -273,12 +273,12 @@ public class ImportWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import com.google.api.generator.engine.ast.AstNode;\n",
             "import com.google.api.generator.engine.ast.ClassDefinition;\n",
-            "import com.google.api.some.pakkage.SomeClass;\n\n"));
+            "import com.google.api.some.pakkage.SomeClass;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -328,7 +328,6 @@ public class ImportWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(7),
             "import static java.util.Map.Entry;\n\n",
@@ -337,7 +336,8 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.ClassDefinition;\n",
             "import java.util.ArrayList;\n",
             "import java.util.List;\n",
-            "import java.util.Map;\n\n"));
+            "import java.util.Map;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -370,12 +370,12 @@ public class ImportWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import static java.util.Map.Entry;\n\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.AstNode;\n\n"));
+            "import com.google.api.generator.engine.ast.AstNode;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -408,12 +408,12 @@ public class ImportWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.AstNode;\n",
-            "import java.util.Map;\n\n"));
+            "import java.util.Map;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -428,11 +428,11 @@ public class ImportWriterVisitorTest {
             .build();
     castExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n\n"));
+            "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -471,12 +471,12 @@ public class ImportWriterVisitorTest {
     varExpr.accept(writerVisitor);
 
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import java.util.HashMap;\n",
-            "import java.util.List;\n\n"));
+            "import java.util.List;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -489,8 +489,8 @@ public class ImportWriterVisitorTest {
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     variableExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format(createLines(1), "import com.google.api.generator.engine.ast.Expr;\n\n"));
+        String.format(createLines(1), "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -509,11 +509,11 @@ public class ImportWriterVisitorTest {
 
     variableExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.TypeNode;\n\n"));
+            "import com.google.api.generator.engine.ast.TypeNode;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -531,7 +531,7 @@ public class ImportWriterVisitorTest {
         VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import java.util.List;\n\n");
+    assertEquals("import java.util.List;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -553,11 +553,11 @@ public class ImportWriterVisitorTest {
 
     variableExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.Expr;\n",
-            "import java.util.List;\n\n"));
+            "import java.util.List;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -578,11 +578,11 @@ public class ImportWriterVisitorTest {
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
     variableExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n\n"));
+            "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -611,12 +611,12 @@ public class ImportWriterVisitorTest {
 
     variableExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
             "import com.google.api.generator.engine.ast.Expr;\n",
-            "import com.google.api.generator.engine.ast.VariableExpr;\n\n"));
+            "import com.google.api.generator.engine.ast.VariableExpr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -685,14 +685,14 @@ public class ImportWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(5),
             "import com.google.api.generator.engine.ast.MethodDefinition;\n",
             "import com.google.common.base.Function;\n",
             "import java.io.IOException;\n",
             "import java.util.HashMap;\n",
-            "import java.util.List;\n\n"));
+            "import java.util.List;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -703,7 +703,7 @@ public class ImportWriterVisitorTest {
     ThrowExpr throwExpr =
         ThrowExpr.builder().setType(exceptionTypes).setMessageExpr(message).build();
     throwExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import java.io.IOException;\n\n");
+    assertEquals("import java.io.IOException;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -727,11 +727,11 @@ public class ImportWriterVisitorTest {
 
     throwExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.Expr;\n",
-            "import com.google.api.generator.engine.ast.IfStatement;\n\n"));
+            "import com.google.api.generator.engine.ast.IfStatement;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -747,11 +747,11 @@ public class ImportWriterVisitorTest {
         InstanceofExpr.builder().setExpr(variableExpr).setCheckType(exprType).build();
     expr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n\n"));
+            "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -766,8 +766,8 @@ public class ImportWriterVisitorTest {
 
     enumRefExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        "import static com.google.api.generator.engine.ast.TypeNode.TypeKind;\n\n");
+        "import static com.google.api.generator.engine.ast.TypeNode.TypeKind;\n\n",
+        writerVisitor.write());
   }
 
   @Test
@@ -776,7 +776,7 @@ public class ImportWriterVisitorTest {
         TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
     enumRefExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.TypeNode;\n\n");
+    assertEquals("import com.google.api.generator.engine.ast.TypeNode;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -788,7 +788,7 @@ public class ImportWriterVisitorTest {
                 .setReturnType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
                 .build());
     returnExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+    assertEquals("import com.google.api.generator.engine.ast.Expr;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -827,11 +827,11 @@ public class ImportWriterVisitorTest {
             .build();
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import java.util.Map;\n\n"));
+            "import java.util.Map;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -842,7 +842,7 @@ public class ImportWriterVisitorTest {
     ReferenceConstructorExpr referenceConstructorExpr =
         ReferenceConstructorExpr.superBuilder().setType(classType).build();
     referenceConstructorExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.example.v1.Parent;\n\n");
+    assertEquals("import com.google.example.v1.Parent;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -877,7 +877,7 @@ public class ImportWriterVisitorTest {
     ArithmeticOperationExpr arithmeticOperationExpr =
         ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
     arithmeticOperationExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+    assertEquals("import com.google.api.generator.engine.ast.Expr;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -897,11 +897,11 @@ public class ImportWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.Expr;\n",
-            "import java.util.Arrays;\n\n"));
+            "import java.util.Arrays;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -920,7 +920,7 @@ public class ImportWriterVisitorTest {
             .setReturnType(TypeNode.STRING)
             .build();
     methodExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.example.examples.v1.Student;\n\n");
+    assertEquals("import com.google.example.examples.v1.Student;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -945,11 +945,11 @@ public class ImportWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
-            "import java.util.Map;\n\n"));
+            "import java.util.Map;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -962,7 +962,7 @@ public class ImportWriterVisitorTest {
             .build();
     UnaryOperationExpr unaryOperationExpr = UnaryOperationExpr.logicalNotWithExpr(expr);
     unaryOperationExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+    assertEquals("import com.google.api.generator.engine.ast.Expr;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -975,7 +975,7 @@ public class ImportWriterVisitorTest {
             .build();
     UnaryOperationExpr unaryOperationExpr = UnaryOperationExpr.postfixIncrementWithExpr(expr);
     unaryOperationExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import com.google.api.generator.engine.ast.Expr;\n\n");
+    assertEquals("import com.google.api.generator.engine.ast.Expr;\n\n", writerVisitor.write());
   }
 
   @Test
@@ -1002,11 +1002,11 @@ public class ImportWriterVisitorTest {
         RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     relationalOperationExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(2),
             "import com.google.api.generator.engine.SomeClass;\n",
-            "import com.google.api.generator.engine.ast.Expr;\n\n"));
+            "import com.google.api.generator.engine.ast.Expr;\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1024,8 +1024,8 @@ public class ImportWriterVisitorTest {
         LogicalOperationExpr.logicalAndWithExprs(lhsExpr, rhsExpr);
     logicalOperationExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        "import com.google.api.generator.engine.ast.UnaryOperationExpr;\n\n");
+        "import com.google.api.generator.engine.ast.UnaryOperationExpr;\n\n",
+        writerVisitor.write());
   }
 
   @Test
@@ -1052,7 +1052,7 @@ public class ImportWriterVisitorTest {
             .build();
 
     packageInfo.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "import javax.annotation.Generated;\n\n");
+    assertEquals("import javax.annotation.Generated;\n\n", writerVisitor.write());
   }
 
   /** =============================== HELPERS =============================== */
