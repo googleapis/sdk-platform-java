@@ -108,11 +108,17 @@ public abstract class VariableExpr implements Expr {
     // Private.
     abstract Builder setTemplateNodes(List<AstNode> nodes);
 
+    abstract Variable variable();
+
     abstract ImmutableList<Object> templateObjects();
 
     abstract VariableExpr autoBuild();
 
     public VariableExpr build() {
+      NodeValidator.checkNoNullElements(
+          templateObjects(),
+          "template objects",
+          String.format("variable expr %s", variable().identifier().name()));
       setTemplateNodes(
           templateObjects().stream()
               .map(
