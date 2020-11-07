@@ -90,7 +90,7 @@ public class JavaWriterVisitorTest {
   public void writeIdentifier() {
     String idName = "foobar";
     IdentifierNode.builder().setName(idName).build().accept(writerVisitor);
-    assertEquals(writerVisitor.write(), idName);
+    assertEquals(idName, writerVisitor.write());
   }
 
   @Test
@@ -98,7 +98,7 @@ public class JavaWriterVisitorTest {
     TypeNode intType = TypeNode.INT;
     assertThat(intType).isNotNull();
     intType.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "int");
+    assertEquals("int", writerVisitor.write());
   }
 
   @Test
@@ -107,7 +107,7 @@ public class JavaWriterVisitorTest {
         TypeNode.builder().setTypeKind(TypeNode.TypeKind.BYTE).setIsArray(true).build();
     assertThat(byteArrayType).isNotNull();
     byteArrayType.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "byte[]");
+    assertEquals("byte[]", writerVisitor.write());
   }
 
   @Test
@@ -144,14 +144,14 @@ public class JavaWriterVisitorTest {
   public void writeAnnotation_simple() {
     AnnotationNode annotation = AnnotationNode.OVERRIDE;
     annotation.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "@Override\n");
+    assertEquals("@Override\n", writerVisitor.write());
   }
 
   @Test
   public void writeAnnotation_withDescription() {
     AnnotationNode annotation = AnnotationNode.withSuppressWarnings("all");
     annotation.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "@SuppressWarnings(\"all\")\n");
+    assertEquals("@SuppressWarnings(\"all\")\n", writerVisitor.write());
   }
 
   @Test
@@ -161,7 +161,7 @@ public class JavaWriterVisitorTest {
     TypeNode type = TypeNode.withReference(ref);
     NewObjectExpr newObjectExpr = NewObjectExpr.builder().setIsGeneric(true).setType(type).build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new List<>()");
+    assertEquals("new List<>()", writerVisitor.write());
   }
 
   @Test
@@ -182,7 +182,7 @@ public class JavaWriterVisitorTest {
             .setArguments(Arrays.asList(msgExpr, causeExpr))
             .build();
     newObjectExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "new IOException(message, cause())");
+    assertEquals("new IOException(message, cause())", writerVisitor.write());
   }
 
   @Test
@@ -222,7 +222,7 @@ public class JavaWriterVisitorTest {
             .build();
     newObjectExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(), "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)");
+        "new HashMap<String, List<Integer>>(SomeClass.foobar(), num)", writerVisitor.write());
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -231,7 +231,7 @@ public class JavaWriterVisitorTest {
     Value value = PrimitiveValue.builder().setType(TypeNode.INT).setValue("3").build();
     ValueExpr valueExpr = ValueExpr.builder().setValue(value).build();
     valueExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "3");
+    assertEquals("3", writerVisitor.write());
   }
 
   @Test
@@ -240,7 +240,7 @@ public class JavaWriterVisitorTest {
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x");
+    assertEquals("x", writerVisitor.write());
   }
 
   @Test
@@ -257,7 +257,7 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "List<?> x");
+    assertEquals("List<?> x", writerVisitor.write());
   }
 
   @Test
@@ -277,7 +277,7 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setIsDecl(true).setVariable(variable).build();
 
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "List<? extends Expr> x");
+    assertEquals("List<? extends Expr> x", writerVisitor.write());
   }
 
   @Test
@@ -290,7 +290,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "Integer.MAX_VALUE");
+    assertEquals("Integer.MAX_VALUE", writerVisitor.write());
   }
 
   @Test
@@ -305,7 +305,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x");
+    assertEquals("x", writerVisitor.write());
   }
 
   @Test
@@ -314,7 +314,7 @@ public class JavaWriterVisitorTest {
     VariableExpr expr = VariableExpr.builder().setVariable(variable).setIsDecl(true).build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "int x");
+    assertEquals("int x", writerVisitor.write());
   }
 
   @Test
@@ -325,7 +325,7 @@ public class JavaWriterVisitorTest {
         VariableExpr.builder().setVariable(variable).setIsFinal(true).setIsDecl(true).build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "final boolean x");
+    assertEquals("final boolean x", writerVisitor.write());
   }
 
   @Test
@@ -340,7 +340,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "private int x");
+    assertEquals("private int x", writerVisitor.write());
   }
 
   @Test
@@ -357,7 +357,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public static final boolean x");
+    assertEquals("public static final boolean x", writerVisitor.write());
   }
 
   @Test
@@ -375,7 +375,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     expr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "private static final volatile boolean x");
+    assertEquals("private static final volatile boolean x", writerVisitor.write());
   }
 
   @Test
@@ -387,7 +387,7 @@ public class JavaWriterVisitorTest {
     variableExpr =
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x.length");
+    assertEquals("x.length", writerVisitor.write());
   }
 
   @Test
@@ -405,7 +405,7 @@ public class JavaWriterVisitorTest {
             .setIsStatic(true)
             .build();
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x.length");
+    assertEquals("x.length", writerVisitor.write());
   }
 
   @Test
@@ -424,7 +424,7 @@ public class JavaWriterVisitorTest {
     variableExpr =
         VariableExpr.builder().setVariable(subVariable).setExprReferenceExpr(variableExpr).build();
     variableExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x.someStringField.anotherStringField.lengthField");
+    assertEquals("x.someStringField.anotherStringField.lengthField", writerVisitor.write());
   }
 
   @Test
@@ -463,7 +463,7 @@ public class JavaWriterVisitorTest {
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
     String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -473,7 +473,7 @@ public class JavaWriterVisitorTest {
     CommentStatement commentStatement = CommentStatement.withComment(lineComment);
     String expected = "// this is a test comment\n";
     commentStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -535,7 +535,7 @@ public class JavaWriterVisitorTest {
             "* @deprecated Use the {@link ArchivedBookName} class instead.\n",
             "*/\n");
     commentStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -546,7 +546,7 @@ public class JavaWriterVisitorTest {
         String.format(
             createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
     blockComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -566,7 +566,7 @@ public class JavaWriterVisitorTest {
             "* you may not use this file except in compliance with the License.\n",
             "*/\n");
     blockComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -582,7 +582,7 @@ public class JavaWriterVisitorTest {
                 + " for 3 times,\n",
             "// blah, blah!\n");
     lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -599,7 +599,7 @@ public class JavaWriterVisitorTest {
             + "// \\r"
             + "\"]']\n";
     lineComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -639,7 +639,7 @@ public class JavaWriterVisitorTest {
             "* RPC method comment may include special characters: &lt;&gt;&amp;\"`'{@literal @}.\n",
             "*/\n");
     javaDocComment.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -663,7 +663,7 @@ public class JavaWriterVisitorTest {
             .setElseExpr(elseExpr)
             .build();
     ternaryExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "condition ? 3 : 4");
+    assertEquals("condition ? 3 : 4", writerVisitor.write());
   }
 
   @Test
@@ -679,7 +679,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "int x = 3");
+    assertEquals("int x = 3", writerVisitor.write());
   }
 
   @Test
@@ -701,7 +701,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "private static final int foobar = y");
+    assertEquals("private static final int foobar = y", writerVisitor.write());
   }
 
   @Test
@@ -717,7 +717,7 @@ public class JavaWriterVisitorTest {
         AssignmentExpr.builder().setVariableExpr(variableExpr).setValueExpr(valueExpr).build();
 
     assignExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "String x = null");
+    assertEquals("String x = null", writerVisitor.write());
   }
 
   @Test
@@ -749,7 +749,7 @@ public class JavaWriterVisitorTest {
         MethodInvocationExpr.builder().setMethodName("foobar").build();
 
     methodExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "foobar()");
+    assertEquals("foobar()", writerVisitor.write());
   }
 
   @Test
@@ -768,7 +768,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "SomeClass.foobar()");
+    assertEquals("SomeClass.foobar()", writerVisitor.write());
   }
 
   @Test
@@ -813,9 +813,9 @@ public class JavaWriterVisitorTest {
 
     assignExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         "final String someStr = anArg.<String, Double, ?, HashMap<HashMap<String, Integer>,"
-            + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)");
+            + " HashMap<String, Integer>>>foobar(anArg, anArg, anArg)",
+        writerVisitor.write());
   }
 
   @Test
@@ -841,7 +841,7 @@ public class JavaWriterVisitorTest {
 
     methodExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(), "libraryClient.streamBooksCallable().doAnotherThing().call()");
+        "libraryClient.streamBooksCallable().doAnotherThing().call()", writerVisitor.write());
   }
 
   @Test
@@ -854,7 +854,7 @@ public class JavaWriterVisitorTest {
             .setExpr(varExpr)
             .build();
     castExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "((Object) str)");
+    assertEquals("((Object) str)", writerVisitor.write());
   }
 
   @Test
@@ -878,7 +878,7 @@ public class JavaWriterVisitorTest {
             .setExpr(methodExpr)
             .build();
     castExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "((Object) SomeClass.foobar())");
+    assertEquals("((Object) SomeClass.foobar())", writerVisitor.write());
   }
 
   @Test
@@ -892,7 +892,7 @@ public class JavaWriterVisitorTest {
             .build();
     castExpr = CastExpr.builder().setType(TypeNode.STRING).setExpr(castExpr).build();
     castExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "((String) ((Object) str))");
+    assertEquals("((String) ((Object) str))", writerVisitor.write());
   }
 
   @Test
@@ -914,13 +914,13 @@ public class JavaWriterVisitorTest {
         AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     anonymousClassExpr.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(4),
             "new Runnable() {\n",
             "@Override\n",
             "public void run() {\n",
-            "boolean foobar = false;\n}\n\n}"));
+            "boolean foobar = false;\n}\n\n}"),
+        writerVisitor.write());
   }
 
   @Test
@@ -966,7 +966,7 @@ public class JavaWriterVisitorTest {
             "@Override\n",
             "public void run() {\n",
             "int x = 3;\n}\n\n}");
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -1023,7 +1023,7 @@ public class JavaWriterVisitorTest {
             "public MethodDefinition apply(List<IOException> arg) {\n",
             "return returnArg;\n",
             "}\n\n}");
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -1032,7 +1032,7 @@ public class JavaWriterVisitorTest {
         TypeNode.withReference(ConcreteReference.withClazz(NullPointerException.class));
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).build();
     throwExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "throw new NullPointerException()");
+    assertEquals("throw new NullPointerException()", writerVisitor.write());
   }
 
   @Test
@@ -1042,7 +1042,7 @@ public class JavaWriterVisitorTest {
     String message = "Some message asdf";
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessageExpr(message).build();
     throwExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "throw new NullPointerException(\"Some message asdf\")");
+    assertEquals("throw new NullPointerException(\"Some message asdf\")", writerVisitor.write());
   }
 
   @Test
@@ -1056,7 +1056,7 @@ public class JavaWriterVisitorTest {
     ThrowExpr throwExpr = ThrowExpr.builder().setType(npeType).setMessageExpr(messageExpr).build();
 
     throwExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "throw new NullPointerException(foobar())");
+    assertEquals("throw new NullPointerException(foobar())", writerVisitor.write());
   }
 
   @Test
@@ -1066,7 +1066,7 @@ public class JavaWriterVisitorTest {
     InstanceofExpr instanceofExpr =
         InstanceofExpr.builder().setCheckType(TypeNode.STRING).setExpr(variableExpr).build();
     instanceofExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "x instanceof String");
+    assertEquals("x instanceof String", writerVisitor.write());
   }
 
   @Test
@@ -1080,7 +1080,7 @@ public class JavaWriterVisitorTest {
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
 
     enumRefExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "TypeKind.VOID");
+    assertEquals("TypeKind.VOID", writerVisitor.write());
   }
 
   @Test
@@ -1089,7 +1089,7 @@ public class JavaWriterVisitorTest {
         TypeNode.withReference(ConcreteReference.withClazz(TypeNode.TypeKind.class));
     EnumRefExpr enumRefExpr = EnumRefExpr.builder().setName("VOID").setType(enumType).build();
     enumRefExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "TypeNode.TypeKind.VOID");
+    assertEquals("TypeNode.TypeKind.VOID", writerVisitor.write());
   }
 
   @Test
@@ -1097,7 +1097,7 @@ public class JavaWriterVisitorTest {
     ReturnExpr returnExpr =
         ReturnExpr.withExpr(ValueExpr.withValue(StringObjectValue.withValue("asdf")));
     returnExpr.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "return \"asdf\"");
+    assertEquals("return \"asdf\"", writerVisitor.write());
   }
 
   /** =============================== STATEMENTS =============================== */
@@ -1118,14 +1118,14 @@ public class JavaWriterVisitorTest {
     ExprStatement exprStatement = ExprStatement.withExpr(methodExpr);
 
     exprStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "SomeClass.foobar();\n");
+    assertEquals("SomeClass.foobar();\n", writerVisitor.write());
   }
 
   @Test
   public void writeBlockStatement_empty() {
     BlockStatement blockStatement = BlockStatement.builder().build();
     blockStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "{\n}\n");
+    assertEquals("{\n}\n", writerVisitor.write());
   }
 
   @Test
@@ -1146,7 +1146,7 @@ public class JavaWriterVisitorTest {
         BlockStatement.builder().setBody(Arrays.asList(ExprStatement.withExpr(methodExpr))).build();
 
     blockStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "{\nSomeClass.foobar();\n}\n");
+    assertEquals("{\nSomeClass.foobar();\n}\n", writerVisitor.write());
   }
 
   @Test
@@ -1172,7 +1172,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     blockStatement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "static {\nSomeClass.foobar();\nSomeClass.foobar();\n}\n");
+    assertEquals("static {\nSomeClass.foobar();\nSomeClass.foobar();\n}\n", writerVisitor.write());
   }
 
   @Test
@@ -1187,8 +1187,8 @@ public class JavaWriterVisitorTest {
 
     ifStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+        String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1207,7 +1207,6 @@ public class JavaWriterVisitorTest {
 
     ifStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s" + "%s%s%s%s",
             "if (condition) {\n",
@@ -1216,7 +1215,8 @@ public class JavaWriterVisitorTest {
             "} else {\n",
             "int x = 3;\n",
             "int x = 3;\n",
-            "}\n"));
+            "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1258,7 +1258,7 @@ public class JavaWriterVisitorTest {
             "boolean fooBar = true;\n",
             "}\n");
 
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -1322,7 +1322,7 @@ public class JavaWriterVisitorTest {
             "boolean fooBar = true;\n",
             "}\n",
             "}\n");
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -1337,8 +1337,8 @@ public class JavaWriterVisitorTest {
 
     whileStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1359,10 +1359,10 @@ public class JavaWriterVisitorTest {
 
     forStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s",
-            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+            "for (String str : getSomeStrings()) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1382,10 +1382,10 @@ public class JavaWriterVisitorTest {
 
     forStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s",
-            "for (int i = 0; i < maxSize(); i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+            "for (int i = 0; i < maxSize(); i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1405,9 +1405,9 @@ public class JavaWriterVisitorTest {
 
     forStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
-            "%s%s%s%s", "for (i = 1; i < 10; i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"));
+            "%s%s%s%s", "for (i = 1; i < 10; i++) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1426,10 +1426,10 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s",
-            "try {\n", "int x = 3;\n", "} catch (IllegalArgumentException e) {\n", "}\n"));
+            "try {\n", "int x = 3;\n", "} catch (IllegalArgumentException e) {\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1452,14 +1452,14 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s%s",
             "try (boolean aBool = false) {\n",
             "int y = 4;\n",
             "} catch (IllegalArgumentException e) {\n",
             "int foobar = 123;\n",
-            "}\n"));
+            "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1477,7 +1477,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     tryCatch.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), String.format("%s%s%s", "try {\n", "int x = 3;\n", "}\n"));
+    assertEquals(String.format("%s%s%s", "try {\n", "int x = 3;\n", "}\n"), writerVisitor.write());
   }
 
   @Test
@@ -1501,14 +1501,14 @@ public class JavaWriterVisitorTest {
 
     tryCatch.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s%s",
             "try (boolean aBool = false) {\n",
             "int y = 4;\n",
             "} catch (IllegalArgumentException e) {\n",
             "int foobar = 123;\n",
-            "}\n"));
+            "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1524,8 +1524,8 @@ public class JavaWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"));
+        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1543,8 +1543,8 @@ public class JavaWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"));
+        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1560,8 +1560,8 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n\n"));
+        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1579,7 +1579,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public LibrarySettings() {\n}\n\n");
+    assertEquals("public LibrarySettings() {\n}\n\n", writerVisitor.write());
   }
 
   @Test
@@ -1592,7 +1592,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public void close() {\n}\n\n");
+    assertEquals("public void close() {\n}\n\n", writerVisitor.write());
   }
 
   @Test
@@ -1609,8 +1609,8 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n\n"));
+        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1624,7 +1624,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     methodDefinition.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "public abstract void close();\n");
+    assertEquals("public abstract void close();\n", writerVisitor.write());
   }
 
   @Test
@@ -1658,13 +1658,13 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             "%s%s%s%s",
             "public int close(int x, int y) {\n",
             "boolean foobar = false;\n",
             "return 3;\n",
-            "}\n\n"));
+            "}\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1742,7 +1742,7 @@ public class JavaWriterVisitorTest {
             "boolean foobar = false;\n",
             "return 3;\n",
             "}\n\n");
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -1779,12 +1779,12 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(3),
             "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
             "return foobar();\n",
-            "}\n\n"));
+            "}\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1801,7 +1801,6 @@ public class JavaWriterVisitorTest {
 
     classDef.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(6),
             "/*\n",
@@ -1809,7 +1808,8 @@ public class JavaWriterVisitorTest {
             " */\n\n",
             "package com.google.example.library.v1.stub;\n",
             "\n",
-            "public class LibraryServiceStub {}\n"));
+            "public class LibraryServiceStub {}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1833,7 +1833,6 @@ public class JavaWriterVisitorTest {
 
     classDef.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
         String.format(
             createLines(5),
             "package com.google.example.library.v1.stub;\n",
@@ -1841,7 +1840,8 @@ public class JavaWriterVisitorTest {
             "@Deprecated\n",
             "@SuppressWarnings(\"all\")\n",
             "public final class LibraryServiceStub extends String implements Appendable,"
-                + " Cloneable, Readable {}\n"));
+                + " Cloneable, Readable {}\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -1981,7 +1981,7 @@ public class JavaWriterVisitorTest {
             "    }\n",
             "  }\n",
             "}\n");
-    assertEquals(writerVisitor.write(), expected);
+    assertEquals(expected, writerVisitor.write());
   }
 
   @Test
@@ -2032,8 +2032,8 @@ public class JavaWriterVisitorTest {
             .build();
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        writerVisitor.write(),
-        String.format("public Student apply() {\n" + "return this;\n" + "}\n\n"));
+        String.format("public Student apply() {\n" + "return this;\n" + "}\n\n"),
+        writerVisitor.write());
   }
 
   @Test
@@ -2241,7 +2241,7 @@ public class JavaWriterVisitorTest {
   public void writeEmptyLineStatement() {
     EmptyLineStatement statement = EmptyLineStatement.create();
     statement.accept(writerVisitor);
-    assertEquals(writerVisitor.write(), "\n");
+    assertEquals("\n", writerVisitor.write());
   }
 
   @Test
