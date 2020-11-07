@@ -167,10 +167,13 @@ public abstract class MethodDefinition implements AstNode {
     abstract Builder setMethodIdentifier(IdentifierNode methodIdentifier);
 
     // Private accessors.
-
     abstract String name();
 
+    abstract ImmutableList<CommentStatement> headerCommentStatements();
+
     abstract ImmutableList<AnnotationNode> annotations();
+
+    abstract ImmutableList<TypeNode> throwsExceptions();
 
     abstract TypeNode returnType();
 
@@ -195,6 +198,8 @@ public abstract class MethodDefinition implements AstNode {
     abstract ImmutableList<String> returnTemplateNames();
 
     public MethodDefinition build() {
+      performNullChecks();
+
       // Handle templates.
       setTemplateIdentifiers(
           templateNames().stream()
@@ -328,6 +333,17 @@ public abstract class MethodDefinition implements AstNode {
       }
 
       return method;
+    }
+
+    void performNullChecks() {
+      String contextInfo = String.format("method definition of %s", name());
+      NodeValidator.checkNoNullElements(headerCommentStatements(), "header comments", contextInfo);
+      NodeValidator.checkNoNullElements(annotations(), "annotations", contextInfo);
+      NodeValidator.checkNoNullElements(throwsExceptions(), "declared exceptions", contextInfo);
+      NodeValidator.checkNoNullElements(body(), "body", contextInfo);
+      NodeValidator.checkNoNullElements(templateNames(), "template names", contextInfo);
+      NodeValidator.checkNoNullElements(
+          returnTemplateNames(), "return template names", contextInfo);
     }
   }
 }
