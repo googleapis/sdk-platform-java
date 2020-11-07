@@ -60,6 +60,14 @@ public abstract class SynchronizedStatement implements Statement {
     // Private.
     abstract Builder setLock(Expr expr);
 
-    public abstract SynchronizedStatement build();
+    abstract ImmutableList<Statement> body();
+
+    abstract SynchronizedStatement autoBuild();
+
+    public SynchronizedStatement build() {
+      NodeValidator.checkNoNullElements(body(), "body statements", "synchronized statement");
+
+      return autoBuild();
+    }
   }
 }
