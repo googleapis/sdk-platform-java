@@ -41,10 +41,14 @@ public abstract class WhileStatement implements Statement {
 
     public abstract Builder setBody(List<Statement> body);
 
+    // Private.
+    abstract ImmutableList<Statement> body();
+
     abstract WhileStatement autoBuild();
 
     public WhileStatement build() {
       WhileStatement whileStatement = autoBuild();
+      NodeValidator.checkNoNullElements(body(), "body", "while statement");
       Preconditions.checkState(
           whileStatement.conditionExpr().type().equals(TypeNode.BOOLEAN),
           "While condition must be a boolean-typed expression");
