@@ -20,7 +20,6 @@ import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @AutoValue
 public abstract class ReferenceConstructorExpr implements Expr {
@@ -77,11 +76,8 @@ public abstract class ReferenceConstructorExpr implements Expr {
           referenceConstructorExpr.type().isReferenceType(referenceConstructorExpr.type()),
           "A this/super constructor must have a reference type.");
 
-      Preconditions.checkState(
-          arguments().stream().allMatch(e -> !Objects.isNull(e)),
-          String.format(
-              "Found null argumentfor in the \"this/super\" initialization of %s",
-              type().reference().name()));
+      NodeValidator.checkNoNullElements(
+          arguments(), "the \"this\" or \"super\" initialization", type().reference().name());
 
       return referenceConstructorExpr;
     }
