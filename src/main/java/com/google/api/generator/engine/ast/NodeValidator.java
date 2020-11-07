@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import com.google.common.base.Preconditions;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 public class NodeValidator {
@@ -25,5 +26,12 @@ public class NodeValidator {
         collection.stream().allMatch(e -> !Objects.isNull(e)),
         String.format(
             "Found null expression in %s %s for %s", fieldTypeName, collection, nodeContextInfo));
+  }
+
+  public static void checkNoNullElements(
+      Map<?, ?> map, String fieldTypeName, String nodeContextInfo) {
+    checkNoNullElements(map.keySet(), String.format("key of %s", fieldTypeName), nodeContextInfo);
+    checkNoNullElements(
+        map.values(), String.format("values of %s", fieldTypeName), nodeContextInfo);
   }
 }
