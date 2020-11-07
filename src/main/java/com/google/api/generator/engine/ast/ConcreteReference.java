@@ -231,9 +231,14 @@ public abstract class ConcreteReference implements Reference {
     // Private.
     abstract Class clazz();
 
+    abstract ImmutableList<Reference> generics();
+
     abstract boolean isStaticImport();
 
     public ConcreteReference build() {
+      NodeValidator.checkNoNullElements(
+          generics(), "generics", String.format("concrete reference %s", clazz().getSimpleName()));
+
       setIsStaticImport(clazz().getEnclosingClass() != null && isStaticImport());
       return autoBuild();
     }
