@@ -137,6 +137,7 @@ public abstract class ClassDefinition implements AstNode {
       setClassIdentifier(classIdentifier);
 
       ClassDefinition classDef = autoBuild();
+      performNullChecks(classDef);
 
       // Only nested classes can forego having a package.
       if (!classDef.isNested()) {
@@ -200,6 +201,20 @@ public abstract class ClassDefinition implements AstNode {
       }
 
       return classDef;
+    }
+
+    void performNullChecks(ClassDefinition classDef) {
+      String contextInfo = String.format("class  definition of %s", name());
+      NodeValidator.checkNoNullElements(
+          classDef.headerCommentStatements(), "header comments", contextInfo);
+      NodeValidator.checkNoNullElements(classDef.annotations(), "annotations", contextInfo);
+
+      NodeValidator.checkNoNullElements(
+          classDef.implementsTypes(), "implemented types", contextInfo);
+      NodeValidator.checkNoNullElements(classDef.statements(), "statements", contextInfo);
+
+      NodeValidator.checkNoNullElements(classDef.methods(), "methods", contextInfo);
+      NodeValidator.checkNoNullElements(classDef.nestedClasses(), "nested classes", contextInfo);
     }
   }
 }
