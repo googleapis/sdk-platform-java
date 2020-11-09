@@ -89,7 +89,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(HtmlEscaper.process(line));
+                componentsList.add(line);
               });
       componentsList.add("}</pre>");
       return this;

@@ -47,7 +47,7 @@ public class JavaDocCommentTest {
             + "`'{@literal @}&#42;/\n"
             + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
             + "<pre>{@code\n"
-            + "ApiFuture&lt;Shelf&gt; future ="
+            + "ApiFuture<Shelf> future ="
             + " libraryClient.createShelfCallable().futureCall(request);\n"
             + "}</pre>\n"
             + "@throws Exception This is an exception.";

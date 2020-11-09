@@ -628,7 +628,7 @@ public class JavaWriterVisitorTest {
             "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
             "* named `bookShelves/&#42;`\n",
             "* <pre>{@code\n",
-            "* ApiFuture&lt;Shelf&gt; future ="
+            "* ApiFuture<Shelf> future ="
                 + " libraryClient.createShelfCallable().futureCall(request);\n",
             "* }</pre>\n",
             "* <ol>\n",
