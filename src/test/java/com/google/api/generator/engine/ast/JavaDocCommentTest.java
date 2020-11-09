@@ -46,10 +46,10 @@ public class JavaDocCommentTest {
             + "&amp;\"\\f\n"
             + "`'{@literal @}&#42;/\n"
             + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
-            + "<pre><code>\n"
+            + "<pre>{@code\n"
             + "ApiFuture&lt;Shelf&gt; future ="
             + " libraryClient.createShelfCallable().futureCall(request);\n"
-            + "</code></pre>\n"
+            + "}</pre>\n"
             + "@throws Exception This is an exception.";
     assertEquals(javaDocComment.comment(), expected);
   }
@@ -62,9 +62,9 @@ public class JavaDocCommentTest {
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
     String expected =
         "sample codes:\n"
-            + "<pre><code>\n"
+            + "<pre>{@code\n"
             + "resource = project/{project}/shelfId/{shelfId}\n"
-            + "</code></pre>";
+            + "}</pre>";
     assertEquals(javaDocComment.comment(), expected);
   }
 

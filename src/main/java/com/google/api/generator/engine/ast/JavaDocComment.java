@@ -85,13 +85,13 @@ public abstract class JavaDocComment implements Comment {
     }
 
     public Builder addSampleCode(String sampleCode) {
-      componentsList.add("<pre><code>");
+      componentsList.add("<pre>{@code");
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
                 componentsList.add(HtmlEscaper.process(line));
               });
-      componentsList.add("</code></pre>");
+      componentsList.add("}</pre>");
       return this;
     }
 
