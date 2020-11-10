@@ -24,6 +24,11 @@ import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.gax.batching.BatchingSettings;
+import com.google.api.gax.batching.FlowControlSettings;
+import com.google.api.gax.batching.FlowController;
+import com.google.api.gax.batching.PartitionKey;
+import com.google.api.gax.batching.RequestBuilder;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -33,6 +38,9 @@ import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.BatchedRequestIssuer;
+import com.google.api.gax.rpc.BatchingCallSettings;
+import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.PagedCallSettings;
@@ -59,6 +67,7 @@ import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Generated;
@@ -95,7 +104,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
           .build();
 
   private final UnaryCallSettings<DeleteLogRequest, Empty> deleteLogSettings;
-  private final UnaryCallSettings<WriteLogEntriesRequest, WriteLogEntriesResponse>
+  private final BatchingCallSettings<WriteLogEntriesRequest, WriteLogEntriesResponse>
       writeLogEntriesSettings;
   private final PagedCallSettings<
           ListLogEntriesRequest, ListLogEntriesResponse, ListLogEntriesPagedResponse>
@@ -296,13 +305,73 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             }
           };
 
+  private static final BatchingDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>
+      WRITE_LOG_ENTRIES_BATCHING_DESC =
+          new BatchingDescriptor<WriteLogEntriesRequest, WriteLogEntriesResponse>() {
+            @Override
+            public PartitionKey getBatchPartitionKey(WriteLogEntriesRequest request) {
+              return new PartitionKey(
+                  request.getLogName(), request.getResource(), request.getLabels());
+            }
+
+            @Override
+            public RequestBuilder<WriteLogEntriesRequest> getRequestBuilder() {
+              return new RequestBuilder<WriteLogEntriesRequest>() {
+                private WriteLogEntriesRequest.Builder builder;
+
+                @Override
+                public void appendRequest(WriteLogEntriesRequest request) {
+                  if (Objects.isNull(builder)) {
+                    builder = request.toBuilder();
+                  } else {
+                    builder.addAllEntries(request.getEntriesList());
+                  }
+                }
+
+                @Override
+                public WriteLogEntriesRequest build() {
+                  return builder.build();
+                }
+              };
+            }
+
+            @Override
+            public void splitResponse(
+                WriteLogEntriesResponse batchResponse,
+                Collection<? extends BatchedRequestIssuer<WriteLogEntriesResponse>> batch) {
+              for (BatchedRequestIssuer<WriteLogEntriesResponse> responder : batch) {
+                WriteLogEntriesResponse response = WriteLogEntriesResponse.newBuilder().build();
+                responder.setResponse(response);
+              }
+            }
+
+            @Override
+            public void splitException(
+                Throwable throwable,
+                Collection<? extends BatchedRequestIssuer<WriteLogEntriesResponse>> batch) {
+              for (BatchedRequestIssuer<WriteLogEntriesResponse> responder : batch) {
+                responder.setException(throwable);
+              }
+            }
+
+            @Override
+            public long countElements(WriteLogEntriesRequest request) {
+              return request.getEntriesCount();
+            }
+
+            @Override
+            public long countBytes(WriteLogEntriesRequest request) {
+              return request.getSerializedSize();
+            }
+          };
+
   /** Returns the object with the settings used for calls to deleteLog. */
   public UnaryCallSettings<DeleteLogRequest, Empty> deleteLogSettings() {
     return deleteLogSettings;
   }
 
   /** Returns the object with the settings used for calls to writeLogEntries. */
-  public UnaryCallSettings<WriteLogEntriesRequest, WriteLogEntriesResponse>
+  public BatchingCallSettings<WriteLogEntriesRequest, WriteLogEntriesResponse>
       writeLogEntriesSettings() {
     return writeLogEntriesSettings;
   }
@@ -410,7 +479,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
   public static class Builder extends StubSettings.Builder<LoggingServiceV2StubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<DeleteLogRequest, Empty> deleteLogSettings;
-    private final UnaryCallSettings.Builder<WriteLogEntriesRequest, WriteLogEntriesResponse>
+    private final BatchingCallSettings.Builder<WriteLogEntriesRequest, WriteLogEntriesResponse>
         writeLogEntriesSettings;
     private final PagedCallSettings.Builder<
             ListLogEntriesRequest, ListLogEntriesResponse, ListLogEntriesPagedResponse>
@@ -466,7 +535,9 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       super(clientContext);
 
       deleteLogSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
-      writeLogEntriesSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      writeLogEntriesSettings =
+          BatchingCallSettings.newBuilder(WRITE_LOG_ENTRIES_BATCHING_DESC)
+              .setBatchingSettings(BatchingSettings.newBuilder().build());
       listLogEntriesSettings = PagedCallSettings.newBuilder(LIST_LOG_ENTRIES_PAGE_STR_FACT);
       listMonitoredResourceDescriptorsSettings =
           PagedCallSettings.newBuilder(LIST_MONITORED_RESOURCE_DESCRIPTORS_PAGE_STR_FACT);
@@ -520,6 +591,22 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
       builder
           .writeLogEntriesSettings()
+          .setBatchingSettings(
+              BatchingSettings.newBuilder()
+                  .setElementCountThreshold(1000L)
+                  .setRequestByteThreshold(1048576L)
+                  .setDelayThreshold(Duration.ofMillis(50L))
+                  .setFlowControlSettings(
+                      FlowControlSettings.newBuilder()
+                          .setMaxOutstandingElementCount(100000L)
+                          .setMaxOutstandingRequestBytes(10485760L)
+                          .setLimitExceededBehavior(
+                              FlowController.LimitExceededBehavior.ThrowException)
+                          .build())
+                  .build());
+
+      builder
+          .writeLogEntriesSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
 
@@ -563,7 +650,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
     }
 
     /** Returns the builder for the settings used for calls to writeLogEntries. */
-    public UnaryCallSettings.Builder<WriteLogEntriesRequest, WriteLogEntriesResponse>
+    public BatchingCallSettings.Builder<WriteLogEntriesRequest, WriteLogEntriesResponse>
         writeLogEntriesSettings() {
       return writeLogEntriesSettings;
     }
