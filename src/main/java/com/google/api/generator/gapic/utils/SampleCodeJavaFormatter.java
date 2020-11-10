@@ -21,7 +21,7 @@ public final class SampleCodeJavaFormatter {
   private static final String FAKE_METHOD_TITLE =
       String.format("void FakeMethod() %s%s", LEFT_BRACE, NEWLINE);
   private static final String FAKE_METHOD_CLOSE = String.format("%s%s", RIGHT_BRACE, NEWLINE);
-  private static final String FAKE_CLASS_CLOSE = String.format("%s%s", RIGHT_BRACE, NEWLINE);
+  private static final String FAKE_CLASS_CLOSE = String.format("%s", RIGHT_BRACE);
 
   public static String format(List<Statement> statements) {
     buffer.append(FAKE_CLASS_TITLE);
