@@ -64,6 +64,9 @@ public abstract class TryCatchStatement implements Statement {
 
     public TryCatchStatement build() {
       TryCatchStatement tryCatchStatement = autoBuild();
+      NodeValidator.checkNoNullElements(tryCatchStatement.tryBody(), "try body", "try-catch");
+      NodeValidator.checkNoNullElements(tryCatchStatement.catchBody(), "catch body", "try-catch");
+
       if (!tryCatchStatement.isSampleCode()) {
         Preconditions.checkNotNull(
             tryCatchStatement.catchVariableExpr(),

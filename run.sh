@@ -77,11 +77,6 @@ if [ -n "$FLAGS_service_config" ]
 then
   SERVICE_CONFIG_OPT="grpc-service-config=$FLAGS_service_config"
 fi
-GAPIC_CONFIG_OPT=""
-if [ -n "$FLAGS_gapic_config" ]
-then
-  GAPIC_CONFIG_OPT="gapic-config=$FLAGS_gapic_config"
-fi
 
 # Run protoc.
 protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" \
@@ -89,7 +84,7 @@ protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" 
     --include_source_info \
     --plugin=bazel-bin/protoc-gen-java_gapic ${FLAGS_protos}/*.proto \
     --java_gapic_out="${FLAGS_out}" \
-    --java_gapic_opt="${SERVICE_CONFIG_OPT},${GAPIC_CONFIG_OPT}" \
+    --java_gapic_opt="${SERVICE_CONFIG_OPT}" \
     --experimental_allow_proto3_optional
 
 echo_success "Output files written to ${FLAGS_out}"

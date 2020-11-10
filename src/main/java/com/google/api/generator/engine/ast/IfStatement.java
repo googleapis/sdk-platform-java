@@ -63,6 +63,10 @@ public abstract class IfStatement implements Statement {
 
     public IfStatement build() {
       IfStatement ifStatement = autoBuild();
+      NodeValidator.checkNoNullElements(ifStatement.body(), "body", "if-statement");
+      NodeValidator.checkNoNullElements(ifStatement.elseIfs(), "else-ifs", "if-statement");
+      NodeValidator.checkNoNullElements(ifStatement.elseBody(), "else-body", "if-statement");
+
       Preconditions.checkState(
           ifStatement.conditionExpr().type().equals(TypeNode.BOOLEAN),
           "If-condition must be a boolean-typed expression");
