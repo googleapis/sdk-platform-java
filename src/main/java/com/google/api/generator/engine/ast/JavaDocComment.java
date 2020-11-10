@@ -84,6 +84,9 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
+    // TODO(developer): <pre> and {@code} is not supporting rendering '@' character, it is evaluated
+    // as Javadoc tag. Please handle '@' character if need in the future. More details at
+    // https://reflectoring.io/howto-format-code-snippets-in-javadoc/#pre--code
     public Builder addSampleCode(String sampleCode) {
       componentsList.add("<pre>{@code");
       Arrays.stream(sampleCode.split("\\r?\\n"))

@@ -69,7 +69,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_sampleCodeKeepIndent() {
+  public void createJavaDocComment_sampleCodeKeepsIndent() {
     String comment = "sample codes:";
     String sampleCode = "try (condition = false) {\n" + "  int x = 3;\n" + "}";
     JavaDocComment javaDocComment =
@@ -85,7 +85,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_sampleCodeKeepLineBreaker() {
+  public void createJavaDocComment_sampleCodeKeepsLongLineBreak() {
     String comment = "sample codes:";
     String sampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings =\n"
