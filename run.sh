@@ -18,7 +18,6 @@ DEFINE_string --alias=s service_config '' 'Path to the JSON service config'
 # Optional flags.
 DEFINE_bool --alias=c use_cached false 'If true, does not rebuild the plugin.'
 DEFINE_string --alias=o out '/tmp/test' 'Output directory'
-DEFINE_string gapic_config '' 'Path to the config ending in gapic.yaml. Optional'
 
 gbash::init_google "$@"
 

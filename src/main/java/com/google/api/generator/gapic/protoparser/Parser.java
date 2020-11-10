@@ -19,7 +19,6 @@ import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
-import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.LongrunningOperation;
@@ -77,15 +76,9 @@ public class Parser {
   }
 
   public static GapicContext parse(CodeGeneratorRequest request) {
-    Optional<String> gapicYamlConfigPathOpt =
-        PluginArgumentParser.parseGapicYamlConfigPath(request);
-    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
-        BatchingSettingsConfigParser.parse(gapicYamlConfigPathOpt);
-
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
-    Optional<GapicServiceConfig> serviceConfigOpt =
-        ServiceConfigParser.parse(serviceConfigPath, batchingSettingsOpt);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
 
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
