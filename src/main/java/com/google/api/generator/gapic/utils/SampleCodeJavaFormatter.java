@@ -9,9 +9,6 @@ public final class SampleCodeJavaFormatter {
 
   private SampleCodeJavaFormatter() {}
 
-  private static final JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
-  private static final StringBuffer buffer = new StringBuffer();
-
   private static final String RIGHT_BRACE = "}";
   private static final String LEFT_BRACE = "{";
   private static final String NEWLINE = "\n";
@@ -24,22 +21,25 @@ public final class SampleCodeJavaFormatter {
   private static final String FAKE_CLASS_CLOSE = String.format("%s", RIGHT_BRACE);
 
   public static String format(List<Statement> statements) {
+    final StringBuffer buffer = new StringBuffer();
     buffer.append(FAKE_CLASS_TITLE);
     buffer.append(FAKE_METHOD_TITLE);
-    statements(statements);
-    buffer.append(javaWriterVisitor.write());
+    buffer.append(writeStatements(statements));
     buffer.append(FAKE_METHOD_CLOSE);
     buffer.append(FAKE_CLASS_CLOSE);
 
     String formattedString = JavaFormatter.format(buffer.toString());
     return formattedString
         .replaceAll("^([^\n]*\n){2}|([^\n]*\n){2}$", "")
-        .replaceAll("(?m)^ {4}", "");
+        .replaceAll("(?m)^ {4}", "")
+        .trim();
   }
 
-  private static void statements(List<Statement> statements) {
+  private static String writeStatements(List<Statement> statements) {
+    JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(javaWriterVisitor);
     }
+    return javaWriterVisitor.write();
   }
 }
