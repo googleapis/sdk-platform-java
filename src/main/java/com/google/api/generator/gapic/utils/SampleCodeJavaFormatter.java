@@ -14,15 +14,15 @@
 
 package com.google.api.generator.gapic.utils;
 
-import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.writer.JavaFormatter;
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import java.util.List;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
 
 public final class SampleCodeJavaFormatter {
 
   private SampleCodeJavaFormatter() {}
 
+  private static final Formatter FORMATTER = new Formatter();
   private static final String RIGHT_BRACE = "}";
   private static final String LEFT_BRACE = "{";
   private static final String NEWLINE = "\n";
@@ -35,30 +35,37 @@ public final class SampleCodeJavaFormatter {
   private static final String FAKE_CLASS_CLOSE = String.format("%s", RIGHT_BRACE);
 
   /**
-   * format utilize google-java-format to format the sample code statements where these are wrapped
-   * in a FakeClass to pretend as a valid source code. Because google-java-format is a program that
-   * reformats Java source code.
+   * This method is used to format sample code by utilizing google-java-format to format the Java
+   * source code.
+   *
+   * @param sampleCode A string is composed by statements.
+   * @return String Formatted sample code string based on google java style.
    */
-  public static String format(List<Statement> statements) {
+  public static String format(String sampleCode) {
     final StringBuffer buffer = new StringBuffer();
     buffer.append(FAKE_CLASS_TITLE);
     buffer.append(FAKE_METHOD_TITLE);
-    buffer.append(writeStatements(statements));
+    buffer.append(sampleCode);
     buffer.append(FAKE_METHOD_CLOSE);
     buffer.append(FAKE_CLASS_CLOSE);
 
-    String formattedString = JavaFormatter.format(buffer.toString());
+    String formattedString = null;
+    try {
+      formattedString = FORMATTER.formatSource(buffer.toString());
+    } catch (FormatterException e) {
+      throw new FormatException(
+          String.format("The sample code should be string where is composed by statements; %s", e));
+    }
     return formattedString
         .replaceAll("^([^\n]*\n){2}|([^\n]*\n){2}$", "")
         .replaceAll("(?m)^ {4}", "")
         .trim();
   }
 
-  private static String writeStatements(List<Statement> statements) {
-    JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
-    for (Statement statement : statements) {
-      statement.accept(javaWriterVisitor);
+  @VisibleForTesting
+  protected static class FormatException extends RuntimeException {
+    public FormatException(String errorMessage) {
+      super(errorMessage);
     }
-    return javaWriterVisitor.write();
   }
 }

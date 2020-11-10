@@ -29,6 +29,8 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.utils.SampleCodeJavaFormatter.FormatException;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -36,15 +38,16 @@ import org.junit.Test;
 public class SampleCodeJavaFormatterTest {
 
   @Test
-  public void formatTryCatchStatement() {
-    String result = SampleCodeJavaFormatter.format(Arrays.asList(createTryCatchSampleCode()));
+  public void validFormatSampleCode_tryCatchStatement() {
+    List<Statement> statements = Arrays.asList(createTryCatchSampleCode());
+    String result = SampleCodeJavaFormatter.format(writeStatements(statements));
     String expected =
         String.format(createLines(3), "try (boolean condition = false) {\n", "  int x = 3;\n", "}");
     assertEquals(expected, result);
   }
 
   @Test
-  public void formatLongLineStatement() {
+  public void validFormatSampleCode_longLineStatement() {
     TypeNode type =
         TypeNode.withReference(
             VaporReference.builder()
@@ -77,13 +80,18 @@ public class SampleCodeJavaFormatterTest {
                     .setVariableExpr(varDclExpr)
                     .setValueExpr(methodExpr)
                     .build()));
-    String result = SampleCodeJavaFormatter.format(statements);
+    String result = SampleCodeJavaFormatter.format(writeStatements(statements));
     String expected =
         String.format(
             createLines(2),
             "SubscriptionAdminSettings subscriptionAdminSettings =\n",
             "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();");
     assertEquals(expected, result);
+  }
+
+  @Test(expected = FormatException.class)
+  public void invalidFormatSampleCode_nonStatement() {
+    SampleCodeJavaFormatter.format("abc");
   }
 
   /** =============================== HELPERS =============================== */
@@ -128,5 +136,13 @@ public class SampleCodeJavaFormatterTest {
 
   private static Variable createVariable(String variableName, TypeNode type) {
     return Variable.builder().setName(variableName).setType(type).build();
+  }
+
+  private static String writeStatements(List<Statement> statements) {
+    JavaWriterVisitor javaWriterVisitor = new JavaWriterVisitor();
+    for (Statement statement : statements) {
+      statement.accept(javaWriterVisitor);
+    }
+    return javaWriterVisitor.write();
   }
 }
