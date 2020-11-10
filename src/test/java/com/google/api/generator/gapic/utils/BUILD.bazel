@@ -18,6 +18,7 @@ filegroup(
     test_class = "com.google.api.generator.gapic.utils.{0}".format(test_name),
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
