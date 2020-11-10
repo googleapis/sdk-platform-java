@@ -69,6 +69,39 @@ public class JavaDocCommentTest {
   }
 
   @Test
+  public void createJavaDocComment_sampleCodeKeepIndent() {
+    String comment = "sample codes:";
+    String sampleCode = "try (condition = false) {\n" + "  int x = 3;\n" + "}";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
+    String expected =
+        "sample codes:\n"
+            + "<pre>{@code\n"
+            + "try (condition = false) {\n"
+            + "  int x = 3;\n"
+            + "}\n"
+            + "}</pre>";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
+  public void createJavaDocComment_sampleCodeKeepLineBreaker() {
+    String comment = "sample codes:";
+    String sampleCode =
+        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
+            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
+    JavaDocComment javaDocComment =
+        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
+    String expected =
+        "sample codes:\n"
+            + "<pre>{@code\n"
+            + "SubscriptionAdminSettings subscriptionAdminSettings =\n"
+            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n"
+            + "}</pre>";
+    assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
   public void createJavaDocComment_multipleComments() {
     // Add methods, like `addComment()`, should add components at any place,
     // and they will get printed in order.
@@ -197,5 +230,9 @@ public class JavaDocCommentTest {
             + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "@deprecated Use the {@link ArchivedBookName} class instead.";
     assertEquals(javaDocComment.comment(), expected);
+  }
+
+  private static String createLines(int numLines) {
+    return new String(new char[numLines]).replace("\0", "%s");
   }
 }
