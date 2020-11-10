@@ -81,7 +81,6 @@ def java_gapic_library(
         name,
         srcs,
         package = None,
-        service_yaml = None,
         grpc_service_config = None,
         deps = [],
         test_deps = [],
@@ -90,10 +89,6 @@ def java_gapic_library(
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
-
-    # Currently a no-op.
-    if service_yaml:
-        file_args_dict[service_yaml] = "gapic-service-config"
 
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"

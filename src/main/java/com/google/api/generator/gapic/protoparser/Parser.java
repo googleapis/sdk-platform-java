@@ -83,7 +83,9 @@ public class Parser {
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
-        ServiceYamlParser.parse(serviceYamlConfigPathOpt.get());
+        serviceYamlConfigPathOpt.isPresent()
+            ? ServiceYamlParser.parse(serviceYamlConfigPathOpt.get())
+            : Optional.empty();
 
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
