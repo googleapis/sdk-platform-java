@@ -15,7 +15,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -24,23 +23,22 @@ public class SampleCodeJavaFormatterTest {
 
   @Test
   public void formatTryCatchStatement() {
-    String result = SampleCodeJavaFormatter.format(Arrays.asList(createSampleCode()));
+    String result = SampleCodeJavaFormatter.format(Arrays.asList(createTryCatchSampleCode()));
     String expected =
-        String.format(
-            createLines(3), "try (boolean condition = false) {\n", "  int x = 3;\n", "}");
+        String.format(createLines(3), "try (boolean condition = false) {\n", "  int x = 3;\n", "}");
     assertEquals(expected, result);
   }
 
   @Test
   public void formatLongLineStatement() {
-    TypeNode type = TypeNode.withReference(
-        VaporReference.builder()
-            .setPakkage("com.google.pubsub.v1")
-            .setName("SubscriptionAdminSettings")
-            .build());
+    TypeNode type =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setPakkage("com.google.pubsub.v1")
+                .setName("SubscriptionAdminSettings")
+                .build());
     VariableExpr varDclExpr = createVariableDeclExpr("subscriptionAdminSettings", type);
-    VariableExpr varExpr = createVariableExpr(
-        "SubscriptionAdminSettings", type);
+    VariableExpr varExpr = createVariableExpr("SubscriptionAdminSettings", type);
     MethodInvocationExpr firstMethodExpr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
@@ -61,14 +59,16 @@ public class SampleCodeJavaFormatterTest {
     List<Statement> statements =
         Arrays.asList(
             ExprStatement.withExpr(
-                AssignmentExpr.builder().setVariableExpr(varDclExpr).setValueExpr(methodExpr).build())
-        );
+                AssignmentExpr.builder()
+                    .setVariableExpr(varDclExpr)
+                    .setValueExpr(methodExpr)
+                    .build()));
     String result = SampleCodeJavaFormatter.format(statements);
     String expected =
         String.format(
             createLines(2),
             "SubscriptionAdminSettings subscriptionAdminSettings =\n",
-            "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n");
+            "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();");
     assertEquals(expected, result);
   }
 
@@ -77,7 +77,7 @@ public class SampleCodeJavaFormatterTest {
     return new String(new char[numLines]).replace("\0", "%s");
   }
 
-  private static Statement createSampleCode() {
+  private static Statement createTryCatchSampleCode() {
     TryCatchStatement tryCatch =
         TryCatchStatement.builder()
             .setTryResourceExpr(createAssignmentExpr("condition", "false", TypeNode.BOOLEAN))
