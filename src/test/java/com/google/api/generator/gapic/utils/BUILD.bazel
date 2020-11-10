@@ -4,6 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "JavaStyleTest",
+    "SampleCodeJavaFormatterTest"
 ]
 
 filegroup(
@@ -16,6 +17,7 @@ filegroup(
     srcs = ["{0}.java".format(test_name)],
     test_class = "com.google.api.generator.gapic.utils.{0}".format(test_name),
     deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
