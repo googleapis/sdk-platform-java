@@ -69,27 +69,14 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createJavaDocComment_sampleCodeKeepsIndent() {
-    String comment = "sample codes:";
-    String sampleCode = "try (condition = false) {\n" + "  int x = 3;\n" + "}";
-    JavaDocComment javaDocComment =
-        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
-    String expected =
-        "sample codes:\n"
-            + "<pre>{@code\n"
-            + "try (condition = false) {\n"
-            + "  int x = 3;\n"
-            + "}\n"
-            + "}</pre>";
-    assertEquals(javaDocComment.comment(), expected);
-  }
-
-  @Test
-  public void createJavaDocComment_sampleCodeKeepsLongLineBreak() {
+  public void createJavaDocComment_sampleCodeKeepsFormat() {
     String comment = "sample codes:";
     String sampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
+            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n"
+            + "try (condition = false) {\n"
+            + "  int x = 3;\n"
+            + "}";
     JavaDocComment javaDocComment =
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
     String expected =
@@ -97,6 +84,9 @@ public class JavaDocCommentTest {
             + "<pre>{@code\n"
             + "SubscriptionAdminSettings subscriptionAdminSettings =\n"
             + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n"
+            + "try (condition = false) {\n"
+            + "  int x = 3;\n"
+            + "}\n"
             + "}</pre>";
     assertEquals(javaDocComment.comment(), expected);
   }
