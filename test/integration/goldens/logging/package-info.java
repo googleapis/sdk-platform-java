@@ -15,7 +15,9 @@
  */
 
 /**
- * The interfaces provided are listed below, along with usage samples.
+ * Clients for LoggingServiceV2, ConfigServiceV2, and MetricsServiceV2.
+ *
+ * <p>The interfaces provided are listed below, along with usage samples.
  *
  * <p>======================= LoggingServiceV2Client =======================
  *

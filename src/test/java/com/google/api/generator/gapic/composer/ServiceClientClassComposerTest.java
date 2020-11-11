@@ -33,7 +33,6 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
 
@@ -48,8 +47,7 @@ public class ServiceClientClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
@@ -72,8 +70,7 @@ public class ServiceClientClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(fileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     Service protoService = services.get(0);
     GapicClass clazz = ServiceClientClassComposer.instance().generate(protoService, messageTypes);

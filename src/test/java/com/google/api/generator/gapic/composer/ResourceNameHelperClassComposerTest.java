@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -95,8 +94,7 @@ public class ResourceNameHelperClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     ResourceName foobarResname = resourceNames.get("showcase.googleapis.com/Foobar");
     assertThat(outputResourceNames).contains(foobarResname);
@@ -138,11 +136,7 @@ public class ResourceNameHelperClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
+            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     ResourceName billingAccountLocationResname =
         resourceNames.get("logging.googleapis.com/BillingAccountLocation");
@@ -170,11 +164,7 @@ public class ResourceNameHelperClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            testingFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
+            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     ResourceName sessionResname = resourceNames.get("showcase.googleapis.com/Session");
     assertThat(outputResourceNames).contains(sessionResname);
@@ -199,11 +189,7 @@ public class ResourceNameHelperClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            testingFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
+            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     ResourceName testResname = resourceNames.get("showcase.googleapis.com/Test");
     assertThat(outputResourceNames).contains(testResname);

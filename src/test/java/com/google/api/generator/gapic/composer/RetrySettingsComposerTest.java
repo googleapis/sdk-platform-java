@@ -72,8 +72,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -109,8 +108,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -150,8 +148,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -187,8 +184,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -227,8 +223,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);
@@ -309,8 +304,7 @@ public class RetrySettingsComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     Service service = services.get(0);

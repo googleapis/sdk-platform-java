@@ -41,7 +41,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -372,8 +371,7 @@ public class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
-    Parser.parseService(
-        testingFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+    Parser.parseService(testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     assertEquals(2, outputResourceNames.size());
 

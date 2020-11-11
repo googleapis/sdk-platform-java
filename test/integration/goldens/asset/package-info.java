@@ -15,7 +15,9 @@
  */
 
 /**
- * The interfaces provided are listed below, along with usage samples.
+ * Clients for AssetService.
+ *
+ * <p>The interfaces provided are listed below, along with usage samples.
  *
  * <p>======================= AssetServiceClient =======================
  *

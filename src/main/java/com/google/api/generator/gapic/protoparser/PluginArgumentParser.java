@@ -26,33 +26,16 @@ public class PluginArgumentParser {
 
   // Synced to rules_java_gapic/java_gapic.bzl.
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
-  @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "gapic-service-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
-  private static final String GAPIC_YAML_FILE_ENDING = "gapic.yaml";
-  private static final String SERVICE_YAML_FILE_ENDING = ".yaml";
 
   static Optional<String> parseJsonConfigPath(CodeGeneratorRequest request) {
     return parseJsonConfigPath(request.getParameter());
   }
 
-  static Optional<String> parseServiceYamlConfigPath(CodeGeneratorRequest request) {
-    return parseServiceYamlConfigPath(request.getParameter());
-  }
-
   /** Expects a comma-separated list of file paths. */
   @VisibleForTesting
   static Optional<String> parseJsonConfigPath(String pluginProtocArgument) {
-    return parseArgument(pluginProtocArgument, KEY_GRPC_SERVICE_CONFIG, JSON_FILE_ENDING);
-  }
-
-  @VisibleForTesting
-  static Optional<String> parseServiceYamlConfigPath(String pluginProtocArgument) {
-    return parseArgument(pluginProtocArgument, KEY_SERVICE_YAML_CONFIG, SERVICE_YAML_FILE_ENDING);
-  }
-
-  private static Optional<String> parseArgument(
-      String pluginProtocArgument, String key, String fileEnding) {
     if (Strings.isNullOrEmpty(pluginProtocArgument)) {
       return Optional.<String>empty();
     }
@@ -63,12 +46,7 @@ public class PluginArgumentParser {
       }
       String keyVal = args[0];
       String valueVal = args[1];
-      boolean valueMeetsCriteria = keyVal.equals(key) && valueVal.endsWith(fileEnding);
-      if (fileEnding.equals(SERVICE_YAML_FILE_ENDING)) {
-        valueMeetsCriteria &= !valueVal.endsWith(GAPIC_YAML_FILE_ENDING);
-      }
-
-      if (valueMeetsCriteria) {
+      if (keyVal.equals(KEY_GRPC_SERVICE_CONFIG) && valueVal.endsWith(JSON_FILE_ENDING)) {
         return Optional.of(valueVal);
       }
     }

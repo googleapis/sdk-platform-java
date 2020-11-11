@@ -80,13 +80,6 @@ public class Parser {
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
     Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
 
-    Optional<String> serviceYamlConfigPathOpt =
-        PluginArgumentParser.parseServiceYamlConfigPath(request);
-    Optional<com.google.api.Service> serviceYamlProtoOpt =
-        serviceYamlConfigPathOpt.isPresent()
-            ? ServiceYamlParser.parse(serviceYamlConfigPathOpt.get())
-            : Optional.empty();
-
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
@@ -95,15 +88,13 @@ public class Parser {
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> services =
-        parseServices(
-            request, messages, resourceNames, outputArgResourceNames, serviceYamlProtoOpt);
+        parseServices(request, messages, resourceNames, outputArgResourceNames);
     return GapicContext.builder()
         .setServices(services)
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
         .setServiceConfig(serviceConfigOpt.isPresent() ? serviceConfigOpt.get() : null)
-        .setServiceYamlProto(serviceYamlProtoOpt.isPresent() ? serviceYamlProtoOpt.get() : null)
         .build();
   }
 
@@ -111,8 +102,7 @@ public class Parser {
       CodeGeneratorRequest request,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
-      Set<ResourceName> outputArgResourceNames,
-      Optional<com.google.api.Service> serviceYamlProtoOpt) {
+      Set<ResourceName> outputArgResourceNames) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
 
     List<Service> services = new ArrayList<>();
@@ -124,12 +114,7 @@ public class Parser {
               fileToGenerate);
 
       services.addAll(
-          parseService(
-              fileDescriptor,
-              messageTypes,
-              resourceNames,
-              serviceYamlProtoOpt,
-              outputArgResourceNames));
+          parseService(fileDescriptor, messageTypes, resourceNames, outputArgResourceNames));
     }
 
     return services;
@@ -139,7 +124,6 @@ public class Parser {
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
-      Optional<com.google.api.Service> serviceYamlProtoOpt,
       Set<ResourceName> outputArgResourceNames) {
     String pakkage = TypeParser.getPackage(fileDescriptor);
 
@@ -154,9 +138,6 @@ public class Parser {
               if (serviceOptions.hasExtension(ClientProto.defaultHost)) {
                 defaultHost =
                     sanitizeDefaultHost(serviceOptions.getExtension(ClientProto.defaultHost));
-              } else if (serviceYamlProtoOpt.isPresent()) {
-                // Fall back to the DNS name supplied in the service .yaml config.
-                defaultHost = serviceYamlProtoOpt.get().getName();
               }
               Preconditions.checkState(
                   !Strings.isNullOrEmpty(defaultHost),

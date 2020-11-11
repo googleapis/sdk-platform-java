@@ -24,8 +24,8 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Generated;
@@ -37,7 +37,7 @@ public class ClientLibraryPackageInfoComposer {
       "The interfaces provided are listed below, along with usage samples.";
 
   private static final String CLIENT_PATTERN = "%sClient";
-  private static final String PACKAGE_INFO_TITLE_PATTERN = "A client to %s";
+  private static final String PACKAGE_INFO_TITLE_PATTERN = "Clients for %s.";
   private static final String SAMPLE_CODE_HEADER_PATTERN = "Sample for %s:";
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
 
@@ -61,12 +61,14 @@ public class ClientLibraryPackageInfoComposer {
 
   private static CommentStatement createPackageInfoJavadoc(GapicContext context) {
     JavaDocComment.Builder javaDocCommentBuilder = JavaDocComment.builder();
-    if (context.hasServiceYamlProto()
-        && !Strings.isNullOrEmpty(context.serviceYamlProto().getTitle())) {
-      javaDocCommentBuilder =
-          javaDocCommentBuilder.addComment(
-              String.format(PACKAGE_INFO_TITLE_PATTERN, context.serviceYamlProto().getTitle()));
-    }
+    javaDocCommentBuilder =
+        javaDocCommentBuilder.addComment(
+            String.format(
+                PACKAGE_INFO_TITLE_PATTERN,
+                context.services().stream()
+                    .map(s -> s.name())
+                    .collect(
+                        Collectors.collectingAndThen(Collectors.toList(), joiningOxfordComma()))));
 
     javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(PACKAGE_INFO_DESCRIPTION);
 
@@ -116,5 +118,14 @@ public class ClientLibraryPackageInfoComposer {
     }
 
     return CommentStatement.withComment(javaDocCommentBuilder.build());
+  }
+
+  private static Function<List<String>, String> joiningOxfordComma() {
+    return vals -> {
+      int last = vals.size() - 1;
+      if (last < 1) return String.join("", vals);
+      if (last == 1) return String.join(" and ", vals);
+      return String.join(", and ", String.join(", ", vals.subList(0, last)), vals.get(last));
+    };
   }
 }

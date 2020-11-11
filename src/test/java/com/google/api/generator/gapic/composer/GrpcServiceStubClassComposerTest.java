@@ -36,7 +36,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import org.junit.Test;
 
@@ -51,8 +50,7 @@ public class GrpcServiceStubClassComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(echoFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     Service echoProtoService = services.get(0);
     GapicClass clazz =
         GrpcServiceStubClassComposer.instance().generate(echoProtoService, messageTypes);
@@ -75,11 +73,7 @@ public class GrpcServiceStubClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            testingFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
+            testingFileDescriptor, messageTypes, resourceNames, outputResourceNames);
     Service testingProtoService = services.get(0);
     GapicClass clazz =
         GrpcServiceStubClassComposer.instance().generate(testingProtoService, messageTypes);
@@ -108,11 +102,7 @@ public class GrpcServiceStubClassComposerTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            serviceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
+            serviceFileDescriptor, messageTypes, resourceNames, outputResourceNames);
 
     Service service = services.get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(service, messageTypes);

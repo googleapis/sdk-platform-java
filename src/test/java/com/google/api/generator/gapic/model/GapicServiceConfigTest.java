@@ -129,8 +129,7 @@ public class GapicServiceConfigTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
-        Parser.parseService(
-            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+        Parser.parseService(fileDescriptor, messageTypes, resourceNames, outputResourceNames);
     assertEquals(1, services.size());
 
     return services.get(0);
