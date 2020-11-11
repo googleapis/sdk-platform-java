@@ -43,7 +43,14 @@ public class ResourceReferenceParser {
       @Nullable String description,
       Map<String, ResourceName> resourceNames,
       Map<String, ResourceName> patternsToResourceNames) {
-    ResourceName resourceName = resourceNames.get(resourceReference.resourceTypeString());
+    ResourceName resourceName = null;
+    if (resourceReference.isOnlyWildcard()) {
+      resourceName = ResourceName.createWildcard("*", "com.google.api.wildcard.placeholder");
+      resourceNames.put(resourceName.resourceTypeString(), resourceName);
+    } else {
+      resourceName = resourceNames.get(resourceReference.resourceTypeString());
+    }
+    resourceName = resourceNames.get(resourceReference.resourceTypeString());
     Preconditions.checkNotNull(
         resourceName,
         String.format(
