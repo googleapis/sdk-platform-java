@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.utils;
+package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.googlejavaformat.java.Formatter;
@@ -35,8 +35,8 @@ public final class SampleCodeJavaFormatter {
   private static final String FAKE_CLASS_CLOSE = String.format("%s", RIGHT_BRACE);
 
   /**
-   * This method is used to format sample code by utilizing google-java-format to format the Java
-   * source code.
+   * This method is used to format sample code string where composed by statements based on Google
+   * Java style guide.
    *
    * @param sampleCode A string is composed by statements.
    * @return String Formatted sample code string based on google java style.

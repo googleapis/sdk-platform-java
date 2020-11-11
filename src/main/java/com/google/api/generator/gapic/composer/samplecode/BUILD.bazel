@@ -3,17 +3,16 @@ load("@rules_java//java:defs.bzl", "java_library")
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "utils_files",
+    name = "samplecode_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "utils",
+    name = "samplecode",
     srcs = [
-        ":utils_files",
+        ":samplecode_files",
     ],
     deps = [
-        "//src/main/java/com/google/api/generator/engine/ast",
-        "@com_google_guava_guava//jar",
+        "@google_java_format_all_deps//jar",
     ],
 )
