@@ -56,6 +56,10 @@ public final class SampleCodeJavaFormatter {
       throw new FormatException(
           String.format("The sample code should be string where is composed by statements; %s", e));
     }
+    // Extract formatted sample by
+    // 1. Removing the first and last two lines.
+    // 2. Delete the first 4 space for each line.
+    // 3. Trim the last new empty line.
     return formattedString
         .replaceAll("^([^\n]*\n){2}|([^\n]*\n){2}$", "")
         .replaceAll("(?m)^ {4}", "")
