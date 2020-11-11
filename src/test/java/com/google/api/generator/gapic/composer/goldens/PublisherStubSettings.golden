@@ -69,17 +69,17 @@ import org.threeten.bp.Duration;
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
  * <pre><code>
- * PublisherStubSettings.Builder topicAdminSettingsBuilder = PublisherStubSettings.newBuilder();
+ * PublisherStubSettings.Builder publisherSettingsBuilder = PublisherStubSettings.newBuilder();
  * publisherSettingsBuilder
  *     .createTopicSettings()
  *     .setRetrySettings(
- *         topicAdminSettingsBuilder
+ *         publisherSettingsBuilder
  *             .createTopicSettings()
  *             .getRetrySettings()
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
- * PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ * PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();
  * </code></pre>
  */
 @BetaApi

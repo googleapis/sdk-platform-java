@@ -101,7 +101,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service, className, types))
+            .setHeaderCommentStatements(createClassHeaderComments(service, types.get(className)))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -120,11 +120,11 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, String className, Map<String, TypeNode> types) {
+      Service service, TypeNode classType) {
     Optional<Method> methodOpt =
         service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
     return SettingsCommentComposer.createClassHeaderComments(
-        getClientClassName(service.name()), service.defaultHost(), methodOpt, className, types);
+        getClientClassName(service.name()), service.defaultHost(), methodOpt, classType);
   }
 
   private static List<AnnotationNode> createClassAnnotations() {

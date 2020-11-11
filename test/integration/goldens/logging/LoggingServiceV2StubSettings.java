@@ -80,6 +80,21 @@ import org.threeten.bp.Duration;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
+ *
+ * <pre><code>
+ * LoggingServiceV2StubSettings.Builder loggingServiceV2SettingsBuilder =
+ *     LoggingServiceV2StubSettings.newBuilder();
+ * loggingServiceV2SettingsBuilder
+ *     .deleteLogSettings()
+ *     .setRetrySettings(
+ *         loggingServiceV2SettingsBuilder
+ *             .deleteLogSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

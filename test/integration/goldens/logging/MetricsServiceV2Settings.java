@@ -52,6 +52,21 @@ import javax.annotation.Generated;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of listLogMetrics to 30 seconds:
+ *
+ * <pre><code>
+ * MetricsServiceV2Settings.Builder metricsServiceV2SettingsBuilder =
+ *     MetricsServiceV2Settings.newBuilder();
+ * metricsServiceV2SettingsBuilder
+ *     .listLogMetricsSettings()
+ *     .setRetrySettings(
+ *         metricsServiceV2SettingsBuilder
+ *             .listLogMetricsSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * MetricsServiceV2Settings metricsServiceV2Settings = metricsServiceV2SettingsBuilder.build();
+ * </code></pre>
  */
 @Generated("by gapic-generator-java")
 public class MetricsServiceV2Settings extends ClientSettings<MetricsServiceV2Settings> {

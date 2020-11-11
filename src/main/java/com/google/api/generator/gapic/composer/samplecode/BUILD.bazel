@@ -13,6 +13,10 @@ java_library(
         ":samplecode_files",
     ],
     deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/utils",
         "@google_java_format_all_deps//jar",
     ],
 )

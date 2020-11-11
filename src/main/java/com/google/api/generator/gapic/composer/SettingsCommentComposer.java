@@ -18,12 +18,12 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.samplecode.SettingsCommentSampleCodeComposer;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -109,8 +109,7 @@ class SettingsCommentComposer {
       String configuredClassName,
       String defaultHost,
       Optional<Method> methodOpt,
-      String className,
-      Map<String, TypeNode> types) {
+      TypeNode classType) {
     // Split default address and port.
     int colonIndex = defaultHost.indexOf(COLON);
     Preconditions.checkState(
@@ -137,7 +136,7 @@ class SettingsCommentComposer {
     if (methodOpt.isPresent()) {
       String sampleCode =
           SettingsCommentSampleCodeComposer.composeSettingClassHeaderSampleCode(
-              className, methodOpt.get(), types);
+              methodOpt.get(), classType);
       javaDocCommentBuilder =
           javaDocCommentBuilder
               .addParagraph(
@@ -145,7 +144,6 @@ class SettingsCommentComposer {
                       CLASS_HEADER_SAMPLE_CODE_PATTERN,
                       JavaStyle.toLowerCamelCase(methodOpt.get().name())))
               .addSampleCode(sampleCode);
-      // TODO(summerji): Add sample code here.
     }
 
     return Arrays.asList(

@@ -89,7 +89,22 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of exportAssets to 30 seconds:
+ * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
+ *
+ * <pre><code>
+ * AssetServiceStubSettings.Builder assetServiceSettingsBuilder =
+ *     AssetServiceStubSettings.newBuilder();
+ * assetServiceSettingsBuilder
+ *     .batchGetAssetsHistorySettings()
+ *     .setRetrySettings(
+ *         assetServiceSettingsBuilder
+ *             .batchGetAssetsHistorySettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * AssetServiceStubSettings assetServiceSettings = assetServiceSettingsBuilder.build();
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

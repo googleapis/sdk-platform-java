@@ -54,6 +54,20 @@ import javax.annotation.Generated;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of listInstances to 30 seconds:
+ *
+ * <pre><code>
+ * CloudRedisSettings.Builder cloudRedisSettingsBuilder = CloudRedisSettings.newBuilder();
+ * cloudRedisSettingsBuilder
+ *     .listInstancesSettings()
+ *     .setRetrySettings(
+ *         cloudRedisSettingsBuilder
+ *             .listInstancesSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ * </code></pre>
  */
 @Generated("by gapic-generator-java")
 public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {

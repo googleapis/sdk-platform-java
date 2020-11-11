@@ -31,6 +31,7 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/gapic/composer",
     "//src/test/java/com/google/api/generator/test/framework:asserts",
     "//src/test/java/com/google/api/generator/test/framework:utils",
+    "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
     "//src/main/java/com/google/api/generator/gapic/model",
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",

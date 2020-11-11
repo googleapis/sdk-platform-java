@@ -55,6 +55,20 @@ import javax.annotation.Generated;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of exportAssets to 30 seconds:
+ *
+ * <pre><code>
+ * AssetServiceSettings.Builder assetServiceSettingsBuilder = AssetServiceSettings.newBuilder();
+ * assetServiceSettingsBuilder
+ *     .exportAssetsSettings()
+ *     .setRetrySettings(
+ *         assetServiceSettingsBuilder
+ *             .exportAssetsSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
+ * </code></pre>
  */
 @Generated("by gapic-generator-java")
 public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {

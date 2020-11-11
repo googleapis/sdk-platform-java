@@ -18,6 +18,7 @@ java_library(
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
         "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
         "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax",

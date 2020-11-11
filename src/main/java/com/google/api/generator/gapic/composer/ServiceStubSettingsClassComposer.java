@@ -78,6 +78,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -163,7 +164,7 @@ public class ServiceStubSettingsClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service, className, types))
+            .setHeaderCommentStatements(createClassHeaderComments(service, types.get(className)))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -188,16 +189,18 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, String className, Map<String, TypeNode> types) {
-    // TODO: find first unary setting
+      Service service, TypeNode classType) {
     Optional<Method> methodOpt =
-        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : Optional.of(
+                service.methods().stream()
+                    .reduce(
+                        (m1, m2) ->
+                            (m1.stream() == Stream.NONE && !m1.hasLro() && !m1.isPaged()) ? m1 : m2)
+                    .get());
     return SettingsCommentComposer.createClassHeaderComments(
-        String.format(STUB_PATTERN, service.name()),
-        service.defaultHost(),
-        methodOpt,
-        className,
-        types);
+        String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt, classType);
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {

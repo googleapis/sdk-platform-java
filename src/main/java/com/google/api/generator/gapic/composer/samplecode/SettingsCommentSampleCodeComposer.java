@@ -1,4 +1,4 @@
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -15,29 +15,25 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.api.generator.gapic.utils.SampleCodeJavaFormatter;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class SettingsCommentSampleCodeComposer {
 
-  private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String BUILDER_NAME_PATTERN = "%sBuilder";
   private static final String STUB = "Stub";
   private static final String EMPTY_STRING = "";
 
-  public static String composeSettingClassHeaderSampleCode(
-      String className, Method method, Map<String, TypeNode> types) {
-    TypeNode settingsType = types.get(className);
+  public static String composeSettingClassHeaderSampleCode(Method method, TypeNode classType) {
+    String className = classType.reference().name();
     TypeNode builderType =
         TypeNode.withReference(
             VaporReference.builder()
-                .setEnclosingClassNames(settingsType.reference().name())
+                .setEnclosingClassNames(classType.reference().name())
                 .setName("Builder")
-                .setPakkage(settingsType.reference().pakkage())
+                .setPakkage(classType.reference().pakkage())
                 .build());
     Variable builderVar =
         Variable.builder()
@@ -49,7 +45,7 @@ public final class SettingsCommentSampleCodeComposer {
 
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(settingsType)
+            .setStaticReferenceType(classType)
             .setMethodName("newBuilder")
             .setReturnType(builderType)
             .build();
@@ -108,7 +104,7 @@ public final class SettingsCommentSampleCodeComposer {
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(settingsType)
+                .setType(classType)
                 .setName(getServiceSettingsName(className))
                 .build());
 
@@ -119,7 +115,7 @@ public final class SettingsCommentSampleCodeComposer {
                 MethodInvocationExpr.builder()
                     .setExprReferenceExpr(localSettingsVarExpr)
                     .setMethodName("build")
-                    .setReturnType(settingsType)
+                    .setReturnType(classType)
                     .build())
             .build();
 

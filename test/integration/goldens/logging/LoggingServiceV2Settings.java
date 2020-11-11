@@ -54,6 +54,21 @@ import javax.annotation.Generated;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
+ *
+ * <pre><code>
+ * LoggingServiceV2Settings.Builder loggingServiceV2SettingsBuilder =
+ *     LoggingServiceV2Settings.newBuilder();
+ * loggingServiceV2SettingsBuilder
+ *     .deleteLogSettings()
+ *     .setRetrySettings(
+ *         loggingServiceV2SettingsBuilder
+ *             .deleteLogSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * LoggingServiceV2Settings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
+ * </code></pre>
  */
 @Generated("by gapic-generator-java")
 public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Settings> {
