@@ -39,6 +39,20 @@ import javax.annotation.Generated;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of echo to 30 seconds:
+ *
+ * <pre><code>
+ * EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
+ * echoSettingsBuilder
+ *     .echoSettings()
+ *     .setRetrySettings(
+ *         echoSettingsBuilder
+ *             .echoSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * EchoSettings echoSettings = echoSettingsBuilder.build();
+ * </code></pre>
  */
 @Generated("by gapic-generator-java")
 public class EchoSettings extends ClientSettings<EchoSettings> {

@@ -67,6 +67,20 @@ import org.threeten.bp.Duration;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
+ *
+ * <pre><code>
+ * PublisherStubSettings.Builder topicAdminSettingsBuilder = PublisherStubSettings.newBuilder();
+ * publisherSettingsBuilder
+ *     .createTopicSettings()
+ *     .setRetrySettings(
+ *         topicAdminSettingsBuilder
+ *             .createTopicSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * PublisherStubSettings topicAdminSettings = topicAdminSettingsBuilder.build();
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

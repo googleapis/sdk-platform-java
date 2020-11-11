@@ -163,7 +163,7 @@ public class ServiceStubSettingsClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service))
+            .setHeaderCommentStatements(createClassHeaderComments(service, className, types))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -187,11 +187,17 @@ public class ServiceStubSettingsClassComposer {
             .build());
   }
 
-  private static List<CommentStatement> createClassHeaderComments(Service service) {
+  private static List<CommentStatement> createClassHeaderComments(
+      Service service, String className, Map<String, TypeNode> types) {
+    // TODO: find first unary setting
     Optional<Method> methodOpt =
         service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
     return SettingsCommentComposer.createClassHeaderComments(
-        String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt);
+        String.format(STUB_PATTERN, service.name()),
+        service.defaultHost(),
+        methodOpt,
+        className,
+        types);
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {
