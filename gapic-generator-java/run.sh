@@ -18,7 +18,6 @@ DEFINE_string --alias=s service_config '' 'Path to the JSON service config'
 # Optional flags.
 DEFINE_bool --alias=c use_cached false 'If true, does not rebuild the plugin.'
 DEFINE_string --alias=o out '/tmp/test' 'Output directory'
-DEFINE_string gapic_config '' 'Path to the config ending in gapic.yaml. Optional'
 
 gbash::init_google "$@"
 
@@ -78,11 +77,6 @@ if [ -n "$FLAGS_service_config" ]
 then
   SERVICE_CONFIG_OPT="grpc-service-config=$FLAGS_service_config"
 fi
-GAPIC_CONFIG_OPT=""
-if [ -n "$FLAGS_gapic_config" ]
-then
-  GAPIC_CONFIG_OPT="gapic-config=$FLAGS_gapic_config"
-fi
 
 # Run protoc.
 protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" \
@@ -90,7 +84,7 @@ protoc -I="${PROTOC_INCLUDE_DIR}" -I="${FLAGS_googleapis}" -I="${FLAGS_protos}" 
     --include_source_info \
     --plugin=bazel-bin/protoc-gen-java_gapic ${FLAGS_protos}/*.proto \
     --java_gapic_out="${FLAGS_out}" \
-    --java_gapic_opt="${SERVICE_CONFIG_OPT},${GAPIC_CONFIG_OPT}" \
+    --java_gapic_opt="${SERVICE_CONFIG_OPT}" \
     --experimental_allow_proto3_optional
 
 echo_success "Output files written to ${FLAGS_out}"
