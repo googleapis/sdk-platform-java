@@ -19,7 +19,6 @@ import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
-import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.LongrunningOperation;
@@ -67,6 +66,9 @@ public class Parser {
   private static final String DEFAULT_PORT = "443";
   private static final String DOT = ".";
 
+  private static final Set<String> DUPE_SERVICE_CODEGEN_BLOCKLIST =
+      new HashSet<>(Arrays.asList("google.longrunning", "google.iam.v1"));
+
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
@@ -77,20 +79,16 @@ public class Parser {
   }
 
   public static GapicContext parse(CodeGeneratorRequest request) {
-    Optional<String> gapicYamlConfigPathOpt =
-        PluginArgumentParser.parseGapicYamlConfigPath(request);
-    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
-        BatchingSettingsConfigParser.parse(gapicYamlConfigPathOpt);
-
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
-    Optional<GapicServiceConfig> serviceConfigOpt =
-        ServiceConfigParser.parse(serviceConfigPath, batchingSettingsOpt);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
 
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
-        ServiceYamlParser.parse(serviceYamlConfigPathOpt.get());
+        serviceYamlConfigPathOpt.isPresent()
+            ? ServiceYamlParser.parse(serviceYamlConfigPathOpt.get())
+            : Optional.empty();
 
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
@@ -135,6 +133,26 @@ public class Parser {
               resourceNames,
               serviceYamlProtoOpt,
               outputArgResourceNames));
+    }
+
+    // Prevent codegen for IAM or LRO if there are other services present, since that is an
+    // indicator that we are not generating a GAPIC client for IAM or LRO.
+    Set<String> serviceProtoPackages =
+        services.stream().map(s -> s.protoPakkage()).collect(Collectors.toSet());
+    boolean servicesContainBlocklistedApi = false;
+    for (String blocklistedPackage : DUPE_SERVICE_CODEGEN_BLOCKLIST) {
+      // It's very unlikely the blocklisted APIs will contain the other, or any other service.
+      if (serviceProtoPackages.contains(blocklistedPackage) && serviceProtoPackages.size() > 1) {
+        servicesContainBlocklistedApi = true;
+        break;
+      }
+    }
+
+    if (servicesContainBlocklistedApi) {
+      services =
+          services.stream()
+              .filter(s -> !DUPE_SERVICE_CODEGEN_BLOCKLIST.contains(s.protoPakkage()))
+              .collect(Collectors.toList());
     }
 
     return services;

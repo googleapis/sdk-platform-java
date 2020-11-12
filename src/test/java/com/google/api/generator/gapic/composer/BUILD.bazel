@@ -4,7 +4,6 @@ load("//:rules_bazel/java/java_diff_test.bzl", "golden_update")
 package(default_visibility = ["//visibility:public"])
 
 UPDATE_GOLDENS_TESTS = [
-    "BatchingDescriptorComposerTest",
     "ComposerTest",
     "GrpcServiceCallableFactoryClassComposerTest",
     "GrpcServiceStubClassComposerTest",
@@ -73,7 +72,6 @@ java_proto_library(
     ],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),
@@ -93,7 +91,6 @@ TEST_CLASS_DIR = "com.google.api.generator.gapic.composer."
     ],
     data = [
         "//src/test/java/com/google/api/generator/gapic/composer/goldens:goldens_files",
-        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
     ],
     test_class = "com.google.api.generator.gapic.composer.{0}".format(test_name),

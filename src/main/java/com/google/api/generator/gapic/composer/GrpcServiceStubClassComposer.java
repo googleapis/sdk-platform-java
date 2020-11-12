@@ -63,9 +63,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -95,6 +97,13 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   private static final GrpcServiceStubClassComposer INSTANCE = new GrpcServiceStubClassComposer();
 
   private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+
+  // Legacy support for the original reroute_to_grpc_interface option in gapic.yaml. These two APIs
+  // predate the modern way, which is to add the RPCs directly into the proto.
+  private static final Set<String> REROUTE_TO_GRPC_INTERFACE_SERVICE_ALLOWLIST =
+      new HashSet<>(Arrays.asList("google.cloud.kms.v1", "google.pubsub.v1"));
+  private static final Set<String> REROUTE_TO_GRPC_INTERFACE_IAM_METHOD_ALLOWLIST =
+      new HashSet<>(Arrays.asList("SetIamPolicy", "GetIamPolicy", "TestIamPermissions"));
 
   private GrpcServiceStubClassComposer() {}
 
@@ -218,8 +227,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             .apply("setType", getMethodDescriptorMethodTypeExpr(protoMethod))
             .apply(methodDescriptorMaker);
 
-    String codeMethodNameArg =
-        String.format("%s.%s/%s", service.protoPakkage(), service.name(), protoMethod.name());
+    String codeMethodNameArg = getProtoRpcFullMethodName(service, protoMethod);
     methodDescriptorMaker =
         methodMakerFn
             .apply(
@@ -1104,6 +1112,17 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             TypeNode.withReference(
                 ConcreteReference.builder().setClazz(MethodDescriptor.MethodType.class).build()))
         .build();
+  }
+
+  private static String getProtoRpcFullMethodName(Service protoService, Method protoMethod) {
+    if (!REROUTE_TO_GRPC_INTERFACE_SERVICE_ALLOWLIST.contains(protoService.protoPakkage())
+        || !REROUTE_TO_GRPC_INTERFACE_IAM_METHOD_ALLOWLIST.contains(protoMethod.name())) {
+      return String.format(
+          "%s.%s/%s", protoService.protoPakkage(), protoService.name(), protoMethod.name());
+    }
+    // This is meant to be a temporary workaround until the allow-listed services come up with a
+    // long-term solution.
+    return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
   private static String getThisClassName(String serviceName) {
