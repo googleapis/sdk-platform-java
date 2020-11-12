@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientCommentSampleCodeComposer;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
@@ -27,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.Map;
 
 class ServiceClientCommentComposer {
   // Tokens.
@@ -103,7 +105,7 @@ class ServiceClientCommentComposer {
           "Returns the OperationsClient that can be used to query the status of a long-running"
               + " operation returned by another API method call.");
 
-  static List<CommentStatement> createClassHeaderComments(Service service) {
+  static List<CommentStatement> createClassHeaderComments(Service service, Map<String, TypeNode> types) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -134,7 +136,7 @@ class ServiceClientCommentComposer {
             SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
             String.format("%sSettings", JavaStyle.toUpperCamelCase(service.name()))));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
-    // TODO(summerji): Add credentials' customization sample code here.
+    classHeaderJavadocBuilder.addSampleCode(ServiceClientCommentSampleCodeComposer.composeClassHeaderCredentialsSampleCode(service, types));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     // TODO(summerji): Add endpoint customization sample code here.
 

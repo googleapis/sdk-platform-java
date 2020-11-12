@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public final class SettingsCommentSampleCodeComposer {
+public class SettingsCommentSampleCodeComposer {
 
   private static final String BUILDER_NAME_PATTERN = "%sBuilder";
   private static final String STUB = "Stub";
