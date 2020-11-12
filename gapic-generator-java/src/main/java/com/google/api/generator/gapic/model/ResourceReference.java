@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.auto.value.AutoValue;
 
 @AutoValue
@@ -22,6 +23,10 @@ public abstract class ResourceReference {
   public abstract String resourceTypeString();
 
   public abstract boolean isChildType();
+
+  public boolean isOnlyWildcard() {
+    return resourceTypeString().equals(ResourceNameConstants.WILDCARD_PATTERN);
+  }
 
   public static ResourceReference withType(String resourceTypeString) {
     return builder().setResourceTypeString(resourceTypeString).setIsChildType(false).build();
