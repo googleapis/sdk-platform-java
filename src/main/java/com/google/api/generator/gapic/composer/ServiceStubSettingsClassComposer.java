@@ -18,11 +18,6 @@ import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
-import com.google.api.gax.batching.BatchingSettings;
-import com.google.api.gax.batching.FlowControlSettings;
-import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
-import com.google.api.gax.batching.PartitionKey;
-import com.google.api.gax.batching.RequestBuilder;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -35,9 +30,6 @@ import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
-import com.google.api.gax.rpc.BatchedRequestIssuer;
-import com.google.api.gax.rpc.BatchingCallSettings;
-import com.google.api.gax.rpc.BatchingDescriptor;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.PageContext;
@@ -82,7 +74,6 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Field;
-import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
@@ -221,12 +212,8 @@ public class ServiceStubSettingsClassComposer {
     Map<String, VariableExpr> varExprs = new LinkedHashMap<>();
 
     // Creates class variables <method>Settings, e.g. echoSettings.
-    // TODO(miraleung): Handle batching here.
     for (Method method : service.methods()) {
-      boolean hasBatchingSettings =
-          !Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method);
-      TypeNode settingsType =
-          getCallSettingsType(method, types, hasBatchingSettings, isNestedClass);
+      TypeNode settingsType = getCallSettingsType(method, types, isNestedClass);
       String varName = JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name()));
       varExprs.put(
           varName,
@@ -310,20 +297,6 @@ public class ServiceStubSettingsClassComposer {
     for (Expr pagingAssignExpr :
         createPagingStaticAssignExprs(service, serviceConfig, messageTypes, types)) {
       statements.add(exprToStatementFn.apply(pagingAssignExpr));
-      statements.add(EMPTY_LINE_STATEMENT);
-    }
-
-    for (Method method : service.methods()) {
-      Optional<GapicBatchingSettings> batchingSettingOpt =
-          Objects.isNull(serviceConfig)
-              ? Optional.empty()
-              : serviceConfig.getBatchingSetting(service, method);
-      if (batchingSettingOpt.isPresent()) {
-        statements.add(
-            exprToStatementFn.apply(
-                BatchingDescriptorComposer.createBatchingDescriptorFieldDeclExpr(
-                    method, batchingSettingOpt.get(), messageTypes)));
-      }
       statements.add(EMPTY_LINE_STATEMENT);
     }
 
@@ -1261,22 +1234,6 @@ public class ServiceStubSettingsClassComposer {
       if (streamKind.equals(Method.Stream.CLIENT) || streamKind.equals(Method.Stream.BIDI)) {
         continue;
       }
-      if (!Objects.isNull(serviceConfig) && serviceConfig.hasBatchingSetting(service, method)) {
-        Optional<GapicBatchingSettings> batchingSettingOpt =
-            serviceConfig.getBatchingSetting(service, method);
-        Preconditions.checkState(
-            batchingSettingOpt.isPresent(),
-            String.format(
-                "No batching setting found for service %s, method %s",
-                service.name(), method.name()));
-        String settingsGetterMethodName =
-            String.format("%sSettings", JavaStyle.toLowerCamelCase(method.name()));
-        bodyStatements.add(
-            ExprStatement.withExpr(
-                RetrySettingsComposer.createBatchingBuilderSettingsExpr(
-                    settingsGetterMethodName, batchingSettingOpt.get(), builderVarExpr)));
-        bodyStatements.add(EMPTY_LINE_STATEMENT);
-      }
 
       bodyStatements.add(
           ExprStatement.withExpr(
@@ -1352,8 +1309,6 @@ public class ServiceStubSettingsClassComposer {
                 .build());
     Reference pagedSettingsBuilderRef =
         ConcreteReference.withClazz(PagedCallSettings.Builder.class);
-    Reference batchingSettingsBuilderRef =
-        ConcreteReference.withClazz(BatchingCallSettings.Builder.class);
     Reference unaryCallSettingsBuilderRef =
         ConcreteReference.withClazz(UnaryCallSettings.Builder.class);
     Function<TypeNode, Boolean> isUnaryCallSettingsBuilderFn =
@@ -1363,9 +1318,6 @@ public class ServiceStubSettingsClassComposer {
                 .equals(unaryCallSettingsBuilderRef);
     Function<TypeNode, Boolean> isPagedCallSettingsBuilderFn =
         t -> t.reference().copyAndSetGenerics(ImmutableList.of()).equals(pagedSettingsBuilderRef);
-    Function<TypeNode, Boolean> isBatchingCallSettingsBuilderFn =
-        t ->
-            t.reference().copyAndSetGenerics(ImmutableList.of()).equals(batchingSettingsBuilderRef);
     Function<TypeNode, TypeNode> builderToCallSettingsFn =
         t ->
             TypeNode.withReference(
@@ -1396,61 +1348,20 @@ public class ServiceStubSettingsClassComposer {
                   String methodName = getMethodNameFromSettingsVarName(e.getKey());
 
                   if (!isPagedCallSettingsBuilderFn.apply(varType)) {
-                    if (!isBatchingCallSettingsBuilderFn.apply(varType)) {
-                      boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
-                      Expr builderExpr =
-                          AssignmentExpr.builder()
-                              .setVariableExpr(varExpr)
-                              .setValueExpr(
-                                  MethodInvocationExpr.builder()
-                                      .setStaticReferenceType(
-                                          builderToCallSettingsFn.apply(varExpr.type()))
-                                      .setMethodName(
-                                          isUnaryCallSettings
-                                              ? "newUnaryCallSettingsBuilder"
-                                              : "newBuilder")
-                                      .setReturnType(varExpr.type())
-                                      .build())
-                              .build();
-                      return ExprStatement.withExpr(builderExpr);
-                    }
-                    Expr newBatchingSettingsExpr =
-                        MethodInvocationExpr.builder()
-                            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
-                            .setMethodName("newBuilder")
-                            .build();
-                    newBatchingSettingsExpr =
-                        MethodInvocationExpr.builder()
-                            .setExprReferenceExpr(newBatchingSettingsExpr)
-                            .setMethodName("build")
-                            .build();
-
-                    String batchingDescVarName =
-                        String.format(
-                            BATCHING_DESC_PATTERN, JavaStyle.toUpperSnakeCase(methodName));
-                    Expr batchingSettingsBuilderExpr =
-                        MethodInvocationExpr.builder()
-                            .setStaticReferenceType(builderToCallSettingsFn.apply(varType))
-                            .setMethodName("newBuilder")
-                            .setArguments(
-                                VariableExpr.withVariable(
-                                    Variable.builder()
-                                        .setType(STATIC_TYPES.get("BatchingDescriptor"))
-                                        .setName(batchingDescVarName)
-                                        .build()))
-                            .build();
-                    batchingSettingsBuilderExpr =
-                        MethodInvocationExpr.builder()
-                            .setExprReferenceExpr(batchingSettingsBuilderExpr)
-                            .setMethodName("setBatchingSettings")
-                            .setArguments(newBatchingSettingsExpr)
-                            .setReturnType(varType)
-                            .build();
-
+                    boolean isUnaryCallSettings = isUnaryCallSettingsBuilderFn.apply(varType);
                     Expr builderExpr =
                         AssignmentExpr.builder()
                             .setVariableExpr(varExpr)
-                            .setValueExpr(batchingSettingsBuilderExpr)
+                            .setValueExpr(
+                                MethodInvocationExpr.builder()
+                                    .setStaticReferenceType(
+                                        builderToCallSettingsFn.apply(varExpr.type()))
+                                    .setMethodName(
+                                        isUnaryCallSettings
+                                            ? "newUnaryCallSettingsBuilder"
+                                            : "newBuilder")
+                                    .setReturnType(varExpr.type())
+                                    .build())
                             .build();
                     return ExprStatement.withExpr(builderExpr);
                   }
@@ -1496,8 +1407,7 @@ public class ServiceStubSettingsClassComposer {
                             .filter(
                                 v ->
                                     isUnaryCallSettingsBuilderFn.apply(v.type())
-                                        || isPagedCallSettingsBuilderFn.apply(v.type())
-                                        || isBatchingCallSettingsBuilderFn.apply(v.type()))
+                                        || isPagedCallSettingsBuilderFn.apply(v.type()))
                             .collect(Collectors.toList()))
                     .setReturnType(NESTED_UNARY_METHOD_SETTINGS_BUILDERS_VAR_EXPR.type())
                     .build())
@@ -1779,15 +1689,10 @@ public class ServiceStubSettingsClassComposer {
             ApiClientHeaderProvider.class,
             ApiFunction.class,
             ApiFuture.class,
-            BatchedRequestIssuer.class,
-            BatchingCallSettings.class,
-            BatchingDescriptor.class,
-            BatchingSettings.class,
             BetaApi.class,
             ClientContext.class,
             Duration.class,
             Empty.class,
-            FlowControlSettings.class,
             GaxGrpcProperties.class,
             GaxProperties.class,
             Generated.class,
@@ -1799,7 +1704,6 @@ public class ServiceStubSettingsClassComposer {
             ImmutableSet.class,
             InstantiatingExecutorProvider.class,
             InstantiatingGrpcChannelProvider.class,
-            LimitExceededBehavior.class,
             List.class,
             Lists.class,
             MonitoredResourceDescriptor.class,
@@ -1811,9 +1715,7 @@ public class ServiceStubSettingsClassComposer {
             PagedCallSettings.class,
             PagedListDescriptor.class,
             PagedListResponseFactory.class,
-            PartitionKey.class,
             ProtoOperationTransformers.class,
-            RequestBuilder.class,
             RetrySettings.class,
             ServerStreamingCallSettings.class,
             StatusCode.class,
@@ -1969,10 +1871,7 @@ public class ServiceStubSettingsClassComposer {
   }
 
   private static TypeNode getCallSettingsType(
-      Method method,
-      Map<String, TypeNode> types,
-      boolean isBatchingSettings,
-      final boolean isSettingsBuilder) {
+      Method method, Map<String, TypeNode> types, final boolean isSettingsBuilder) {
     Function<Class, TypeNode> typeMakerFn =
         clz -> TypeNode.withReference(ConcreteReference.withClazz(clz));
     // Default: No streaming.
@@ -1982,11 +1881,6 @@ public class ServiceStubSettingsClassComposer {
                 isSettingsBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class)
             : typeMakerFn.apply(
                 isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
-    if (isBatchingSettings) {
-      callSettingsType =
-          typeMakerFn.apply(
-              isSettingsBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class);
-    }
 
     // Streaming takes precendence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {

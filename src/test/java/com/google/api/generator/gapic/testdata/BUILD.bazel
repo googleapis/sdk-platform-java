@@ -9,11 +9,6 @@ filegroup(
 )
 
 filegroup(
-    name = "gapic_config_files",
-    srcs = glob(["*_gapic.yaml"]),
-)
-
-filegroup(
     name = "service_yaml_files",
     srcs = ["logging.yaml"],
 )
