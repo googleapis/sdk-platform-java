@@ -87,15 +87,15 @@ public class ServiceClientCommentSampleCodeComposer {
     return SampleCodeJavaFormatter.format(writeStatements(statements));
   }
 
-  private static String getClientClassName(String serviceName) {
+  private String getClientClassName(String serviceName) {
     return String.format(CLASS_NAME_PATTERN, serviceName);
   }
 
-  private static String getSettingsName(String serviceName) {
+  private String getSettingsName(String serviceName) {
     return String.format(SETTINGS_NAME_PATTERN, serviceName);
   }
 
-  private static String writeStatements(List<Statement> statements) {
+  private String writeStatements(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(visitor);
