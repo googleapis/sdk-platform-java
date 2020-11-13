@@ -24,10 +24,8 @@ public final class SampleCodeJavaFormatter {
 
   private static final Formatter FORMATTER = new Formatter();
 
-  private static final String FAKE_CLASS_TITLE = "public class FakeClass {";
-  private static final String FAKE_METHOD_TITLE = "void fakeMethod() {";
-  private static final String FAKE_METHOD_CLOSE = "}";
-  private static final String FAKE_CLASS_CLOSE = "}";
+  private static final String FAKE_CLASS_TITLE = "public class FakeClass { void fakeMethod() {";
+  private static final String FAKE_CLASS_CLOSE = "}}";
 
   /**
    * This method is used to format sample code string.
@@ -40,9 +38,7 @@ public final class SampleCodeJavaFormatter {
     // Wrap the sample code inside a class for composing a valid Java source code.
     // Because we utilized google-java-format to reformat the codes.
     buffer.append(FAKE_CLASS_TITLE);
-    buffer.append(FAKE_METHOD_TITLE);
     buffer.append(sampleCode);
-    buffer.append(FAKE_METHOD_CLOSE);
     buffer.append(FAKE_CLASS_CLOSE);
 
     String formattedString = null;
