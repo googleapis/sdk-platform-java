@@ -80,45 +80,14 @@ public class JavaDocCommentTest {
             + "        .newBuilder()\n"
             + "        .setEndpoint(myEndpoint)\n"
             + "        .build();\n";
-    String sampleCodeNotFormatted =
-        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings\n"
-            + "        .newBuilder()\n"
-            + "    .setEndpoint(myEndpoint)\n"
-            + "        .build();\n";
     JavaDocComment javaDocComment1 =
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode1).build();
     JavaDocComment javaDocComment2 =
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode2).build();
-    JavaDocComment javaDocComment3 =
-        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCodeNotFormatted).build();
-    String expected1 =
-        "sample codes:\n"
-            + "<pre>{@code\n"
-            + "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n"
-            + "}</pre>";
-    String expected2 =
-        "sample codes:\n"
-            + "<pre>{@code\n"
-            + "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings\n"
-            + "        .newBuilder()\n"
-            + "        .setEndpoint(myEndpoint)\n"
-            + "        .build();\n"
-            + "}</pre>";
-    String expected3 =
-        "sample codes:\n"
-            + "<pre>{@code\n"
-            + "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings\n"
-            + "        .newBuilder()\n"
-            + "    .setEndpoint(myEndpoint)\n"
-            + "        .build();\n"
-            + "}</pre>";
+    String expected1 = comment.concat("\n<pre>{@code\n" + sampleCode1 + "}</pre>");
+    String expected2 = comment.concat("\n<pre>{@code\n" + sampleCode2 + "}</pre>");
     assertEquals(javaDocComment1.comment(), expected1);
     assertEquals(javaDocComment2.comment(), expected2);
-    assertEquals(javaDocComment3.comment(), expected3);
   }
 
   @Test
