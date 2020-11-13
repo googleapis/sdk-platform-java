@@ -28,12 +28,12 @@ public class ServiceClientCommentSampleCodeComposer {
 
   public static String composeClassHeaderMethodSampleCode() {
     // TODO(summerji): implement class header rpc sample code.
-    return "string holder";
+    return "";
   }
 
   public static String composeClassHeaderCredentialsSampleCode(Service service, Map<String, TypeNode> types) {
-    String settingsVarName = getSettingsName(service.name());
-    TypeNode settingsVarType = types.get(settingsVarName);
+    String settingsVarName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
+    TypeNode settingsVarType = types.get(getSettingsName(service.name()));
     VariableExpr settingsVarExpr = VariableExpr.withVariable(
         Variable.builder()
             .setName(settingsVarName)
@@ -72,8 +72,8 @@ public class ServiceClientCommentSampleCodeComposer {
             .setValueExpr(buildMethodExpr)
             .build();
 
-    String className = getClientClassName(service.name());
-    TypeNode classType = types.get(className);
+    String className = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
+    TypeNode classType = types.get(getClientClassName(service.name()));
     VariableExpr clientVarExpr = VariableExpr.withVariable(Variable.builder().setName(className).setType(classType).build());
     MethodInvocationExpr createMethodExpr = MethodInvocationExpr.builder().setStaticReferenceType(classType).setArguments(settingsVarExpr).setMethodName("create").setReturnType(classType).build();
     Expr initClientVarExpr = AssignmentExpr.builder()

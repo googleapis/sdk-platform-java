@@ -72,6 +72,15 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre><code>
+ * MetricsServiceV2Settings metricsServiceV2Settings =
+ *     MetricsServiceV2Settings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * MetricsServiceV2Client metricsServiceV2Client =
+ *     MetricsServiceV2Client.create(metricsServiceV2Settings);
+ * </code></pre>
+ *
  * <p>To customize the endpoint:
  */
 @BetaApi

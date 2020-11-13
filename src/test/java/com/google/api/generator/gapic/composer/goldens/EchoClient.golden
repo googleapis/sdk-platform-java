@@ -63,6 +63,14 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre><code>
+ * EchoSettings echoSettings =
+ *     EchoSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * EchoClient echoClient = EchoClient.create(echoSettings);
+ * </code></pre>
+ *
  * <p>To customize the endpoint:
  */
 @BetaApi

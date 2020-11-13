@@ -75,6 +75,14 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre><code>
+ * AssetServiceSettings assetServiceSettings =
+ *     AssetServiceSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ * </code></pre>
+ *
  * <p>To customize the endpoint:
  */
 @BetaApi
