@@ -35,7 +35,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 public class TypeParser {
-  // TODO(miraleung): Add a test.
   private static Reference REFERENCE_BYTE_STRING = ConcreteReference.withClazz(ByteString.class);
   private static TypeNode TYPE_NODE_BYTE_STRING = TypeNode.withReference(REFERENCE_BYTE_STRING);
 
@@ -115,9 +114,9 @@ public class TypeParser {
 
   @VisibleForTesting
   static Reference parseMessageReference(@Nonnull Descriptor messageDescriptor) {
-    // TODO(miraleung): Handle deeper levels of nesting.
     List<String> outerNestedTypeNames = new ArrayList<>();
     Descriptor containingType = messageDescriptor.getContainingType();
+    // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
       outerNestedTypeNames.add(0, containingType.getName());
@@ -150,13 +149,13 @@ public class TypeParser {
     // EnumDescriptor and Descriptor are sibling types.
     List<String> outerNestedTypeNames = new ArrayList<>();
     Descriptor containingType = enumDescriptor.getContainingType();
+    // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
       outerNestedTypeNames.add(0, containingType.getName());
       containingType = containingType.getContainingType();
     }
 
-    // TODO(miraleung): Handle deeper levels of nesting.
     String pakkage = getPackage(enumDescriptor.getFile());
     Reference enumReference =
         VaporReference.builder()
