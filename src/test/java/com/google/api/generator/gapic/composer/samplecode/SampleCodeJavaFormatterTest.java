@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer.samplecode;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter.FormatException;
@@ -69,9 +70,13 @@ public class SampleCodeJavaFormatterTest {
     assertEquals(expected, result);
   }
 
-  @Test(expected = FormatException.class)
+  @Test
   public void invalidFormatSampleCode_nonStatement() {
-    SampleCodeJavaFormatter.format("abc");
+    assertThrows(
+        FormatException.class,
+        () -> {
+          SampleCodeJavaFormatter.format("abc");
+        });
   }
 
   /** =============================== HELPERS =============================== */

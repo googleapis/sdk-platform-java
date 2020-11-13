@@ -23,26 +23,22 @@ public final class SampleCodeJavaFormatter {
   private SampleCodeJavaFormatter() {}
 
   private static final Formatter FORMATTER = new Formatter();
-  private static final String RIGHT_BRACE = "}";
-  private static final String LEFT_BRACE = "{";
-  private static final String NEWLINE = "\n";
 
-  private static final String FAKE_CLASS_TITLE =
-      String.format("public class FakeClass %s%s", LEFT_BRACE, NEWLINE);
-  private static final String FAKE_METHOD_TITLE =
-      String.format("void fakeMethod() %s%s", LEFT_BRACE, NEWLINE);
-  private static final String FAKE_METHOD_CLOSE = String.format("%s%s", RIGHT_BRACE, NEWLINE);
-  private static final String FAKE_CLASS_CLOSE = String.format("%s", RIGHT_BRACE);
+  private static final String FAKE_CLASS_TITLE = "public class FakeClass {";
+  private static final String FAKE_METHOD_TITLE = "void fakeMethod() {";
+  private static final String FAKE_METHOD_CLOSE = "}";
+  private static final String FAKE_CLASS_CLOSE = "}";
 
   /**
-   * This method is used to format sample code string where composed by statements based on Google
-   * Java style guide.
+   * This method is used to format sample code string.
    *
    * @param sampleCode A string is composed by statements.
    * @return String Formatted sample code string based on google java style.
    */
   public static String format(String sampleCode) {
     final StringBuffer buffer = new StringBuffer();
+    // Wrap the sample code inside a class for composing a valid Java source code.
+    // Because we utilized google-java-format to reformat the codes.
     buffer.append(FAKE_CLASS_TITLE);
     buffer.append(FAKE_METHOD_TITLE);
     buffer.append(sampleCode);
@@ -56,7 +52,7 @@ public final class SampleCodeJavaFormatter {
       throw new FormatException(
           String.format("The sample code should be string where is composed by statements; %s", e));
     }
-    // Extract formatted sample by
+    // Extract formatted sample code by
     // 1. Removing the first and last two lines.
     // 2. Delete the first 4 space for each line.
     // 3. Trim the last new empty line.
