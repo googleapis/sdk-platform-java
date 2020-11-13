@@ -53,99 +53,41 @@ public class PluginArgumentParserTest {
         String.join(
             ",",
             Arrays.asList(
-                createGapicConfig(gapicPath),
+                createServiceConfig(gapicPath),
                 createGrpcServiceConfig("/tmp/something.json"),
                 createGrpcServiceConfig("/tmp/some_grpc_service_configjson"),
                 createGrpcServiceConfig(jsonPath),
-                createGapicConfig(gapicPath)));
+                createServiceConfig(gapicPath)));
     assertEquals(jsonPath, PluginArgumentParser.parseJsonConfigPath(rawArgument).get());
   }
 
   @Test
   public void parseJsonPath_argumentHasSpaces() {
     String jsonPath = "/tmp/foo_grpc_service_config.json";
-    String gapicPath = "/tmp/something_gapic.yaml";
     String rawArgument =
         String.join(
             " , ",
             Arrays.asList(
-                createGapicConfig(gapicPath),
                 createGrpcServiceConfig("/tmp/something.json"),
                 createGrpcServiceConfig("/tmp/some_grpc_service_configjson"),
-                createGrpcServiceConfig(jsonPath),
-                createGapicConfig(gapicPath)));
+                createGrpcServiceConfig(jsonPath)));
     assertEquals(jsonPath, PluginArgumentParser.parseJsonConfigPath(rawArgument).get());
   }
 
   @Test
   public void parseJsonPath_restAreEmpty() {
     String jsonPath = "/tmp/foobar_grpc_service_config.json";
-    String gapicPath = "";
+    String emptyPath = "";
     String rawArgument =
-        String.join(",", Arrays.asList(gapicPath, createGrpcServiceConfig(jsonPath), gapicPath));
+        String.join(",", Arrays.asList(emptyPath, createGrpcServiceConfig(jsonPath), emptyPath));
     assertEquals(jsonPath, PluginArgumentParser.parseJsonConfigPath(rawArgument).get());
   }
 
   @Test
   public void parseJsonPath_noneFound() {
-    String gapicPath = "/tmp/something_gapic.yaml";
-    String rawArgument = String.join(",", Arrays.asList(gapicPath));
+    String someOtherPath = "/tmp/something_gapic.yaml";
+    String rawArgument = String.join(",", Arrays.asList(someOtherPath));
     assertFalse(PluginArgumentParser.parseJsonConfigPath(rawArgument).isPresent());
-  }
-
-  @Test
-  public void parseGapicYamlPath_onlyOnePresent() {
-    String gapicPath = "/tmp/something_gapic.yaml";
-    assertEquals(
-        gapicPath,
-        PluginArgumentParser.parseGapicYamlConfigPath(createGapicConfig(gapicPath)).get());
-  }
-
-  @Test
-  public void parseGapicYamlPath_returnsFirstOneFound() {
-    String gapicPathOne = "/tmp/something_gapic.yaml";
-    String gapicPathTwo = "/tmp/other_gapic.yaml";
-    assertEquals(
-        gapicPathOne,
-        PluginArgumentParser.parseGapicYamlConfigPath(
-                String.join(
-                    ",",
-                    Arrays.asList(
-                        createGapicConfig(gapicPathOne), createGapicConfig(gapicPathTwo))))
-            .get());
-  }
-
-  @Test
-  public void parseGapicYamlPath_similarFileAppearsFirst() {
-    String jsonPath = "/tmp/foo_grpc_service_config.json";
-    String gapicPath = "/tmp/something_gapic.yaml";
-    String rawArgument =
-        String.join(
-            ",",
-            Arrays.asList(
-                createGrpcServiceConfig(jsonPath),
-                createGapicConfig("/tmp/something.yaml"),
-                createGapicConfig("/tmp/some_gapicyaml"),
-                createGapicConfig(gapicPath)));
-    assertEquals(gapicPath, PluginArgumentParser.parseGapicYamlConfigPath(rawArgument).get());
-  }
-
-  @Test
-  public void parseGapicYamlPath_restAreEmpty() {
-    String jsonPath = "";
-    String gapicPath = "/tmp/something_gapic.yaml";
-    String rawArgument =
-        String.join(",", Arrays.asList(jsonPath, createGapicConfig(gapicPath), jsonPath));
-    assertEquals(gapicPath, PluginArgumentParser.parseGapicYamlConfigPath(rawArgument).get());
-  }
-
-  @Test
-  public void parseGapicYamlPath_noneFound() {
-    String jsonPath = "/tmp/foo_grpc_service_config.json";
-    String gapicPath = "";
-    String rawArgument =
-        String.join(",", Arrays.asList(createGrpcServiceConfig(jsonPath), gapicPath));
-    assertFalse(PluginArgumentParser.parseGapicYamlConfigPath(rawArgument).isPresent());
   }
 
   @Test
@@ -183,19 +125,13 @@ public class PluginArgumentParserTest {
     // Passed under the right flags.
     rawArgument =
         String.join(
-            ",", Arrays.asList(createGapicConfig(gapicPath), createServiceConfig(servicePath)));
+            ",", Arrays.asList(createServiceConfig(gapicPath), createServiceConfig(servicePath)));
     assertEquals(servicePath, PluginArgumentParser.parseServiceYamlConfigPath(rawArgument).get());
 
     // Swapped flags.
     rawArgument =
         String.join(
-            ",", Arrays.asList(createGapicConfig(servicePath), createServiceConfig(gapicPath)));
-    assertFalse(PluginArgumentParser.parseServiceYamlConfigPath(rawArgument).isPresent());
-
-    // Both passed under the Gapic yaml flag.
-    rawArgument =
-        String.join(
-            ",", Arrays.asList(createGapicConfig(gapicPath), createGapicConfig(servicePath)));
+            ",", Arrays.asList(createServiceConfig(gapicPath), createServiceConfig(gapicPath)));
     assertFalse(PluginArgumentParser.parseServiceYamlConfigPath(rawArgument).isPresent());
   }
 
@@ -209,8 +145,8 @@ public class PluginArgumentParserTest {
             ",",
             Arrays.asList(
                 createGrpcServiceConfig(jsonPath),
-                createGapicConfig("/tmp/something.yaml"),
-                createGapicConfig("/tmp/some_gapicyaml"),
+                createServiceConfig("/tmp/something.yaml"),
+                createServiceConfig("/tmp/some_gapicyaml"),
                 createServiceConfig(gapicPath),
                 createServiceConfig(servicePath)));
     assertEquals(servicePath, PluginArgumentParser.parseServiceYamlConfigPath(rawArgument).get());
@@ -227,10 +163,6 @@ public class PluginArgumentParserTest {
 
   private static String createGrpcServiceConfig(String path) {
     return String.format("%s=%s", PluginArgumentParser.KEY_GRPC_SERVICE_CONFIG, path);
-  }
-
-  private static String createGapicConfig(String path) {
-    return String.format("%s=%s", PluginArgumentParser.KEY_GAPIC_CONFIG, path);
   }
 
   private static String createServiceConfig(String path) {

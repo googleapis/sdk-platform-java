@@ -41,7 +41,6 @@ below are temporary and better ones will be coming.
     java_gapic_library2(
         name = "showcase_java_gapic",
         srcs = [":showcase_proto_with_info"],
-        # The gapic_yaml file is needed only for APIs that have batching configs.
         grpc_service_config = "showcase_grpc_service_config.json",
         package = "google.showcase.v1beta1",
         test_deps = [
@@ -100,20 +99,25 @@ below are temporary and better ones will be coming.
     bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest
     ```
 
--   Update goldens files based on code generation in unit test, for example `JavaCodeGeneratorTest.java`
+-   Update goldens files based on code generation in unit test, for example
+    `JavaCodeGeneratorTest.java`
 
     ```sh
     bazel run //src/test/java/com/google/api/generator/engine:JavaCodeGeneratorTest_update
     ```
 
--   Run a single integration test for API like `Redis`, it generates Java source code using
-the Java microgenerator and compares them with the goldens files in `test/integration/goldens/redis`.
+-   Run a single integration test for API like `Redis`, it generates Java source
+    code using the Java microgenerator and compares them with the goldens files
+    in `test/integration/goldens/redis`.
 
     ```sh
     bazel test //test/integration:redis
     ```
 
--   Update goldens files based on code generation in integration test, for example `Redis`. It generates Java source code using the Java microgenerator and overwrites the goldens files in `test/integration/goldens/redis` based on code generation.
+-   Update goldens files based on code generation in integration test, for
+    example `Redis`. It generates Java source code using the Java microgenerator
+    and overwrites the goldens files in `test/integration/goldens/redis` based
+    on code generation.
 
     ```sh
     bazel run //test/integration:redis_update
