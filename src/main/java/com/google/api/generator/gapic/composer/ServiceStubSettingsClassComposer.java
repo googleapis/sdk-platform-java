@@ -190,6 +190,8 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType) {
+    // Pick the first pure unary rpc method, if no such method exist, then pick the first in the
+    // list.
     Optional<Method> methodOpt =
         service.methods().isEmpty()
             ? Optional.empty()
