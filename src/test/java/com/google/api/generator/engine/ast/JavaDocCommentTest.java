@@ -71,23 +71,24 @@ public class JavaDocCommentTest {
   @Test
   public void createJavaDocComment_sampleCodePreserveIndentAndLineBreaks() {
     String comment = "sample codes:";
-    String sampleCode1 =
+    String formattedSampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings =\n"
             + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n";
-    String sampleCode2 =
+    String badFormattingSampleCode =
         "SubscriptionAdminSettings subscriptionAdminSettings =\n"
             + "    SubscriptionAdminSettings\n"
             + "        .newBuilder()\n"
-            + "        .setEndpoint(myEndpoint)\n"
+            + "    .setEndpoint(myEndpoint)\n"
             + "        .build();\n";
-    JavaDocComment javaDocComment1 =
-        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode1).build();
-    JavaDocComment javaDocComment2 =
-        JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode2).build();
-    String expected1 = comment.concat("\n<pre>{@code\n" + sampleCode1 + "}</pre>");
-    String expected2 = comment.concat("\n<pre>{@code\n" + sampleCode2 + "}</pre>");
-    assertEquals(javaDocComment1.comment(), expected1);
-    assertEquals(javaDocComment2.comment(), expected2);
+    JavaDocComment formattedJavaDoc =
+        JavaDocComment.builder().addComment(comment).addSampleCode(formattedSampleCode).build();
+    JavaDocComment badFormatJavaDoc =
+        JavaDocComment.builder().addComment(comment).addSampleCode(badFormattingSampleCode).build();
+    String expectedFormatted = comment.concat("\n<pre>{@code\n" + formattedSampleCode + "}</pre>");
+    String expectedBadFormat =
+        comment.concat("\n<pre>{@code\n" + badFormattingSampleCode + "}</pre>");
+    assertEquals(formattedJavaDoc.comment(), expectedFormatted);
+    assertEquals(badFormatJavaDoc.comment(), expectedBadFormat);
   }
 
   @Test
