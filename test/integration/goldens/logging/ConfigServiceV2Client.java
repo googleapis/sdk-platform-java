@@ -83,6 +83,13 @@ import javax.annotation.Generated;
  * </code></pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre><code>
+ * ConfigServiceV2Settings configServiceV2Settings =
+ *     ConfigServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ * ConfigServiceV2Client configServiceV2Client =
+ *     ConfigServiceV2Client.create(configServiceV2Settings);
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

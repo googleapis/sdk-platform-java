@@ -84,6 +84,12 @@ import javax.annotation.Generated;
  * </code></pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre><code>
+ * AssetServiceSettings assetServiceSettings =
+ *     AssetServiceSettings.newBuilder().setEndpoint("myEndpoint").build();
+ * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

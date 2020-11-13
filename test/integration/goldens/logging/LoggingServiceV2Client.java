@@ -85,6 +85,13 @@ import javax.annotation.Generated;
  * </code></pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre><code>
+ * LoggingServiceV2Settings loggingServiceV2Settings =
+ *     LoggingServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ * LoggingServiceV2Client loggingServiceV2Client =
+ *     LoggingServiceV2Client.create(loggingServiceV2Settings);
+ * </code></pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

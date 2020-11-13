@@ -141,7 +141,9 @@ class ServiceClientCommentComposer {
         ServiceClientCommentSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
             service, types));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
-    // TODO(summerji): Add endpoint customization sample code here.
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientCommentSampleCodeComposer.composeClassHeaderEndpointSampleCode(service, types)
+    );
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
