@@ -54,6 +54,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -121,8 +122,17 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType) {
+    // Pick the first pure unary rpc method, if no such method exist, then pick the first in the
+    // list.
     Optional<Method> methodOpt =
-        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : Optional.of(
+                service.methods().stream()
+                    .reduce(
+                        (m1, m2) ->
+                            (m1.stream() == Stream.NONE && !m1.hasLro() && !m1.isPaged()) ? m1 : m2)
+                    .get());
     return SettingsCommentComposer.createClassHeaderComments(
         getClientClassName(service.name()), service.defaultHost(), methodOpt, classType);
   }
