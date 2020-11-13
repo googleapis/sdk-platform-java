@@ -132,10 +132,20 @@ public class RetrySettingsComposerTest {
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
             "settings ="
-                + " RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0).setMaxRetryDelay(Duration.ofMillis(3000L)).setInitialRpcTimeout(Duration.ofMillis(10000L)).setRpcTimeoutMultiplier(1.0).setMaxRpcTimeout(Duration.ofMillis(10000L)).setTotalTimeout(Duration.ofMillis(10000L)).build();\n",
+                + " RetrySettings.newBuilder().setInitialRetryDelay("
+                + "Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0)"
+                + ".setMaxRetryDelay(Duration.ofMillis(3000L))"
+                + ".setInitialRpcTimeout(Duration.ofMillis(10000L))"
+                + ".setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeout(Duration.ofMillis(10000L))"
+                + ".setTotalTimeout(Duration.ofMillis(10000L)).build();\n",
             "definitions.put(\"retry_policy_1_params\", settings);\n",
             "settings ="
-                + " RetrySettings.newBuilder().setInitialRpcTimeout(Duration.ofMillis(5000L)).setRpcTimeoutMultiplier(1.0).setMaxRpcTimeout(Duration.ofMillis(5000L)).setTotalTimeout(Duration.ofMillis(5000L)).build();\n",
+                + " RetrySettings.newBuilder()"
+                + ".setInitialRpcTimeout(Duration.ofMillis(5000L))"
+                + ".setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeout(Duration.ofMillis(5000L))"
+                + ".setTotalTimeout(Duration.ofMillis(5000L)).build();\n",
             "definitions.put(\"no_retry_0_params\", settings);\n",
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
