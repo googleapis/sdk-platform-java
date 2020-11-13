@@ -15,9 +15,7 @@
  */
 
 /**
- * A client to Cloud Logging API
- *
- * <p>The interfaces provided are listed below, along with usage samples.
+ * The interfaces provided are listed below, along with usage samples.
  *
  * <p>======================= LoggingServiceV2Client =======================
  *
