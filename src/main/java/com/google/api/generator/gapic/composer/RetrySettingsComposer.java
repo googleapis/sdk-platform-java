@@ -345,7 +345,6 @@ public class RetrySettingsComposer {
                     .build())
             .build();
 
-    // TODO(miraleung): Determine fianl LRO settings values here.
     Expr lroRetrySettingsExpr = createLroRetrySettingsExpr();
     Expr pollAlgoExpr =
         MethodInvocationExpr.builder()
@@ -488,7 +487,6 @@ public class RetrySettingsComposer {
   }
 
   private static Expr createLroRetrySettingsExpr() {
-    // TODO(miraleung): Determine fianl LRO settings values here.
     Expr lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
@@ -519,7 +517,7 @@ public class RetrySettingsComposer {
 
     Expr zeroDurationExpr =
         EnumRefExpr.builder().setType(STATIC_TYPES.get("Duration")).setName("ZERO").build();
-    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    // TODO(miraleung): Add an "// ignored" comment here.
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
@@ -527,7 +525,7 @@ public class RetrySettingsComposer {
             .setArguments(zeroDurationExpr)
             .build();
 
-    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    // TODO(miraleung): Add an "// ignored" comment here.
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
@@ -535,7 +533,7 @@ public class RetrySettingsComposer {
             .setArguments(toValExpr(LRO_DEFAULT_MAX_RPC_TIMEOUT))
             .build();
 
-    // TODO(miraleung): Find a way to add an "// ignored" comment here.
+    // TODO(miraleung): Add an "// ignored" comment here.
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)

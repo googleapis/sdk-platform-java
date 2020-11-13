@@ -14,6 +14,8 @@
 
 load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
 
+SERVICE_YAML_ALLOWLIST = ["googleads"]
+
 def _java_gapic_postprocess_srcjar_impl(ctx):
     gapic_srcjar = ctx.file.gapic_srcjar
     output_srcjar_name = ctx.label.name
@@ -91,9 +93,17 @@ def java_gapic_library(
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
 
-    # Currently a no-op.
+    # Check the allow-list.
     if service_yaml:
-        file_args_dict[service_yaml] = "gapic-service-config"
+        service_yaml_in_allowlist = False
+        for keyword in SERVICE_YAML_ALLOWLIST:
+            if keyword in service_yaml:
+                service_yaml_in_allowlist = True
+                break
+        if service_yaml_in_allowlist:
+            file_args_dict[service_yaml] = "gapic-service-config"
+        else:
+            fail("Service.yaml is no longer supported in the Java microgenerator")
 
     srcjar_name = name + "_srcjar"
     raw_srcjar_name = srcjar_name + "_raw"
