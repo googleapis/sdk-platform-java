@@ -27,7 +27,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
@@ -75,7 +74,7 @@ public class ServiceClientCommentSampleCodeComposer {
             .setMethodName("build")
             .build();
 
-    Expr initLocalSettingsVarExpr =
+    Expr initSettingsVarExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(buildMethodExpr)
@@ -90,15 +89,7 @@ public class ServiceClientCommentSampleCodeComposer {
         .setValueExpr(createMethodExpr)
         .build();
 
-    List<Statement> statements =
-        Arrays.asList(
-            initLocalSettingsVarExpr,
-            initClientVarExpr
-        )
-            .stream()
-            .map(e -> ExprStatement.withExpr(e))
-            .collect(Collectors.toList());
-    return SampleCodeJavaFormatter.format(writeStatements(statements));
+    return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
   }
 
   private static String getClientClassName(String serviceName) {
@@ -109,11 +100,16 @@ public class ServiceClientCommentSampleCodeComposer {
     return String.format(SETTINGS_NAME_PATTERN, serviceName);
   }
 
-  private static String writeStatements(List<Statement> statements) {
+  private static String writeSampleCode(List<Expr> exprs) {
+    List<Statement> statements =
+        exprs
+            .stream()
+            .map(e -> ExprStatement.withExpr(e))
+            .collect(Collectors.toList());
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(visitor);
     }
-    return visitor.write();
+    return SampleCodeJavaFormatter.format(visitor.write());
   }
 }
