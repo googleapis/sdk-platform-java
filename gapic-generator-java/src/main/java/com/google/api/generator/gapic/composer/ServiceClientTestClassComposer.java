@@ -1464,7 +1464,6 @@ public class ServiceClientTestClassComposer {
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
                 .setValueExpr(valExpr)
                 .build());
-        // TODO(miraleung): Empty line here.
       }
     }
     String rpcJavaName = JavaStyle.toLowerCamelCase(method.name());
