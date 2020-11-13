@@ -15,6 +15,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,9 +72,19 @@ public class ServiceClientCommentSampleCodeComposer {
             .setValueExpr(buildMethodExpr)
             .build();
 
+    String className = getClientClassName(service.name());
+    TypeNode classType = types.get(className);
+    VariableExpr clientVarExpr = VariableExpr.withVariable(Variable.builder().setName(className).setType(classType).build());
+    MethodInvocationExpr createMethodExpr = MethodInvocationExpr.builder().setStaticReferenceType(classType).setArguments(settingsVarExpr).setMethodName("create").setReturnType(classType).build();
+    Expr initClientVarExpr = AssignmentExpr.builder()
+        .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(createMethodExpr)
+        .build();
+
     List<Statement> statements =
         Arrays.asList(
-            initLocalSettingsVarExpr
+            initLocalSettingsVarExpr,
+            initClientVarExpr
         )
             .stream()
             .map(e -> ExprStatement.withExpr(e))

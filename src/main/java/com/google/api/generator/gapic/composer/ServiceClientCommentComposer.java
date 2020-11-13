@@ -26,9 +26,9 @@ import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.Map;
 
 class ServiceClientCommentComposer {
   // Tokens.
@@ -105,7 +105,8 @@ class ServiceClientCommentComposer {
           "Returns the OperationsClient that can be used to query the status of a long-running"
               + " operation returned by another API method call.");
 
-  static List<CommentStatement> createClassHeaderComments(Service service, Map<String, TypeNode> types) {
+  static List<CommentStatement> createClassHeaderComments(
+      Service service, Map<String, TypeNode> types) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -136,7 +137,9 @@ class ServiceClientCommentComposer {
             SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
             String.format("%sSettings", JavaStyle.toUpperCamelCase(service.name()))));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addSampleCode(ServiceClientCommentSampleCodeComposer.composeClassHeaderCredentialsSampleCode(service, types));
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientCommentSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            service, types));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     // TODO(summerji): Add endpoint customization sample code here.
 
