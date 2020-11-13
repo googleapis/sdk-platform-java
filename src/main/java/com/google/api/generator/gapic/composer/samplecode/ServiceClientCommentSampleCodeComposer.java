@@ -26,11 +26,6 @@ public class ServiceClientCommentSampleCodeComposer {
   private static final String SETTINGS_NAME_PATTERN = "%sSettings";
   private static final String CLASS_NAME_PATTERN = "%sClient";
 
-  public static String composeClassHeaderMethodSampleCode() {
-    // TODO(summerji): implement class header rpc sample code.
-    return "";
-  }
-
   public static String composeClassHeaderCredentialsSampleCode(Service service, Map<String, TypeNode> types) {
     String settingsVarName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
     TypeNode settingsVarType = types.get(getSettingsName(service.name()));
