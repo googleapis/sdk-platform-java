@@ -38,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.management.ValueExp;
 
 public class ServiceClientCommentSampleCodeComposer {
 
@@ -249,7 +250,7 @@ public class ServiceClientCommentSampleCodeComposer {
         VariableExpr.withVariable(Variable.builder().setType(varType).setName(varName).build());
     List<Expr> argExprs =
         arguments.stream()
-            .map(a -> ValueExpr.withValue(StringObjectValue.withValue(a.name())))
+            .map(a -> VariableExpr.withVariable(Variable.builder().setType(a.type()).setName(a.name()).build()))
             .collect(Collectors.toList());
     MethodInvocationExpr invokeMethodExpr =
         MethodInvocationExpr.builder()
@@ -258,18 +259,18 @@ public class ServiceClientCommentSampleCodeComposer {
             .setArguments(argExprs)
             .setReturnType(varType)
             .build();
-    return AssignmentExpr.builder().setVariableExpr(varExpr).setValueExpr(invokeMethodExpr).build();
+    return AssignmentExpr.builder().setVariableExpr(varExpr.toBuilder().setIsDecl(true).build()).setValueExpr(invokeMethodExpr).build();
   }
 
   private static Expr assignArgumentWithDefaultValue(MethodArgument argument) {
     VariableExpr argVarExpr = VariableExpr.withVariable(
         Variable.builder()
             .setName(argument.name())
-            .setType(argument.type())
+            .setType(argument.field().type())
         .build()
     );
     return AssignmentExpr.builder()
-        .setVariableExpr(argVarExpr)
+        .setVariableExpr(argVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(DefaultValueComposer.createDefaultValue(argument.field()))
         .build();
   }
