@@ -46,10 +46,10 @@ public class JavaDocCommentTest {
             + "&amp;\"\\f\n"
             + "`'{@literal @}&#42;/\n"
             + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
-            + "<pre><code>\n"
-            + "ApiFuture&lt;Shelf&gt; future ="
+            + "<pre>{@code\n"
+            + "ApiFuture<Shelf> future ="
             + " libraryClient.createShelfCallable().futureCall(request);\n"
-            + "</code></pre>\n"
+            + "}</pre>\n"
             + "@throws Exception This is an exception.";
     assertEquals(javaDocComment.comment(), expected);
   }
@@ -62,10 +62,33 @@ public class JavaDocCommentTest {
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
     String expected =
         "sample codes:\n"
-            + "<pre><code>\n"
+            + "<pre>{@code\n"
             + "resource = project/{project}/shelfId/{shelfId}\n"
-            + "</code></pre>";
+            + "}</pre>";
     assertEquals(javaDocComment.comment(), expected);
+  }
+
+  @Test
+  public void createJavaDocComment_sampleCodePreserveIndentAndLineBreaks() {
+    String comment = "sample codes:";
+    String formattedSampleCode =
+        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
+            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n";
+    String badFormattingSampleCode =
+        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
+            + "    SubscriptionAdminSettings\n"
+            + "        .newBuilder()\n"
+            + "    .setEndpoint(myEndpoint)\n"
+            + "        .build();\n";
+    JavaDocComment formattedJavaDoc =
+        JavaDocComment.builder().addComment(comment).addSampleCode(formattedSampleCode).build();
+    JavaDocComment badFormatJavaDoc =
+        JavaDocComment.builder().addComment(comment).addSampleCode(badFormattingSampleCode).build();
+    String expectedFormatted = comment.concat("\n<pre>{@code\n" + formattedSampleCode + "}</pre>");
+    String expectedBadFormat =
+        comment.concat("\n<pre>{@code\n" + badFormattingSampleCode + "}</pre>");
+    assertEquals(formattedJavaDoc.comment(), expectedFormatted);
+    assertEquals(badFormatJavaDoc.comment(), expectedBadFormat);
   }
 
   @Test
@@ -197,5 +220,9 @@ public class JavaDocCommentTest {
             + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "@deprecated Use the {@link ArchivedBookName} class instead.";
     assertEquals(javaDocComment.comment(), expected);
+  }
+
+  private static String createLines(int numLines) {
+    return new String(new char[numLines]).replace("\0", "%s");
   }
 }
