@@ -68,7 +68,7 @@ import org.threeten.bp.Duration;
  *
  * <p>For example, to set the total timeout of createTopic to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * PublisherStubSettings.Builder publisherSettingsBuilder = PublisherStubSettings.newBuilder();
  * publisherSettingsBuilder
  *     .createTopicSettings()
@@ -80,7 +80,7 @@ import org.threeten.bp.Duration;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

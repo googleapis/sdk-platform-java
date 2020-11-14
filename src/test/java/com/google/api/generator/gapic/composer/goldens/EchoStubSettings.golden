@@ -68,7 +68,7 @@ import org.threeten.bp.Duration;
  *
  * <p>For example, to set the total timeout of echo to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();
  * echoSettingsBuilder
  *     .echoSettings()
@@ -80,7 +80,7 @@ import org.threeten.bp.Duration;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * EchoStubSettings echoSettings = echoSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

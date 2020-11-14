@@ -75,7 +75,7 @@ import org.threeten.bp.Duration;
  *
  * <p>For example, to set the total timeout of getLogMetric to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * MetricsServiceV2StubSettings.Builder metricsServiceV2SettingsBuilder =
  *     MetricsServiceV2StubSettings.newBuilder();
  * metricsServiceV2SettingsBuilder
@@ -88,7 +88,7 @@ import org.threeten.bp.Duration;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * MetricsServiceV2StubSettings metricsServiceV2Settings = metricsServiceV2SettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

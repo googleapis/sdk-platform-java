@@ -56,7 +56,7 @@ import javax.annotation.Generated;
  *
  * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * AssetServiceSettings.Builder assetServiceSettingsBuilder = AssetServiceSettings.newBuilder();
  * assetServiceSettingsBuilder
  *     .batchGetAssetsHistorySettings()
@@ -68,7 +68,7 @@ import javax.annotation.Generated;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {

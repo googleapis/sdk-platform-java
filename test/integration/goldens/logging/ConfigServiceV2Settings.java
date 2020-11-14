@@ -55,7 +55,7 @@ import javax.annotation.Generated;
  *
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * ConfigServiceV2Settings.Builder configServiceV2SettingsBuilder =
  *     ConfigServiceV2Settings.newBuilder();
  * configServiceV2SettingsBuilder
@@ -68,7 +68,7 @@ import javax.annotation.Generated;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * ConfigServiceV2Settings configServiceV2Settings = configServiceV2SettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Settings> {

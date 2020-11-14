@@ -91,7 +91,7 @@ import org.threeten.bp.Duration;
  *
  * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * AssetServiceStubSettings.Builder assetServiceSettingsBuilder =
  *     AssetServiceStubSettings.newBuilder();
  * assetServiceSettingsBuilder
@@ -104,7 +104,7 @@ import org.threeten.bp.Duration;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * AssetServiceStubSettings assetServiceSettings = assetServiceSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

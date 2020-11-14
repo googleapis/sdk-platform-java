@@ -53,7 +53,7 @@ import javax.annotation.Generated;
  *
  * <p>For example, to set the total timeout of getLogMetric to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * MetricsServiceV2Settings.Builder metricsServiceV2SettingsBuilder =
  *     MetricsServiceV2Settings.newBuilder();
  * metricsServiceV2SettingsBuilder
@@ -66,7 +66,7 @@ import javax.annotation.Generated;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * MetricsServiceV2Settings metricsServiceV2Settings = metricsServiceV2SettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class MetricsServiceV2Settings extends ClientSettings<MetricsServiceV2Settings> {

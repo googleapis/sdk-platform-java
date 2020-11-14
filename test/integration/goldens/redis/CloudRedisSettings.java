@@ -55,7 +55,7 @@ import javax.annotation.Generated;
  *
  * <p>For example, to set the total timeout of getInstance to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * CloudRedisSettings.Builder cloudRedisSettingsBuilder = CloudRedisSettings.newBuilder();
  * cloudRedisSettingsBuilder
  *     .getInstanceSettings()
@@ -67,7 +67,7 @@ import javax.annotation.Generated;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {

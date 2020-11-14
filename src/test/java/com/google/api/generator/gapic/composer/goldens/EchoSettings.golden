@@ -40,7 +40,7 @@ import javax.annotation.Generated;
  *
  * <p>For example, to set the total timeout of echo to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * EchoSettings.Builder echoSettingsBuilder = EchoSettings.newBuilder();
  * echoSettingsBuilder
  *     .echoSettings()
@@ -52,7 +52,7 @@ import javax.annotation.Generated;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * EchoSettings echoSettings = echoSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class EchoSettings extends ClientSettings<EchoSettings> {

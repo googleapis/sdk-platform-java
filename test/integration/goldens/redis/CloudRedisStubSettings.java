@@ -85,7 +85,7 @@ import org.threeten.bp.Duration;
  *
  * <p>For example, to set the total timeout of getInstance to 30 seconds:
  *
- * <pre><code>
+ * <pre>{@code
  * CloudRedisStubSettings.Builder cloudRedisSettingsBuilder = CloudRedisStubSettings.newBuilder();
  * cloudRedisSettingsBuilder
  *     .getInstanceSettings()
@@ -97,7 +97,7 @@ import org.threeten.bp.Duration;
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
- * </code></pre>
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")
