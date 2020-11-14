@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientCommentSampleCodeComposer;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
@@ -158,7 +157,7 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments) {
+      Method method, List<MethodArgument> methodArguments, Map<String, TypeNode> types) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -168,6 +167,9 @@ class ServiceClientCommentComposer {
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
     // TODO(summerji): Add sample code here.
+    methodJavadocBuilder.addSampleCode(
+        ServiceClientCommentSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+            method, methodArguments, types));
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -188,8 +190,9 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(methodJavadocBuilder.build()));
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList());
+  static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, Map<String, TypeNode> types) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), types);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {

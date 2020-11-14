@@ -549,7 +549,8 @@ public class ServiceClientClassComposer implements ClassComposer {
       javaMethods.add(
           MethodDefinition.builder()
               .setHeaderCommentStatements(
-                  ServiceClientCommentComposer.createRpcMethodHeaderComment(method, signature))
+                  ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                      method, signature, types))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setReturnType(methodOutputType)
@@ -608,7 +609,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
+            ServiceClientCommentComposer.createRpcMethodHeaderComment(method, types))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setReturnType(methodOutputType)
