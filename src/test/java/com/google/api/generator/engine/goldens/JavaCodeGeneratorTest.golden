@@ -26,9 +26,9 @@ import java.util.Stack;
 /**
  * Service Description: This is a test comment.
  *
- * <pre><code>
+ * <pre>{@code
  * LibraryServiceStub libServiceStub = new LibraryServiceStub()
- * </code></pre>
+ * }</pre>
  *
  * <ol>
  *   <li>A "flattened" method.
