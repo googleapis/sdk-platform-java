@@ -104,7 +104,7 @@ public class ResourceNameHelperClassComposer {
     Preconditions.checkState(
         templateFinalVarExprs.size() > 0 && tokenHierarchies.size() == templateFinalVarExprs.size(),
         String.format(
-            "Cardinality of patterns (%d) and associated variables (%d) do not match for"
+            "Cardinalities of patterns (%d) and associated variables (%d) do not match for"
                 + " resource name %s ",
             templateFinalVarExprs.size(),
             tokenHierarchies.size(),
