@@ -22,7 +22,6 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
-import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
@@ -30,6 +29,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -38,12 +38,34 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import javax.management.ValueExp;
 
 public class ServiceClientCommentSampleCodeComposer {
 
   private static final String SETTINGS_NAME_PATTERN = "%sSettings";
   private static final String CLASS_NAME_PATTERN = "%sClient";
+
+  public static String composeClassHeaderMethodSampleCode(
+      Service service, Map<String, TypeNode> types) {
+    String clientName = getClientClassName(service.name());
+    TypeNode clientType = types.get(clientName);
+    Method sampleMethod =
+        service.methods().stream()
+            .reduce(
+                (m1, m2) -> (m1.stream() == Stream.NONE && !m1.hasLro() && !m1.isPaged()) ? m1 : m2)
+            .get();
+    List<MethodArgument> arguments =
+        !sampleMethod.methodSignatures().isEmpty()
+            ? sampleMethod.methodSignatures().get(0)
+            : Collections.emptyList();
+    if (sampleMethod.stream() != Stream.NONE) {
+      return writeSampleCode(
+          SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
+              clientName, clientType, sampleMethod, arguments));
+    }
+    return writeSampleCode(
+        SampleCodeHelperComposer.composeRpcMethodSampleCode(
+            clientName, clientType, sampleMethod, arguments));
+  }
 
   public static String composeClassHeaderCredentialsSampleCode(
       Service service, Map<String, TypeNode> types) {
@@ -156,15 +178,12 @@ public class ServiceClientCommentSampleCodeComposer {
   }
 
   public static String composeRpcMethodHeaderSampleCode(
-      Method method, List<MethodArgument> arguments, Map<String, TypeNode> types) {
-    if (method.isPaged()) {
-      return "paged;";
-    }
-    if (method.hasLro()) {
-      return "lro;";
-    }
-
-    return writeSampleCode(composeRpcMethodSampleCode("EchoClient", method, arguments, types));
+      Service service, Method method, List<MethodArgument> arguments, Map<String, TypeNode> types) {
+    String clientName = getClientClassName(service.name());
+    TypeNode clientType = types.get(clientName);
+    return writeSampleCode(
+        SampleCodeHelperComposer.composeRpcMethodSampleCode(
+            clientName, clientType, method, arguments));
   }
   // =============================== Helpers ==================================================//
 
@@ -190,88 +209,5 @@ public class ServiceClientCommentSampleCodeComposer {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     statement.accept(visitor);
     return SampleCodeJavaFormatter.format(visitor.write());
-  }
-
-  private static TryCatchStatement composeRpcMethodSampleCode(
-      String clientName,
-      Method method,
-      List<MethodArgument> arguments,
-      Map<String, TypeNode> types) {
-    TypeNode clientType = types.get(clientName);
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientName))
-                .setType(clientType)
-                .build());
-    AssignmentExpr initClientWithCreateMethodExpr =
-        assignClientVarWithCreateMethodExpr(clientType, JavaStyle.toLowerCamelCase(clientName));
-    List<Statement> bodyStatements =
-        arguments.stream()
-            .map(arg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(arg)))
-            .collect(Collectors.toList());
-
-    Expr invokeMethodExpr =
-        method.outputType().equals(TypeNode.VOID)
-            ? MethodInvocationExpr.builder()
-                .setExprReferenceExpr(clientVarExpr)
-                .setMethodName(method.name())
-                .setReturnType(clientType)
-                .build()
-            : assignVarExpr(
-                method.outputType(),
-                "response",
-                clientType,
-                JavaStyle.toLowerCamelCase(clientName),
-                arguments);
-    bodyStatements.add(ExprStatement.withExpr(invokeMethodExpr));
-    TryCatchStatement trySampleCodeExpr =
-        TryCatchStatement.builder()
-            .setTryResourceExpr(initClientWithCreateMethodExpr)
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build();
-    return trySampleCodeExpr;
-  }
-
-  private static AssignmentExpr assignClientVarWithCreateMethodExpr(
-      TypeNode clientType, String clientName) {
-    return (AssignmentExpr)
-        assignVarExpr(clientType, clientName, clientType, "create", Collections.emptyList());
-  }
-
-  private static Expr assignVarExpr(
-      TypeNode varType,
-      String varName,
-      TypeNode classType,
-      String methodName,
-      List<MethodArgument> arguments) {
-    VariableExpr varExpr =
-        VariableExpr.withVariable(Variable.builder().setType(varType).setName(varName).build());
-    List<Expr> argExprs =
-        arguments.stream()
-            .map(a -> VariableExpr.withVariable(Variable.builder().setType(a.type()).setName(a.name()).build()))
-            .collect(Collectors.toList());
-    MethodInvocationExpr invokeMethodExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(classType)
-            .setMethodName(methodName)
-            .setArguments(argExprs)
-            .setReturnType(varType)
-            .build();
-    return AssignmentExpr.builder().setVariableExpr(varExpr.toBuilder().setIsDecl(true).build()).setValueExpr(invokeMethodExpr).build();
-  }
-
-  private static Expr assignArgumentWithDefaultValue(MethodArgument argument) {
-    VariableExpr argVarExpr = VariableExpr.withVariable(
-        Variable.builder()
-            .setName(argument.name())
-            .setType(argument.field().type())
-        .build()
-    );
-    return AssignmentExpr.builder()
-        .setVariableExpr(argVarExpr.toBuilder().setIsDecl(true).build())
-        .setValueExpr(DefaultValueComposer.createDefaultValue(argument.field()))
-        .build();
   }
 }

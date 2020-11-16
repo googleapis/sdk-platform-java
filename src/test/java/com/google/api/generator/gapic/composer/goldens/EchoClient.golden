@@ -35,6 +35,13 @@ import javax.annotation.Generated;
  * This class provides the ability to make remote calls to the backing service through method calls
  * that map to API methods. Sample code to get started:
  *
+ * <pre><code>
+ * try (EchoClient echoClient = EchoClient.create()) {
+ *   String parent = "parent-995424086";
+ *   EchoResponse response = EchoClient.echoClient(parent);
+ * }
+ * </code></pre>
+ *
  * <p>Note: close() needs to be called on the echoClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *
@@ -145,6 +152,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String parent = "parent-995424086";
+   *   EchoResponse response = EchoClient.echoClient(parent);
+   * }
+   * </code></pre>
+   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -160,6 +174,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   Status error = Status.newBuilder().build();
+   *   EchoResponse response = EchoClient.echoClient(error);
+   * }
+   * </code></pre>
+   *
    * @param error
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -171,6 +192,13 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String name = "name3373707";
+   *   EchoResponse response = EchoClient.echoClient(name);
+   * }
+   * </code></pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -185,6 +213,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String content = "content951530617";
+   *   EchoResponse response = EchoClient.echoClient(content);
+   * }
+   * </code></pre>
+   *
    * @param content
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -196,6 +231,13 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String name = "name3373707";
+   *   EchoResponse response = EchoClient.echoClient(name);
+   * }
+   * </code></pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -209,6 +251,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String parent = "parent-995424086";
+   *   EchoResponse response = EchoClient.echoClient(parent);
+   * }
+   * </code></pre>
+   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -220,6 +269,14 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String content = "content951530617";
+   *   Severity severity = Severity.forNumber(0);
+   *   EchoResponse response = EchoClient.echoClient(content, severity);
+   * }
+   * </code></pre>
    *
    * @param content
    * @param severity
@@ -234,6 +291,14 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   String parent = "parent-995424086";
+   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+   *   response = EchoClient.Echo(request);
+   * }
+   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -276,6 +341,15 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
+   *   for (EchoClient EchoClient : EchoClient.PagedExpand(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * </code></pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -300,6 +374,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   Duration ttl = Duration.newBuilder().build();
+   *   Operation response = EchoClient.waitAsync(ttl).get();
+   * }
+   * </code></pre>
+   *
    * @param ttl
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -312,6 +393,13 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   Timestamp end_time = Timestamp.newBuilder().build();
+   *   Operation response = EchoClient.waitAsync(end_time).get();
+   * }
+   * </code></pre>
+   *
    * @param end_time
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -323,6 +411,14 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   Operation response = EchoClient.waitAsync(request).get();
+   * }
+   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -346,6 +442,13 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   response = EchoClient.Block(request);
+   * }
+   * </code></pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

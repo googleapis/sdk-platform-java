@@ -470,8 +470,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
-        javaMethods.add(createMethodDefaultMethod(method, types));
+        javaMethods.addAll(createMethodVariants(service, method, messageTypes, types));
+        javaMethods.add(createMethodDefaultMethod(service, method, types));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service.name(), method, types));
@@ -485,7 +485,10 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service,
+      Method method,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -550,7 +553,7 @@ public class ServiceClientClassComposer implements ClassComposer {
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   ServiceClientCommentComposer.createRpcMethodHeaderComment(
-                      method, signature, types))
+                      service, method, signature, types))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setReturnType(methodOutputType)
@@ -565,7 +568,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createMethodDefaultMethod(
-      Method method, Map<String, TypeNode> types) {
+      Service service, Method method, Map<String, TypeNode> types) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -609,7 +612,7 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcMethodHeaderComment(method, types))
+            ServiceClientCommentComposer.createRpcMethodHeaderComment(service, method, types))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setReturnType(methodOutputType)

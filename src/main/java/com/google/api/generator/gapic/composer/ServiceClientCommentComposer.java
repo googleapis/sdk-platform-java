@@ -118,6 +118,8 @@ class ServiceClientCommentComposer {
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
     // TODO(summerji): Add sample code here.
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientCommentSampleCodeComposer.composeClassHeaderMethodSampleCode(service, types));
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
@@ -157,7 +159,10 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments, Map<String, TypeNode> types) {
+      Service service,
+      Method method,
+      List<MethodArgument> methodArguments,
+      Map<String, TypeNode> types) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -169,7 +174,7 @@ class ServiceClientCommentComposer {
     // TODO(summerji): Add sample code here.
     methodJavadocBuilder.addSampleCode(
         ServiceClientCommentSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, methodArguments, types));
+            service, method, methodArguments, types));
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -191,8 +196,8 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, Map<String, TypeNode> types) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList(), types);
+      Service service, Method method, Map<String, TypeNode> types) {
+    return createRpcMethodHeaderComment(service, method, Collections.emptyList(), types);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {
