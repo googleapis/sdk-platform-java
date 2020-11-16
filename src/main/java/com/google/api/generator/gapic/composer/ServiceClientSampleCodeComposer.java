@@ -94,6 +94,54 @@ public class ServiceClientSampleCodeComposer {
     return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
   }
 
+  public static String composeClassHeaderEndpointSampleCode(
+      Service service, Map<String, TypeNode> types) {
+    String settingsVarName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
+    TypeNode settingsVarType = types.get(getSettingsName(service.name()));
+    VariableExpr settingsVarExpr = createVariableExpr(settingsVarName, settingsVarType);
+    MethodInvocationExpr newBuilderMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(settingsVarType)
+            .setMethodName("newBuilder")
+            .build();
+    MethodInvocationExpr credentialsMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderMethodExpr)
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("myEndpoint")))
+            .setMethodName("setEndpoint")
+            .build();
+    MethodInvocationExpr buildMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credentialsMethodExpr)
+            .setReturnType(settingsVarType)
+            .setMethodName("build")
+            .build();
+
+    Expr initSettingsVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(buildMethodExpr)
+            .build();
+
+    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
+    TypeNode clientType = types.get(getClientClassName(service.name()));
+    VariableExpr clientVarExpr = createVariableExpr(clientName, clientType);
+    MethodInvocationExpr createMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(clientType)
+            .setArguments(settingsVarExpr)
+            .setMethodName("create")
+            .setReturnType(clientType)
+            .build();
+    Expr initClientVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(createMethodExpr)
+            .build();
+
+    return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
+  }
+
   // ======================================== Helpers ==========================================//
 
   private static String getClientClassName(String serviceName) {
