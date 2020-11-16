@@ -18,7 +18,6 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.composer.samplecode.SettingsCommentSampleCodeComposer;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -135,7 +134,7 @@ class SettingsCommentComposer {
 
     if (methodOpt.isPresent()) {
       String sampleCode =
-          SettingsCommentSampleCodeComposer.composeSettingClassHeaderSampleCode(
+          SettingsSampleCodeComposer.composeSettingClassHeaderSampleCode(
               methodOpt.get(), classType);
       javaDocCommentBuilder =
           javaDocCommentBuilder
