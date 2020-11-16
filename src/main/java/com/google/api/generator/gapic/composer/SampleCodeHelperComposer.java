@@ -1,15 +1,19 @@
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Method;
@@ -22,8 +26,9 @@ import java.util.stream.Collectors;
 
 public final class SampleCodeHelperComposer {
   private static String ASYNC_NAME_PATTERN = "%sAsync";
+  private static String UNARY_CALLABLE_NAME_PATTERN = "%sCallable";
 
-  // ===========================================Helper==========================================//
+  // ===========================================RPC==========================================//
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       String clientName, TypeNode clientType, Method method, List<MethodArgument> arguments) {
@@ -145,36 +150,7 @@ public final class SampleCodeHelperComposer {
         arguments.stream()
             .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
             .collect(Collectors.toList());
-    TypeNode inputType = method.inputType();
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(Variable.builder().setName("request").setType(inputType).build());
-    MethodInvocationExpr newBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(inputType)
-            .setMethodName("newBuilder")
-            .build();
-    for (MethodArgument arg : arguments) {
-      newBuilderExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(newBuilderExpr)
-              .setMethodName(String.format("set%s", JavaStyle.toUpperCamelCase(arg.name())))
-              .setArguments(
-                  VariableExpr.withVariable(
-                      Variable.builder().setName(arg.name()).setType(arg.type()).build()))
-              .build();
-    }
-    MethodInvocationExpr requestBuildExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(newBuilderExpr)
-            .setMethodName("build")
-            .setReturnType(inputType)
-            .build();
-    Expr assignRequestExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(requestBuildExpr)
-            .build();
-    bodyStatements.add(ExprStatement.withExpr(assignRequestExpr));
+    bodyStatements.add(ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
     VariableExpr responseVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.outputType()).setName("response").build());
@@ -214,7 +190,7 @@ public final class SampleCodeHelperComposer {
                   MethodInvocationExpr.builder()
                       .setStaticReferenceType(clientType)
                       .setMethodName(method.name())
-                      .setArguments(requestVarExpr)
+                      .setArguments(createVariableExpr("request", method.inputType()))
                       .setReturnType(method.outputType())
                       .build())
               .build();
@@ -227,16 +203,84 @@ public final class SampleCodeHelperComposer {
         .build();
   }
 
+  // ========================================= PRC Callable ==================================//
   public static TryCatchStatement composeRpcCallableMethodSampleCode(
-      String clientName, TypeNode clientType, Method method, List<MethodArgument> arguments) {
-    // TODO: Not Implemented yet.
+      String clientName, TypeNode clientType, Method method) {
+    return composeUnaryRpcCallableMethodSampleCode(clientName, clientType, method);
+  }
+  public static TryCatchStatement composeUnaryRpcCallableMethodSampleCode(
+      String clientName, TypeNode clientType, Method method) {
+    List<MethodArgument> arguments = method.methodSignatures().isEmpty() ? Collections.emptyList() : method.methodSignatures().get(0);
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    bodyStatements.add(ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(),arguments)));
+    bodyStatements.add(ExprStatement.withExpr(createFutureResponseWithValueExpr(method, clientType)));
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVarWithCreateMethodExpr(clientType, clientName))
-        .setTryBody(Arrays.asList(createLineCommentStatement("stream method sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
   // ===========================================Helper==========================================//
+
+  private static Expr createFutureResponseWithValueExpr(Method method, TypeNode clientType) {
+    VariableExpr futureResponseVarExpr = createFutureResponseVarExpr(method);
+    MethodInvocationExpr futureCallMethodExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(MethodInvocationExpr.builder()
+            .setMethodName(getUnaryCallableMethodName(method.name()))
+            .setStaticReferenceType(clientType)
+            .build())
+        .setMethodName("futureCall")
+        .setArguments(createVariableExpr("request", method.inputType()))
+        .setReturnType(futureResponseVarExpr.variable().type())
+        .build();
+    return AssignmentExpr.builder()
+        .setVariableExpr(futureResponseVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(futureCallMethodExpr)
+        .build();
+  }
+  private static VariableExpr createFutureResponseVarExpr(Method method) {
+    return VariableExpr.withVariable(
+            Variable.builder()
+                .setName("futureResponse")
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder()
+                            .setClazz(ApiFuture.class)
+                            .setGenerics(Arrays.asList(method.outputType().reference()))
+                            .build()))
+                .build());
+  }
+  private static Expr createRequestBuilderExpr(TypeNode requestType, List<MethodArgument> arguments) {
+    MethodInvocationExpr newBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(requestType)
+            .setMethodName("newBuilder")
+            .build();
+    for (MethodArgument arg : arguments) {
+      newBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(newBuilderExpr)
+              .setMethodName(String.format("set%s", JavaStyle.toUpperCamelCase(arg.name())))
+              .setArguments(
+                  VariableExpr.withVariable(
+                      Variable.builder().setName(arg.name()).setType(arg.type()).build()))
+              .build();
+    }
+    MethodInvocationExpr requestBuildExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(requestType)
+            .build();
+    return AssignmentExpr.builder()
+    .setVariableExpr(createVariableDeclExpr("request", requestType))
+    .setValueExpr(requestBuildExpr)
+    .build();
+  }
+
   private static Expr assignVarExpr(
       TypeNode varType,
       String varName,
@@ -326,5 +370,9 @@ public final class SampleCodeHelperComposer {
 
   private static String getLroMethodName(String methodName) {
     return JavaStyle.toLowerCamelCase(String.format(ASYNC_NAME_PATTERN, methodName));
+  }
+
+  private static String getUnaryCallableMethodName(String methodName) {
+    return JavaStyle.toLowerCamelCase(String.format(UNARY_CALLABLE_NAME_PATTERN, methodName));
   }
 }

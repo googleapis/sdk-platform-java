@@ -60,7 +60,7 @@ public class ServiceClientCommentSampleCodeComposer {
     if (sampleMethod.stream() != Stream.NONE) {
       return writeSampleCode(
           SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
-              clientName, clientType, sampleMethod, arguments));
+              clientName, clientType, sampleMethod));
     }
     return writeSampleCode(
         SampleCodeHelperComposer.composeRpcMethodSampleCode(
@@ -184,6 +184,29 @@ public class ServiceClientCommentSampleCodeComposer {
     return writeSampleCode(
         SampleCodeHelperComposer.composeRpcMethodSampleCode(
             clientName, clientType, method, arguments));
+  }
+
+  public static String composeRpcCallableMethodHeaderSampleCode(
+      String serviceName, Method method, Map<String, TypeNode> types, String callableMethodName) {
+    String clientName = getClientClassName(serviceName);
+    TypeNode clientType = types.get(clientName);
+    if (method.stream() != Stream.NONE) {
+      switch (method.stream()) {
+        case CLIENT:
+          return "Stream.Client;";
+        case BIDI:
+          return "Stream.BIDI;";
+        case SERVER:
+          return "Stream.SERVER;";
+      }
+    }
+    if (method.hasLro()) {
+      return "LRO callable;";
+    }
+    if (method.isPaged()) {
+      return "paged callable;";
+    }
+    return writeSampleCode(SampleCodeHelperComposer.composeUnaryRpcCallableMethodSampleCode(clientName, clientType, method));
   }
   // =============================== Helpers ==================================================//
 
