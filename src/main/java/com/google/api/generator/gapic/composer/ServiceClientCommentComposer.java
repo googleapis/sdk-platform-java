@@ -198,7 +198,8 @@ class ServiceClientCommentComposer {
 
   static List<CommentStatement> createRpcMethodHeaderComment(
       Service service, Method method, Map<String, TypeNode> types, String callableMethodName) {
-    return createRpcMethodHeaderComment(service, method, Collections.emptyList(), types, callableMethodName);
+    return createRpcMethodHeaderComment(
+        service, method, Collections.emptyList(), types, callableMethodName);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {
@@ -213,7 +214,8 @@ class ServiceClientCommentComposer {
     return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
   }
 
-  static List<CommentStatement> createRpcCallableMethodHeaderComment(String serviceName, Method method, Map<String, TypeNode> types, String callableMethodName) {
+  static List<CommentStatement> createRpcCallableMethodHeaderComment(
+      String serviceName, Method method, Map<String, TypeNode> types, String callableMethodName) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {

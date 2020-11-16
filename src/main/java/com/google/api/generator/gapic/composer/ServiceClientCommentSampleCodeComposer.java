@@ -193,11 +193,15 @@ public class ServiceClientCommentSampleCodeComposer {
     if (method.stream() != Stream.NONE) {
       switch (method.stream()) {
         case CLIENT:
-          return "Stream.Client;";
+          return writeSampleCode(
+              SampleCodeHelperComposer.composeStreamClientRpcCallableMethodSampleCode(
+                  clientName, clientType, method));
         case BIDI:
           return "Stream.BIDI;";
         case SERVER:
-          return writeSampleCode(SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(clientName, clientType, method));
+          return writeSampleCode(
+              SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(
+                  clientName, clientType, method));
       }
     }
     if (method.hasLro()) {
@@ -206,7 +210,9 @@ public class ServiceClientCommentSampleCodeComposer {
     if (method.isPaged()) {
       return "paged callable;";
     }
-    return writeSampleCode(SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(clientName, clientType, method));
+    return writeSampleCode(
+        SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
+            clientName, clientType, method));
   }
   // =============================== Helpers ==================================================//
 

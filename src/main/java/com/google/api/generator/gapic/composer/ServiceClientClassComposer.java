@@ -612,7 +612,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcMethodHeaderComment(service, method, Collections.emptyList(), types, callableMethodName))
+            ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                service, method, Collections.emptyList(), types, callableMethodName))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setReturnType(methodOutputType)
@@ -685,7 +686,8 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(serviceName, method, types, methodName))
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(
+                serviceName, method, types, methodName))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)
