@@ -99,8 +99,7 @@ public class ResourceNameHelperClassComposer {
 
     Preconditions.checkState(
         patternTokenVarExprs.size() > 0,
-        String.format(
-            "No patterns fround for resource naem %s", resourceName.resourceTypeString()));
+        String.format("No patterns found for resource name %s", resourceName.resourceTypeString()));
     Preconditions.checkState(
         templateFinalVarExprs.size() > 0 && tokenHierarchies.size() == templateFinalVarExprs.size(),
         String.format(
