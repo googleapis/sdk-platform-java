@@ -104,6 +104,12 @@ import javax.annotation.Generated;
  * }</pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * CloudRedisSettings cloudRedisSettings =
+ *     CloudRedisSettings.newBuilder().setEndpoint("myEndpoint").build();
+ * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")
