@@ -197,7 +197,7 @@ public class ServiceClientCommentSampleCodeComposer {
         case BIDI:
           return "Stream.BIDI;";
         case SERVER:
-          return "Stream.SERVER;";
+          return writeSampleCode(SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(clientName, clientType, method));
       }
     }
     if (method.hasLro()) {
@@ -206,7 +206,7 @@ public class ServiceClientCommentSampleCodeComposer {
     if (method.isPaged()) {
       return "paged callable;";
     }
-    return writeSampleCode(SampleCodeHelperComposer.composeUnaryRpcCallableMethodSampleCode(clientName, clientType, method));
+    return writeSampleCode(SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(clientName, clientType, method));
   }
   // =============================== Helpers ==================================================//
 

@@ -308,13 +308,38 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   String parent = "parent-995424086";
+   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture&lt;EchoResponse&gt; futureResponse = EchoClient.echoCallable().futureCall(request);
+   * }
+   * </code></pre>
+   */
   public final UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return stub.echoCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   String content = "content951530617";
+   *   Status error = Status.newBuilder().build();
+   *   ExpandRequest request =
+   *       ExpandRequest.newBuilder().setContent(content).setError(error).build();
+   *   ServerStream&lt;EchoResponse&gt; stream = EchoClient.expandCallable().call(request);
+   *   for (EchoResponse response : stream) {
+   *     // Do something when receive a response.
+   *   }
+   * }
+   * </code></pre>
+   */
   public final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
     return stub.expandCallable();
   }
@@ -458,7 +483,16 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   ApiFuture&lt;BlockResponse&gt; futureResponse = EchoClient.blockCallable().futureCall(request);
+   * }
+   * </code></pre>
+   */
   public final UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return stub.blockCallable();
   }
