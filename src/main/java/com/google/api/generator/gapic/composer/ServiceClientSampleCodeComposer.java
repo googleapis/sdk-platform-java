@@ -28,6 +28,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,10 +37,12 @@ public class ServiceClientSampleCodeComposer {
   // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
-      String clientName, TypeNode clientType, String settingsName, TypeNode settingsType) {
+      TypeNode clientType, TypeNode settingsType) {
     // Initialize clientSettings with builder() method.
     // e.g. EchoSettings echoSettings =
     // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
+    String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
+    String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
     VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
