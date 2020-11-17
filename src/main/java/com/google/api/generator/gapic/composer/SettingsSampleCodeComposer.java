@@ -36,12 +36,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class SettingsSampleCodeComposer {
+  // TODO(summerji): Add unit tests
 
   private static final String BUILDER_NAME_PATTERN = "%sBuilder";
   private static final String STUB = "Stub";
   private static final String EMPTY_STRING = "";
 
   public static String composeSettingClassHeaderSampleCode(Method method, TypeNode classType) {
+    // Initialize services settingsBuilder with newBuilder()
+    // e.g. FoobarSettings.Builder foobarSettingsBuilder = FoobarSettings.newBuilder();
     String className = classType.reference().name();
     TypeNode builderType =
         TypeNode.withReference(
@@ -55,29 +58,28 @@ public final class SettingsSampleCodeComposer {
             .setName(getClassSettingsBuilderName(className))
             .setType(builderType)
             .build();
-
     VariableExpr localSettingsVarExpr = VariableExpr.withVariable(builderVar);
-
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(classType)
             .setMethodName("newBuilder")
             .setReturnType(builderType)
             .build();
-
     Expr initLocalSettingsExpr =
         AssignmentExpr.builder()
             .setVariableExpr(localSettingsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(settingsBuilderExpr)
             .build();
 
+    // Builder with set value method
+    // e.g
+    // foobarSettingBuilder.fooSetting().setRetrySettings(echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());
     MethodInvocationExpr retrySettingsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(localSettingsVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name())))
             .setReturnType(method.outputType())
             .build();
-
     MethodInvocationExpr timeoutArExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -87,7 +89,6 @@ public final class SettingsSampleCodeComposer {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("30").build()))
             .build();
-
     MethodInvocationExpr timeoutBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
@@ -102,13 +103,11 @@ public final class SettingsSampleCodeComposer {
             .setMethodName("setTotalTimeout")
             .setArguments(Arrays.asList(timeoutArExpr))
             .build();
-
     MethodInvocationExpr retrySettingsArgExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(timeoutBuilderMethodExpr)
             .setMethodName("build")
             .build();
-
     MethodInvocationExpr settingBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(retrySettingsMethodExpr)
@@ -116,13 +115,14 @@ public final class SettingsSampleCodeComposer {
             .setArguments(Arrays.asList(retrySettingsArgExpr))
             .build();
 
+    // Initialize clientSetting with builder() method.
+    // e.g: Foobar<Stub>Settings foobarSettings = foobarSettingsBuilder.build();
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(classType)
                 .setName(getServiceSettingsName(className))
                 .build());
-
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
@@ -152,6 +152,7 @@ public final class SettingsSampleCodeComposer {
         .replace(STUB, EMPTY_STRING);
   }
 
+  // TODO(summerji): Refactor to use writeSampleCode method after PR#499 merged.
   private static String writeStatements(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
