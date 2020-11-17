@@ -125,6 +125,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent
    * @param display_name
    * @param email
@@ -143,6 +149,12 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param parent
    * @param display_name
@@ -178,6 +190,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -195,6 +213,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -208,6 +232,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -219,6 +249,12 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -237,6 +273,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -254,6 +296,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -269,6 +317,12 @@ public class IdentityClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -280,6 +334,12 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -297,6 +357,12 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

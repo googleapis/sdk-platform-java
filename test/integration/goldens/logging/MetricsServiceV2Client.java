@@ -150,6 +150,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -168,6 +174,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -182,6 +194,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Lists logs-based metrics.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -218,6 +236,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -236,6 +260,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -251,6 +281,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Gets a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -275,6 +311,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the project in which to create the metric:
    *     <p>"projects/[PROJECT_ID]"
    *     <p>The new metric must be provided in the request.
@@ -297,6 +339,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the project in which to create the metric:
    *     <p>"projects/[PROJECT_ID]"
    *     <p>The new metric must be provided in the request.
@@ -315,6 +363,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Creates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -339,6 +393,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the metric to update:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    *     <p>The updated metric must be provided in the request and it's `name` field must be the
@@ -362,6 +422,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the metric to update:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    *     <p>The updated metric must be provided in the request and it's `name` field must be the
@@ -381,6 +447,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Creates or updates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -405,6 +477,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -423,6 +501,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param metric_name Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -438,6 +522,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Deletes a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

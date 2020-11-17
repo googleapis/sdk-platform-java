@@ -162,7 +162,7 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments) {
+      Method method, List<MethodArgument> methodArguments, TypeNode clientType) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -171,7 +171,9 @@ class ServiceClientCommentComposer {
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here.
+    methodJavadocBuilder.addSampleCode(
+        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+            method, methodArguments, clientType));
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -192,8 +194,8 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(methodJavadocBuilder.build()));
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList());
+  static List<CommentStatement> createRpcMethodHeaderComment(Method method, TypeNode clientType) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), clientType);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {
