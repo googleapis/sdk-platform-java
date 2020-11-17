@@ -197,7 +197,8 @@ public class ServiceClientCommentSampleCodeComposer {
               SampleCodeHelperComposer.composeStreamClientRpcCallableMethodSampleCode(
                   clientName, clientType, method));
         case BIDI:
-          return "Stream.BIDI;";
+          return writeSampleCode(SampleCodeHelperComposer.composeStreamBiDiRpcCallableMethodSampleCode(
+              clientName, clientType, method));
         case SERVER:
           return writeSampleCode(
               SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(

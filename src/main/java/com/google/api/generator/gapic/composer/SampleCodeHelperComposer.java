@@ -2,6 +2,7 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
+import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
@@ -221,6 +222,54 @@ public final class SampleCodeHelperComposer {
     return composeUnaryRpcCallableMethodSampleCode(clientName, clientType, method);
   }
 
+  public static TryCatchStatement composeStreamBiDiRpcCallableMethodSampleCode(
+      String clientName, TypeNode clientType, Method method) {
+    VariableExpr bidiStreamVarExpr = createStreamBiDiVarExpr(method);
+    MethodInvocationExpr callMethodExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(MethodInvocationExpr.builder()
+        .setStaticReferenceType(clientType)
+        .setMethodName(getCallableMethodName(method.name()))
+        .build())
+        .setMethodName("call")
+        .setReturnType(bidiStreamVarExpr.variable().type())
+        .build();
+    AssignmentExpr assignBiDiStreamExpr = AssignmentExpr.builder()
+        .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(callMethodExpr)
+        .build();
+
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+
+    MethodInvocationExpr sendMethodExpr = MethodInvocationExpr.builder()
+        .setExprReferenceExpr(bidiStreamVarExpr)
+        .setMethodName("send")
+        .setArguments(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
+        .build();
+    ForStatement loopResponse = ForStatement.builder()
+        .setLocalVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+        .setCollectionExpr(bidiStreamVarExpr)
+        .setBody(Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
+        .build();
+
+    List<Statement> bodyStatements = new ArrayList<>();
+    bodyStatements.add(ExprStatement.withExpr(assignBiDiStreamExpr));
+    bodyStatements.add(EmptyLineStatement.create());
+    bodyStatements.addAll(arguments.stream()
+        .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
+        .collect(Collectors.toList()));
+    bodyStatements.add(ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    bodyStatements.add(ExprStatement.withExpr(sendMethodExpr));
+    bodyStatements.add(loopResponse);
+      return TryCatchStatement.builder()
+          .setTryResourceExpr(assignClientVarWithCreateMethodExpr(clientType, clientName))
+          .setTryBody(bodyStatements)
+          .setIsSampleCode(true)
+          .build();
+  }
+
   public static TryCatchStatement composeStreamClientRpcCallableMethodSampleCode(
       String clientName, TypeNode clientType, Method method) {
     List<MethodArgument> arguments =
@@ -359,6 +408,20 @@ public final class SampleCodeHelperComposer {
         .setVariableExpr(streamObserverRequestExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(streamingCallMethodExpr)
         .build();
+  }
+
+  private static VariableExpr createStreamBiDiVarExpr(Method method) {
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setName("bidiStream")
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(BidiStream.class)
+                        .setGenerics(
+                            Arrays.asList(method.inputType().reference(), method.outputType().reference()))
+                        .build()))
+            .build());
   }
 
   private static VariableExpr createStreamObserverVarExpr(Method method, boolean isResponse) {

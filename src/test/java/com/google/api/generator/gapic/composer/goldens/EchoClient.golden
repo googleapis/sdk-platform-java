@@ -381,13 +381,42 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   BidiStream&lt;EchoRequest, EchoResponse&gt; bidiStream = EchoClient.chatCallable().call();
+   *
+   *   EchoRequest request = EchoRequest.newBuilder().build();
+   *   bidiStream.send(request);
+   *   for (EchoResponse response : bidiStream) {
+   *     // Do something when receive a response.
+   *   }
+   * }
+   * </code></pre>
+   */
   public final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
     return stub.chatCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   BidiStream&lt;EchoRequest, EchoResponse&gt; bidiStream = EchoClient.chatAgainCallable().call();
+   *
+   *   String content = "content951530617";
+   *   EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+   *   bidiStream.send(request);
+   *   for (EchoResponse response : bidiStream) {
+   *     // Do something when receive a response.
+   *   }
+   * }
+   * </code></pre>
+   */
   public final BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable() {
     return stub.chatAgainCallable();
   }
