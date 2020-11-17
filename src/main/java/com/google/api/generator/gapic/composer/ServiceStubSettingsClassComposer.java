@@ -190,17 +190,16 @@ public class ServiceStubSettingsClassComposer {
 
   private static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode classType) {
-    // Pick the first pure unary rpc method, if no such method exist, then pick the first in the
+    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
     // list.
     Optional<Method> methodOpt =
         service.methods().isEmpty()
             ? Optional.empty()
             : Optional.of(
                 service.methods().stream()
-                    .reduce(
-                        (m1, m2) ->
-                            (m1.stream() == Stream.NONE && !m1.hasLro() && !m1.isPaged()) ? m1 : m2)
-                    .get());
+                    .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
+                    .findFirst()
+                    .orElse(service.methods().stream().findFirst().get()));
     return SettingsCommentComposer.createClassHeaderComments(
         String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt, classType);
   }
