@@ -16,9 +16,14 @@ package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import java.util.Arrays;
 import java.util.List;
 
 public class SampleCodeWriter {
+
+  public static String writeSampleCode(Statement ... statement) {
+    return writeSampleCode(Arrays.asList(statement));
+  }
 
   public static String writeSampleCode(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();

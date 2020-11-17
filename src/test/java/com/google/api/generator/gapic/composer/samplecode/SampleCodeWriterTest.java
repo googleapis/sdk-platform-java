@@ -37,6 +37,20 @@ import org.junit.Test;
 
 public class SampleCodeWriterTest {
   @Test
+  public void writeSampleCode_singleStatements() {
+    Statement sampleStatement = TryCatchStatement.builder()
+        .setTryResourceExpr(createAssignmentExpr("aBool", "false", TypeNode.BOOLEAN))
+        .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
+        .setIsSampleCode(true)
+        .build();
+    String result = SampleCodeWriter.writeSampleCode(sampleStatement);
+    String expected = "try (boolean aBool = false) {\n"
+        + "  int x = 3;\n"
+        + "}";
+    assertEquals(expected, result);
+  }
+
+  @Test
   public void writeSampleCode_statements() {
     TypeNode settingType = TypeNode.withReference(ConcreteReference.withClazz(ClientSettings.class));
     Variable aVar = Variable.builder().setName("clientSettings").setType(settingType).build();
