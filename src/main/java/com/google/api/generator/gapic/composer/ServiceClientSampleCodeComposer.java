@@ -95,13 +95,13 @@ public class ServiceClientSampleCodeComposer {
   }
 
   public static String composeClassHeaderEndpointSampleCode(
-      Service service, Map<String, TypeNode> types) {
-    String settingsVarName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
-    TypeNode settingsVarType = types.get(getSettingsName(service.name()));
-    VariableExpr settingsVarExpr = createVariableExpr(settingsVarName, settingsVarType);
+      String clientName, TypeNode clientType, String settingsName, TypeNode settingsType) {
+    // Initialize client settings with builder() method.
+    // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+    VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(settingsVarType)
+            .setStaticReferenceType(settingsType)
             .setMethodName("newBuilder")
             .build();
     MethodInvocationExpr credentialsMethodExpr =
@@ -113,7 +113,7 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr buildMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(credentialsMethodExpr)
-            .setReturnType(settingsVarType)
+            .setReturnType(settingsType)
             .setMethodName("build")
             .build();
 
@@ -123,8 +123,8 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(buildMethodExpr)
             .build();
 
-    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
-    TypeNode clientType = types.get(getClientClassName(service.name()));
+    // Initialize client with create() method.
+    // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
     VariableExpr clientVarExpr = createVariableExpr(clientName, clientType);
     MethodInvocationExpr createMethodExpr =
         MethodInvocationExpr.builder()
