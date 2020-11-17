@@ -199,7 +199,7 @@ public class ServiceStubSettingsClassComposer {
                 service.methods().stream()
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
-                    .orElse(service.methods().stream().findFirst().get()));
+                    .orElse(service.methods().get(0)));
     return SettingsCommentComposer.createClassHeaderComments(
         String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt, classType);
   }

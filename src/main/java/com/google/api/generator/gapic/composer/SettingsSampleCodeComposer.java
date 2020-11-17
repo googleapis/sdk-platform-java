@@ -72,8 +72,8 @@ public final class SettingsSampleCodeComposer {
             .build();
 
     // Builder with set value method
-    // e.g
-    // foobarSettingBuilder.fooSetting().setRetrySettings(echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());
+    // e.g foobarSettingBuilder.fooSetting().setRetrySettings(
+    // echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());
     MethodInvocationExpr retrySettingsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(localSettingsVarExpr)
