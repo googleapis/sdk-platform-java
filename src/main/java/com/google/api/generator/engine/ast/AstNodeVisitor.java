@@ -89,6 +89,8 @@ public interface AstNodeVisitor {
 
   public void visit(EmptyLineStatement emptyLineStatement);
 
+  public void visit(BreakStatement breakStatement);
+
   /** =============================== OTHER =============================== */
   public void visit(MethodDefinition methodDefinition);
 
