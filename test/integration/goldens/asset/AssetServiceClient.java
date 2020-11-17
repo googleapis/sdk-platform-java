@@ -168,6 +168,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -221,6 +227,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -250,6 +262,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The name of the project/folder/organization where this feed should be
    *     created in. It can only be an organization number (such as "organizations/123"), a folder
    *     number (such as "folders/123"), a project ID (such as "projects/my-project-id")", or a
@@ -266,6 +284,12 @@ public class AssetServiceClient implements BackgroundResource {
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -290,6 +314,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -307,6 +337,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -322,6 +358,12 @@ public class AssetServiceClient implements BackgroundResource {
    * Gets details about an asset feed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -346,6 +388,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent project/folder/organization whose feeds are to be listed. It
    *     can only be using project/folder/organization number (such as "folders/12345")", or a
    *     project ID (such as "projects/my-project-id").
@@ -361,6 +409,12 @@ public class AssetServiceClient implements BackgroundResource {
    * Lists all asset feeds in a parent project/folder/organization.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -385,6 +439,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param feed Required. The new values of feed details. It must match an existing feed and the
    *     field `name` must be in the format of: projects/project_number/feeds/feed_id or
    *     folders/folder_number/feeds/feed_id or organizations/organization_number/feeds/feed_id.
@@ -400,6 +460,12 @@ public class AssetServiceClient implements BackgroundResource {
    * Updates an asset feed configuration.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -424,6 +490,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -443,6 +515,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -458,6 +536,12 @@ public class AssetServiceClient implements BackgroundResource {
    * Deletes an asset feed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -483,6 +567,12 @@ public class AssetServiceClient implements BackgroundResource {
    * on the desired scope, otherwise the request will be rejected.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the resources within the `scope`. The caller must be granted the
@@ -552,6 +642,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -593,6 +689,12 @@ public class AssetServiceClient implements BackgroundResource {
    * permission on the desired scope, otherwise the request will be rejected.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the IAM policies within the `scope`. The caller must be granted the
@@ -645,6 +747,12 @@ public class AssetServiceClient implements BackgroundResource {
    * permission on the desired scope, otherwise the request will be rejected.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

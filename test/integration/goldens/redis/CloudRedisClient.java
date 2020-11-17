@@ -190,6 +190,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -218,6 +224,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -242,6 +254,12 @@ public class CloudRedisClient implements BackgroundResource {
    * are queried, and the results are aggregated.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -297,6 +315,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -316,6 +340,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -331,6 +361,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Gets the details of a specific Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -365,6 +401,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
@@ -409,6 +451,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @param instance_id Required. The logical name of the Redis instance in the customer project
@@ -451,6 +499,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -513,6 +567,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param update_mask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
    *     [Instance][google.cloud.redis.v1.Instance]:
@@ -536,6 +596,12 @@ public class CloudRedisClient implements BackgroundResource {
    * DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -580,6 +646,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -602,6 +674,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -620,6 +698,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Upgrades Redis instance to the newer Redis version specified in the request.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -662,6 +746,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -686,6 +776,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -739,6 +835,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -762,6 +864,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -809,6 +917,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -833,6 +947,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -856,6 +976,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Cloud Memorystore for Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -894,6 +1020,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -913,6 +1045,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -928,6 +1066,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

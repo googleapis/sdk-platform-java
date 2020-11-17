@@ -28,6 +28,9 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
@@ -142,6 +145,12 @@ public class ServiceClientSampleCodeComposer {
             .build();
 
     return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
+  }
+
+  public static String composeRpcMethodHeaderSampleCode(
+      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+    return SampleCodeWriter.write(
+        SampleCodeHelperComposer.composeRpcMethodSampleCode(method, arguments, clientType));
   }
 
   // ======================================== Helpers ==========================================//
