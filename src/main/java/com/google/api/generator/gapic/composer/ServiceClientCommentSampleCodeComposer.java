@@ -207,7 +207,9 @@ public class ServiceClientCommentSampleCodeComposer {
       }
     }
     if (method.hasLro()) {
-      return "LRO callable;";
+      return writeSampleCode(
+          SampleCodeHelperComposer.composeLroCallableMethodSampleCode(
+              clientName, clientType, method, returnType));
     }
     if (method.isPaged()) {
       return writeSampleCode(

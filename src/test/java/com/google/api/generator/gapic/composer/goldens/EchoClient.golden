@@ -546,13 +546,36 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   OperationFuture&lt;WaitResponse, WaitMetadata&gt; future =
+   *       EchoClient.waitAsync().futureCall(request);
+   *   // Do something.
+   * }
+   * </code></pre>
+   */
   public final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable() {
     return stub.waitOperationCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   ApiFuture&lt;Operation&gt; future = EchoClient.waitCallable().futureCall(request);
+   *   // Do something.
+   * }
+   * </code></pre>
+   */
   public final UnaryCallable<WaitRequest, Operation> waitCallable() {
     return stub.waitCallable();
   }
