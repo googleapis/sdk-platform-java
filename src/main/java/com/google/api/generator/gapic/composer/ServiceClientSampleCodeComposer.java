@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
-  //TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
+  // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
       String clientName, TypeNode clientType, String settingsName, TypeNode settingsType) {
