@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -2242,6 +2243,13 @@ public class JavaWriterVisitorTest {
     EmptyLineStatement statement = EmptyLineStatement.create();
     statement.accept(writerVisitor);
     assertEquals("\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeBreakStatement() {
+    BreakStatement statement = BreakStatement.create();
+    statement.accept(writerVisitor);
+    assertEquals("break;", writerVisitor.write());
   }
 
   @Test
