@@ -30,6 +30,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class ServiceClientCommentComposer {
+  // Name Pattern.
+  private static final String SETTINGS_NAME_PATTERN = "%sSettings";
+  private static final String CLASS_NAME_PATTERN = "%sClient";
+
   // Tokens.
   private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
@@ -106,6 +110,10 @@ class ServiceClientCommentComposer {
 
   static List<CommentStatement> createClassHeaderComments(
       Service service, Map<String, TypeNode> types) {
+    String settingsName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
+    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
+    TypeNode settingsType = types.get(getSettingsName(service.name()));
+    TypeNode clientType = types.get(getClientClassName(service.name()));
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -137,7 +145,8 @@ class ServiceClientCommentComposer {
             String.format("%sSettings", JavaStyle.toUpperCamelCase(service.name()))));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(service, types));
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientName, clientType, settingsName, settingsType));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     // TODO(summerji): Add endpoint customization sample code here.
 
@@ -256,5 +265,13 @@ class ServiceClientCommentComposer {
     }
 
     return commentBuilder;
+  }
+
+  private static String getSettingsName(String serviceName) {
+    return String.format(SETTINGS_NAME_PATTERN, serviceName);
+  }
+
+  private static String getClientClassName(String serviceName) {
+    return String.format(CLASS_NAME_PATTERN, serviceName);
   }
 }
