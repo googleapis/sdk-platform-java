@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -108,6 +109,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   private static final String TRY = "try";
   private static final String VOLATILE = "volatile";
   private static final String WHILE = "while";
+  private static final String BREAK = "break";
 
   // Operators
   private static final String OPERATOR_ADDITION = "+";
@@ -629,6 +631,12 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(EmptyLineStatement emptyLineStatement) {
     newline();
+  }
+
+  @Override
+  public void visit(BreakStatement breakStatement) {
+    buffer.append(BREAK);
+    semicolon();
   }
 
   /** =============================== COMMENT =============================== */
