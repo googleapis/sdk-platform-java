@@ -145,6 +145,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -160,6 +166,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param error
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -171,6 +183,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -185,6 +203,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param content
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -196,6 +220,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -209,6 +239,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -220,6 +256,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param content
    * @param severity
@@ -234,6 +276,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -276,6 +324,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -300,6 +354,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param ttl
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -312,6 +372,12 @@ public class EchoClient implements BackgroundResource {
   /**
    * Sample code:
    *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param end_time
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -323,6 +389,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -346,6 +418,12 @@ public class EchoClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

@@ -155,6 +155,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -179,6 +185,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -199,6 +211,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * delete operation with a timestamp before the operation will be deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -227,6 +245,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
@@ -292,6 +316,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
@@ -356,6 +386,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -384,6 +420,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param resource_names Required. Names of one or more parent resources from which to retrieve
    *     log entries:
@@ -421,6 +463,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -461,6 +509,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -500,6 +554,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -519,6 +579,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -540,6 +606,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -559,6 +631,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -580,6 +658,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <p>Sample code:
    *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -596,6 +680,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
