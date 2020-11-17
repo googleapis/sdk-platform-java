@@ -345,7 +345,37 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   ApiStreamObserver&lt;EchoResponse&gt; responseObserver =
+   *       new ApiStreamObserver&lt;EchoResponse&gt;() {
+   *         {@literal @}Override
+   *         public void onNext(EchoResponse response) {
+   *           // Do something when receive a response.
+   *         }
+   *
+   *         {@literal @}Override
+   *         public void onError(Throwable t) {
+   *           // Add error-handling
+   *         }
+   *
+   *         {@literal @}Override
+   *         public void onCompleted() {
+   *           // Do something when complete.
+   *         }
+   *       };
+   *   ApiStreamObserver&lt;EchoRequest&gt; requestObserver =
+   *       EchoClient.collectCallable().clientStreamingCall(responseObserver);
+   *
+   *   String content = "content951530617";
+   *   EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+   *   requestObserver.onNext(request);
+   * }
+   * </code></pre>
+   */
   public final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     return stub.collectCallable();
   }

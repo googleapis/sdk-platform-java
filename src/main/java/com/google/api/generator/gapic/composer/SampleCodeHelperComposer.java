@@ -3,6 +3,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.ServerStream;
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -12,8 +13,10 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -22,6 +25,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -304,19 +308,33 @@ public final class SampleCodeHelperComposer {
   // ===========================================Helper==========================================//
   private static Expr assignStreamObserverResponseExpr(Method method) {
     VariableExpr streamObserverResponseVarExpr = createStreamObserverVarExpr(method, true);
-    Expr newStreamObserverResponseExpr =
-        NewObjectExpr.builder()
-            .setType(streamObserverResponseVarExpr.variable().type())
-            .setIsGeneric(true)
-            .setArguments(
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(createVariableExpr("test", TypeNode.STRING))
-                    .setMethodName("size")
-                    .build())
-            .build();
+    MethodDefinition onNextMethod = MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setName("onNext")
+        .setArguments(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+        .setBody(Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
+        .setReturnType(TypeNode.VOID)
+        .build();
+    MethodDefinition onErrorMethod = MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setName("onError")
+        .setArguments(createVariableDeclExpr("t", TypeNode.withReference(ConcreteReference.withClazz(Throwable.class))))
+        .setBody(Arrays.asList(createLineCommentStatement("Add error-handling")))
+        .setReturnType(TypeNode.VOID)
+        .build();
+    MethodDefinition onCompletedMethod = MethodDefinition.builder()
+        .setIsOverride(true)
+        .setScope(ScopeNode.PUBLIC)
+        .setName("onCompleted")
+        .setBody(Arrays.asList(createLineCommentStatement("Do something when complete.")))
+        .setReturnType(TypeNode.VOID)
+        .build();
+
     AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder()
         .setType(streamObserverResponseVarExpr.variable().type())
-        .setMethods()
+        .setMethods(onNextMethod, onErrorMethod, onCompletedMethod)
         .build();
     return AssignmentExpr.builder()
         .setVariableExpr(streamObserverResponseVarExpr.toBuilder().setIsDecl(true).build())
