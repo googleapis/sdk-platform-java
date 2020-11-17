@@ -19,7 +19,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import java.util.Arrays;
 import java.util.List;
 
-public class SampleCodeWriter {
+public final class SampleCodeWriter {
 
   public static String writeSampleCode(Statement ... statement) {
     return writeSampleCode(Arrays.asList(statement));
