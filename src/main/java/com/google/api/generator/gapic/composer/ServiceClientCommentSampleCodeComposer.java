@@ -59,7 +59,7 @@ public class ServiceClientCommentSampleCodeComposer {
             : Collections.emptyList();
     if (sampleMethod.stream() != Stream.NONE) {
       return writeSampleCode(
-          SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
+          SampleCodeHelperComposer.composeStreamRpcCallableMethodSampleCode(
               clientName, clientType, sampleMethod));
     }
     return writeSampleCode(
@@ -190,35 +190,7 @@ public class ServiceClientCommentSampleCodeComposer {
       String serviceName, Method method, Map<String, TypeNode> types, TypeNode returnType) {
     String clientName = getClientClassName(serviceName);
     TypeNode clientType = types.get(clientName);
-    if (method.stream() != Stream.NONE) {
-      switch (method.stream()) {
-        case CLIENT:
-          return writeSampleCode(
-              SampleCodeHelperComposer.composeStreamClientRpcCallableMethodSampleCode(
-                  clientName, clientType, method));
-        case BIDI:
-          return writeSampleCode(
-              SampleCodeHelperComposer.composeStreamBiDiRpcCallableMethodSampleCode(
-                  clientName, clientType, method));
-        case SERVER:
-          return writeSampleCode(
-              SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(
-                  clientName, clientType, method));
-      }
-    }
-    if (method.hasLro()) {
-      return writeSampleCode(
-          SampleCodeHelperComposer.composeLroCallableMethodSampleCode(
-              clientName, clientType, method, returnType));
-    }
-    if (method.isPaged()) {
-      return writeSampleCode(
-          SampleCodeHelperComposer.composePagedRpcCallableMethodSampleCode(
-              clientName, clientType, method, returnType));
-    }
-    return writeSampleCode(
-        SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
-            clientName, clientType, method));
+    return writeSampleCode(SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(clientName, clientType, method, returnType));
   }
   // =============================== Helpers ==================================================//
 

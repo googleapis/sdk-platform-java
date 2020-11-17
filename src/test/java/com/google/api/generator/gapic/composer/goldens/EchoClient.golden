@@ -312,7 +312,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   String parent = "parent-995424086";
    *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
    *   ApiFuture&lt;EchoResponse&gt; futureResponse = EchoClient.echoCallable().futureCall(request);
@@ -328,7 +328,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   String content = "content951530617";
    *   Status error = Status.newBuilder().build();
    *   ExpandRequest request =
@@ -349,7 +349,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   ApiStreamObserver&lt;EchoResponse&gt; responseObserver =
    *       new ApiStreamObserver&lt;EchoResponse&gt;() {
    *         {@literal @}Override
@@ -385,7 +385,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   BidiStream&lt;EchoRequest, EchoResponse&gt; bidiStream = EchoClient.chatCallable().call();
    *
    *   EchoRequest request = EchoRequest.newBuilder().build();
@@ -405,7 +405,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   BidiStream&lt;EchoRequest, EchoResponse&gt; bidiStream = EchoClient.chatAgainCallable().call();
    *
    *   String content = "content951530617";
@@ -446,7 +446,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
    *   ApiFuture&lt;PagedExpandPagedResponse&gt; future =
    *       EchoClient.pagedExpandPagedCallable().futureCall(request);
@@ -467,7 +467,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
    *   while (true) {
    *     PagedExpandResponse response = EchoClient.pagedExpandCallable().call(request);
@@ -493,7 +493,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   Operation response = EchoClient.waitAsync(ttl).get();
    * }
@@ -512,7 +512,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   Timestamp end_time = Timestamp.newBuilder().build();
    *   Operation response = EchoClient.waitAsync(end_time).get();
    * }
@@ -550,12 +550,13 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
    *   OperationFuture&lt;WaitResponse, WaitMetadata&gt; future =
    *       EchoClient.waitAsync().futureCall(request);
    *   // Do something.
+   *   WaitResponse response = future.get();
    * }
    * </code></pre>
    */
@@ -568,11 +569,12 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
    *   ApiFuture&lt;Operation&gt; future = EchoClient.waitCallable().futureCall(request);
    *   // Do something.
+   *   Operation response = future.get();
    * }
    * </code></pre>
    */
@@ -603,7 +605,7 @@ public class EchoClient implements BackgroundResource {
    * Sample code:
    *
    * <pre><code>
-   * try (EchoClient EchoClient = EchoClient.create()) {
+   * try (EchoClient echoClient = EchoClient.create()) {
    *   BlockRequest request = BlockRequest.newBuilder().build();
    *   ApiFuture&lt;BlockResponse&gt; futureResponse = EchoClient.blockCallable().futureCall(request);
    * }
