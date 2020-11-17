@@ -215,7 +215,7 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcCallableMethodHeaderComment(
-      String serviceName, Method method, Map<String, TypeNode> types, String callableMethodName) {
+      String serviceName, Method method, Map<String, TypeNode> types, TypeNode returnType) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -227,7 +227,7 @@ class ServiceClientCommentComposer {
     // TODO(summerji): Add sample code here.
     methodJavadocBuilder.addSampleCode(
         ServiceClientCommentSampleCodeComposer.composeRpcCallableMethodHeaderSampleCode(
-            serviceName, method, types, callableMethodName));
+            serviceName, method, types, returnType));
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_METHOD_COMMENT,

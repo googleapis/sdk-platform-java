@@ -22,6 +22,7 @@ import com.google.api.generator.engine.ast.AssignmentOperationExpr;
 import com.google.api.generator.engine.ast.AstNodeVisitor;
 import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.BlockStatement;
+import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -332,6 +333,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   @Override
   public void visit(EmptyLineStatement emptyLineStatement) {
+    // Nothing to do.
+  }
+
+  @Override
+  public void visit(BreakStatement breakStatement) {
     // Nothing to do.
   }
 

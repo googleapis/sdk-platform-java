@@ -187,7 +187,7 @@ public class ServiceClientCommentSampleCodeComposer {
   }
 
   public static String composeRpcCallableMethodHeaderSampleCode(
-      String serviceName, Method method, Map<String, TypeNode> types, String callableMethodName) {
+      String serviceName, Method method, Map<String, TypeNode> types, TypeNode returnType) {
     String clientName = getClientClassName(serviceName);
     TypeNode clientType = types.get(clientName);
     if (method.stream() != Stream.NONE) {
@@ -197,8 +197,9 @@ public class ServiceClientCommentSampleCodeComposer {
               SampleCodeHelperComposer.composeStreamClientRpcCallableMethodSampleCode(
                   clientName, clientType, method));
         case BIDI:
-          return writeSampleCode(SampleCodeHelperComposer.composeStreamBiDiRpcCallableMethodSampleCode(
-              clientName, clientType, method));
+          return writeSampleCode(
+              SampleCodeHelperComposer.composeStreamBiDiRpcCallableMethodSampleCode(
+                  clientName, clientType, method));
         case SERVER:
           return writeSampleCode(
               SampleCodeHelperComposer.composeStreamServerRpcCallableMethodSampleCode(
@@ -209,7 +210,9 @@ public class ServiceClientCommentSampleCodeComposer {
       return "LRO callable;";
     }
     if (method.isPaged()) {
-      return "paged callable;";
+      return writeSampleCode(
+          SampleCodeHelperComposer.composePagedRpcCallableMethodSampleCode(
+              clientName, clientType, method, returnType));
     }
     return writeSampleCode(
         SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(

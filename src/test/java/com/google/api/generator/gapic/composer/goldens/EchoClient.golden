@@ -442,14 +442,48 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
+   *   ApiFuture&lt;PagedExpandPagedResponse&gt; future =
+   *       EchoClient.pagedExpandPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (PagedExpandResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * </code></pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
       pagedExpandPagedCallable() {
     return stub.pagedExpandPagedCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre><code>
+   * try (EchoClient EchoClient = EchoClient.create()) {
+   *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
+   *   while (true) {
+   *     PagedExpandResponse response = EchoClient.pagedExpandCallable().call(request);
+   *     for (PagedExpandResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = PagedExpandRequest.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * </code></pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
     return stub.pagedExpandCallable();
   }

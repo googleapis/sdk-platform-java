@@ -4,29 +4,33 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
-import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,6 +41,8 @@ public final class SampleCodeHelperComposer {
   private static String ASYNC_NAME_PATTERN = "%sAsync";
   private static String UNARY_CALLABLE_NAME_PATTERN = "%sCallable";
   private static String OBSERVER_NAME_PATTERN = "%sObserver";
+  private static String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
+  private static String PAGED_RESPONSE_NAME_PATTERN = "%sPagedResponse";
   private static String RESPONSE_VAR_NAME = "response";
   private static String REQUEST_VAR_NAME = "request";
 
@@ -222,52 +228,231 @@ public final class SampleCodeHelperComposer {
     return composeUnaryRpcCallableMethodSampleCode(clientName, clientType, method);
   }
 
+  public static TryCatchStatement composePagedRpcCallableMethodSampleCode(
+      String clientName, TypeNode clientType, Method method, TypeNode returnType) {
+    // Initialize the method's arguments with default values.
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    if (returnType
+        .reference()
+        .generics()
+        .get(1)
+        .name()
+        .equals(String.format(PAGED_RESPONSE_NAME_PATTERN, method.name()))) {
+      bodyStatements.addAll(createPagedResponseBody(method, clientType, returnType));
+    } else {
+      bodyStatements.add(createPagedWhileStatement(method, clientType));
+    }
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVarWithCreateMethodExpr(clientType, clientName))
+        .setTryBody(bodyStatements)
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static WhileStatement createPagedWhileStatement(Method method, TypeNode clientType) {
+    List<Statement> bodyStatements = new ArrayList<>();
+    // Initialize the response with calling callable method.
+    // PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);
+    VariableExpr responseVarExpr = createVariableExpr(RESPONSE_VAR_NAME, method.outputType());
+    MethodInvocationExpr callableMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(clientType)
+                    .setMethodName(getCallableMethodName(method.name()))
+                    .build())
+            .setMethodName("call")
+            .setArguments(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
+            .setReturnType(method.outputType())
+            .build();
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(callableMethodExpr)
+                .build()));
+    // For loop on method response.
+    // e.g. for (EchoResponse element : response.getResponsesList()) {// doThingsWith(element);}
+    bodyStatements.add(
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr("element", method.outputType()))
+            .setCollectionExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        createVariableExpr(RESPONSE_VAR_NAME, method.outputType()))
+                    .setMethodName("getResponsesList")
+                    .build())
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build());
+    // Initialize nextPageToken variable.
+    // e.g.String nextPageToken = response.getNextPageToken();
+    VariableExpr nextPageTokenVarExpr = createVariableExpr("nextPageToken", TypeNode.STRING);
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(nextPageTokenVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(
+                    MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(
+                            createVariableExpr(RESPONSE_VAR_NAME, method.outputType()))
+                        .setMethodName("getNextPageToken")
+                        .setReturnType(TypeNode.STRING)
+                        .build())
+                .build()));
+    // If isNullOrEmpty nextPageToken, assign request variable.
+    // if (!Strings.isNullOrEmpty(nextPageToken)) { request =
+    // request.toBuilder().setPageToken(nextPageToken).build();} else {break;}
+    Expr conditionExpr =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(TypeNode.STRING)
+                .setMethodName("isNullOrEmpty")
+                .setArguments(nextPageTokenVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
+    MethodInvocationExpr buildRequestMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setStaticReferenceType(method.inputType())
+                            .setMethodName("toBuilder")
+                            .build())
+                    .setArguments(nextPageTokenVarExpr)
+                    .setMethodName("setPageToken")
+                    .build())
+            .setMethodName("build")
+            .setReturnType(method.inputType())
+            .build();
+    Expr requestAssignExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
+            .setValueExpr(buildRequestMethodExpr)
+            .build();
+    bodyStatements.add(
+        IfStatement.builder()
+            .setConditionExpr(conditionExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(requestAssignExpr)))
+            .setElseBody(Arrays.asList(BreakStatement.create()))
+            .build());
+    return WhileStatement.builder()
+        .setConditionExpr(
+            ValueExpr.withValue(
+                PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
+        .setBody(bodyStatements)
+        .build();
+  }
+
+  private static List<Statement> createPagedResponseBody(
+      Method method, TypeNode clientType, TypeNode returnType) {
+    // Assign future variable with calling paged callable method.
+    // e.g. ApiFuture&lt;PagedExpandPagedResponse&gt; future =
+    // echoClient.pagedExpandPagedCallable().futureCall(request);
+    VariableExpr pagedResponseFutureVarExpr =
+        createFuturePagedResponseVarExpr(returnType.reference().generics().get(1));
+    MethodInvocationExpr futureCallMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(clientType)
+                    .setMethodName(getPagedCallableName(method.name()))
+                    .build())
+            .setMethodName("futureCall")
+            .setReturnType(pagedResponseFutureVarExpr.variable().type())
+            .setArguments(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
+            .build();
+    AssignmentExpr assignPagedResponseExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(pagedResponseFutureVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(futureCallMethodExpr)
+            .build();
+    // For loop method response.
+    // e.g for (EchoResponse element : future.get().iterateAll()) {// doThingsWith(element);}
+    ForStatement loopResponseStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr("element", method.outputType()))
+            .setCollectionExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(
+                        MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(pagedResponseFutureVarExpr)
+                            .setMethodName("get")
+                            .build())
+                    .setMethodName("iterateAll")
+                    .setReturnType(method.outputType())
+                    .build())
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build();
+    return Arrays.asList(
+        ExprStatement.withExpr(assignPagedResponseExpr),
+        createLineCommentStatement("Do something."),
+        loopResponseStatement);
+  }
+
   public static TryCatchStatement composeStreamBiDiRpcCallableMethodSampleCode(
       String clientName, TypeNode clientType, Method method) {
     VariableExpr bidiStreamVarExpr = createStreamBiDiVarExpr(method);
-    MethodInvocationExpr callMethodExpr = MethodInvocationExpr.builder()
-        .setExprReferenceExpr(MethodInvocationExpr.builder()
-        .setStaticReferenceType(clientType)
-        .setMethodName(getCallableMethodName(method.name()))
-        .build())
-        .setMethodName("call")
-        .setReturnType(bidiStreamVarExpr.variable().type())
-        .build();
-    AssignmentExpr assignBiDiStreamExpr = AssignmentExpr.builder()
-        .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
-        .setValueExpr(callMethodExpr)
-        .build();
+    MethodInvocationExpr callMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(clientType)
+                    .setMethodName(getCallableMethodName(method.name()))
+                    .build())
+            .setMethodName("call")
+            .setReturnType(bidiStreamVarExpr.variable().type())
+            .build();
+    AssignmentExpr assignBiDiStreamExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(callMethodExpr)
+            .build();
 
     List<MethodArgument> arguments =
         method.methodSignatures().isEmpty()
             ? Collections.emptyList()
             : method.methodSignatures().get(0);
 
-    MethodInvocationExpr sendMethodExpr = MethodInvocationExpr.builder()
-        .setExprReferenceExpr(bidiStreamVarExpr)
-        .setMethodName("send")
-        .setArguments(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
-        .build();
-    ForStatement loopResponse = ForStatement.builder()
-        .setLocalVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-        .setCollectionExpr(bidiStreamVarExpr)
-        .setBody(Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
-        .build();
+    MethodInvocationExpr sendMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(bidiStreamVarExpr)
+            .setMethodName("send")
+            .setArguments(createVariableExpr(REQUEST_VAR_NAME, method.inputType()))
+            .build();
+    ForStatement loopResponse =
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+            .setCollectionExpr(bidiStreamVarExpr)
+            .setBody(
+                Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
+            .build();
 
     List<Statement> bodyStatements = new ArrayList<>();
     bodyStatements.add(ExprStatement.withExpr(assignBiDiStreamExpr));
     bodyStatements.add(EmptyLineStatement.create());
-    bodyStatements.addAll(arguments.stream()
-        .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
-        .collect(Collectors.toList()));
-    bodyStatements.add(ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    bodyStatements.addAll(
+        arguments.stream()
+            .map(methodArg -> ExprStatement.withExpr(assignArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList()));
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
     bodyStatements.add(ExprStatement.withExpr(sendMethodExpr));
     bodyStatements.add(loopResponse);
-      return TryCatchStatement.builder()
-          .setTryResourceExpr(assignClientVarWithCreateMethodExpr(clientType, clientName))
-          .setTryBody(bodyStatements)
-          .setIsSampleCode(true)
-          .build();
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVarWithCreateMethodExpr(clientType, clientName))
+        .setTryBody(bodyStatements)
+        .setIsSampleCode(true)
+        .build();
   }
 
   public static TryCatchStatement composeStreamClientRpcCallableMethodSampleCode(
@@ -357,34 +542,41 @@ public final class SampleCodeHelperComposer {
   // ===========================================Helper==========================================//
   private static Expr assignStreamObserverResponseExpr(Method method) {
     VariableExpr streamObserverResponseVarExpr = createStreamObserverVarExpr(method, true);
-    MethodDefinition onNextMethod = MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setName("onNext")
-        .setArguments(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-        .setBody(Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
-        .setReturnType(TypeNode.VOID)
-        .build();
-    MethodDefinition onErrorMethod = MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setName("onError")
-        .setArguments(createVariableDeclExpr("t", TypeNode.withReference(ConcreteReference.withClazz(Throwable.class))))
-        .setBody(Arrays.asList(createLineCommentStatement("Add error-handling")))
-        .setReturnType(TypeNode.VOID)
-        .build();
-    MethodDefinition onCompletedMethod = MethodDefinition.builder()
-        .setIsOverride(true)
-        .setScope(ScopeNode.PUBLIC)
-        .setName("onCompleted")
-        .setBody(Arrays.asList(createLineCommentStatement("Do something when complete.")))
-        .setReturnType(TypeNode.VOID)
-        .build();
+    MethodDefinition onNextMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onNext")
+            .setArguments(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+            .setBody(
+                Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
+            .setReturnType(TypeNode.VOID)
+            .build();
+    MethodDefinition onErrorMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onError")
+            .setArguments(
+                createVariableDeclExpr(
+                    "t", TypeNode.withReference(ConcreteReference.withClazz(Throwable.class))))
+            .setBody(Arrays.asList(createLineCommentStatement("Add error-handling")))
+            .setReturnType(TypeNode.VOID)
+            .build();
+    MethodDefinition onCompletedMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onCompleted")
+            .setBody(Arrays.asList(createLineCommentStatement("Do something when complete.")))
+            .setReturnType(TypeNode.VOID)
+            .build();
 
-    AnonymousClassExpr anonymousClassExpr = AnonymousClassExpr.builder()
-        .setType(streamObserverResponseVarExpr.variable().type())
-        .setMethods(onNextMethod, onErrorMethod, onCompletedMethod)
-        .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(streamObserverResponseVarExpr.variable().type())
+            .setMethods(onNextMethod, onErrorMethod, onCompletedMethod)
+            .build();
     return AssignmentExpr.builder()
         .setVariableExpr(streamObserverResponseVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(anonymousClassExpr)
@@ -410,6 +602,19 @@ public final class SampleCodeHelperComposer {
         .build();
   }
 
+  private static VariableExpr createFuturePagedResponseVarExpr(Reference genericRef) {
+    return VariableExpr.withVariable(
+        Variable.builder()
+            .setName("future")
+            .setType(
+                TypeNode.withReference(
+                    ConcreteReference.builder()
+                        .setClazz(ApiFuture.class)
+                        .setGenerics(Arrays.asList(genericRef))
+                        .build()))
+            .build());
+  }
+
   private static VariableExpr createStreamBiDiVarExpr(Method method) {
     return VariableExpr.withVariable(
         Variable.builder()
@@ -419,7 +624,8 @@ public final class SampleCodeHelperComposer {
                     ConcreteReference.builder()
                         .setClazz(BidiStream.class)
                         .setGenerics(
-                            Arrays.asList(method.inputType().reference(), method.outputType().reference()))
+                            Arrays.asList(
+                                method.inputType().reference(), method.outputType().reference()))
                         .build()))
             .build());
   }
@@ -630,6 +836,10 @@ public final class SampleCodeHelperComposer {
 
   private static String getCallableMethodName(String methodName) {
     return JavaStyle.toLowerCamelCase(String.format(UNARY_CALLABLE_NAME_PATTERN, methodName));
+  }
+
+  private static String getPagedCallableName(String methodName) {
+    return JavaStyle.toLowerCamelCase(String.format(PAGED_CALLABLE_NAME_PATTERN, methodName));
   }
 
   private static String getObserverVariableName(String variableName) {

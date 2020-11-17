@@ -687,7 +687,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
             ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(
-                serviceName, method, types, methodName))
+                serviceName, method, types, returnType))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)
