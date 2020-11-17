@@ -119,7 +119,10 @@ public class ServiceClientClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createClassHeaderComments(service, types))
+                ServiceClientCommentComposer.createClassHeaderComments(
+                    service,
+                    types.get(getClientClassName(service.name())),
+                    types.get(getSettingsName(service.name()))))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
             .setScope(ScopeNode.PUBLIC)
@@ -1503,6 +1506,10 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static String getClientClassName(String serviceName) {
     return String.format("%sClient", serviceName);
+  }
+
+  private static String getSettingsName(String serviceName) {
+    return String.format("%sSettings", serviceName);
   }
 
   private static List<Reference> getGenericsForCallable(

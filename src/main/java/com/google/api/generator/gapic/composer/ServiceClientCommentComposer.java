@@ -25,7 +25,6 @@ import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -109,11 +108,9 @@ class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   static List<CommentStatement> createClassHeaderComments(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeNode clientType, TypeNode settingsType) {
     String settingsName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
     String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
-    TypeNode settingsType = types.get(getSettingsName(service.name()));
-    TypeNode clientType = types.get(getClientClassName(service.name()));
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
