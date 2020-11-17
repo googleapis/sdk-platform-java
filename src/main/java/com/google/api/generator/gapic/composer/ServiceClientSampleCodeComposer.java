@@ -28,25 +28,22 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
-import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
-  private static final String SETTINGS_NAME_PATTERN = "%sSettings";
-  private static final String CLASS_NAME_PATTERN = "%sClient";
+  //TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
-      Service service, Map<String, TypeNode> types) {
-    String settingsVarName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
-    TypeNode settingsVarType = types.get(getSettingsName(service.name()));
-    VariableExpr settingsVarExpr = createVariableExpr(settingsVarName, settingsVarType);
+      String clientName, TypeNode clientType, String settingsName, TypeNode settingsType) {
+    // Initialize clientSettings with builder() method.
+    // e.g. EchoSettings echoSettings =
+    // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
+    VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(settingsVarType)
+            .setStaticReferenceType(settingsType)
             .setMethodName("newBuilder")
             .build();
     TypeNode fixedCredentialProvideType =
@@ -66,7 +63,7 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr buildMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(credentialsMethodExpr)
-            .setReturnType(settingsVarType)
+            .setReturnType(settingsType)
             .setMethodName("build")
             .build();
     Expr initSettingsVarExpr =
@@ -75,8 +72,8 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(buildMethodExpr)
             .build();
 
-    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
-    TypeNode clientType = types.get(getClientClassName(service.name()));
+    // Initialized client with create() method.
+    // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
     VariableExpr clientVarExpr = createVariableExpr(clientName, clientType);
     MethodInvocationExpr createMethodExpr =
         MethodInvocationExpr.builder()
@@ -95,15 +92,7 @@ public class ServiceClientSampleCodeComposer {
   }
 
   // ======================================== Helpers ==========================================//
-
-  private static String getClientClassName(String serviceName) {
-    return String.format(CLASS_NAME_PATTERN, serviceName);
-  }
-
-  private static String getSettingsName(String serviceName) {
-    return String.format(SETTINGS_NAME_PATTERN, serviceName);
-  }
-
+  // TODO(summerji): Use writeSampleCode method in new class once PR#499 merged.
   private static String writeSampleCode(List<Expr> exprs) {
     List<Statement> statements =
         exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
