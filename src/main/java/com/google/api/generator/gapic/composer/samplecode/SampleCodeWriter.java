@@ -21,11 +21,11 @@ import java.util.List;
 
 public final class SampleCodeWriter {
 
-  public static String writeSampleCode(Statement ... statement) {
-    return writeSampleCode(Arrays.asList(statement));
+  public static String write(Statement ... statement) {
+    return write(Arrays.asList(statement));
   }
 
-  public static String writeSampleCode(List<Statement> statements) {
+  public static String write(List<Statement> statements) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     for (Statement statement : statements) {
       statement.accept(visitor);

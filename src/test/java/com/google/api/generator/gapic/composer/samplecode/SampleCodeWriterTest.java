@@ -19,19 +19,15 @@ import static junit.framework.TestCase.assertEquals;
 import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
-import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
-import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.gapic.model.Method;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import org.junit.Test;
 
@@ -58,7 +54,7 @@ public class SampleCodeWriterTest {
         .setTryBody(Arrays.asList(ExprStatement.withExpr(createAssignmentExpr("x", "3", TypeNode.INT))))
         .setIsSampleCode(true)
         .build();
-    String result = SampleCodeWriter.writeSampleCode(
+    String result = SampleCodeWriter.write(
         ExprStatement.withExpr(assignmentExpr),
             sampleStatement);
     String expected = "ClientSettings clientSettings = ClientSettings.newBuilder().build();\n"
