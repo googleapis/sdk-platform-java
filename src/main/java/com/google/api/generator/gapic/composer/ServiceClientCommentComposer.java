@@ -147,7 +147,7 @@ class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientName, clientType, settingsName, settingsType));
+            clientType, settingsType));
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,

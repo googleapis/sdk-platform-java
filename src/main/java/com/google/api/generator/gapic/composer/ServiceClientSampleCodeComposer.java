@@ -95,9 +95,11 @@ public class ServiceClientSampleCodeComposer {
   }
 
   public static String composeClassHeaderEndpointSampleCode(
-      String clientName, TypeNode clientType, String settingsName, TypeNode settingsType) {
+      TypeNode clientType, TypeNode settingsType) {
     // Initialize client settings with builder() method.
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+    String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
+    String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
     VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
