@@ -26,8 +26,8 @@ public class VaporReferenceTest {
     String pkg = "com.google.example.examples.library.v1";
     String name = "Babbage";
     Reference ref = VaporReference.builder().setName(name).setPakkage(pkg).build();
-    assertEquals(ref.name(), name);
-    assertEquals(ref.fullName(), String.format("%s.%s", pkg, name));
+    assertEquals(name, ref.name());
+    assertEquals(String.format("%s.%s", pkg, name), ref.fullName());
     assertFalse(ref.hasEnclosingClass());
     assertTrue(ref.isFromPackage(pkg));
     assertFalse(ref.isFromPackage("com.google.example.library"));
@@ -39,8 +39,8 @@ public class VaporReferenceTest {
     String name = "Babbage";
     Reference ref =
         VaporReference.builder().setName(name).setPakkage(pkg).setIsStaticImport(true).build();
-    assertEquals(ref.name(), name);
-    assertEquals(ref.fullName(), String.format("%s.%s", pkg, name));
+    assertEquals(name, ref.name());
+    assertEquals(String.format("%s.%s", pkg, name), ref.fullName());
     assertFalse(ref.hasEnclosingClass());
     assertTrue(ref.isFromPackage(pkg));
     // isStaticImport is automatically false for non-nested classes.
@@ -60,9 +60,9 @@ public class VaporReferenceTest {
             .setPakkage(pkg)
             .build();
 
-    assertEquals(ref.name(), "Babbage.Ada.Charles");
+    assertEquals("Babbage.Ada.Charles", ref.name());
     assertTrue(ref.hasEnclosingClass());
-    assertEquals(ref.fullName(), String.format("%s.%s.%s.%s", pkg, "Babbage", "Ada", name));
+    assertEquals(String.format("%s.%s.%s.%s", pkg, "Babbage", "Ada", name), ref.fullName());
     assertTrue(ref.hasEnclosingClass());
     assertTrue(ref.isFromPackage(pkg));
     assertFalse(ref.isFromPackage("com.google.example.library"));
@@ -81,8 +81,8 @@ public class VaporReferenceTest {
             .setPakkage(pkg)
             .setIsStaticImport(true)
             .build();
-    assertEquals(ref.name(), name);
-    assertEquals(ref.fullName(), String.format("%s.%s.%s", pkg, enclosingClassName, name));
+    assertEquals(name, ref.name());
+    assertEquals(String.format("%s.%s.%s", pkg, enclosingClassName, name), ref.fullName());
     assertTrue(ref.hasEnclosingClass());
     assertTrue(ref.isFromPackage(pkg));
     assertFalse(ref.isFromPackage("com.google.example.library"));
@@ -114,6 +114,6 @@ public class VaporReferenceTest {
             .setEnclosingClassNames(enclosingName)
             .build();
     assertTrue(ref.hasEnclosingClass());
-    assertEquals(ref.fullName(), String.format("%s.%s.%s", pkg, enclosingName, name));
+    assertEquals(String.format("%s.%s.%s", pkg, enclosingName, name), ref.fullName());
   }
 }
