@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -312,6 +313,8 @@ public class ConfigServiceV2ClientTest {
                 LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
                     .toString())
             .setDescription("description-1724546052")
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .setRetentionDays(1544391896)
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
@@ -364,6 +367,8 @@ public class ConfigServiceV2ClientTest {
                 LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
                     .toString())
             .setDescription("description-1724546052")
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .setRetentionDays(1544391896)
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
@@ -374,6 +379,7 @@ public class ConfigServiceV2ClientTest {
                 LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
                     .toString())
             .setBucket(LogBucket.newBuilder().build())
+            .setUpdateMask(FieldMask.newBuilder().build())
             .build();
 
     LogBucket actualResponse = client.updateBucket(request);
@@ -404,6 +410,7 @@ public class ConfigServiceV2ClientTest {
                   LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
                       .toString())
               .setBucket(LogBucket.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.updateBucket(request);
       Assert.fail("No exception raised");
@@ -643,6 +650,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -687,6 +696,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -731,6 +742,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -778,6 +791,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -825,6 +840,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -872,6 +889,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -919,6 +938,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -966,6 +987,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1013,6 +1036,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1060,6 +1085,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1110,6 +1137,8 @@ public class ConfigServiceV2ClientTest {
             .setDisabled(true)
             .setWriterIdentity("writer_identity775638794")
             .setIncludeChildren(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1447,6 +1476,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1488,6 +1519,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1529,6 +1562,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1573,6 +1608,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1617,6 +1654,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1661,6 +1700,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1705,6 +1746,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1749,6 +1792,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1796,6 +1841,8 @@ public class ConfigServiceV2ClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setDisabled(true)
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -1965,6 +2012,7 @@ public class ConfigServiceV2ClientTest {
         UpdateCmekSettingsRequest.newBuilder()
             .setName("name3373707")
             .setCmekSettings(CmekSettings.newBuilder().build())
+            .setUpdateMask(FieldMask.newBuilder().build())
             .build();
 
     CmekSettings actualResponse = client.updateCmekSettings(request);
@@ -1993,6 +2041,7 @@ public class ConfigServiceV2ClientTest {
           UpdateCmekSettingsRequest.newBuilder()
               .setName("name3373707")
               .setCmekSettings(CmekSettings.newBuilder().build())
+              .setUpdateMask(FieldMask.newBuilder().build())
               .build();
       client.updateCmekSettings(request);
       Assert.fail("No exception raised");
