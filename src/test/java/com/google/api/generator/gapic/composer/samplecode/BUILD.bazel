@@ -4,6 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "SampleCodeJavaFormatterTest",
+    "SampleCodeWriterTest",
 ]
 
 filegroup(
@@ -19,6 +20,8 @@ filegroup(
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "@com_google_api_gax_java//gax",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
     ],
