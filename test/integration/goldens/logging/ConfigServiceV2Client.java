@@ -155,7 +155,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -188,7 +188,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -221,7 +221,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -254,7 +254,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -287,7 +287,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -433,7 +433,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -462,7 +462,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -491,7 +491,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -520,7 +520,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -549,7 +549,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1198,7 +1198,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1227,7 +1227,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1256,7 +1256,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1285,7 +1285,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1314,7 +1314,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }

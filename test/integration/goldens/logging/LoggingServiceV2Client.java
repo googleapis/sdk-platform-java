@@ -439,7 +439,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *   String filter = "filter-1274492040";
    *   String order_by = "order_by1234304744";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogEntries(resource_names, filter, order_by).iterateAll()) {
+   *       loggingServiceV2Client.ListLogEntries(resource_names, filter, order_by).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -576,7 +576,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -606,7 +606,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -636,7 +636,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -666,7 +666,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -696,7 +696,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (LoggingServiceV2Client loggingServiceV2Client :
-   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }

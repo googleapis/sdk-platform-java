@@ -207,10 +207,11 @@ public final class SampleCodeHelperComposer {
 
   private static Expr createIteratorAllMethodExpr(
       Method method, TypeNode clientType, List<MethodArgument> arguments) {
+    // e.g echoClient.echo(name).iterateAll()
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(clientType)
+                .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
                 .setMethodName(method.name())
                 .setArguments(
                     !arguments.isEmpty()
