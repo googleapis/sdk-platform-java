@@ -153,10 +153,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   BillingAccountLocationName parent =
-   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -187,9 +186,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   FolderLocationName parent = FolderLocationName.of("[FOLDER]", "[LOCATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -220,9 +219,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -253,9 +252,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   OrganizationLocationName parent = OrganizationLocationName.of("[ORGANIZATION]", "[LOCATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -288,7 +287,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -316,7 +315,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -356,7 +355,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -394,7 +393,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -432,9 +431,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -461,9 +460,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -490,9 +489,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -519,9 +518,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -550,7 +549,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -574,7 +573,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -668,7 +667,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -867,7 +866,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1074,7 +1073,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1167,7 +1166,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1197,9 +1196,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1226,9 +1225,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1255,9 +1254,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1284,9 +1283,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1315,7 +1314,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (ConfigServiceV2Client configServiceV2Client :
-   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *       ConfigServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -1339,7 +1338,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -1435,7 +1434,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1622,7 +1621,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1736,7 +1735,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1820,7 +1819,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1855,7 +1854,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1901,7 +1900,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
