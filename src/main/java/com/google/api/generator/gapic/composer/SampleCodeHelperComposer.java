@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 public final class SampleCodeHelperComposer {
   private static String RESPONSE_VAR_NAME = "response";
+  private static String REQUEST_VAR_NAME = "request";
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method,
