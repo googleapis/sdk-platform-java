@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.rpc.ApiStreamObserver;
+import com.google.api.gax.rpc.ServerStream;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -287,7 +288,7 @@ public final class SampleCodeHelperComposer {
       return composeStreamClientRpcCallableMethodSampleCode(method, clientType, resourceNames);
     }
     if (method.stream() == Stream.SERVER) {
-      return composeStreamServerRpcCallableMethodSampleCode(method, clientType);
+      return composeStreamServerRpcCallableMethodSampleCode(method, clientType, resourceNames);
     }
     return composeStreamBiDiRpcCallableMethodSampleCode(method, clientType);
   }
@@ -338,14 +339,67 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composeStreamServerRpcCallableMethodSampleCode(
-      Method method, TypeNode clientType) {
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    // TODO(summerji): Add unit tests
+    // If variant method signatures exists, use the first one.
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+    // Assign each method arguments with default value.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .collect(Collectors.toList());
+    TypeNode serverStreamType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ServerStream.class)
+                .setGenerics(Arrays.asList(method.outputType().reference()))
+                .build());
+    VariableExpr serverStreamVarExpr = createVariableExpr("stream", serverStreamType);
+    // Assign request variable with attributes based on method arguments.
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    // Create server stream variable with invoke client methods and call method.
+    // e.g ServerStream<EchoResponse> stream = EchoClient.expandCallable().call(request);
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            createServerStreamWithValueExpr(method, clientType, serverStreamVarExpr)));
+    // For loop on stream response variable with comment as body.
+    bodyStatements.add(
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+            .setCollectionExpr(serverStreamVarExpr)
+            .setBody(
+                Arrays.asList(createLineCommentStatement("Do something when receive a response.")))
+            .build());
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not implement yet, placeholder for Stream.Server Rpc callable methods' sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
+        .build();
+  }
+
+  private static Expr createServerStreamWithValueExpr(
+      Method method, TypeNode clientType, VariableExpr serverStreamVarExpr) {
+    MethodInvocationExpr callMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                    .setMethodName(getCallableMethodName(method.name()))
+                    .build())
+            .setMethodName("call")
+            .setArguments(createVariableExpr("request", method.inputType()))
+            .setReturnType(serverStreamVarExpr.variable().type())
+            .build();
+    return AssignmentExpr.builder()
+        .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(callMethodExpr)
         .build();
   }
 

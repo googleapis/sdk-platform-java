@@ -320,7 +320,14 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Stream.Server Rpc callable methods' sample code.
+   *   String content = "content951530617";
+   *   Status error = Status.newBuilder().build();
+   *   ExpandRequest request =
+   *       ExpandRequest.newBuilder().setContent(content).setError(error).build();
+   *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
+   *   for (EchoResponse response : stream) {
+   *     // Do something when receive a response.
+   *   }
    * }
    * }</pre>
    */
