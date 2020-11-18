@@ -147,7 +147,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -168,7 +168,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -186,7 +186,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -205,7 +205,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -223,7 +223,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -241,7 +241,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -259,7 +259,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -279,7 +279,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -326,7 +326,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -356,7 +356,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -374,7 +374,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -392,7 +392,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -421,7 +421,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
