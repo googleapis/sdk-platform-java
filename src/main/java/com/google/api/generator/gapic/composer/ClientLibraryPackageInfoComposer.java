@@ -76,7 +76,7 @@ public class ClientLibraryPackageInfoComposer {
           javaDocCommentBuilder.addParagraph(
               String.format("%s %s %s", DIVIDER, javaClientName, DIVIDER));
 
-      // TODO(miraleung): Replace this with a comment converter when we upport CommonMark.
+      // TODO(miraleung): Replace this with a comment converter when we support CommonMark.
       if (service.hasDescription()) {
         String[] descriptionParagraphs = service.description().split("\\n\\n");
         for (int i = 0; i < descriptionParagraphs.length; i++) {

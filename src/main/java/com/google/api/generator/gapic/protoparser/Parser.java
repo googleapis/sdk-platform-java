@@ -370,7 +370,7 @@ public class Parser {
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
-      // Any input type that has a resource reference will need a resource name helper calss.
+      // Any input type that has a resource reference will need a resource name helper class.
       Message inputMessage = messageTypes.get(inputType.reference().name());
       for (Field field : inputMessage.fields()) {
         if (field.hasResourceReference()) {
