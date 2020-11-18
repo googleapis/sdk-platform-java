@@ -208,11 +208,10 @@ public final class SampleCodeHelperComposer {
         .build();
   }
 
-  private static Expr assignMethodArgumentWithDefaultValue(
-      MethodArgument argument, Map<String, ResourceName> resourceNames) {
+  private static Expr assignMethodArgumentWithDefaultValue(MethodArgument argument) {
     return AssignmentExpr.builder()
-        .setVariableExpr(createVariableDeclExpr(argument.name(), argument.type()))
-        .setValueExpr(DefaultValueComposer.createDefaultValue(argument, resourceNames))
+        .setVariableExpr(createVariableDeclExpr(argument.name(), argument.field().type()))
+        .setValueExpr(DefaultValueComposer.createDefaultValue(argument.field()))
         .build();
   }
 
