@@ -113,6 +113,6 @@ public class IdentifierNodeTest {
   }
 
   private static void assertValidIdentifier(String idName) {
-    assertEquals(IdentifierNode.builder().setName(idName).build().name(), idName);
+    assertEquals(idName, IdentifierNode.builder().setName(idName).build().name());
   }
 }

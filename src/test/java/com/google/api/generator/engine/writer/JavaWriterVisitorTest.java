@@ -68,6 +68,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
+import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
@@ -462,7 +463,7 @@ public class JavaWriterVisitorTest {
     String content = "this is a test comment";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     CommentStatement commentStatement = CommentStatement.withComment(blockComment);
-    String expected = String.format(createLines(3), "/*\n", "* this is a test comment\n", "*/\n");
+    String expected = LineFormatter.lines("/*\n", "* this is a test comment\n", "*/\n");
     commentStatement.accept(writerVisitor);
     assertEquals(expected, writerVisitor.write());
   }
@@ -508,8 +509,7 @@ public class JavaWriterVisitorTest {
             .build();
     CommentStatement commentStatement = CommentStatement.withComment(javaDocComment);
     String expected =
-        String.format(
-            createLines(23),
+        LineFormatter.lines(
             "/**\n",
             "* this is a test comment\n",
             "* <p> This class provides the ability to make remote calls to the backing service"
@@ -544,8 +544,7 @@ public class JavaWriterVisitorTest {
     String content = "Apache License \nThis is a test file header";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        String.format(
-            createLines(4), "/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
+        LineFormatter.lines("/*\n", "* Apache License\n", "* This is a test file header\n", "*/\n");
     blockComment.accept(writerVisitor);
     assertEquals(expected, writerVisitor.write());
   }
@@ -558,8 +557,7 @@ public class JavaWriterVisitorTest {
             + "you may not use this file except in compliance with the License.";
     BlockComment blockComment = BlockComment.builder().setComment(content).build();
     String expected =
-        String.format(
-            createLines(6),
+        LineFormatter.lines(
             "/*\n",
             "* Apache License\n",
             "* Licensed under the Apache License, Version 2.0 (the \"License\");\n",
@@ -577,8 +575,7 @@ public class JavaWriterVisitorTest {
             + " times, blah, blah!";
     LineComment lineComment = LineComment.builder().setComment(content).build();
     String expected =
-        String.format(
-            createLines(2),
+        LineFormatter.lines(
             "// this is a long test comment with so many words, hello world, hello again, hello"
                 + " for 3 times,\n",
             "// blah, blah!\n");
@@ -594,11 +591,12 @@ public class JavaWriterVisitorTest {
             + "\"]']";
     LineComment lineComment = LineComment.withComment(content);
     String expected =
-        "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
-            + " [--args='[--shelf\n"
-            + "// \"Novel\\\\\"`\\b\\t\n"
-            + "// \\r"
-            + "\"]']\n";
+        LineFormatter.lines(
+            "// usage: gradle run -PmainClass=com.google.example.examples.library.v1.Hopper"
+                + " [--args='[--shelf\n",
+            "// \"Novel\\\\\"`\\b\\t\n",
+            "// \\r",
+            "\"]']\n");
     lineComment.accept(writerVisitor);
     assertEquals(expected, writerVisitor.write());
   }
@@ -623,8 +621,7 @@ public class JavaWriterVisitorTest {
             .addComment("RPC method comment may include special characters: <>&\"`'@.")
             .build();
     String expected =
-        String.format(
-            createLines(13),
+        LineFormatter.lines(
             "/**\n",
             "* The API has a collection of [Shelf][google.example.library.v1.Shelf] resources\n",
             "* named `bookShelves/&#42;`\n",
@@ -915,8 +912,7 @@ public class JavaWriterVisitorTest {
         AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     anonymousClassExpr.accept(writerVisitor);
     assertEquals(
-        String.format(
-            createLines(4),
+        LineFormatter.lines(
             "new Runnable() {\n",
             "@Override\n",
             "public void run() {\n",
@@ -960,8 +956,7 @@ public class JavaWriterVisitorTest {
             .build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        String.format(
-            createLines(5),
+        LineFormatter.lines(
             "new Runnable() {\n",
             "private static final String s = \"foo\";\n",
             "@Override\n",
@@ -1017,8 +1012,7 @@ public class JavaWriterVisitorTest {
         AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     anonymousClassExpr.accept(writerVisitor);
     String expected =
-        String.format(
-            createLines(5),
+        LineFormatter.lines(
             "new Function<List<IOException>, MethodDefinition>() {\n",
             "@Override\n",
             "public MethodDefinition apply(List<IOException> arg) {\n",
@@ -1188,7 +1182,7 @@ public class JavaWriterVisitorTest {
 
     ifStatement.accept(writerVisitor);
     assertEquals(
-        String.format("%s%s%s%s", "if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        LineFormatter.lines("if (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
         writerVisitor.write());
   }
 
@@ -1243,8 +1237,7 @@ public class JavaWriterVisitorTest {
 
     ifStatement.accept(writerVisitor);
     String expected =
-        String.format(
-            createLines(13),
+        LineFormatter.lines(
             "if (condition) {\n",
             "int x = 3;\n",
             "boolean fooBar = true;\n",
@@ -1304,8 +1297,7 @@ public class JavaWriterVisitorTest {
     ifStatement.accept(writerVisitor);
 
     String expected =
-        String.format(
-            createLines(17),
+        LineFormatter.lines(
             "if (condition) {\n",
             "if (condition) {\n",
             "if (fooBarCheck) {\n",
@@ -1338,7 +1330,7 @@ public class JavaWriterVisitorTest {
 
     whileStatement.accept(writerVisitor);
     assertEquals(
-        String.format("%s%s%s%s", "while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
+        LineFormatter.lines("while (condition) {\n", "int x = 3;\n", "int x = 3;\n", "}\n"),
         writerVisitor.write());
   }
 
@@ -1478,7 +1470,7 @@ public class JavaWriterVisitorTest {
             .build();
 
     tryCatch.accept(writerVisitor);
-    assertEquals(String.format("%s%s%s", "try {\n", "int x = 3;\n", "}\n"), writerVisitor.write());
+    assertEquals(LineFormatter.lines("try {\n", "int x = 3;\n", "}\n"), writerVisitor.write());
   }
 
   @Test
@@ -1525,7 +1517,7 @@ public class JavaWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        String.format(createLines(3), "synchronized (this) {\n", "doStuff();\n", "}\n"),
+        LineFormatter.lines("synchronized (this) {\n", "doStuff();\n", "}\n"),
         writerVisitor.write());
   }
 
@@ -1544,7 +1536,7 @@ public class JavaWriterVisitorTest {
             .build();
     synchronizedStatement.accept(writerVisitor);
     assertEquals(
-        String.format(createLines(3), "synchronized (str) {\n", "doStuff();\n", "}\n"),
+        LineFormatter.lines("synchronized (str) {\n", "doStuff();\n", "}\n"),
         writerVisitor.write());
   }
 
@@ -1561,7 +1553,7 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        String.format("%s%s%s", "public void close() {\n", "int x = 3;\n", "}\n\n"),
+        LineFormatter.lines("public void close() {\n", "int x = 3;\n", "}\n\n"),
         writerVisitor.write());
   }
 
@@ -1610,7 +1602,7 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        String.format("%s%s%s", "public abstract void close() {\n", "int x = 3;\n", "}\n\n"),
+        LineFormatter.lines("public abstract void close() {\n", "int x = 3;\n", "}\n\n"),
         writerVisitor.write());
   }
 
@@ -1659,8 +1651,7 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        String.format(
-            "%s%s%s%s",
+        LineFormatter.lines(
             "public int close(int x, int y) {\n",
             "boolean foobar = false;\n",
             "return 3;\n",
@@ -1723,8 +1714,7 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     String expected =
-        String.format(
-            createLines(17),
+        LineFormatter.lines(
             "// AUTO-GENERATED DOCUMENTATION AND METHOD\n",
             "/**\n",
             "* This is an override method called `close()`\n",
@@ -1780,8 +1770,7 @@ public class JavaWriterVisitorTest {
 
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        String.format(
-            createLines(3),
+        LineFormatter.lines(
             "public <T, K, V> Map<K, V> close(Map<K, String> x, Map<T, V> y) {\n",
             "return foobar();\n",
             "}\n\n"),
@@ -1802,8 +1791,7 @@ public class JavaWriterVisitorTest {
 
     classDef.accept(writerVisitor);
     assertEquals(
-        String.format(
-            createLines(6),
+        LineFormatter.lines(
             "/*\n",
             " * Apache License\n",
             " */\n\n",
@@ -1834,8 +1822,7 @@ public class JavaWriterVisitorTest {
 
     classDef.accept(writerVisitor);
     assertEquals(
-        String.format(
-            createLines(5),
+        LineFormatter.lines(
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "@Deprecated\n",
@@ -1941,8 +1928,7 @@ public class JavaWriterVisitorTest {
 
     classDef.accept(writerVisitor);
     String expected =
-        String.format(
-            createLines(36),
+        LineFormatter.lines(
             "package com.google.example.library.v1.stub;\n",
             "\n",
             "import com.google.api.generator.engine.ast.AssignmentExpr;\n",
@@ -2033,7 +2019,7 @@ public class JavaWriterVisitorTest {
             .build();
     methodDefinition.accept(writerVisitor);
     assertEquals(
-        String.format("public Student apply() {\n" + "return this;\n" + "}\n\n"),
+        LineFormatter.lines("public Student apply() {\n", "return this;\n", "}\n\n"),
         writerVisitor.write());
   }
 
@@ -2270,8 +2256,7 @@ public class JavaWriterVisitorTest {
 
     packageInfo.accept(writerVisitor);
     assertEquals(
-        String.format(
-            createLines(9),
+        LineFormatter.lines(
             "/*\n",
             " * Lorum ipsum dolor sit amet\n",
             " */\n",
@@ -2285,10 +2270,6 @@ public class JavaWriterVisitorTest {
   }
 
   /** =============================== HELPERS =============================== */
-  private static String createLines(int numLines) {
-    return new String(new char[numLines]).replace("\0", "%s");
-  }
-
   private static AssignmentExpr createAssignmentExpr(
       String variableName, String value, TypeNode type) {
     VariableExpr variableExpr = createVariableDeclExpr(variableName, type);

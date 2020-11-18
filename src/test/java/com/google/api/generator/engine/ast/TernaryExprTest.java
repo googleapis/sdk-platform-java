@@ -37,9 +37,9 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
-    assertEquals(ternaryExpr.type(), TypeNode.INT);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(ternaryExpr.elseExpr().type(), ternaryExpr.thenExpr().type());
+    assertEquals(TypeNode.INT, ternaryExpr.type());
   }
 
   @Test
@@ -59,9 +59,9 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
-    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(ternaryExpr.elseExpr().type(), ternaryExpr.thenExpr().type());
+    assertEquals(TypeNode.STRING, ternaryExpr.type());
   }
 
   @Test
@@ -82,9 +82,9 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
-    assertEquals(ternaryExpr.type(), TypeNode.INT_OBJECT);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(ternaryExpr.elseExpr().type(), ternaryExpr.thenExpr().type());
+    assertEquals(TypeNode.INT_OBJECT, ternaryExpr.type());
   }
 
   @Test
@@ -106,9 +106,9 @@ public class TernaryExprTest {
             .setThenExpr(thenExpr)
             .setElseExpr(elseExpr)
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.thenExpr().type(), ternaryExpr.elseExpr().type());
-    assertEquals(ternaryExpr.type(), TypeNode.DOUBLE_OBJECT);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(ternaryExpr.elseExpr().type(), ternaryExpr.thenExpr().type());
+    assertEquals(TypeNode.DOUBLE_OBJECT, ternaryExpr.type());
   }
 
   @Test
@@ -121,8 +121,8 @@ public class TernaryExprTest {
             .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .setElseExpr(ValueExpr.withValue(NullObjectValue.create()))
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(TypeNode.STRING, ternaryExpr.type());
   }
 
   @Test
@@ -135,8 +135,8 @@ public class TernaryExprTest {
             .setThenExpr(ValueExpr.withValue(NullObjectValue.create()))
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.type(), TypeNode.STRING);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(TypeNode.STRING, ternaryExpr.type());
   }
 
   @Test
@@ -151,8 +151,8 @@ public class TernaryExprTest {
                     Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(TypeNode.OBJECT, ternaryExpr.type());
   }
 
   @Test
@@ -167,8 +167,8 @@ public class TernaryExprTest {
                 VariableExpr.withVariable(
                     Variable.builder().setName("anObject").setType(TypeNode.OBJECT).build()))
             .build();
-    assertEquals(ternaryExpr.conditionExpr().type(), TypeNode.BOOLEAN);
-    assertEquals(ternaryExpr.type(), TypeNode.OBJECT);
+    assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
+    assertEquals(TypeNode.OBJECT, ternaryExpr.type());
   }
 
   @Test
