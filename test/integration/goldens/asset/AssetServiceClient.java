@@ -577,7 +577,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -699,7 +699,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
