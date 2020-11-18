@@ -147,7 +147,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response = echoClient.Echo(parent);
    * }
    * }</pre>
@@ -188,7 +188,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   String name = "name3373707";
+   *   FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
    *   EchoResponse response = echoClient.Echo(name);
    * }
    * }</pre>

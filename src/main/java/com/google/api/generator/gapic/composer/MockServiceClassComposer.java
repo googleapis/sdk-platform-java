@@ -33,6 +33,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.protobuf.AbstractMessage;
 import io.grpc.ServerServiceDefinition;
@@ -55,7 +56,8 @@ public class MockServiceClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
     Map<String, TypeNode> types = createTypes(service);
     String className = String.format(MOCK_SERVICE_NAME_PATTERN, service.name());
     GapicClass.Kind kind = Kind.TEST;

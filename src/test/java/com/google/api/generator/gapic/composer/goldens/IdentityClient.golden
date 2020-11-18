@@ -227,7 +227,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = "name3373707";
+   *   UserName name = UserName.of("[USER]");
    *   User response = identityClient.GetUser(name);
    * }
    * }</pre>
@@ -312,7 +312,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = "name3373707";
+   *   UserName name = UserName.of("[USER]");
    *   Empty response = identityClient.DeleteUser(name);
    * }
    * }</pre>

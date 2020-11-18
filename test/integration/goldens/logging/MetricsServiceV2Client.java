@@ -75,7 +75,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
  *     MetricsServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
  *         .build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
@@ -85,7 +85,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
- *     MetricsServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
+ *     MetricsServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
  * }</pre>
@@ -152,7 +152,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -176,7 +176,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -197,7 +197,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -238,7 +238,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetric response = metricsServiceV2Client.GetLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -262,7 +263,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric response = metricsServiceV2Client.GetLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -284,7 +286,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -313,7 +315,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.CreateLogMetric(parent, metric);
    * }
    * }</pre>
    *
@@ -341,7 +345,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.CreateLogMetric(parent, metric);
    * }
    * }</pre>
    *
@@ -366,7 +372,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -395,7 +401,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.UpdateLogMetric(metric_name, metric);
    * }
    * }</pre>
    *
@@ -424,7 +432,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.UpdateLogMetric(metric_name, metric);
    * }
    * }</pre>
    *
@@ -450,7 +460,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -479,7 +489,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   Empty response = metricsServiceV2Client.DeleteLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -503,7 +514,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   Empty response = metricsServiceV2Client.DeleteLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -525,7 +537,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
