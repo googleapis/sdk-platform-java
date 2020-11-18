@@ -172,7 +172,7 @@ public class JavaDocCommentTest {
   }
 
   @Test
-  public void createavaDocComment_allComponents() {
+  public void createJavaDocComment_allComponents() {
     // No matter what order `setThrows`, `setDeprecated` are called,
     // They will be printed at the end. And `@param` should be grouped,
     // they should always be printed right before `@throws` and `@deprecated`.

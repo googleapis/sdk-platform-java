@@ -132,7 +132,7 @@ public class AssignmentOperationExprTest {
 
   @Test
   public void invalidMultiplyAndAssignmentOperationExpr_numericWithReferenceType() {
-    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_feferencedWithNumericType".
+    // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_referencedWithNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     assertThrows(
@@ -470,7 +470,7 @@ public class AssignmentOperationExprTest {
   }
 
   @Test
-  public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithOjectType() {
+  public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithObjectType() {
     // No need swap test.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
     NewObjectExpr rhsExpr = NewObjectExpr.withType(TypeNode.OBJECT);

@@ -1199,7 +1199,7 @@ public class ResourceNameHelperClassComposer {
     Set<String> tokenSet = getTokenSet(tokenHierarchies);
     Iterator<String> itToken = tokenSet.iterator();
     Expr curTokenExpr =
-        createObjectsEqualsForTokenMethodEpxr(
+        createObjectsEqualsForTokenMethodExpr(
             thisValueExpr,
             thatVariableExpr,
             Variable.builder()
@@ -1208,7 +1208,7 @@ public class ResourceNameHelperClassComposer {
                 .build());
     while (itToken.hasNext()) {
       Expr nextTokenExpr =
-          createObjectsEqualsForTokenMethodEpxr(
+          createObjectsEqualsForTokenMethodExpr(
               thisValueExpr,
               thatVariableExpr,
               Variable.builder()
@@ -1252,7 +1252,7 @@ public class ResourceNameHelperClassComposer {
         .build();
   }
 
-  private static MethodInvocationExpr createObjectsEqualsForTokenMethodEpxr(
+  private static MethodInvocationExpr createObjectsEqualsForTokenMethodExpr(
       Expr thisExpr, Expr thatExpr, Variable tokenVar) {
     VariableExpr varThisExpr =
         VariableExpr.builder().setVariable(tokenVar).setExprReferenceExpr(thisExpr).build();
@@ -1267,7 +1267,7 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static MethodDefinition createHashCodeMethod(List<List<String>> tokenHierarchies) {
-    List<Statement> asgmtBody = new ArrayList<>();
+    List<Statement> assignmentBody = new ArrayList<>();
     // code: int h = 1;
     Variable hVar = Variable.builder().setType(TypeNode.INT).setName("h").build();
     VariableExpr hVarExpr = VariableExpr.builder().setVariable(hVar).build();
@@ -1278,20 +1278,20 @@ public class ResourceNameHelperClassComposer {
             .setVariableExpr(hVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(hValueExpr)
             .build();
-    asgmtBody.add(ExprStatement.withExpr(hAssignmentExpr));
+    assignmentBody.add(ExprStatement.withExpr(hAssignmentExpr));
     // code: h *= 1000003;
     // code: h ^= Objects.hashCode(...);
     ValueExpr numValueExpr =
         ValueExpr.withValue(
             PrimitiveValue.builder().setType(TypeNode.INT).setValue("1000003").build());
-    AssignmentOperationExpr multiplyAsgmtOpExpr =
+    AssignmentOperationExpr multiplyAssignmentOpExpr =
         AssignmentOperationExpr.multiplyAssignmentWithExprs(hVarExpr, numValueExpr);
     // If it has variants, add the multiply and xor assignment operation exprs for fixedValue.
     boolean hasVariants = tokenHierarchies.size() > 1;
     if (hasVariants) {
       VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
-      asgmtBody.add(ExprStatement.withExpr(multiplyAsgmtOpExpr));
-      asgmtBody.add(
+      assignmentBody.add(ExprStatement.withExpr(multiplyAssignmentOpExpr));
+      assignmentBody.add(
           ExprStatement.withExpr(
               AssignmentOperationExpr.xorAssignmentWithExprs(
                   hVarExpr, createObjectsHashCodeForVarMethod(fixedValueVarExpr))));
@@ -1307,8 +1307,8 @@ public class ResourceNameHelperClassComposer {
                           .setName(JavaStyle.toLowerCamelCase(token))
                           .setType(TypeNode.STRING)
                           .build());
-              asgmtBody.add(ExprStatement.withExpr(multiplyAsgmtOpExpr));
-              asgmtBody.add(
+              assignmentBody.add(ExprStatement.withExpr(multiplyAssignmentOpExpr));
+              assignmentBody.add(
                   ExprStatement.withExpr(
                       AssignmentOperationExpr.xorAssignmentWithExprs(
                           hVarExpr, createObjectsHashCodeForVarMethod(tokenVarExpr))));
@@ -1319,7 +1319,7 @@ public class ResourceNameHelperClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(TypeNode.INT)
         .setName("hashCode")
-        .setBody(asgmtBody)
+        .setBody(assignmentBody)
         .setReturnExpr(hVarExpr)
         .build();
   }
