@@ -60,7 +60,7 @@ public class DefaultValueComposerTest {
 
     writerVisitor.clear();
 
-    // isMap() and isRepeated() will be set by protoc simulataneoulsy, but we check this edge case
+    // isMap() and isRepeated() will be set by protoc simultaneously, but we check this edge case.
     // for completeness.
     field = Field.builder().setName("foobar").setType(TypeNode.STRING).setIsMap(true).build();
     expr = DefaultValueComposer.createDefaultValue(field);

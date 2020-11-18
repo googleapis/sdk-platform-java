@@ -220,14 +220,12 @@ public class Parser {
   public static Map<String, Message> parseMessages(CodeGeneratorRequest request) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, Message> messages = new HashMap<>();
-    for (String fileToGenerate : request.getFileToGenerateList()) {
-      FileDescriptor fileDescriptor =
-          Preconditions.checkNotNull(
-              fileDescriptors.get(fileToGenerate),
-              "Missing file descriptor for [%s]",
-              fileToGenerate);
+    // Look for message types amongst all the protos, not just the ones to generate. This will
+    // ensure we track commonly-used protos like Empty.
+    for (FileDescriptor fileDescriptor : fileDescriptors.values()) {
       messages.putAll(parseMessages(fileDescriptor));
     }
+
     return messages;
   }
 
@@ -372,7 +370,7 @@ public class Parser {
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
-      // Any input type that has a resource reference will need a resource name helper calss.
+      // Any input type that has a resource reference will need a resource name helper class.
       Message inputMessage = messageTypes.get(inputType.reference().name());
       for (Field field : inputMessage.fields()) {
         if (field.hasResourceReference()) {

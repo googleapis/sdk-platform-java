@@ -433,7 +433,7 @@ public class ServiceStubSettingsClassComposer {
     VariableExpr pageSizeVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
-    // Re-declare for clarity and easier readeability.
+    // Re-declare for clarity and easier readability.
     returnType = method.inputType();
     returnExpr =
         MethodInvocationExpr.builder()
@@ -1431,7 +1431,7 @@ public class ServiceStubSettingsClassComposer {
             .setBody(ctorBodyStatements)
             .build());
 
-    // Third constructor that takes a ServivceStubSettings.
+    // Third constructor that takes a ServiceStubSettings.
     TypeNode outerSettingsType = types.get(getThisClassName(service.name()));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
@@ -1882,7 +1882,7 @@ public class ServiceStubSettingsClassComposer {
             : typeMakerFn.apply(
                 isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
 
-    // Streaming takes precendence over paging, as per the monolith's existing behavior.
+    // Streaming takes precedence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
         callSettingsType =
