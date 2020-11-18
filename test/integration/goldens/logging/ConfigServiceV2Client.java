@@ -295,7 +295,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -533,7 +533,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -572,7 +572,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink response = configServiceV2Client.GetSink(sink_name);
    * }
    * }</pre>
    *
@@ -600,7 +601,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink response = configServiceV2Client.GetSink(sink_name);
    * }
    * }</pre>
    *
@@ -657,7 +659,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
    * }
    * }</pre>
    *
@@ -689,7 +693,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
    * }
    * }</pre>
    *
@@ -721,7 +727,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
    * }
    * }</pre>
    *
@@ -753,7 +761,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
    * }
    * }</pre>
    *
@@ -785,7 +795,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
    * }
    * }</pre>
    *
@@ -850,7 +862,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink);
    * }
    * }</pre>
    *
@@ -886,7 +900,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink);
    * }
    * }</pre>
    *
@@ -919,7 +935,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink, update_mask);
    * }
    * }</pre>
    *
@@ -965,7 +984,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink, update_mask);
    * }
    * }</pre>
    *
@@ -1045,7 +1067,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   Empty response = configServiceV2Client.DeleteSink(sink_name);
    * }
    * }</pre>
    *
@@ -1075,7 +1098,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String sink_name = "sink_name-1391757129";
+   *   Empty response = configServiceV2Client.DeleteSink(sink_name);
    * }
    * }</pre>
    *
@@ -1254,7 +1278,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -1295,7 +1319,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   LogExclusion response = configServiceV2Client.GetExclusion(name);
    * }
    * }</pre>
    *
@@ -1323,7 +1348,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   LogExclusion response = configServiceV2Client.GetExclusion(name);
    * }
    * }</pre>
    *
@@ -1378,7 +1404,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1408,7 +1436,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1438,7 +1468,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1468,7 +1500,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1498,7 +1532,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1555,7 +1591,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.UpdateExclusion(name, exclusion, update_mask);
    * }
    * }</pre>
    *
@@ -1594,7 +1633,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   LogExclusion response = configServiceV2Client.UpdateExclusion(name, exclusion, update_mask);
    * }
    * }</pre>
    *
@@ -1662,7 +1704,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = configServiceV2Client.DeleteExclusion(name);
    * }
    * }</pre>
    *
@@ -1690,7 +1733,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = configServiceV2Client.DeleteExclusion(name);
    * }
    * }</pre>
    *

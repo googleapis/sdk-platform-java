@@ -170,7 +170,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -264,7 +264,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   Feed response = assetServiceClient.CreateFeed(parent);
    * }
    * }</pre>
    *
@@ -316,7 +317,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Feed response = assetServiceClient.GetFeed(name);
    * }
    * }</pre>
    *
@@ -339,7 +341,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Feed response = assetServiceClient.GetFeed(name);
    * }
    * }</pre>
    *
@@ -390,7 +393,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   ListFeedsResponse response = assetServiceClient.ListFeeds(parent);
    * }
    * }</pre>
    *
@@ -441,7 +445,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   Feed feed = Feed.newBuilder().build();
+   *   Feed response = assetServiceClient.UpdateFeed(feed);
    * }
    * }</pre>
    *
@@ -492,7 +497,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = assetServiceClient.DeleteFeed(name);
    * }
    * }</pre>
    *
@@ -517,7 +523,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = assetServiceClient.DeleteFeed(name);
    * }
    * }</pre>
    *
@@ -644,7 +651,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -750,7 +757,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *

@@ -197,7 +197,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -238,7 +238,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric response = metricsServiceV2Client.GetLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -262,7 +263,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric response = metricsServiceV2Client.GetLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -313,7 +315,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.CreateLogMetric(parent, metric);
    * }
    * }</pre>
    *
@@ -341,7 +345,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.CreateLogMetric(parent, metric);
    * }
    * }</pre>
    *
@@ -395,7 +401,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.UpdateLogMetric(metric_name, metric);
    * }
    * }</pre>
    *
@@ -424,7 +432,9 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   LogMetric response = metricsServiceV2Client.UpdateLogMetric(metric_name, metric);
    * }
    * }</pre>
    *
@@ -479,7 +489,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   Empty response = metricsServiceV2Client.DeleteLogMetric(metric_name);
    * }
    * }</pre>
    *
@@ -503,7 +514,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
+   *   String metric_name = "metric_name-1737602118";
+   *   Empty response = metricsServiceV2Client.DeleteLogMetric(metric_name);
    * }
    * }</pre>
    *
