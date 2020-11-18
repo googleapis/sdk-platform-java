@@ -236,6 +236,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * delete operation with a timestamp before the operation will be deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteLogRequest, Empty> deleteLogCallable() {
     return stub.deleteLogCallable();
@@ -432,6 +438,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<WriteLogEntriesRequest, WriteLogEntriesResponse>
       writeLogEntriesCallable() {
@@ -527,6 +539,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesPagedResponse>
       listLogEntriesPagedCallable() {
@@ -540,6 +558,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesResponse>
       listLogEntriesCallable() {
@@ -576,6 +600,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsPagedResponse>
@@ -588,6 +618,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsResponse>
@@ -773,6 +809,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsPagedResponse> listLogsPagedCallable() {
     return stub.listLogsPagedCallable();
@@ -784,6 +826,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsResponse> listLogsCallable() {
     return stub.listLogsCallable();

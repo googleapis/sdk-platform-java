@@ -338,6 +338,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists buckets (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBucketsRequest, ListBucketsPagedResponse>
       listBucketsPagedCallable() {
@@ -349,6 +355,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists buckets (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBucketsRequest, ListBucketsResponse> listBucketsCallable() {
     return stub.listBucketsCallable();
@@ -379,6 +391,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Gets a bucket (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetBucketRequest, LogBucket> getBucketCallable() {
     return stub.getBucketCallable();
@@ -427,6 +445,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateBucketRequest, LogBucket> updateBucketCallable() {
     return stub.updateBucketCallable();
@@ -603,6 +627,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists sinks.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListSinksRequest, ListSinksPagedResponse> listSinksPagedCallable() {
     return stub.listSinksPagedCallable();
@@ -613,6 +643,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists sinks.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListSinksRequest, ListSinksResponse> listSinksCallable() {
     return stub.listSinksCallable();
@@ -699,6 +735,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Gets a sink.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetSinkRequest, LogSink> getSinkCallable() {
     return stub.getSinkCallable();
@@ -905,6 +947,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * owning the sink.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateSinkRequest, LogSink> createSinkCallable() {
     return stub.createSinkCallable();
@@ -1117,6 +1165,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * field.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateSinkRequest, LogSink> updateSinkCallable() {
     return stub.updateSinkCallable();
@@ -1209,6 +1263,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteSinkRequest, Empty> deleteSinkCallable() {
     return stub.deleteSinkCallable();
@@ -1385,6 +1445,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists all the exclusions in a parent resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListExclusionsRequest, ListExclusionsPagedResponse>
       listExclusionsPagedCallable() {
@@ -1396,6 +1462,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Lists all the exclusions in a parent resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListExclusionsRequest, ListExclusionsResponse>
       listExclusionsCallable() {
@@ -1483,6 +1555,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Gets the description of an exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetExclusionRequest, LogExclusion> getExclusionCallable() {
     return stub.getExclusionCallable();
@@ -1675,6 +1753,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateExclusionRequest, LogExclusion> createExclusionCallable() {
     return stub.createExclusionCallable();
@@ -1797,6 +1881,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Changes one or more properties of an existing exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateExclusionRequest, LogExclusion> updateExclusionCallable() {
     return stub.updateExclusionCallable();
@@ -1883,6 +1973,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Deletes an exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteExclusionRequest, Empty> deleteExclusionCallable() {
     return stub.deleteExclusionCallable();
@@ -1925,6 +2021,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetCmekSettingsRequest, CmekSettings> getCmekSettingsCallable() {
     return stub.getCmekSettingsCallable();
@@ -1977,6 +2079,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateCmekSettingsRequest, CmekSettings> updateCmekSettingsCallable() {
     return stub.updateCmekSettingsCallable();

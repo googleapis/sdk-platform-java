@@ -225,7 +225,15 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<CreateUserRequest, User> createUserCallable() {
     return stub.createUserCallable();
   }
@@ -289,7 +297,15 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<GetUserRequest, User> getUserCallable() {
     return stub.getUserCallable();
   }
@@ -313,7 +329,15 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<UpdateUserRequest, User> updateUserCallable() {
     return stub.updateUserCallable();
   }
@@ -379,7 +403,15 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<DeleteUserRequest, Empty> deleteUserCallable() {
     return stub.deleteUserCallable();
   }
@@ -405,13 +437,29 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<ListUsersRequest, ListUsersPagedResponse> listUsersPagedCallable() {
     return stub.listUsersPagedCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<ListUsersRequest, ListUsersResponse> listUsersCallable() {
     return stub.listUsersCallable();
   }

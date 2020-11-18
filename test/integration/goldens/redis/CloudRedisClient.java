@@ -296,6 +296,12 @@ public class CloudRedisClient implements BackgroundResource {
    * are queried, and the results are aggregated.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListInstancesRequest, ListInstancesPagedResponse>
       listInstancesPagedCallable() {
@@ -317,6 +323,12 @@ public class CloudRedisClient implements BackgroundResource {
    * are queried, and the results are aggregated.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListInstancesRequest, ListInstancesResponse> listInstancesCallable() {
     return stub.listInstancesCallable();
@@ -397,6 +409,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Gets the details of a specific Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetInstanceRequest, Instance> getInstanceCallable() {
     return stub.getInstanceCallable();
@@ -564,6 +582,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
       createInstanceOperationCallable() {
@@ -586,6 +610,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateInstanceRequest, Operation> createInstanceCallable() {
     return stub.createInstanceCallable();
@@ -663,6 +693,12 @@ public class CloudRedisClient implements BackgroundResource {
    * DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
       updateInstanceOperationCallable() {
@@ -678,6 +714,12 @@ public class CloudRedisClient implements BackgroundResource {
    * DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateInstanceRequest, Operation> updateInstanceCallable() {
     return stub.updateInstanceCallable();
@@ -769,6 +811,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Upgrades Redis instance to the newer Redis version specified in the request.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
       upgradeInstanceOperationCallable() {
@@ -780,6 +828,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Upgrades Redis instance to the newer Redis version specified in the request.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpgradeInstanceRequest, Operation> upgradeInstanceCallable() {
     return stub.upgradeInstanceCallable();
@@ -859,6 +913,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
       importInstanceOperationCallable() {
@@ -876,6 +936,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ImportInstanceRequest, Operation> importInstanceCallable() {
     return stub.importInstanceCallable();
@@ -952,6 +1018,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
       exportInstanceOperationCallable() {
@@ -968,6 +1040,12 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ExportInstanceRequest, Operation> exportInstanceCallable() {
     return stub.exportInstanceCallable();
@@ -1074,6 +1152,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Cloud Memorystore for Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
       failoverInstanceOperationCallable() {
@@ -1086,6 +1170,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Cloud Memorystore for Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<FailoverInstanceRequest, Operation> failoverInstanceCallable() {
     return stub.failoverInstanceCallable();
@@ -1167,6 +1257,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
       deleteInstanceOperationCallable() {
@@ -1178,6 +1274,12 @@ public class CloudRedisClient implements BackgroundResource {
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteInstanceRequest, Operation> deleteInstanceCallable() {
     return stub.deleteInstanceCallable();

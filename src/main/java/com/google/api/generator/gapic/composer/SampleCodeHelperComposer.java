@@ -27,6 +27,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -61,6 +62,25 @@ public final class SampleCodeHelperComposer {
     // Pure Unary RPC method.
     return composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
   }
+
+  public static TryCatchStatement composeRpcCallableMethodSampleCode(
+      Method method,
+      TypeNode clientType,
+      TypeNode returnType,
+      Map<String, ResourceName> resourceNames) {
+    if (method.stream() != Stream.NONE) {
+      return composeStreamRpcCallableMethodSampleCode(method, clientType, resourceNames);
+    }
+    if (method.isPaged()) {
+      return composePagedRpcCallableMethodSampleCode(method, clientType, returnType, resourceNames);
+    }
+    if (method.hasLro()) {
+      return composeLroRpcCallableMethodSampleCode(method, clientType, returnType, resourceNames);
+    }
+    return composeUnaryRpcCallableMethodSampleCode(method, clientType, resourceNames);
+  }
+
+  // ============================================ PRC  =========================================//
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method,
@@ -251,7 +271,97 @@ public final class SampleCodeHelperComposer {
         .build();
   }
 
-  // ==================================Helpers===================================================//
+  // ======================================== PRC Callable =====================================//
+  private static TryCatchStatement composeStreamRpcCallableMethodSampleCode(
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    if (method.stream() == Stream.CLIENT) {
+      return composeStreamClientRpcCallableMethodSampleCode(method, clientType);
+    }
+    if (method.stream() == Stream.SERVER) {
+      return composeStreamServerRpcCallableMethodSampleCode(method, clientType);
+    }
+    return composeStreamBiDiRpcCallableMethodSampleCode(method, clientType);
+  }
+
+  private static TryCatchStatement composeStreamClientRpcCallableMethodSampleCode(
+      Method method, TypeNode clientType) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Stream.Client Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static TryCatchStatement composeStreamServerRpcCallableMethodSampleCode(
+      Method method, TypeNode clientType) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Stream.Server Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static TryCatchStatement composeStreamBiDiRpcCallableMethodSampleCode(
+      Method method, TypeNode clientType) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Stream.BiDi Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static TryCatchStatement composePagedRpcCallableMethodSampleCode(
+      Method method,
+      TypeNode clientType,
+      TypeNode returnType,
+      Map<String, ResourceName> resourceNames) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static TryCatchStatement composeLroRpcCallableMethodSampleCode(
+      Method method,
+      TypeNode clientType,
+      TypeNode returnType,
+      Map<String, ResourceName> resourceNames) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  private static TryCatchStatement composeUnaryRpcCallableMethodSampleCode(
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(
+            Arrays.asList(
+                createLineCommentStatement(
+                    "Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.")))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  // ======================================== Helpers ===========================================//
 
   // Assign client variable expr with create client.
   // e.g EchoClient echoClient = EchoClient.create()

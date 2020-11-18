@@ -226,6 +226,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Lists logs-based metrics.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogMetricsRequest, ListLogMetricsPagedResponse>
       listLogMetricsPagedCallable() {
@@ -237,6 +243,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Lists logs-based metrics.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogMetricsRequest, ListLogMetricsResponse>
       listLogMetricsCallable() {
@@ -318,6 +330,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Gets a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetLogMetricRequest, LogMetric> getLogMetricCallable() {
     return stub.getLogMetricCallable();
@@ -408,6 +426,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Creates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateLogMetricRequest, LogMetric> createLogMetricCallable() {
     return stub.createLogMetricCallable();
@@ -500,6 +524,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Creates or updates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateLogMetricRequest, LogMetric> updateLogMetricCallable() {
     return stub.updateLogMetricCallable();
@@ -580,6 +610,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * Deletes a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteLogMetricRequest, Empty> deleteLogMetricCallable() {
     return stub.deleteLogMetricCallable();

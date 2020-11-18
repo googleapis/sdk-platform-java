@@ -301,31 +301,71 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return stub.echoCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Stream.Server Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
     return stub.expandCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Stream.Client Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     return stub.collectCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Stream.BiDi Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
     return stub.chatCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Stream.BiDi Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable() {
     return stub.chatAgainCallable();
   }
@@ -351,14 +391,30 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
       pagedExpandPagedCallable() {
     return stub.pagedExpandPagedCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
     return stub.pagedExpandCallable();
   }
@@ -421,13 +477,29 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable() {
     return stub.waitOperationCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<WaitRequest, Operation> waitCallable() {
     return stub.waitCallable();
   }
@@ -451,7 +523,15 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return stub.blockCallable();
   }

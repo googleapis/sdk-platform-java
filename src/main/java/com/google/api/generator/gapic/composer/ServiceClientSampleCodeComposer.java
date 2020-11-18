@@ -160,6 +160,16 @@ public class ServiceClientSampleCodeComposer {
             method, arguments, clientType, resourceNames));
   }
 
+  public static String composeRpcCallableMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      TypeNode returnType,
+      Map<String, ResourceName> resourceNames) {
+    return SampleCodeWriter.write(
+        SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
+            method, clientType, returnType, resourceNames));
+  }
+
   // ======================================== Helpers ==========================================//
   // TODO(summerji): Use writeSampleCode method in new class once PR#499 merged.
   private static String writeSampleCode(List<Expr> exprs) {
