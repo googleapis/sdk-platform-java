@@ -577,7 +577,13 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   List<String> asset_types = new ArrayList<>();
+   *   for (AssetServiceClient assetServiceClient :
+   *       assetServiceClient.SearchAllResources(scope, query, asset_types).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -699,7 +705,12 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   for (AssetServiceClient assetServiceClient :
+   *       assetServiceClient.SearchAllIamPolicies(scope, query).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *

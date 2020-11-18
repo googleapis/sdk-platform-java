@@ -112,15 +112,27 @@ public final class SampleCodeHelperComposer {
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
-    // TODO(summerji): compose sample code for unary paged rpc method.
-    // TODO(summerji): Add unit tests.
-    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    // TODO(summerji): Add unit test.
+    // Assign each method arguments with default value.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    // For loop client on iterateAll method.
+    // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
+    // loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    // //doThingsWith(element);}
+    bodyStatements.add(
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
+            .setCollectionExpr(createIteratorAllMethodExpr(method, clientType, arguments))
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build());
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not implemented yet, placeholder for paged unary rpc method sample code.")))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
