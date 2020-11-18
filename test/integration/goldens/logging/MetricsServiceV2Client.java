@@ -154,7 +154,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (MetricsServiceV2Client metricsServiceV2Client :
-   *       MetricsServiceV2Client.ListLogMetrics(parent).iterateAll()) {
+   *       metricsServiceV2Client.ListLogMetrics(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -182,7 +182,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   for (MetricsServiceV2Client metricsServiceV2Client :
-   *       MetricsServiceV2Client.ListLogMetrics(parent).iterateAll()) {
+   *       metricsServiceV2Client.ListLogMetrics(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }

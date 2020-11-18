@@ -194,7 +194,7 @@ public class CloudRedisClient implements BackgroundResource {
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String parent = "parent-995424086";
    *   for (CloudRedisClient cloudRedisClient :
-   *       CloudRedisClient.ListInstances(parent).iterateAll()) {
+   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }
@@ -232,7 +232,7 @@ public class CloudRedisClient implements BackgroundResource {
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String parent = "parent-995424086";
    *   for (CloudRedisClient cloudRedisClient :
-   *       CloudRedisClient.ListInstances(parent).iterateAll()) {
+   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
    * }

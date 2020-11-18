@@ -191,6 +191,26 @@ public final class SampleCodeHelperComposer {
     return arguments.stream()
         .map(arg -> createVariableExpr(arg.name(), arg.type()))
         .collect(Collectors.toList());
+    return arguments.stream().map(arg -> createVariableExpr(arg.name(), arg.type())).collect(
+        Collectors.toList());
+  }
+
+  private static Expr createIteratorAllMethodExpr(
+      Method method, TypeNode clientType, List<MethodArgument> arguments) {
+    // e.g echoClient.echo(name).iterateAll()
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                .setMethodName(method.name())
+                .setArguments(
+                    !arguments.isEmpty()
+                        ? mapMethodArgumentsToVariableExprs(arguments)
+                        : Arrays.asList(createVariableExpr("request", method.inputType())))
+                .build())
+        .setMethodName("iterateAll")
+        .setReturnType(clientType)
+        .build();
   }
 
   private static String getClientName(TypeNode clientType) {
