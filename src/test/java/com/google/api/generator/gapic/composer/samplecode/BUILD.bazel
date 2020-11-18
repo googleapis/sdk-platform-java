@@ -21,6 +21,7 @@ filegroup(
         "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
         "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/test/java/com/google/api/generator/testutils",
         "@com_google_api_gax_java//gax",
         "@com_google_truth_truth//jar",
         "@junit_junit//jar",
