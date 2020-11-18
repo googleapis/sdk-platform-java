@@ -56,7 +56,7 @@ public final class SampleCodeHelperComposer {
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet. Hold for pure unary rpc method sample code.")))
+                    "Note: Not Implement yet, placeholder for pure unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -69,7 +69,7 @@ public final class SampleCodeHelperComposer {
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet. Holder for lro Unary rpc method sample code.")))
+                    "Note: Not Implement yet, placeholder for lro Unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -82,7 +82,7 @@ public final class SampleCodeHelperComposer {
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet. Holder for paged unary rpc method sample code.")))
+                    "Note: Not Implement yet, placeholder for paged unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -92,7 +92,7 @@ public final class SampleCodeHelperComposer {
     // TODO(summerji): compose sample code for unary default rpc method.
     String content =
         String.format(
-            "Note: Not Implement yet. Holder for unary %s rpc method sample code.",
+            "Note: Not Implement yet, placeholder for unary %s rpc method sample code.",
             (!method.hasLro() && !method.isPaged()
                 ? "default"
                 : (method.hasLro() ? "lro default" : "paged default")));
@@ -138,12 +138,8 @@ public final class SampleCodeHelperComposer {
   private static VariableExpr createVariableExpr(
       String variableName, TypeNode type, boolean isDecl) {
     return VariableExpr.builder()
-        .setVariable(createVariable(variableName, type))
+        .setVariable(Variable.builder().setName(variableName).setType(type).build())
         .setIsDecl(isDecl)
         .build();
-  }
-
-  private static Variable createVariable(String varName, TypeNode type) {
-    return Variable.builder().setName(varName).setType(type).build();
   }
 }

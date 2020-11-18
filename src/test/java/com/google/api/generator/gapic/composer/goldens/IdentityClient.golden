@@ -127,7 +127,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -152,7 +152,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -192,7 +192,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -215,7 +215,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -234,7 +234,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -252,7 +252,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -275,7 +275,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -298,7 +298,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -319,7 +319,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Hold for pure unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for pure unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -337,7 +337,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -360,7 +360,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
