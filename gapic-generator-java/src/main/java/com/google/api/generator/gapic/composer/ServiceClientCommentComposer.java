@@ -29,6 +29,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class ServiceClientCommentComposer {
+  // Name Pattern.
+  private static final String SETTINGS_NAME_PATTERN = "%sSettings";
+  private static final String CLASS_NAME_PATTERN = "%sClient";
+
   // Tokens.
   private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
@@ -103,7 +107,8 @@ class ServiceClientCommentComposer {
           "Returns the OperationsClient that can be used to query the status of a long-running"
               + " operation returned by another API method call.");
 
-  static List<CommentStatement> createClassHeaderComments(Service service) {
+  static List<CommentStatement> createClassHeaderComments(
+      Service service, TypeNode clientType, TypeNode settingsType) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -134,7 +139,9 @@ class ServiceClientCommentComposer {
             SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
             String.format("%sSettings", JavaStyle.toUpperCamelCase(service.name()))));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
-    // TODO(summerji): Add credentials' customization sample code here.
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientType, settingsType));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     // TODO(summerji): Add endpoint customization sample code here.
 
