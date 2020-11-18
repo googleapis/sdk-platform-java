@@ -466,7 +466,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -511,7 +511,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -683,7 +683,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *

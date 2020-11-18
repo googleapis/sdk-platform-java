@@ -95,7 +95,7 @@ public final class SampleCodeHelperComposer {
             "Note: Not Implement yet. Holder for unary %s rpc method sample code.",
             (!method.hasLro() && !method.isPaged()
                 ? "default"
-                : (method.hasLro() ? "lro" : "paged")));
+                : (method.hasLro() ? "lro default" : "paged default")));
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
         .setTryBody(Arrays.asList(createLineCommentStatement(content)))
