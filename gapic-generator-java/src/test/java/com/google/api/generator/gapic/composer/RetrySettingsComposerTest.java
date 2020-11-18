@@ -356,7 +356,7 @@ public class RetrySettingsComposerTest {
                 + "WaitResponse.class))"
                 + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
                 + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
-                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(20000L))"
+                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(5000L))"
                 + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(Duration.ofMillis(45000L))"
                 + ".setInitialRpcTimeout(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
                 + ".setMaxRpcTimeout(Duration.ZERO).setTotalTimeout(Duration.ofMillis(86400000L))"
