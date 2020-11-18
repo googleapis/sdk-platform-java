@@ -334,7 +334,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -400,7 +400,7 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
