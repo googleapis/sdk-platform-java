@@ -62,6 +62,12 @@ import javax.annotation.Generated;
  * }</pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * IdentitySettings identitySettings =
+ *     IdentitySettings.newBuilder().setEndpoint("myEndpoint").build();
+ * IdentityClient identityClient = IdentityClient.create(identitySettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

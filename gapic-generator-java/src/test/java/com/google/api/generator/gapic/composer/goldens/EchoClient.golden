@@ -72,6 +72,11 @@ import javax.annotation.Generated;
  * }</pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+ * EchoClient echoClient = EchoClient.create(echoSettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

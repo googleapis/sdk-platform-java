@@ -143,7 +143,9 @@ class ServiceClientCommentComposer {
         ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
             clientType, settingsType));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
-    // TODO(summerji): Add endpoint customization sample code here.
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+            clientType, settingsType));
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
@@ -260,5 +262,13 @@ class ServiceClientCommentComposer {
     }
 
     return commentBuilder;
+  }
+
+  private static String getSettingsName(String serviceName) {
+    return String.format(SETTINGS_NAME_PATTERN, serviceName);
+  }
+
+  private static String getClientClassName(String serviceName) {
+    return String.format(CLASS_NAME_PATTERN, serviceName);
   }
 }

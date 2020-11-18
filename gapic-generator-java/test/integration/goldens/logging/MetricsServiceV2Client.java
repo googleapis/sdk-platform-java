@@ -82,6 +82,13 @@ import javax.annotation.Generated;
  * }</pre>
  *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * MetricsServiceV2Settings metricsServiceV2Settings =
+ *     MetricsServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ * MetricsServiceV2Client metricsServiceV2Client =
+ *     MetricsServiceV2Client.create(metricsServiceV2Settings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")
