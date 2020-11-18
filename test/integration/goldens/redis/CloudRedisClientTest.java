@@ -32,6 +32,7 @@ import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
+import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -187,6 +188,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -239,6 +241,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -291,6 +294,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -357,6 +361,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -423,6 +428,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -486,6 +492,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -549,6 +556,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -612,6 +620,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -675,6 +684,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -738,6 +748,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
@@ -803,6 +814,7 @@ public class CloudRedisClientTest {
             .setHost("host3208616")
             .setPort(3446913)
             .setCurrentLocationId("current_location_id1312712735")
+            .setCreateTime(Timestamp.newBuilder().build())
             .setStatusMessage("status_message-239442758")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
