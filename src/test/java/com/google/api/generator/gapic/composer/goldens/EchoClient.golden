@@ -334,7 +334,29 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Stream.Client Rpc callable methods' sample code.
+   *   ApiStreamObserver<EchoResponse> responseObserver =
+   *       new ApiStreamObserver<EchoResponse>() {
+   *         @Override
+   *         public void onNext(EchoResponse response) {
+   *           // Do something when receive a response.
+   *         }
+   *
+   *         @Override
+   *         public void onError(Throwable t) {
+   *           // Add error-handling
+   *         }
+   *
+   *         @Override
+   *         public void onCompleted() {
+   *           // Do something when complete.
+   *         }
+   *       };
+   *   ApiStreamObserver<EchoRequest> requestObserver =
+   *       echoClient.collectCallable().clientStreamingCall(responseObserver);
+   *
+   *   String content = "content951530617";
+   *   EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+   *   requestObserver.onNext(request);
    * }
    * }</pre>
    */
