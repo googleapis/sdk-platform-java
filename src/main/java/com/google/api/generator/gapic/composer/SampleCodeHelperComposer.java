@@ -16,8 +16,11 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.Expr;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
@@ -27,8 +30,10 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class SampleCodeHelperComposer {
+  private static String RESPONSE_VAR_NAME = "response";
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
@@ -50,14 +55,30 @@ public final class SampleCodeHelperComposer {
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
-    // TODO(summerji): compose sample code for unary rpc method.
-    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    // Assign each method arguments with default value.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    // Invoke current method based on return type.
+    // e.g. if return void, echoClient.echo(..); or,
+    // e.g. if return other type, EchoResponse response = echoClient.echo(...);
+    Expr invokeMethodExpr =
+        method.outputType().equals(TypeNode.VOID)
+            ? MethodInvocationExpr.builder()
+                .setExprReferenceExpr(createVariableDeclExpr(getClientName(clientType), clientType))
+                .setMethodName(method.name())
+                .setReturnType(clientType)
+                .build()
+            : createAssignExprForVariableWithClientMethod(
+                RESPONSE_VAR_NAME, method.outputType(), clientType, method.name(), arguments);
+    bodyStatements.add(ExprStatement.withExpr(invokeMethodExpr));
+
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not implemented yet, placeholder for pure unary rpc method sample code.")))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
@@ -121,6 +142,36 @@ public final class SampleCodeHelperComposer {
                 .setReturnType(clientVarExpr.variable().type())
                 .setMethodName("create")
                 .build())
+        .build();
+  }
+
+  private static Expr assignMethodArgumentWithDefaultValue(MethodArgument argument) {
+    return AssignmentExpr.builder()
+        .setVariableExpr(createVariableDeclExpr(argument.name(), argument.field().type()))
+        .setValueExpr(DefaultValueComposer.createDefaultValue(argument.field()))
+        .build();
+  }
+
+  private static Expr createAssignExprForVariableWithClientMethod(
+      String variableName,
+      TypeNode variableType,
+      TypeNode clientType,
+      String methodName,
+      List<MethodArgument> arguments) {
+    VariableExpr varExpr = createVariableExpr(variableName, variableType);
+    MethodInvocationExpr clientMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+            .setMethodName(methodName)
+            .setArguments(
+                arguments.stream()
+                    .map(arg -> createVariableExpr(arg.name(), arg.type()))
+                    .collect(Collectors.toList()))
+            .setReturnType(variableType)
+            .build();
+    return AssignmentExpr.builder()
+        .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(clientMethodInvocationExpr)
         .build();
   }
 
