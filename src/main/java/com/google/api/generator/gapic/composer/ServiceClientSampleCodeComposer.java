@@ -28,14 +28,11 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
+import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.gapic.utils.JavaStyle;
-import java.util.Arrays;
-
 
 public class ServiceClientSampleCodeComposer {
   // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
@@ -99,7 +96,7 @@ public class ServiceClientSampleCodeComposer {
             ExprStatement.withExpr(initSettingsVarExpr),
             ExprStatement.withExpr(initClientVarExpr)));
   }
-  
+
   public static String composeClassHeaderEndpointSampleCode(
       TypeNode clientType, TypeNode settingsType) {
     // Initialize client settings with builder() method.
@@ -147,7 +144,10 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(createMethodExpr)
             .build();
 
-    return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
+    return SampleCodeWriter.write(
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr),
+            ExprStatement.withExpr(initClientVarExpr)));
   }
 
   // ======================================== Helpers ==========================================//
