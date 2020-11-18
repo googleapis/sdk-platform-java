@@ -170,7 +170,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -644,7 +644,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -750,7 +750,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
