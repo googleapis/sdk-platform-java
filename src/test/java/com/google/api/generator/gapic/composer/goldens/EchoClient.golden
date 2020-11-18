@@ -365,8 +365,7 @@ public class EchoClient implements BackgroundResource {
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
-   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
-   *   Operation response = EchoClient.waitAsync(ttl).get();
+   *   Operation response = echoClient.waitAsync(ttl).get();
    * }
    * }</pre>
    *
@@ -385,8 +384,7 @@ public class EchoClient implements BackgroundResource {
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Timestamp end_time = Timestamp.newBuilder().build();
-   *   WaitRequest request = WaitRequest.newBuilder().setEndTime(end_time).build();
-   *   Operation response = EchoClient.waitAsync(end_time).get();
+   *   Operation response = echoClient.waitAsync(end_time).get();
    * }
    * }</pre>
    *

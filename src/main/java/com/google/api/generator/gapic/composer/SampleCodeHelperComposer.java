@@ -112,17 +112,13 @@ public final class SampleCodeHelperComposer {
                 methodArg ->
                     ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
             .collect(Collectors.toList());
-    // Assign request with set attributes.
-    // e.g. EchoRequest request = echoClient.newBuilder().setName(name).build();
-    bodyStatements.add(
-        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
     // Assign response variable with get method.
     // e.g EchoResponse response = echoClient.waitAsync().get();
     Expr getResponseMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(clientType)
+                    .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
                     .setMethodName(getLroMethodName(method.name()))
                     .setArguments(mapMethodArgumentsToVariableExprs(arguments))
                     .build())
