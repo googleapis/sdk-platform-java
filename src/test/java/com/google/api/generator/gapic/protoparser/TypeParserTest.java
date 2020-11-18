@@ -32,7 +32,7 @@ public class TypeParserTest {
   public void parseMessageType_basic() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
+    assertEquals("Echo", echoService.getName());
 
     MethodDescriptor echoMethodDescriptor = echoService.getMethods().get(0);
     Reference reference = TypeParser.parseMessageReference(echoMethodDescriptor.getInputType());

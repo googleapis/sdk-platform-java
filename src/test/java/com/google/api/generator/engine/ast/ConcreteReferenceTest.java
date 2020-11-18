@@ -29,7 +29,7 @@ public class ConcreteReferenceTest {
   @Test
   public void basicConcreteReference() {
     Reference reference = ConcreteReference.builder().setClazz(Integer.class).build();
-    assertEquals(reference.name(), Integer.class.getSimpleName());
+    assertEquals(Integer.class.getSimpleName(), reference.name());
     assertFalse(reference.isStaticImport());
   }
 
@@ -37,14 +37,14 @@ public class ConcreteReferenceTest {
   public void basicConcreteReference_setIsStaticImport() {
     Reference reference =
         ConcreteReference.builder().setClazz(Integer.class).setIsStaticImport(true).build();
-    assertEquals(reference.name(), Integer.class.getSimpleName());
+    assertEquals(Integer.class.getSimpleName(), reference.name());
     assertFalse(reference.isStaticImport());
   }
 
   @Test
   public void basicConcreteReference_nested() {
     Reference reference = ConcreteReference.builder().setClazz(Map.Entry.class).build();
-    assertEquals(reference.name(), "Map.Entry");
+    assertEquals("Map.Entry", reference.name());
     assertFalse(reference.isStaticImport());
   }
 
@@ -52,7 +52,7 @@ public class ConcreteReferenceTest {
   public void basicConcreteReference_nestedAndStaticImport() {
     Reference reference =
         ConcreteReference.builder().setClazz(Map.Entry.class).setIsStaticImport(true).build();
-    assertEquals(reference.name(), Map.Entry.class.getSimpleName());
+    assertEquals(Map.Entry.class.getSimpleName(), reference.name());
     assertTrue(reference.isStaticImport());
   }
 
@@ -67,7 +67,7 @@ public class ConcreteReferenceTest {
                     ConcreteReference.withClazz(Integer.class)))
             .build();
     assertEquals(reference.name(), "HashMap<String, Integer>");
-    assertEquals(reference.fullName(), "java.util.HashMap");
+    assertEquals("java.util.HashMap", reference.fullName());
   }
 
   @Test
@@ -91,8 +91,8 @@ public class ConcreteReferenceTest {
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
     assertEquals(
-        listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
-    assertEquals(listReference.fullName(), "java.util.List");
+        "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>", listReference.name());
+    assertEquals("java.util.List", listReference.fullName());
   }
 
   @Test
@@ -143,7 +143,7 @@ public class ConcreteReferenceTest {
 
   @Test
   public void wildcards() {
-    assertEquals("?", ConcreteReference.wildcard().name());
+    assertEquals(ConcreteReference.wildcard().name(), "?");
     assertEquals(
         "? extends String",
         ConcreteReference.wildcardWithUpperBound(TypeNode.STRING.reference()).name());

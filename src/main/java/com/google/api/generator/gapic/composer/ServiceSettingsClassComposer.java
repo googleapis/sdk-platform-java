@@ -54,6 +54,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -101,7 +102,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service))
+            .setHeaderCommentStatements(createClassHeaderComments(service, types.get(className)))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -119,11 +120,20 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<CommentStatement> createClassHeaderComments(Service service) {
+  private static List<CommentStatement> createClassHeaderComments(
+      Service service, TypeNode classType) {
+    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
+    // list.
     Optional<Method> methodOpt =
-        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : Optional.of(
+                service.methods().stream()
+                    .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
+                    .findFirst()
+                    .orElse(service.methods().get(0)));
     return SettingsCommentComposer.createClassHeaderComments(
-        getClientClassName(service.name()), service.defaultHost(), methodOpt);
+        getClientClassName(service.name()), service.defaultHost(), methodOpt, classType);
   }
 
   private static List<AnnotationNode> createClassAnnotations() {

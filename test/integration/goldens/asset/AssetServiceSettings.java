@@ -54,7 +54,21 @@ import javax.annotation.Generated;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of exportAssets to 30 seconds:
+ * <p>For example, to set the total timeout of batchGetAssetsHistory to 30 seconds:
+ *
+ * <pre>{@code
+ * AssetServiceSettings.Builder assetServiceSettingsBuilder = AssetServiceSettings.newBuilder();
+ * assetServiceSettingsBuilder
+ *     .batchGetAssetsHistorySettings()
+ *     .setRetrySettings(
+ *         assetServiceSettingsBuilder
+ *             .batchGetAssetsHistorySettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
