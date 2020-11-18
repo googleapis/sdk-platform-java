@@ -55,6 +55,7 @@ public final class SampleCodeHelperComposer {
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
+    // TODO(summerji): Add unit tests.
     // Assign each method arguments with default value.
     List<Statement> bodyStatements =
         arguments.stream()
@@ -65,16 +66,21 @@ public final class SampleCodeHelperComposer {
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
-    Expr invokeMethodExpr =
-        method.outputType().equals(TypeNode.VOID)
-            ? MethodInvocationExpr.builder()
-                .setExprReferenceExpr(createVariableDeclExpr(getClientName(clientType), clientType))
-                .setMethodName(method.name())
-                .setReturnType(clientType)
-                .build()
-            : createAssignExprForVariableWithClientMethod(
-                RESPONSE_VAR_NAME, method.outputType(), clientType, method.name(), arguments);
-    bodyStatements.add(ExprStatement.withExpr(invokeMethodExpr));
+    if (method.outputType().equals(TypeNode.VOID)) {
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(
+                      createVariableDeclExpr(getClientName(clientType), clientType))
+                  .setMethodName(method.name())
+                  .setReturnType(clientType)
+                  .build()));
+    } else {
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              createAssignExprForVariableWithClientMethod(
+                  RESPONSE_VAR_NAME, method.outputType(), clientType, method.name(), arguments)));
+    }
 
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
@@ -86,6 +92,7 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composeLroUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary lro rpc method.
+    // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
@@ -100,6 +107,7 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary paged rpc method.
+    // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
@@ -114,6 +122,7 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composeUnaryRpcDefaultMethodSampleCode(
       Method method, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary default rpc method.
+    // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     String content =
         String.format(

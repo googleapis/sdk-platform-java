@@ -312,7 +312,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = identityClient.DeleteUser(name);
    * }
    * }</pre>
    *
@@ -333,7 +334,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implemented yet, placeholder for pure unary rpc method sample code.
+   *   String name = "name3373707";
+   *   Empty response = identityClient.DeleteUser(name);
    * }
    * }</pre>
    *
