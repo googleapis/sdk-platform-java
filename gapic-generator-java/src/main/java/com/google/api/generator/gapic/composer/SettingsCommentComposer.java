@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
 class SettingsCommentComposer {
   private static final String COLON = ":";
 
+  private static final String CLIENT_CLASS_NAME_PATTERN = "%sClient";
+  private static final String STUB_PATTERN = "%sStub";
   private static final String BUILDER_CLASS_DOC_PATTERN = "Builder for %s.";
   private static final String CALL_SETTINGS_METHOD_DOC_PATTERN =
       "Returns the object with the settings used for calls to %s.";
@@ -102,7 +105,10 @@ class SettingsCommentComposer {
   }
 
   static List<CommentStatement> createClassHeaderComments(
-      String configuredClassName, String defaultHost, Optional<Method> methodOpt) {
+      String configuredClassName,
+      String defaultHost,
+      Optional<Method> methodOpt,
+      TypeNode classType) {
     // Split default address and port.
     int colonIndex = defaultHost.indexOf(COLON);
     Preconditions.checkState(
@@ -127,12 +133,16 @@ class SettingsCommentComposer {
             .addParagraph(CLASS_HEADER_BUILDER_DESCRIPTION);
 
     if (methodOpt.isPresent()) {
+      String sampleCode =
+          SettingsSampleCodeComposer.composeSettingClassHeaderSampleCode(
+              methodOpt.get(), classType);
       javaDocCommentBuilder =
-          javaDocCommentBuilder.addParagraph(
-              String.format(
-                  CLASS_HEADER_SAMPLE_CODE_PATTERN,
-                  JavaStyle.toLowerCamelCase(methodOpt.get().name())));
-      // TODO(summerji): Add sample code here.
+          javaDocCommentBuilder
+              .addParagraph(
+                  String.format(
+                      CLASS_HEADER_SAMPLE_CODE_PATTERN,
+                      JavaStyle.toLowerCamelCase(methodOpt.get().name())))
+              .addSampleCode(sampleCode);
     }
 
     return Arrays.asList(
