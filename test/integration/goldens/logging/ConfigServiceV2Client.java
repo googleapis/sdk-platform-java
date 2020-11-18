@@ -154,6 +154,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -187,6 +188,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -220,6 +222,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -253,6 +256,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -286,6 +290,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -432,6 +437,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -461,6 +467,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -490,6 +497,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -519,6 +527,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -548,6 +557,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -1197,6 +1207,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -1226,6 +1237,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -1255,6 +1267,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -1284,6 +1297,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -1313,6 +1327,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
    *   for (ConfigServiceV2Client configServiceV2Client :
    *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
