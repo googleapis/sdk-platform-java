@@ -67,6 +67,20 @@ import org.threeten.bp.Duration;
  * build() is called, the tree of builders is called to create the complete settings object.
  *
  * <p>For example, to set the total timeout of echo to 30 seconds:
+ *
+ * <pre>{@code
+ * EchoStubSettings.Builder echoSettingsBuilder = EchoStubSettings.newBuilder();
+ * echoSettingsBuilder
+ *     .echoSettings()
+ *     .setRetrySettings(
+ *         echoSettingsBuilder
+ *             .echoSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * EchoStubSettings echoSettings = echoSettingsBuilder.build();
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")

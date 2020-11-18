@@ -73,7 +73,22 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of listLogMetrics to 30 seconds:
+ * <p>For example, to set the total timeout of getLogMetric to 30 seconds:
+ *
+ * <pre>{@code
+ * MetricsServiceV2StubSettings.Builder metricsServiceV2SettingsBuilder =
+ *     MetricsServiceV2StubSettings.newBuilder();
+ * metricsServiceV2SettingsBuilder
+ *     .getLogMetricSettings()
+ *     .setRetrySettings(
+ *         metricsServiceV2SettingsBuilder
+ *             .getLogMetricSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * MetricsServiceV2StubSettings metricsServiceV2Settings = metricsServiceV2SettingsBuilder.build();
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")
