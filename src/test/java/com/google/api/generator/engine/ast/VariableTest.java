@@ -41,7 +41,7 @@ public class VariableTest {
             .setIdentifier(identifierNode)
             .setName("y")
             .build();
-    assertEquals(variable.name(), "y");
+    assertEquals("y", variable.name());
     assertThat(variable.type()).isEqualTo(TypeNode.STRING);
   }
 
@@ -54,7 +54,7 @@ public class VariableTest {
   private static void assertValidVariable(TypeKind typeKind, String name) {
     TypeNode type = TypeNode.builder().setTypeKind(typeKind).build();
     Variable variable = Variable.builder().setType(type).setName(name).build();
-    assertEquals(variable.name(), name);
+    assertEquals(name, variable.name());
     assertThat(variable.type()).isEqualTo(type);
   }
 

@@ -45,8 +45,8 @@ public class ReferenceTest {
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
     assertEquals(
-        listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
-    assertEquals(listReference.fullName(), "java.util.List");
+        "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>", listReference.name());
+    assertEquals("java.util.List", listReference.fullName());
   }
 
   @Test
@@ -72,8 +72,8 @@ public class ReferenceTest {
             .setGenerics(Arrays.asList(outerMapReference))
             .build();
     assertEquals(
-        listReference.name(), "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>");
-    assertEquals(listReference.fullName(), "java.util.List");
+        "List<HashMap<HashMap<String, Integer>, HashMap<String, Integer>>>", listReference.name());
+    assertEquals("java.util.List", listReference.fullName());
   }
 
   @Test
