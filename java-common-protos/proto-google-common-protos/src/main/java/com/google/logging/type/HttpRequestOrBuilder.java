@@ -153,7 +153,8 @@ public interface HttpRequestOrBuilder
    *
    * <pre>
    * The IP address (IPv4 or IPv6) of the client that issued the HTTP
-   * request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * request. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
    * <code>string remote_ip = 7;</code>
@@ -166,7 +167,8 @@ public interface HttpRequestOrBuilder
    *
    * <pre>
    * The IP address (IPv4 or IPv6) of the client that issued the HTTP
-   * request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
+   * request. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
    * <code>string remote_ip = 7;</code>
@@ -180,7 +182,8 @@ public interface HttpRequestOrBuilder
    *
    * <pre>
    * The IP address (IPv4 or IPv6) of the origin server that the request was
-   * sent to.
+   * sent to. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
    * <code>string server_ip = 13;</code>
@@ -193,7 +196,8 @@ public interface HttpRequestOrBuilder
    *
    * <pre>
    * The IP address (IPv4 or IPv6) of the origin server that the request was
-   * sent to.
+   * sent to. This field can include port information. Examples:
+   * `"192.168.1.1"`, `"10.0.0.1:80"`, `"FE80::0202:B3FF:FE1E:8329"`.
    * </pre>
    *
    * <code>string server_ip = 13;</code>
