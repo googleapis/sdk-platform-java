@@ -19,12 +19,14 @@ import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -162,7 +164,10 @@ class ServiceClientCommentComposer {
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> methodArguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -173,7 +178,7 @@ class ServiceClientCommentComposer {
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
     methodJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, methodArguments, clientType));
+            method, methodArguments, clientType, resourceNames));
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -194,8 +199,9 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(methodJavadocBuilder.build()));
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(Method method, TypeNode clientType) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList(), clientType);
+  static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), clientType, resourceNames);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {

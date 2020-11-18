@@ -31,9 +31,11 @@ import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatte
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
@@ -148,9 +150,13 @@ public class ServiceClientSampleCodeComposer {
   }
 
   public static String composeRpcMethodHeaderSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     return SampleCodeWriter.write(
-        SampleCodeHelperComposer.composeRpcMethodSampleCode(method, arguments, clientType));
+        SampleCodeHelperComposer.composeRpcMethodSampleCode(
+            method, arguments, clientType, resourceNames));
   }
 
   // ======================================== Helpers ==========================================//

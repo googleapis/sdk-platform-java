@@ -62,6 +62,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
@@ -109,7 +110,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> messageTypes) {
+  public GapicClass generate(
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     Map<String, TypeNode> types = createTypes(service, messageTypes);
     String className = String.format("%sClient", service.name());
     GapicClass.Kind kind = Kind.MAIN;
@@ -129,7 +131,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setName(className)
             .setImplementsTypes(createClassImplements(types))
             .setStatements(createFieldDeclarations(service, types, hasLroClient))
-            .setMethods(createClassMethods(service, messageTypes, types, hasLroClient))
+            .setMethods(
+                createClassMethods(service, messageTypes, types, resourceNames, hasLroClient))
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -152,6 +155,7 @@ public class ServiceClientClassComposer implements ClassComposer {
       Service service,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames,
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
@@ -159,7 +163,11 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.addAll(createGetterMethods(service, types, hasLroClient));
     methods.addAll(
         createServiceMethods(
-            service, messageTypes, types, types.get(getClientClassName(service.name()))));
+            service,
+            messageTypes,
+            types,
+            types.get(getClientClassName(service.name())),
+            resourceNames));
     methods.addAll(createBackgroundResourceMethods(service, types));
     return methods;
   }
@@ -474,12 +482,14 @@ public class ServiceClientClassComposer implements ClassComposer {
       Service service,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
-      TypeNode clientType) {
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, types, clientType));
-        javaMethods.add(createMethodDefaultMethod(method, types, clientType));
+        javaMethods.addAll(
+            createMethodVariants(method, messageTypes, types, clientType, resourceNames));
+        javaMethods.add(createMethodDefaultMethod(method, types, clientType, resourceNames));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service.name(), method, types));
@@ -496,7 +506,8 @@ public class ServiceClientClassComposer implements ClassComposer {
       Method method,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
-      TypeNode clientType) {
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -561,7 +572,7 @@ public class ServiceClientClassComposer implements ClassComposer {
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   ServiceClientCommentComposer.createRpcMethodHeaderComment(
-                      method, signature, clientType))
+                      method, signature, clientType, resourceNames))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setReturnType(methodOutputType)
@@ -576,7 +587,10 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createMethodDefaultMethod(
-      Method method, Map<String, TypeNode> types, TypeNode clientType) {
+      Method method,
+      Map<String, TypeNode> types,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -620,7 +634,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .build();
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcMethodHeaderComment(method, clientType))
+            ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                method, clientType, resourceNames))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setReturnType(methodOutputType)

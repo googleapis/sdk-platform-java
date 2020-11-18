@@ -60,8 +60,8 @@ public class Composer {
       @Nonnull Map<String, ResourceName> resourceNames,
       @Nonnull Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes));
-    clazzes.addAll(generateClientSettingsClasses(service, messageTypes));
+    clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes, resourceNames));
+    clazzes.addAll(generateClientSettingsClasses(service, messageTypes, resourceNames));
     clazzes.addAll(generateMocksAndTestClasses(service, resourceNames, messageTypes));
     // TODO(miraleung): Generate test classes.
     return clazzes;
@@ -76,29 +76,38 @@ public class Composer {
   }
 
   public static List<GapicClass> generateStubClasses(
-      Service service, GapicServiceConfig serviceConfig, Map<String, Message> messageTypes) {
+      Service service,
+      GapicServiceConfig serviceConfig,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(ServiceStubClassComposer.instance().generate(service, resourceNames, messageTypes));
     clazzes.add(
         ServiceStubSettingsClassComposer.instance().generate(service, serviceConfig, messageTypes));
-    clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(GrpcServiceStubClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(
+        GrpcServiceCallableFactoryClassComposer.instance()
+            .generate(service, resourceNames, messageTypes));
+    clazzes.add(
+        GrpcServiceStubClassComposer.instance().generate(service, resourceNames, messageTypes));
     return clazzes;
   }
 
   public static List<GapicClass> generateClientSettingsClasses(
-      Service service, Map<String, Message> messageTypes) {
+      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(ServiceClientClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(
+        ServiceClientClassComposer.instance().generate(service, resourceNames, messageTypes));
+    clazzes.add(
+        ServiceSettingsClassComposer.instance().generate(service, resourceNames, messageTypes));
     return clazzes;
   }
 
   public static List<GapicClass> generateMocksAndTestClasses(
       Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(MockServiceClassComposer.instance().generate(service, resourceNames, messageTypes));
+    clazzes.add(
+        MockServiceImplClassComposer.instance().generate(service, resourceNames, messageTypes));
     clazzes.add(
         ServiceClientTestClassComposer.instance().generate(service, resourceNames, messageTypes));
     return clazzes;

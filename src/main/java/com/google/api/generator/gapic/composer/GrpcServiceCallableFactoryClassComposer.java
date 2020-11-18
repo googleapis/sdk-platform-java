@@ -42,6 +42,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.base.Preconditions;
 import com.google.longrunning.Operation;
@@ -64,7 +65,8 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
     Map<String, TypeNode> types = createTypes(service);
     String className = String.format("Grpc%sCallableFactory", service.name());
     GapicClass.Kind kind = Kind.STUB;

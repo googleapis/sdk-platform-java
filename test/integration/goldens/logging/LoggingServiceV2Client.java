@@ -157,7 +157,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   String log_name = "log_name2013526694";
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
    *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
    * }
    * }</pre>
@@ -250,7 +250,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   String log_name = "log_name2013526694";
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
    *   MonitoredResource resource = MonitoredResource.newBuilder().build();
    *   Map<String, String> labels = new HashMap<>();
    *   List<LogEntry> entries = new ArrayList<>();

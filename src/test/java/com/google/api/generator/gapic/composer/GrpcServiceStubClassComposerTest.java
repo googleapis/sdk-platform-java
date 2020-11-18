@@ -55,7 +55,8 @@ public class GrpcServiceStubClassComposerTest {
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        GrpcServiceStubClassComposer.instance().generate(echoProtoService, messageTypes);
+        GrpcServiceStubClassComposer.instance()
+            .generate(echoProtoService, resourceNames, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -82,7 +83,8 @@ public class GrpcServiceStubClassComposerTest {
             outputResourceNames);
     Service testingProtoService = services.get(0);
     GapicClass clazz =
-        GrpcServiceStubClassComposer.instance().generate(testingProtoService, messageTypes);
+        GrpcServiceStubClassComposer.instance()
+            .generate(testingProtoService, resourceNames, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -115,7 +117,8 @@ public class GrpcServiceStubClassComposerTest {
             outputResourceNames);
 
     Service service = services.get(0);
-    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(service, messageTypes);
+    GapicClass clazz =
+        GrpcServiceStubClassComposer.instance().generate(service, resourceNames, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
