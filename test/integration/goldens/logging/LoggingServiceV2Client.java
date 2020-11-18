@@ -78,7 +78,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * LoggingServiceV2Settings loggingServiceV2Settings =
  *     LoggingServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
  *         .build();
  * LoggingServiceV2Client loggingServiceV2Client =
  *     LoggingServiceV2Client.create(loggingServiceV2Settings);
@@ -88,7 +88,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * LoggingServiceV2Settings loggingServiceV2Settings =
- *     LoggingServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
+ *     LoggingServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
  * LoggingServiceV2Client loggingServiceV2Client =
  *     LoggingServiceV2Client.create(loggingServiceV2Settings);
  * }</pre>
@@ -157,7 +157,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   String log_name = "log_name2013526694";
    *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
    * }
    * }</pre>
@@ -216,7 +216,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -250,7 +250,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   String log_name = "log_name2013526694";
    *   MonitoredResource resource = MonitoredResource.newBuilder().build();
    *   Map<String, String> labels = new HashMap<>();
    *   List<LogEntry> entries = new ArrayList<>();
@@ -400,7 +400,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -435,7 +435,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -478,7 +478,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -523,7 +523,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -568,7 +568,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -594,7 +594,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -620,7 +620,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -646,7 +646,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -672,7 +672,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -695,7 +695,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
