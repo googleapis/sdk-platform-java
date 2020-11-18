@@ -25,7 +25,7 @@ public class JavaDocCommentTest {
   public void createJavaDocComment_basic() {
     String content = "this is a test comment";
     JavaDocComment javaDocComment = JavaDocComment.builder().addComment(content).build();
-    assertEquals(javaDocComment.comment(), content);
+    assertEquals(content, javaDocComment.comment());
   }
 
   @Test
@@ -51,7 +51,7 @@ public class JavaDocCommentTest {
             + " libraryClient.createShelfCallable().futureCall(request);\n"
             + "}</pre>\n"
             + "@throws Exception This is an exception.";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   @Test
@@ -65,7 +65,7 @@ public class JavaDocCommentTest {
             + "<pre>{@code\n"
             + "resource = project/{project}/shelfId/{shelfId}\n"
             + "}</pre>";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   @Test
@@ -122,7 +122,7 @@ public class JavaDocCommentTest {
             + "<li> A request object method.\n"
             + "<li> A callable method.\n"
             + "</ol>";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   @Test
@@ -143,7 +143,7 @@ public class JavaDocCommentTest {
         "This is a block comment.\n"
             + "@param shelfName The name of the shelf where books are published to.\n"
             + "@param shelfId The shelfId of the shelf where books are published to.";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   @Test
@@ -168,7 +168,7 @@ public class JavaDocCommentTest {
     String expected =
         "@throws java.lang.RuntimeException if the remote call fails.\n"
             + "@deprecated Use the {@link ShelfBookName} class instead.";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   @Test
@@ -219,7 +219,7 @@ public class JavaDocCommentTest {
             + "@param shelf The shelf to create.\n"
             + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
             + "@deprecated Use the {@link ArchivedBookName} class instead.";
-    assertEquals(javaDocComment.comment(), expected);
+    assertEquals(expected, javaDocComment.comment());
   }
 
   private static String createLines(int numLines) {
