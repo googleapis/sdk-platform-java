@@ -377,7 +377,13 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Stream.BiDi Rpc callable methods' sample code.
+   *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+   *
+   *   EchoRequest request = EchoRequest.newBuilder().build();
+   *   bidiStream.send(response);
+   *   for (EchoResponse response : bidiStream) {
+   *     // Do something when receive a response.
+   *   }
    * }
    * }</pre>
    */
@@ -391,7 +397,14 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Stream.BiDi Rpc callable methods' sample code.
+   *   BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatAgainCallable().call();
+   *
+   *   String content = "content951530617";
+   *   EchoRequest request = EchoRequest.newBuilder().setContent(content).build();
+   *   bidiStream.send(response);
+   *   for (EchoResponse response : bidiStream) {
+   *     // Do something when receive a response.
+   *   }
    * }
    * }</pre>
    */
