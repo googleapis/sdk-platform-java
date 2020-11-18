@@ -287,7 +287,9 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+   *   EchoResponse response = echoClient.Echo(request);
    * }
    * }</pre>
    *
@@ -334,7 +336,10 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   PagedExpandRequest request = PagedExpandRequest.newBuilder().build();
+   *   for (EchoClient echoClient : echoClient.PagedExpand(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -402,7 +407,9 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   Operation response = EchoClient.waitAsync(request).get();
    * }
    * }</pre>
    *
@@ -431,7 +438,8 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   BlockResponse response = echoClient.Block(request);
    * }
    * }</pre>
    *

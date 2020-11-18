@@ -316,7 +316,13 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   BillingAccountLocationName parent =
+   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
+   *   for (ConfigServiceV2Client configServiceV2Client :
+   *       configServiceV2Client.ListBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -356,7 +362,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   GetBucketRequest request = GetBucketRequest.newBuilder().build();
+   *   LogBucket response = configServiceV2Client.GetBucket(request);
    * }
    * }</pre>
    *
@@ -394,7 +401,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   UpdateBucketRequest request = UpdateBucketRequest.newBuilder().build();
+   *   LogBucket response = configServiceV2Client.UpdateBucket(request);
    * }
    * }</pre>
    *
@@ -574,7 +582,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
+   *   for (ConfigServiceV2Client configServiceV2Client :
+   *       configServiceV2Client.ListSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -668,7 +681,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   GetSinkRequest request = GetSinkRequest.newBuilder().setSinkName(sink_name).build();
+   *   LogSink response = configServiceV2Client.GetSink(request);
    * }
    * }</pre>
    *
@@ -867,7 +882,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   CreateSinkRequest request =
+   *       CreateSinkRequest.newBuilder().setParent(parent).setSink(sink).build();
+   *   LogSink response = configServiceV2Client.CreateSink(request);
    * }
    * }</pre>
    *
@@ -1074,7 +1093,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   UpdateSinkRequest request =
+   *       UpdateSinkRequest.newBuilder().setSinkName(sink_name).setSink(sink).build();
+   *   LogSink response = configServiceV2Client.UpdateSink(request);
    * }
    * }</pre>
    *
@@ -1167,7 +1190,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   DeleteSinkRequest request = DeleteSinkRequest.newBuilder().setSinkName(sink_name).build();
+   *   Empty response = configServiceV2Client.DeleteSink(request);
    * }
    * }</pre>
    *
@@ -1339,7 +1364,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
+   *   for (ConfigServiceV2Client configServiceV2Client :
+   *       configServiceV2Client.ListExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -1435,7 +1465,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   GetExclusionRequest request = GetExclusionRequest.newBuilder().setName(name).build();
+   *   LogExclusion response = configServiceV2Client.GetExclusion(request);
    * }
    * }</pre>
    *
@@ -1622,7 +1654,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   CreateExclusionRequest request =
+   *       CreateExclusionRequest.newBuilder().setParent(parent).setExclusion(exclusion).build();
+   *   LogExclusion response = configServiceV2Client.CreateExclusion(request);
    * }
    * }</pre>
    *
@@ -1736,7 +1772,16 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   UpdateExclusionRequest request =
+   *       UpdateExclusionRequest.newBuilder()
+   *           .setName(name)
+   *           .setExclusion(exclusion)
+   *           .setUpdateMask(update_mask)
+   *           .build();
+   *   LogExclusion response = configServiceV2Client.UpdateExclusion(request);
    * }
    * }</pre>
    *
@@ -1820,7 +1865,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   DeleteExclusionRequest request = DeleteExclusionRequest.newBuilder().setName(name).build();
+   *   Empty response = configServiceV2Client.DeleteExclusion(request);
    * }
    * }</pre>
    *
@@ -1855,7 +1902,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   GetCmekSettingsRequest request = GetCmekSettingsRequest.newBuilder().build();
+   *   CmekSettings response = configServiceV2Client.GetCmekSettings(request);
    * }
    * }</pre>
    *
@@ -1901,7 +1949,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   UpdateCmekSettingsRequest request = UpdateCmekSettingsRequest.newBuilder().build();
+   *   CmekSettings response = configServiceV2Client.UpdateCmekSettings(request);
    * }
    * }</pre>
    *

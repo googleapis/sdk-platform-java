@@ -204,7 +204,16 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   String display_name = "display_name1615086568";
+   *   String email = "email96619420";
+   *   CreateUserRequest request =
+   *       CreateUserRequest.newBuilder()
+   *           .setParent(parent)
+   *           .setDisplayName(display_name)
+   *           .setEmail(email)
+   *           .build();
+   *   User response = identityClient.CreateUser(request);
    * }
    * }</pre>
    *
@@ -266,7 +275,9 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   UserName name = UserName.of("[USER]");
+   *   GetUserRequest request = GetUserRequest.newBuilder().setName(name).build();
+   *   User response = identityClient.GetUser(request);
    * }
    * }</pre>
    *
@@ -289,7 +300,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   UpdateUserRequest request = UpdateUserRequest.newBuilder().build();
+   *   User response = identityClient.UpdateUser(request);
    * }
    * }</pre>
    *
@@ -353,7 +365,9 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   UserName name = UserName.of("[USER]");
+   *   DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name).build();
+   *   Empty response = identityClient.DeleteUser(request);
    * }
    * }</pre>
    *
@@ -376,7 +390,10 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   ListUsersRequest request = ListUsersRequest.newBuilder().build();
+   *   for (IdentityClient identityClient : identityClient.ListUsers(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *

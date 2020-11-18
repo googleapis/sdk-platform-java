@@ -265,7 +265,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   ListInstancesRequest request = ListInstancesRequest.newBuilder().setParent(parent).build();
+   *   for (CloudRedisClient cloudRedisClient :
+   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -374,7 +379,9 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   GetInstanceRequest request = GetInstanceRequest.newBuilder().setName(name).build();
+   *   Instance response = cloudRedisClient.GetInstance(request);
    * }
    * }</pre>
    *
@@ -520,7 +527,16 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   String instance_id = "instance_id-2101995259";
+   *   Instance instance = Instance.newBuilder().build();
+   *   CreateInstanceRequest request =
+   *       CreateInstanceRequest.newBuilder()
+   *           .setParent(parent)
+   *           .setInstanceId(instance_id)
+   *           .setInstance(instance)
+   *           .build();
+   *   Operation response = CloudRedisClient.createInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -619,7 +635,14 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   Instance instance = Instance.newBuilder().build();
+   *   UpdateInstanceRequest request =
+   *       UpdateInstanceRequest.newBuilder()
+   *           .setUpdateMask(update_mask)
+   *           .setInstance(instance)
+   *           .build();
+   *   Operation response = CloudRedisClient.updateInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -725,7 +748,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   String redis_version = "redis_version-685310444";
+   *   UpgradeInstanceRequest request =
+   *       UpgradeInstanceRequest.newBuilder().setName(name).setRedisVersion(redis_version).build();
+   *   Operation response = CloudRedisClient.upgradeInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -805,7 +832,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   String name = "name3373707";
+   *   InputConfig input_config = InputConfig.newBuilder().build();
+   *   ImportInstanceRequest request =
+   *       ImportInstanceRequest.newBuilder().setName(name).setInputConfig(input_config).build();
+   *   Operation response = CloudRedisClient.importInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -895,7 +926,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   String name = "name3373707";
+   *   OutputConfig output_config = OutputConfig.newBuilder().build();
+   *   ExportInstanceRequest request =
+   *       ExportInstanceRequest.newBuilder().setName(name).setOutputConfig(output_config).build();
+   *   Operation response = CloudRedisClient.exportInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -1013,7 +1048,15 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   FailoverInstanceRequest.DataProtectionMode data_protection_mode =
+   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *   FailoverInstanceRequest request =
+   *       FailoverInstanceRequest.newBuilder()
+   *           .setName(name)
+   *           .setDataProtectionMode(data_protection_mode)
+   *           .build();
+   *   Operation response = CloudRedisClient.failoverInstanceAsync(request).get();
    * }
    * }</pre>
    *
@@ -1105,7 +1148,9 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   DeleteInstanceRequest request = DeleteInstanceRequest.newBuilder().setName(name).build();
+   *   Operation response = CloudRedisClient.deleteInstanceAsync(request).get();
    * }
    * }</pre>
    *

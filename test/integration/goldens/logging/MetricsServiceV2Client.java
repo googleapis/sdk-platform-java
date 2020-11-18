@@ -205,7 +205,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   ListLogMetricsRequest request = ListLogMetricsRequest.newBuilder().setParent(parent).build();
+   *   for (MetricsServiceV2Client metricsServiceV2Client :
+   *       metricsServiceV2Client.ListLogMetrics(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -294,7 +299,10 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   GetLogMetricRequest request =
+   *       GetLogMetricRequest.newBuilder().setMetricName(metric_name).build();
+   *   LogMetric response = metricsServiceV2Client.GetLogMetric(request);
    * }
    * }</pre>
    *
@@ -380,7 +388,11 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   CreateLogMetricRequest request =
+   *       CreateLogMetricRequest.newBuilder().setParent(parent).setMetric(metric).build();
+   *   LogMetric response = metricsServiceV2Client.CreateLogMetric(request);
    * }
    * }</pre>
    *
@@ -468,7 +480,11 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   UpdateLogMetricRequest request =
+   *       UpdateLogMetricRequest.newBuilder().setMetricName(metric_name).setMetric(metric).build();
+   *   LogMetric response = metricsServiceV2Client.UpdateLogMetric(request);
    * }
    * }</pre>
    *
@@ -545,7 +561,10 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   DeleteLogMetricRequest request =
+   *       DeleteLogMetricRequest.newBuilder().setMetricName(metric_name).build();
+   *   Empty response = metricsServiceV2Client.DeleteLogMetric(request);
    * }
    * }</pre>
    *

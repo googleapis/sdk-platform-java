@@ -170,7 +170,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   ExportAssetsRequest request = ExportAssetsRequest.newBuilder().build();
+   *   Operation response = AssetServiceClient.exportAssetsAsync(request).get();
    * }
    * }</pre>
    *
@@ -229,7 +230,8 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   BatchGetAssetsHistoryRequest request = BatchGetAssetsHistoryRequest.newBuilder().build();
+   *   BatchGetAssetsHistoryResponse response = assetServiceClient.BatchGetAssetsHistory(request);
    * }
    * }</pre>
    *
@@ -288,7 +290,9 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   CreateFeedRequest request = CreateFeedRequest.newBuilder().setParent(parent).build();
+   *   Feed response = assetServiceClient.CreateFeed(request);
    * }
    * }</pre>
    *
@@ -364,7 +368,9 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   GetFeedRequest request = GetFeedRequest.newBuilder().setName(name).build();
+   *   Feed response = assetServiceClient.GetFeed(request);
    * }
    * }</pre>
    *
@@ -416,7 +422,9 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   ListFeedsRequest request = ListFeedsRequest.newBuilder().setParent(parent).build();
+   *   ListFeedsResponse response = assetServiceClient.ListFeeds(request);
    * }
    * }</pre>
    *
@@ -468,7 +476,9 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   Feed feed = Feed.newBuilder().build();
+   *   UpdateFeedRequest request = UpdateFeedRequest.newBuilder().setFeed(feed).build();
+   *   Feed response = assetServiceClient.UpdateFeed(request);
    * }
    * }</pre>
    *
@@ -546,7 +556,9 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name).build();
+   *   Empty response = assetServiceClient.DeleteFeed(request);
    * }
    * }</pre>
    *
@@ -657,7 +669,19 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   List<String> asset_types = new ArrayList<>();
+   *   SearchAllResourcesRequest request =
+   *       SearchAllResourcesRequest.newBuilder()
+   *           .setScope(scope)
+   *           .setQuery(query)
+   *           .setAssetTypes(asset_types)
+   *           .build();
+   *   for (AssetServiceClient assetServiceClient :
+   *       assetServiceClient.SearchAllResources(scope, query, asset_types).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -768,7 +792,14 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   SearchAllIamPoliciesRequest request =
+   *       SearchAllIamPoliciesRequest.newBuilder().setScope(scope).setQuery(query).build();
+   *   for (AssetServiceClient assetServiceClient :
+   *       assetServiceClient.SearchAllIamPolicies(scope, query).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *

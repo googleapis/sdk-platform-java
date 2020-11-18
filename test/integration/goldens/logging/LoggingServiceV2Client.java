@@ -216,7 +216,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   DeleteLogRequest request = DeleteLogRequest.newBuilder().setLogName(log_name).build();
+   *   Empty response = loggingServiceV2Client.DeleteLog(request);
    * }
    * }</pre>
    *
@@ -400,7 +402,18 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(log_name)
+   *           .setResource(resource)
+   *           .setLabels(labels)
+   *           .setEntries(entries)
+   *           .build();
+   *   WriteLogEntriesResponse response = loggingServiceV2Client.WriteLogEntries(request);
    * }
    * }</pre>
    *
@@ -484,7 +497,19 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   List<String> resource_names = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String order_by = "order_by1234304744";
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .setResourceNames(resource_names)
+   *           .setFilter(filter)
+   *           .setOrderBy(order_by)
+   *           .build();
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       loggingServiceV2Client.ListLogEntries(resource_names, filter, order_by).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -529,7 +554,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder().build();
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       loggingServiceV2Client.ListMonitoredResourceDescriptors(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -721,7 +751,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent).build();
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *

@@ -40,6 +40,7 @@ import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
   // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
+  // TODO(summerji): Refactor signatures as sample code context.
 
   public static String composeClassHeaderCredentialsSampleCode(
       TypeNode clientType, TypeNode settingsType) {
