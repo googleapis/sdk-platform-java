@@ -20,7 +20,6 @@ java_library(
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
         "//src/main/java/com/google/api/generator/gapic/utils",
-        "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
         "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax",
         "@com_google_api_gax_java//gax-grpc:gax_grpc",
