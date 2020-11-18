@@ -93,6 +93,58 @@ public class ServiceClientSampleCodeComposer {
             .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(createMethodExpr)
             .build();
+    return SampleCodeWriter.write(
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr),
+            ExprStatement.withExpr(initClientVarExpr)));
+  }
+
+  public static String composeClassHeaderEndpointSampleCode(
+      TypeNode clientType, TypeNode settingsType) {
+    // Initialize client settings with builder() method.
+    // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+    String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
+    String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
+    VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
+    MethodInvocationExpr newBuilderMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(settingsType)
+            .setMethodName("newBuilder")
+            .build();
+    MethodInvocationExpr credentialsMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderMethodExpr)
+            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("myEndpoint")))
+            .setMethodName("setEndpoint")
+            .build();
+    MethodInvocationExpr buildMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(credentialsMethodExpr)
+            .setReturnType(settingsType)
+            .setMethodName("build")
+            .build();
+
+    Expr initSettingsVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(buildMethodExpr)
+            .build();
+
+    // Initialize client with create() method.
+    // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
+    VariableExpr clientVarExpr = createVariableExpr(clientName, clientType);
+    MethodInvocationExpr createMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(clientType)
+            .setArguments(settingsVarExpr)
+            .setMethodName("create")
+            .setReturnType(clientType)
+            .build();
+    Expr initClientVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(createMethodExpr)
+            .build();
 
     return SampleCodeWriter.write(
         Arrays.asList(
@@ -157,6 +209,17 @@ public class ServiceClientSampleCodeComposer {
   }
 
   // ======================================== Helpers ==========================================//
+  // TODO(summerji): Use writeSampleCode method in new class once PR#499 merged.
+  private static String writeSampleCode(List<Expr> exprs) {
+    List<Statement> statements =
+        exprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    for (Statement statement : statements) {
+      statement.accept(visitor);
+    }
+    return SampleCodeJavaFormatter.format(visitor.write());
+  }
+
   private static VariableExpr createVariableExpr(String variableName, TypeNode type) {
     return VariableExpr.withVariable(
         Variable.builder().setName(variableName).setType(type).build());
