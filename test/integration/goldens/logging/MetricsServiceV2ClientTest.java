@@ -18,6 +18,7 @@ package com.google.logging.v2;
 
 import static com.google.logging.v2.MetricsServiceV2Client.ListLogMetricsPagedResponse;
 
+import com.google.api.MetricDescriptor;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.testing.LocalChannelProvider;
@@ -28,6 +29,7 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Timestamp;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.Arrays;
@@ -175,8 +177,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
@@ -217,8 +222,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
@@ -259,8 +267,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
@@ -304,8 +315,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
@@ -349,8 +363,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
@@ -394,8 +411,11 @@ public class MetricsServiceV2ClientTest {
             .setName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
+            .setMetricDescriptor(MetricDescriptor.newBuilder().build())
             .setValueExtractor("value_extractor2047672534")
             .putAllLabelExtractors(new HashMap<String, String>())
+            .setCreateTime(Timestamp.newBuilder().build())
+            .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 

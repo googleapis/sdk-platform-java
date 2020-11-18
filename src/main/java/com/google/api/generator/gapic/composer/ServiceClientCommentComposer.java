@@ -217,7 +217,7 @@ class ServiceClientCommentComposer {
     return CommentStatement.withComment(JavaDocComment.withComment(comment));
   }
 
-  // TODO(miraleung): Replace this with a comment converter when we upport CommonMark.
+  // TODO(miraleung): Replace this with a comment converter when we support CommonMark.
   private static JavaDocComment.Builder processProtobufComment(
       String rawComment, JavaDocComment.Builder originalCommentBuilder, String firstPattern) {
     JavaDocComment.Builder commentBuilder = originalCommentBuilder;

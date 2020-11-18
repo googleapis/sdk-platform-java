@@ -60,7 +60,7 @@ public class RetrySettingsComposer {
       TypeNode.withReference(ConcreteReference.withClazz(StatusCode.Code.class));
 
   // Default values for LongRunningConfig fields.
-  private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 20000;
+  private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 5000;
   private static final double LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1.5;
   private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 45000;
   private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS = 86400000; // 24 hours.
