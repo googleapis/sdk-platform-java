@@ -51,11 +51,11 @@ public final class SampleCodeHelperComposer {
     }
     // Paged Unary RPC method.
     if (method.isPaged()) {
-      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Long run operation Unary RPC method.
     if (method.hasLro()) {
-      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Pure Unary RPC method.
     return composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
@@ -102,7 +102,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composeLroUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     // TODO(summerji): Add unit tests.
     // Assign each method arguments with default value.
@@ -110,7 +113,8 @@ public final class SampleCodeHelperComposer {
         arguments.stream()
             .map(
                 methodArg ->
-                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
             .collect(Collectors.toList());
     // Assign response variable with get method.
     // e.g EchoResponse response = echoClient.waitAsync().get();
@@ -139,14 +143,18 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit test.
     // Assign each method arguments with default value.
     List<Statement> bodyStatements =
         arguments.stream()
             .map(
                 methodArg ->
-                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
             .collect(Collectors.toList());
     // For loop client on iterateAll method.
     // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
@@ -198,10 +206,11 @@ public final class SampleCodeHelperComposer {
         .build();
   }
 
-  private static Expr assignMethodArgumentWithDefaultValue(MethodArgument argument) {
+  private static Expr assignMethodArgumentWithDefaultValue(
+      MethodArgument argument, Map<String, ResourceName> resourceNames) {
     return AssignmentExpr.builder()
-        .setVariableExpr(createVariableDeclExpr(argument.name(), argument.field().type()))
-        .setValueExpr(DefaultValueComposer.createDefaultValue(argument.field()))
+        .setVariableExpr(createVariableDeclExpr(argument.name(), argument.type()))
+        .setValueExpr(DefaultValueComposer.createDefaultValue(argument, resourceNames))
         .build();
   }
 

@@ -192,8 +192,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = "parent-995424086";
-   *   ListInstancesRequest request = ListInstancesRequest.newBuilder().setParent(parent).build();
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
    *   for (CloudRedisClient cloudRedisClient :
    *       cloudRedisClient.ListInstances(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -232,7 +231,6 @@ public class CloudRedisClient implements BackgroundResource {
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String parent = "parent-995424086";
-   *   ListInstancesRequest request = ListInstancesRequest.newBuilder().setParent(parent).build();
    *   for (CloudRedisClient cloudRedisClient :
    *       cloudRedisClient.ListInstances(parent).iterateAll()) {
    *     // doThingsWith(element);
@@ -416,7 +414,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = "parent-995424086";
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
    *   String instance_id = "instance_id-2101995259";
    *   Instance instance = Instance.newBuilder().build();
    *   Operation response =
@@ -670,7 +668,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = "name3373707";
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   String redis_version = "redis_version-685310444";
    *   Operation response = cloudRedisClient.upgradeInstanceAsync(name, redis_version).get();
    * }
@@ -949,7 +947,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = "name3373707";
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   FailoverInstanceRequest.DataProtectionMode data_protection_mode =
    *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
    *   Operation response = cloudRedisClient.failoverInstanceAsync(name, data_protection_mode).get();
@@ -1058,7 +1056,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String name = "name3373707";
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   Operation response = cloudRedisClient.deleteInstanceAsync(name).get();
    * }
    * }</pre>
