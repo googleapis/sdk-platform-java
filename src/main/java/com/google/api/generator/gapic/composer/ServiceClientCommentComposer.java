@@ -109,8 +109,6 @@ class ServiceClientCommentComposer {
 
   static List<CommentStatement> createClassHeaderComments(
       Service service, TypeNode clientType, TypeNode settingsType) {
-    String settingsName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
-    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
