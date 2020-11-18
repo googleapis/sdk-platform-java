@@ -261,12 +261,4 @@ class ServiceClientCommentComposer {
 
     return commentBuilder;
   }
-
-  private static String getSettingsName(String serviceName) {
-    return String.format(SETTINGS_NAME_PATTERN, serviceName);
-  }
-
-  private static String getClientClassName(String serviceName) {
-    return String.format(CLASS_NAME_PATTERN, serviceName);
-  }
 }
