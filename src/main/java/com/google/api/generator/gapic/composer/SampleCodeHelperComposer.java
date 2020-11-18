@@ -38,6 +38,7 @@ import java.util.stream.Collectors;
 public final class SampleCodeHelperComposer {
   private static String RESPONSE_VAR_NAME = "response";
   private static String REQUEST_VAR_NAME = "request";
+  private static String ASYNC_NAME_PATTERN = "%sAsync";
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method,
@@ -104,12 +105,39 @@ public final class SampleCodeHelperComposer {
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     // TODO(summerji): Add unit tests.
+    // Assign each method arguments with default value.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    // Assign request with set attributes.
+    // e.g. EchoRequest request = echoClient.newBuilder().setName(name).build();
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    // Assign response variable with get method.
+    // e.g EchoResponse response = echoClient.waitAsync().get();
+    Expr getResponseMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(clientType)
+                    .setMethodName(getLroMethodName(method.name()))
+                    .setArguments(mapMethodArgumentsToVariableExprs(arguments))
+                    .build())
+            .setMethodName("get")
+            .setReturnType(method.outputType())
+            .build();
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+                .setValueExpr(getResponseMethodExpr)
+                .build()));
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not Implement yet, placeholder for lro Unary rpc method sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
@@ -227,6 +255,10 @@ public final class SampleCodeHelperComposer {
 
   private static String getClientName(TypeNode clientType) {
     return JavaStyle.toLowerCamelCase(clientType.reference().name());
+  }
+
+  private static String getLroMethodName(String methodName) {
+    return JavaStyle.toLowerCamelCase(String.format(ASYNC_NAME_PATTERN, methodName));
   }
 
   private static CommentStatement createLineCommentStatement(String content) {
