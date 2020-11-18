@@ -56,7 +56,7 @@ public class ParserTest {
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
-    assertEquals(echoService.getName(), "Echo");
+    assertEquals("Echo", echoService.getName());
   }
 
   @Test
@@ -102,7 +102,7 @@ public class ParserTest {
         Parser.parseMethods(
             echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
 
-    assertEquals(methods.size(), 8);
+    assertEquals(8, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
@@ -114,17 +114,17 @@ public class ParserTest {
     assertEquals(7, methodSignatures.size());
 
     Method expandMethod = methods.get(1);
-    assertEquals(expandMethod.name(), "Expand");
+    assertEquals("Expand", expandMethod.name());
     assertEquals(
-        expandMethod.inputType(),
         TypeNode.withReference(
-            VaporReference.builder().setName("ExpandRequest").setPakkage(ECHO_PACKAGE).build()));
+            VaporReference.builder().setName("ExpandRequest").setPakkage(ECHO_PACKAGE).build()),
+        expandMethod.inputType());
     assertEquals(
-        expandMethod.outputType(),
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(ECHO_PACKAGE).build()));
-    assertEquals(expandMethod.stream(), Method.Stream.SERVER);
-    assertEquals(expandMethod.methodSignatures().size(), 1);
+            VaporReference.builder().setName("EchoResponse").setPakkage(ECHO_PACKAGE).build()),
+        expandMethod.outputType());
+    assertEquals(Method.Stream.SERVER, expandMethod.stream());
+    assertEquals(1, expandMethod.methodSignatures().size());
     assertMethodArgumentEquals(
         "content",
         TypeNode.STRING,
@@ -137,12 +137,12 @@ public class ParserTest {
         expandMethod.methodSignatures().get(0).get(1));
 
     Method collectMethod = methods.get(2);
-    assertEquals(collectMethod.name(), "Collect");
-    assertEquals(collectMethod.stream(), Method.Stream.CLIENT);
+    assertEquals("Collect", collectMethod.name());
+    assertEquals(Method.Stream.CLIENT, collectMethod.stream());
 
     Method chatMethod = methods.get(3);
-    assertEquals(chatMethod.name(), "Chat");
-    assertEquals(chatMethod.stream(), Method.Stream.BIDI);
+    assertEquals("Chat", chatMethod.name());
+    assertEquals(Method.Stream.BIDI, chatMethod.stream());
   }
 
   @Test
@@ -154,11 +154,11 @@ public class ParserTest {
         Parser.parseMethods(
             echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
 
-    assertEquals(methods.size(), 8);
+    assertEquals(8, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method waitMethod = methods.get(6);
-    assertEquals(waitMethod.name(), "Wait");
+    assertEquals("Wait", waitMethod.name());
     assertTrue(waitMethod.hasLro());
     TypeNode waitResponseType = messageTypes.get("WaitResponse").type();
     TypeNode waitMetadataType = messageTypes.get("WaitMetadata").type();
