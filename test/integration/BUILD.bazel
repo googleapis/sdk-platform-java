@@ -81,20 +81,9 @@ java_gapic_assembly_gradle_pkg(
 )
 
 # Redis API.
-# Redefine the proto_with_info target so we can include empty_proto.
-# This should be removed post-migration.
-proto_library_with_info(
-    name = "redis_proto_with_info",
-    deps = [
-        "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/cloud/redis/v1:redis_proto",
-        "@com_google_protobuf//:empty_proto",
-    ],
-)
-
 java_gapic_library(
     name = "redis_java_gapic",
-    srcs = ["redis_proto_with_info"],
+    srcs = ["@com_google_googleapis//google/cloud/redis/v1:redis_proto_with_info"],
     grpc_service_config = "@com_google_googleapis//google/cloud/redis/v1:redis_grpc_service_config.json",
     package = "google.cloud.redis.v1",
     test_deps = [
