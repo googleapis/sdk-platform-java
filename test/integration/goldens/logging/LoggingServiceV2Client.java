@@ -216,7 +216,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -400,7 +400,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -435,7 +435,13 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   List<String> resource_names = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String order_by = "order_by1234304744";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogEntries(resource_names, filter, order_by).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -478,7 +484,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -523,7 +529,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -568,7 +574,11 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -594,7 +604,11 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -620,7 +634,11 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -646,7 +664,11 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -672,7 +694,11 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (LoggingServiceV2Client loggingServiceV2Client :
+   *       LoggingServiceV2Client.ListLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -695,7 +721,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
