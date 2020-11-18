@@ -123,6 +123,10 @@ public final class SampleCodeHelperComposer {
                 methodArg ->
                     ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
             .collect(Collectors.toList());
+    // For loop client on iterateAll method.
+    // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
+    // loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    // //doThingsWith(element);}
     bodyStatements.add(
         ForStatement.builder()
             .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
@@ -131,10 +135,7 @@ public final class SampleCodeHelperComposer {
             .build());
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not Implement yet, placeholder for paged unary rpc method sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }

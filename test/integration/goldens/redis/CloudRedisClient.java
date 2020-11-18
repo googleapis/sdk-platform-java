@@ -192,7 +192,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (CloudRedisClient cloudRedisClient :
+   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -226,7 +230,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
+   *   String parent = "parent-995424086";
+   *   for (CloudRedisClient cloudRedisClient :
+   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    *
@@ -257,7 +265,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -504,7 +512,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -601,7 +609,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -703,7 +711,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -781,7 +789,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -869,7 +877,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -981,7 +989,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1071,7 +1079,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
