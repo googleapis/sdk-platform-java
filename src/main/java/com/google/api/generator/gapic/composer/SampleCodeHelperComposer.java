@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.LineComment;
@@ -30,7 +29,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -190,8 +188,9 @@ public final class SampleCodeHelperComposer {
   }
 
   private static List<Expr> mapMethodArgumentsToVariableExprs(List<MethodArgument> arguments) {
-    return arguments.stream().map(arg -> createVariableExpr(arg.name(), arg.type())).collect(
-        Collectors.toList());
+    return arguments.stream()
+        .map(arg -> createVariableExpr(arg.name(), arg.type()))
+        .collect(Collectors.toList());
   }
 
   private static String getClientName(TypeNode clientType) {
