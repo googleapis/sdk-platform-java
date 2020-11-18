@@ -17,23 +17,18 @@ package com.google.api.generator.gapic.composer.samplecode;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter.FormatException;
-import java.util.Arrays;
-import java.util.List;
+import com.google.api.generator.testutils.LineFormatter;
 import org.junit.Test;
 
 public class SampleCodeJavaFormatterTest {
 
   @Test
   public void validFormatSampleCode_tryCatchStatement() {
-    String samplecode = String.format(createLines(3),
-        "try(boolean condition = false){",
-        "int x = 3;",
-        "}");
+    String samplecode = LineFormatter.lines("try(boolean condition = false){", "int x = 3;", "}");
     String result = SampleCodeJavaFormatter.format(samplecode);
     String expected =
-        String.format(createLines(3), "try (boolean condition = false) {\n", "  int x = 3;\n", "}");
+        LineFormatter.lines("try (boolean condition = false) {\n", "  int x = 3;\n", "}");
     assertEquals(expected, result);
   }
 
@@ -44,8 +39,7 @@ public class SampleCodeJavaFormatterTest {
             + "SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();";
     String result = SampleCodeJavaFormatter.format(sampleCode);
     String expected =
-        String.format(
-            createLines(2),
+        LineFormatter.lines(
             "SubscriptionAdminSettings subscriptionAdminSettings =\n",
             "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();");
     assertEquals(expected, result);
@@ -53,11 +47,13 @@ public class SampleCodeJavaFormatterTest {
 
   @Test
   public void validFormatSampleCode_longChainMethod() {
-    String sampleCode = "echoSettingsBuilder.echoSettings().setRetrySettings(echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());";
+    String sampleCode =
+        "echoSettingsBuilder.echoSettings().setRetrySettings("
+            + "echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()"
+            + ".setTotalTimeout(Duration.ofSeconds(30)).build());";
     String result = SampleCodeJavaFormatter.format(sampleCode);
     String expected =
-        String.format(
-            createLines(9),
+        LineFormatter.lines(
             "echoSettingsBuilder\n",
             "    .echoSettings()\n",
             "    .setRetrySettings(\n",
@@ -77,10 +73,5 @@ public class SampleCodeJavaFormatterTest {
         () -> {
           SampleCodeJavaFormatter.format("abc");
         });
-  }
-
-  /** =============================== HELPERS =============================== */
-  private static String createLines(int numLines) {
-    return new String(new char[numLines]).replace("\0", "%s");
   }
 }

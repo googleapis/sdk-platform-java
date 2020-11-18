@@ -16,6 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import static junit.framework.Assert.assertEquals;
 
+import com.google.api.generator.testutils.LineFormatter;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;
@@ -42,15 +43,16 @@ public class JavaDocCommentTest {
             .setThrows("Exception", "This is an exception.")
             .build();
     String expected =
-        "Service comment may include special characters: \\\\ \\t\\b\\r"
-            + "&amp;\"\\f\n"
-            + "`'{@literal @}&#42;/\n"
-            + "<p> title: GetBigBook: &lt;War and Peace&gt;\n"
-            + "<pre>{@code\n"
-            + "ApiFuture<Shelf> future ="
-            + " libraryClient.createShelfCallable().futureCall(request);\n"
-            + "}</pre>\n"
-            + "@throws Exception This is an exception.";
+        LineFormatter.lines(
+            "Service comment may include special characters: \\\\ \\t\\b\\r",
+            "&amp;\"\\f\n",
+            "`'{@literal @}&#42;/\n",
+            "<p> title: GetBigBook: &lt;War and Peace&gt;\n",
+            "<pre>{@code\n",
+            "ApiFuture<Shelf> future =",
+            " libraryClient.createShelfCallable().futureCall(request);\n",
+            "}</pre>\n",
+            "@throws Exception This is an exception.");
     assertEquals(expected, javaDocComment.comment());
   }
 
@@ -61,10 +63,11 @@ public class JavaDocCommentTest {
     JavaDocComment javaDocComment =
         JavaDocComment.builder().addComment(comment).addSampleCode(sampleCode).build();
     String expected =
-        "sample codes:\n"
-            + "<pre>{@code\n"
-            + "resource = project/{project}/shelfId/{shelfId}\n"
-            + "}</pre>";
+        LineFormatter.lines(
+            "sample codes:\n",
+            "<pre>{@code\n",
+            "resource = project/{project}/shelfId/{shelfId}\n",
+            "}</pre>");
     assertEquals(expected, javaDocComment.comment());
   }
 
@@ -72,14 +75,16 @@ public class JavaDocCommentTest {
   public void createJavaDocComment_sampleCodePreserveIndentAndLineBreaks() {
     String comment = "sample codes:";
     String formattedSampleCode =
-        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n";
+        LineFormatter.lines(
+            "SubscriptionAdminSettings subscriptionAdminSettings =\n",
+            "    SubscriptionAdminSettings.newBuilder().setEndpoint(myEndpoint).build();\n");
     String badFormattingSampleCode =
-        "SubscriptionAdminSettings subscriptionAdminSettings =\n"
-            + "    SubscriptionAdminSettings\n"
-            + "        .newBuilder()\n"
-            + "    .setEndpoint(myEndpoint)\n"
-            + "        .build();\n";
+        LineFormatter.lines(
+            "SubscriptionAdminSettings subscriptionAdminSettings =\n",
+            "    SubscriptionAdminSettings\n",
+            "        .newBuilder()\n",
+            "    .setEndpoint(myEndpoint)\n",
+            "        .build();\n");
     JavaDocComment formattedJavaDoc =
         JavaDocComment.builder().addComment(comment).addSampleCode(formattedSampleCode).build();
     JavaDocComment badFormatJavaDoc =
@@ -109,19 +114,20 @@ public class JavaDocCommentTest {
             .addOrderedList(list)
             .build();
     String expected =
-        "This is a test comment.\n"
-            + "This is an unordered list.\n"
-            + "<ul>\n"
-            + "<li> A flattened method.\n"
-            + "<li> A request object method.\n"
-            + "<li> A callable method.\n"
-            + "</ul>\n"
-            + "This is an ordered list.\n"
-            + "<ol>\n"
-            + "<li> A flattened method.\n"
-            + "<li> A request object method.\n"
-            + "<li> A callable method.\n"
-            + "</ol>";
+        LineFormatter.lines(
+            "This is a test comment.\n",
+            "This is an unordered list.\n",
+            "<ul>\n",
+            "<li> A flattened method.\n",
+            "<li> A request object method.\n",
+            "<li> A callable method.\n",
+            "</ul>\n",
+            "This is an ordered list.\n",
+            "<ol>\n",
+            "<li> A flattened method.\n",
+            "<li> A request object method.\n",
+            "<li> A callable method.\n",
+            "</ol>");
     assertEquals(expected, javaDocComment.comment());
   }
 
@@ -166,8 +172,9 @@ public class JavaDocCommentTest {
             .setDeprecated(deprecatedText_print)
             .build();
     String expected =
-        "@throws java.lang.RuntimeException if the remote call fails.\n"
-            + "@deprecated Use the {@link ShelfBookName} class instead.";
+        LineFormatter.lines(
+            "@throws java.lang.RuntimeException if the remote call fails.\n",
+            "@deprecated Use the {@link ShelfBookName} class instead.");
     assertEquals(expected, javaDocComment.comment());
   }
 
@@ -205,24 +212,21 @@ public class JavaDocCommentTest {
             .addParam(paramName2, paramDescription2)
             .build();
     String expected =
-        "this is a test comment\n"
-            + "<p> This class provides the ability to make remote calls to the backing service"
-            + " through method calls that map to API methods. Sample code to get started:\n"
-            + "<p> The surface of this class includes several types of Java methods for each of"
-            + " the API's methods:\n"
-            + "<ol>\n"
-            + "<li> A flattened method.\n"
-            + "<li> A request object method.\n"
-            + "<li> A callable method.\n"
-            + "</ol>\n"
-            + "@param shelfName The name of the shelf where books are published to.\n"
-            + "@param shelf The shelf to create.\n"
-            + "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n"
-            + "@deprecated Use the {@link ArchivedBookName} class instead.";
+        LineFormatter.lines(
+            "this is a test comment\n",
+            "<p> This class provides the ability to make remote calls to the backing service"
+                + " through method calls that map to API methods. Sample code to get started:\n",
+            "<p> The surface of this class includes several types of Java methods for each of"
+                + " the API's methods:\n",
+            "<ol>\n",
+            "<li> A flattened method.\n",
+            "<li> A request object method.\n",
+            "<li> A callable method.\n",
+            "</ol>\n",
+            "@param shelfName The name of the shelf where books are published to.\n",
+            "@param shelf The shelf to create.\n",
+            "@throws com.google.api.gax.rpc.ApiException if the remote call fails.\n",
+            "@deprecated Use the {@link ArchivedBookName} class instead.");
     assertEquals(expected, javaDocComment.comment());
-  }
-
-  private static String createLines(int numLines) {
-    return new String(new char[numLines]).replace("\0", "%s");
   }
 }
