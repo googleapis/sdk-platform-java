@@ -50,7 +50,7 @@ public final class SampleCodeHelperComposer {
     }
     // Paged Unary RPC method.
     if (method.isPaged()) {
-      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Long-running operation Unary RPC method.
     if (method.hasLro()) {
@@ -112,14 +112,18 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit test.
     // Assign each method arguments with default value.
     List<Statement> bodyStatements =
         arguments.stream()
             .map(
                 methodArg ->
-                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
             .collect(Collectors.toList());
     // For loop client on iterateAll method.
     // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
@@ -205,8 +209,6 @@ public final class SampleCodeHelperComposer {
     return arguments.stream()
         .map(arg -> createVariableExpr(arg.name(), arg.type()))
         .collect(Collectors.toList());
-    return arguments.stream().map(arg -> createVariableExpr(arg.name(), arg.type())).collect(
-        Collectors.toList());
   }
 
   private static Expr createIteratorAllMethodExpr(
