@@ -75,6 +75,15 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre>{@code
+ * LoggingServiceV2Settings loggingServiceV2Settings =
+ *     LoggingServiceV2Settings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * LoggingServiceV2Client loggingServiceV2Client =
+ *     LoggingServiceV2Client.create(loggingServiceV2Settings);
+ * }</pre>
+ *
  * <p>To customize the endpoint:
  */
 @BetaApi

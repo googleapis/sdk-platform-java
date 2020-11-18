@@ -73,6 +73,15 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre>{@code
+ * ConfigServiceV2Settings configServiceV2Settings =
+ *     ConfigServiceV2Settings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * ConfigServiceV2Client configServiceV2Client =
+ *     ConfigServiceV2Client.create(configServiceV2Settings);
+ * }</pre>
+ *
  * <p>To customize the endpoint:
  */
 @BetaApi
