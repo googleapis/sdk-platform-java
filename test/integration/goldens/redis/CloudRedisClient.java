@@ -192,11 +192,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = "parent-995424086";
-   *   for (CloudRedisClient cloudRedisClient :
-   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -230,11 +226,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = "parent-995424086";
-   *   for (CloudRedisClient cloudRedisClient :
-   *       cloudRedisClient.ListInstances(parent).iterateAll()) {
-   *     // doThingsWith(element);
-   *   }
+   *   // Note: Not Implement yet. Holder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -265,7 +257,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary paged rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary paged rpc method sample code.
    * }
    * }</pre>
    *
@@ -374,7 +366,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary default rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -414,7 +406,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -463,7 +455,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -512,7 +504,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -579,7 +571,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -609,7 +601,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -658,7 +650,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -686,7 +678,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -711,7 +703,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -758,7 +750,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -789,7 +781,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -847,7 +839,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -877,7 +869,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -929,7 +921,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -959,7 +951,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -989,7 +981,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
@@ -1032,7 +1024,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1057,7 +1049,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for lro Unary rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for lro Unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1079,7 +1071,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not Implement yet. Holder for unary lro rpc method sample code.
+   *   // Note: Not Implement yet, placeholder for unary lro rpc method sample code.
    * }
    * }</pre>
    *
