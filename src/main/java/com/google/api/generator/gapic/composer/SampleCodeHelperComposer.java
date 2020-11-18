@@ -114,8 +114,20 @@ public final class SampleCodeHelperComposer {
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
-    // TODO(summerji): compose sample code for unary paged rpc method.
-    // TODO(summerji): Add unit tests.
+    // TODO(summerji): Add unit test.
+    // Assign each method arguments with default value.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(assignMethodArgumentWithDefaultValue(methodArg)))
+            .collect(Collectors.toList());
+    bodyStatements.add(
+        ForStatement.builder()
+            .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
+            .setCollectionExpr(createIteratorAllMethodExpr(method, clientType, arguments))
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build());
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
         .setTryBody(
@@ -191,6 +203,23 @@ public final class SampleCodeHelperComposer {
     return arguments.stream()
         .map(arg -> createVariableExpr(arg.name(), arg.type()))
         .collect(Collectors.toList());
+  }
+
+  private static Expr createIteratorAllMethodExpr(
+      Method method, TypeNode clientType, List<MethodArgument> arguments) {
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(clientType)
+                .setMethodName(method.name())
+                .setArguments(
+                    !arguments.isEmpty()
+                        ? mapMethodArgumentsToVariableExprs(arguments)
+                        : Arrays.asList(createVariableExpr("request", method.inputType())))
+                .build())
+        .setMethodName("iterateAll")
+        .setReturnType(clientType)
+        .build();
   }
 
   private static String getClientName(TypeNode clientType) {
