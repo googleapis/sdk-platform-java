@@ -580,12 +580,6 @@ public class AssetServiceClient implements BackgroundResource {
    *   String scope = "scope109264468";
    *   String query = "query107944136";
    *   List<String> asset_types = new ArrayList<>();
-   *   SearchAllResourcesRequest request =
-   *       SearchAllResourcesRequest.newBuilder()
-   *           .setScope(scope)
-   *           .setQuery(query)
-   *           .setAssetTypes(asset_types)
-   *           .build();
    *   for (AssetServiceClient assetServiceClient :
    *       assetServiceClient.SearchAllResources(scope, query, asset_types).iterateAll()) {
    *     // doThingsWith(element);
@@ -713,8 +707,6 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String scope = "scope109264468";
    *   String query = "query107944136";
-   *   SearchAllIamPoliciesRequest request =
-   *       SearchAllIamPoliciesRequest.newBuilder().setScope(scope).setQuery(query).build();
    *   for (AssetServiceClient assetServiceClient :
    *       assetServiceClient.SearchAllIamPolicies(scope, query).iterateAll()) {
    *     // doThingsWith(element);
