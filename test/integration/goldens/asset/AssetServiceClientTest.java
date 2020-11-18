@@ -32,6 +32,8 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
+import com.google.protobuf.Timestamp;
+import com.google.type.Expr;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -89,6 +91,7 @@ public class AssetServiceClientTest {
   public void exportAssetsTest() throws Exception {
     ExportAssetsResponse expectedResponse =
         ExportAssetsResponse.newBuilder()
+            .setReadTime(Timestamp.newBuilder().build())
             .setOutputConfig(OutputConfig.newBuilder().build())
             .setOutputResult(OutputResult.newBuilder().build())
             .build();
@@ -103,6 +106,7 @@ public class AssetServiceClientTest {
     ExportAssetsRequest request =
         ExportAssetsRequest.newBuilder()
             .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+            .setReadTime(Timestamp.newBuilder().build())
             .addAllAssetTypes(new ArrayList<String>())
             .setOutputConfig(OutputConfig.newBuilder().build())
             .build();
@@ -134,6 +138,7 @@ public class AssetServiceClientTest {
       ExportAssetsRequest request =
           ExportAssetsRequest.newBuilder()
               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+              .setReadTime(Timestamp.newBuilder().build())
               .addAllAssetTypes(new ArrayList<String>())
               .setOutputConfig(OutputConfig.newBuilder().build())
               .build();
@@ -206,6 +211,7 @@ public class AssetServiceClientTest {
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
+            .setCondition(Expr.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -247,6 +253,7 @@ public class AssetServiceClientTest {
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
+            .setCondition(Expr.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -288,6 +295,7 @@ public class AssetServiceClientTest {
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
+            .setCondition(Expr.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
@@ -365,6 +373,7 @@ public class AssetServiceClientTest {
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
+            .setCondition(Expr.newBuilder().build())
             .build();
     mockAssetService.addResponse(expectedResponse);
 
