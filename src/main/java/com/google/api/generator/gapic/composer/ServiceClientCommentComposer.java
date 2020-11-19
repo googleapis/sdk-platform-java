@@ -29,6 +29,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class ServiceClientCommentComposer {
+  // Name Pattern.
+  private static final String SETTINGS_NAME_PATTERN = "%sSettings";
+  private static final String CLASS_NAME_PATTERN = "%sClient";
+
   // Tokens.
   private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
@@ -260,5 +264,13 @@ class ServiceClientCommentComposer {
     }
 
     return commentBuilder;
+  }
+
+  private static String getSettingsName(String serviceName) {
+    return String.format(SETTINGS_NAME_PATTERN, serviceName);
+  }
+
+  private static String getClientClassName(String serviceName) {
+    return String.format(CLASS_NAME_PATTERN, serviceName);
   }
 }

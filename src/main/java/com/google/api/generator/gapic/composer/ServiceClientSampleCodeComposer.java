@@ -1,6 +1,6 @@
 // Copyright 2020 Google LLC
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
+// Licensed under the Apache License, Version 2.0 (the "License");\
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
 //
@@ -146,7 +146,10 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(createMethodExpr)
             .build();
 
-    return writeSampleCode(Arrays.asList(initSettingsVarExpr, initClientVarExpr));
+    return SampleCodeWriter.write(
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr),
+            ExprStatement.withExpr(initClientVarExpr)));
   }
 
   public static String composeRpcMethodHeaderSampleCode(
