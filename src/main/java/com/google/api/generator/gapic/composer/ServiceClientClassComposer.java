@@ -122,9 +122,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         ClassDefinition.builder()
             .setHeaderCommentStatements(
                 ServiceClientCommentComposer.createClassHeaderComments(
-                    service,
-                    types.get(getClientClassName(service.name())),
-                    types.get(getSettingsName(service.name()))))
+                    service, types, resourceNames))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
             .setScope(ScopeNode.PUBLIC)

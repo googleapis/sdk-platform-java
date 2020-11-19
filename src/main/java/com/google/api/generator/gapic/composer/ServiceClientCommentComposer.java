@@ -110,9 +110,11 @@ class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode clientType, TypeNode settingsType) {
-    String settingsName = JavaStyle.toLowerCamelCase(getSettingsName(service.name()));
-    String clientName = JavaStyle.toLowerCamelCase(getClientClassName(service.name()));
+      Service service, Map<String, TypeNode> types, Map<String, ResourceName> resourcesNames) {
+    String clientName = getClientClassName(service.name());
+    String settingsName = getSettingsName(service.name());
+    TypeNode clientType = types.get(clientName);
+    TypeNode settingsType = types.get(settingsName);
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -124,7 +126,9 @@ class ServiceClientCommentComposer {
 
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
-    // TODO(summerji): Add sample code here.
+    classHeaderJavadocBuilder.addSampleCode(
+        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+            service.methods(), clientType, types, resourcesNames));
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
@@ -280,11 +284,11 @@ class ServiceClientCommentComposer {
     return commentBuilder;
   }
 
-  private static String getSettingsName(String serviceName) {
-    return String.format(SETTINGS_NAME_PATTERN, serviceName);
+  private static String getClientClassName(String serviceName) {
+    return String.format("%sClient", serviceName);
   }
 
-  private static String getClientClassName(String serviceName) {
-    return String.format(CLASS_NAME_PATTERN, serviceName);
+  private static String getSettingsName(String serviceName) {
+    return String.format("%sSettings", serviceName);
   }
 }

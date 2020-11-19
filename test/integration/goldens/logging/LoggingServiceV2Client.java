@@ -46,6 +46,13 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+ *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+ *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the loggingServiceV2Client object to clean up resources
  * such as threads. In the example above, try-with-resources is used, which automatically calls
  * close().

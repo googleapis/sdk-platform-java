@@ -20,6 +20,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -30,17 +31,68 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
+
+  private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
   // TODO(summerji): Refactor signatures as sample code context.
+
+  public static String composeClassHeaderMethodSampleCode(
+      List<Method> methods,
+      TypeNode clientType,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames) {
+    // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
+    // the first method in the service's methods list.
+    Method method =
+        methods.stream()
+            .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
+            .findFirst()
+            .orElse(methods.get(0));
+    // If variant method signatures exists, use the first one.
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+    if (method.stream() == Stream.NONE) {
+      return SampleCodeWriter.write(
+          SampleCodeHelperComposer.composeRpcMethodSampleCode(
+              method, arguments, clientType, resourceNames));
+    }
+
+    TypeNode rawCallableReturnType = null;
+    if (method.hasLro()) {
+      rawCallableReturnType = types.get("OperationCallable");
+    } else if (method.stream() == Stream.CLIENT) {
+      rawCallableReturnType = types.get("ClientStreamingCallable");
+    } else if (method.stream() == Stream.SERVER) {
+      rawCallableReturnType = types.get("ServerStreamingCallable");
+    } else if (method.stream() == Stream.BIDI) {
+      rawCallableReturnType = types.get("BidiStreamingCallable");
+    } else {
+      rawCallableReturnType = types.get("UnaryCallable");
+    }
+
+    // Set generics.
+    TypeNode returnType =
+        TypeNode.withReference(
+            rawCallableReturnType
+                .reference()
+                .copyAndSetGenerics(getGenericsForCallable(method, types)));
+    return SampleCodeWriter.write(
+        SampleCodeHelperComposer.composeRpcCallableMethodSampleCode(
+            method, clientType, returnType, resourceNames));
+  }
 
   public static String composeClassHeaderCredentialsSampleCode(
       TypeNode clientType, TypeNode settingsType) {
@@ -185,5 +237,21 @@ public class ServiceClientSampleCodeComposer {
   private static VariableExpr createVariableExpr(String variableName, TypeNode type) {
     return VariableExpr.withVariable(
         Variable.builder().setName(variableName).setType(type).build());
+  }
+
+  private static List<Reference> getGenericsForCallable(
+      Method method, Map<String, TypeNode> types) {
+    if (method.hasLro()) {
+      return Arrays.asList(
+          method.inputType().reference(),
+          method.lro().responseType().reference(),
+          method.lro().metadataType().reference());
+    }
+    if (method.isPaged()) {
+      return Arrays.asList(
+          method.inputType().reference(),
+          types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name())).reference());
+    }
+    return Arrays.asList(method.inputType().reference(), method.outputType().reference());
   }
 }

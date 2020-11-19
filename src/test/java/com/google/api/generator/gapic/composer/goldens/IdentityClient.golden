@@ -25,6 +25,15 @@ import javax.annotation.Generated;
  * This class provides the ability to make remote calls to the backing service through method calls
  * that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (IdentityClient identityClient = IdentityClient.create()) {
+ *   String parent = "parent-995424086";
+ *   String display_name = "display_name1615086568";
+ *   String email = "email96619420";
+ *   User response = identityClient.CreateUser(parent, display_name, email);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the identityClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *

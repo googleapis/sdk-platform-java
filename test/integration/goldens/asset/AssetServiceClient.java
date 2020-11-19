@@ -47,6 +47,13 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+ *   BatchGetAssetsHistoryRequest request = BatchGetAssetsHistoryRequest.newBuilder().build();
+ *   BatchGetAssetsHistoryResponse response = assetServiceClient.BatchGetAssetsHistory(request);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the assetServiceClient object to clean up resources such
  * as threads. In the example above, try-with-resources is used, which automatically calls close().
  *
