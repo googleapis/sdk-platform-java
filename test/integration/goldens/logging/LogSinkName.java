@@ -48,6 +48,15 @@ public class LogSinkName implements ResourceName {
   private final String folder;
   private final String billingAccount;
 
+  @Deprecated
+  protected LogSinkName() {
+    project = null;
+    sink = null;
+    organization = null;
+    folder = null;
+    billingAccount = null;
+  }
+
   private LogSinkName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     sink = Preconditions.checkNotNull(builder.getSink());
@@ -311,7 +320,7 @@ public class LogSinkName implements ResourceName {
     private String project;
     private String sink;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -350,7 +359,7 @@ public class LogSinkName implements ResourceName {
     private String organization;
     private String sink;
 
-    private OrganizationSinkBuilder() {}
+    protected OrganizationSinkBuilder() {}
 
     public String getOrganization() {
       return organization;
@@ -381,7 +390,7 @@ public class LogSinkName implements ResourceName {
     private String folder;
     private String sink;
 
-    private FolderSinkBuilder() {}
+    protected FolderSinkBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -412,7 +421,7 @@ public class LogSinkName implements ResourceName {
     private String billingAccount;
     private String sink;
 
-    private BillingAccountSinkBuilder() {}
+    protected BillingAccountSinkBuilder() {}
 
     public String getBillingAccount() {
       return billingAccount;

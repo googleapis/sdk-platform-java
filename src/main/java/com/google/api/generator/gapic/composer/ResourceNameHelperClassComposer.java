@@ -289,6 +289,29 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    final ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+    Function<String, AssignmentExpr> assignTokenToNullExpr =
+        t ->
+            AssignmentExpr.builder()
+                .setVariableExpr(patternTokenVarExprs.get(t))
+                .setValueExpr(nullExpr)
+                .build();
+
+    // First deprecated constructor.
+    javaMethods.add(
+        MethodDefinition.constructorBuilder()
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(Deprecated.class)))))
+            .setScope(ScopeNode.PROTECTED)
+            .setReturnType(thisClassType)
+            .setBody(
+                getTokenSet(tokenHierarchies).stream()
+                    .map(t -> ExprStatement.withExpr(assignTokenToNullExpr.apply(t)))
+                    .collect(Collectors.toList()))
+            .build());
+
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       List<Expr> bodyExprs = new ArrayList<>();
@@ -316,16 +339,11 @@ public class ResourceNameHelperClassComposer {
                 .build());
       }
       // Initialize the rest to null.
-      ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
       for (String token : getTokenSet(tokenHierarchies)) {
         if (tokens.contains(token)) {
           continue;
         }
-        bodyExprs.add(
-            AssignmentExpr.builder()
-                .setVariableExpr(patternTokenVarExprs.get(token))
-                .setValueExpr(nullExpr)
-                .build());
+        bodyExprs.add(assignTokenToNullExpr.apply(token));
       }
 
       if (hasVariants) {
@@ -1389,7 +1407,7 @@ public class ResourceNameHelperClassComposer {
     TypeNode thisClassType = types.get(className);
     MethodDefinition ctor =
         MethodDefinition.constructorBuilder()
-            .setScope(ScopeNode.PRIVATE)
+            .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .build();
     nestedClassMethods.add(ctor);
