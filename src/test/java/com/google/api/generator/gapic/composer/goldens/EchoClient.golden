@@ -542,7 +542,12 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   OperationFuture<WaitRequest, Operation> future =
+   *       echoClient.waitOperationCallable().futureCall(request);
+   *   // Do something.
+   *   WaitResponse response = future.get();
    * }
    * }</pre>
    */
@@ -556,7 +561,11 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
+   *   ApiFuture<Operation> future = EchoClient.waitCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */

@@ -198,7 +198,11 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   ExportAssetsRequest request = ExportAssetsRequest.newBuilder().build();
+   *   OperationFuture<ExportAssetsRequest, Operation> future =
+   *       assetServiceClient.exportAssetsOperationCallable().futureCall(request);
+   *   // Do something.
+   *   ExportAssetsResponse response = future.get();
    * }
    * }</pre>
    */
@@ -222,7 +226,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   ExportAssetsRequest request = ExportAssetsRequest.newBuilder().build();
+   *   ApiFuture<Operation> future = AssetServiceClient.exportAssetsCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */

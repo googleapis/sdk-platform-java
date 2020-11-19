@@ -605,7 +605,19 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   String instance_id = "instance_id-2101995259";
+   *   Instance instance = Instance.newBuilder().build();
+   *   CreateInstanceRequest request =
+   *       CreateInstanceRequest.newBuilder()
+   *           .setParent(parent)
+   *           .setInstanceId(instance_id)
+   *           .setInstance(instance)
+   *           .build();
+   *   OperationFuture<CreateInstanceRequest, Operation> future =
+   *       cloudRedisClient.createInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -633,7 +645,18 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   String instance_id = "instance_id-2101995259";
+   *   Instance instance = Instance.newBuilder().build();
+   *   CreateInstanceRequest request =
+   *       CreateInstanceRequest.newBuilder()
+   *           .setParent(parent)
+   *           .setInstanceId(instance_id)
+   *           .setInstance(instance)
+   *           .build();
+   *   ApiFuture<Operation> future = CloudRedisClient.createInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -716,7 +739,17 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   Instance instance = Instance.newBuilder().build();
+   *   UpdateInstanceRequest request =
+   *       UpdateInstanceRequest.newBuilder()
+   *           .setUpdateMask(update_mask)
+   *           .setInstance(instance)
+   *           .build();
+   *   OperationFuture<UpdateInstanceRequest, Operation> future =
+   *       cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -737,7 +770,16 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   Instance instance = Instance.newBuilder().build();
+   *   UpdateInstanceRequest request =
+   *       UpdateInstanceRequest.newBuilder()
+   *           .setUpdateMask(update_mask)
+   *           .setInstance(instance)
+   *           .build();
+   *   ApiFuture<Operation> future = CloudRedisClient.updateInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -834,7 +876,14 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   String redis_version = "redis_version-685310444";
+   *   UpgradeInstanceRequest request =
+   *       UpgradeInstanceRequest.newBuilder().setName(name).setRedisVersion(redis_version).build();
+   *   OperationFuture<UpgradeInstanceRequest, Operation> future =
+   *       cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -851,7 +900,13 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   String redis_version = "redis_version-685310444";
+   *   UpgradeInstanceRequest request =
+   *       UpgradeInstanceRequest.newBuilder().setName(name).setRedisVersion(redis_version).build();
+   *   ApiFuture<Operation> future = CloudRedisClient.upgradeInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -936,7 +991,14 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   String name = "name3373707";
+   *   InputConfig input_config = InputConfig.newBuilder().build();
+   *   ImportInstanceRequest request =
+   *       ImportInstanceRequest.newBuilder().setName(name).setInputConfig(input_config).build();
+   *   OperationFuture<ImportInstanceRequest, Operation> future =
+   *       cloudRedisClient.importInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -959,7 +1021,13 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   String name = "name3373707";
+   *   InputConfig input_config = InputConfig.newBuilder().build();
+   *   ImportInstanceRequest request =
+   *       ImportInstanceRequest.newBuilder().setName(name).setInputConfig(input_config).build();
+   *   ApiFuture<Operation> future = CloudRedisClient.importInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -1041,7 +1109,14 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   String name = "name3373707";
+   *   OutputConfig output_config = OutputConfig.newBuilder().build();
+   *   ExportInstanceRequest request =
+   *       ExportInstanceRequest.newBuilder().setName(name).setOutputConfig(output_config).build();
+   *   OperationFuture<ExportInstanceRequest, Operation> future =
+   *       cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -1063,7 +1138,13 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   String name = "name3373707";
+   *   OutputConfig output_config = OutputConfig.newBuilder().build();
+   *   ExportInstanceRequest request =
+   *       ExportInstanceRequest.newBuilder().setName(name).setOutputConfig(output_config).build();
+   *   ApiFuture<Operation> future = CloudRedisClient.exportInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -1175,7 +1256,18 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   FailoverInstanceRequest.DataProtectionMode data_protection_mode =
+   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *   FailoverInstanceRequest request =
+   *       FailoverInstanceRequest.newBuilder()
+   *           .setName(name)
+   *           .setDataProtectionMode(data_protection_mode)
+   *           .build();
+   *   OperationFuture<FailoverInstanceRequest, Operation> future =
+   *       cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
    * }
    * }</pre>
    */
@@ -1193,7 +1285,17 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   FailoverInstanceRequest.DataProtectionMode data_protection_mode =
+   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *   FailoverInstanceRequest request =
+   *       FailoverInstanceRequest.newBuilder()
+   *           .setName(name)
+   *           .setDataProtectionMode(data_protection_mode)
+   *           .build();
+   *   ApiFuture<Operation> future = CloudRedisClient.failoverInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */
@@ -1280,7 +1382,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   DeleteInstanceRequest request = DeleteInstanceRequest.newBuilder().setName(name).build();
+   *   OperationFuture<DeleteInstanceRequest, Operation> future =
+   *       cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Empty response = future.get();
    * }
    * }</pre>
    */
@@ -1297,7 +1404,11 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   DeleteInstanceRequest request = DeleteInstanceRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Operation> future = CloudRedisClient.deleteInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
    * }
    * }</pre>
    */

@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
@@ -46,6 +47,7 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -64,6 +66,7 @@ public final class SampleCodeHelperComposer {
   private static String UNARY_CALLABLE_NAME_PATTERN = "%sCallable";
   private static String PAGED_CALLABLE_NAME_PATTERN = "%sPagedCallable";
   private static String PAGED_RESPONSE_NAME_PATTERN = "%sPagedResponse";
+  private static String OPERATION_CALLABLE_NAME_PATTERN = "%sOperationCallable";
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method,
@@ -533,12 +536,116 @@ public final class SampleCodeHelperComposer {
       TypeNode clientType,
       TypeNode returnType,
       Map<String, ResourceName> resourceNames) {
+    // Initialize the method's arguments with default values.
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .collect(Collectors.toList());
+    // Build request Variable Epxr with set attributes.
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+
+    // If return type has 3 generics, add statements for OperationCallable method.
+    // otherwise, add statements for callable method.
+    if (returnType.reference().generics().size() == 3) {
+      // Initialize operation future variable with operation callable method.
+      // e.g.OperationFuture<WaitResponse, WaitMetadata> future =
+      // echoClient.waitOperationCallable().futureCall(request);
+      TypeNode operationFutureType =
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setClazz(OperationFuture.class)
+                  .setGenerics(method.inputType().reference(), method.outputType().reference())
+                  .build());
+      VariableExpr operationFutureVarExpr = createVariableExpr(FUTURE, operationFutureType);
+      MethodInvocationExpr futureCallMethodExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(
+                  MethodInvocationExpr.builder()
+                      .setExprReferenceExpr(
+                          createVariableExpr(getClientName(clientType), clientType))
+                      .setMethodName(getOperationCallableName(method.name()))
+                      .build())
+              .setArguments(createVariableExpr(REQUEST, method.inputType()))
+              .setMethodName("futureCall")
+              .setReturnType(operationFutureType)
+              .build();
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(operationFutureVarExpr.toBuilder().setIsDecl(true).build())
+                  .setValueExpr(futureCallMethodExpr)
+                  .build()));
+      // Create comment line
+      bodyStatements.add(createLineCommentStatement("Do something."));
+      // Assign response variable with get method.
+      // e.g. WaitResponse response = future.get();
+      TypeNode waitResponseType = TypeNode.withReference(returnType.reference().generics().get(1));
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(createVariableDeclExpr(RESPONSE, waitResponseType))
+                  .setValueExpr(
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(operationFutureVarExpr)
+                          .setMethodName("get")
+                          .setReturnType(waitResponseType)
+                          .build())
+                  .build()));
+    } else {
+      // Initialize Api future variable with callable method.
+      // e.g ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
+      TypeNode apiFutureType =
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setClazz(ApiFuture.class)
+                  .setGenerics(ConcreteReference.withClazz(Operation.class))
+                  .build());
+      VariableExpr apiFutureVarExpr = createVariableExpr("future", apiFutureType);
+      MethodInvocationExpr futureCallMethodExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(
+                  MethodInvocationExpr.builder()
+                      .setStaticReferenceType(clientType)
+                      .setMethodName(getCallableMethodName(method.name()))
+                      .build())
+              .setMethodName("futureCall")
+              .setArguments(createVariableExpr(REQUEST, method.inputType()))
+              .setReturnType(apiFutureType)
+              .build();
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+                  .setValueExpr(futureCallMethodExpr)
+                  .build()));
+      // Create comment line
+      bodyStatements.add(createLineCommentStatement("Do something."));
+      // Assign response variable with get method.
+      // e.g. Operation response = future.get();
+      bodyStatements.add(
+          ExprStatement.withExpr(
+              AssignmentExpr.builder()
+                  .setVariableExpr(createVariableDeclExpr(RESPONSE, method.outputType()))
+                  .setValueExpr(
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(apiFutureVarExpr)
+                          .setMethodName("get")
+                          .setReturnType(method.outputType())
+                          .build())
+                  .build()));
+    }
+
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not implement yet, placeholder for Lro Rpc callable methods' sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
@@ -897,6 +1004,10 @@ public final class SampleCodeHelperComposer {
 
   private static String getPagedCallableName(String methodName) {
     return JavaStyle.toLowerCamelCase(String.format(PAGED_CALLABLE_NAME_PATTERN, methodName));
+  }
+
+  private static String getOperationCallableName(String methodName) {
+    return JavaStyle.toLowerCamelCase(String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName));
   }
 
   private static CommentStatement createLineCommentStatement(String content) {
