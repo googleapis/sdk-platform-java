@@ -23,17 +23,38 @@
  *
  * <p>Sample for LoggingServiceV2Client:
  *
+ * <pre>{@code
+ * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
+ *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+ *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
+ * }
+ * }</pre>
+ *
  * <p>======================= ConfigServiceV2Client =======================
  *
  * <p>Service Description: Service for configuring sinks used to route log entries.
  *
  * <p>Sample for ConfigServiceV2Client:
  *
+ * <pre>{@code
+ * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
+ *   GetBucketRequest request = GetBucketRequest.newBuilder().build();
+ *   LogBucket response = configServiceV2Client.GetBucket(request);
+ * }
+ * }</pre>
+ *
  * <p>======================= MetricsServiceV2Client =======================
  *
  * <p>Service Description: Service for configuring logs-based metrics.
  *
  * <p>Sample for MetricsServiceV2Client:
+ *
+ * <pre>{@code
+ * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
+ *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+ *   LogMetric response = metricsServiceV2Client.GetLogMetric(metric_name);
+ * }
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 package com.google.logging.v2;

@@ -106,13 +106,12 @@ public class ClientLibraryPackageInfoComposer {
                     listItems.subList(startsWithItemizedList ? 0 : 1, listItems.size()));
           }
         }
+        javaDocCommentBuilder =
+            javaDocCommentBuilder.addParagraph(
+                String.format(SAMPLE_CODE_HEADER_PATTERN, javaClientName));
+        javaDocCommentBuilder.addSampleCode(
+            PackageInfoSampleCodeComposer.composeSampleCode(service, context.resourceNames()));
       }
-
-      javaDocCommentBuilder =
-          javaDocCommentBuilder.addParagraph(
-              String.format(SAMPLE_CODE_HEADER_PATTERN, javaClientName));
-
-      // TODO(summerji): Add package-info.java sample code here.
     }
 
     return CommentStatement.withComment(javaDocCommentBuilder.build());
