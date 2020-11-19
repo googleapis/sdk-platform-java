@@ -229,7 +229,14 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   ListLogMetricsRequest request = ListLogMetricsRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListLogMetricsPagedResponse> future =
+   *       metricsServiceV2Client.listLogMetricsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListLogMetricsResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -246,7 +253,21 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   ListLogMetricsRequest request = ListLogMetricsRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListLogMetricsResponse response =
+   *         metricsServiceV2Client.listLogMetricsCallable().call(request);
+   *     for (ListLogMetricsResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */

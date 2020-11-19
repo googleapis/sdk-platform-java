@@ -299,7 +299,14 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   ListInstancesRequest request = ListInstancesRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListInstancesPagedResponse> future =
+   *       cloudRedisClient.listInstancesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListInstancesResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -326,7 +333,20 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   ListInstancesRequest request = ListInstancesRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListInstancesResponse response = cloudRedisClient.listInstancesCallable().call(request);
+   *     for (ListInstancesResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */

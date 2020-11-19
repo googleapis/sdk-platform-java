@@ -341,7 +341,15 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountLocationName parent =
+   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListBucketsPagedResponse> future =
+   *       configServiceV2Client.listBucketsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListBucketsResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -358,7 +366,21 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountLocationName parent =
+   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *   ListBucketsRequest request = ListBucketsRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListBucketsResponse response = configServiceV2Client.listBucketsCallable().call(request);
+   *     for (ListBucketsResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -630,7 +652,14 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListSinksPagedResponse> future =
+   *       configServiceV2Client.listSinksPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListSinksResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -646,7 +675,20 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListSinksRequest request = ListSinksRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListSinksResponse response = configServiceV2Client.listSinksCallable().call(request);
+   *     for (ListSinksResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -1448,7 +1490,14 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListExclusionsPagedResponse> future =
+   *       configServiceV2Client.listExclusionsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListExclusionsResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -1465,7 +1514,21 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListExclusionsRequest request = ListExclusionsRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListExclusionsResponse response =
+   *         configServiceV2Client.listExclusionsCallable().call(request);
+   *     for (ListExclusionsResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */

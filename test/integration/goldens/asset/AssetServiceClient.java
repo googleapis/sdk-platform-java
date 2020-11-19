@@ -751,7 +751,21 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   List<String> asset_types = new ArrayList<>();
+   *   SearchAllResourcesRequest request =
+   *       SearchAllResourcesRequest.newBuilder()
+   *           .setScope(scope)
+   *           .setQuery(query)
+   *           .setAssetTypes(asset_types)
+   *           .build();
+   *   ApiFuture<SearchAllResourcesPagedResponse> future =
+   *       assetServiceClient.searchAllResourcesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (SearchAllResourcesResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -770,7 +784,28 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   List<String> asset_types = new ArrayList<>();
+   *   SearchAllResourcesRequest request =
+   *       SearchAllResourcesRequest.newBuilder()
+   *           .setScope(scope)
+   *           .setQuery(query)
+   *           .setAssetTypes(asset_types)
+   *           .build();
+   *   while (true) {
+   *     SearchAllResourcesResponse response =
+   *         assetServiceClient.searchAllResourcesCallable().call(request);
+   *     for (SearchAllResourcesResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -881,7 +916,16 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   SearchAllIamPoliciesRequest request =
+   *       SearchAllIamPoliciesRequest.newBuilder().setScope(scope).setQuery(query).build();
+   *   ApiFuture<SearchAllIamPoliciesPagedResponse> future =
+   *       assetServiceClient.searchAllIamPoliciesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (SearchAllIamPoliciesResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -900,7 +944,23 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   SearchAllIamPoliciesRequest request =
+   *       SearchAllIamPoliciesRequest.newBuilder().setScope(scope).setQuery(query).build();
+   *   while (true) {
+   *     SearchAllIamPoliciesResponse response =
+   *         assetServiceClient.searchAllIamPoliciesCallable().call(request);
+   *     for (SearchAllIamPoliciesResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */

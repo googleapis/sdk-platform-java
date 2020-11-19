@@ -442,7 +442,13 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ListUsersRequest request = ListUsersRequest.newBuilder().build();
+   *   ApiFuture<ListUsersPagedResponse> future =
+   *       identityClient.listUsersPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListUsersResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -456,7 +462,19 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ListUsersRequest request = ListUsersRequest.newBuilder().build();
+   *   while (true) {
+   *     ListUsersResponse response = identityClient.listUsersCallable().call(request);
+   *     for (ListUsersResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */

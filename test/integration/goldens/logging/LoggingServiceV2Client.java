@@ -542,7 +542,21 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   List<String> resource_names = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String order_by = "order_by1234304744";
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .setResourceNames(resource_names)
+   *           .setFilter(filter)
+   *           .setOrderBy(order_by)
+   *           .build();
+   *   ApiFuture<ListLogEntriesPagedResponse> future =
+   *       loggingServiceV2Client.listLogEntriesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListLogEntriesResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -561,7 +575,28 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   List<String> resource_names = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String order_by = "order_by1234304744";
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .setResourceNames(resource_names)
+   *           .setFilter(filter)
+   *           .setOrderBy(order_by)
+   *           .build();
+   *   while (true) {
+   *     ListLogEntriesResponse response =
+   *         loggingServiceV2Client.listLogEntriesCallable().call(request);
+   *     for (ListLogEntriesResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -603,7 +638,16 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder().build();
+   *   ApiFuture<ListMonitoredResourceDescriptorsPagedResponse> future =
+   *       loggingServiceV2Client
+   *           .listMonitoredResourceDescriptorsPagedCallable()
+   *           .futureCall(request);
+   *   // Do something.
+   *   for (ListMonitoredResourceDescriptorsResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -621,7 +665,21 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder().build();
+   *   while (true) {
+   *     ListMonitoredResourceDescriptorsResponse response =
+   *         loggingServiceV2Client.listMonitoredResourceDescriptorsCallable().call(request);
+   *     for (ListMonitoredResourceDescriptorsResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
@@ -812,7 +870,14 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListLogsPagedResponse> future =
+   *       loggingServiceV2Client.listLogsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ListLogsResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
    * }
    * }</pre>
    */
@@ -829,7 +894,20 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Paged Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent).build();
+   *   while (true) {
+   *     ListLogsResponse response = loggingServiceV2Client.listLogsCallable().call(request);
+   *     for (ListLogsResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
    * }
    * }</pre>
    */
