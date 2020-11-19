@@ -63,7 +63,20 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre>{@code
+ * EchoSettings echoSettings =
+ *     EchoSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * EchoClient echoClient = EchoClient.create(echoSettings);
+ * }</pre>
+ *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
+ * EchoClient echoClient = EchoClient.create(echoSettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

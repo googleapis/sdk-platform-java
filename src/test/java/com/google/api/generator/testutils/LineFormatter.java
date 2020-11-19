@@ -12,20 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.engine.ast;
+package com.google.api.generator.testutils;
 
-import static com.google.common.truth.Truth.assertThat;
-import static junit.framework.Assert.assertEquals;
-
-import org.junit.Test;
-
-public class NullObjectValueTest {
-  private static final String NULL_VALUE = "null";
-
-  @Test
-  public void createNullObjectValue_valid() {
-    NullObjectValue nullValue = NullObjectValue.create();
-    assertEquals(NULL_VALUE, nullValue.value());
-    assertThat(nullValue.type()).isEqualTo(TypeNode.NULL);
+public class LineFormatter {
+  public static String lines(String... lines) {
+    // Cast to get rid of warnings.
+    return String.format(new String(new char[lines.length]).replace("\0", "%s"), (Object[]) lines);
   }
 }

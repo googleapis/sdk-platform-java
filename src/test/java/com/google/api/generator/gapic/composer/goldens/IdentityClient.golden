@@ -53,7 +53,21 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre>{@code
+ * IdentitySettings identitySettings =
+ *     IdentitySettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * IdentityClient identityClient = IdentityClient.create(identitySettings);
+ * }</pre>
+ *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * IdentitySettings identitySettings =
+ *     IdentitySettings.newBuilder().setEndpoint("myEndpoint").build();
+ * IdentityClient identityClient = IdentityClient.create(identitySettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

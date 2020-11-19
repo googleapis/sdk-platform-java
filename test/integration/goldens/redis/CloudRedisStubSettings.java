@@ -83,7 +83,21 @@ import org.threeten.bp.Duration;
  * <p>The builder of this class is recursive, so contained classes are themselves builders. When
  * build() is called, the tree of builders is called to create the complete settings object.
  *
- * <p>For example, to set the total timeout of listInstances to 30 seconds:
+ * <p>For example, to set the total timeout of getInstance to 30 seconds:
+ *
+ * <pre>{@code
+ * CloudRedisStubSettings.Builder cloudRedisSettingsBuilder = CloudRedisStubSettings.newBuilder();
+ * cloudRedisSettingsBuilder
+ *     .getInstanceSettings()
+ *     .setRetrySettings(
+ *         cloudRedisSettingsBuilder
+ *             .getInstanceSettings()
+ *             .getRetrySettings()
+ *             .toBuilder()
+ *             .setTotalTimeout(Duration.ofSeconds(30))
+ *             .build());
+ * CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator-java")
@@ -552,7 +566,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -576,7 +590,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -600,7 +614,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -624,7 +638,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -648,7 +662,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -672,7 +686,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)
@@ -696,7 +710,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
-                      .setInitialRetryDelay(Duration.ofMillis(20000L))
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
                       .setRetryDelayMultiplier(1.5)
                       .setMaxRetryDelay(Duration.ofMillis(45000L))
                       .setInitialRpcTimeout(Duration.ZERO)

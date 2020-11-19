@@ -34,6 +34,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.testutils.LineFormatter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.Descriptors.FileDescriptor;
@@ -90,7 +91,7 @@ public class RetrySettingsComposerTest {
 
     paramDefinitionsBlock.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "static {\n",
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
@@ -127,7 +128,7 @@ public class RetrySettingsComposerTest {
 
     paramDefinitionsBlock.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "static {\n",
             "ImmutableMap.Builder<String, RetrySettings> definitions = ImmutableMap.builder();\n",
             "RetrySettings settings = null;\n",
@@ -178,7 +179,7 @@ public class RetrySettingsComposerTest {
 
     paramDefinitionsBlock.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "static {\n",
             "ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions ="
                 + " ImmutableMap.builder();\n",
@@ -215,7 +216,7 @@ public class RetrySettingsComposerTest {
 
     paramDefinitionsBlock.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "static {\n",
             "ImmutableMap.Builder<String, ImmutableSet<StatusCode.Code>> definitions ="
                 + " ImmutableMap.builder();\n",
@@ -264,7 +265,7 @@ public class RetrySettingsComposerTest {
             RETRY_PARAM_DEFINITIONS_VAR_EXPR);
     builderExpr.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "builder.echoSettings()"
                 + ".setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get(\"retry_policy_1_codes\"))"
                 + ".setRetrySettings(RETRY_PARAM_DEFINITIONS.get(\"retry_policy_1_params\"))");
@@ -284,7 +285,7 @@ public class RetrySettingsComposerTest {
     writerVisitor.clear();
     builderExpr.accept(writerVisitor);
     expected =
-        createLines(
+        LineFormatter.lines(
             "builder.expandSettings()"
                 + ".setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get(\"retry_policy_1_codes\"))"
                 + ".setRetrySettings(RETRY_PARAM_DEFINITIONS.get(\"retry_policy_1_params\"))");
@@ -304,7 +305,7 @@ public class RetrySettingsComposerTest {
     writerVisitor.clear();
     builderExpr.accept(writerVisitor);
     expected =
-        createLines(
+        LineFormatter.lines(
             "builder.waitSettings()"
                 + ".setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get(\"no_retry_0_codes\"))"
                 + ".setRetrySettings(RETRY_PARAM_DEFINITIONS.get(\"no_retry_0_params\"))");
@@ -346,7 +347,7 @@ public class RetrySettingsComposerTest {
             RETRY_PARAM_DEFINITIONS_VAR_EXPR);
     builderExpr.accept(writerVisitor);
     String expected =
-        createLines(
+        LineFormatter.lines(
             "builder.waitOperationSettings()"
                 + ".setInitialCallSettings(UnaryCallSettings.<WaitRequest,"
                 + " OperationSnapshot>newUnaryCallSettingsBuilder()"
@@ -356,7 +357,7 @@ public class RetrySettingsComposerTest {
                 + "WaitResponse.class))"
                 + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
                 + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
-                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(20000L))"
+                + "RetrySettings.newBuilder().setInitialRetryDelay(Duration.ofMillis(5000L))"
                 + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(Duration.ofMillis(45000L))"
                 + ".setInitialRpcTimeout(Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
                 + ".setMaxRpcTimeout(Duration.ZERO).setTotalTimeout(Duration.ofMillis(86400000L))"
@@ -422,10 +423,5 @@ public class RetrySettingsComposerTest {
                 .build());
     return VariableExpr.withVariable(
         Variable.builder().setType(varType).setName("RETRY_PARAM_DEFINITIONS").build());
-  }
-
-  private static String createLines(String... lines) {
-    // Cast to get rid of warnings.
-    return String.format(new String(new char[lines.length]).replace("\0", "%s"), (Object[]) lines);
   }
 }

@@ -657,7 +657,7 @@ public class ServiceClientTestClassComposer {
             .build());
 
     if (method.isPaged()) {
-      // Assign the resources variaqble.
+      // Assign the resources variable.
       VariableExpr resourcesVarExpr =
           VariableExpr.withVariable(
               Variable.builder()

@@ -95,7 +95,21 @@ import javax.annotation.Generated;
  *
  * <p>To customize credentials:
  *
+ * <pre>{@code
+ * CloudRedisSettings cloudRedisSettings =
+ *     CloudRedisSettings.newBuilder()
+ *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .build();
+ * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ * }</pre>
+ *
  * <p>To customize the endpoint:
+ *
+ * <pre>{@code
+ * CloudRedisSettings cloudRedisSettings =
+ *     CloudRedisSettings.newBuilder().setEndpoint("myEndpoint").build();
+ * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
+ * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")

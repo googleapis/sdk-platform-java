@@ -41,7 +41,7 @@ public class AnonymousClassExprTest {
     AnonymousClassExpr anonymousClassExpr =
         AnonymousClassExpr.builder().setType(type).setMethods(Arrays.asList(method)).build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
-    assertEquals(anonymousClassExpr.type(), type);
+    assertEquals(type, anonymousClassExpr.type());
   }
 
   @Test
@@ -96,7 +96,7 @@ public class AnonymousClassExprTest {
             .setMethods(Arrays.asList(method))
             .build();
     assertTrue(TypeNode.isReferenceType(anonymousClassExpr.type()));
-    assertEquals(anonymousClassExpr.type(), type);
+    assertEquals(type, anonymousClassExpr.type());
   }
 
   @Test

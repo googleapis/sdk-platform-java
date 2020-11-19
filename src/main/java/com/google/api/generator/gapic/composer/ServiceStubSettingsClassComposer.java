@@ -78,6 +78,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -163,7 +164,7 @@ public class ServiceStubSettingsClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service))
+            .setHeaderCommentStatements(createClassHeaderComments(service, types.get(className)))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
@@ -187,11 +188,20 @@ public class ServiceStubSettingsClassComposer {
             .build());
   }
 
-  private static List<CommentStatement> createClassHeaderComments(Service service) {
+  private static List<CommentStatement> createClassHeaderComments(
+      Service service, TypeNode classType) {
+    // Pick the first pure unary rpc method, if no such method exists, then pick the first in the
+    // list.
     Optional<Method> methodOpt =
-        service.methods().isEmpty() ? Optional.empty() : Optional.of(service.methods().get(0));
+        service.methods().isEmpty()
+            ? Optional.empty()
+            : Optional.of(
+                service.methods().stream()
+                    .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
+                    .findFirst()
+                    .orElse(service.methods().get(0)));
     return SettingsCommentComposer.createClassHeaderComments(
-        String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt);
+        String.format(STUB_PATTERN, service.name()), service.defaultHost(), methodOpt, classType);
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {
@@ -433,7 +443,7 @@ public class ServiceStubSettingsClassComposer {
     VariableExpr pageSizeVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.INT).setName("pageSize").build());
-    // Re-declare for clarity and easier readeability.
+    // Re-declare for clarity and easier readability.
     returnType = method.inputType();
     returnExpr =
         MethodInvocationExpr.builder()
@@ -1431,7 +1441,7 @@ public class ServiceStubSettingsClassComposer {
             .setBody(ctorBodyStatements)
             .build());
 
-    // Third constructor that takes a ServivceStubSettings.
+    // Third constructor that takes a ServiceStubSettings.
     TypeNode outerSettingsType = types.get(getThisClassName(service.name()));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
@@ -1882,7 +1892,7 @@ public class ServiceStubSettingsClassComposer {
             : typeMakerFn.apply(
                 isSettingsBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class);
 
-    // Streaming takes precendence over paging, as per the monolith's existing behavior.
+    // Streaming takes precedence over paging, as per the monolith's existing behavior.
     switch (method.stream()) {
       case SERVER:
         callSettingsType =
