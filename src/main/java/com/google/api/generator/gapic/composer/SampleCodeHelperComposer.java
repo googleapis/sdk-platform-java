@@ -40,7 +40,7 @@ public final class SampleCodeHelperComposer {
     if (method.isPaged()) {
       return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
     }
-    // Long run operation Unary RPC method.
+    // Long-running operation Unary RPC method.
     if (method.hasLro()) {
       return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType);
     }
@@ -52,7 +52,9 @@ public final class SampleCodeHelperComposer {
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary rpc method.
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(
+            assignClientVariableWithCreateMethodExpr(
+                createVariableExpr(getClientName(clientType), clientType)))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
@@ -65,7 +67,9 @@ public final class SampleCodeHelperComposer {
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(
+            assignClientVariableWithCreateMethodExpr(
+                createVariableExpr(getClientName(clientType), clientType)))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
@@ -78,7 +82,9 @@ public final class SampleCodeHelperComposer {
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary paged rpc method.
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(
+            assignClientVariableWithCreateMethodExpr(
+                createVariableExpr(getClientName(clientType), clientType)))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
@@ -97,7 +103,9 @@ public final class SampleCodeHelperComposer {
                 ? "default"
                 : (method.hasLro() ? "lro default" : "paged default")));
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(
+            assignClientVariableWithCreateMethodExpr(
+                createVariableExpr(getClientName(clientType), clientType)))
         .setTryBody(Arrays.asList(createLineCommentStatement(content)))
         .setIsSampleCode(true)
         .build();
@@ -107,13 +115,14 @@ public final class SampleCodeHelperComposer {
 
   // Assign client variable expr with create client.
   // e.g EchoClient echoClient = EchoClient.create()
-  private static AssignmentExpr assignClientVariableWithCreateMethodExpr(TypeNode clientType) {
+  private static AssignmentExpr assignClientVariableWithCreateMethodExpr(
+      VariableExpr clientVarExpr) {
     return AssignmentExpr.builder()
-        .setVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
+        .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(clientType)
-                .setReturnType(clientType)
+                .setStaticReferenceType(clientVarExpr.variable().type())
+                .setReturnType(clientVarExpr.variable().type())
                 .setMethodName("create")
                 .build())
         .build();
