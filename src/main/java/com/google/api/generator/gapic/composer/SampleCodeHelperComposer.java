@@ -613,7 +613,8 @@ public final class SampleCodeHelperComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(
                   MethodInvocationExpr.builder()
-                      .setStaticReferenceType(clientType)
+                      .setExprReferenceExpr(
+                          createVariableExpr(getClientName(clientType), clientType))
                       .setMethodName(getCallableMethodName(method.name()))
                       .build())
               .setMethodName("futureCall")

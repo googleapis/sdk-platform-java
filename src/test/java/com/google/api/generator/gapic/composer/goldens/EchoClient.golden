@@ -563,7 +563,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
-   *   ApiFuture<Operation> future = EchoClient.waitCallable().futureCall(request);
+   *   ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }

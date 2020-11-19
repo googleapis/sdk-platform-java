@@ -227,7 +227,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request = ExportAssetsRequest.newBuilder().build();
-   *   ApiFuture<Operation> future = AssetServiceClient.exportAssetsCallable().futureCall(request);
+   *   ApiFuture<Operation> future = assetServiceClient.exportAssetsCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }

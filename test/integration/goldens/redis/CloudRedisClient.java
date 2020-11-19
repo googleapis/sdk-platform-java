@@ -654,7 +654,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setInstanceId(instance_id)
    *           .setInstance(instance)
    *           .build();
-   *   ApiFuture<Operation> future = CloudRedisClient.createInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.createInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -777,7 +777,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setUpdateMask(update_mask)
    *           .setInstance(instance)
    *           .build();
-   *   ApiFuture<Operation> future = CloudRedisClient.updateInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.updateInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -904,7 +904,7 @@ public class CloudRedisClient implements BackgroundResource {
    *   String redis_version = "redis_version-685310444";
    *   UpgradeInstanceRequest request =
    *       UpgradeInstanceRequest.newBuilder().setName(name).setRedisVersion(redis_version).build();
-   *   ApiFuture<Operation> future = CloudRedisClient.upgradeInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.upgradeInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -1025,7 +1025,7 @@ public class CloudRedisClient implements BackgroundResource {
    *   InputConfig input_config = InputConfig.newBuilder().build();
    *   ImportInstanceRequest request =
    *       ImportInstanceRequest.newBuilder().setName(name).setInputConfig(input_config).build();
-   *   ApiFuture<Operation> future = CloudRedisClient.importInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.importInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -1142,7 +1142,7 @@ public class CloudRedisClient implements BackgroundResource {
    *   OutputConfig output_config = OutputConfig.newBuilder().build();
    *   ExportInstanceRequest request =
    *       ExportInstanceRequest.newBuilder().setName(name).setOutputConfig(output_config).build();
-   *   ApiFuture<Operation> future = CloudRedisClient.exportInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.exportInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -1293,7 +1293,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setName(name)
    *           .setDataProtectionMode(data_protection_mode)
    *           .build();
-   *   ApiFuture<Operation> future = CloudRedisClient.failoverInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.failoverInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
@@ -1406,7 +1406,7 @@ public class CloudRedisClient implements BackgroundResource {
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
    *   DeleteInstanceRequest request = DeleteInstanceRequest.newBuilder().setName(name).build();
-   *   ApiFuture<Operation> future = CloudRedisClient.deleteInstanceCallable().futureCall(request);
+   *   ApiFuture<Operation> future = cloudRedisClient.deleteInstanceCallable().futureCall(request);
    *   // Do something.
    *   Operation response = future.get();
    * }
