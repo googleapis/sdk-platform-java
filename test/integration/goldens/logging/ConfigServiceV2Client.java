@@ -416,7 +416,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   GetBucketRequest request = GetBucketRequest.newBuilder().build();
+   *   ApiFuture<LogBucket> future = configServiceV2Client.getBucketCallable().futureCall(request);
+   *   LogBucket response = future.get();
    * }
    * }</pre>
    */
@@ -470,7 +472,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   UpdateBucketRequest request = UpdateBucketRequest.newBuilder().build();
+   *   ApiFuture<LogBucket> future =
+   *       configServiceV2Client.updateBucketCallable().futureCall(request);
+   *   LogBucket response = future.get();
    * }
    * }</pre>
    */
@@ -780,7 +785,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   GetSinkRequest request = GetSinkRequest.newBuilder().setSinkName(sink_name).build();
+   *   ApiFuture<LogSink> future = configServiceV2Client.getSinkCallable().futureCall(request);
+   *   LogSink response = future.get();
    * }
    * }</pre>
    */
@@ -992,7 +1000,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   CreateSinkRequest request =
+   *       CreateSinkRequest.newBuilder().setParent(parent).setSink(sink).build();
+   *   ApiFuture<LogSink> future = configServiceV2Client.createSinkCallable().futureCall(request);
+   *   LogSink response = future.get();
    * }
    * }</pre>
    */
@@ -1210,7 +1223,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   UpdateSinkRequest request =
+   *       UpdateSinkRequest.newBuilder().setSinkName(sink_name).setSink(sink).build();
+   *   ApiFuture<LogSink> future = configServiceV2Client.updateSinkCallable().futureCall(request);
+   *   LogSink response = future.get();
    * }
    * }</pre>
    */
@@ -1308,7 +1326,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   DeleteSinkRequest request = DeleteSinkRequest.newBuilder().setSinkName(sink_name).build();
+   *   ApiFuture<Empty> future = configServiceV2Client.deleteSinkCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */
@@ -1621,7 +1642,11 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   GetExclusionRequest request = GetExclusionRequest.newBuilder().setName(name).build();
+   *   ApiFuture<LogExclusion> future =
+   *       configServiceV2Client.getExclusionCallable().futureCall(request);
+   *   LogExclusion response = future.get();
    * }
    * }</pre>
    */
@@ -1819,7 +1844,13 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   CreateExclusionRequest request =
+   *       CreateExclusionRequest.newBuilder().setParent(parent).setExclusion(exclusion).build();
+   *   ApiFuture<LogExclusion> future =
+   *       configServiceV2Client.createExclusionCallable().futureCall(request);
+   *   LogExclusion response = future.get();
    * }
    * }</pre>
    */
@@ -1947,7 +1978,18 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask update_mask = FieldMask.newBuilder().build();
+   *   UpdateExclusionRequest request =
+   *       UpdateExclusionRequest.newBuilder()
+   *           .setName(name)
+   *           .setExclusion(exclusion)
+   *           .setUpdateMask(update_mask)
+   *           .build();
+   *   ApiFuture<LogExclusion> future =
+   *       configServiceV2Client.updateExclusionCallable().futureCall(request);
+   *   LogExclusion response = future.get();
    * }
    * }</pre>
    */
@@ -2039,7 +2081,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   DeleteExclusionRequest request = DeleteExclusionRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Empty> future = configServiceV2Client.deleteExclusionCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */
@@ -2087,7 +2132,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   GetCmekSettingsRequest request = GetCmekSettingsRequest.newBuilder().build();
+   *   ApiFuture<CmekSettings> future =
+   *       configServiceV2Client.getCmekSettingsCallable().futureCall(request);
+   *   CmekSettings response = future.get();
    * }
    * }</pre>
    */
@@ -2145,7 +2193,10 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   UpdateCmekSettingsRequest request = UpdateCmekSettingsRequest.newBuilder().build();
+   *   ApiFuture<CmekSettings> future =
+   *       configServiceV2Client.updateCmekSettingsCallable().futureCall(request);
+   *   CmekSettings response = future.get();
    * }
    * }</pre>
    */

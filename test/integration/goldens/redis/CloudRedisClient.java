@@ -432,7 +432,10 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   GetInstanceRequest request = GetInstanceRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Instance> future = cloudRedisClient.getInstanceCallable().futureCall(request);
+   *   Instance response = future.get();
    * }
    * }</pre>
    */

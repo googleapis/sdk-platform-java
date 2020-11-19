@@ -354,7 +354,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   GetLogMetricRequest request =
+   *       GetLogMetricRequest.newBuilder().setMetricName(metric_name).build();
+   *   ApiFuture<LogMetric> future =
+   *       metricsServiceV2Client.getLogMetricCallable().futureCall(request);
+   *   LogMetric response = future.get();
    * }
    * }</pre>
    */
@@ -450,7 +455,13 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   CreateLogMetricRequest request =
+   *       CreateLogMetricRequest.newBuilder().setParent(parent).setMetric(metric).build();
+   *   ApiFuture<LogMetric> future =
+   *       metricsServiceV2Client.createLogMetricCallable().futureCall(request);
+   *   LogMetric response = future.get();
    * }
    * }</pre>
    */
@@ -548,7 +559,13 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetric metric = LogMetric.newBuilder().build();
+   *   UpdateLogMetricRequest request =
+   *       UpdateLogMetricRequest.newBuilder().setMetricName(metric_name).setMetric(metric).build();
+   *   ApiFuture<LogMetric> future =
+   *       metricsServiceV2Client.updateLogMetricCallable().futureCall(request);
+   *   LogMetric response = future.get();
    * }
    * }</pre>
    */
@@ -634,7 +651,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   DeleteLogMetricRequest request =
+   *       DeleteLogMetricRequest.newBuilder().setMetricName(metric_name).build();
+   *   ApiFuture<Empty> future =
+   *       metricsServiceV2Client.deleteLogMetricCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */

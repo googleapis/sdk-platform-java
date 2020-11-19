@@ -306,7 +306,10 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+   *   EchoResponse response = future.get();
    * }
    * }</pre>
    */
@@ -597,7 +600,9 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
+   *   BlockResponse response = future.get();
    * }
    * }</pre>
    */

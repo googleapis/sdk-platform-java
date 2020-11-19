@@ -239,7 +239,10 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   DeleteLogRequest request = DeleteLogRequest.newBuilder().setLogName(log_name).build();
+   *   ApiFuture<Empty> future = loggingServiceV2Client.deleteLogCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */
@@ -441,7 +444,20 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(log_name)
+   *           .setResource(resource)
+   *           .setLabels(labels)
+   *           .setEntries(entries)
+   *           .build();
+   *   ApiFuture<WriteLogEntriesResponse> future =
+   *       loggingServiceV2Client.writeLogEntriesCallable().futureCall(request);
+   *   WriteLogEntriesResponse response = future.get();
    * }
    * }</pre>
    */

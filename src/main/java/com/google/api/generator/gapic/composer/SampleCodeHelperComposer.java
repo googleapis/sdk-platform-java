@@ -653,12 +653,64 @@ public final class SampleCodeHelperComposer {
 
   private static TryCatchStatement composeUnaryRpcCallableMethodSampleCode(
       Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    // TODO (summerji): Add unit test.
+    // If variant method signatures exists, use the first one.
+    List<MethodArgument> arguments =
+        method.methodSignatures().isEmpty()
+            ? Collections.emptyList()
+            : method.methodSignatures().get(0);
+    // Assign method argument with default values.
+    List<Statement> bodyStatements =
+        arguments.stream()
+            .map(
+                methodArg ->
+                    ExprStatement.withExpr(
+                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .collect(Collectors.toList());
+    // Create request variable with set attributes based on method argument.
+    bodyStatements.add(
+        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    // Create ApiFuture variable with invoking client method callable method by passing the request.
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(method.outputType().reference())
+                .build());
+    VariableExpr apiFutureVarExpr = createVariableExpr(FUTURE, apiFutureType);
+    MethodInvocationExpr callableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                    .setMethodName(getCallableMethodName(method.name()))
+                    .build())
+            .setMethodName("futureCall")
+            .setReturnType(apiFutureType)
+            .setArguments(createVariableExpr(REQUEST, method.inputType()))
+            .build();
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(callableMethodInvocationExpr)
+                .build()));
+    // Create response variable by assigning future.get() method.
+    MethodInvocationExpr futureGetMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiFutureVarExpr)
+            .setMethodName("get")
+            .setReturnType(method.outputType())
+            .build();
+    bodyStatements.add(
+        ExprStatement.withExpr(
+            AssignmentExpr.builder()
+                .setVariableExpr(createVariableDeclExpr(RESPONSE, method.outputType()))
+                .setValueExpr(futureGetMethodExpr)
+                .build()));
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(
-            Arrays.asList(
-                createLineCommentStatement(
-                    "Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.")))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }

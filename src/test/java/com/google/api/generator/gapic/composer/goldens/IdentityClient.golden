@@ -230,7 +230,17 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   String parent = "parent-995424086";
+   *   String display_name = "display_name1615086568";
+   *   String email = "email96619420";
+   *   CreateUserRequest request =
+   *       CreateUserRequest.newBuilder()
+   *           .setParent(parent)
+   *           .setDisplayName(display_name)
+   *           .setEmail(email)
+   *           .build();
+   *   ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
+   *   User response = future.get();
    * }
    * }</pre>
    */
@@ -302,7 +312,10 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   UserName name = UserName.of("[USER]");
+   *   GetUserRequest request = GetUserRequest.newBuilder().setName(name).build();
+   *   ApiFuture<User> future = identityClient.getUserCallable().futureCall(request);
+   *   User response = future.get();
    * }
    * }</pre>
    */
@@ -334,7 +347,9 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   UpdateUserRequest request = UpdateUserRequest.newBuilder().build();
+   *   ApiFuture<User> future = identityClient.updateUserCallable().futureCall(request);
+   *   User response = future.get();
    * }
    * }</pre>
    */
@@ -408,7 +423,10 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   UserName name = UserName.of("[USER]");
+   *   DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Empty> future = identityClient.deleteUserCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */

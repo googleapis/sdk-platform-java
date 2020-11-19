@@ -274,7 +274,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   BatchGetAssetsHistoryRequest request = BatchGetAssetsHistoryRequest.newBuilder().build();
+   *   ApiFuture<BatchGetAssetsHistoryResponse> future =
+   *       assetServiceClient.batchGetAssetsHistoryCallable().futureCall(request);
+   *   BatchGetAssetsHistoryResponse response = future.get();
    * }
    * }</pre>
    */
@@ -336,7 +339,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   String parent = "parent-995424086";
+   *   CreateFeedRequest request = CreateFeedRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<Feed> future = assetServiceClient.createFeedCallable().futureCall(request);
+   *   Feed response = future.get();
    * }
    * }</pre>
    */
@@ -420,7 +426,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   GetFeedRequest request = GetFeedRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Feed> future = assetServiceClient.getFeedCallable().futureCall(request);
+   *   Feed response = future.get();
    * }
    * }</pre>
    */
@@ -480,7 +489,11 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   String parent = "parent-995424086";
+   *   ListFeedsRequest request = ListFeedsRequest.newBuilder().setParent(parent).build();
+   *   ApiFuture<ListFeedsResponse> future =
+   *       assetServiceClient.listFeedsCallable().futureCall(request);
+   *   ListFeedsResponse response = future.get();
    * }
    * }</pre>
    */
@@ -540,7 +553,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   Feed feed = Feed.newBuilder().build();
+   *   UpdateFeedRequest request = UpdateFeedRequest.newBuilder().setFeed(feed).build();
+   *   ApiFuture<Feed> future = assetServiceClient.updateFeedCallable().futureCall(request);
+   *   Feed response = future.get();
    * }
    * }</pre>
    */
@@ -626,7 +642,10 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not implement yet, placeholder for Unary Rpc callable methods' sample code.
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name).build();
+   *   ApiFuture<Empty> future = assetServiceClient.deleteFeedCallable().futureCall(request);
+   *   Empty response = future.get();
    * }
    * }</pre>
    */
