@@ -33,7 +33,7 @@ jobs:
           name: Run unit tests for gapic-generator-java
           command: |
             cd /tmp/gapic-generator-java
-            bazel --batch test //src/test/... --noshow_progress
+            bazel --batch test $(bazel query "//src/test/..." | grep "Test$") --noshow_progress
             find . -type f -regex ".*/bazel-testlogs/.*xml" -exec cp {} ${TEST_REPORTS_DIR} \;
       - run:
           name: Run integration tests for gapic-generator-java

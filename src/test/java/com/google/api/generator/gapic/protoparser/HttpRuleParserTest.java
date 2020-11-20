@@ -35,7 +35,7 @@ public class HttpRuleParserTest {
   public void parseHttpAnnotation_basic() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "Testing");
+    assertEquals("Testing", testingService.getName());
 
     Map<String, Message> messages = Parser.parseMessages(testingFileDescriptor);
 
@@ -58,7 +58,7 @@ public class HttpRuleParserTest {
   public void parseHttpAnnotation_missingFieldFromMessage() {
     FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
-    assertEquals(testingService.getName(), "Testing");
+    assertEquals("Testing", testingService.getName());
 
     Map<String, Message> messages = Parser.parseMessages(testingFileDescriptor);
 

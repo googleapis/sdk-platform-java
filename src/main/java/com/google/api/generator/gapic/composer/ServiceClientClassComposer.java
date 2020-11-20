@@ -161,13 +161,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.addAll(createStaticCreatorMethods(service, types));
     methods.addAll(createConstructorMethods(service, types, hasLroClient));
     methods.addAll(createGetterMethods(service, types, hasLroClient));
-    methods.addAll(
-        createServiceMethods(
-            service,
-            messageTypes,
-            types,
-            types.get(getClientClassName(service.name())),
-            resourceNames));
+    methods.addAll(createServiceMethods(service, messageTypes, types, resourceNames));
     methods.addAll(createBackgroundResourceMethods(service, types));
     return methods;
   }
@@ -482,8 +476,8 @@ public class ServiceClientClassComposer implements ClassComposer {
       Service service,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
-      TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
+    TypeNode clientType = types.get(getClientClassName(service.name()));
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {

@@ -75,7 +75,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
  *     MetricsServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
@@ -85,7 +85,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
- *     MetricsServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ *     MetricsServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
  * }</pre>
@@ -205,7 +205,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -294,7 +294,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -380,7 +380,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -468,7 +468,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -545,7 +545,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *

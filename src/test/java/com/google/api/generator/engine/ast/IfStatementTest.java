@@ -28,7 +28,7 @@ public class IfStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(createAssignmentExprList())
             .build();
-    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, ifStatement.conditionExpr().type());
   }
 
   @Test
@@ -43,7 +43,7 @@ public class IfStatementTest {
             .setConditionExpr(condExpr)
             .setBody(createAssignmentExprList())
             .build();
-    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, ifStatement.conditionExpr().type());
   }
 
   @Test
@@ -60,7 +60,7 @@ public class IfStatementTest {
             .addElseIf(thirdCondExpr, createAssignmentExprList())
             .setElseBody(createAssignmentExprList())
             .build();
-    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, ifStatement.conditionExpr().type());
   }
 
   @Test
@@ -78,7 +78,7 @@ public class IfStatementTest {
             .setConditionExpr(condExpr)
             .setBody(Arrays.asList(nestedIfStatement))
             .build();
-    assertEquals(ifStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, ifStatement.conditionExpr().type());
   }
 
   private static List<Statement> createAssignmentExprList() {

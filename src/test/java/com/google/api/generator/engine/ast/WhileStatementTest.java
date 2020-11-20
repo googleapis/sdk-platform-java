@@ -29,7 +29,7 @@ public class WhileStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(createAssignmentExprList())
             .build();
-    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, whileStatement.conditionExpr().type());
   }
 
   @Test
@@ -43,7 +43,7 @@ public class WhileStatementTest {
             .setConditionExpr(condExpr)
             .setBody(createAssignmentExprList())
             .build();
-    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, whileStatement.conditionExpr().type());
   }
 
   @Test
@@ -58,7 +58,7 @@ public class WhileStatementTest {
             .setConditionExpr(createConditionExpr("condition"))
             .setBody(Arrays.asList(nestedWhileStatement))
             .build();
-    assertEquals(whileStatement.conditionExpr().type(), TypeNode.BOOLEAN);
+    assertEquals(TypeNode.BOOLEAN, whileStatement.conditionExpr().type());
   }
 
   @Test

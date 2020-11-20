@@ -56,7 +56,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * IdentitySettings identitySettings =
  *     IdentitySettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * IdentityClient identityClient = IdentityClient.create(identitySettings);
  * }</pre>
@@ -65,7 +65,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * IdentitySettings identitySettings =
- *     IdentitySettings.newBuilder().setEndpoint("myEndpoint").build();
+ *     IdentitySettings.newBuilder().setEndpoint(myEndpoint).build();
  * IdentityClient identityClient = IdentityClient.create(identitySettings);
  * }</pre>
  */
@@ -204,7 +204,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -266,7 +266,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -289,7 +289,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -353,7 +353,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -376,7 +376,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
