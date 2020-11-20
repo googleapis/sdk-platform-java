@@ -117,6 +117,7 @@ public final class SampleCodeHelperComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit test.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
     List<Statement> bodyStatements =
         arguments.stream()
@@ -127,16 +128,17 @@ public final class SampleCodeHelperComposer {
             .collect(Collectors.toList());
     // For loop client on iterateAll method.
     // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
-    // loggingServiceV2Client.ListLogs(parent).iterateAll()) {
-    // //doThingsWith(element);}
+    //        loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    //          //doThingsWith(element);
+    //      }
     bodyStatements.add(
         ForStatement.builder()
-            .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
-            .setCollectionExpr(createIteratorAllMethodExpr(method, clientType, arguments))
+            .setLocalVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(createIteratorAllMethodExpr(method, clientVarExpr, arguments))
             .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
             .build());
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
@@ -212,12 +214,12 @@ public final class SampleCodeHelperComposer {
   }
 
   private static Expr createIteratorAllMethodExpr(
-      Method method, TypeNode clientType, List<MethodArgument> arguments) {
+      Method method, VariableExpr clientVarExpr, List<MethodArgument> arguments) {
     // e.g echoClient.echo(name).iterateAll()
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(
             MethodInvocationExpr.builder()
-                .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                .setExprReferenceExpr(clientVarExpr)
                 .setMethodName(method.name())
                 .setArguments(
                     !arguments.isEmpty()
@@ -225,7 +227,7 @@ public final class SampleCodeHelperComposer {
                         : Arrays.asList(createVariableExpr("request", method.inputType())))
                 .build())
         .setMethodName("iterateAll")
-        .setReturnType(clientType)
+        .setReturnType(clientVarExpr.variable().type())
         .build();
   }
 
