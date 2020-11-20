@@ -14,6 +14,12 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
@@ -79,18 +85,17 @@ public class PackageInfoSampleCodeComposer {
   }
 
   private static Map<String, TypeNode> createDynamicTypes(Service service) {
-    Map<String, TypeNode> types = new HashMap<>();
-    // This class.
-    types.put(
+    Map<String, TypeNode> dynamicTypes = new HashMap<>();
+    dynamicTypes.putAll(createConcreteTypes());
+    dynamicTypes.put(
         getClientName(service.name()),
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(getClientName(service.name()))
                 .setPakkage(service.pakkage())
                 .build()));
-
     // Pagination types.
-    types.putAll(
+    dynamicTypes.putAll(
         service.methods().stream()
             .filter(m -> m.isPaged())
             .collect(
@@ -104,7 +109,22 @@ public class PackageInfoSampleCodeComposer {
                                 .setEnclosingClassNames(getClientName(service.name()))
                                 .setIsStaticImport(true)
                                 .build()))));
-    return types;
+    return dynamicTypes;
+  }
+
+  private static Map<String, TypeNode> createConcreteTypes() {
+    List<Class> concreteClazzes =
+        Arrays.asList(
+            BidiStreamingCallable.class,
+            ClientStreamingCallable.class,
+            ServerStreamingCallable.class,
+            OperationCallable.class,
+            UnaryCallable.class);
+    return concreteClazzes.stream()
+        .collect(
+            Collectors.toMap(
+                c -> c.getSimpleName(),
+                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
   }
 
   private static List<Reference> getGenericsForCallable(
