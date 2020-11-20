@@ -49,7 +49,7 @@ public class PrimitiveValueTest {
   private static void assertValidValue(TypeKind typeKind, String value) {
     TypeNode type = TypeNode.builder().setTypeKind(typeKind).build();
     PrimitiveValue primitiveValue = PrimitiveValue.builder().setType(type).setValue(value).build();
-    assertEquals(primitiveValue.value(), value);
+    assertEquals(value, primitiveValue.value());
     assertThat(primitiveValue.type()).isEqualTo(type);
   }
 

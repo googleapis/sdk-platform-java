@@ -54,7 +54,7 @@ public final class SampleCodeHelperComposer {
     if (method.isPaged()) {
       return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
-    // Long run operation Unary RPC method.
+    // Long-running operation Unary RPC method.
     if (method.hasLro()) {
       return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
@@ -68,36 +68,32 @@ public final class SampleCodeHelperComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit tests.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
-    List<Statement> bodyStatements =
+    List<Expr> bodyExpr =
         arguments.stream()
-            .map(
-                methodArg ->
-                    ExprStatement.withExpr(
-                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .map(methodArg -> assignMethodArgumentWithDefaultValue(methodArg, resourceNames))
             .collect(Collectors.toList());
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
     if (method.outputType().equals(TypeNode.VOID)) {
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(
-                      createVariableDeclExpr(getClientName(clientType), clientType))
-                  .setMethodName(method.name())
-                  .setReturnType(clientType)
-                  .build()));
+      bodyExpr.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(method.name())
+              .setReturnType(clientType)
+              .build());
     } else {
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              createAssignExprForVariableWithClientMethod(
-                  RESPONSE_VAR_NAME, method.outputType(), clientType, method.name(), arguments)));
+      bodyExpr.add(
+          createAssignExprForVariableWithClientMethod(
+              RESPONSE_VAR_NAME, method.outputType(), clientVarExpr, method.name(), arguments));
     }
 
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(bodyStatements)
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExpr.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .setIsSampleCode(true)
         .build();
   }
@@ -109,13 +105,11 @@ public final class SampleCodeHelperComposer {
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     // TODO(summerji): Add unit tests.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
-    List<Statement> bodyStatements =
+    List<Expr> bodyExprs =
         arguments.stream()
-            .map(
-                methodArg ->
-                    ExprStatement.withExpr(
-                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .map(methodArg -> assignMethodArgumentWithDefaultValue(methodArg, resourceNames))
             .collect(Collectors.toList());
     // Assign response variable with get method.
     // e.g EchoResponse response = echoClient.waitAsync().get();
@@ -123,22 +117,22 @@ public final class SampleCodeHelperComposer {
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
                 MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                    .setExprReferenceExpr(clientVarExpr)
                     .setMethodName(getLroMethodName(method.name()))
                     .setArguments(mapMethodArgumentsToVariableExprs(arguments))
                     .build())
             .setMethodName("get")
             .setReturnType(method.outputType())
             .build();
-    bodyStatements.add(
-        ExprStatement.withExpr(
-            AssignmentExpr.builder()
-                .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-                .setValueExpr(getResponseMethodExpr)
-                .build()));
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+            .setValueExpr(getResponseMethodExpr)
+            .build());
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(bodyStatements)
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .setIsSampleCode(true)
         .build();
   }
@@ -149,6 +143,7 @@ public final class SampleCodeHelperComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit test.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
     List<Statement> bodyStatements =
         arguments.stream()
@@ -159,16 +154,17 @@ public final class SampleCodeHelperComposer {
             .collect(Collectors.toList());
     // For loop client on iterateAll method.
     // e.g. for (LoggingServiceV2Client loggingServiceV2Client :
-    // loggingServiceV2Client.ListLogs(parent).iterateAll()) {
-    // //doThingsWith(element);}
+    //          loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    //        //doThingsWith(element);
+    //      }
     bodyStatements.add(
         ForStatement.builder()
-            .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
-            .setCollectionExpr(createIteratorAllMethodExpr(method, clientType, arguments))
+            .setLocalVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(createIteratorAllMethodExpr(method, clientVarExpr, arguments))
             .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
             .build());
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
@@ -255,13 +251,14 @@ public final class SampleCodeHelperComposer {
 
   // Assign client variable expr with create client.
   // e.g EchoClient echoClient = EchoClient.create()
-  private static AssignmentExpr assignClientVariableWithCreateMethodExpr(TypeNode clientType) {
+  private static AssignmentExpr assignClientVariableWithCreateMethodExpr(
+      VariableExpr clientVarExpr) {
     return AssignmentExpr.builder()
-        .setVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
+        .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(clientType)
-                .setReturnType(clientType)
+                .setStaticReferenceType(clientVarExpr.variable().type())
+                .setReturnType(clientVarExpr.variable().type())
                 .setMethodName("create")
                 .build())
         .build();
@@ -309,13 +306,13 @@ public final class SampleCodeHelperComposer {
   private static Expr createAssignExprForVariableWithClientMethod(
       String variableName,
       TypeNode variableType,
-      TypeNode clientType,
+      VariableExpr clientVarExpr,
       String methodName,
       List<MethodArgument> arguments) {
     VariableExpr varExpr = createVariableExpr(variableName, variableType);
     MethodInvocationExpr clientMethodInvocationExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+            .setExprReferenceExpr(clientVarExpr)
             .setMethodName(methodName)
             .setArguments(mapMethodArgumentsToVariableExprs(arguments))
             .setReturnType(variableType)
@@ -333,12 +330,12 @@ public final class SampleCodeHelperComposer {
   }
 
   private static Expr createIteratorAllMethodExpr(
-      Method method, TypeNode clientType, List<MethodArgument> arguments) {
+      Method method, VariableExpr clientVarExpr, List<MethodArgument> arguments) {
     // e.g echoClient.echo(name).iterateAll()
     return MethodInvocationExpr.builder()
         .setExprReferenceExpr(
             MethodInvocationExpr.builder()
-                .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                .setExprReferenceExpr(clientVarExpr)
                 .setMethodName(method.name())
                 .setArguments(
                     !arguments.isEmpty()
@@ -346,7 +343,7 @@ public final class SampleCodeHelperComposer {
                         : Arrays.asList(createVariableExpr("request", method.inputType())))
                 .build())
         .setMethodName("iterateAll")
-        .setReturnType(clientType)
+        .setReturnType(clientVarExpr.variable().type())
         .build();
   }
 

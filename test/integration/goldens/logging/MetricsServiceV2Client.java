@@ -75,7 +75,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
  *     MetricsServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
@@ -85,7 +85,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * MetricsServiceV2Settings metricsServiceV2Settings =
- *     MetricsServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ *     MetricsServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
  * }</pre>

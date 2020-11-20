@@ -76,7 +76,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * ConfigServiceV2Settings configServiceV2Settings =
  *     ConfigServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * ConfigServiceV2Client configServiceV2Client =
  *     ConfigServiceV2Client.create(configServiceV2Settings);
@@ -86,7 +86,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * ConfigServiceV2Settings configServiceV2Settings =
- *     ConfigServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ *     ConfigServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
  * ConfigServiceV2Client configServiceV2Client =
  *     ConfigServiceV2Client.create(configServiceV2Settings);
  * }</pre>
