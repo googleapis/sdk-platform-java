@@ -78,7 +78,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * AssetServiceSettings assetServiceSettings =
  *     AssetServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
@@ -87,7 +87,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * AssetServiceSettings assetServiceSettings =
- *     AssetServiceSettings.newBuilder().setEndpoint("myEndpoint").build();
+ *     AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
  */
