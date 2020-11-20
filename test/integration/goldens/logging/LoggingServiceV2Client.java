@@ -78,7 +78,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * LoggingServiceV2Settings loggingServiceV2Settings =
  *     LoggingServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * LoggingServiceV2Client loggingServiceV2Client =
  *     LoggingServiceV2Client.create(loggingServiceV2Settings);
@@ -88,7 +88,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * LoggingServiceV2Settings loggingServiceV2Settings =
- *     LoggingServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ *     LoggingServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
  * LoggingServiceV2Client loggingServiceV2Client =
  *     LoggingServiceV2Client.create(loggingServiceV2Settings);
  * }</pre>

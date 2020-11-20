@@ -98,7 +98,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * CloudRedisSettings cloudRedisSettings =
  *     CloudRedisSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
  * }</pre>
@@ -107,7 +107,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * CloudRedisSettings cloudRedisSettings =
- *     CloudRedisSettings.newBuilder().setEndpoint("myEndpoint").build();
+ *     CloudRedisSettings.newBuilder().setEndpoint(myEndpoint).build();
  * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
  * }</pre>
  */
