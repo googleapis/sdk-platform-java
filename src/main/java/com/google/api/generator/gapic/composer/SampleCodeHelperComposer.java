@@ -104,13 +104,11 @@ public final class SampleCodeHelperComposer {
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     // TODO(summerji): Add unit tests.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
-    List<Statement> bodyStatements =
+    List<Expr> bodyExprs =
         arguments.stream()
-            .map(
-                methodArg ->
-                    ExprStatement.withExpr(
-                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .map(methodArg -> assignMethodArgumentWithDefaultValue(methodArg, resourceNames))
             .collect(Collectors.toList());
     // Assign response variable with get method.
     // e.g EchoResponse response = echoClient.waitAsync().get();
@@ -118,22 +116,22 @@ public final class SampleCodeHelperComposer {
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
                 MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+                    .setExprReferenceExpr(clientVarExpr)
                     .setMethodName(getLroMethodName(method.name()))
                     .setArguments(mapMethodArgumentsToVariableExprs(arguments))
                     .build())
             .setMethodName("get")
             .setReturnType(method.outputType())
             .build();
-    bodyStatements.add(
-        ExprStatement.withExpr(
-            AssignmentExpr.builder()
-                .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-                .setValueExpr(getResponseMethodExpr)
-                .build()));
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
+            .setValueExpr(getResponseMethodExpr)
+            .build());
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(bodyStatements)
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .setIsSampleCode(true)
         .build();
   }
