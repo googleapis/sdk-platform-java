@@ -88,6 +88,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   public void clear() {
     staticImports.clear();
     imports.clear();
+    importShortNames.clear();
   }
 
   public void initialize(@Nonnull String currentPackage) {
@@ -119,11 +120,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     // This is a sufficiently-good heuristic since it's unlikely that the AST structure has changed
     // if the size is the same.
     if (importShortNames.size() != imports.size()) {
-      importShortNames.clear();
-      importShortNames.addAll(
-          imports.stream()
-              .map(s -> s.substring(s.lastIndexOf(DOT) + 1))
-              .collect(Collectors.toSet()));
+      updateShortNames();
     }
     return importShortNames.contains(shortName)
         && imports.stream()
@@ -426,6 +423,21 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   }
 
   /** =============================== PRIVATE HELPERS =============================== */
+  private void addImport(String packageToImport) {
+    String shortName = packageToImport.substring(packageToImport.lastIndexOf(DOT) + 1);
+    if (importShortNames.contains(shortName)) {
+      return;
+    }
+    importShortNames.add(shortName);
+    imports.add(packageToImport);
+  }
+
+  private void updateShortNames() {
+    importShortNames.clear();
+    importShortNames.addAll(
+        imports.stream().map(s -> s.substring(s.lastIndexOf(DOT) + 1)).collect(Collectors.toSet()));
+  }
+
   private void annotations(List<AnnotationNode> annotations) {
     for (AnnotationNode annotation : annotations) {
       annotation.accept(this);
@@ -470,14 +482,16 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
     if (reference.isStaticImport()) {
       // This is a static import.
+      // TODO(miraleung): This should have a variant of addImports as well. Handle static import
+      // collisions.
       staticImports.add(reference.fullName());
     } else {
       if (reference.hasEnclosingClass()) {
-        imports.add(
+        addImport(
             String.format(
                 "%s.%s", reference.pakkage(), String.join(DOT, reference.enclosingClassNames())));
       } else {
-        imports.add(reference.fullName());
+        addImport(reference.fullName());
       }
     }
 
