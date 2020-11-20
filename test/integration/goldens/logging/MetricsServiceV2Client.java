@@ -238,7 +238,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
    *   LogMetric response = metricsServiceV2Client.getLogMetric(metric_name);
    * }
    * }</pre>
@@ -263,7 +263,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   String metric_name = "metric_name-1737602118";
+   *   String metricName = "metric_name-1737602118";
    *   LogMetric response = metricsServiceV2Client.getLogMetric(metric_name);
    * }
    * }</pre>
@@ -401,7 +401,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
    *   LogMetric metric = LogMetric.newBuilder().build();
    *   LogMetric response = metricsServiceV2Client.updateLogMetric(metric_name, metric);
    * }
@@ -432,7 +432,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   String metric_name = "metric_name-1737602118";
+   *   String metricName = "metric_name-1737602118";
    *   LogMetric metric = LogMetric.newBuilder().build();
    *   LogMetric response = metricsServiceV2Client.updateLogMetric(metric_name, metric);
    * }
@@ -489,7 +489,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
    *   Empty response = metricsServiceV2Client.deleteLogMetric(metric_name);
    * }
    * }</pre>
@@ -514,7 +514,7 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsServiceV2Client metricsServiceV2Client = MetricsServiceV2Client.create()) {
-   *   String metric_name = "metric_name-1737602118";
+   *   String metricName = "metric_name-1737602118";
    *   Empty response = metricsServiceV2Client.deleteLogMetric(metric_name);
    * }
    * }</pre>
