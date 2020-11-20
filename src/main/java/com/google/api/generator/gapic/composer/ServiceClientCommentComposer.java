@@ -128,7 +128,7 @@ class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
     classHeaderJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
-            service.methods(), clientType, types, resourcesNames));
+            service, resourcesNames));
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(

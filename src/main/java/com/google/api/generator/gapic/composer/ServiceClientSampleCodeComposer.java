@@ -15,6 +15,11 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.rpc.BidiStreamingCallable;
+import com.google.api.gax.rpc.ClientStreamingCallable;
+import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -25,6 +30,7 @@ import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
@@ -34,9 +40,11 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,17 +56,16 @@ public class ServiceClientSampleCodeComposer {
   // TODO(summerji): Refactor signatures as sample code context.
 
   public static String composeClassHeaderMethodSampleCode(
-      List<Method> methods,
-      TypeNode clientType,
-      Map<String, TypeNode> types,
-      Map<String, ResourceName> resourceNames) {
+      Service service, Map<String, ResourceName> resourceNames) {
     // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
     // the first method in the service's methods list.
+    Map<String, TypeNode> types = createDynamicTypes(service);
+    TypeNode clientType = types.get(getClientName(service.name()));
     Method method =
-        methods.stream()
+        service.methods().stream()
             .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
             .findFirst()
-            .orElse(methods.get(0));
+            .orElse(service.methods().get(0));
     // If variant method signatures exists, use the first one.
     List<MethodArgument> arguments =
         method.methodSignatures().isEmpty()
@@ -253,5 +260,52 @@ public class ServiceClientSampleCodeComposer {
           types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name())).reference());
     }
     return Arrays.asList(method.inputType().reference(), method.outputType().reference());
+  }
+
+  private static Map<String, TypeNode> createDynamicTypes(Service service) {
+    Map<String, TypeNode> dynamicTypes = new HashMap<>();
+    dynamicTypes.putAll(createConcreteTypes());
+    dynamicTypes.put(
+        getClientName(service.name()),
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(getClientName(service.name()))
+                .setPakkage(service.pakkage())
+                .build()));
+    // Pagination types.
+    dynamicTypes.putAll(
+        service.methods().stream()
+            .filter(m -> m.isPaged())
+            .collect(
+                Collectors.toMap(
+                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
+                    m ->
+                        TypeNode.withReference(
+                            VaporReference.builder()
+                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+                                .setPakkage(service.pakkage())
+                                .setEnclosingClassNames(getClientName(service.name()))
+                                .setIsStaticImport(true)
+                                .build()))));
+    return dynamicTypes;
+  }
+
+  private static Map<String, TypeNode> createConcreteTypes() {
+    List<Class> concreteClazzes =
+        Arrays.asList(
+            BidiStreamingCallable.class,
+            ClientStreamingCallable.class,
+            ServerStreamingCallable.class,
+            OperationCallable.class,
+            UnaryCallable.class);
+    return concreteClazzes.stream()
+        .collect(
+            Collectors.toMap(
+                c -> c.getSimpleName(),
+                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+  }
+
+  private static String getClientName(String serviceName) {
+    return String.format("%sClient", serviceName);
   }
 }
