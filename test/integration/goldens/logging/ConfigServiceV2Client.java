@@ -76,7 +76,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * ConfigServiceV2Settings configServiceV2Settings =
  *     ConfigServiceV2Settings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * ConfigServiceV2Client configServiceV2Client =
  *     ConfigServiceV2Client.create(configServiceV2Settings);
@@ -86,7 +86,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * ConfigServiceV2Settings configServiceV2Settings =
- *     ConfigServiceV2Settings.newBuilder().setEndpoint("myEndpoint").build();
+ *     ConfigServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
  * ConfigServiceV2Client configServiceV2Client =
  *     ConfigServiceV2Client.create(configServiceV2Settings);
  * }</pre>
@@ -153,7 +153,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -182,7 +182,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -211,7 +211,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -240,7 +240,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -269,7 +269,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -295,7 +295,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -335,7 +335,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -373,7 +373,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -411,7 +411,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -436,7 +436,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -461,7 +461,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -486,7 +486,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -511,7 +511,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -533,7 +533,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -627,7 +627,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -826,7 +826,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1033,7 +1033,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1126,7 +1126,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1156,7 +1156,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1181,7 +1181,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1206,7 +1206,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1231,7 +1231,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1256,7 +1256,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -1278,7 +1278,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1374,7 +1374,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1561,7 +1561,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1675,7 +1675,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1759,7 +1759,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1794,7 +1794,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -1840,7 +1840,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *

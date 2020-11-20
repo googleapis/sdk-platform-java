@@ -20,7 +20,6 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
@@ -64,36 +63,32 @@ public final class SampleCodeHelperComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add unit tests.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with default value.
-    List<Statement> bodyStatements =
+    List<Expr> bodyExpr =
         arguments.stream()
-            .map(
-                methodArg ->
-                    ExprStatement.withExpr(
-                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .map(methodArg -> assignMethodArgumentWithDefaultValue(methodArg, resourceNames))
             .collect(Collectors.toList());
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
     if (method.outputType().equals(TypeNode.VOID)) {
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              MethodInvocationExpr.builder()
-                  .setExprReferenceExpr(
-                      createVariableDeclExpr(getClientName(clientType), clientType))
-                  .setMethodName(method.name())
-                  .setReturnType(clientType)
-                  .build()));
+      bodyExpr.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(method.name())
+              .setReturnType(clientType)
+              .build());
     } else {
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              createAssignExprForVariableWithClientMethod(
-                  RESPONSE_VAR_NAME, method.outputType(), clientType, method.name(), arguments)));
+      bodyExpr.add(
+          createAssignExprForVariableWithClientMethod(
+              RESPONSE_VAR_NAME, method.outputType(), clientVarExpr, method.name(), arguments));
     }
 
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
-        .setTryBody(bodyStatements)
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExpr.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .setIsSampleCode(true)
         .build();
   }
@@ -174,13 +169,13 @@ public final class SampleCodeHelperComposer {
   private static Expr createAssignExprForVariableWithClientMethod(
       String variableName,
       TypeNode variableType,
-      TypeNode clientType,
+      VariableExpr clientVarExpr,
       String methodName,
       List<MethodArgument> arguments) {
     VariableExpr varExpr = createVariableExpr(variableName, variableType);
     MethodInvocationExpr clientMethodInvocationExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
+            .setExprReferenceExpr(clientVarExpr)
             .setMethodName(methodName)
             .setArguments(mapMethodArgumentsToVariableExprs(arguments))
             .setReturnType(variableType)

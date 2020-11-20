@@ -78,7 +78,7 @@ import javax.annotation.Generated;
  * <pre>{@code
  * AssetServiceSettings assetServiceSettings =
  *     AssetServiceSettings.newBuilder()
- *         .setCredentialsProvider(FixedCredentialsProvider.create("myCredentials"))
+ *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
@@ -87,7 +87,7 @@ import javax.annotation.Generated;
  *
  * <pre>{@code
  * AssetServiceSettings assetServiceSettings =
- *     AssetServiceSettings.newBuilder().setEndpoint("myEndpoint").build();
+ *     AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
  */
@@ -170,7 +170,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary lro default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary lro default rpc method sample code.
    * }
    * }</pre>
    *
@@ -229,7 +229,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -288,7 +288,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -364,7 +364,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -416,7 +416,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -468,7 +468,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -546,7 +546,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary default rpc method sample code.
    * }
    * }</pre>
    *
@@ -577,7 +577,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -651,7 +651,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
@@ -699,7 +699,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for paged unary rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for paged unary rpc method sample code.
    * }
    * }</pre>
    *
@@ -757,7 +757,7 @@ public class AssetServiceClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
-   *   // Note: Not Implement yet, placeholder for unary paged default rpc method sample code.
+   *   // Note: Not implemented yet, placeholder for unary paged default rpc method sample code.
    * }
    * }</pre>
    *
