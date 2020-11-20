@@ -30,6 +30,11 @@ public abstract class VaporReference implements Reference {
   private static final String COMMA = ", ";
 
   @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
+  @Override
   public abstract ImmutableList<Reference> generics();
 
   @Override
