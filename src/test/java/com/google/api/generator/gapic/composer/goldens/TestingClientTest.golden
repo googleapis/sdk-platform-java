@@ -212,8 +212,7 @@ public class TestingClientTest {
     DeleteSessionRequest request =
         DeleteSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
-    Empty actualResponse = client.deleteSession(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSession(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -425,8 +424,7 @@ public class TestingClientTest {
             .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
             .build();
 
-    Empty actualResponse = client.deleteTest(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteTest(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
