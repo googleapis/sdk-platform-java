@@ -438,19 +438,18 @@ public class RetrySettingsComposerTest {
             methodSettingsName, batchingSettings, builderVarExpr);
     builderExpr.accept(writerVisitor);
     String expected =
-        createLines(
-            "builder"
-                + ".publishSettings()"
-                + ".setBatchingSettings("
-                + "BatchingSettings.newBuilder()"
-                + ".setElementCountThreshold(100L)"
-                + ".setRequestByteThreshold(1048576L)"
-                + ".setDelayThreshold(Duration.ofMillis(10L))"
-                + ".setFlowControlSettings("
-                + "FlowControlSettings.newBuilder()"
-                + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)"
-                + ".build())"
-                + ".build())");
+        "builder"
+            + ".publishSettings()"
+            + ".setBatchingSettings("
+            + "BatchingSettings.newBuilder()"
+            + ".setElementCountThreshold(100L)"
+            + ".setRequestByteThreshold(1048576L)"
+            + ".setDelayThreshold(Duration.ofMillis(10L))"
+            + ".setFlowControlSettings("
+            + "FlowControlSettings.newBuilder()"
+            + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)"
+            + ".build())"
+            + ".build())";
     assertEquals(expected, writerVisitor.write());
   }
 
@@ -522,21 +521,20 @@ public class RetrySettingsComposerTest {
             methodSettingsName, batchingSettings, builderVarExpr);
     builderExpr.accept(writerVisitor);
     String expected =
-        createLines(
-            "builder"
-                + ".writeLogEntriesSettings()"
-                + ".setBatchingSettings("
-                + "BatchingSettings.newBuilder()"
-                + ".setElementCountThreshold(1000L)"
-                + ".setRequestByteThreshold(1048576L)"
-                + ".setDelayThreshold(Duration.ofMillis(50L))"
-                + ".setFlowControlSettings("
-                + "FlowControlSettings.newBuilder()"
-                + ".setMaxOutstandingElementCount(100000L)"
-                + ".setMaxOutstandingRequestBytes(10485760L)"
-                + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.ThrowException)"
-                + ".build())"
-                + ".build())");
+        "builder"
+            + ".writeLogEntriesSettings()"
+            + ".setBatchingSettings("
+            + "BatchingSettings.newBuilder()"
+            + ".setElementCountThreshold(1000L)"
+            + ".setRequestByteThreshold(1048576L)"
+            + ".setDelayThreshold(Duration.ofMillis(50L))"
+            + ".setFlowControlSettings("
+            + "FlowControlSettings.newBuilder()"
+            + ".setMaxOutstandingElementCount(100000L)"
+            + ".setMaxOutstandingRequestBytes(10485760L)"
+            + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.ThrowException)"
+            + ".build())"
+            + ".build())";
     assertEquals(expected, writerVisitor.write());
   }
 
