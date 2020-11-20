@@ -288,8 +288,8 @@ public class EchoClient implements BackgroundResource {
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
-   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
-   *   EchoResponse response = echoClient.Echo(request);
+   *   EchoRequest request = EchoRequest.newBuilder().setParent(parent.toString()).build();
+   *   EchoResponse response = echoClient.echo(request);
    * }
    * }</pre>
    *
@@ -409,7 +409,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   Duration ttl = Duration.newBuilder().build();
    *   WaitRequest request = WaitRequest.newBuilder().setTtl(ttl).build();
-   *   Operation response = EchoClient.waitAsync(request).get();
+   *   Operation response = echoClient.waitAsync(request).get();
    * }
    * }</pre>
    *
@@ -439,7 +439,7 @@ public class EchoClient implements BackgroundResource {
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
    *   BlockRequest request = BlockRequest.newBuilder().build();
-   *   BlockResponse response = echoClient.Block(request);
+   *   BlockResponse response = echoClient.block(request);
    * }
    * }</pre>
    *

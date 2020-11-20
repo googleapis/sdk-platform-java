@@ -213,7 +213,7 @@ public class IdentityClient implements BackgroundResource {
    *           .setDisplayName(display_name)
    *           .setEmail(email)
    *           .build();
-   *   User response = identityClient.CreateUser(request);
+   *   User response = identityClient.createUser(request);
    * }
    * }</pre>
    *
@@ -276,8 +276,8 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
-   *   GetUserRequest request = GetUserRequest.newBuilder().setName(name).build();
-   *   User response = identityClient.GetUser(request);
+   *   GetUserRequest request = GetUserRequest.newBuilder().setName(name.toString()).build();
+   *   User response = identityClient.getUser(request);
    * }
    * }</pre>
    *
@@ -301,7 +301,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UpdateUserRequest request = UpdateUserRequest.newBuilder().build();
-   *   User response = identityClient.UpdateUser(request);
+   *   User response = identityClient.updateUser(request);
    * }
    * }</pre>
    *
@@ -366,8 +366,8 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
-   *   DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name).build();
-   *   Empty response = identityClient.DeleteUser(request);
+   *   DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name.toString()).build();
+   *   Empty response = identityClient.deleteUser(request);
    * }
    * }</pre>
    *

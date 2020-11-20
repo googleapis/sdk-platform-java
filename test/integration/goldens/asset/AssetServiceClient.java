@@ -171,7 +171,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   ExportAssetsRequest request = ExportAssetsRequest.newBuilder().build();
-   *   Operation response = AssetServiceClient.exportAssetsAsync(request).get();
+   *   Operation response = assetServiceClient.exportAssetsAsync(request).get();
    * }
    * }</pre>
    *
@@ -231,7 +231,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   BatchGetAssetsHistoryRequest request = BatchGetAssetsHistoryRequest.newBuilder().build();
-   *   BatchGetAssetsHistoryResponse response = assetServiceClient.BatchGetAssetsHistory(request);
+   *   BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
    * }
    * }</pre>
    *
@@ -292,7 +292,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String parent = "parent-995424086";
    *   CreateFeedRequest request = CreateFeedRequest.newBuilder().setParent(parent).build();
-   *   Feed response = assetServiceClient.CreateFeed(request);
+   *   Feed response = assetServiceClient.createFeed(request);
    * }
    * }</pre>
    *
@@ -369,8 +369,8 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   GetFeedRequest request = GetFeedRequest.newBuilder().setName(name).build();
-   *   Feed response = assetServiceClient.GetFeed(request);
+   *   GetFeedRequest request = GetFeedRequest.newBuilder().setName(name.toString()).build();
+   *   Feed response = assetServiceClient.getFeed(request);
    * }
    * }</pre>
    *
@@ -424,7 +424,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String parent = "parent-995424086";
    *   ListFeedsRequest request = ListFeedsRequest.newBuilder().setParent(parent).build();
-   *   ListFeedsResponse response = assetServiceClient.ListFeeds(request);
+   *   ListFeedsResponse response = assetServiceClient.listFeeds(request);
    * }
    * }</pre>
    *
@@ -478,7 +478,7 @@ public class AssetServiceClient implements BackgroundResource {
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   Feed feed = Feed.newBuilder().build();
    *   UpdateFeedRequest request = UpdateFeedRequest.newBuilder().setFeed(feed).build();
-   *   Feed response = assetServiceClient.UpdateFeed(request);
+   *   Feed response = assetServiceClient.updateFeed(request);
    * }
    * }</pre>
    *
@@ -557,8 +557,8 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name).build();
-   *   Empty response = assetServiceClient.DeleteFeed(request);
+   *   DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name.toString()).build();
+   *   Empty response = assetServiceClient.deleteFeed(request);
    * }
    * }</pre>
    *

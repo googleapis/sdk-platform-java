@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
@@ -174,74 +175,77 @@ public final class SampleCodeHelperComposer {
       Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary default rpc method.
     // TODO(summerji): Add unit tests.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    VariableExpr requestVarExpr = createVariableExpr(REQUEST_VAR_NAME, method.inputType());
+    VariableExpr responseVarExpr = createVariableExpr(RESPONSE_VAR_NAME, method.outputType());
     // If variant method signatures exists, use the first one.
     List<MethodArgument> arguments =
         !method.methodSignatures().isEmpty()
             ? method.methodSignatures().get(0)
             : Collections.emptyList();
     // Assign each method arguments with default value.
-    List<Statement> bodyStatements =
+    List<Expr> bodyExprs =
         arguments.stream()
-            .map(
-                methodArg ->
-                    ExprStatement.withExpr(
-                        assignMethodArgumentWithDefaultValue(methodArg, resourceNames)))
+            .map(methodArg -> assignMethodArgumentWithDefaultValue(methodArg, resourceNames))
             .collect(Collectors.toList());
     // Assign request variables with set argument attributes.
-    // e.g EchoRequest
-    bodyStatements.add(
-        ExprStatement.withExpr(createRequestBuilderExpr(method.inputType(), arguments)));
+    bodyExprs.add(createRequestBuilderExpr(requestVarExpr, arguments));
 
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
     if (method.isPaged()) {
       // For loop on invoke client method's iterator with comment.
-      // e.g. for (EchoClient echoClient : echoClient.PagedExpand(request).iterateAll()) {//..}
+      // e.g. for (EchoClient echoClient : echoClient.PagedExpand(request).iterateAll()) {..}
       bodyStatements.add(
           ForStatement.builder()
-              .setLocalVariableExpr(createVariableDeclExpr(getClientName(clientType), clientType))
-              .setCollectionExpr(createIteratorAllMethodExpr(method, clientType, arguments))
+              .setLocalVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+              .setCollectionExpr(createIteratorAllMethodExpr(method, clientVarExpr, arguments))
               .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
               .build());
     } else if (method.hasLro()) {
       // Create response variable by invoke client's async method.
-      // e.g Operation response = EchoClient.waitAsync(request).get();
+      // e.g Operation response = echoClient.waitAsync(request).get();
       Expr getResponseMethodExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(
                   MethodInvocationExpr.builder()
-                      .setStaticReferenceType(clientType)
+                      .setExprReferenceExpr(clientVarExpr)
                       .setMethodName(getLroMethodName(method.name()))
-                      .setArguments(
-                          Arrays.asList(createVariableExpr(REQUEST_VAR_NAME, method.inputType())))
+                      .setArguments(Arrays.asList(requestVarExpr))
                       .build())
               .setMethodName("get")
               .setReturnType(method.outputType())
               .build();
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              AssignmentExpr.builder()
-                  .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-                  .setValueExpr(getResponseMethodExpr)
-                  .build()));
+      if (!method.outputType().equals(TypeNode.VOID)) {
+        getResponseMethodExpr =
+            AssignmentExpr.builder()
+                .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(getResponseMethodExpr)
+                .build();
+      }
+      bodyStatements.add(ExprStatement.withExpr(getResponseMethodExpr));
     } else {
       // Create response variable by invoke client's method by passing request.
       // e.g. EchoResponse response = echoClient.Echo(request);
       Expr invokeMethodExpr =
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(createVariableExpr(getClientName(clientType), clientType))
-              .setMethodName(method.name())
-              .setArguments(createVariableExpr("request", method.inputType()))
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+              .setArguments(requestVarExpr)
               .setReturnType(method.outputType())
               .build();
-      bodyStatements.add(
-          ExprStatement.withExpr(
-              AssignmentExpr.builder()
-                  .setVariableExpr(createVariableDeclExpr(RESPONSE_VAR_NAME, method.outputType()))
-                  .setValueExpr(invokeMethodExpr)
-                  .build()));
+      if (!method.outputType().equals(TypeNode.VOID)) {
+        invokeMethodExpr =
+            AssignmentExpr.builder()
+                .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(invokeMethodExpr)
+                .build();
+      }
+      bodyStatements.add(ExprStatement.withExpr(invokeMethodExpr));
     }
 
     return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientType))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
@@ -267,30 +271,40 @@ public final class SampleCodeHelperComposer {
   // Create request variable by set attributes.
   // e.g. EchoRequest request = EchoRequest.newBuilder().setParent(parent).build();
   private static Expr createRequestBuilderExpr(
-      TypeNode requestType, List<MethodArgument> arguments) {
+      VariableExpr requestVarExpr, List<MethodArgument> arguments) {
     MethodInvocationExpr newBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(requestType)
+            .setStaticReferenceType(requestVarExpr.variable().type())
             .setMethodName("newBuilder")
             .build();
     for (MethodArgument arg : arguments) {
+      // if method argument is ResourceName, return method invocation expr <arg>.toString().
+      TypeNode resourceNameType =
+          TypeNode.withReference(
+              ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
+      Expr argumentExpr = createVariableExpr(arg.name(), arg.type());
+      if (resourceNameType.isSupertypeOrEquals(arg.type())) {
+        argumentExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(argumentExpr)
+                .setMethodName("toString")
+                .build();
+      }
       newBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(newBuilderExpr)
               .setMethodName(String.format("set%s", JavaStyle.toUpperCamelCase(arg.name())))
-              .setArguments(
-                  VariableExpr.withVariable(
-                      Variable.builder().setName(arg.name()).setType(arg.type()).build()))
+              .setArguments(argumentExpr)
               .build();
     }
     MethodInvocationExpr requestBuildExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(newBuilderExpr)
             .setMethodName("build")
-            .setReturnType(requestType)
+            .setReturnType(requestVarExpr.variable().type())
             .build();
     return AssignmentExpr.builder()
-        .setVariableExpr(createVariableDeclExpr("request", requestType))
+        .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
         .setValueExpr(requestBuildExpr)
         .build();
   }

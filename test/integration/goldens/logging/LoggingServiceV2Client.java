@@ -217,8 +217,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
-   *   DeleteLogRequest request = DeleteLogRequest.newBuilder().setLogName(log_name).build();
-   *   Empty response = loggingServiceV2Client.DeleteLog(request);
+   *   DeleteLogRequest request =
+   *       DeleteLogRequest.newBuilder().setLogName(log_name.toString()).build();
+   *   Empty response = loggingServiceV2Client.deleteLog(request);
    * }
    * }</pre>
    *
@@ -408,12 +409,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *   List<LogEntry> entries = new ArrayList<>();
    *   WriteLogEntriesRequest request =
    *       WriteLogEntriesRequest.newBuilder()
-   *           .setLogName(log_name)
+   *           .setLogName(log_name.toString())
    *           .setResource(resource)
    *           .setLabels(labels)
    *           .setEntries(entries)
    *           .build();
-   *   WriteLogEntriesResponse response = loggingServiceV2Client.WriteLogEntries(request);
+   *   WriteLogEntriesResponse response = loggingServiceV2Client.writeLogEntries(request);
    * }
    * }</pre>
    *
@@ -752,7 +753,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
-   *   ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent).build();
+   *   ListLogsRequest request = ListLogsRequest.newBuilder().setParent(parent.toString()).build();
    *   for (LoggingServiceV2Client loggingServiceV2Client :
    *       loggingServiceV2Client.ListLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
