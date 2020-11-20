@@ -51,14 +51,13 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
-        .setTryResourceExpr(
-            assignClientVariableWithCreateMethodExpr(
-                createVariableExpr(getClientName(clientType), clientType)))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet, placeholder for pure unary rpc method sample code.")))
+                    "Note: Not implemented yet, placeholder for pure unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -66,14 +65,13 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composeLroUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary lro rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
-        .setTryResourceExpr(
-            assignClientVariableWithCreateMethodExpr(
-                createVariableExpr(getClientName(clientType), clientType)))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet, placeholder for lro Unary rpc method sample code.")))
+                    "Note: Not implemented yet, placeholder for lro Unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -81,14 +79,13 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary paged rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
-        .setTryResourceExpr(
-            assignClientVariableWithCreateMethodExpr(
-                createVariableExpr(getClientName(clientType), clientType)))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(
             Arrays.asList(
                 createLineCommentStatement(
-                    "Note: Not Implement yet, placeholder for paged unary rpc method sample code.")))
+                    "Note: Not implemented yet, placeholder for paged unary rpc method sample code.")))
         .setIsSampleCode(true)
         .build();
   }
@@ -96,16 +93,15 @@ public final class SampleCodeHelperComposer {
   private static TryCatchStatement composeUnaryRpcDefaultMethodSampleCode(
       Method method, TypeNode clientType) {
     // TODO(summerji): compose sample code for unary default rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     String content =
         String.format(
-            "Note: Not Implement yet, placeholder for unary %s rpc method sample code.",
+            "Note: Not implemented yet, placeholder for unary %s rpc method sample code.",
             (!method.hasLro() && !method.isPaged()
                 ? "default"
                 : (method.hasLro() ? "lro default" : "paged default")));
     return TryCatchStatement.builder()
-        .setTryResourceExpr(
-            assignClientVariableWithCreateMethodExpr(
-                createVariableExpr(getClientName(clientType), clientType)))
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(Arrays.asList(createLineCommentStatement(content)))
         .setIsSampleCode(true)
         .build();
