@@ -265,7 +265,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String parent = "parent-995424086";
-   *   Feed response = assetServiceClient.CreateFeed(parent);
+   *   Feed response = assetServiceClient.createFeed(parent);
    * }
    * }</pre>
    *
@@ -318,7 +318,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   Feed response = assetServiceClient.GetFeed(name);
+   *   Feed response = assetServiceClient.getFeed(name);
    * }
    * }</pre>
    *
@@ -342,7 +342,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String name = "name3373707";
-   *   Feed response = assetServiceClient.GetFeed(name);
+   *   Feed response = assetServiceClient.getFeed(name);
    * }
    * }</pre>
    *
@@ -394,7 +394,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String parent = "parent-995424086";
-   *   ListFeedsResponse response = assetServiceClient.ListFeeds(parent);
+   *   ListFeedsResponse response = assetServiceClient.listFeeds(parent);
    * }
    * }</pre>
    *
@@ -446,7 +446,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   Feed feed = Feed.newBuilder().build();
-   *   Feed response = assetServiceClient.UpdateFeed(feed);
+   *   Feed response = assetServiceClient.updateFeed(feed);
    * }
    * }</pre>
    *
@@ -498,7 +498,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
-   *   Empty response = assetServiceClient.DeleteFeed(name);
+   *   Empty response = assetServiceClient.deleteFeed(name);
    * }
    * }</pre>
    *
@@ -524,7 +524,7 @@ public class AssetServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
    *   String name = "name3373707";
-   *   Empty response = assetServiceClient.DeleteFeed(name);
+   *   Empty response = assetServiceClient.deleteFeed(name);
    * }
    * }</pre>
    *

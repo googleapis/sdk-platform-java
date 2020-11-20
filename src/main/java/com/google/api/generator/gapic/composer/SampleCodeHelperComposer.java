@@ -176,7 +176,7 @@ public final class SampleCodeHelperComposer {
     MethodInvocationExpr clientMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
-            .setMethodName(methodName)
+            .setMethodName(JavaStyle.toLowerCamelCase(methodName))
             .setArguments(mapMethodArgumentsToVariableExprs(arguments))
             .setReturnType(variableType)
             .build();

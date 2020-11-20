@@ -130,7 +130,7 @@ public class IdentityClient implements BackgroundResource {
    *   String parent = "parent-995424086";
    *   String display_name = "display_name1615086568";
    *   String email = "email96619420";
-   *   User response = identityClient.CreateUser(parent, display_name, email);
+   *   User response = identityClient.createUser(parent, display_name, email);
    * }
    * }</pre>
    *
@@ -163,7 +163,7 @@ public class IdentityClient implements BackgroundResource {
    *   boolean enable_notifications = true;
    *   double height_feet = -1032737338;
    *   User response =
-   *       identityClient.CreateUser(
+   *       identityClient.createUser(
    *           parent, display_name, email, age, nickname, enable_notifications, height_feet);
    * }
    * }</pre>
@@ -228,7 +228,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
-   *   User response = identityClient.GetUser(name);
+   *   User response = identityClient.getUser(name);
    * }
    * }</pre>
    *
@@ -248,7 +248,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = "name3373707";
-   *   User response = identityClient.GetUser(name);
+   *   User response = identityClient.getUser(name);
    * }
    * }</pre>
    *
@@ -313,7 +313,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
-   *   Empty response = identityClient.DeleteUser(name);
+   *   Empty response = identityClient.deleteUser(name);
    * }
    * }</pre>
    *
@@ -335,7 +335,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = "name3373707";
-   *   Empty response = identityClient.DeleteUser(name);
+   *   Empty response = identityClient.deleteUser(name);
    * }
    * }</pre>
    *

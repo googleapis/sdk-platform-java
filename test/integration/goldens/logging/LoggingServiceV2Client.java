@@ -158,7 +158,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
-   *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
+   *   Empty response = loggingServiceV2Client.deleteLog(log_name);
    * }
    * }</pre>
    *
@@ -189,7 +189,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (LoggingServiceV2Client loggingServiceV2Client = LoggingServiceV2Client.create()) {
    *   String log_name = "log_name2013526694";
-   *   Empty response = loggingServiceV2Client.DeleteLog(log_name);
+   *   Empty response = loggingServiceV2Client.deleteLog(log_name);
    * }
    * }</pre>
    *
@@ -255,7 +255,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *   Map<String, String> labels = new HashMap<>();
    *   List<LogEntry> entries = new ArrayList<>();
    *   WriteLogEntriesResponse response =
-   *       loggingServiceV2Client.WriteLogEntries(log_name, resource, labels, entries);
+   *       loggingServiceV2Client.writeLogEntries(log_name, resource, labels, entries);
    * }
    * }</pre>
    *
@@ -330,7 +330,7 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *   Map<String, String> labels = new HashMap<>();
    *   List<LogEntry> entries = new ArrayList<>();
    *   WriteLogEntriesResponse response =
-   *       loggingServiceV2Client.WriteLogEntries(log_name, resource, labels, entries);
+   *       loggingServiceV2Client.writeLogEntries(log_name, resource, labels, entries);
    * }
    * }</pre>
    *

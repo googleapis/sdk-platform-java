@@ -573,7 +573,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   LogSink response = configServiceV2Client.GetSink(sink_name);
+   *   LogSink response = configServiceV2Client.getSink(sink_name);
    * }
    * }</pre>
    *
@@ -602,7 +602,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String sink_name = "sink_name-1391757129";
-   *   LogSink response = configServiceV2Client.GetSink(sink_name);
+   *   LogSink response = configServiceV2Client.getSink(sink_name);
    * }
    * }</pre>
    *
@@ -661,7 +661,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
+   *   LogSink response = configServiceV2Client.createSink(parent, sink);
    * }
    * }</pre>
    *
@@ -695,7 +695,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
+   *   LogSink response = configServiceV2Client.createSink(parent, sink);
    * }
    * }</pre>
    *
@@ -729,7 +729,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
+   *   LogSink response = configServiceV2Client.createSink(parent, sink);
    * }
    * }</pre>
    *
@@ -763,7 +763,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
+   *   LogSink response = configServiceV2Client.createSink(parent, sink);
    * }
    * }</pre>
    *
@@ -797,7 +797,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.CreateSink(parent, sink);
+   *   LogSink response = configServiceV2Client.createSink(parent, sink);
    * }
    * }</pre>
    *
@@ -864,7 +864,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink);
+   *   LogSink response = configServiceV2Client.updateSink(sink_name, sink);
    * }
    * }</pre>
    *
@@ -902,7 +902,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String sink_name = "sink_name-1391757129";
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink);
+   *   LogSink response = configServiceV2Client.updateSink(sink_name, sink);
    * }
    * }</pre>
    *
@@ -938,7 +938,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
    *   FieldMask update_mask = FieldMask.newBuilder().build();
-   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink, update_mask);
+   *   LogSink response = configServiceV2Client.updateSink(sink_name, sink, update_mask);
    * }
    * }</pre>
    *
@@ -987,7 +987,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *   String sink_name = "sink_name-1391757129";
    *   LogSink sink = LogSink.newBuilder().build();
    *   FieldMask update_mask = FieldMask.newBuilder().build();
-   *   LogSink response = configServiceV2Client.UpdateSink(sink_name, sink, update_mask);
+   *   LogSink response = configServiceV2Client.updateSink(sink_name, sink, update_mask);
    * }
    * }</pre>
    *
@@ -1068,7 +1068,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
-   *   Empty response = configServiceV2Client.DeleteSink(sink_name);
+   *   Empty response = configServiceV2Client.deleteSink(sink_name);
    * }
    * }</pre>
    *
@@ -1099,7 +1099,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String sink_name = "sink_name-1391757129";
-   *   Empty response = configServiceV2Client.DeleteSink(sink_name);
+   *   Empty response = configServiceV2Client.deleteSink(sink_name);
    * }
    * }</pre>
    *
@@ -1320,7 +1320,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
-   *   LogExclusion response = configServiceV2Client.GetExclusion(name);
+   *   LogExclusion response = configServiceV2Client.getExclusion(name);
    * }
    * }</pre>
    *
@@ -1349,7 +1349,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String name = "name3373707";
-   *   LogExclusion response = configServiceV2Client.GetExclusion(name);
+   *   LogExclusion response = configServiceV2Client.getExclusion(name);
    * }
    * }</pre>
    *
@@ -1406,7 +1406,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
+   *   LogExclusion response = configServiceV2Client.createExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1438,7 +1438,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   FolderName parent = FolderName.of("[FOLDER]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
+   *   LogExclusion response = configServiceV2Client.createExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1470,7 +1470,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
+   *   LogExclusion response = configServiceV2Client.createExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1502,7 +1502,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   ProjectName parent = ProjectName.of("[PROJECT]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
+   *   LogExclusion response = configServiceV2Client.createExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1534,7 +1534,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String parent = "parent-995424086";
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.CreateExclusion(parent, exclusion);
+   *   LogExclusion response = configServiceV2Client.createExclusion(parent, exclusion);
    * }
    * }</pre>
    *
@@ -1594,7 +1594,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
    *   FieldMask update_mask = FieldMask.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.UpdateExclusion(name, exclusion, update_mask);
+   *   LogExclusion response = configServiceV2Client.updateExclusion(name, exclusion, update_mask);
    * }
    * }</pre>
    *
@@ -1636,7 +1636,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *   String name = "name3373707";
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
    *   FieldMask update_mask = FieldMask.newBuilder().build();
-   *   LogExclusion response = configServiceV2Client.UpdateExclusion(name, exclusion, update_mask);
+   *   LogExclusion response = configServiceV2Client.updateExclusion(name, exclusion, update_mask);
    * }
    * }</pre>
    *
@@ -1705,7 +1705,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
-   *   Empty response = configServiceV2Client.DeleteExclusion(name);
+   *   Empty response = configServiceV2Client.deleteExclusion(name);
    * }
    * }</pre>
    *
@@ -1734,7 +1734,7 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * <pre>{@code
    * try (ConfigServiceV2Client configServiceV2Client = ConfigServiceV2Client.create()) {
    *   String name = "name3373707";
-   *   Empty response = configServiceV2Client.DeleteExclusion(name);
+   *   Empty response = configServiceV2Client.deleteExclusion(name);
    * }
    * }</pre>
    *
