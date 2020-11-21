@@ -42,7 +42,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     # Resource name source files.
     PROTO_DIR=$WORKING_DIR/{output_dir_path}/proto/src/main/java
     PROTO_SRCJAR=$WORKING_DIR/{output_srcjar_name}-resource-name.srcjar
-    if [ -d $PROTO_DIR ]
+    if [ ! -d $PROTO_DIR ]
     then
       # Some APIs don't have resource name helpers, like BigQuery v2.
       # Create an empty file so we can finish building. Gating the resource name rule definition
