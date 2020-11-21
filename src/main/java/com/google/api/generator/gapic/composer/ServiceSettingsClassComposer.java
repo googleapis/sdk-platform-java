@@ -836,7 +836,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static TypeNode getStubSettingsBuilderType(Service service) {
     return TypeNode.withReference(
         VaporReference.builder()
-            .setPakkage(service.pakkage())
+            .setPakkage(String.format("%s.stub", service.pakkage()))
             .setName(BUILDER_CLASS_NAME)
             .setEnclosingClassNames(getStubSettingsClassName(service.name()))
             .build());
