@@ -21,9 +21,8 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.Statement;
-import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
@@ -44,6 +43,12 @@ public class ServiceClientSampleCodeComposer {
     // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
+    TypeNode myCredentialsType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("myCredentials")
+                .setPakkage(clientType.reference().pakkage())
+                .build());
     VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
@@ -55,7 +60,7 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr credentialArgExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(fixedCredentialProvideType)
-            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("myCredentials")))
+            .setArguments(createVariableExpr("myCredentials", myCredentialsType))
             .setMethodName("create")
             .build();
     MethodInvocationExpr credentialsMethodExpr =
@@ -103,6 +108,12 @@ public class ServiceClientSampleCodeComposer {
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
     String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
+    TypeNode myEndpointType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("myEndpoint")
+                .setPakkage(clientType.reference().pakkage())
+                .build());
     VariableExpr settingsVarExpr = createVariableExpr(settingsName, settingsType);
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
@@ -112,7 +123,7 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr credentialsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(newBuilderMethodExpr)
-            .setArguments(ValueExpr.withValue(StringObjectValue.withValue("myEndpoint")))
+            .setArguments(createVariableExpr("myEndpoint", myEndpointType))
             .setMethodName("setEndpoint")
             .build();
     MethodInvocationExpr buildMethodExpr =
