@@ -481,7 +481,6 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
 
     if (reference.isStaticImport()) {
-      // This is a static import.
       // TODO(miraleung): This should have a variant of addImports as well. Handle static import
       // collisions.
       staticImports.add(reference.fullName());
