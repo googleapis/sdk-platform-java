@@ -851,11 +851,23 @@ public class ServiceClientTestClassComposer {
                     .build();
         Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
         Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
+        List<Expr> assertEqualsArguments = new ArrayList<>();
+        assertEqualsArguments.add(expectedFieldExpr);
+        assertEqualsArguments.add(actualFieldExpr);
+        if (TypeNode.isFloatingPointType(field.type())) {
+          boolean isFloat = field.type().equals(TypeNode.FLOAT);
+          assertEqualsArguments.add(
+              ValueExpr.withValue(
+                  PrimitiveValue.builder()
+                      .setType(isFloat ? TypeNode.FLOAT : TypeNode.DOUBLE)
+                      .setValue(String.format("0.0001%s", isFloat ? "f" : ""))
+                      .build()));
+        }
         methodExprs.add(
             MethodInvocationExpr.builder()
                 .setStaticReferenceType(STATIC_TYPES.get("Assert"))
                 .setMethodName("assertEquals")
-                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .setArguments(assertEqualsArguments)
                 .build());
       }
     } else {
@@ -1080,6 +1092,11 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       methodExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1087,7 +1104,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
@@ -1347,6 +1364,12 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       exprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1354,7 +1377,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
