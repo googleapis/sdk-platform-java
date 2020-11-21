@@ -62,7 +62,12 @@ public class HttpRuleParser {
         String subField = descendantBindings[i];
         if (i < descendantBindings.length - 1) {
           Field field = containingMessage.fieldMap().get(subField);
-          containingMessage = messageTypes.get(field.type().reference().name());
+          containingMessage = messageTypes.get(field.type().reference().simpleName());
+          Preconditions.checkNotNull(
+              containingMessage,
+              String.format(
+                  "No containing message found for field %s with type %s",
+                  field.name(), field.type().reference().simpleName()));
         } else {
           checkHttpFieldIsValid(subField, containingMessage, false);
         }
