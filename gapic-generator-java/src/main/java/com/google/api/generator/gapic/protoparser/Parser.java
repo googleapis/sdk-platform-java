@@ -262,7 +262,6 @@ public class Parser {
         messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
       }
     }
-    String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
     messages.put(
         messageName,
         Message.builder()
@@ -351,9 +350,10 @@ public class Parser {
         }
       }
 
-      Message inputMessage = messageTypes.get(inputType.reference().name());
+      Message inputMessage = messageTypes.get(inputType.reference().simpleName());
       Preconditions.checkNotNull(
-          inputMessage, String.format("No message found for %s", inputType.reference().name()));
+          inputMessage,
+          String.format("No message found for %s", inputType.reference().simpleName()));
       Optional<List<String>> httpBindingsOpt =
           HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =

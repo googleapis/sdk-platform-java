@@ -23,6 +23,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.DescriptorProtos.FileOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.EnumDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
@@ -35,6 +36,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 public class TypeParser {
+  private static final String DOT = ".";
+
   private static Reference REFERENCE_BYTE_STRING = ConcreteReference.withClazz(ByteString.class);
   private static TypeNode TYPE_NODE_BYTE_STRING = TypeNode.withReference(REFERENCE_BYTE_STRING);
 
@@ -115,7 +118,16 @@ public class TypeParser {
   @VisibleForTesting
   static Reference parseMessageReference(@Nonnull Descriptor messageDescriptor) {
     List<String> outerNestedTypeNames = new ArrayList<>();
+    FileOptions fileOptions = messageDescriptor.getFile().getOptions();
+    String javaOuterClassname =
+        fileOptions.hasJavaOuterClassname() ? fileOptions.getJavaOuterClassname() : null;
+    boolean hasJavaOuterClass =
+        !Strings.isNullOrEmpty(javaOuterClassname) && !fileOptions.getJavaMultipleFiles();
+    if (hasJavaOuterClass) {
+      outerNestedTypeNames.add(javaOuterClassname);
+    }
     Descriptor containingType = messageDescriptor.getContainingType();
+
     // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
@@ -131,15 +143,21 @@ public class TypeParser {
             .setEnclosingClassNames(outerNestedTypeNames)
             .build();
     String protoPackage = messageDescriptor.getFile().getPackage();
+    String messageFullName = messageDescriptor.getFullName();
+    if (hasJavaOuterClass) {
+      messageFullName =
+          String.format(
+              "%s.%s.%s",
+              messageFullName.substring(0, messageFullName.lastIndexOf(DOT)),
+              javaOuterClassname,
+              messageFullName.substring(messageFullName.lastIndexOf(DOT) + 1));
+    }
     Preconditions.checkState(
-        messageReference
-            .fullName()
-            .replace(pakkage, protoPackage)
-            .equals(messageDescriptor.getFullName()),
+        messageReference.fullName().replace(pakkage, protoPackage).equals(messageFullName),
         String.format(
             "Parsed message name %s does not match actual name %s",
             messageReference.fullName().replace(pakkage, ""),
-            messageDescriptor.getFullName().replace(protoPackage, "")));
+            messageFullName.replace(protoPackage, "")));
     return messageReference;
   }
 
