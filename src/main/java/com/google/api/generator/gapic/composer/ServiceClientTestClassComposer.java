@@ -1092,6 +1092,11 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       methodExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1099,7 +1104,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
@@ -1359,6 +1364,12 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       exprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1366,7 +1377,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
