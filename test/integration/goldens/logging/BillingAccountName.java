@@ -34,6 +34,11 @@ public class BillingAccountName implements ResourceName {
   private volatile Map<String, String> fieldValuesMap;
   private final String billingAccount;
 
+  @Deprecated
+  protected BillingAccountName() {
+    billingAccount = null;
+  }
+
   private BillingAccountName(Builder builder) {
     billingAccount = Preconditions.checkNotNull(builder.getBillingAccount());
   }
@@ -141,7 +146,7 @@ public class BillingAccountName implements ResourceName {
   public static class Builder {
     private String billingAccount;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getBillingAccount() {
       return billingAccount;

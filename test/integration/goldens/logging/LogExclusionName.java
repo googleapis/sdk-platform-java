@@ -49,6 +49,15 @@ public class LogExclusionName implements ResourceName {
   private final String folder;
   private final String billingAccount;
 
+  @Deprecated
+  protected LogExclusionName() {
+    project = null;
+    exclusion = null;
+    organization = null;
+    folder = null;
+    billingAccount = null;
+  }
+
   private LogExclusionName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     exclusion = Preconditions.checkNotNull(builder.getExclusion());
@@ -321,7 +330,7 @@ public class LogExclusionName implements ResourceName {
     private String project;
     private String exclusion;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -360,7 +369,7 @@ public class LogExclusionName implements ResourceName {
     private String organization;
     private String exclusion;
 
-    private OrganizationExclusionBuilder() {}
+    protected OrganizationExclusionBuilder() {}
 
     public String getOrganization() {
       return organization;
@@ -391,7 +400,7 @@ public class LogExclusionName implements ResourceName {
     private String folder;
     private String exclusion;
 
-    private FolderExclusionBuilder() {}
+    protected FolderExclusionBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -422,7 +431,7 @@ public class LogExclusionName implements ResourceName {
     private String billingAccount;
     private String exclusion;
 
-    private BillingAccountExclusionBuilder() {}
+    protected BillingAccountExclusionBuilder() {}
 
     public String getBillingAccount() {
       return billingAccount;

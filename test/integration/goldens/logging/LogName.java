@@ -48,6 +48,15 @@ public class LogName implements ResourceName {
   private final String folder;
   private final String billingAccount;
 
+  @Deprecated
+  protected LogName() {
+    project = null;
+    log = null;
+    organization = null;
+    folder = null;
+    billingAccount = null;
+  }
+
   private LogName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     log = Preconditions.checkNotNull(builder.getLog());
@@ -307,7 +316,7 @@ public class LogName implements ResourceName {
     private String project;
     private String log;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -346,7 +355,7 @@ public class LogName implements ResourceName {
     private String organization;
     private String log;
 
-    private OrganizationLogBuilder() {}
+    protected OrganizationLogBuilder() {}
 
     public String getOrganization() {
       return organization;
@@ -377,7 +386,7 @@ public class LogName implements ResourceName {
     private String folder;
     private String log;
 
-    private FolderLogBuilder() {}
+    protected FolderLogBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -408,7 +417,7 @@ public class LogName implements ResourceName {
     private String billingAccount;
     private String log;
 
-    private BillingAccountLogBuilder() {}
+    protected BillingAccountLogBuilder() {}
 
     public String getBillingAccount() {
       return billingAccount;
