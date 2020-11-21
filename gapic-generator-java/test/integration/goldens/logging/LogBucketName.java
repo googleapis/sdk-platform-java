@@ -53,6 +53,16 @@ public class LogBucketName implements ResourceName {
   private final String folder;
   private final String billingAccount;
 
+  @Deprecated
+  protected LogBucketName() {
+    project = null;
+    location = null;
+    bucket = null;
+    organization = null;
+    folder = null;
+    billingAccount = null;
+  }
+
   private LogBucketName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -372,7 +382,7 @@ public class LogBucketName implements ResourceName {
     private String location;
     private String bucket;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -422,7 +432,7 @@ public class LogBucketName implements ResourceName {
     private String location;
     private String bucket;
 
-    private OrganizationLocationBucketBuilder() {}
+    protected OrganizationLocationBucketBuilder() {}
 
     public String getOrganization() {
       return organization;
@@ -463,7 +473,7 @@ public class LogBucketName implements ResourceName {
     private String location;
     private String bucket;
 
-    private FolderLocationBucketBuilder() {}
+    protected FolderLocationBucketBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -504,7 +514,7 @@ public class LogBucketName implements ResourceName {
     private String location;
     private String bucket;
 
-    private BillingAccountLocationBucketBuilder() {}
+    protected BillingAccountLocationBucketBuilder() {}
 
     public String getBillingAccount() {
       return billingAccount;

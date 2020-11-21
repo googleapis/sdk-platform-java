@@ -35,6 +35,12 @@ public class LogMetricName implements ResourceName {
   private final String project;
   private final String metric;
 
+  @Deprecated
+  protected LogMetricName() {
+    project = null;
+    metric = null;
+  }
+
   private LogMetricName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     metric = Preconditions.checkNotNull(builder.getMetric());
@@ -153,7 +159,7 @@ public class LogMetricName implements ResourceName {
     private String project;
     private String metric;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
