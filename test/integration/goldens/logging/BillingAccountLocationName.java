@@ -36,6 +36,12 @@ public class BillingAccountLocationName implements ResourceName {
   private final String billingAccount;
   private final String location;
 
+  @Deprecated
+  protected BillingAccountLocationName() {
+    billingAccount = null;
+    location = null;
+  }
+
   private BillingAccountLocationName(Builder builder) {
     billingAccount = Preconditions.checkNotNull(builder.getBillingAccount());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -157,7 +163,7 @@ public class BillingAccountLocationName implements ResourceName {
     private String billingAccount;
     private String location;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getBillingAccount() {
       return billingAccount;

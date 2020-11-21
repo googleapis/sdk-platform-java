@@ -37,6 +37,11 @@ public abstract class ConcreteReference implements Reference {
   // Private.
   abstract Class clazz();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @Nullable
   @Override
   public abstract Reference wildcardUpperBound();
@@ -78,6 +83,11 @@ public abstract class ConcreteReference implements Reference {
       sb.append(RIGHT_ANGLE);
     }
     return sb.toString();
+  }
+
+  @Override
+  public String simpleName() {
+    return clazz().getSimpleName();
   }
 
   @Override

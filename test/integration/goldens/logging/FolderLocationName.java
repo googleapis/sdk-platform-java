@@ -35,6 +35,12 @@ public class FolderLocationName implements ResourceName {
   private final String folder;
   private final String location;
 
+  @Deprecated
+  protected FolderLocationName() {
+    folder = null;
+    location = null;
+  }
+
   private FolderLocationName(Builder builder) {
     folder = Preconditions.checkNotNull(builder.getFolder());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -154,7 +160,7 @@ public class FolderLocationName implements ResourceName {
     private String folder;
     private String location;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getFolder() {
       return folder;

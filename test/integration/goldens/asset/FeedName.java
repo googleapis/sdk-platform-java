@@ -45,6 +45,14 @@ public class FeedName implements ResourceName {
   private final String folder;
   private final String organization;
 
+  @Deprecated
+  protected FeedName() {
+    project = null;
+    feed = null;
+    folder = null;
+    organization = null;
+  }
+
   private FeedName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     feed = Preconditions.checkNotNull(builder.getFeed());
@@ -263,7 +271,7 @@ public class FeedName implements ResourceName {
     private String project;
     private String feed;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -302,7 +310,7 @@ public class FeedName implements ResourceName {
     private String folder;
     private String feed;
 
-    private FolderFeedBuilder() {}
+    protected FolderFeedBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -333,7 +341,7 @@ public class FeedName implements ResourceName {
     private String organization;
     private String feed;
 
-    private OrganizationFeedBuilder() {}
+    protected OrganizationFeedBuilder() {}
 
     public String getOrganization() {
       return organization;

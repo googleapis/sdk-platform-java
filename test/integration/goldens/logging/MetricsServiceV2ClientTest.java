@@ -459,8 +459,7 @@ public class MetricsServiceV2ClientTest {
 
     LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
 
-    Empty actualResponse = client.deleteLogMetric(metricName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteLogMetric(metricName);
 
     List<AbstractMessage> actualRequests = mockMetricsServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -494,8 +493,7 @@ public class MetricsServiceV2ClientTest {
 
     String metricName = "metric_name-1737602118";
 
-    Empty actualResponse = client.deleteLogMetric(metricName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteLogMetric(metricName);
 
     List<AbstractMessage> actualRequests = mockMetricsServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
