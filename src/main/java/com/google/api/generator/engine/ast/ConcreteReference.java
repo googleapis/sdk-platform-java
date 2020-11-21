@@ -198,6 +198,10 @@ public abstract class ConcreteReference implements Reference {
     return toBuilder().setGenerics(generics).build();
   }
 
+  public String simpleName() {
+    return clazz().getSimpleName();
+  }
+
   public static ConcreteReference withClazz(Class clazz) {
     return builder().setClazz(clazz).build();
   }
