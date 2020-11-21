@@ -35,6 +35,12 @@ public class OrganizationLocationName implements ResourceName {
   private final String organization;
   private final String location;
 
+  @Deprecated
+  protected OrganizationLocationName() {
+    organization = null;
+    location = null;
+  }
+
   private OrganizationLocationName(Builder builder) {
     organization = Preconditions.checkNotNull(builder.getOrganization());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -154,7 +160,7 @@ public class OrganizationLocationName implements ResourceName {
     private String organization;
     private String location;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getOrganization() {
       return organization;

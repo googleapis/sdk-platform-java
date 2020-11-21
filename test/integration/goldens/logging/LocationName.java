@@ -35,6 +35,12 @@ public class LocationName implements ResourceName {
   private final String project;
   private final String location;
 
+  @Deprecated
+  protected LocationName() {
+    project = null;
+    location = null;
+  }
+
   private LocationName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -154,7 +160,7 @@ public class LocationName implements ResourceName {
     private String project;
     private String location;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
