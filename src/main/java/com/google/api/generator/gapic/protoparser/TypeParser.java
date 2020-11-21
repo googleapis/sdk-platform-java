@@ -18,6 +18,7 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -121,6 +122,17 @@ public class TypeParser {
     FileOptions fileOptions = messageDescriptor.getFile().getOptions();
     String javaOuterClassname =
         fileOptions.hasJavaOuterClassname() ? fileOptions.getJavaOuterClassname() : null;
+
+    // Some older protos don't have java_multiple_files option set, and don't have the outer
+    // classname option set either.
+    if (!fileOptions.getJavaMultipleFiles() && !fileOptions.hasJavaOuterClassname()) {
+      String fullFilePath = JavaStyle.toUpperCamelCase(messageDescriptor.getFile().getName());
+      javaOuterClassname =
+          JavaStyle.toUpperCamelCase(
+              fullFilePath.substring(
+                  fullFilePath.lastIndexOf("/") + 1, fullFilePath.lastIndexOf(".")));
+    }
+
     boolean hasJavaOuterClass =
         !Strings.isNullOrEmpty(javaOuterClassname) && !fileOptions.getJavaMultipleFiles();
     if (hasJavaOuterClass) {
