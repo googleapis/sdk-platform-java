@@ -3,6 +3,7 @@ load("@rules_java//java:defs.bzl", "java_test")
 package(default_visibility = ["//visibility:public"])
 
 TESTS = [
+    "BatchingSettingsConfigParserTest",
     "HttpRuleParserTest",
     "MethodSignatureParserTest",
     "ParserTest",
@@ -25,6 +26,7 @@ filegroup(
     srcs = ["{0}.java".format(test_name)],
     data = [
         "//src/test/java/com/google/api/generator/gapic/testdata:basic_proto_descriptor",
+        "//src/test/java/com/google/api/generator/gapic/testdata:gapic_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_config_files",
         "//src/test/java/com/google/api/generator/gapic/testdata:service_yaml_files",
     ],
