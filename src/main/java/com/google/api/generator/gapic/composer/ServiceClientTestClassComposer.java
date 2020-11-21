@@ -486,7 +486,7 @@ public class ServiceClientTestClassComposer {
     TypeNode repeatedResponseType = null;
     VariableExpr responsesElementVarExpr = null;
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -517,7 +517,7 @@ public class ServiceClientTestClassComposer {
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           firstRepeatedField,
@@ -532,7 +532,9 @@ public class ServiceClientTestClassComposer {
       if (messageTypes.containsKey(methodOutputType.reference().name())) {
         expectedResponseValExpr =
             DefaultValueComposer.createSimpleMessageBuilderExpr(
-                messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+                messageTypes.get(methodOutputType.reference().simpleName()),
+                resourceNames,
+                messageTypes);
       } else {
         // Wrap this in a field so we don't have to split the helper into lots of different methods,
         // or duplicate it for VariableExpr.
@@ -596,7 +598,7 @@ public class ServiceClientTestClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argExprs.add(requestVarExpr);
-      requestMessage = messageTypes.get(method.inputType().reference().name());
+      requestMessage = messageTypes.get(method.inputType().reference().simpleName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -717,7 +719,7 @@ public class ServiceClientTestClassComposer {
               .build());
 
       // Assert the responses are equivalent.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -947,7 +949,9 @@ public class ServiceClientTestClassComposer {
     if (messageTypes.containsKey(methodOutputType.reference().name())) {
       expectedResponseValExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
-              messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+              messageTypes.get(methodOutputType.reference().simpleName()),
+              resourceNames,
+              messageTypes);
     } else {
       // Wrap this in a field so we don't have to split the helper into lots of different methods,
       // or duplicate it for VariableExpr.
@@ -998,7 +1002,7 @@ public class ServiceClientTestClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1265,7 +1269,7 @@ public class ServiceClientTestClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1447,7 +1451,7 @@ public class ServiceClientTestClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argVarExprs.add(varExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().name());
+      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(

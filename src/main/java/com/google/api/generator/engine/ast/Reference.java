@@ -25,6 +25,9 @@ public interface Reference extends AstNode {
 
   String name();
 
+  // Just the class name, no generics.
+  String simpleName();
+
   String fullName();
 
   String pakkage();
