@@ -351,9 +351,11 @@ public class Parser {
         }
       }
 
+      Message inputMessage = messageTypes.get(inputType.reference().name());
+      Preconditions.checkNotNull(
+          inputMessage, String.format("No message found for %s", inputType.reference().name()));
       Optional<List<String>> httpBindingsOpt =
-          HttpRuleParser.parseHttpBindings(
-              protoMethod, messageTypes.get(inputType.reference().name()), messageTypes);
+          HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =
           httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
 
@@ -377,8 +379,7 @@ public class Parser {
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
-      // Any input type that has a resource reference will need a resource name helper class.
-      Message inputMessage = messageTypes.get(inputType.reference().name());
+      // Any input type that has a resource reference will need a resource name helper calss.
       for (Field field : inputMessage.fields()) {
         if (field.hasResourceReference()) {
           String resourceTypeString = field.resourceReference().resourceTypeString();
