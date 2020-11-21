@@ -37,6 +37,11 @@ public abstract class ConcreteReference implements Reference {
   // Private.
   abstract Class clazz();
 
+  @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
   @Nullable
   @Override
   public abstract Reference wildcardUpperBound();
@@ -186,6 +191,10 @@ public abstract class ConcreteReference implements Reference {
   @Override
   public Reference copyAndSetGenerics(List<Reference> generics) {
     return toBuilder().setGenerics(generics).build();
+  }
+
+  public String simpleName() {
+    return clazz().getSimpleName();
   }
 
   public static ConcreteReference withClazz(Class clazz) {
