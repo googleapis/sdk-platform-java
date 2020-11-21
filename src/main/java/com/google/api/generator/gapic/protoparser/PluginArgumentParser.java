@@ -26,6 +26,7 @@ public class PluginArgumentParser {
 
   // Synced to rules_java_gapic/java_gapic.bzl.
   @VisibleForTesting static final String KEY_GRPC_SERVICE_CONFIG = "grpc-service-config";
+  @VisibleForTesting static final String KEY_GAPIC_CONFIG = "gapic-config";
   @VisibleForTesting static final String KEY_SERVICE_YAML_CONFIG = "gapic-service-config";
 
   private static final String JSON_FILE_ENDING = "grpc_service_config.json";
@@ -36,6 +37,10 @@ public class PluginArgumentParser {
     return parseJsonConfigPath(request.getParameter());
   }
 
+  static Optional<String> parseGapicYamlConfigPath(CodeGeneratorRequest request) {
+    return parseGapicYamlConfigPath(request.getParameter());
+  }
+
   static Optional<String> parseServiceYamlConfigPath(CodeGeneratorRequest request) {
     return parseServiceYamlConfigPath(request.getParameter());
   }
@@ -44,6 +49,11 @@ public class PluginArgumentParser {
   @VisibleForTesting
   static Optional<String> parseJsonConfigPath(String pluginProtocArgument) {
     return parseArgument(pluginProtocArgument, KEY_GRPC_SERVICE_CONFIG, JSON_FILE_ENDING);
+  }
+
+  @VisibleForTesting
+  static Optional<String> parseGapicYamlConfigPath(String pluginProtocArgument) {
+    return parseArgument(pluginProtocArgument, KEY_GAPIC_CONFIG, GAPIC_YAML_FILE_ENDING);
   }
 
   @VisibleForTesting
