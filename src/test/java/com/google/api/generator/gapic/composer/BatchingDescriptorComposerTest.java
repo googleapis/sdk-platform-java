@@ -185,9 +185,4 @@ public class BatchingDescriptorComposerTest {
     }
     return null;
   }
-
-  private static String createLines(String... lines) {
-    // Cast to get rid of warnings.
-    return String.format(new String(new char[lines.length]).replace("\0", "%s"), (Object[]) lines);
-  }
 }
