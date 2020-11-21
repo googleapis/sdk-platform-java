@@ -880,7 +880,7 @@ public class SubscriberClientTest {
     BidiStreamingCallable<StreamingPullRequest, StreamingPullResponse> callable =
         client.streamingPullCallable();
     ApiStreamObserver<StreamingPullRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+        callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -911,7 +911,7 @@ public class SubscriberClientTest {
     BidiStreamingCallable<StreamingPullRequest, StreamingPullResponse> callable =
         client.streamingPullCallable();
     ApiStreamObserver<StreamingPullRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+        callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 
