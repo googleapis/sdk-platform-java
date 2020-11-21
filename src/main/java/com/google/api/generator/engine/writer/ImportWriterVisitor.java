@@ -26,6 +26,7 @@ import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
@@ -55,6 +56,7 @@ import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.common.base.Preconditions;
@@ -65,6 +67,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -75,6 +78,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
 
   private final Set<String> staticImports = new TreeSet<>();
   private final Set<String> imports = new TreeSet<>();
+
+  // Cache the list of short names, since it will be used relatively often.
+  private final Set<String> importShortNames = new TreeSet<>();
 
   private String currentPackage;
   @Nullable private String currentClassName;
@@ -109,6 +115,24 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     return sb.toString();
   }
 
+  public boolean collidesWithImport(String pakkage, String shortName) {
+    // This is a sufficiently-good heuristic since it's unlikely that the AST structure has changed
+    // if the size is the same.
+    if (importShortNames.size() != imports.size()) {
+      importShortNames.clear();
+      importShortNames.addAll(
+          imports.stream()
+              .map(s -> s.substring(s.lastIndexOf(DOT) + 1))
+              .collect(Collectors.toSet()));
+    }
+    return importShortNames.contains(shortName)
+        && imports.stream()
+            .filter(s -> s.equals(String.format("%s.%s", pakkage, shortName)))
+            .findFirst()
+            .orElse("")
+            .isEmpty();
+  }
+
   @Override
   public void visit(IdentifierNode identifier) {
     // Nothing to do.
@@ -125,6 +149,16 @@ public class ImportWriterVisitor implements AstNodeVisitor {
       refs.add(type.reference());
     }
     references(refs);
+  }
+
+  @Override
+  public void visit(ConcreteReference reference) {
+    handleReference(reference);
+  }
+
+  @Override
+  public void visit(VaporReference reference) {
+    handleReference(reference);
   }
 
   @Override
@@ -410,44 +444,49 @@ public class ImportWriterVisitor implements AstNodeVisitor {
     }
   }
 
+  private void handleReference(Reference reference) {
+    // Don't need to import this.
+    if (reference.useFullName()) {
+      return;
+    }
+    if (!reference.isStaticImport()
+        && (reference.isFromPackage(PKG_JAVA_LANG) || reference.isFromPackage(currentPackage))) {
+      return;
+    }
+
+    if (reference.isWildcard()) {
+      if (reference.wildcardUpperBound() != null) {
+        references(Arrays.asList(reference.wildcardUpperBound()));
+      }
+      return;
+    }
+
+    if (reference.isStaticImport()
+        && !Strings.isNullOrEmpty(currentClassName)
+        && !reference.enclosingClassNames().isEmpty()
+        && reference.enclosingClassNames().contains(currentClassName)) {
+      return;
+    }
+
+    if (reference.isStaticImport()) {
+      // This is a static import.
+      staticImports.add(reference.fullName());
+    } else {
+      if (reference.hasEnclosingClass()) {
+        imports.add(
+            String.format(
+                "%s.%s", reference.pakkage(), String.join(DOT, reference.enclosingClassNames())));
+      } else {
+        imports.add(reference.fullName());
+      }
+    }
+
+    references(reference.generics());
+  }
+
   private void references(List<Reference> refs) {
     for (Reference ref : refs) {
-      // Don't need to import this.
-      if (ref.useFullName()) {
-        continue;
-      }
-      if (!ref.isStaticImport()
-          && (ref.isFromPackage(PKG_JAVA_LANG) || ref.isFromPackage(currentPackage))) {
-        continue;
-      }
-
-      if (ref.isWildcard()) {
-        if (ref.wildcardUpperBound() != null) {
-          references(Arrays.asList(ref.wildcardUpperBound()));
-        }
-        continue;
-      }
-
-      if (ref.isStaticImport()
-          && !Strings.isNullOrEmpty(currentClassName)
-          && !ref.enclosingClassNames().isEmpty()
-          && ref.enclosingClassNames().contains(currentClassName)) {
-        continue;
-      }
-
-      if (ref.isStaticImport()) {
-        // This is a static import.
-        staticImports.add(ref.fullName());
-      } else {
-        if (ref.hasEnclosingClass()) {
-          imports.add(
-              String.format("%s.%s", ref.pakkage(), String.join(DOT, ref.enclosingClassNames())));
-        } else {
-          imports.add(ref.fullName());
-        }
-      }
-
-      references(ref.generics());
+      ref.accept(this);
     }
   }
 
