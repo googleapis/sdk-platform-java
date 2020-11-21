@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
+import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -28,12 +29,15 @@ import java.util.Optional;
 
 public class ServiceConfigParser {
   public static Optional<GapicServiceConfig> parse(
-      String serviceConfigFilePath, Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
+      String serviceConfigFilePath,
+      Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt,
+      Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
     Optional<ServiceConfig> rawConfigOpt = parseFile(serviceConfigFilePath);
     if (!rawConfigOpt.isPresent()) {
       return Optional.empty();
     }
-    return Optional.of(GapicServiceConfig.create(rawConfigOpt.get(), batchingSettingsOpt));
+    return Optional.of(
+        GapicServiceConfig.create(rawConfigOpt.get(), lroRetrySettingsOpt, batchingSettingsOpt));
   }
 
   @VisibleForTesting
