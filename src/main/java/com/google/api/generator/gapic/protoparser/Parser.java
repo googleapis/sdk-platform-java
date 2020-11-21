@@ -437,10 +437,14 @@ public class Parser {
   static boolean parseIsPaged(
       MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
     Message inputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
-    Message outputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
+    Message outputMessage = messageTypes.get(methodDescriptor.getOutputType().getName());
+
+    // This should technically handle the absence of either of these fields (aip.dev/158), but we
+    // gate on their collective presence to ensure the generated surface is backawrds-compatible
+    // with monolith-gnerated libraries.
     return inputMessage.fieldMap().containsKey("page_size")
-        || inputMessage.fieldMap().containsKey("page_token")
-        || outputMessage.fieldMap().containsKey("next_page_token");
+        && inputMessage.fieldMap().containsKey("page_token")
+        && outputMessage.fieldMap().containsKey("next_page_token");
   }
 
   @VisibleForTesting
