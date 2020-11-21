@@ -85,6 +85,7 @@ def java_gapic_library(
         package = None,
         service_yaml = None,
         grpc_service_config = None,
+        gapic_yaml = None,
         deps = [],
         test_deps = [],
         **kwargs):
@@ -94,6 +95,9 @@ def java_gapic_library(
         file_args_dict[grpc_service_config] = "grpc-service-config"
     else:
         fail("Missing a gRPC service config file")
+
+    if gapic_yaml:
+        file_args_dict[gapic_yaml] = "gapic-config"
 
     # Check the allow-list.
     if service_yaml:
