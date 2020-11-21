@@ -34,6 +34,11 @@ public class FolderName implements ResourceName {
   private volatile Map<String, String> fieldValuesMap;
   private final String folder;
 
+  @Deprecated
+  protected FolderName() {
+    folder = null;
+  }
+
   private FolderName(Builder builder) {
     folder = Preconditions.checkNotNull(builder.getFolder());
   }
@@ -141,7 +146,7 @@ public class FolderName implements ResourceName {
   public static class Builder {
     private String folder;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getFolder() {
       return folder;

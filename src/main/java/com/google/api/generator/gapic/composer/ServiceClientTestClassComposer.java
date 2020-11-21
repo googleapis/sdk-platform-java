@@ -486,7 +486,7 @@ public class ServiceClientTestClassComposer {
     TypeNode repeatedResponseType = null;
     VariableExpr responsesElementVarExpr = null;
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -517,7 +517,7 @@ public class ServiceClientTestClassComposer {
             Variable.builder().setType(methodOutputType).setName("expectedResponse").build());
     Expr expectedResponseValExpr = null;
     if (method.isPaged()) {
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field firstRepeatedField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           firstRepeatedField,
@@ -532,7 +532,9 @@ public class ServiceClientTestClassComposer {
       if (messageTypes.containsKey(methodOutputType.reference().name())) {
         expectedResponseValExpr =
             DefaultValueComposer.createSimpleMessageBuilderExpr(
-                messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+                messageTypes.get(methodOutputType.reference().simpleName()),
+                resourceNames,
+                messageTypes);
       } else {
         // Wrap this in a field so we don't have to split the helper into lots of different methods,
         // or duplicate it for VariableExpr.
@@ -596,7 +598,7 @@ public class ServiceClientTestClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argExprs.add(requestVarExpr);
-      requestMessage = messageTypes.get(method.inputType().reference().name());
+      requestMessage = messageTypes.get(method.inputType().reference().simpleName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -650,11 +652,17 @@ public class ServiceClientTestClassComposer {
               .setReturnType(rpcJavaMethodInvocationExpr.type())
               .build();
     }
-    methodExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(rpcJavaMethodInvocationExpr)
-            .build());
+
+    boolean returnsVoid = isProtoEmptyType(methodOutputType);
+    if (returnsVoid) {
+      methodExprs.add(rpcJavaMethodInvocationExpr);
+    } else {
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(rpcJavaMethodInvocationExpr)
+              .build());
+    }
 
     if (method.isPaged()) {
       // Assign the resources variable.
@@ -711,7 +719,7 @@ public class ServiceClientTestClassComposer {
               .build());
 
       // Assert the responses are equivalent.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -747,7 +755,7 @@ public class ServiceClientTestClassComposer {
               .setMethodName("assertEquals")
               .setArguments(expectedPagedResponseExpr, actualPagedResponseExpr)
               .build());
-    } else {
+    } else if (!returnsVoid) {
       methodExprs.add(
           MethodInvocationExpr.builder()
               .setStaticReferenceType(STATIC_TYPES.get("Assert"))
@@ -843,11 +851,23 @@ public class ServiceClientTestClassComposer {
                     .build();
         Expr expectedFieldExpr = checkExprFn.apply(requestVarExpr);
         Expr actualFieldExpr = checkExprFn.apply(actualRequestVarExpr);
+        List<Expr> assertEqualsArguments = new ArrayList<>();
+        assertEqualsArguments.add(expectedFieldExpr);
+        assertEqualsArguments.add(actualFieldExpr);
+        if (TypeNode.isFloatingPointType(field.type())) {
+          boolean isFloat = field.type().equals(TypeNode.FLOAT);
+          assertEqualsArguments.add(
+              ValueExpr.withValue(
+                  PrimitiveValue.builder()
+                      .setType(isFloat ? TypeNode.FLOAT : TypeNode.DOUBLE)
+                      .setValue(String.format("0.0001%s", isFloat ? "f" : ""))
+                      .build()));
+        }
         methodExprs.add(
             MethodInvocationExpr.builder()
                 .setStaticReferenceType(STATIC_TYPES.get("Assert"))
                 .setMethodName("assertEquals")
-                .setArguments(expectedFieldExpr, actualFieldExpr)
+                .setArguments(assertEqualsArguments)
                 .build());
       }
     } else {
@@ -941,7 +961,9 @@ public class ServiceClientTestClassComposer {
     if (messageTypes.containsKey(methodOutputType.reference().name())) {
       expectedResponseValExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
-              messageTypes.get(methodOutputType.reference().name()), resourceNames, messageTypes);
+              messageTypes.get(methodOutputType.reference().simpleName()),
+              resourceNames,
+              messageTypes);
     } else {
       // Wrap this in a field so we don't have to split the helper into lots of different methods,
       // or duplicate it for VariableExpr.
@@ -992,7 +1014,7 @@ public class ServiceClientTestClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1070,6 +1092,11 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       methodExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1077,7 +1104,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
@@ -1259,7 +1286,7 @@ public class ServiceClientTestClassComposer {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(method.inputType()).setName("request").build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().name());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(requestMessage);
     Expr valExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1337,6 +1364,12 @@ public class ServiceClientTestClassComposer {
                               .copyAndSetGenerics(Arrays.asList(method.inputType().reference()))))
                   .setName("requestObserver")
                   .build());
+
+      List<Expr> callableMethodArgs = new ArrayList<>();
+      if (!method.stream().equals(Method.Stream.BIDI)) {
+        callableMethodArgs.add(requestVarExpr);
+      }
+      callableMethodArgs.add(responseObserverVarExpr);
       exprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
@@ -1344,7 +1377,7 @@ public class ServiceClientTestClassComposer {
                   MethodInvocationExpr.builder()
                       .setExprReferenceExpr(callableVarExpr)
                       .setMethodName(getCallableMethodName(method))
-                      .setArguments(requestVarExpr, responseObserverVarExpr)
+                      .setArguments(callableMethodArgs)
                       .setReturnType(requestObserverVarExpr.type())
                       .build())
               .build());
@@ -1441,7 +1474,7 @@ public class ServiceClientTestClassComposer {
           VariableExpr.withVariable(
               Variable.builder().setType(method.inputType()).setName("request").build());
       argVarExprs.add(varExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().name());
+      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
       Preconditions.checkNotNull(requestMessage);
       Expr valExpr =
           DefaultValueComposer.createSimpleMessageBuilderExpr(
@@ -1897,5 +1930,10 @@ public class ServiceClientTestClassComposer {
 
   private static String getMockServiceVarName(String serviceName) {
     return String.format(MOCK_SERVICE_VAR_NAME_PATTERN, serviceName);
+  }
+
+  private static boolean isProtoEmptyType(TypeNode type) {
+    return type.reference().pakkage().equals("com.google.protobuf")
+        && type.reference().name().equals("Empty");
   }
 }

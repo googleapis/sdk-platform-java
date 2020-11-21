@@ -212,8 +212,7 @@ public class TestingClientTest {
     DeleteSessionRequest request =
         DeleteSessionRequest.newBuilder().setName(SessionName.of("[SESSION]").toString()).build();
 
-    Empty actualResponse = client.deleteSession(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSession(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -281,8 +280,8 @@ public class TestingClientTest {
 
   @Test
   public void getTestTest() throws Exception {
-    Test expectedResponse =
-        Test.newBuilder()
+    com.google.showcase.v1beta1.Test expectedResponse =
+        com.google.showcase.v1beta1.Test.newBuilder()
             .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
             .setDescription("description-1724546052")
             .build();
@@ -290,7 +289,7 @@ public class TestingClientTest {
 
     TestName name = TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]");
 
-    Test actualResponse = client.getTest(name);
+    com.google.showcase.v1beta1.Test actualResponse = client.getTest(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
@@ -320,8 +319,8 @@ public class TestingClientTest {
 
   @Test
   public void getTestTest2() throws Exception {
-    Test expectedResponse =
-        Test.newBuilder()
+    com.google.showcase.v1beta1.Test expectedResponse =
+        com.google.showcase.v1beta1.Test.newBuilder()
             .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
             .setDescription("description-1724546052")
             .build();
@@ -329,7 +328,7 @@ public class TestingClientTest {
 
     String name = "name3373707";
 
-    Test actualResponse = client.getTest(name);
+    com.google.showcase.v1beta1.Test actualResponse = client.getTest(name);
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
@@ -359,7 +358,8 @@ public class TestingClientTest {
 
   @Test
   public void listTestsTest() throws Exception {
-    Test responsesElement = Test.newBuilder().build();
+    com.google.showcase.v1beta1.Test responsesElement =
+        com.google.showcase.v1beta1.Test.newBuilder().build();
     ListTestsResponse expectedResponse =
         ListTestsResponse.newBuilder()
             .setNextPageToken("")
@@ -376,7 +376,8 @@ public class TestingClientTest {
 
     ListTestsPagedResponse pagedListResponse = client.listTests(request);
 
-    List<Test> resources = Lists.newArrayList(pagedListResponse.iterateAll());
+    List<com.google.showcase.v1beta1.Test> resources =
+        Lists.newArrayList(pagedListResponse.iterateAll());
 
     Assert.assertEquals(1, resources.size());
     Assert.assertEquals(expectedResponse.getTestsList().get(0), resources.get(0));
@@ -423,8 +424,7 @@ public class TestingClientTest {
             .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
             .build();
 
-    Empty actualResponse = client.deleteTest(request);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteTest(request);
 
     List<AbstractMessage> actualRequests = mockTesting.getRequests();
     Assert.assertEquals(1, actualRequests.size());

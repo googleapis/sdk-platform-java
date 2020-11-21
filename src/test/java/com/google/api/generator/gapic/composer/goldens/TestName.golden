@@ -20,6 +20,13 @@ public class TestName implements ResourceName {
   private final String shardId;
   private final String testId;
 
+  @Deprecated
+  protected TestName() {
+    session = null;
+    shardId = null;
+    testId = null;
+  }
+
   private TestName(Builder builder) {
     session = Preconditions.checkNotNull(builder.getSession());
     shardId = Preconditions.checkNotNull(builder.getShardId());
@@ -157,7 +164,7 @@ public class TestName implements ResourceName {
     private String shardId;
     private String testId;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getSession() {
       return session;

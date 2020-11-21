@@ -34,6 +34,11 @@ public class OrganizationName implements ResourceName {
   private volatile Map<String, String> fieldValuesMap;
   private final String organization;
 
+  @Deprecated
+  protected OrganizationName() {
+    organization = null;
+  }
+
   private OrganizationName(Builder builder) {
     organization = Preconditions.checkNotNull(builder.getOrganization());
   }
@@ -141,7 +146,7 @@ public class OrganizationName implements ResourceName {
   public static class Builder {
     private String organization;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getOrganization() {
       return organization;

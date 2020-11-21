@@ -34,13 +34,32 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
     WORKING_DIR=`pwd`
+
+    # Main source files.
     cd {output_dir_path}/src/main/java
     zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
+
+    # Resource name source files.
+    PROTO_DIR=$WORKING_DIR/{output_dir_path}/proto/src/main/java
+    PROTO_SRCJAR=$WORKING_DIR/{output_srcjar_name}-resource-name.srcjar
+    if [ ! -d $PROTO_DIR ]
+    then
+      # Some APIs don't have resource name helpers, like BigQuery v2.
+      # Create an empty file so we can finish building. Gating the resource name rule definition
+      # on file existences go against Bazel's design patterns, so we'll simply delete all empty
+      # files during the final packaging process (see java_gapic_pkg.bzl)
+      mkdir -p $PROTO_DIR
+      touch $PROTO_DIR/PlaceholderFile.java
+    fi
     cd $WORKING_DIR/{output_dir_path}/proto/src/main/java
-    zip -r $WORKING_DIR/{output_srcjar_name}-resource-name.srcjar ./
+    zip -r $PROTO_SRCJAR ./
+
+    # Test source files.
     cd $WORKING_DIR/{output_dir_path}/src/test/java
     zip -r $WORKING_DIR/{output_srcjar_name}-tests.srcjar ./
+
     cd $WORKING_DIR
+
     mv {output_srcjar_name}.srcjar {output_main}
     mv {output_srcjar_name}-resource-name.srcjar {output_resource_name}
     mv {output_srcjar_name}-tests.srcjar {output_test}
@@ -93,6 +112,14 @@ def java_gapic_library(
 
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
+    else:
+        fail("Missing a gRPC service config file")
+
+    if gapic_yaml:
+        file_args_dict[gapic_yaml] = "gapic-config"
+
+    if gapic_yaml:
+        file_args_dict[gapic_yaml] = "gapic-config"
 
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
