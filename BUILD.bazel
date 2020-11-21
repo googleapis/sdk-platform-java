@@ -33,11 +33,8 @@ java_proto_library(
 
 java_binary(
     name = "protoc-gen-java_gapic",
-    srcs = [
-        "//src/main/java/com/google/api/generator:generator_files",
-    ],
     main_class = "com.google.api.generator.Main",
-    deps = [
+    runtime_deps = [
         "//src/main/java/com/google/api/generator",
         "//src/main/java/com/google/api/generator/gapic",
         "@com_google_googleapis//google/api:api_java_proto",
