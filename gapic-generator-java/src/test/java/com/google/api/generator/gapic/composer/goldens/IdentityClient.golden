@@ -257,12 +257,12 @@ public class IdentityClient implements BackgroundResource {
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteUser(UserName name) {
+  public final void deleteUser(UserName name) {
     DeleteUserRequest request =
         DeleteUserRequest.newBuilder()
             .setName(Objects.isNull(name) ? null : name.toString())
             .build();
-    return deleteUser(request);
+    deleteUser(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -272,9 +272,9 @@ public class IdentityClient implements BackgroundResource {
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteUser(String name) {
+  public final void deleteUser(String name) {
     DeleteUserRequest request = DeleteUserRequest.newBuilder().setName(name).build();
-    return deleteUser(request);
+    deleteUser(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -284,8 +284,8 @@ public class IdentityClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteUser(DeleteUserRequest request) {
-    return deleteUserCallable().call(request);
+  public final void deleteUser(DeleteUserRequest request) {
+    deleteUserCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

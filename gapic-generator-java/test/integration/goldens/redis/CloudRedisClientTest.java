@@ -879,8 +879,7 @@ public class CloudRedisClientTest {
 
     InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
 
-    Empty actualResponse = client.deleteInstanceAsync(name).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteInstanceAsync(name).get();
 
     List<AbstractMessage> actualRequests = mockCloudRedis.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -922,8 +921,7 @@ public class CloudRedisClientTest {
 
     String name = "name3373707";
 
-    Empty actualResponse = client.deleteInstanceAsync(name).get();
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteInstanceAsync(name).get();
 
     List<AbstractMessage> actualRequests = mockCloudRedis.getRequests();
     Assert.assertEquals(1, actualRequests.size());

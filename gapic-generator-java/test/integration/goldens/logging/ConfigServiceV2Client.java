@@ -884,12 +884,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteSink(LogSinkName sinkName) {
+  public final void deleteSink(LogSinkName sinkName) {
     DeleteSinkRequest request =
         DeleteSinkRequest.newBuilder()
             .setSinkName(Objects.isNull(sinkName) ? null : sinkName.toString())
             .build();
-    return deleteSink(request);
+    deleteSink(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -908,9 +908,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteSink(String sinkName) {
+  public final void deleteSink(String sinkName) {
     DeleteSinkRequest request = DeleteSinkRequest.newBuilder().setSinkName(sinkName).build();
-    return deleteSink(request);
+    deleteSink(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -923,8 +923,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteSink(DeleteSinkRequest request) {
-    return deleteSinkCallable().call(request);
+  public final void deleteSink(DeleteSinkRequest request) {
+    deleteSinkCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -1374,12 +1374,12 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteExclusion(LogExclusionName name) {
+  public final void deleteExclusion(LogExclusionName name) {
     DeleteExclusionRequest request =
         DeleteExclusionRequest.newBuilder()
             .setName(Objects.isNull(name) ? null : name.toString())
             .build();
-    return deleteExclusion(request);
+    deleteExclusion(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -1396,9 +1396,9 @@ public class ConfigServiceV2Client implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteExclusion(String name) {
+  public final void deleteExclusion(String name) {
     DeleteExclusionRequest request = DeleteExclusionRequest.newBuilder().setName(name).build();
-    return deleteExclusion(request);
+    deleteExclusion(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -1410,8 +1410,8 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteExclusion(DeleteExclusionRequest request) {
-    return deleteExclusionCallable().call(request);
+  public final void deleteExclusion(DeleteExclusionRequest request) {
+    deleteExclusionCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

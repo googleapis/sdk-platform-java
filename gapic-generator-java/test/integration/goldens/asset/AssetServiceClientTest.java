@@ -414,8 +414,7 @@ public class AssetServiceClientTest {
 
     FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
 
-    Empty actualResponse = client.deleteFeed(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteFeed(name);
 
     List<AbstractMessage> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -449,8 +448,7 @@ public class AssetServiceClientTest {
 
     String name = "name3373707";
 
-    Empty actualResponse = client.deleteFeed(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteFeed(name);
 
     List<AbstractMessage> actualRequests = mockAssetService.getRequests();
     Assert.assertEquals(1, actualRequests.size());
