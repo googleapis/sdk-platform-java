@@ -838,7 +838,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         continue;
       }
       // Find the repeated field.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,

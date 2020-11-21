@@ -354,10 +354,10 @@ public class ServiceStubSettingsClassComposer {
 
       // Find the repeated type.
       String pagedResponseMessageKey =
-          JavaStyle.toUpperCamelCase(method.outputType().reference().name());
+          JavaStyle.toUpperCamelCase(method.outputType().reference().simpleName());
       if (method.hasLro()) {
         pagedResponseMessageKey =
-            JavaStyle.toUpperCamelCase(method.lro().responseType().reference().name());
+            JavaStyle.toUpperCamelCase(method.lro().responseType().reference().simpleName());
       }
       Message pagedResponseMessage = messageTypes.get(pagedResponseMessageKey);
       Preconditions.checkNotNull(

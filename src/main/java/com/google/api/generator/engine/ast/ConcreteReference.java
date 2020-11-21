@@ -86,6 +86,11 @@ public abstract class ConcreteReference implements Reference {
   }
 
   @Override
+  public String simpleName() {
+    return clazz().getSimpleName();
+  }
+
+  @Override
   public String pakkage() {
     return clazz().getPackage().getName();
   }
@@ -191,10 +196,6 @@ public abstract class ConcreteReference implements Reference {
   @Override
   public Reference copyAndSetGenerics(List<Reference> generics) {
     return toBuilder().setGenerics(generics).build();
-  }
-
-  public String simpleName() {
-    return clazz().getSimpleName();
   }
 
   public static ConcreteReference withClazz(Class clazz) {
