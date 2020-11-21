@@ -67,7 +67,7 @@ public class RetrySettingsComposer {
   private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 5000;
   private static final double LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1.5;
   private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 45000;
-  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS = 86400000; // 24 hours.
+  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS = 300000; // 5 minutes.
   private static final double LRO_DEFAULT_MAX_RPC_TIMEOUT = 1.0;
 
   public static BlockStatement createRetryParamDefinitionsBlock(

@@ -622,7 +622,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
                       .setInitialRpcTimeout(Duration.ZERO)
                       .setRpcTimeoutMultiplier(1.0)
                       .setMaxRpcTimeout(Duration.ZERO)
-                      .setTotalTimeout(Duration.ofMillis(86400000L))
+                      .setTotalTimeout(Duration.ofMillis(300000L))
                       .build()));
 
       return builder;
