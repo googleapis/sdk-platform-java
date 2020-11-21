@@ -650,11 +650,17 @@ public class ServiceClientTestClassComposer {
               .setReturnType(rpcJavaMethodInvocationExpr.type())
               .build();
     }
-    methodExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(rpcJavaMethodInvocationExpr)
-            .build());
+
+    boolean returnsVoid = isProtoEmptyType(methodOutputType);
+    if (returnsVoid) {
+      methodExprs.add(rpcJavaMethodInvocationExpr);
+    } else {
+      methodExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(actualResponseVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(rpcJavaMethodInvocationExpr)
+              .build());
+    }
 
     if (method.isPaged()) {
       // Assign the resources variable.
@@ -747,7 +753,7 @@ public class ServiceClientTestClassComposer {
               .setMethodName("assertEquals")
               .setArguments(expectedPagedResponseExpr, actualPagedResponseExpr)
               .build());
-    } else {
+    } else if (!returnsVoid) {
       methodExprs.add(
           MethodInvocationExpr.builder()
               .setStaticReferenceType(STATIC_TYPES.get("Assert"))
@@ -1897,5 +1903,10 @@ public class ServiceClientTestClassComposer {
 
   private static String getMockServiceVarName(String serviceName) {
     return String.format(MOCK_SERVICE_VAR_NAME_PATTERN, serviceName);
+  }
+
+  private static boolean isProtoEmptyType(TypeNode type) {
+    return type.reference().pakkage().equals("com.google.protobuf")
+        && type.reference().name().equals("Empty");
   }
 }

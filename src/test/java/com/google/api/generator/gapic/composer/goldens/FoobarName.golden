@@ -32,6 +32,14 @@ public class FoobarName implements ResourceName {
   private final String variant;
   private final String barFoo;
 
+  @Deprecated
+  protected FoobarName() {
+    project = null;
+    foobar = null;
+    variant = null;
+    barFoo = null;
+  }
+
   private FoobarName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     foobar = Preconditions.checkNotNull(builder.getFoobar());
@@ -285,7 +293,7 @@ public class FoobarName implements ResourceName {
     private String project;
     private String foobar;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -325,7 +333,7 @@ public class FoobarName implements ResourceName {
     private String variant;
     private String foobar;
 
-    private ProjectVariantFoobarBuilder() {}
+    protected ProjectVariantFoobarBuilder() {}
 
     public String getProject() {
       return project;
@@ -364,7 +372,7 @@ public class FoobarName implements ResourceName {
   public static class FoobarBuilder {
     private String foobar;
 
-    private FoobarBuilder() {}
+    protected FoobarBuilder() {}
 
     public String getFoobar() {
       return foobar;
@@ -386,7 +394,7 @@ public class FoobarName implements ResourceName {
     private String barFoo;
     private String foobar;
 
-    private BarFooFoobarBuilder() {}
+    protected BarFooFoobarBuilder() {}
 
     public String getBarFoo() {
       return barFoo;
