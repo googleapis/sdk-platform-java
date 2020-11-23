@@ -42,14 +42,24 @@ public class GapicServiceConfig {
 
   private final List<MethodConfig> methodConfigs;
   private final Map<MethodConfig.Name, Integer> methodConfigTable;
+  private final Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable;
+  private final Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable;
 
   private GapicServiceConfig(
-      List<MethodConfig> methodConfigs, Map<MethodConfig.Name, Integer> methodConfigTable) {
+      List<MethodConfig> methodConfigs,
+      Map<MethodConfig.Name, Integer> methodConfigTable,
+      Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable,
+      Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable) {
     this.methodConfigs = methodConfigs;
     this.methodConfigTable = methodConfigTable;
+    this.lroRetrySettingsTable = lroRetrySettingsTable;
+    this.batchingSettingsTable = batchingSettingsTable;
   }
 
-  public static GapicServiceConfig create(ServiceConfig serviceConfig) {
+  public static GapicServiceConfig create(
+      ServiceConfig serviceConfig,
+      Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt,
+      Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
     // Keep this  processing logic out of the constructor.
     Map<MethodConfig.Name, Integer> methodConfigTable = new HashMap<>();
     List<MethodConfig> methodConfigs = serviceConfig.getMethodConfigList();
@@ -60,7 +70,36 @@ public class GapicServiceConfig {
       }
     }
 
-    return new GapicServiceConfig(methodConfigs, methodConfigTable);
+    Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable = new HashMap<>();
+    if (lroRetrySettingsOpt.isPresent()) {
+      for (GapicLroRetrySettings lroRetrySetting : lroRetrySettingsOpt.get()) {
+        lroRetrySettingsTable.put(
+            MethodConfig.Name.newBuilder()
+                .setService(
+                    String.format(
+                        "%s.%s", lroRetrySetting.protoPakkage(), lroRetrySetting.serviceName()))
+                .setMethod(lroRetrySetting.methodName())
+                .build(),
+            lroRetrySetting);
+      }
+    }
+
+    Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable = new HashMap<>();
+    if (batchingSettingsOpt.isPresent()) {
+      for (GapicBatchingSettings batchingSetting : batchingSettingsOpt.get()) {
+        batchingSettingsTable.put(
+            MethodConfig.Name.newBuilder()
+                .setService(
+                    String.format(
+                        "%s.%s", batchingSetting.protoPakkage(), batchingSetting.serviceName()))
+                .setMethod(batchingSetting.methodName())
+                .build(),
+            batchingSetting);
+      }
+    }
+
+    return new GapicServiceConfig(
+        methodConfigs, methodConfigTable, lroRetrySettingsTable, batchingSettingsTable);
   }
 
   public Map<String, GapicRetrySettings> getAllGapicRetrySettings(Service service) {
@@ -97,6 +136,26 @@ public class GapicServiceConfig {
       return getRetryParamsName(retryPolicyIndexOpt.get());
     }
     return NO_RETRY_PARAMS_NAME;
+  }
+
+  public boolean hasLroRetrySetting(Service service, Method method) {
+    return lroRetrySettingsTable.containsKey(toName(service, method));
+  }
+
+  public boolean hasBatchingSetting(Service service, Method method) {
+    return batchingSettingsTable.containsKey(toName(service, method));
+  }
+
+  public Optional<GapicLroRetrySettings> getLroRetrySetting(Service service, Method method) {
+    return hasLroRetrySetting(service, method)
+        ? Optional.of(lroRetrySettingsTable.get(toName(service, method)))
+        : Optional.empty();
+  }
+
+  public Optional<GapicBatchingSettings> getBatchingSetting(Service service, Method method) {
+    return hasBatchingSetting(service, method)
+        ? Optional.of(batchingSettingsTable.get(toName(service, method)))
+        : Optional.empty();
   }
 
   private GapicRetrySettings toGapicRetrySettings(Service service, Method method) {

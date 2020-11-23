@@ -93,8 +93,7 @@ public class LoggingServiceV2ClientTest {
 
     LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
 
-    Empty actualResponse = client.deleteLog(logName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteLog(logName);
 
     List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -128,8 +127,7 @@ public class LoggingServiceV2ClientTest {
 
     String logName = "log_name2013526694";
 
-    Empty actualResponse = client.deleteLog(logName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteLog(logName);
 
     List<AbstractMessage> actualRequests = mockLoggingServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());

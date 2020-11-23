@@ -66,7 +66,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
+      Service service, Map<String, Message> ignore, Map<String, ResourceName> resourceNames) {
     Map<String, TypeNode> types = createTypes(service);
     String className = String.format("Grpc%sCallableFactory", service.name());
     GapicClass.Kind kind = Kind.STUB;

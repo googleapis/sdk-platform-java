@@ -95,7 +95,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
+      Service service, Map<String, Message> ignore, Map<String, ResourceName> resourceNames) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
     String className = getThisClassName(service.name());
@@ -838,7 +838,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static TypeNode getStubSettingsBuilderType(Service service) {
     return TypeNode.withReference(
         VaporReference.builder()
-            .setPakkage(service.pakkage())
+            .setPakkage(String.format("%s.stub", service.pakkage()))
             .setName(BUILDER_CLASS_NAME)
             .setEnclosingClassNames(getStubSettingsClassName(service.name()))
             .build());

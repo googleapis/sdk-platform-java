@@ -171,6 +171,13 @@ public class ServiceClientSampleCodeComposer {
             method, arguments, clientType, resourceNames));
   }
 
+  public static String composeRpcDefaultMethodHeaderSampleCode(
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    return SampleCodeWriter.write(
+        SampleCodeHelperComposer.composeRpcDefaultMethodSampleCode(
+            method, clientType, resourceNames));
+  }
+
   // ======================================== Helpers ==========================================//
   private static VariableExpr createVariableExpr(String variableName, TypeNode type) {
     return VariableExpr.withVariable(

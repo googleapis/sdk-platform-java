@@ -507,12 +507,12 @@ public class AssetServiceClient implements BackgroundResource {
    *     organizations/organization_number/feeds/feed_id
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteFeed(FeedName name) {
+  public final void deleteFeed(FeedName name) {
     DeleteFeedRequest request =
         DeleteFeedRequest.newBuilder()
             .setName(Objects.isNull(name) ? null : name.toString())
             .build();
-    return deleteFeed(request);
+    deleteFeed(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -533,9 +533,9 @@ public class AssetServiceClient implements BackgroundResource {
    *     organizations/organization_number/feeds/feed_id
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteFeed(String name) {
+  public final void deleteFeed(String name) {
     DeleteFeedRequest request = DeleteFeedRequest.newBuilder().setName(name).build();
-    return deleteFeed(request);
+    deleteFeed(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -553,8 +553,8 @@ public class AssetServiceClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteFeed(DeleteFeedRequest request) {
-    return deleteFeedCallable().call(request);
+  public final void deleteFeed(DeleteFeedRequest request) {
+    deleteFeedCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

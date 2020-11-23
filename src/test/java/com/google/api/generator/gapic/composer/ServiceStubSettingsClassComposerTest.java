@@ -18,11 +18,13 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.test.framework.Assert;
@@ -51,7 +53,7 @@ import org.junit.Test;
 public class ServiceStubSettingsClassComposerTest {
 
   @Test
-  public void generateServiceStubSettingsClasses_batchingNotHandled() throws IOException {
+  public void generateServiceStubSettingsClasses_batchingWithEmptyResponses() throws IOException {
     FileDescriptor serviceFileDescriptor = LoggingProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
     assertEquals(serviceDescriptor.getName(), "LoggingServiceV2");
@@ -73,9 +75,16 @@ public class ServiceStubSettingsClassComposerTest {
     List<Service> services =
         parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
 
+    String filename = "logging_gapic.yaml";
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
+        BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
+    assertTrue(batchingSettingsOpt.isPresent());
+
     String jsonFilename = "logging_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> configOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
@@ -93,7 +102,8 @@ public class ServiceStubSettingsClassComposerTest {
   }
 
   @Test
-  public void generateServiceStubSettingsClasses_batchingNotHandledInPubSub() throws IOException {
+  public void generateServiceStubSettingsClasses_batchingWithNonemptyResponses()
+      throws IOException {
     FileDescriptor serviceFileDescriptor = PubsubProto.getDescriptor();
     FileDescriptor commonResourcesFileDescriptor = CommonResources.getDescriptor();
     ServiceDescriptor serviceDescriptor = serviceFileDescriptor.getServices().get(0);
@@ -108,9 +118,16 @@ public class ServiceStubSettingsClassComposerTest {
     List<Service> services =
         parseServices(serviceFileDescriptor, serviceDescriptor, messageTypes, resourceNames);
 
+    String filename = "pubsub_gapic.yaml";
+    Path path = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, filename);
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
+        BatchingSettingsConfigParser.parse(Optional.of(path.toString()));
+    assertTrue(batchingSettingsOpt.isPresent());
+
     String jsonFilename = "pubsub_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> configOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
@@ -140,7 +157,8 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Optional<GapicServiceConfig> configOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), Optional.empty());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 

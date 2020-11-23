@@ -54,7 +54,7 @@ public class ServiceClientClassComposerTest {
     Service echoProtoService = services.get(0);
     GapicClass clazz =
         ServiceClientClassComposer.instance()
-            .generate(echoProtoService, resourceNames, messageTypes);
+            .generate(echoProtoService, messageTypes, resourceNames);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -78,7 +78,7 @@ public class ServiceClientClassComposerTest {
 
     Service protoService = services.get(0);
     GapicClass clazz =
-        ServiceClientClassComposer.instance().generate(protoService, resourceNames, messageTypes);
+        ServiceClientClassComposer.instance().generate(protoService, messageTypes, resourceNames);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

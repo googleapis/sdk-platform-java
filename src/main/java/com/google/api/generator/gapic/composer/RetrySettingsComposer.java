@@ -14,6 +14,9 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.gax.batching.BatchingSettings;
+import com.google.api.gax.batching.FlowControlSettings;
+import com.google.api.gax.batching.FlowController;
 import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
@@ -34,6 +37,8 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.model.GapicBatchingSettings;
+import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Method;
@@ -51,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -63,7 +69,7 @@ public class RetrySettingsComposer {
   private static final long LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS = 5000;
   private static final double LRO_DEFAULT_POLL_DELAY_MULTIPLIER = 1.5;
   private static final long LRO_DEFAULT_MAX_POLL_DELAY_MILLIS = 45000;
-  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS = 86400000; // 24 hours.
+  private static final long LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLIS = 300000; // 5 minutes.
   private static final double LRO_DEFAULT_MAX_RPC_TIMEOUT = 1.0;
 
   public static BlockStatement createRetryParamDefinitionsBlock(
@@ -345,7 +351,7 @@ public class RetrySettingsComposer {
                     .build())
             .build();
 
-    Expr lroRetrySettingsExpr = createLroRetrySettingsExpr();
+    Expr lroRetrySettingsExpr = createLroRetrySettingsExpr(service, method, serviceConfig);
     Expr pollAlgoExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("OperationTimedPollAlgorithm"))
@@ -361,6 +367,108 @@ public class RetrySettingsComposer {
             .build();
 
     return builderSettingsExpr;
+  }
+
+  public static Expr createBatchingBuilderSettingsExpr(
+      String settingsGetterMethodName,
+      GapicBatchingSettings batchingSettings,
+      VariableExpr builderVarExpr) {
+
+    Expr batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
+            .setMethodName("newBuilder")
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setElementCountThreshold")
+            .setArguments(toValExpr(batchingSettings.elementCountThreshold()))
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setRequestByteThreshold")
+            .setArguments(toValExpr(batchingSettings.requestByteThreshold()))
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setDelayThreshold")
+            .setArguments(
+                createDurationOfMillisExpr(toValExpr(batchingSettings.delayThresholdMillis())))
+            .build();
+
+    // FlowControlSettings.
+    Expr flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(STATIC_TYPES.get("FlowControlSettings"))
+            .setMethodName("newBuilder")
+            .build();
+    if (batchingSettings.flowControlElementLimit() != null) {
+      flowControlSettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(flowControlSettingsExpr)
+              .setMethodName("setMaxOutstandingElementCount")
+              .setArguments(toValExpr(batchingSettings.flowControlElementLimit()))
+              .build();
+    }
+    if (batchingSettings.flowControlByteLimit() != null) {
+      flowControlSettingsExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(flowControlSettingsExpr)
+              .setMethodName("setMaxOutstandingRequestBytes")
+              .setArguments(toValExpr(batchingSettings.flowControlByteLimit()))
+              .build();
+    }
+    flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(flowControlSettingsExpr)
+            .setMethodName("setLimitExceededBehavior")
+            .setArguments(
+                EnumRefExpr.builder()
+                    .setType(STATIC_TYPES.get("LimitExceededBehavior"))
+                    .setName(
+                        JavaStyle.toUpperCamelCase(
+                            batchingSettings
+                                .flowControlLimitExceededBehavior()
+                                .name()
+                                .toLowerCase()))
+                    .build())
+            .build();
+    flowControlSettingsExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(flowControlSettingsExpr)
+            .setMethodName("build")
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("setFlowControlSettings")
+            .setArguments(flowControlSettingsExpr)
+            .build();
+
+    batchingSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(batchingSettingsBuilderExpr)
+            .setMethodName("build")
+            .build();
+
+    // Put everything together.
+    Expr builderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(builderVarExpr)
+            .setMethodName(settingsGetterMethodName)
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(builderExpr)
+        .setMethodName("setBatchingSettings")
+        .setArguments(batchingSettingsBuilderExpr)
+        .build();
   }
 
   private static Expr createRetryCodeDefinitionExpr(
@@ -486,33 +594,49 @@ public class RetrySettingsComposer {
     return Arrays.asList(settingsAssignExpr, definitionsPutExpr);
   }
 
-  private static Expr createLroRetrySettingsExpr() {
+  private static Expr createLroRetrySettingsExpr(
+      Service service, Method method, GapicServiceConfig serviceConfig) {
     Expr lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
             .setMethodName("newBuilder")
             .build();
 
+    long initialPollDelayMillis = LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS;
+    double pollDelayMultiplier = LRO_DEFAULT_POLL_DELAY_MULTIPLIER;
+    long maxPollDelayMillis = LRO_DEFAULT_MAX_POLL_DELAY_MILLIS;
+    long totalPollTimeoutMillis = LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLIS;
+    if (serviceConfig.hasLroRetrySetting(service, method)) {
+      Optional<GapicLroRetrySettings> lroRetrySettingsOpt =
+          serviceConfig.getLroRetrySetting(service, method);
+      if (lroRetrySettingsOpt.isPresent()) {
+        GapicLroRetrySettings lroRetrySettings = lroRetrySettingsOpt.get();
+        initialPollDelayMillis = lroRetrySettings.initialPollDelayMillis();
+        pollDelayMultiplier = lroRetrySettings.pollDelayMultiplier();
+        maxPollDelayMillis = lroRetrySettings.maxPollDelayMillis();
+        totalPollTimeoutMillis = lroRetrySettings.totalPollTimeoutMillis();
+      }
+    }
+
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
             .setMethodName("setInitialRetryDelay")
-            .setArguments(
-                createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_INITIAL_POLL_DELAY_MILLIS)))
+            .setArguments(createDurationOfMillisExpr(toValExpr(initialPollDelayMillis)))
             .build();
 
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
             .setMethodName("setRetryDelayMultiplier")
-            .setArguments(toValExpr(LRO_DEFAULT_POLL_DELAY_MULTIPLIER))
+            .setArguments(toValExpr(pollDelayMultiplier))
             .build();
 
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
             .setMethodName("setMaxRetryDelay")
-            .setArguments(createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_MAX_POLL_DELAY_MILLIS)))
+            .setArguments(createDurationOfMillisExpr(toValExpr(maxPollDelayMillis)))
             .build();
 
     Expr zeroDurationExpr =
@@ -545,8 +669,7 @@ public class RetrySettingsComposer {
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(lroRetrySettingsExpr)
             .setMethodName("setTotalTimeout")
-            .setArguments(
-                createDurationOfMillisExpr(toValExpr(LRO_DEFAULT_TOTAL_POLL_TIMEOUT_MILLS)))
+            .setArguments(createDurationOfMillisExpr(toValExpr(totalPollTimeoutMillis)))
             .build();
 
     lroRetrySettingsExpr =
@@ -597,7 +720,10 @@ public class RetrySettingsComposer {
   private static Map<String, TypeNode> createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
+            BatchingSettings.class,
             org.threeten.bp.Duration.class,
+            FlowControlSettings.class,
+            FlowController.LimitExceededBehavior.class,
             ImmutableMap.class,
             ImmutableSet.class,
             Lists.class,

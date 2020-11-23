@@ -26,6 +26,7 @@ import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
@@ -43,6 +44,7 @@ import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.OperatorKind;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
@@ -56,6 +58,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.TypeNode.TypeKind;
 import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
@@ -145,23 +148,15 @@ public class JavaWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(TypeNode type) {
     TypeKind typeKind = type.typeKind();
-    StringBuilder generatedCodeBuilder = new StringBuilder();
     if (type.isPrimitiveType()) {
-      generatedCodeBuilder.append(typeKind.toString().toLowerCase());
+      buffer.append(typeKind.toString().toLowerCase());
     } else {
-      if (type.reference().useFullName()) {
-        generatedCodeBuilder.append(type.reference().pakkage());
-        generatedCodeBuilder.append(DOT);
-      }
-      // A null pointer exception will be thrown if reference is null, which is WAI.
-      generatedCodeBuilder.append(type.reference().name());
+      type.reference().accept(this);
     }
 
     if (type.isArray()) {
-      generatedCodeBuilder.append("[]");
+      buffer.append("[]");
     }
-
-    buffer.append(generatedCodeBuilder.toString());
   }
 
   @Override
@@ -179,6 +174,68 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       rightParen();
     }
     newline();
+  }
+
+  @Override
+  public void visit(ConcreteReference reference) {
+    if (reference.isWildcard()) {
+      buffer.append(QUESTION_MARK);
+      if (reference.wildcardUpperBound() != null) {
+        // Handle the upper bound.
+        buffer.append(SPACE);
+        buffer.append(EXTENDS);
+        buffer.append(SPACE);
+        reference.wildcardUpperBound().accept(this);
+      }
+      return;
+    }
+    String pakkage = reference.pakkage();
+    String shortName = reference.name();
+    if (reference.useFullName() || importWriterVisitor.collidesWithImport(pakkage, shortName)) {
+      buffer.append(pakkage);
+      buffer.append(DOT);
+    }
+
+    if (reference.hasEnclosingClass() && !reference.isStaticImport()) {
+      buffer.append(String.join(DOT, reference.enclosingClassNames()));
+      buffer.append(DOT);
+    }
+
+    buffer.append(reference.simpleName());
+
+    if (!reference.generics().isEmpty()) {
+      buffer.append(LEFT_ANGLE);
+      for (int i = 0; i < reference.generics().size(); i++) {
+        Reference r = reference.generics().get(i);
+        r.accept(this);
+        if (i < reference.generics().size() - 1) {
+          buffer.append(COMMA);
+          buffer.append(SPACE);
+        }
+      }
+      buffer.append(RIGHT_ANGLE);
+    }
+  }
+
+  @Override
+  public void visit(VaporReference reference) {
+    // This implementation should be more extensive, but there are no existing use cases that
+    // exercise the edge cases.
+    // TODO(miraleung): Give this behavioral parity with ConcreteReference.
+    String pakkage = reference.pakkage();
+    String shortName = reference.name();
+
+    if (reference.useFullName() || importWriterVisitor.collidesWithImport(pakkage, shortName)) {
+      buffer.append(pakkage);
+      buffer.append(DOT);
+      if (reference.hasEnclosingClass()) {
+        buffer.append(String.join(DOT, reference.enclosingClassNames()));
+        buffer.append(DOT);
+      }
+    }
+
+    // A null pointer exception will be thrown if reference is null, which is WAI.
+    buffer.append(shortName);
   }
 
   /** =============================== EXPRESSIONS =============================== */
@@ -798,6 +855,7 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       newline();
     }
 
+    // This must go first, so that we can check for type collisions.
     classDefinition.accept(importWriterVisitor);
     if (!classDefinition.isNested()) {
       buffer.append(importWriterVisitor.write());

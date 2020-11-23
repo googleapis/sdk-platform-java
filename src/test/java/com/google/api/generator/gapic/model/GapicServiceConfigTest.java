@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import com.google.api.generator.gapic.protoparser.Parser;
@@ -28,6 +29,7 @@ import com.google.showcase.v1beta1.EchoOuterClass;
 import io.grpc.serviceconfig.MethodConfig;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +39,7 @@ import org.junit.Test;
 
 public class GapicServiceConfigTest {
   private static final double EPSILON = 1e-4;
-  private static final String JSON_DIRECTORY =
+  private static final String TESTDATA_DIRECTORY =
       "src/test/java/com/google/api/generator/gapic/testdata/";
 
   @Test
@@ -47,8 +49,11 @@ public class GapicServiceConfigTest {
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "retrying_grpc_service_config.json";
-    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
+    Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt = Optional.empty();
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt = Optional.empty();
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), lroRetrySettingsOpt, batchingSettingsOpt);
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -76,8 +81,11 @@ public class GapicServiceConfigTest {
     Service service = parseService(echoFileDescriptor);
 
     String jsonFilename = "showcase_grpc_service_config.json";
-    Path jsonPath = Paths.get(JSON_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(jsonPath.toString());
+    Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
+    Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt = Optional.empty();
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt = Optional.empty();
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), lroRetrySettingsOpt, batchingSettingsOpt);
     assertTrue(serviceConfigOpt.isPresent());
     GapicServiceConfig serviceConfig = serviceConfigOpt.get();
 
@@ -122,6 +130,124 @@ public class GapicServiceConfigTest {
     retryCodeName = serviceConfig.getRetryCodeName(service, method);
     assertEquals("no_retry_0_codes", retryCodeName);
     assertEquals(GapicServiceConfig.EMPTY_RETRY_CODES, retryCodes.get(retryCodeName));
+  }
+
+  @Test
+  public void serviceConfig_withBatchingSettings() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Service service = parseService(echoFileDescriptor);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
+
+    GapicBatchingSettings origBatchingSetting =
+        GapicBatchingSettings.builder()
+            .setProtoPakkage("google.showcase.v1beta1")
+            .setServiceName("Echo")
+            .setMethodName("Echo")
+            .setElementCountThreshold(1000)
+            .setRequestByteThreshold(2000)
+            .setDelayThresholdMillis(3000)
+            .setBatchedFieldName("name")
+            .setDiscriminatorFieldNames(Arrays.asList("severity"))
+            .build();
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
+        Optional.of(Arrays.asList(origBatchingSetting));
+    Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt = Optional.empty();
+
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), lroRetrySettingsOpt, batchingSettingsOpt);
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    Map<String, GapicRetrySettings> retrySettings = serviceConfig.getAllGapicRetrySettings(service);
+    assertEquals(2, retrySettings.size());
+    Map<String, List<Code>> retryCodes = serviceConfig.getAllRetryCodes(service);
+    assertEquals(2, retryCodes.size());
+
+    // Echo method has an explicitly-defined setting.
+    Method method = findMethod(service, "Echo");
+    assertThat(method).isNotNull();
+
+    // No change to the retry settings.
+    String retryParamsName = serviceConfig.getRetryParamsName(service, method);
+    assertEquals("retry_policy_1_params", retryParamsName);
+    GapicRetrySettings settings = retrySettings.get(retryParamsName);
+    assertThat(settings).isNotNull();
+    assertEquals(10, settings.timeout().getSeconds());
+    assertEquals(GapicRetrySettings.Kind.FULL, settings.kind());
+
+    // No changge to the retry codes.
+    String retryCodeName = serviceConfig.getRetryCodeName(service, method);
+    assertEquals("retry_policy_1_codes", retryCodeName);
+    List<Code> retryCode = retryCodes.get(retryCodeName);
+    assertThat(retryCode).containsExactly(Code.UNAVAILABLE, Code.UNKNOWN);
+
+    // Check batching settings.
+    assertTrue(serviceConfig.hasBatchingSetting(service, method));
+    Optional<GapicBatchingSettings> batchingSettingOpt =
+        serviceConfig.getBatchingSetting(service, method);
+    assertTrue(batchingSettingOpt.isPresent());
+    GapicBatchingSettings batchingSetting = batchingSettingOpt.get();
+    assertEquals(
+        origBatchingSetting.elementCountThreshold(), batchingSetting.elementCountThreshold());
+    assertEquals(
+        origBatchingSetting.requestByteThreshold(), batchingSetting.requestByteThreshold());
+    assertEquals(
+        origBatchingSetting.delayThresholdMillis(), batchingSetting.delayThresholdMillis());
+
+    // Chat method defaults to the service-defined setting.
+    method = findMethod(service, "Chat");
+    assertThat(method).isNotNull();
+    retryParamsName = serviceConfig.getRetryParamsName(service, method);
+    assertEquals("no_retry_0_params", retryParamsName);
+    retryCodeName = serviceConfig.getRetryCodeName(service, method);
+    assertEquals("no_retry_0_codes", retryCodeName);
+    assertFalse(serviceConfig.hasBatchingSetting(service, method));
+  }
+
+  @Test
+  public void serviceConfig_withLroRetrySettings() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
+    Service service = parseService(echoFileDescriptor);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(TESTDATA_DIRECTORY, jsonFilename);
+    Optional<List<GapicBatchingSettings>> batchingSettingsOpt = Optional.empty();
+
+    // Construct LRO retry settings.
+    GapicLroRetrySettings origLroRetrySetting =
+        GapicLroRetrySettings.builder()
+            .setProtoPakkage("google.showcase.v1beta1")
+            .setServiceName("Echo")
+            .setMethodName("Echo")
+            .setInitialPollDelayMillis(100)
+            .setPollDelayMultiplier(1.5)
+            .setMaxPollDelayMillis(200)
+            .setTotalPollTimeoutMillis(300)
+            .build();
+    Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt =
+        Optional.of(Arrays.asList(origLroRetrySetting));
+
+    Optional<GapicServiceConfig> serviceConfigOpt =
+        ServiceConfigParser.parse(jsonPath.toString(), lroRetrySettingsOpt, batchingSettingsOpt);
+    assertTrue(serviceConfigOpt.isPresent());
+    GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+
+    // Check LRO retry settings.
+    Method method = findMethod(service, "Echo");
+    assertTrue(serviceConfig.hasLroRetrySetting(service, method));
+    Optional<GapicLroRetrySettings> retrievedSettingsOpt =
+        serviceConfig.getLroRetrySetting(service, method);
+    assertTrue(retrievedSettingsOpt.isPresent());
+    GapicLroRetrySettings retrievedSettings = retrievedSettingsOpt.get();
+    assertEquals(
+        origLroRetrySetting.initialPollDelayMillis(), retrievedSettings.initialPollDelayMillis());
+    assertEquals(origLroRetrySetting.maxPollDelayMillis(), retrievedSettings.maxPollDelayMillis());
+    assertEquals(
+        origLroRetrySetting.totalPollTimeoutMillis(), retrievedSettings.totalPollTimeoutMillis());
   }
 
   private static Service parseService(FileDescriptor fileDescriptor) {

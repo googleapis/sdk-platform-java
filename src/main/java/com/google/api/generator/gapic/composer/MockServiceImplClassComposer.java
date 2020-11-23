@@ -96,7 +96,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
+      Service service, Map<String, Message> ignore, Map<String, ResourceName> resourceNames) {
     Map<String, TypeNode> types = createDynamicTypes(service);
     String className = String.format(MOCK_SERVICE_IMPL_NAME_PATTERN, service.name());
     GapicClass.Kind kind = Kind.TEST;

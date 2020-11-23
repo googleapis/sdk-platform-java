@@ -47,6 +47,14 @@ public class CmekSettingsName implements ResourceName {
   private final String folder;
   private final String billingAccount;
 
+  @Deprecated
+  protected CmekSettingsName() {
+    project = null;
+    organization = null;
+    folder = null;
+    billingAccount = null;
+  }
+
   private CmekSettingsName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     organization = null;
@@ -287,7 +295,7 @@ public class CmekSettingsName implements ResourceName {
   public static class Builder {
     private String project;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
@@ -315,7 +323,7 @@ public class CmekSettingsName implements ResourceName {
   public static class OrganizationBuilder {
     private String organization;
 
-    private OrganizationBuilder() {}
+    protected OrganizationBuilder() {}
 
     public String getOrganization() {
       return organization;
@@ -336,7 +344,7 @@ public class CmekSettingsName implements ResourceName {
   public static class FolderBuilder {
     private String folder;
 
-    private FolderBuilder() {}
+    protected FolderBuilder() {}
 
     public String getFolder() {
       return folder;
@@ -357,7 +365,7 @@ public class CmekSettingsName implements ResourceName {
   public static class BillingAccountBuilder {
     private String billingAccount;
 
-    private BillingAccountBuilder() {}
+    protected BillingAccountBuilder() {}
 
     public String getBillingAccount() {
       return billingAccount;

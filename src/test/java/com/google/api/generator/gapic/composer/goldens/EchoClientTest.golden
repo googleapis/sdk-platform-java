@@ -440,8 +440,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -465,8 +464,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 
@@ -495,8 +493,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatAgainCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -520,8 +517,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     BidiStreamingCallable<EchoRequest, EchoResponse> callable = client.chatAgainCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 

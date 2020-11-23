@@ -59,7 +59,7 @@ public class ServiceStubClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
     Map<String, TypeNode> types = createTypes(service, messageTypes);
     String className = String.format("%sStub", service.name());
     GapicClass.Kind kind = Kind.STUB;

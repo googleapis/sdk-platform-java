@@ -1185,8 +1185,7 @@ public class ConfigServiceV2ClientTest {
 
     LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
 
-    Empty actualResponse = client.deleteSink(sinkName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSink(sinkName);
 
     List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -1220,8 +1219,7 @@ public class ConfigServiceV2ClientTest {
 
     String sinkName = "sink_name-1391757129";
 
-    Empty actualResponse = client.deleteSink(sinkName);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSink(sinkName);
 
     List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -1889,8 +1887,7 @@ public class ConfigServiceV2ClientTest {
 
     LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
 
-    Empty actualResponse = client.deleteExclusion(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteExclusion(name);
 
     List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -1924,8 +1921,7 @@ public class ConfigServiceV2ClientTest {
 
     String name = "name3373707";
 
-    Empty actualResponse = client.deleteExclusion(name);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteExclusion(name);
 
     List<AbstractMessage> actualRequests = mockConfigServiceV2.getRequests();
     Assert.assertEquals(1, actualRequests.size());

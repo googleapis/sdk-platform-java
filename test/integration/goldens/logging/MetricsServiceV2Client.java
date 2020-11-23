@@ -498,12 +498,12 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLogMetric(LogMetricName metricName) {
+  public final void deleteLogMetric(LogMetricName metricName) {
     DeleteLogMetricRequest request =
         DeleteLogMetricRequest.newBuilder()
             .setMetricName(Objects.isNull(metricName) ? null : metricName.toString())
             .build();
-    return deleteLogMetric(request);
+    deleteLogMetric(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -523,10 +523,10 @@ public class MetricsServiceV2Client implements BackgroundResource {
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLogMetric(String metricName) {
+  public final void deleteLogMetric(String metricName) {
     DeleteLogMetricRequest request =
         DeleteLogMetricRequest.newBuilder().setMetricName(metricName).build();
-    return deleteLogMetric(request);
+    deleteLogMetric(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -544,8 +544,8 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLogMetric(DeleteLogMetricRequest request) {
-    return deleteLogMetricCallable().call(request);
+  public final void deleteLogMetric(DeleteLogMetricRequest request) {
+    deleteLogMetricCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

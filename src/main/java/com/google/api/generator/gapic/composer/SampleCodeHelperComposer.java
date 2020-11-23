@@ -41,20 +41,33 @@ public final class SampleCodeHelperComposer {
       List<MethodArgument> arguments,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
-    // Default Unary RPC method.
-    if (arguments.isEmpty()) {
-      return composeUnaryRpcDefaultMethodSampleCode(method, clientType);
-    }
     // Paged Unary RPC method.
     if (method.isPaged()) {
-      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Long-running operation Unary RPC method.
     if (method.hasLro()) {
-      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Pure Unary RPC method.
     return composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
+  }
+
+  public static TryCatchStatement composeRpcDefaultMethodSampleCode(
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
+    // TODO(summerji): compose sample code for unary default rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    String content =
+        String.format(
+            "Note: Not implemented yet, placeholder for unary %s rpc method sample code.",
+            (!method.hasLro() && !method.isPaged()
+                ? "default"
+                : (method.hasLro() ? "lro default" : "paged default")));
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(Arrays.asList(createLineCommentStatement(content)))
+        .setIsSampleCode(true)
+        .build();
   }
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
@@ -94,7 +107,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composeLroUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
@@ -109,7 +125,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary paged rpc method.
     // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
@@ -122,25 +141,6 @@ public final class SampleCodeHelperComposer {
         .setIsSampleCode(true)
         .build();
   }
-
-  private static TryCatchStatement composeUnaryRpcDefaultMethodSampleCode(
-      Method method, TypeNode clientType) {
-    // TODO(summerji): compose sample code for unary default rpc method.
-    // TODO(summerji): Add unit tests.
-    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
-    String content =
-        String.format(
-            "Note: Not implemented yet, placeholder for unary %s rpc method sample code.",
-            (!method.hasLro() && !method.isPaged()
-                ? "default"
-                : (method.hasLro() ? "lro default" : "paged default")));
-    return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(Arrays.asList(createLineCommentStatement(content)))
-        .setIsSampleCode(true)
-        .build();
-  }
-
   // ==================================Helpers===================================================//
 
   // Assign client variable expr with create client.

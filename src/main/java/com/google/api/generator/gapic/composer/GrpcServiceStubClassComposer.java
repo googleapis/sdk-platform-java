@@ -114,7 +114,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> ignore) {
+      Service service, Map<String, Message> ignore, Map<String, ResourceName> resourceNames) {
     String pakkage = service.pakkage() + ".stub";
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
     String className = getThisClassName(service.name());

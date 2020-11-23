@@ -30,10 +30,18 @@ public abstract class VaporReference implements Reference {
   private static final String COMMA = ", ";
 
   @Override
+  public void accept(AstNodeVisitor visitor) {
+    visitor.visit(this);
+  }
+
+  @Override
   public abstract ImmutableList<Reference> generics();
 
   @Override
   public abstract String name();
+
+  @Override
+  public abstract String simpleName();
 
   @Override
   public abstract String pakkage();
@@ -58,9 +66,9 @@ public abstract class VaporReference implements Reference {
   public String fullName() {
     if (hasEnclosingClass()) {
       return String.format(
-          "%s.%s.%s", pakkage(), String.join(DOT, enclosingClassNames()), plainName());
+          "%s.%s.%s", pakkage(), String.join(DOT, enclosingClassNames()), simpleName());
     }
-    return String.format("%s.%s", pakkage(), plainName());
+    return String.format("%s.%s", pakkage(), simpleName());
   }
 
   @Override
@@ -85,7 +93,7 @@ public abstract class VaporReference implements Reference {
 
     VaporReference ref = (VaporReference) other;
     return pakkage().equals(ref.pakkage())
-        && plainName().equals(ref.plainName())
+        && simpleName().equals(ref.simpleName())
         && Objects.equals(enclosingClassNames(), ref.enclosingClassNames());
   }
 
@@ -99,8 +107,6 @@ public abstract class VaporReference implements Reference {
   public boolean isWildcard() {
     return false;
   }
-
-  abstract String plainName();
 
   @Override
   public boolean equals(Object o) {
@@ -165,7 +171,7 @@ public abstract class VaporReference implements Reference {
     public abstract Builder setSupertypeReference(Reference supertypeReference);
 
     // Private.
-    abstract Builder setPlainName(String plainName);
+    abstract Builder setSimpleName(String simpleName);
 
     abstract String name();
 
@@ -186,7 +192,7 @@ public abstract class VaporReference implements Reference {
       IdentifierNode.builder().setName(name()).build();
       // No exception thrown, so we can proceed.
 
-      setPlainName(name());
+      setSimpleName(name());
 
       setIsStaticImport(!enclosingClassNames().isEmpty() && isStaticImport());
 
