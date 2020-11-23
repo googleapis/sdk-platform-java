@@ -55,6 +55,7 @@ import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
@@ -93,7 +94,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> ignore) {
+  public GapicClass generate(
+      Service service, Map<String, Message> ignore, Map<String, ResourceName> resourceNames) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
     String className = getThisClassName(service.name());

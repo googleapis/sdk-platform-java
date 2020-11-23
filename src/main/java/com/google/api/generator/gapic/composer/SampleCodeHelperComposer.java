@@ -24,28 +24,33 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public final class SampleCodeHelperComposer {
 
   public static TryCatchStatement composeRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // Paged Unary RPC method.
     if (method.isPaged()) {
-      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Long-running operation Unary RPC method.
     if (method.hasLro()) {
-      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType);
+      return composeLroUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
     }
     // Pure Unary RPC method.
-    return composeUnaryRpcMethodSampleCode(method, arguments, clientType);
+    return composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames);
   }
 
   public static TryCatchStatement composeRpcDefaultMethodSampleCode(
-      Method method, TypeNode clientType) {
+      Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary default rpc method.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     String content =
@@ -62,7 +67,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary rpc method.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
@@ -76,7 +84,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composeLroUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary lro rpc method.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
@@ -90,7 +101,10 @@ public final class SampleCodeHelperComposer {
   }
 
   private static TryCatchStatement composePagedUnaryRpcMethodSampleCode(
-      Method method, List<MethodArgument> arguments, TypeNode clientType) {
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): compose sample code for unary paged rpc method.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     return TryCatchStatement.builder()
