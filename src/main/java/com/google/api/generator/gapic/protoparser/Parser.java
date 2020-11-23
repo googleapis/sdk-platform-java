@@ -90,8 +90,13 @@ public class Parser {
 
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
-    Optional<GapicServiceConfig> serviceConfigOpt =
-        ServiceConfigParser.parse(serviceConfigPath, lroRetrySettingsOpt, batchingSettingsOpt);
+    Optional<GapicServiceConfig> serviceConfigOpt = ServiceConfigParser.parse(serviceConfigPath);
+    if (serviceConfigOpt.isPresent()) {
+      GapicServiceConfig serviceConfig = serviceConfigOpt.get();
+      serviceConfig.setLroRetrySettings(lroRetrySettingsOpt);
+      serviceConfig.setBatchingSettings(batchingSettingsOpt);
+      serviceConfigOpt = Optional.of(serviceConfig);
+    }
 
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
