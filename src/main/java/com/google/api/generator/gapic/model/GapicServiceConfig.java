@@ -42,18 +42,20 @@ public class GapicServiceConfig {
 
   private final List<MethodConfig> methodConfigs;
   private final Map<MethodConfig.Name, Integer> methodConfigTable;
-  private final Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable;
-  private final Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable;
+  private final Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable =
+      new HashMap<>();
+  private final Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable =
+      new HashMap<>();
 
   private GapicServiceConfig(
       List<MethodConfig> methodConfigs,
       Map<MethodConfig.Name, Integer> methodConfigTable,
-      Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable,
-      Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable) {
+      Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt,
+      Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
     this.methodConfigs = methodConfigs;
     this.methodConfigTable = methodConfigTable;
-    this.lroRetrySettingsTable = lroRetrySettingsTable;
-    this.batchingSettingsTable = batchingSettingsTable;
+    setLroRetrySettings(lroRetrySettingsOpt);
+    setBatchingRestrySettings(batchingSettingsOpt);
   }
 
   public static GapicServiceConfig create(
@@ -70,36 +72,42 @@ public class GapicServiceConfig {
       }
     }
 
-    Map<MethodConfig.Name, GapicLroRetrySettings> lroRetrySettingsTable = new HashMap<>();
-    if (lroRetrySettingsOpt.isPresent()) {
-      for (GapicLroRetrySettings lroRetrySetting : lroRetrySettingsOpt.get()) {
-        lroRetrySettingsTable.put(
-            MethodConfig.Name.newBuilder()
-                .setService(
-                    String.format(
-                        "%s.%s", lroRetrySetting.protoPakkage(), lroRetrySetting.serviceName()))
-                .setMethod(lroRetrySetting.methodName())
-                .build(),
-            lroRetrySetting);
-      }
-    }
-
-    Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable = new HashMap<>();
-    if (batchingSettingsOpt.isPresent()) {
-      for (GapicBatchingSettings batchingSetting : batchingSettingsOpt.get()) {
-        batchingSettingsTable.put(
-            MethodConfig.Name.newBuilder()
-                .setService(
-                    String.format(
-                        "%s.%s", batchingSetting.protoPakkage(), batchingSetting.serviceName()))
-                .setMethod(batchingSetting.methodName())
-                .build(),
-            batchingSetting);
-      }
-    }
-
     return new GapicServiceConfig(
-        methodConfigs, methodConfigTable, lroRetrySettingsTable, batchingSettingsTable);
+        methodConfigs, methodConfigTable, lroRetrySettingsOpt, batchingSettingsOpt);
+  }
+
+  public void setLroRetrySettings(Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt) {
+    if (!lroRetrySettingsOpt.isPresent()) {
+      return;
+    }
+    lroRetrySettingsTable.clear();
+    for (GapicLroRetrySettings lroRetrySetting : lroRetrySettingsOpt.get()) {
+      lroRetrySettingsTable.put(
+          MethodConfig.Name.newBuilder()
+              .setService(
+                  String.format(
+                      "%s.%s", lroRetrySetting.protoPakkage(), lroRetrySetting.serviceName()))
+              .setMethod(lroRetrySetting.methodName())
+              .build(),
+          lroRetrySetting);
+    }
+  }
+
+  public void setBatchingRestrySettings(Optional<List<GapicBatchingSettings>> batchingSettingsOpt) {
+    if (!batchingSettingsOpt.isPresent()) {
+      return;
+    }
+    batchingSettingsTable.clear();
+    for (GapicBatchingSettings batchingSetting : batchingSettingsOpt.get()) {
+      batchingSettingsTable.put(
+          MethodConfig.Name.newBuilder()
+              .setService(
+                  String.format(
+                      "%s.%s", batchingSetting.protoPakkage(), batchingSetting.serviceName()))
+              .setMethod(batchingSetting.methodName())
+              .build(),
+          batchingSetting);
+    }
   }
 
   public Map<String, GapicRetrySettings> getAllGapicRetrySettings(Service service) {
