@@ -153,8 +153,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
-   * <p>Sample code:
-   *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -177,8 +175,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
-   * <p>Sample code:
-   *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -197,8 +193,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -225,8 +219,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
-   *
-   * <p>Sample code:
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
@@ -290,8 +282,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
-   * <p>Sample code:
-   *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
@@ -354,8 +344,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -382,8 +370,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists log entries. Use this method to retrieve log entries that originated from a
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
-   *
-   * <p>Sample code:
    *
    * @param resource_names Required. Names of one or more parent resources from which to retrieve
    *     log entries:
@@ -419,8 +405,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists log entries. Use this method to retrieve log entries that originated from a
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -459,8 +443,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
   /**
    * Lists the descriptors for monitored resource types used by Logging.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -498,8 +480,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -517,8 +497,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -538,8 +516,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -557,8 +533,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -578,8 +552,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -594,8 +566,6 @@ public class LoggingServiceV2Client implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

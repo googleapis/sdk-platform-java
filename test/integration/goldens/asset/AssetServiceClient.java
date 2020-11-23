@@ -166,8 +166,6 @@ public class AssetServiceClient implements BackgroundResource {
    * exponential retry to poll the export operation result. For regular-size resource parent, the
    * export operation usually finishes within 5 minutes.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -219,8 +217,6 @@ public class AssetServiceClient implements BackgroundResource {
    * or deleted status. If a specified asset does not exist, this API returns an INVALID_ARGUMENT
    * error.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -248,8 +244,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The name of the project/folder/organization where this feed should be
    *     created in. It can only be an organization number (such as "organizations/123"), a folder
    *     number (such as "folders/123"), a project ID (such as "projects/my-project-id")", or a
@@ -264,8 +258,6 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -288,8 +280,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Gets details about an asset feed.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -305,8 +295,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Gets details about an asset feed.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -320,8 +308,6 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets details about an asset feed.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -344,8 +330,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Lists all asset feeds in a parent project/folder/organization.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent project/folder/organization whose feeds are to be listed. It
    *     can only be using project/folder/organization number (such as "folders/12345")", or a
    *     project ID (such as "projects/my-project-id").
@@ -359,8 +343,6 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all asset feeds in a parent project/folder/organization.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -383,8 +365,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Updates an asset feed configuration.
    *
-   * <p>Sample code:
-   *
    * @param feed Required. The new values of feed details. It must match an existing feed and the
    *     field `name` must be in the format of: projects/project_number/feeds/feed_id or
    *     folders/folder_number/feeds/feed_id or organizations/organization_number/feeds/feed_id.
@@ -398,8 +378,6 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates an asset feed configuration.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -422,8 +400,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Deletes an asset feed.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -441,8 +417,6 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Deletes an asset feed.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -456,8 +430,6 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes an asset feed.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -481,8 +453,6 @@ public class AssetServiceClient implements BackgroundResource {
    * Searches all Cloud resources within the specified scope, such as a project, folder, or
    * organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission
    * on the desired scope, otherwise the request will be rejected.
-   *
-   * <p>Sample code:
    *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the resources within the `scope`. The caller must be granted the
@@ -550,8 +520,6 @@ public class AssetServiceClient implements BackgroundResource {
    * organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission
    * on the desired scope, otherwise the request will be rejected.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -591,8 +559,6 @@ public class AssetServiceClient implements BackgroundResource {
    * Searches all IAM policies within the specified scope, such as a project, folder, or
    * organization. The caller must be granted the `cloudasset.assets.searchAllIamPolicies`
    * permission on the desired scope, otherwise the request will be rejected.
-   *
-   * <p>Sample code:
    *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the IAM policies within the `scope`. The caller must be granted the
@@ -643,8 +609,6 @@ public class AssetServiceClient implements BackgroundResource {
    * Searches all IAM policies within the specified scope, such as a project, folder, or
    * organization. The caller must be granted the `cloudasset.assets.searchAllIamPolicies`
    * permission on the desired scope, otherwise the request will be rejected.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
