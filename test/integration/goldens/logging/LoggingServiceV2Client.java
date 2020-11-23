@@ -169,12 +169,12 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *     information about log names, see [LogEntry][google.logging.v2.LogEntry].
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLog(LogName logName) {
+  public final void deleteLog(LogName logName) {
     DeleteLogRequest request =
         DeleteLogRequest.newBuilder()
             .setLogName(Objects.isNull(logName) ? null : logName.toString())
             .build();
-    return deleteLog(request);
+    deleteLog(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -199,9 +199,9 @@ public class LoggingServiceV2Client implements BackgroundResource {
    *     information about log names, see [LogEntry][google.logging.v2.LogEntry].
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLog(String logName) {
+  public final void deleteLog(String logName) {
     DeleteLogRequest request = DeleteLogRequest.newBuilder().setLogName(logName).build();
-    return deleteLog(request);
+    deleteLog(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -221,8 +221,8 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final Empty deleteLog(DeleteLogRequest request) {
-    return deleteLogCallable().call(request);
+  public final void deleteLog(DeleteLogRequest request) {
+    deleteLogCallable().call(request);
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

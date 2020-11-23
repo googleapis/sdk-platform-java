@@ -543,29 +543,36 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setVariableExpr(requestVarExpr)
               .setValueExpr(requestBuilderExpr)
               .build();
-      List<Statement> statements = Arrays.asList(ExprStatement.withExpr(requestAssignmentExpr));
 
-      // Return expression.
-      MethodInvocationExpr returnExpr =
+      List<Statement> statements = new ArrayList<>();
+      statements.add(ExprStatement.withExpr(requestAssignmentExpr));
+
+      MethodInvocationExpr rpcInvocationExpr =
           MethodInvocationExpr.builder()
               .setMethodName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
               .setArguments(Arrays.asList(requestVarExpr.toBuilder().setIsDecl(false).build()))
               .setReturnType(methodOutputType)
               .build();
 
-      javaMethods.add(
+      MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   ServiceClientCommentComposer.createRpcMethodHeaderComment(
                       method, signature, clientType))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
-              .setReturnType(methodOutputType)
               .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
-              .setArguments(arguments)
-              .setBody(statements)
-              .setReturnExpr(returnExpr)
-              .build());
+              .setArguments(arguments);
+
+      if (isProtoEmptyType(methodOutputType)) {
+        statements.add(ExprStatement.withExpr(rpcInvocationExpr));
+        methodVariantBuilder = methodVariantBuilder.setReturnType(TypeNode.VOID);
+      } else {
+        methodVariantBuilder =
+            methodVariantBuilder.setReturnType(methodOutputType).setReturnExpr(rpcInvocationExpr);
+      }
+      methodVariantBuilder = methodVariantBuilder.setBody(statements);
+      javaMethods.add(methodVariantBuilder.build());
     }
 
     return javaMethods;
@@ -605,25 +612,35 @@ public class ServiceClientClassComposer implements ClassComposer {
       callableMethodName = String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName);
     }
 
-    MethodInvocationExpr methodReturnExpr =
+    MethodInvocationExpr callableMethodExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
-    methodReturnExpr =
+    callableMethodExpr =
         MethodInvocationExpr.builder()
             .setMethodName(method.hasLro() ? "futureCall" : "call")
             .setArguments(Arrays.asList(requestArgVarExpr.toBuilder().setIsDecl(false).build()))
-            .setExprReferenceExpr(methodReturnExpr)
+            .setExprReferenceExpr(callableMethodExpr)
             .setReturnType(methodOutputType)
             .build();
-    return MethodDefinition.builder()
-        .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcMethodHeaderComment(method, clientType))
-        .setScope(ScopeNode.PUBLIC)
-        .setIsFinal(true)
-        .setReturnType(methodOutputType)
-        .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
-        .setArguments(Arrays.asList(requestArgVarExpr))
-        .setReturnExpr(methodReturnExpr)
-        .build();
+
+    MethodDefinition.Builder methodBuilder =
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(method, clientType))
+            .setScope(ScopeNode.PUBLIC)
+            .setIsFinal(true)
+            .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
+            .setArguments(Arrays.asList(requestArgVarExpr));
+
+    if (isProtoEmptyType(methodOutputType)) {
+      methodBuilder =
+          methodBuilder
+              .setBody(Arrays.asList(ExprStatement.withExpr(callableMethodExpr)))
+              .setReturnType(TypeNode.VOID);
+    } else {
+      methodBuilder =
+          methodBuilder.setReturnExpr(callableMethodExpr).setReturnType(methodOutputType);
+    }
+    return methodBuilder.build();
   }
 
   private static MethodDefinition createLroCallableMethod(
@@ -827,7 +844,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         continue;
       }
       // Find the repeated field.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().name());
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
       Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
       Preconditions.checkNotNull(
           repeatedPagedResultsField,
@@ -1541,5 +1558,10 @@ public class ServiceClientClassComposer implements ClassComposer {
       return String.format(PAGED_CALLABLE_NAME_PATTERN, rawMethodName);
     }
     return String.format(CALLABLE_NAME_PATTERN, rawMethodName);
+  }
+
+  private static boolean isProtoEmptyType(TypeNode type) {
+    return type.reference().pakkage().equals("com.google.protobuf")
+        && type.reference().name().equals("Empty");
   }
 }

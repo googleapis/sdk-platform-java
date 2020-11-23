@@ -37,6 +37,13 @@ public class InstanceName implements ResourceName {
   private final String location;
   private final String instance;
 
+  @Deprecated
+  protected InstanceName() {
+    project = null;
+    location = null;
+    instance = null;
+  }
+
   private InstanceName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
     location = Preconditions.checkNotNull(builder.getLocation());
@@ -174,7 +181,7 @@ public class InstanceName implements ResourceName {
     private String location;
     private String instance;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;

@@ -557,8 +557,7 @@ public class SubscriberClientTest {
 
     SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
 
-    Empty actualResponse = client.deleteSubscription(subscription);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSubscription(subscription);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -592,8 +591,7 @@ public class SubscriberClientTest {
 
     String subscription = "subscription341203229";
 
-    Empty actualResponse = client.deleteSubscription(subscription);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSubscription(subscription);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -629,8 +627,7 @@ public class SubscriberClientTest {
     List<String> ackIds = new ArrayList<>();
     int ackDeadlineSeconds = 2135351438;
 
-    Empty actualResponse = client.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -670,8 +667,7 @@ public class SubscriberClientTest {
     List<String> ackIds = new ArrayList<>();
     int ackDeadlineSeconds = 2135351438;
 
-    Empty actualResponse = client.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.modifyAckDeadline(subscription, ackIds, ackDeadlineSeconds);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -710,8 +706,7 @@ public class SubscriberClientTest {
     SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
     List<String> ackIds = new ArrayList<>();
 
-    Empty actualResponse = client.acknowledge(subscription, ackIds);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.acknowledge(subscription, ackIds);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -748,8 +743,7 @@ public class SubscriberClientTest {
     String subscription = "subscription341203229";
     List<String> ackIds = new ArrayList<>();
 
-    Empty actualResponse = client.acknowledge(subscription, ackIds);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.acknowledge(subscription, ackIds);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -886,7 +880,7 @@ public class SubscriberClientTest {
     BidiStreamingCallable<StreamingPullRequest, StreamingPullResponse> callable =
         client.streamingPullCallable();
     ApiStreamObserver<StreamingPullRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+        callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -917,7 +911,7 @@ public class SubscriberClientTest {
     BidiStreamingCallable<StreamingPullRequest, StreamingPullResponse> callable =
         client.streamingPullCallable();
     ApiStreamObserver<StreamingPullRequest> requestObserver =
-        callable.bidiStreamingCall(request, responseObserver);
+        callable.bidiStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 
@@ -939,8 +933,7 @@ public class SubscriberClientTest {
     SubscriptionName subscription = SubscriptionName.of("[PROJECT]", "[SUBSCRIPTION]");
     PushConfig pushConfig = PushConfig.newBuilder().build();
 
-    Empty actualResponse = client.modifyPushConfig(subscription, pushConfig);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.modifyPushConfig(subscription, pushConfig);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -977,8 +970,7 @@ public class SubscriberClientTest {
     String subscription = "subscription341203229";
     PushConfig pushConfig = PushConfig.newBuilder().build();
 
-    Empty actualResponse = client.modifyPushConfig(subscription, pushConfig);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.modifyPushConfig(subscription, pushConfig);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -1397,8 +1389,7 @@ public class SubscriberClientTest {
 
     SnapshotName snapshot = SnapshotName.of("[PROJECT]", "[SNAPSHOT]");
 
-    Empty actualResponse = client.deleteSnapshot(snapshot);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSnapshot(snapshot);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());
@@ -1432,8 +1423,7 @@ public class SubscriberClientTest {
 
     String snapshot = "snapshot284874180";
 
-    Empty actualResponse = client.deleteSnapshot(snapshot);
-    Assert.assertEquals(expectedResponse, actualResponse);
+    client.deleteSnapshot(snapshot);
 
     List<AbstractMessage> actualRequests = mockSubscriber.getRequests();
     Assert.assertEquals(1, actualRequests.size());

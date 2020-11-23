@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
@@ -84,11 +85,13 @@ public class Parser {
         PluginArgumentParser.parseGapicYamlConfigPath(request);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
         BatchingSettingsConfigParser.parse(gapicYamlConfigPathOpt);
+    Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt =
+        GapicLroRetrySettingsParser.parse(gapicYamlConfigPathOpt);
 
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
     Optional<GapicServiceConfig> serviceConfigOpt =
-        ServiceConfigParser.parse(serviceConfigPath, batchingSettingsOpt);
+        ServiceConfigParser.parse(serviceConfigPath, lroRetrySettingsOpt, batchingSettingsOpt);
 
     Optional<String> serviceYamlConfigPathOpt =
         PluginArgumentParser.parseServiceYamlConfigPath(request);
@@ -262,7 +265,6 @@ public class Parser {
         messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
       }
     }
-    String pakkage = TypeParser.getPackage(messageDescriptor.getFile());
     messages.put(
         messageName,
         Message.builder()
@@ -351,9 +353,12 @@ public class Parser {
         }
       }
 
+      Message inputMessage = messageTypes.get(inputType.reference().simpleName());
+      Preconditions.checkNotNull(
+          inputMessage,
+          String.format("No message found for %s", inputType.reference().simpleName()));
       Optional<List<String>> httpBindingsOpt =
-          HttpRuleParser.parseHttpBindings(
-              protoMethod, messageTypes.get(inputType.reference().name()), messageTypes);
+          HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =
           httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
 
@@ -377,8 +382,7 @@ public class Parser {
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
-      // Any input type that has a resource reference will need a resource name helper class.
-      Message inputMessage = messageTypes.get(inputType.reference().name());
+      // Any input type that has a resource reference will need a resource name helper calss.
       for (Field field : inputMessage.fields()) {
         if (field.hasResourceReference()) {
           String resourceTypeString = field.resourceReference().resourceTypeString();
@@ -436,10 +440,14 @@ public class Parser {
   static boolean parseIsPaged(
       MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
     Message inputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
-    Message outputMessage = messageTypes.get(methodDescriptor.getInputType().getName());
+    Message outputMessage = messageTypes.get(methodDescriptor.getOutputType().getName());
+
+    // This should technically handle the absence of either of these fields (aip.dev/158), but we
+    // gate on their collective presence to ensure the generated surface is backawrds-compatible
+    // with monolith-gnerated libraries.
     return inputMessage.fieldMap().containsKey("page_size")
-        || inputMessage.fieldMap().containsKey("page_token")
-        || outputMessage.fieldMap().containsKey("next_page_token");
+        && inputMessage.fieldMap().containsKey("page_token")
+        && outputMessage.fieldMap().containsKey("next_page_token");
   }
 
   @VisibleForTesting

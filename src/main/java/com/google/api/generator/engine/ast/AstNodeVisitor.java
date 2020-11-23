@@ -24,6 +24,10 @@ public interface AstNodeVisitor {
 
   public void visit(AnnotationNode annotation);
 
+  public void visit(ConcreteReference reference);
+
+  public void visit(VaporReference reference);
+
   /** =============================== EXPRESSIONS =============================== */
   public void visit(ValueExpr valueExpr);
 
