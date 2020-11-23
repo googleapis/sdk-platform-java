@@ -554,11 +554,14 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setReturnType(methodOutputType)
               .build();
 
+      String methodSampleCode =
+          ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+              method, signature, clientType);
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
                   ServiceClientCommentComposer.createRpcMethodHeaderComment(
-                      method, signature, clientType))
+                      method, signature, methodSampleCode))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
@@ -622,10 +625,13 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setReturnType(methodOutputType)
             .build();
 
+    String defaultMethodSampleCode =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(method, clientType);
     MethodDefinition.Builder methodBuilder =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createRpcMethodHeaderComment(method, clientType))
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                    method, defaultMethodSampleCode))
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))

@@ -32,10 +32,6 @@ public final class SampleCodeHelperComposer {
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method, List<MethodArgument> arguments, TypeNode clientType) {
-    // Default Unary RPC method.
-    if (arguments.isEmpty()) {
-      return composeUnaryRpcDefaultMethodSampleCode(method, clientType);
-    }
     // Paged Unary RPC method.
     if (method.isPaged()) {
       return composePagedUnaryRpcMethodSampleCode(method, arguments, clientType);
@@ -46,6 +42,23 @@ public final class SampleCodeHelperComposer {
     }
     // Pure Unary RPC method.
     return composeUnaryRpcMethodSampleCode(method, arguments, clientType);
+  }
+
+  public static TryCatchStatement composeRpcDefaultMethodSampleCode(
+      Method method, TypeNode clientType) {
+    // TODO(summerji): compose sample code for unary default rpc method.
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    String content =
+        String.format(
+            "Note: Not implemented yet, placeholder for unary %s rpc method sample code.",
+            (!method.hasLro() && !method.isPaged()
+                ? "default"
+                : (method.hasLro() ? "lro default" : "paged default")));
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(Arrays.asList(createLineCommentStatement(content)))
+        .setIsSampleCode(true)
+        .build();
   }
 
   private static TryCatchStatement composeUnaryRpcMethodSampleCode(
@@ -86,23 +99,6 @@ public final class SampleCodeHelperComposer {
             Arrays.asList(
                 createLineCommentStatement(
                     "Note: Not implemented yet, placeholder for paged unary rpc method sample code.")))
-        .setIsSampleCode(true)
-        .build();
-  }
-
-  private static TryCatchStatement composeUnaryRpcDefaultMethodSampleCode(
-      Method method, TypeNode clientType) {
-    // TODO(summerji): compose sample code for unary default rpc method.
-    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
-    String content =
-        String.format(
-            "Note: Not implemented yet, placeholder for unary %s rpc method sample code.",
-            (!method.hasLro() && !method.isPaged()
-                ? "default"
-                : (method.hasLro() ? "lro default" : "paged default")));
-    return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(Arrays.asList(createLineCommentStatement(content)))
         .setIsSampleCode(true)
         .build();
   }
