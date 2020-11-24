@@ -143,8 +143,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -158,8 +156,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param error
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -170,8 +166,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -183,8 +177,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param content
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -195,8 +187,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -207,8 +197,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param parent
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -219,8 +207,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param content
    * @param severity
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -233,8 +219,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -274,8 +258,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -298,8 +280,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param ttl
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -310,8 +290,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param end_time
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -322,8 +300,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -345,8 +321,6 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */

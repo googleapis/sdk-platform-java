@@ -22,6 +22,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Strings;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -168,8 +169,8 @@ class ServiceClientCommentComposer {
           processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
-    methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here.
+    // methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
+    // TODO(summerji): Add sample code here and uncomment the above.
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -185,9 +186,12 @@ class ServiceClientCommentComposer {
 
     methodJavadocBuilder.setThrows(API_EXCEPTION_TYPE_NAME, EXCEPTION_CONDITION);
 
-    return Arrays.asList(
-        CommentComposer.AUTO_GENERATED_METHOD_COMMENT,
-        CommentStatement.withComment(methodJavadocBuilder.build()));
+    List<CommentStatement> comments = new ArrayList<>();
+    comments.add(CommentComposer.AUTO_GENERATED_METHOD_COMMENT);
+    if (!methodJavadocBuilder.emptyComments()) {
+      comments.add(CommentStatement.withComment(methodJavadocBuilder.build()));
+    }
+    return comments;
   }
 
   static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
