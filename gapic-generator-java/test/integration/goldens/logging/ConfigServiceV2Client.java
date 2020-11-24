@@ -90,6 +90,8 @@ import javax.annotation.Generated;
  * ConfigServiceV2Client configServiceV2Client =
  *     ConfigServiceV2Client.create(configServiceV2Settings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")

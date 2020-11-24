@@ -89,6 +89,8 @@ import javax.annotation.Generated;
  * MetricsServiceV2Client metricsServiceV2Client =
  *     MetricsServiceV2Client.create(metricsServiceV2Settings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")
