@@ -90,6 +90,8 @@ import javax.annotation.Generated;
  *     AssetServiceSettings.newBuilder().setEndpoint(myEndpoint).build();
  * AssetServiceClient assetServiceClient = AssetServiceClient.create(assetServiceSettings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")

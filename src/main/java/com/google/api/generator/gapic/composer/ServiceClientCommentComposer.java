@@ -59,6 +59,9 @@ class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
 
+  private static final String SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING =
+      "Please refer to the GitHub repository's samples for more quickstart code snippets.";
+
   private static final String METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING = "Sample code:";
 
   private static final List<String> SERVICE_DESCRIPTION_SURFACE_DESCRIPTION =
@@ -147,6 +150,8 @@ class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
             clientType, settingsType));
+
+    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,

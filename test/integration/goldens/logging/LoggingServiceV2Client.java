@@ -92,6 +92,8 @@ import javax.annotation.Generated;
  * LoggingServiceV2Client loggingServiceV2Client =
  *     LoggingServiceV2Client.create(loggingServiceV2Settings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")
