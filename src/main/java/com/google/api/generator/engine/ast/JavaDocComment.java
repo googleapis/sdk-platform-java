@@ -125,6 +125,14 @@ public abstract class JavaDocComment implements Comment {
       return this;
     }
 
+    public boolean emptyComments() {
+      return Strings.isNullOrEmpty(throwsType)
+          && Strings.isNullOrEmpty(throwsDescription)
+          && Strings.isNullOrEmpty(deprecated)
+          && paramsList.isEmpty()
+          && componentsList.isEmpty();
+    }
+
     public JavaDocComment build() {
       // @param, @throws and @deprecated should always get printed at the end.
       componentsList.addAll(paramsList);
