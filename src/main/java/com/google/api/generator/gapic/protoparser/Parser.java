@@ -68,6 +68,7 @@ public class Parser {
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
   private static final String DOT = ".";
+  private static final String SLASH = "/";
 
   private static final ResourceName WILDCARD_RESOURCE_NAME =
       ResourceName.createWildcard("*", "com.google.api.wildcard.placeholder");
@@ -436,7 +437,21 @@ public class Parser {
       for (Field field : inputMessage.fields()) {
         if (field.hasResourceReference()) {
           String resourceTypeString = field.resourceReference().resourceTypeString();
-          ResourceName resourceName = resourceNames.get(resourceTypeString);
+          ResourceName resourceName = null;
+          // Support older resource_references that specify only the final typename, e.g. FooBar
+          // versus example.com/FooBar.
+          if (resourceTypeString.indexOf(SLASH) < 0) {
+            Optional<String> actualResourceTypeNameOpt =
+                resourceNames.keySet().stream()
+                    .filter(k -> k.substring(k.lastIndexOf(SLASH) + 1).equals(resourceTypeString))
+                    .findFirst();
+            if (actualResourceTypeNameOpt.isPresent()) {
+              resourceName = resourceNames.get(actualResourceTypeNameOpt.get());
+            }
+          } else {
+            resourceName = resourceNames.get(resourceTypeString);
+          }
+
           if (ResourceNameConstants.WILDCARD_PATTERN.equals(resourceTypeString)) {
             resourceName = WILDCARD_RESOURCE_NAME;
           } else {
