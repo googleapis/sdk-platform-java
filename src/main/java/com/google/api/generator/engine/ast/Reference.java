@@ -18,10 +18,15 @@ import com.google.common.collect.ImmutableList;
 import java.util.List;
 import javax.annotation.Nullable;
 
-public interface Reference {
+public interface Reference extends AstNode {
+  void accept(AstNodeVisitor visitor);
+
   ImmutableList<Reference> generics();
 
   String name();
+
+  // Just the class name, no generics.
+  String simpleName();
 
   String fullName();
 

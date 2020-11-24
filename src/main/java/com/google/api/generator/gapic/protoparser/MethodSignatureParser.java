@@ -54,8 +54,7 @@ public class MethodSignatureParser {
     }
 
     Map<String, ResourceName> patternsToResourceNames = createPatternResourceNameMap(resourceNames);
-    String methodInputTypeName = methodInputType.reference().name();
-    Message inputMessage = messageTypes.get(methodInputTypeName);
+    Message inputMessage = messageTypes.get(methodInputType.reference().simpleName());
 
     // Example from Expand in echo.proto:
     // stringSigs: ["content,error", "content,error,info"].

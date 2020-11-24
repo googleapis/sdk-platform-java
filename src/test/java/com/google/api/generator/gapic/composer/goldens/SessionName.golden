@@ -18,6 +18,11 @@ public class SessionName implements ResourceName {
   private volatile Map<String, String> fieldValuesMap;
   private final String session;
 
+  @Deprecated
+  protected SessionName() {
+    session = null;
+  }
+
   private SessionName(Builder builder) {
     session = Preconditions.checkNotNull(builder.getSession());
   }
@@ -125,7 +130,7 @@ public class SessionName implements ResourceName {
   public static class Builder {
     private String session;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getSession() {
       return session;

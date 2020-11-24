@@ -34,6 +34,11 @@ public class ProjectName implements ResourceName {
   private volatile Map<String, String> fieldValuesMap;
   private final String project;
 
+  @Deprecated
+  protected ProjectName() {
+    project = null;
+  }
+
   private ProjectName(Builder builder) {
     project = Preconditions.checkNotNull(builder.getProject());
   }
@@ -141,7 +146,7 @@ public class ProjectName implements ResourceName {
   public static class Builder {
     private String project;
 
-    private Builder() {}
+    protected Builder() {}
 
     public String getProject() {
       return project;
