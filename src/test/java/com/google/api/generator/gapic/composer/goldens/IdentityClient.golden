@@ -123,8 +123,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param parent
    * @param display_name
    * @param email
@@ -142,8 +140,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param parent
    * @param display_name
    * @param email
@@ -176,8 +172,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -193,8 +187,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -206,8 +198,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -218,8 +208,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -235,8 +223,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -252,8 +238,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -267,8 +251,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -279,8 +261,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -296,8 +276,6 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
