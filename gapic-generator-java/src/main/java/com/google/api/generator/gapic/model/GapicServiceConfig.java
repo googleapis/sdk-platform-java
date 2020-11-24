@@ -47,6 +47,8 @@ public class GapicServiceConfig {
   private final Map<MethodConfig.Name, GapicBatchingSettings> batchingSettingsTable =
       new HashMap<>();
 
+  private Optional<GapicLanguageSettings> languageSettingsOpt = Optional.empty();
+
   private GapicServiceConfig(
       List<MethodConfig> methodConfigs, Map<MethodConfig.Name, Integer> methodConfigTable) {
     this.methodConfigs = methodConfigs;
@@ -98,6 +100,14 @@ public class GapicServiceConfig {
               .build(),
           batchingSetting);
     }
+  }
+
+  public void setLanguageSettings(Optional<GapicLanguageSettings> languageSettingsOpt) {
+    this.languageSettingsOpt = languageSettingsOpt;
+  }
+
+  public Optional<GapicLanguageSettings> getLanguageSettingsOpt() {
+    return languageSettingsOpt;
   }
 
   public Map<String, GapicRetrySettings> getAllGapicRetrySettings(Service service) {

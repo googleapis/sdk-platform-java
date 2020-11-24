@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
-import static com.google.logging.v2.ConfigServiceV2Client.ListBucketsPagedResponse;
-import static com.google.logging.v2.ConfigServiceV2Client.ListExclusionsPagedResponse;
-import static com.google.logging.v2.ConfigServiceV2Client.ListSinksPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListBucketsPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListExclusionsPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListSinksPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -32,7 +32,29 @@ import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.logging.v2.stub.ConfigServiceV2StubSettings;
+import com.google.cloud.logging.v2.stub.ConfigServiceV2StubSettings;
+import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CreateExclusionRequest;
+import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.DeleteExclusionRequest;
+import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.GetBucketRequest;
+import com.google.logging.v2.GetCmekSettingsRequest;
+import com.google.logging.v2.GetExclusionRequest;
+import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.ListBucketsRequest;
+import com.google.logging.v2.ListBucketsResponse;
+import com.google.logging.v2.ListExclusionsRequest;
+import com.google.logging.v2.ListExclusionsResponse;
+import com.google.logging.v2.ListSinksRequest;
+import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.LogBucket;
+import com.google.logging.v2.LogExclusion;
+import com.google.logging.v2.LogSink;
+import com.google.logging.v2.UpdateBucketRequest;
+import com.google.logging.v2.UpdateCmekSettingsRequest;
+import com.google.logging.v2.UpdateExclusionRequest;
+import com.google.logging.v2.UpdateSinkRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +62,7 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * Settings class to configure an instance of {@link ConfigServiceV2Client}.
+ * Settings class to configure an instance of {@link ConfigClient}.
  *
  * <p>The default instance has everything set to sensible defaults:
  *
@@ -56,22 +78,21 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of getBucket to 30 seconds:
  *
  * <pre>{@code
- * ConfigServiceV2Settings.Builder configServiceV2SettingsBuilder =
- *     ConfigServiceV2Settings.newBuilder();
- * configServiceV2SettingsBuilder
+ * ConfigSettings.Builder configSettingsBuilder = ConfigSettings.newBuilder();
+ * configSettingsBuilder
  *     .getBucketSettings()
  *     .setRetrySettings(
- *         configServiceV2SettingsBuilder
+ *         configSettingsBuilder
  *             .getBucketSettings()
  *             .getRetrySettings()
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
- * ConfigServiceV2Settings configServiceV2Settings = configServiceV2SettingsBuilder.build();
+ * ConfigSettings configSettings = configSettingsBuilder.build();
  * }</pre>
  */
 @Generated("by gapic-generator-java")
-public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Settings> {
+public class ConfigSettings extends ClientSettings<ConfigSettings> {
 
   /** Returns the object with the settings used for calls to listBuckets. */
   public PagedCallSettings<ListBucketsRequest, ListBucketsResponse, ListBucketsPagedResponse>
@@ -152,9 +173,8 @@ public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Setti
     return ((ConfigServiceV2StubSettings) getStubSettings()).updateCmekSettingsSettings();
   }
 
-  public static final ConfigServiceV2Settings create(ConfigServiceV2StubSettings stub)
-      throws IOException {
-    return new ConfigServiceV2Settings.Builder(stub.toBuilder()).build();
+  public static final ConfigSettings create(ConfigServiceV2StubSettings stub) throws IOException {
+    return new ConfigSettings.Builder(stub.toBuilder()).build();
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -206,12 +226,12 @@ public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Setti
     return new Builder(this);
   }
 
-  protected ConfigServiceV2Settings(Builder settingsBuilder) throws IOException {
+  protected ConfigSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
   }
 
-  /** Builder for ConfigServiceV2Settings. */
-  public static class Builder extends ClientSettings.Builder<ConfigServiceV2Settings, Builder> {
+  /** Builder for ConfigSettings. */
+  public static class Builder extends ClientSettings.Builder<ConfigSettings, Builder> {
 
     protected Builder() throws IOException {
       this(((ClientContext) null));
@@ -221,7 +241,7 @@ public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Setti
       super(ConfigServiceV2StubSettings.newBuilder(clientContext));
     }
 
-    protected Builder(ConfigServiceV2Settings settings) {
+    protected Builder(ConfigSettings settings) {
       super(settings.getStubSettings().toBuilder());
     }
 
@@ -335,8 +355,8 @@ public class ConfigServiceV2Settings extends ClientSettings<ConfigServiceV2Setti
     }
 
     @Override
-    public ConfigServiceV2Settings build() throws IOException {
-      return new ConfigServiceV2Settings(this);
+    public ConfigSettings build() throws IOException {
+      return new ConfigSettings(this);
     }
   }
 }

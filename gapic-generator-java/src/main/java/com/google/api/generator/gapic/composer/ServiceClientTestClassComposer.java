@@ -138,7 +138,7 @@ public class ServiceClientTestClassComposer {
       Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
-    String className = String.format("%sClientTest", service.name());
+    String className = String.format("%sClientTest", service.overriddenName());
     GapicClass.Kind kind = Kind.MAIN;
 
     Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);
@@ -171,11 +171,9 @@ public class ServiceClientTestClassComposer {
         (name, type) ->
             VariableExpr.withVariable(Variable.builder().setName(name).setType(type).build());
     Map<String, TypeNode> fields = new LinkedHashMap<>();
-    fields.put(
-        getMockServiceVarName(service.name()),
-        types.get(String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name())));
+    fields.put(getMockServiceVarName(service), types.get(getMockServiceClassName(service)));
     fields.put(SERVICE_HELPER_VAR_NAME, STATIC_TYPES.get("MockServiceHelper"));
-    fields.put(CLIENT_VAR_NAME, types.get(getClientClassName(service.name())));
+    fields.put(CLIENT_VAR_NAME, types.get(getClientClassName(service)));
     fields.put(CHANNEL_PROVIDER_VAR_NAME, STATIC_TYPES.get("LocalChannelProvider"));
     return fields.entrySet().stream()
         .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
@@ -220,8 +218,7 @@ public class ServiceClientTestClassComposer {
 
   private static MethodDefinition createStartStaticServerMethod(
       Service service, Map<String, VariableExpr> classMemberVarExprs) {
-    VariableExpr mockServiceVarExpr =
-        classMemberVarExprs.get(getMockServiceVarName(service.name()));
+    VariableExpr mockServiceVarExpr = classMemberVarExprs.get(getMockServiceVarName(service));
     VariableExpr serviceHelperVarExpr = classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME);
     Expr initMockServiceExpr =
         AssignmentExpr.builder()
@@ -318,7 +315,7 @@ public class ServiceClientTestClassComposer {
                     .build())
             .build();
 
-    TypeNode settingsType = types.get(getServiceSettingsClassName(service.name()));
+    TypeNode settingsType = types.get(getServiceSettingsClassName(service));
     VariableExpr localSettingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(settingsType).build());
@@ -368,7 +365,7 @@ public class ServiceClientTestClassComposer {
             .setVariableExpr(clientVarExpr)
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(types.get(getClientClassName(service.name())))
+                    .setStaticReferenceType(types.get(getClientClassName(service)))
                     .setMethodName("create")
                     .setArguments(Arrays.asList(localSettingsVarExpr))
                     .setReturnType(clientVarExpr.type())
@@ -473,11 +470,9 @@ public class ServiceClientTestClassComposer {
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    String serviceName = service.name();
-
     if (!method.stream().equals(Method.Stream.NONE)) {
       return createStreamingRpcTestMethod(
-          method, serviceName, classMemberVarExprs, resourceNames, messageTypes);
+          service, method, classMemberVarExprs, resourceNames, messageTypes);
     }
     // Construct the expected response.
     TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
@@ -570,14 +565,14 @@ public class ServiceClientTestClassComposer {
               .build());
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
               .setMethodName("addResponse")
               .setArguments(resultOperationVarExpr)
               .build());
     } else {
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
               .setMethodName("addResponse")
               .setArguments(expectedResponseVarExpr)
               .build());
@@ -786,8 +781,7 @@ public class ServiceClientTestClassComposer {
             .setVariableExpr(actualRequestsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(
-                        classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+                    .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
                     .setMethodName("getRequests")
                     .setReturnType(actualRequestsVarExpr.type())
                     .build())
@@ -947,8 +941,8 @@ public class ServiceClientTestClassComposer {
   }
 
   private static MethodDefinition createStreamingRpcTestMethod(
+      Service service,
       Method method,
-      String serviceName,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
@@ -997,14 +991,14 @@ public class ServiceClientTestClassComposer {
               .build());
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
               .setMethodName("addResponse")
               .setArguments(resultOperationVarExpr)
               .build());
     } else {
       methodExprs.add(
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+              .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
               .setMethodName("addResponse")
               .setArguments(expectedResponseVarExpr)
               .build());
@@ -1209,6 +1203,7 @@ public class ServiceClientTestClassComposer {
         .build();
   }
 
+  // TODO(imraleung): Reorder params.
   private static MethodDefinition createRpcExceptionTestMethod(
       Method method,
       Service service,
@@ -1217,8 +1212,6 @@ public class ServiceClientTestClassComposer {
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    String serviceName = service.name();
-
     VariableExpr exceptionVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -1242,7 +1235,7 @@ public class ServiceClientTestClassComposer {
             .build();
     Expr addExceptionExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(serviceName)))
+            .setExprReferenceExpr(classMemberVarExprs.get(getMockServiceVarName(service)))
             .setMethodName("addException")
             .setArguments(exceptionVarExpr)
             .build();
@@ -1743,7 +1736,7 @@ public class ServiceClientTestClassComposer {
     Map<String, TypeNode> types = new HashMap<>();
 
     // ServiceStubSettings class.
-    String stubSettingsClassName = String.format(STUB_SETTINGS_PATTERN, service.name());
+    String stubSettingsClassName = getStubSettingsClassName(service);
     types.put(
         stubSettingsClassName,
         TypeNode.withReference(
@@ -1751,21 +1744,25 @@ public class ServiceClientTestClassComposer {
                 .setName(stubSettingsClassName)
                 .setPakkage(String.format("%s.stub", service.pakkage()))
                 .build()));
+    types.put(
+        getMockServiceClassName(service),
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName(getMockServiceClassName(service))
+                .setPakkage(String.format("%s", service.pakkage()))
+                .build()));
 
     // Classes in the same package.
     types.putAll(
-        Arrays.asList(
-                SERVICE_CLIENT_CLASS_NAME_PATTERN,
-                SERVICE_SETTINGS_CLASS_NAME_PATTERN,
-                MOCK_SERVICE_CLASS_NAME_PATTERN)
+        Arrays.asList(SERVICE_CLIENT_CLASS_NAME_PATTERN, SERVICE_SETTINGS_CLASS_NAME_PATTERN)
             .stream()
             .collect(
                 Collectors.toMap(
-                    p -> String.format(p, service.name()),
+                    p -> String.format(p, service.overriddenName()),
                     p ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(String.format(p, service.name()))
+                                .setName(String.format(p, service.overriddenName()))
                                 .setPakkage(service.pakkage())
                                 .build()))));
 
@@ -1781,7 +1778,7 @@ public class ServiceClientTestClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -1896,7 +1893,7 @@ public class ServiceClientTestClassComposer {
         VaporReference.builder()
             .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             .setPakkage(service.pakkage())
-            .setEnclosingClassNames(getClientClassName(service.name()))
+            .setEnclosingClassNames(getClientClassName(service))
             .setIsStaticImport(true)
             .build());
   }
@@ -1920,16 +1917,24 @@ public class ServiceClientTestClassComposer {
     }
   }
 
-  private static String getClientClassName(String serviceName) {
-    return String.format(SERVICE_CLIENT_CLASS_NAME_PATTERN, serviceName);
+  private static String getClientClassName(Service service) {
+    return String.format(SERVICE_CLIENT_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
-  private static String getServiceSettingsClassName(String serviceName) {
-    return String.format(SERVICE_SETTINGS_CLASS_NAME_PATTERN, serviceName);
+  private static String getServiceSettingsClassName(Service service) {
+    return String.format(SERVICE_SETTINGS_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
-  private static String getMockServiceVarName(String serviceName) {
-    return String.format(MOCK_SERVICE_VAR_NAME_PATTERN, serviceName);
+  private static String getMockServiceVarName(Service service) {
+    return String.format(MOCK_SERVICE_VAR_NAME_PATTERN, service.name());
+  }
+
+  private static String getMockServiceClassName(Service service) {
+    return String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name());
+  }
+
+  private static String getStubSettingsClassName(Service service) {
+    return String.format(STUB_SETTINGS_PATTERN, service.name());
   }
 
   private static boolean isProtoEmptyType(TypeNode type) {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2.stub;
+package com.google.cloud.logging.v2.stub;
 
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcCallableFactory;

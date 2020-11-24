@@ -129,6 +129,7 @@ public class ServiceStubSettingsClassComposer {
   private static final String NESTED_RETRYABLE_CODE_DEFINITIONS_VAR_NAME =
       "RETRYABLE_CODE_DEFINITIONS";
   private static final String NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME = "RETRY_PARAM_DEFINITIONS";
+  private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String STUB_PATTERN = "%sStub";
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
@@ -1885,7 +1886,7 @@ public class ServiceStubSettingsClassComposer {
                             VaporReference.builder()
                                 .setName(getPagedResponseTypeName(m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(String.format("%sClient", service.name()))
+                                .setEnclosingClassNames(getClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
 
@@ -1976,6 +1977,10 @@ public class ServiceStubSettingsClassComposer {
 
   private static String getGrpcServiceStubTypeName(String serviceName) {
     return String.format(GRPC_SERVICE_STUB_PATTERN, JavaStyle.toUpperCamelCase(serviceName));
+  }
+
+  private static String getClientClassName(Service service) {
+    return String.format(SERVICE_CLIENT_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
   private static TypeNode getCallSettingsType(

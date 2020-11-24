@@ -36,6 +36,6 @@
  * <p>Sample for MetricsServiceV2Client:
  */
 @Generated("by gapic-generator-java")
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
 import javax.annotation.Generated;
