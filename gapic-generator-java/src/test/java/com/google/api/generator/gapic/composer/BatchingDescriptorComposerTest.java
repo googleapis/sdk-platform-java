@@ -88,10 +88,10 @@ public class BatchingDescriptorComposerTest {
 
     String jsonFilename = "pubsub_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt =
-        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
+    config.setBatchingSettings(batchingSettingsOpt);
 
     Service service = services.get(0);
     assertEquals("Publisher", service.name());
@@ -150,10 +150,10 @@ public class BatchingDescriptorComposerTest {
 
     String jsonFilename = "logging_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt =
-        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
+    config.setBatchingSettings(batchingSettingsOpt);
 
     Service service = services.get(0);
     assertEquals("LoggingServiceV2", service.name());

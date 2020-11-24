@@ -83,10 +83,10 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "logging_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt =
-        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
+    config.setBatchingSettings(batchingSettingsOpt);
 
     Service protoService = services.get(0);
     GapicClass clazz =
@@ -126,10 +126,10 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "pubsub_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt =
-        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), batchingSettingsOpt);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
+    config.setBatchingSettings(batchingSettingsOpt);
 
     Service protoService = services.get(0);
     assertEquals("Publisher", protoService.name());
@@ -157,8 +157,7 @@ public class ServiceStubSettingsClassComposerTest {
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(ComposerConstants.TESTFILES_DIRECTORY, jsonFilename);
-    Optional<GapicServiceConfig> configOpt =
-        ServiceConfigParser.parse(jsonPath.toString(), Optional.empty(), Optional.empty());
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
