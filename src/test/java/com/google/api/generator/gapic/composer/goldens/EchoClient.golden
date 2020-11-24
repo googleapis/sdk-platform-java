@@ -77,6 +77,8 @@ import javax.annotation.Generated;
  * EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();
  * EchoClient echoClient = EchoClient.create(echoSettings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")

@@ -110,6 +110,8 @@ import javax.annotation.Generated;
  *     CloudRedisSettings.newBuilder().setEndpoint(myEndpoint).build();
  * CloudRedisClient cloudRedisClient = CloudRedisClient.create(cloudRedisSettings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")
