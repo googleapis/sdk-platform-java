@@ -119,6 +119,8 @@ import javax.annotation.Generated;
  * ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
  * ConfigClient configClient = ConfigClient.create(configSettings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")
@@ -177,8 +179,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -199,8 +199,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists buckets (Beta).
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
@@ -223,8 +221,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -245,8 +241,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists buckets (Beta).
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
@@ -269,8 +263,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -288,8 +280,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists buckets (Beta).
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -323,8 +313,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets a bucket (Beta).
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -354,8 +342,6 @@ public class ConfigClient implements BackgroundResource {
    * returned.
    *
    * <p>A buckets region may not be modified after it is created. This method is in Beta.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -387,8 +373,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -405,8 +389,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists sinks.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -425,8 +407,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -443,8 +423,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists sinks.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -463,8 +441,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -478,8 +454,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists sinks.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -512,8 +486,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets a sink.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -534,8 +506,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets a sink.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -552,8 +522,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a sink.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -579,8 +547,6 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -604,8 +570,6 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -631,8 +595,6 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -656,8 +618,6 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -683,8 +643,6 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -705,8 +663,6 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -736,8 +692,6 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -766,8 +720,6 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -792,8 +744,6 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
-   *
-   * <p>Sample code:
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
@@ -833,8 +783,6 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -873,8 +821,6 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -901,8 +847,6 @@ public class ConfigClient implements BackgroundResource {
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -925,8 +869,6 @@ public class ConfigClient implements BackgroundResource {
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
    *
-   * <p>Sample code:
-   *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -945,8 +887,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -970,8 +910,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -988,8 +926,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all the exclusions in a parent resource.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1008,8 +944,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1026,8 +960,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all the exclusions in a parent resource.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1046,8 +978,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1061,8 +991,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all the exclusions in a parent resource.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1097,8 +1025,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets the description of an exclusion.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The resource name of an existing exclusion:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1119,8 +1045,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets the description of an exclusion.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The resource name of an existing exclusion:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1137,8 +1061,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets the description of an exclusion.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1162,8 +1084,6 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1185,8 +1105,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1210,8 +1128,6 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1233,8 +1149,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
-   *
-   * <p>Sample code:
    *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1258,8 +1172,6 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1278,8 +1190,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1302,8 +1212,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Changes one or more properties of an existing exclusion.
-   *
-   * <p>Sample code:
    *
    * @param name Required. The resource name of the exclusion to update:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
@@ -1336,8 +1244,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Changes one or more properties of an existing exclusion.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The resource name of the exclusion to update:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1369,8 +1275,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Changes one or more properties of an existing exclusion.
    *
-   * <p>Sample code:
-   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1392,8 +1296,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes an exclusion.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The resource name of an existing exclusion to delete:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1414,8 +1316,6 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes an exclusion.
    *
-   * <p>Sample code:
-   *
    * @param name Required. The resource name of an existing exclusion to delete:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1432,8 +1332,6 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes an exclusion.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1461,8 +1359,6 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1501,8 +1397,6 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
