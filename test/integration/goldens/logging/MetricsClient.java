@@ -94,6 +94,8 @@ import javax.annotation.Generated;
  * MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
  * MetricsClient metricsClient = MetricsClient.create(metricsSettings);
  * }</pre>
+ *
+ * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @BetaApi
 @Generated("by gapic-generator")
@@ -151,8 +153,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Lists logs-based metrics.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -169,8 +169,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Lists logs-based metrics.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -183,8 +181,6 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists logs-based metrics.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -219,8 +215,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Gets a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -237,8 +231,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Gets a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the desired metric:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -252,8 +244,6 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a logs-based metric.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -276,8 +266,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Creates a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource name of the project in which to create the metric:
    *     <p>"projects/[PROJECT_ID]"
    *     <p>The new metric must be provided in the request.
@@ -298,8 +286,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Creates a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param parent Required. The resource name of the project in which to create the metric:
    *     <p>"projects/[PROJECT_ID]"
    *     <p>The new metric must be provided in the request.
@@ -316,8 +302,6 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Creates a logs-based metric.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -340,8 +324,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Creates or updates a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the metric to update:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    *     <p>The updated metric must be provided in the request and it's `name` field must be the
@@ -363,8 +345,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Creates or updates a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the metric to update:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    *     <p>The updated metric must be provided in the request and it's `name` field must be the
@@ -382,8 +362,6 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Creates or updates a logs-based metric.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -406,8 +384,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Deletes a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -424,8 +400,6 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Deletes a logs-based metric.
    *
-   * <p>Sample code:
-   *
    * @param metric_name Required. The resource name of the metric to delete:
    *     <p>"projects/[PROJECT_ID]/metrics/[METRIC_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -439,8 +413,6 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes a logs-based metric.
-   *
-   * <p>Sample code:
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
