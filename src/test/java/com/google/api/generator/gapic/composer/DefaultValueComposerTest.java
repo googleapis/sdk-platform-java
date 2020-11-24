@@ -15,7 +15,6 @@
 package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -153,7 +152,8 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
-            typeStringsToResourceNames.values().stream().collect(Collectors.toList()));
+            typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+            "ignored");
     expr.accept(writerVisitor);
     assertEquals("BillingAccountName.of(\"[BILLING_ACCOUNT]\")", writerVisitor.write());
   }
@@ -168,7 +168,8 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
-            typeStringsToResourceNames.values().stream().collect(Collectors.toList()));
+            typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+            "ignored");
     expr.accept(writerVisitor);
     assertEquals(
         "FolderName.ofProjectFolderName(\"[PROJECT]\", \"[FOLDER]\")", writerVisitor.write());
@@ -184,13 +185,14 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
-            typeStringsToResourceNames.values().stream().collect(Collectors.toList()));
+            typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+            "ignored");
     expr.accept(writerVisitor);
     assertEquals("DocumentName.ofDocumentName(\"[DOCUMENT]\")", writerVisitor.write());
   }
 
   @Test
-  public void invalidDefaultValue_wildcardResourceNameWithOnlyDeletedTopic() {
+  public void defaultValue_wildcardResourceNameWithOnlyDeletedTopic() {
     // Edge case that should never happen in practice.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
@@ -205,13 +207,14 @@ public class DefaultValueComposerTest {
     Expr expr =
         DefaultValueComposer.createDefaultValue(
             resourceName,
-            typeStringsToResourceNames.values().stream().collect(Collectors.toList()));
+            typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+            "ignored");
     expr.accept(writerVisitor);
     assertEquals("TopicName.ofDeletedTopic()", writerVisitor.write());
   }
 
   @Test
-  public void invalidDefaultValue_resourceNameWithOnlyWildcards() {
+  public void defaultValue_resourceNameWithOnlyWildcards() {
     // Edge case that should never happen in practice.
     // Wildcard, but the resource names map has only other names that contain only the deleted-topic
     // constant.
@@ -220,9 +223,13 @@ public class DefaultValueComposerTest {
         Parser.parseResourceNames(lockerServiceFileDescriptor);
     ResourceName resourceName =
         typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Anything");
-    assertThrows(
-        IllegalStateException.class,
-        () -> DefaultValueComposer.createDefaultValue(resourceName, Collections.emptyList()));
+    String fallbackField = "foobar";
+    Expr expr =
+        DefaultValueComposer.createDefaultValue(
+            resourceName, Collections.emptyList(), fallbackField);
+    expr.accept(writerVisitor);
+    assertEquals(
+        String.format("\"%s%s\"", fallbackField, fallbackField.hashCode()), writerVisitor.write());
   }
 
   @Test
