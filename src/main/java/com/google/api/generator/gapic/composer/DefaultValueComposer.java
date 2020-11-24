@@ -65,7 +65,9 @@ public class DefaultValueComposer {
               "No resource name found for reference %s",
               methodArg.field().resourceReference().resourceTypeString()));
       return createDefaultValue(
-          resourceName, resourceNames.values().stream().collect(Collectors.toList()));
+          resourceName,
+          resourceNames.values().stream().collect(Collectors.toList()),
+          methodArg.field().name());
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
@@ -150,7 +152,8 @@ public class DefaultValueComposer {
             "Default value for field %s with type %s not implemented yet.", f.name(), f.type()));
   }
 
-  static Expr createDefaultValue(ResourceName resourceName, List<ResourceName> resnames) {
+  static Expr createDefaultValue(
+      ResourceName resourceName, List<ResourceName> resnames, String fieldOrMessageName) {
     boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (resourceName.isOnlyWildcard()) {
       List<ResourceName> unexaminedResnames = new ArrayList<>(resnames);
@@ -160,13 +163,14 @@ public class DefaultValueComposer {
           continue;
         }
         unexaminedResnames.remove(resname);
-        return createDefaultValue(resname, unexaminedResnames);
+        return createDefaultValue(resname, unexaminedResnames, fieldOrMessageName);
       }
-      // Should not get here.
-      Preconditions.checkState(
-          !unexaminedResnames.isEmpty(),
-          String.format(
-              "No default resource name found for wildcard %s", resourceName.resourceTypeString()));
+
+      if (unexaminedResnames.isEmpty()) {
+        return ValueExpr.withValue(
+            StringObjectValue.withValue(
+                String.format("%s%s", fieldOrMessageName, fieldOrMessageName.hashCode())));
+      }
     }
 
     // The cost tradeoffs of new ctors versus distinct() don't really matter here, since this list
@@ -242,7 +246,8 @@ public class DefaultValueComposer {
         defaultExpr =
             createDefaultValue(
                 resourceNames.get(field.resourceReference().resourceTypeString()),
-                resourceNames.values().stream().collect(Collectors.toList()));
+                resourceNames.values().stream().collect(Collectors.toList()),
+                message.name());
         defaultExpr =
             MethodInvocationExpr.builder()
                 .setExprReferenceExpr(defaultExpr)
