@@ -26,27 +26,28 @@ public abstract class GapicLanguageSettings {
   public abstract String pakkage();
 
   // Private.
-  abstract ImmutableMap<String, String> protoServiceToJavaClass();
+  abstract ImmutableMap<String, String> protoServiceToJavaClassname();
 
-  public String getJavaFullName(String protoPackage, String protoRpcName) {
-    String protoFullName = String.format("%s.%s", protoPackage, protoRpcName);
-    String finalProtoRpcName = protoRpcName;
-    if (protoServiceToJavaClass().containsKey(protoFullName)) {
-      finalProtoRpcName = protoServiceToJavaClass().get(protoFullName);
+  public String getJavaServiceName(String protoPackage, String protoServiceName) {
+    String protoFullName = String.format("%s.%s", protoPackage, protoServiceName);
+    String finalProtoRpcName = protoServiceName;
+    if (protoServiceToJavaClassname().containsKey(protoFullName)) {
+      finalProtoRpcName = protoServiceToJavaClassname().get(protoFullName);
     }
-    return String.format("%s.%s", pakkage(), finalProtoRpcName);
+    return finalProtoRpcName;
   }
 
   public static Builder builder() {
     return new AutoValue_GapicLanguageSettings.Builder()
-        .setProtoServiceToJavaClass(Collections.emptyMap());
+        .setProtoServiceToJavaClassname(Collections.emptyMap());
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setPakkage(String pakkage);
 
-    public abstract Builder setProtoServiceToJavaClass(Map<String, String> protoServiceToJavaClass);
+    public abstract Builder setProtoServiceToJavaClassname(
+        Map<String, String> protoServiceToJavaClassname);
 
     public abstract GapicLanguageSettings build();
   }

@@ -262,7 +262,7 @@ public class ServiceStubClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
 
@@ -279,7 +279,7 @@ public class ServiceStubClassComposer implements ClassComposer {
                 .build()));
   }
 
-  private static String getClientClassName(String serviceName) {
-    return String.format("%sClient", serviceName);
+  private static String getClientClassName(Service service) {
+    return String.format("%sClient", service.overriddenName());
   }
 }

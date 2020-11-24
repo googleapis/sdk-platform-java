@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
-import static com.google.logging.v2.MetricsServiceV2Client.ListLogMetricsPagedResponse;
+import static com.google.cloud.logging.v2.MetricsClient.ListLogMetricsPagedResponse;
 
 import com.google.api.MetricDescriptor;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -27,6 +27,15 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
+import com.google.logging.v2.CreateLogMetricRequest;
+import com.google.logging.v2.DeleteLogMetricRequest;
+import com.google.logging.v2.GetLogMetricRequest;
+import com.google.logging.v2.ListLogMetricsRequest;
+import com.google.logging.v2.ListLogMetricsResponse;
+import com.google.logging.v2.LogMetric;
+import com.google.logging.v2.LogMetricName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.UpdateLogMetricRequest;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Timestamp;
@@ -45,9 +54,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-public class MetricsServiceV2ClientTest {
+public class MetricsClientTest {
   private static MockServiceHelper mockServiceHelper;
-  private MetricsServiceV2Client client;
+  private MetricsClient client;
   private static MockMetricsServiceV2 mockMetricsServiceV2;
   private LocalChannelProvider channelProvider;
 
@@ -69,12 +78,12 @@ public class MetricsServiceV2ClientTest {
   public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
-    MetricsServiceV2Settings settings =
-        MetricsServiceV2Settings.newBuilder()
+    MetricsSettings settings =
+        MetricsSettings.newBuilder()
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
-    client = MetricsServiceV2Client.create(settings);
+    client = MetricsClient.create(settings);
   }
 
   @After

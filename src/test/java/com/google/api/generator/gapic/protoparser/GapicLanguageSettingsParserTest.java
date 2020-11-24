@@ -36,9 +36,7 @@ public class GapicLanguageSettingsParserTest {
     assertTrue(settingsOpt.isPresent());
     GapicLanguageSettings settings = settingsOpt.get();
     assertEquals("com.google.cloud.datastore.v1", settings.pakkage());
-    assertEquals(
-        "com.google.cloud.datastore.v1.FooBar",
-        settings.getJavaFullName("google.datastore.v1", "FooBar"));
+    assertEquals("FooBar", settings.getJavaServiceName("google.datastore.v1", "FooBar"));
   }
 
   @Test
@@ -50,8 +48,6 @@ public class GapicLanguageSettingsParserTest {
     assertTrue(settingsOpt.isPresent());
     GapicLanguageSettings settings = settingsOpt.get();
     assertEquals("com.google.cloud.logging.v2", settings.pakkage());
-    assertEquals(
-        "com.google.cloud.logging.v2.Logging",
-        settings.getJavaFullName("google.logging.v2", "LoggingServiceV2"));
+    assertEquals("Logging", settings.getJavaServiceName("google.logging.v2", "LoggingServiceV2"));
   }
 }

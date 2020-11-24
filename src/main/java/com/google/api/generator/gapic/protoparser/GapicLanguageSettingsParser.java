@@ -85,7 +85,7 @@ public class GapicLanguageSettingsParser {
 
     return Optional.of(
         gapicLanguageSettingsBuilder
-            .setProtoServiceToJavaClass(
+            .setProtoServiceToJavaClassname(
                 (Map<String, String>) javaYamlConfig.get(YAML_KEY_INTERFACE_NAMES))
             .build());
   }
