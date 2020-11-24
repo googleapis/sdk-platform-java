@@ -61,9 +61,8 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
- * <p>Note: close() needs to be called on the loggingServiceV2Client object to clean up resources
- * such as threads. In the example above, try-with-resources is used, which automatically calls
- * close().
+ * <p>Note: close() needs to be called on the LoggingClient object to clean up resources such as
+ * threads. In the example above, try-with-resources is used, which automatically calls close().
  *
  * <p>The surface of this class includes several types of Java methods for each of the API's
  * methods:
@@ -85,8 +84,8 @@ import javax.annotation.Generated;
  * these names, this class includes a format method for each type of name, and additionally a parse
  * method to extract the individual identifiers contained within names that are returned.
  *
- * <p>This class can be customized by passing in a custom instance of LoggingServiceV2Settings to
- * create(). For example:
+ * <p>This class can be customized by passing in a custom instance of LoggingSettings to create().
+ * For example:
  *
  * <p>To customize credentials:
  *
@@ -111,22 +110,22 @@ public class LoggingClient implements BackgroundResource {
   private final LoggingSettings settings;
   private final LoggingServiceV2Stub stub;
 
-  /** Constructs an instance of LoggingServiceV2Client with default settings. */
+  /** Constructs an instance of LoggingClient with default settings. */
   public static final LoggingClient create() throws IOException {
     return create(LoggingSettings.newBuilder().build());
   }
 
   /**
-   * Constructs an instance of LoggingServiceV2Client, using the given settings. The channels are
-   * created based on the settings passed in, or defaults for any settings that are not set.
+   * Constructs an instance of LoggingClient, using the given settings. The channels are created
+   * based on the settings passed in, or defaults for any settings that are not set.
    */
   public static final LoggingClient create(LoggingSettings settings) throws IOException {
     return new LoggingClient(settings);
   }
 
   /**
-   * Constructs an instance of LoggingServiceV2Client, using the given stub for making calls. This
-   * is for advanced usage - prefer using create(LoggingSettings).
+   * Constructs an instance of LoggingClient, using the given stub for making calls. This is for
+   * advanced usage - prefer using create(LoggingSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public static final LoggingClient create(LoggingServiceV2Stub stub) {
@@ -134,9 +133,8 @@ public class LoggingClient implements BackgroundResource {
   }
 
   /**
-   * Constructs an instance of LoggingServiceV2Client, using the given settings. This is protected
-   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
-   * preferred.
+   * Constructs an instance of LoggingClient, using the given settings. This is protected so that it
+   * is easy to make a subclass, but otherwise, the static factory methods should be preferred.
    */
   protected LoggingClient(LoggingSettings settings) throws IOException {
     this.settings = settings;

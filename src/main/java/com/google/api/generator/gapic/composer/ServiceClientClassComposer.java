@@ -229,7 +229,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     MethodDefinition createMethodOne =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createMethodNoArgComment(service.name()))
+                ServiceClientCommentComposer.createMethodNoArgComment(getClientClassName(service)))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -248,7 +248,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.add(
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createMethodSettingsArgComment(service.name()))
+                ServiceClientCommentComposer.createMethodSettingsArgComment(
+                    getClientClassName(service)))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
             .setIsFinal(true)
@@ -280,7 +281,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         MethodDefinition.builder()
             .setHeaderCommentStatements(
                 ServiceClientCommentComposer.createCreateMethodStubArgComment(
-                    service.name(), settingsVarExpr.type()))
+                    getClientClassName(service), settingsVarExpr.type()))
             .setAnnotations(Arrays.asList(betaAnnotation))
             .setScope(ScopeNode.PUBLIC)
             .setIsStatic(true)
@@ -371,7 +372,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     methods.add(
         MethodDefinition.constructorBuilder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createProtectedCtorSettingsArgComment(service.name()))
+                ServiceClientCommentComposer.createProtectedCtorSettingsArgComment(
+                    getClientClassName(service)))
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(thisClassType)
             .setArguments(settingsVarExpr.toBuilder().setIsDecl(true).build())

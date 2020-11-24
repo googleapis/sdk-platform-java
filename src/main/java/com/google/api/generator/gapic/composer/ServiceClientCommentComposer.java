@@ -20,7 +20,6 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Strings;
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,11 +73,11 @@ class ServiceClientCommentComposer {
 
   // Patterns.
   private static final String CREATE_METHOD_STUB_ARG_PATTERN =
-      "Constructs an instance of %sClient, using the given stub for making calls. This is for"
+      "Constructs an instance of %s, using the given stub for making calls. This is for"
           + " advanced usage - prefer using create(%s).";
 
   private static final String SERVICE_DESCRIPTION_CLOSE_PATTERN =
-      "Note: close() needs to be called on the %sClient object to clean up resources such as "
+      "Note: close() needs to be called on the %s object to clean up resources such as "
           + "threads. In the example above, try-with-resources is used, which automatically calls "
           + "close().";
 
@@ -89,15 +88,15 @@ class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_SUMMARY_PATTERN = "Service Description: %s";
 
   private static final String CREATE_METHOD_NO_ARG_PATTERN =
-      "Constructs an instance of %sClient with default settings.";
+      "Constructs an instance of %s with default settings.";
 
   private static final String CREATE_METHOD_SETTINGS_ARG_PATTERN =
-      "Constructs an instance of %sClient, using the given settings. The channels are"
+      "Constructs an instance of %s, using the given settings. The channels are"
           + " created based  on the settings passed in, or defaults for any settings that are"
           + " not set.";
 
   private static final String PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN =
-      "Constructs an instance of %sClient, using the given settings. This is protected so"
+      "Constructs an instance of %s, using the given settings. This is protected so"
           + " that it is easy to make a subclass, but otherwise, the static factory methods"
           + " should be preferred.";
 
@@ -124,8 +123,7 @@ class ServiceClientCommentComposer {
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
-        String.format(
-            SERVICE_DESCRIPTION_CLOSE_PATTERN, JavaStyle.toLowerCamelCase(service.name())));
+        String.format(SERVICE_DESCRIPTION_CLOSE_PATTERN, getClientClassName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING);
     classHeaderJavadocBuilder.addOrderedList(SERVICE_DESCRIPTION_SURFACE_DESCRIPTION);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
@@ -135,9 +133,7 @@ class ServiceClientCommentComposer {
 
     // Customization examples.
     classHeaderJavadocBuilder.addParagraph(
-        String.format(
-            SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
-            String.format("%sSettings", JavaStyle.toUpperCamelCase(service.name()))));
+        String.format(SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN, getSettingsName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
@@ -264,11 +260,11 @@ class ServiceClientCommentComposer {
     return commentBuilder;
   }
 
-  private static String getSettingsName(String serviceName) {
-    return String.format(SETTINGS_NAME_PATTERN, serviceName);
+  private static String getSettingsName(Service service) {
+    return String.format(SETTINGS_NAME_PATTERN, service.overriddenName());
   }
 
-  private static String getClientClassName(String serviceName) {
-    return String.format(CLASS_NAME_PATTERN, serviceName);
+  private static String getClientClassName(Service service) {
+    return String.format(CLASS_NAME_PATTERN, service.overriddenName());
   }
 }
