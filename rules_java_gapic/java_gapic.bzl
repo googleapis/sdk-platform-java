@@ -118,15 +118,6 @@ def java_gapic_library(
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
 
-    if gapic_yaml:
-        file_args_dict[gapic_yaml] = "gapic-config"
-
-    if gapic_yaml:
-        file_args_dict[gapic_yaml] = "gapic-config"
-
-    if gapic_yaml:
-        file_args_dict[gapic_yaml] = "gapic-config"
-
     # Check the allow-list.
     if service_yaml:
         service_yaml_in_allowlist = False
