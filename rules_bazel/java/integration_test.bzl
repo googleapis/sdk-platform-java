@@ -141,7 +141,7 @@ def _overwrite_golden_impl(ctx):
     # Overwrite the goldens.
     golden_update_script_content = """
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
-    rm -r test/integration/goldens/{api_name}/*
+    rm -r test/integration/goldens/{api_name}/*.java
     unzip -ao {goldens_output_zip} -d test/integration/goldens/{api_name}
     """.format(
         goldens_output_zip = goldens_output_zip.path,
