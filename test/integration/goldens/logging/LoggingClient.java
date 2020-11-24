@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
 import com.google.api.MonitoredResource;
 import com.google.api.MonitoredResourceDescriptor;
@@ -28,9 +28,24 @@ import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.logging.v2.stub.LoggingServiceV2Stub;
+import com.google.cloud.logging.v2.stub.LoggingServiceV2StubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.google.logging.v2.stub.LoggingServiceV2Stub;
-import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
+import com.google.logging.v2.BillingAccountName;
+import com.google.logging.v2.DeleteLogRequest;
+import com.google.logging.v2.FolderName;
+import com.google.logging.v2.ListLogEntriesRequest;
+import com.google.logging.v2.ListLogEntriesResponse;
+import com.google.logging.v2.ListLogsRequest;
+import com.google.logging.v2.ListLogsResponse;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
+import com.google.logging.v2.LogEntry;
+import com.google.logging.v2.LogName;
+import com.google.logging.v2.OrganizationName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.WriteLogEntriesRequest;
+import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -76,50 +91,46 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * LoggingServiceV2Settings loggingServiceV2Settings =
- *     LoggingServiceV2Settings.newBuilder()
+ * LoggingSettings loggingSettings =
+ *     LoggingSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
- * LoggingServiceV2Client loggingServiceV2Client =
- *     LoggingServiceV2Client.create(loggingServiceV2Settings);
+ * LoggingClient loggingClient = LoggingClient.create(loggingSettings);
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * LoggingServiceV2Settings loggingServiceV2Settings =
- *     LoggingServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
- * LoggingServiceV2Client loggingServiceV2Client =
- *     LoggingServiceV2Client.create(loggingServiceV2Settings);
+ * LoggingSettings loggingSettings = LoggingSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * LoggingClient loggingClient = LoggingClient.create(loggingSettings);
  * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")
-public class LoggingServiceV2Client implements BackgroundResource {
-  private final LoggingServiceV2Settings settings;
+public class LoggingClient implements BackgroundResource {
+  private final LoggingSettings settings;
   private final LoggingServiceV2Stub stub;
 
   /** Constructs an instance of LoggingServiceV2Client with default settings. */
-  public static final LoggingServiceV2Client create() throws IOException {
-    return create(LoggingServiceV2Settings.newBuilder().build());
+  public static final LoggingClient create() throws IOException {
+    return create(LoggingSettings.newBuilder().build());
   }
 
   /**
    * Constructs an instance of LoggingServiceV2Client, using the given settings. The channels are
    * created based on the settings passed in, or defaults for any settings that are not set.
    */
-  public static final LoggingServiceV2Client create(LoggingServiceV2Settings settings)
-      throws IOException {
-    return new LoggingServiceV2Client(settings);
+  public static final LoggingClient create(LoggingSettings settings) throws IOException {
+    return new LoggingClient(settings);
   }
 
   /**
    * Constructs an instance of LoggingServiceV2Client, using the given stub for making calls. This
-   * is for advanced usage - prefer using create(LoggingServiceV2Settings).
+   * is for advanced usage - prefer using create(LoggingSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public static final LoggingServiceV2Client create(LoggingServiceV2Stub stub) {
-    return new LoggingServiceV2Client(stub);
+  public static final LoggingClient create(LoggingServiceV2Stub stub) {
+    return new LoggingClient(stub);
   }
 
   /**
@@ -127,18 +138,18 @@ public class LoggingServiceV2Client implements BackgroundResource {
    * so that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
-  protected LoggingServiceV2Client(LoggingServiceV2Settings settings) throws IOException {
+  protected LoggingClient(LoggingSettings settings) throws IOException {
     this.settings = settings;
     this.stub = ((LoggingServiceV2StubSettings) settings.getStubSettings()).createStub();
   }
 
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  protected LoggingServiceV2Client(LoggingServiceV2Stub stub) {
+  protected LoggingClient(LoggingServiceV2Stub stub) {
     this.settings = null;
     this.stub = stub;
   }
 
-  public final LoggingServiceV2Settings getSettings() {
+  public final LoggingSettings getSettings() {
     return settings;
   }
 

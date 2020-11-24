@@ -111,7 +111,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(Service service, Map<String, Message> messageTypes) {
     Map<String, TypeNode> types = createTypes(service, messageTypes);
-    String className = String.format("%sClient", service.name());
+    String className = getClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
     boolean hasLroClient = hasLroMethods(service);
@@ -121,8 +121,8 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 ServiceClientCommentComposer.createClassHeaderComments(
                     service,
-                    types.get(getClientClassName(service.name())),
-                    types.get(getSettingsName(service.name()))))
+                    types.get(getClientClassName(service)),
+                    types.get(getSettingsName(service))))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(types))
             .setScope(ScopeNode.PUBLIC)
@@ -174,8 +174,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static List<Statement> createFieldDeclarations(
       Service service, Map<String, TypeNode> types, boolean hasLroClient) {
     Map<String, TypeNode> fieldNameToTypes = new HashMap<>();
-    fieldNameToTypes.put("settings", types.get(String.format("%sSettings", service.name())));
-    fieldNameToTypes.put("stub", types.get(String.format("%sStub", service.name())));
+    fieldNameToTypes.put("settings", types.get(getSettingsName(service)));
+    fieldNameToTypes.put("stub", types.get(getStubClassName(service)));
     if (hasLroClient) {
       fieldNameToTypes.put("operationsClient", types.get("OperationsClient"));
     }
@@ -201,8 +201,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static List<MethodDefinition> createStaticCreatorMethods(
       Service service, Map<String, TypeNode> types) {
     List<MethodDefinition> methods = new ArrayList<>();
-    String thisClientName = String.format("%sClient", service.name());
-    String settingsName = String.format("%sSettings", service.name());
+    String thisClientName = getClientClassName(service);
+    String settingsName = getSettingsName(service);
     TypeNode thisClassType = types.get(thisClientName);
     TypeNode exceptionType = types.get("IOException");
 
@@ -267,7 +267,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(String.format("%sStub", service.name())))
+                .setType(types.get(getStubClassName(service)))
                 .setName("stub")
                 .build());
     AnnotationNode betaAnnotation =
@@ -298,8 +298,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static List<MethodDefinition> createConstructorMethods(
       Service service, Map<String, TypeNode> types, boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
-    String thisClientName = String.format("%sClient", service.name());
-    String settingsName = String.format("%sSettings", service.name());
+    String thisClientName = getClientClassName(service);
+    String settingsName = getSettingsName(service);
     TypeNode thisClassType = types.get(thisClientName);
     TypeNode stubSettingsType = types.get(String.format("%sStubSettings", service.name()));
     TypeNode operationsClientType = types.get("OperationsClient");
@@ -312,7 +312,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(String.format("%sStub", service.name())))
+                .setType(types.get(getStubClassName(service)))
                 .setName("stub")
                 .build());
     VariableExpr operationsClientVarExpr =
@@ -421,8 +421,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static List<MethodDefinition> createGetterMethods(
       Service service, Map<String, TypeNode> types, boolean hasLroClient) {
     Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
-    methodNameToTypes.put("getSettings", types.get(String.format("%sSettings", service.name())));
-    methodNameToTypes.put("getStub", types.get(String.format("%sStub", service.name())));
+    methodNameToTypes.put("getSettings", types.get(getSettingsName(service)));
+    methodNameToTypes.put("getStub", types.get(getStubClassName(service)));
     String getOperationsClientMethodName = "getOperationsClient";
     if (hasLroClient) {
       methodNameToTypes.put(getOperationsClientMethodName, types.get("OperationsClient"));
@@ -477,12 +477,12 @@ public class ServiceClientClassComposer implements ClassComposer {
         javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroCallableMethod(service.name(), method, types));
+        javaMethods.add(createLroCallableMethod(service, method, types));
       }
       if (method.isPaged()) {
-        javaMethods.add(createPagedCallableMethod(service.name(), method, types));
+        javaMethods.add(createPagedCallableMethod(service, method, types));
       }
-      javaMethods.add(createCallableMethod(service.name(), method, types));
+      javaMethods.add(createCallableMethod(service, method, types));
     }
     return javaMethods;
   }
@@ -638,22 +638,22 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createLroCallableMethod(
-      String serviceName, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(serviceName, method, types, CallableMethodKind.LRO);
+      Service service, Method method, Map<String, TypeNode> types) {
+    return createCallableMethod(service, method, types, CallableMethodKind.LRO);
   }
 
   private static MethodDefinition createCallableMethod(
-      String serviceName, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(serviceName, method, types, CallableMethodKind.REGULAR);
+      Service service, Method method, Map<String, TypeNode> types) {
+    return createCallableMethod(service, method, types, CallableMethodKind.REGULAR);
   }
 
   private static MethodDefinition createPagedCallableMethod(
-      String serviceName, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(serviceName, method, types, CallableMethodKind.PAGED);
+      Service service, Method method, Map<String, TypeNode> types) {
+    return createCallableMethod(service, method, types, CallableMethodKind.PAGED);
   }
 
   private static MethodDefinition createCallableMethod(
-      String serviceName,
+      Service service,
       Method method,
       Map<String, TypeNode> types,
       CallableMethodKind callableMethodKind) {
@@ -687,7 +687,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     String rawMethodName = JavaStyle.toLowerCamelCase(method.name());
     String methodName = getCallableName(callableMethodKind, rawMethodName);
-    TypeNode stubType = types.get(String.format("%sStub", serviceName));
+    TypeNode stubType = types.get(getStubClassName(service));
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
@@ -716,7 +716,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(String.format("%sStub", service.name())))
+                .setType(types.get(getStubClassName(service)))
                 .setName("stub")
                 .build());
     MethodDefinition closeMethod =
@@ -1447,11 +1447,11 @@ public class ServiceClientClassComposer implements ClassComposer {
         Arrays.asList("%sClient", "%sSettings").stream()
             .collect(
                 Collectors.toMap(
-                    t -> String.format(t, service.name()),
+                    t -> String.format(t, service.overriddenName()),
                     t ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(String.format(t, service.name()))
+                                .setName(String.format(t, service.overriddenName()))
                                 .setPakkage(service.pakkage())
                                 .build()))));
 
@@ -1470,7 +1470,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                               VaporReference.builder()
                                   .setName(
                                       String.format(t, JavaStyle.toUpperCamelCase(method.name())))
-                                  .setEnclosingClassNames(getClientClassName(service.name()))
+                                  .setEnclosingClassNames(getClientClassName(service))
                                   .setPakkage(service.pakkage())
                                   .setIsStaticImport(true) // Same class, so they won't be imported.
                                   .build()))));
@@ -1495,7 +1495,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service.name()))
+                                .setEnclosingClassNames(getClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -1520,12 +1520,16 @@ public class ServiceClientClassComposer implements ClassComposer {
     return Variable.builder().setName(name).setType(type).build();
   }
 
-  private static String getClientClassName(String serviceName) {
-    return String.format("%sClient", serviceName);
+  private static String getClientClassName(Service service) {
+    return String.format("%sClient", service.overriddenName());
   }
 
-  private static String getSettingsName(String serviceName) {
-    return String.format("%sSettings", serviceName);
+  private static String getSettingsName(Service service) {
+    return String.format("%sSettings", service.overriddenName());
+  }
+
+  private static String getStubClassName(Service service) {
+    return String.format("%sStub", service.name());
   }
 
   private static List<Reference> getGenericsForCallable(

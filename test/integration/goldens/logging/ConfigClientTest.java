@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
-import static com.google.logging.v2.ConfigServiceV2Client.ListBucketsPagedResponse;
-import static com.google.logging.v2.ConfigServiceV2Client.ListExclusionsPagedResponse;
-import static com.google.logging.v2.ConfigServiceV2Client.ListSinksPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListBucketsPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListExclusionsPagedResponse;
+import static com.google.cloud.logging.v2.ConfigClient.ListSinksPagedResponse;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
@@ -28,6 +28,40 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
+import com.google.logging.v2.BillingAccountLocationName;
+import com.google.logging.v2.BillingAccountName;
+import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CmekSettingsName;
+import com.google.logging.v2.CreateExclusionRequest;
+import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.DeleteExclusionRequest;
+import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.FolderLocationName;
+import com.google.logging.v2.FolderName;
+import com.google.logging.v2.GetBucketRequest;
+import com.google.logging.v2.GetCmekSettingsRequest;
+import com.google.logging.v2.GetExclusionRequest;
+import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.ListBucketsRequest;
+import com.google.logging.v2.ListBucketsResponse;
+import com.google.logging.v2.ListExclusionsRequest;
+import com.google.logging.v2.ListExclusionsResponse;
+import com.google.logging.v2.ListSinksRequest;
+import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.LocationName;
+import com.google.logging.v2.LogBucket;
+import com.google.logging.v2.LogBucketName;
+import com.google.logging.v2.LogExclusion;
+import com.google.logging.v2.LogExclusionName;
+import com.google.logging.v2.LogSink;
+import com.google.logging.v2.LogSinkName;
+import com.google.logging.v2.OrganizationLocationName;
+import com.google.logging.v2.OrganizationName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.UpdateBucketRequest;
+import com.google.logging.v2.UpdateCmekSettingsRequest;
+import com.google.logging.v2.UpdateExclusionRequest;
+import com.google.logging.v2.UpdateSinkRequest;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
@@ -46,9 +80,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-public class ConfigServiceV2ClientTest {
+public class ConfigClientTest {
   private static MockServiceHelper mockServiceHelper;
-  private ConfigServiceV2Client client;
+  private ConfigClient client;
   private LocalChannelProvider channelProvider;
   private static MockConfigServiceV2 mockConfigServiceV2;
 
@@ -70,12 +104,12 @@ public class ConfigServiceV2ClientTest {
   public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
-    ConfigServiceV2Settings settings =
-        ConfigServiceV2Settings.newBuilder()
+    ConfigSettings settings =
+        ConfigSettings.newBuilder()
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
-    client = ConfigServiceV2Client.create(settings);
+    client = ConfigClient.create(settings);
   }
 
   @After

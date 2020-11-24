@@ -559,7 +559,8 @@ public class MockServiceImplClassComposer implements ClassComposer {
             VaporReference.builder()
                 .setName(implBase)
                 // Hack: This should be a nested class and perhaps a static import or something.
-                .setPakkage(String.format("%s.%sGrpc", service.pakkage(), service.name()))
+                .setPakkage(
+                    String.format("%s.%sGrpc", service.originalJavaPackage(), service.name()))
                 .build()));
     String className = String.format(MOCK_SERVICE_IMPL_NAME_PATTERN, service.name());
     types.put(

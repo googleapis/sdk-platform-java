@@ -1,5 +1,5 @@
 def _diff_integration_goldens_impl(ctx):
-    # Extract the Java source files from the generated 3 srcjars from API bazel target, 
+    # Extract the Java source files from the generated 3 srcjars from API bazel target,
     # and put them in the temporary folder `codegen_tmp`.
     # Compare the `codegen_tmp` with the goldens folder e.g `test/integration/goldens/redis`
     # and save the differences in output file `diff_output.txt`.
@@ -11,7 +11,7 @@ def _diff_integration_goldens_impl(ctx):
     test_library = ctx.attr.test_library
     srcs = ctx.files.srcs
     api_name = ctx.attr.name
-    
+
     script = """
     mkdir codegen_tmp
     unzip -j {input} -d codegen_tmp
@@ -30,20 +30,20 @@ def _diff_integration_goldens_impl(ctx):
         input = gapic_library[JavaInfo].source_jars[0].path,
         input_resource_name = resource_name_library[JavaInfo].source_jars[0].path,
         input_test = test_library[JavaInfo].source_jars[0].path,
-        api_name = api_name
+        api_name = api_name,
     )
     ctx.actions.run_shell(
         inputs = srcs + [
-            gapic_library[JavaInfo].source_jars[0], 
-            resource_name_library[JavaInfo].source_jars[0], 
+            gapic_library[JavaInfo].source_jars[0],
+            resource_name_library[JavaInfo].source_jars[0],
             test_library[JavaInfo].source_jars[0],
         ],
         outputs = [diff_output],
         command = script,
     )
 
-    # Check the generated diff_output file, if it is empty, that means there is no difference  
-    # between generated source code and goldens files, test should pass. If it is not empty, then 
+    # Check the generated diff_output file, if it is empty, that means there is no difference
+    # between generated source code and goldens files, test should pass. If it is not empty, then
     # test will fail by exiting 1.
 
     check_diff_script_content = """
@@ -67,7 +67,6 @@ def _diff_integration_goldens_impl(ctx):
     runfiles = ctx.runfiles(files = [ctx.outputs.diff_output])
     return [DefaultInfo(executable = check_diff_script, runfiles = runfiles)]
 
-
 diff_integration_goldens_test = rule(
     attrs = {
         "gapic_library": attr.label(),
@@ -76,7 +75,7 @@ diff_integration_goldens_test = rule(
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
-        ), 
+        ),
     },
     outputs = {
         "diff_output": "%{name}_diff_output.txt",
@@ -85,7 +84,6 @@ diff_integration_goldens_test = rule(
     implementation = _diff_integration_goldens_impl,
     test = True,
 )
-
 
 def integration_test(name, target, data):
     # Bazel target `java_gapic_library` will generate 3 source jars including the
@@ -99,15 +97,16 @@ def integration_test(name, target, data):
     )
 
 def _overwrite_golden_impl(ctx):
-    # Extract the Java source files from the generated 3 srcjars from API bazel target, 
+    # Extract the Java source files from the generated 3 srcjars from API bazel target,
     # and put them in the temporary folder `codegen_tmp`, zip as `goldens_output_zip`.
-    # Overwrite the goldens folder e.g `test/integration/goldens/redis` with the 
+    # Overwrite the goldens folder e.g `test/integration/goldens/redis` with the
     # code generation in `goldens_output_zip`.
 
     gapic_library = ctx.attr.gapic_library
     resource_name_library = ctx.attr.resource_name_library
     test_library = ctx.attr.test_library
     srcs = ctx.files.srcs
+
     # Convert the name of bazel rules e.g. `redis_update` to `redis`
     # because we will need to overwrite the goldens files in `redis` folder.
     api_name = "_".join(ctx.attr.name.split("_")[:-1])
@@ -131,8 +130,8 @@ def _overwrite_golden_impl(ctx):
 
     ctx.actions.run_shell(
         inputs = srcs + [
-            gapic_library[JavaInfo].source_jars[0], 
-            resource_name_library[JavaInfo].source_jars[0], 
+            gapic_library[JavaInfo].source_jars[0],
+            resource_name_library[JavaInfo].source_jars[0],
             test_library[JavaInfo].source_jars[0],
         ],
         outputs = [goldens_output_zip],
@@ -142,6 +141,7 @@ def _overwrite_golden_impl(ctx):
     # Overwrite the goldens.
     golden_update_script_content = """
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
+    rm -r test/integration/goldens/{api_name}/*
     unzip -ao {goldens_output_zip} -d test/integration/goldens/{api_name}
     """.format(
         goldens_output_zip = goldens_output_zip.path,
@@ -162,7 +162,7 @@ overwrite_golden = rule(
         "srcs": attr.label_list(
             allow_files = True,
             mandatory = True,
-        ), 
+        ),
     },
     outputs = {
         "goldens_output_zip": "%{name}.zip",

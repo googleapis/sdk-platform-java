@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogEntriesPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogsPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListMonitoredResourceDescriptorsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogEntriesPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListMonitoredResourceDescriptorsPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -32,7 +32,16 @@ import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.logging.v2.stub.LoggingServiceV2StubSettings;
+import com.google.cloud.logging.v2.stub.LoggingServiceV2StubSettings;
+import com.google.logging.v2.DeleteLogRequest;
+import com.google.logging.v2.ListLogEntriesRequest;
+import com.google.logging.v2.ListLogEntriesResponse;
+import com.google.logging.v2.ListLogsRequest;
+import com.google.logging.v2.ListLogsResponse;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
+import com.google.logging.v2.WriteLogEntriesRequest;
+import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -40,7 +49,7 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
- * Settings class to configure an instance of {@link LoggingServiceV2Client}.
+ * Settings class to configure an instance of {@link LoggingClient}.
  *
  * <p>The default instance has everything set to sensible defaults:
  *
@@ -56,22 +65,21 @@ import javax.annotation.Generated;
  * <p>For example, to set the total timeout of deleteLog to 30 seconds:
  *
  * <pre>{@code
- * LoggingServiceV2Settings.Builder loggingServiceV2SettingsBuilder =
- *     LoggingServiceV2Settings.newBuilder();
- * loggingServiceV2SettingsBuilder
+ * LoggingSettings.Builder loggingSettingsBuilder = LoggingSettings.newBuilder();
+ * loggingSettingsBuilder
  *     .deleteLogSettings()
  *     .setRetrySettings(
- *         loggingServiceV2SettingsBuilder
+ *         loggingSettingsBuilder
  *             .deleteLogSettings()
  *             .getRetrySettings()
  *             .toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
- * LoggingServiceV2Settings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();
+ * LoggingSettings loggingSettings = loggingSettingsBuilder.build();
  * }</pre>
  */
 @Generated("by gapic-generator-java")
-public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Settings> {
+public class LoggingSettings extends ClientSettings<LoggingSettings> {
 
   /** Returns the object with the settings used for calls to deleteLog. */
   public UnaryCallSettings<DeleteLogRequest, Empty> deleteLogSettings() {
@@ -107,9 +115,8 @@ public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Set
     return ((LoggingServiceV2StubSettings) getStubSettings()).listLogsSettings();
   }
 
-  public static final LoggingServiceV2Settings create(LoggingServiceV2StubSettings stub)
-      throws IOException {
-    return new LoggingServiceV2Settings.Builder(stub.toBuilder()).build();
+  public static final LoggingSettings create(LoggingServiceV2StubSettings stub) throws IOException {
+    return new LoggingSettings.Builder(stub.toBuilder()).build();
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -161,12 +168,12 @@ public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Set
     return new Builder(this);
   }
 
-  protected LoggingServiceV2Settings(Builder settingsBuilder) throws IOException {
+  protected LoggingSettings(Builder settingsBuilder) throws IOException {
     super(settingsBuilder);
   }
 
-  /** Builder for LoggingServiceV2Settings. */
-  public static class Builder extends ClientSettings.Builder<LoggingServiceV2Settings, Builder> {
+  /** Builder for LoggingSettings. */
+  public static class Builder extends ClientSettings.Builder<LoggingSettings, Builder> {
 
     protected Builder() throws IOException {
       this(((ClientContext) null));
@@ -176,7 +183,7 @@ public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Set
       super(LoggingServiceV2StubSettings.newBuilder(clientContext));
     }
 
-    protected Builder(LoggingServiceV2Settings settings) {
+    protected Builder(LoggingSettings settings) {
       super(settings.getStubSettings().toBuilder());
     }
 
@@ -239,8 +246,8 @@ public class LoggingServiceV2Settings extends ClientSettings<LoggingServiceV2Set
     }
 
     @Override
-    public LoggingServiceV2Settings build() throws IOException {
-      return new LoggingServiceV2Settings(this);
+    public LoggingSettings build() throws IOException {
+      return new LoggingSettings(this);
     }
   }
 }

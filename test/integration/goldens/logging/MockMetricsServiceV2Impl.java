@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
 import com.google.api.core.BetaApi;
+import com.google.logging.v2.CreateLogMetricRequest;
+import com.google.logging.v2.DeleteLogMetricRequest;
+import com.google.logging.v2.GetLogMetricRequest;
+import com.google.logging.v2.ListLogMetricsRequest;
+import com.google.logging.v2.ListLogMetricsResponse;
+import com.google.logging.v2.LogMetric;
 import com.google.logging.v2.MetricsServiceV2Grpc.MetricsServiceV2ImplBase;
+import com.google.logging.v2.UpdateLogMetricRequest;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;

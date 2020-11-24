@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2.stub;
+package com.google.cloud.logging.v2.stub;
 
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogEntriesPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogsPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListMonitoredResourceDescriptorsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogEntriesPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListMonitoredResourceDescriptorsPagedResponse;
 
 import com.google.api.MonitoredResourceDescriptor;
 import com.google.api.core.ApiFunction;

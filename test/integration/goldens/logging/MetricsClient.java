@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -26,9 +26,18 @@ import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.logging.v2.stub.MetricsServiceV2Stub;
+import com.google.cloud.logging.v2.stub.MetricsServiceV2StubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.google.logging.v2.stub.MetricsServiceV2Stub;
-import com.google.logging.v2.stub.MetricsServiceV2StubSettings;
+import com.google.logging.v2.CreateLogMetricRequest;
+import com.google.logging.v2.DeleteLogMetricRequest;
+import com.google.logging.v2.GetLogMetricRequest;
+import com.google.logging.v2.ListLogMetricsRequest;
+import com.google.logging.v2.ListLogMetricsResponse;
+import com.google.logging.v2.LogMetric;
+import com.google.logging.v2.LogMetricName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.UpdateLogMetricRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -73,50 +82,46 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * MetricsServiceV2Settings metricsServiceV2Settings =
- *     MetricsServiceV2Settings.newBuilder()
+ * MetricsSettings metricsSettings =
+ *     MetricsSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
- * MetricsServiceV2Client metricsServiceV2Client =
- *     MetricsServiceV2Client.create(metricsServiceV2Settings);
+ * MetricsClient metricsClient = MetricsClient.create(metricsSettings);
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * MetricsServiceV2Settings metricsServiceV2Settings =
- *     MetricsServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
- * MetricsServiceV2Client metricsServiceV2Client =
- *     MetricsServiceV2Client.create(metricsServiceV2Settings);
+ * MetricsSettings metricsSettings = MetricsSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * MetricsClient metricsClient = MetricsClient.create(metricsSettings);
  * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")
-public class MetricsServiceV2Client implements BackgroundResource {
-  private final MetricsServiceV2Settings settings;
+public class MetricsClient implements BackgroundResource {
+  private final MetricsSettings settings;
   private final MetricsServiceV2Stub stub;
 
   /** Constructs an instance of MetricsServiceV2Client with default settings. */
-  public static final MetricsServiceV2Client create() throws IOException {
-    return create(MetricsServiceV2Settings.newBuilder().build());
+  public static final MetricsClient create() throws IOException {
+    return create(MetricsSettings.newBuilder().build());
   }
 
   /**
    * Constructs an instance of MetricsServiceV2Client, using the given settings. The channels are
    * created based on the settings passed in, or defaults for any settings that are not set.
    */
-  public static final MetricsServiceV2Client create(MetricsServiceV2Settings settings)
-      throws IOException {
-    return new MetricsServiceV2Client(settings);
+  public static final MetricsClient create(MetricsSettings settings) throws IOException {
+    return new MetricsClient(settings);
   }
 
   /**
    * Constructs an instance of MetricsServiceV2Client, using the given stub for making calls. This
-   * is for advanced usage - prefer using create(MetricsServiceV2Settings).
+   * is for advanced usage - prefer using create(MetricsSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public static final MetricsServiceV2Client create(MetricsServiceV2Stub stub) {
-    return new MetricsServiceV2Client(stub);
+  public static final MetricsClient create(MetricsServiceV2Stub stub) {
+    return new MetricsClient(stub);
   }
 
   /**
@@ -124,18 +129,18 @@ public class MetricsServiceV2Client implements BackgroundResource {
    * so that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
-  protected MetricsServiceV2Client(MetricsServiceV2Settings settings) throws IOException {
+  protected MetricsClient(MetricsSettings settings) throws IOException {
     this.settings = settings;
     this.stub = ((MetricsServiceV2StubSettings) settings.getStubSettings()).createStub();
   }
 
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  protected MetricsServiceV2Client(MetricsServiceV2Stub stub) {
+  protected MetricsClient(MetricsServiceV2Stub stub) {
     this.settings = null;
     this.stub = stub;
   }
 
-  public final MetricsServiceV2Settings getSettings() {
+  public final MetricsSettings getSettings() {
     return settings;
   }
 

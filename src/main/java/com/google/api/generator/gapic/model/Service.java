@@ -32,6 +32,12 @@ public abstract class Service {
 
   public abstract String protoPakkage();
 
+  // For compatibility with other protoc-plugin code generators, e.g. gRPC.
+  public abstract String originalJavaPackage();
+
+  // New Java class name as defined in gapic.yaml's language settings.
+  public abstract String overriddenName();
+
   public abstract ImmutableList<Method> methods();
 
   @Nullable
@@ -49,6 +55,8 @@ public abstract class Service {
   public abstract static class Builder {
     public abstract Builder setName(String name);
 
+    public abstract Builder setOverriddenName(String overriddenName);
+
     public abstract Builder setDefaultHost(String defaultHost);
 
     public abstract Builder setOauthScopes(List<String> oauthScopes);
@@ -56,6 +64,8 @@ public abstract class Service {
     public abstract Builder setPakkage(String pakkage);
 
     public abstract Builder setProtoPakkage(String pakkage);
+
+    public abstract Builder setOriginalJavaPackage(String originalJavaPackage);
 
     public abstract Builder setMethods(List<Method> methods);
 

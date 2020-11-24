@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogEntriesPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListLogsPagedResponse;
-import static com.google.logging.v2.LoggingServiceV2Client.ListMonitoredResourceDescriptorsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogEntriesPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListLogsPagedResponse;
+import static com.google.cloud.logging.v2.LoggingClient.ListMonitoredResourceDescriptorsPagedResponse;
 
 import com.google.api.MonitoredResource;
 import com.google.api.MonitoredResourceDescriptor;
@@ -30,6 +30,21 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
+import com.google.logging.v2.BillingAccountName;
+import com.google.logging.v2.DeleteLogRequest;
+import com.google.logging.v2.FolderName;
+import com.google.logging.v2.ListLogEntriesRequest;
+import com.google.logging.v2.ListLogEntriesResponse;
+import com.google.logging.v2.ListLogsRequest;
+import com.google.logging.v2.ListLogsResponse;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
+import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
+import com.google.logging.v2.LogEntry;
+import com.google.logging.v2.LogName;
+import com.google.logging.v2.OrganizationName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.WriteLogEntriesRequest;
+import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import io.grpc.StatusRuntimeException;
@@ -49,10 +64,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-public class LoggingServiceV2ClientTest {
+public class LoggingClientTest {
   private static MockServiceHelper mockServiceHelper;
   private static MockLoggingServiceV2 mockLoggingServiceV2;
-  private LoggingServiceV2Client client;
+  private LoggingClient client;
   private LocalChannelProvider channelProvider;
 
   @BeforeClass
@@ -73,12 +88,12 @@ public class LoggingServiceV2ClientTest {
   public void setUp() throws IOException {
     mockServiceHelper.reset();
     channelProvider = mockServiceHelper.createChannelProvider();
-    LoggingServiceV2Settings settings =
-        LoggingServiceV2Settings.newBuilder()
+    LoggingSettings settings =
+        LoggingSettings.newBuilder()
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
-    client = LoggingServiceV2Client.create(settings);
+    client = LoggingClient.create(settings);
   }
 
   @After

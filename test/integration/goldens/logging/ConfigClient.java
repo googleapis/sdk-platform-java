@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2;
+package com.google.cloud.logging.v2;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -26,9 +26,41 @@ import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.logging.v2.stub.ConfigServiceV2Stub;
+import com.google.cloud.logging.v2.stub.ConfigServiceV2StubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
-import com.google.logging.v2.stub.ConfigServiceV2Stub;
-import com.google.logging.v2.stub.ConfigServiceV2StubSettings;
+import com.google.logging.v2.BillingAccountLocationName;
+import com.google.logging.v2.BillingAccountName;
+import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CreateExclusionRequest;
+import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.DeleteExclusionRequest;
+import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.FolderLocationName;
+import com.google.logging.v2.FolderName;
+import com.google.logging.v2.GetBucketRequest;
+import com.google.logging.v2.GetCmekSettingsRequest;
+import com.google.logging.v2.GetExclusionRequest;
+import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.ListBucketsRequest;
+import com.google.logging.v2.ListBucketsResponse;
+import com.google.logging.v2.ListExclusionsRequest;
+import com.google.logging.v2.ListExclusionsResponse;
+import com.google.logging.v2.ListSinksRequest;
+import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.LocationName;
+import com.google.logging.v2.LogBucket;
+import com.google.logging.v2.LogExclusion;
+import com.google.logging.v2.LogExclusionName;
+import com.google.logging.v2.LogSink;
+import com.google.logging.v2.LogSinkName;
+import com.google.logging.v2.OrganizationLocationName;
+import com.google.logging.v2.OrganizationName;
+import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.UpdateBucketRequest;
+import com.google.logging.v2.UpdateCmekSettingsRequest;
+import com.google.logging.v2.UpdateExclusionRequest;
+import com.google.logging.v2.UpdateSinkRequest;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
@@ -74,50 +106,46 @@ import javax.annotation.Generated;
  * <p>To customize credentials:
  *
  * <pre>{@code
- * ConfigServiceV2Settings configServiceV2Settings =
- *     ConfigServiceV2Settings.newBuilder()
+ * ConfigSettings configSettings =
+ *     ConfigSettings.newBuilder()
  *         .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))
  *         .build();
- * ConfigServiceV2Client configServiceV2Client =
- *     ConfigServiceV2Client.create(configServiceV2Settings);
+ * ConfigClient configClient = ConfigClient.create(configSettings);
  * }</pre>
  *
  * <p>To customize the endpoint:
  *
  * <pre>{@code
- * ConfigServiceV2Settings configServiceV2Settings =
- *     ConfigServiceV2Settings.newBuilder().setEndpoint(myEndpoint).build();
- * ConfigServiceV2Client configServiceV2Client =
- *     ConfigServiceV2Client.create(configServiceV2Settings);
+ * ConfigSettings configSettings = ConfigSettings.newBuilder().setEndpoint(myEndpoint).build();
+ * ConfigClient configClient = ConfigClient.create(configSettings);
  * }</pre>
  */
 @BetaApi
 @Generated("by gapic-generator")
-public class ConfigServiceV2Client implements BackgroundResource {
-  private final ConfigServiceV2Settings settings;
+public class ConfigClient implements BackgroundResource {
+  private final ConfigSettings settings;
   private final ConfigServiceV2Stub stub;
 
   /** Constructs an instance of ConfigServiceV2Client with default settings. */
-  public static final ConfigServiceV2Client create() throws IOException {
-    return create(ConfigServiceV2Settings.newBuilder().build());
+  public static final ConfigClient create() throws IOException {
+    return create(ConfigSettings.newBuilder().build());
   }
 
   /**
    * Constructs an instance of ConfigServiceV2Client, using the given settings. The channels are
    * created based on the settings passed in, or defaults for any settings that are not set.
    */
-  public static final ConfigServiceV2Client create(ConfigServiceV2Settings settings)
-      throws IOException {
-    return new ConfigServiceV2Client(settings);
+  public static final ConfigClient create(ConfigSettings settings) throws IOException {
+    return new ConfigClient(settings);
   }
 
   /**
    * Constructs an instance of ConfigServiceV2Client, using the given stub for making calls. This is
-   * for advanced usage - prefer using create(ConfigServiceV2Settings).
+   * for advanced usage - prefer using create(ConfigSettings).
    */
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  public static final ConfigServiceV2Client create(ConfigServiceV2Stub stub) {
-    return new ConfigServiceV2Client(stub);
+  public static final ConfigClient create(ConfigServiceV2Stub stub) {
+    return new ConfigClient(stub);
   }
 
   /**
@@ -125,18 +153,18 @@ public class ConfigServiceV2Client implements BackgroundResource {
    * that it is easy to make a subclass, but otherwise, the static factory methods should be
    * preferred.
    */
-  protected ConfigServiceV2Client(ConfigServiceV2Settings settings) throws IOException {
+  protected ConfigClient(ConfigSettings settings) throws IOException {
     this.settings = settings;
     this.stub = ((ConfigServiceV2StubSettings) settings.getStubSettings()).createStub();
   }
 
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
-  protected ConfigServiceV2Client(ConfigServiceV2Stub stub) {
+  protected ConfigClient(ConfigServiceV2Stub stub) {
     this.settings = null;
     this.stub = stub;
   }
 
-  public final ConfigServiceV2Settings getSettings() {
+  public final ConfigSettings getSettings() {
     return settings;
   }
 

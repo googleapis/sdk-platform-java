@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.logging.v2.stub;
+package com.google.cloud.logging.v2.stub;
 
-import static com.google.logging.v2.MetricsServiceV2Client.ListLogMetricsPagedResponse;
+import static com.google.cloud.logging.v2.MetricsClient.ListLogMetricsPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;

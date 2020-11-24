@@ -21,6 +21,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicLanguageSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.LongrunningOperation;
@@ -87,6 +88,8 @@ public class Parser {
         BatchingSettingsConfigParser.parse(gapicYamlConfigPathOpt);
     Optional<List<GapicLroRetrySettings>> lroRetrySettingsOpt =
         GapicLroRetrySettingsParser.parse(gapicYamlConfigPathOpt);
+    Optional<GapicLanguageSettings> languageSettingsOpt =
+        GapicLanguageSettingsParser.parse(gapicYamlConfigPathOpt);
 
     Optional<String> serviceConfigPathOpt = PluginArgumentParser.parseJsonConfigPath(request);
     String serviceConfigPath = serviceConfigPathOpt.isPresent() ? serviceConfigPathOpt.get() : null;
@@ -95,6 +98,7 @@ public class Parser {
       GapicServiceConfig serviceConfig = serviceConfigOpt.get();
       serviceConfig.setLroRetrySettings(lroRetrySettingsOpt);
       serviceConfig.setBatchingSettings(batchingSettingsOpt);
+      serviceConfig.setLanguageSettings(languageSettingsOpt);
       serviceConfigOpt = Optional.of(serviceConfig);
     }
 
@@ -114,7 +118,12 @@ public class Parser {
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> services =
         parseServices(
-            request, messages, resourceNames, outputArgResourceNames, serviceYamlProtoOpt);
+            request,
+            messages,
+            resourceNames,
+            outputArgResourceNames,
+            serviceYamlProtoOpt,
+            serviceConfigOpt);
     return GapicContext.builder()
         .setServices(services)
         .setMessages(messages)
@@ -130,7 +139,8 @@ public class Parser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Set<ResourceName> outputArgResourceNames,
-      Optional<com.google.api.Service> serviceYamlProtoOpt) {
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      Optional<GapicServiceConfig> serviceConfigOpt) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
 
     List<Service> services = new ArrayList<>();
@@ -147,6 +157,7 @@ public class Parser {
               messageTypes,
               resourceNames,
               serviceYamlProtoOpt,
+              serviceConfigOpt,
               outputArgResourceNames));
     }
 
@@ -173,13 +184,29 @@ public class Parser {
     return services;
   }
 
+  @VisibleForTesting
   public static List<Service> parseService(
       FileDescriptor fileDescriptor,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
       Set<ResourceName> outputArgResourceNames) {
-    String pakkage = TypeParser.getPackage(fileDescriptor);
+    return parseService(
+        fileDescriptor,
+        messageTypes,
+        resourceNames,
+        serviceYamlProtoOpt,
+        Optional.empty(),
+        outputArgResourceNames);
+  }
+
+  public static List<Service> parseService(
+      FileDescriptor fileDescriptor,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      Optional<GapicServiceConfig> serviceConfigOpt,
+      Set<ResourceName> outputArgResourceNames) {
 
     return fileDescriptor.getServices().stream()
         .map(
@@ -219,11 +246,26 @@ public class Parser {
                 }
               }
 
+              String serviceName = s.getName();
+              String overriddenServiceName = serviceName;
+              String pakkage = TypeParser.getPackage(fileDescriptor);
+              String originalJavaPackage = pakkage;
+              // Override Java package with that specified in gapic.yaml.
+              if (serviceConfigOpt.isPresent()
+                  && serviceConfigOpt.get().getLanguageSettingsOpt().isPresent()) {
+                GapicLanguageSettings languageSettings =
+                    serviceConfigOpt.get().getLanguageSettingsOpt().get();
+                pakkage = languageSettings.pakkage();
+                overriddenServiceName =
+                    languageSettings.getJavaServiceName(fileDescriptor.getPackage(), s.getName());
+              }
               return serviceBuilder
-                  .setName(s.getName())
+                  .setName(serviceName)
+                  .setOverriddenName(overriddenServiceName)
                   .setDefaultHost(defaultHost)
                   .setOauthScopes(oauthScopes)
                   .setPakkage(pakkage)
+                  .setOriginalJavaPackage(originalJavaPackage)
                   .setProtoPakkage(fileDescriptor.getPackage())
                   .setMethods(
                       parseMethods(s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
