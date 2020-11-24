@@ -69,6 +69,9 @@ public class Parser {
   private static final String DEFAULT_PORT = "443";
   private static final String DOT = ".";
 
+  private static final ResourceName WILDCARD_RESOURCE_NAME =
+      ResourceName.createWildcard("*", "com.google.api.wildcard.placeholder");
+
   private static final Set<String> DUPE_SERVICE_CODEGEN_BLOCKLIST =
       new HashSet<>(Arrays.asList("google.longrunning", "google.iam.v1"));
 
@@ -434,8 +437,16 @@ public class Parser {
         if (field.hasResourceReference()) {
           String resourceTypeString = field.resourceReference().resourceTypeString();
           ResourceName resourceName = resourceNames.get(resourceTypeString);
-          Preconditions.checkNotNull(
-              resourceName, String.format("Resource name %s not found", resourceTypeString));
+          if (ResourceNameConstants.WILDCARD_PATTERN.equals(resourceTypeString)) {
+            resourceName = WILDCARD_RESOURCE_NAME;
+          } else {
+            Preconditions.checkNotNull(
+                resourceName,
+                String.format(
+                    "Resource name %s not found; parsing field %s in message %s in method %s",
+                    resourceTypeString, field.name(), inputMessage.name(), protoMethod.getName()));
+          }
+
           outputArgResourceNames.add(resourceName);
         }
       }
@@ -534,6 +545,7 @@ public class Parser {
           isChildType
               ? ResourceReference.withChildType(childTypeString)
               : ResourceReference.withType(typeString);
+
     } else if (messageOptions.hasExtension(ResourceProto.resource)) {
       ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
       // aip.dev/4231.
