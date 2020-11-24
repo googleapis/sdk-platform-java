@@ -4,6 +4,7 @@ package(default_visibility = ["//visibility:public"])
 
 TESTS = [
     "BatchingSettingsConfigParserTest",
+    "GapicLanguageSettingsParserTest",
     "GapicLroRetrySettingsParserTest",
     "HttpRuleParserTest",
     "MethodSignatureParserTest",
