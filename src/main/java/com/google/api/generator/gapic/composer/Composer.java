@@ -81,14 +81,11 @@ public class Composer {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes, resourceNames));
+    clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
     clazzes.add(
         ServiceStubSettingsClassComposer.instance().generate(service, serviceConfig, messageTypes));
-    clazzes.add(
-        GrpcServiceCallableFactoryClassComposer.instance()
-            .generate(service, messageTypes, resourceNames));
-    clazzes.add(
-        GrpcServiceStubClassComposer.instance().generate(service, messageTypes, resourceNames));
+    clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(GrpcServiceStubClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
@@ -97,17 +94,15 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.add(
         ServiceClientClassComposer.instance().generate(service, messageTypes, resourceNames));
-    clazzes.add(
-        ServiceSettingsClassComposer.instance().generate(service, messageTypes, resourceNames));
+    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
     return clazzes;
   }
 
   public static List<GapicClass> generateMocksAndTestClasses(
       Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes, resourceNames));
-    clazzes.add(
-        MockServiceImplClassComposer.instance().generate(service, messageTypes, resourceNames));
+    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
     clazzes.add(
         ServiceClientTestClassComposer.instance().generate(service, resourceNames, messageTypes));
     return clazzes;

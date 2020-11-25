@@ -59,8 +59,7 @@ public class GrpcServiceCallableFactoryClassComposerTest {
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        GrpcServiceCallableFactoryClassComposer.instance()
-            .generate(echoProtoService, messageTypes, resourceNames);
+        GrpcServiceCallableFactoryClassComposer.instance().generate(echoProtoService, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
