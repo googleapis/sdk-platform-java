@@ -59,8 +59,7 @@ public class MockServiceImplClassComposerTest {
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        MockServiceImplClassComposer.instance()
-            .generate(echoProtoService, messageTypes, resourceNames);
+        MockServiceImplClassComposer.instance().generate(echoProtoService, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
