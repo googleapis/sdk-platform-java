@@ -20,6 +20,7 @@ INTEGRATION_TEST_LIBRARIES = [
     "asset",
     "logging",
     "redis",
+    "library",  # No gRPC service config.
 ]
 
 [integration_test(
@@ -145,5 +146,39 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/logging/v2:logging_java_grpc",
         "@com_google_googleapis//google/logging/v2:logging_java_proto",
         "@com_google_googleapis//google/logging/v2:logging_proto",
+    ],
+)
+
+# example/library API.
+# Tests the edge case of a legitimately missing gRPC service config file.
+java_gapic_library(
+    name = "library_java_gapic",
+    srcs = ["@com_google_googleapis//google/example/library/v1:library_proto_with_info"],
+    gapic_yaml = "@com_google_googleapis//google/example/library/v1:library_example_gapic.yaml",
+    package = "google.example.library.v1",
+    test_deps = [
+        "@com_google_googleapis//google/example/library/v1:library_java_grpc",
+    ],
+    deps = [
+        "@com_google_googleapis//google/example/library/v1:library_java_proto",
+    ],
+)
+
+java_gapic_test(
+    name = "library_java_gapic_test_suite",
+    test_classes = [
+        "com.google.cloud.example.library.v1.LibraryServiceClientTest",
+    ],
+    runtime_deps = [":library_java_gapic_test"],
+)
+
+# Open Source Packages
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-example-library-v1-java",
+    deps = [
+        ":library_java_gapic",
+        "@com_google_googleapis//google/example/library/v1:library_java_grpc",
+        "@com_google_googleapis//google/example/library/v1:library_java_proto",
+        "@com_google_googleapis//google/example/library/v1:library_proto",
     ],
 )

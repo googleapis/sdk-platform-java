@@ -27,10 +27,7 @@ import java.util.Optional;
 public class ServiceConfigParser {
   public static Optional<GapicServiceConfig> parse(String serviceConfigFilePath) {
     Optional<ServiceConfig> rawConfigOpt = parseFile(serviceConfigFilePath);
-    if (!rawConfigOpt.isPresent()) {
-      return Optional.empty();
-    }
-    return Optional.of(GapicServiceConfig.create(rawConfigOpt.get()));
+    return Optional.of(GapicServiceConfig.create(rawConfigOpt));
   }
 
   @VisibleForTesting
