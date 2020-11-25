@@ -96,6 +96,7 @@ service Echo {
       post: "/v1beta1/echo:pagedExpand"
       body: "*"
     };
+    option (google.api.method_signature) = "";
   }
 
   // This method will wait the requested amount of and then return.

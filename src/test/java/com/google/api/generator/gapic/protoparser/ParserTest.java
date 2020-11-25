@@ -187,8 +187,9 @@ public class ParserTest {
   @Test
   public void parseMethodSignatures_empty() {
     // TODO(miraleung): Move this to MethodSignatureParserTest.
-    MethodDescriptor chatWithInfoMethodDescriptor = echoService.getMethods().get(5);
-    TypeNode inputType = TypeParser.parseType(chatWithInfoMethodDescriptor.getInputType());
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(3);
+    assertEquals("Chat", methodDescriptor.getName());
+    TypeNode inputType = TypeParser.parseType(methodDescriptor.getInputType());
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
@@ -198,7 +199,31 @@ public class ParserTest {
             echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
-                chatWithInfoMethodDescriptor,
+                methodDescriptor,
+                ECHO_PACKAGE,
+                inputType,
+                messageTypes,
+                resourceNames,
+                outputResourceNames))
+        .isEmpty();
+  }
+
+  @Test
+  public void parseMethodSignatures_emptyString() {
+    // TODO(miraleung): Move this to MethodSignatureParserTest.
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(5);
+    assertEquals("PagedExpand", methodDescriptor.getName());
+    TypeNode inputType = TypeParser.parseType(methodDescriptor.getInputType());
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+
+    List<Method> methods =
+        Parser.parseMethods(
+            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+    assertThat(
+            MethodSignatureParser.parseMethodSignatures(
+                methodDescriptor,
                 ECHO_PACKAGE,
                 inputType,
                 messageTypes,
