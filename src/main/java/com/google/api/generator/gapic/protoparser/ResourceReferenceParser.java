@@ -71,9 +71,7 @@ public class ResourceReferenceParser {
         resourceName,
         String.format(
                 "No resource definition found for reference with type %s",
-                resourceReference.resourceTypeString())
-            + "\nDEL: "
-            + resourceNames.keySet());
+                resourceReference.resourceTypeString()));
     if (!resourceReference.isChildType() || resourceName.isOnlyWildcard()) {
       return Arrays.asList(resourceName);
     }
