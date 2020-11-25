@@ -22,6 +22,7 @@ TESTS = UPDATE_GOLDENS_TESTS + [
     "DefaultValueComposerTest",
     "ResourceNameTokenizerTest",
     "RetrySettingsComposerTest",
+    "SampleCodeHelperComposerTest"
 ]
 
 TEST_DEPS = [
@@ -38,6 +39,7 @@ TEST_DEPS = [
     "//src/main/java/com/google/api/generator/gapic/protoparser",
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
+    "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",
     "@com_google_googleapis//google/logging/v2:logging_java_proto",
     "@com_google_googleapis//google/pubsub/v1:pubsub_java_proto",

@@ -24,5 +24,5 @@ public interface ClassComposer {
   GapicClass generate(
       // TODO(miraleung): clean up the hierarchy to avoid pass another parameter (resourceNames is
       // only used for composing sample code).
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes);
+      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames);
 }

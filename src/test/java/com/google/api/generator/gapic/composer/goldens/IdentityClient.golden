@@ -130,7 +130,7 @@ public class IdentityClient implements BackgroundResource {
    *   String parent = "parent-995424086";
    *   String displayName = "display_name1615086568";
    *   String email = "email96619420";
-   *   User response = identityClient.createUser(parent, display_name, email);
+   *   User response = identityClient.createUser(parent, displayName, email);
    * }
    * }</pre>
    *
@@ -164,7 +164,7 @@ public class IdentityClient implements BackgroundResource {
    *   double heightFeet = -1032737338;
    *   User response =
    *       identityClient.createUser(
-   *           parent, display_name, email, age, nickname, enable_notifications, height_feet);
+   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
    * }
    * }</pre>
    *
@@ -313,7 +313,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   UserName name = UserName.of("[USER]");
-   *   Empty response = identityClient.deleteUser(name);
+   *   identityClient.deleteUser(name);
    * }
    * }</pre>
    *
@@ -335,7 +335,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String name = "name3373707";
-   *   Empty response = identityClient.deleteUser(name);
+   *   identityClient.deleteUser(name);
    * }
    * }</pre>
    *
