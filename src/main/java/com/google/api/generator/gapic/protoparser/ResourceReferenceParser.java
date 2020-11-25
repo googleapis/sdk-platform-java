@@ -70,8 +70,8 @@ public class ResourceReferenceParser {
     Preconditions.checkNotNull(
         resourceName,
         String.format(
-                "No resource definition found for reference with type %s",
-                resourceReference.resourceTypeString()));
+            "No resource definition found for reference with type %s",
+            resourceReference.resourceTypeString()));
     if (!resourceReference.isChildType() || resourceName.isOnlyWildcard()) {
       return Arrays.asList(resourceName);
     }
