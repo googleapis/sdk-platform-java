@@ -58,7 +58,8 @@ public class MockServiceClassComposerTest {
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
     Service echoProtoService = services.get(0);
-    GapicClass clazz = MockServiceClassComposer.instance().generate(echoProtoService, messageTypes);
+    GapicClass clazz =
+        MockServiceClassComposer.instance().generate(echoProtoService, messageTypes, resourceNames);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

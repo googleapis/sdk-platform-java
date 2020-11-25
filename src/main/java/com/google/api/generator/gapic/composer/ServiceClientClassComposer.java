@@ -62,6 +62,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
@@ -109,7 +110,8 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(Service service, Map<String, Message> messageTypes) {
+  public GapicClass generate(
+      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
     Map<String, TypeNode> types = createTypes(service, messageTypes);
     String className = getClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
