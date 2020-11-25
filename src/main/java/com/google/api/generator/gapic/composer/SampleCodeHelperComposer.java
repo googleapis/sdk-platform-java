@@ -85,7 +85,6 @@ public final class SampleCodeHelperComposer {
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with its default value.
     Map<String, VariableExpr> methodArgVarExprMap = mapMethodArgumentsToVariableExprs(arguments);
-    List<Expr> bodyExpr = new ArrayList<>();
     List<Expr> methodArgumentsAssignmentExpr =
         assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
     List<Expr> methodVarExprs =
@@ -114,6 +113,7 @@ public final class SampleCodeHelperComposer {
               methodVarExprs);
     }
 
+    List<Expr> bodyExpr = new ArrayList<>();
     bodyExpr.addAll(methodArgumentsAssignmentExpr);
     bodyExpr.add(responseExpr);
 
