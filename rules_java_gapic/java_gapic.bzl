@@ -15,6 +15,7 @@
 load("@com_google_api_codegen//rules_gapic:gapic.bzl", "proto_custom_library", "unzipped_srcjar")
 
 SERVICE_YAML_ALLOWLIST = ["googleads"]
+NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
 def _java_gapic_postprocess_srcjar_impl(ctx):
     gapic_srcjar = ctx.file.gapic_srcjar
@@ -113,7 +114,9 @@ def java_gapic_library(
     if grpc_service_config:
         file_args_dict[grpc_service_config] = "grpc-service-config"
     else:
-        fail("Missing a gRPC service config file")
+        for keyword in NO_GRPC_CONFIG_ALLOWLIST:
+            if keyword not in name:
+                fail("Missing a gRPC service config file")
 
     if gapic_yaml:
         file_args_dict[gapic_yaml] = "gapic-config"
