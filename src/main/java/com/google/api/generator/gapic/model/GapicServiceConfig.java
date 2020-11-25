@@ -55,7 +55,12 @@ public class GapicServiceConfig {
     this.methodConfigTable = methodConfigTable;
   }
 
-  public static GapicServiceConfig create(ServiceConfig serviceConfig) {
+  public static GapicServiceConfig create(Optional<ServiceConfig> serviceConfigOpt) {
+    if (!serviceConfigOpt.isPresent()) {
+      return new GapicServiceConfig(Collections.emptyList(), Collections.emptyMap());
+    }
+
+    ServiceConfig serviceConfig = serviceConfigOpt.get();
     Map<MethodConfig.Name, Integer> methodConfigTable = new HashMap<>();
     List<MethodConfig> methodConfigs = serviceConfig.getMethodConfigList();
     for (int i = 0; i < methodConfigs.size(); i++) {
