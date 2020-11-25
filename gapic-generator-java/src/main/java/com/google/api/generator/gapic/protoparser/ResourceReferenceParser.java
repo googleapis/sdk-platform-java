@@ -50,12 +50,30 @@ public class ResourceReferenceParser {
     } else {
       resourceName = resourceNames.get(resourceReference.resourceTypeString());
     }
-    resourceName = resourceNames.get(resourceReference.resourceTypeString());
+
+    // Support older resource_references that specify only the final typename, e.g. FooBar versus
+    // example.com/FooBar.
+    if (resourceReference.resourceTypeString().indexOf(SLASH) < 0) {
+      Optional<String> actualResourceTypeNameOpt =
+          resourceNames.keySet().stream()
+              .filter(
+                  k ->
+                      k.substring(k.lastIndexOf(SLASH) + 1)
+                          .equals(resourceReference.resourceTypeString()))
+              .findFirst();
+      if (actualResourceTypeNameOpt.isPresent()) {
+        resourceName = resourceNames.get(actualResourceTypeNameOpt.get());
+      }
+    } else {
+      resourceName = resourceNames.get(resourceReference.resourceTypeString());
+    }
     Preconditions.checkNotNull(
         resourceName,
         String.format(
-            "No resource definition found for reference with type %s",
-            resourceReference.resourceTypeString()));
+                "No resource definition found for reference with type %s",
+                resourceReference.resourceTypeString())
+            + "\nDEL: "
+            + resourceNames.keySet());
     if (!resourceReference.isChildType() || resourceName.isOnlyWildcard()) {
       return Arrays.asList(resourceName);
     }
