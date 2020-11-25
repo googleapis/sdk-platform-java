@@ -82,7 +82,6 @@ public final class SampleCodeHelperComposer {
       List<MethodArgument> arguments,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
-    // TODO(summerji): Add unit tests.
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with its default value.
     Map<String, VariableExpr> methodArgVarExprMap = mapMethodArgumentsToVariableExprs(arguments);
