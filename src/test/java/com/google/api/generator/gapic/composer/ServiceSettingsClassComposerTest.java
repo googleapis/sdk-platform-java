@@ -59,8 +59,7 @@ public class ServiceSettingsClassComposerTest {
 
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        ServiceSettingsClassComposer.instance()
-            .generate(echoProtoService, messageTypes, resourceNames);
+        ServiceSettingsClassComposer.instance().generate(echoProtoService, messageTypes);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
