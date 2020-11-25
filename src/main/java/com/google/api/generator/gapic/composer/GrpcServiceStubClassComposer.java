@@ -836,10 +836,24 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     }
     String javaStyleMethodName = callableVarName.substring(0, callableVarName.length() - sublength);
     List<Expr> creatorMethodArgVarExprs = null;
+    Expr transportSettingsVarExpr =
+        javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName);
+    if (transportSettingsVarExpr == null && isOperation) {
+      // Try again, in case the name dtection above was inaccurate.
+      isOperation = false;
+      sublength = CALLABLE_NAME.length();
+      javaStyleMethodName = callableVarName.substring(0, callableVarName.length() - sublength);
+      transportSettingsVarExpr =
+          javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName);
+    }
+    Preconditions.checkNotNull(
+        transportSettingsVarExpr,
+        String.format(
+            "No transport settings variable found for method name %s", javaStyleMethodName));
     if (isOperation) {
       creatorMethodArgVarExprs =
           Arrays.asList(
-              javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName),
+              transportSettingsVarExpr,
               MethodInvocationExpr.builder()
                   .setExprReferenceExpr(settingsVarExpr)
                   .setMethodName(String.format("%sOperationSettings", javaStyleMethodName))
@@ -849,7 +863,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     } else {
       creatorMethodArgVarExprs =
           Arrays.asList(
-              javaStyleMethodNameToTransportSettingsVarExprs.get(javaStyleMethodName),
+              transportSettingsVarExpr,
               MethodInvocationExpr.builder()
                   .setExprReferenceExpr(settingsVarExpr)
                   .setMethodName(String.format("%sSettings", javaStyleMethodName))
