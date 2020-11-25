@@ -23,6 +23,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
@@ -59,6 +60,10 @@ public class MethodSignatureParser {
     // Example from Expand in echo.proto:
     // stringSigs: ["content,error", "content,error,info"].
     for (String stringSig : stringSigs) {
+      if (Strings.isNullOrEmpty(stringSig)) {
+        continue;
+      }
+
       List<String> argumentNames = new ArrayList<>();
       Map<String, List<MethodArgument>> argumentNameToOverloads = new HashMap<>();
 
