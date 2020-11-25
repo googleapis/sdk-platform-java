@@ -21,6 +21,8 @@ import com.google.api.generator.gapic.model.Service;
 import java.util.Map;
 
 public interface ClassComposer {
+  // TODO(miraleung): clean up the hierarchy to avoid pass another parameter (resourceNames is
+  // only used for composing sample code).
   GapicClass generate(
       Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames);
 }

@@ -167,14 +167,14 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
     return SampleCodeWriter.write(
-        SampleCodeHelperComposer.composeRpcMethodSampleCode(
+        MethodSampleCodeHelperComposer.composeRpcMethodSampleCode(
             method, arguments, clientType, resourceNames));
   }
 
   public static String composeRpcDefaultMethodHeaderSampleCode(
       Method method, TypeNode clientType, Map<String, ResourceName> resourceNames) {
     return SampleCodeWriter.write(
-        SampleCodeHelperComposer.composeRpcDefaultMethodSampleCode(
+        MethodSampleCodeHelperComposer.composeRpcDefaultMethodSampleCode(
             method, clientType, resourceNames));
   }
 

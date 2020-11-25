@@ -169,7 +169,8 @@ class ServiceClientCommentComposer {
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    methodJavadocBuilder.addSampleCode(sampleCode);
+    // TODO(summerji): Add sample code here.
+    // methodJavadocBuilder.addSampleCode(sampleCode);
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(

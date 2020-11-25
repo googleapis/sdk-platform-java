@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public final class SampleCodeHelperComposer {
+public final class MethodSampleCodeHelperComposer {
 
   public static TryCatchStatement composeRpcMethodSampleCode(
       Method method,
