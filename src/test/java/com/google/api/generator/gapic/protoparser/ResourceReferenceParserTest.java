@@ -113,11 +113,12 @@ public class ResourceReferenceParserTest {
         ResourceReferenceParser.parseParentResourceName(
             "projects/{project}/billingAccounts",
             MAIN_PACKAGE,
-            null,
-            MAIN_PACKAGE,
+            "com.google.cloud.billing.v1",
             "cloudbilling.googleapis.com/Feature",
+            null,
             new HashMap<String, ResourceName>());
-    assertFalse(parentResourceNameOpt.isPresent());
+    assertTrue(parentResourceNameOpt.isPresent());
+    assertEquals("projects/{project}", parentResourceNameOpt.get().patterns().get(0));
   }
 
   @Test
@@ -159,7 +160,8 @@ public class ResourceReferenceParserTest {
   public void parseParentPattern_lastComponentIsNotAVariable() {
     Optional<String> parentPatternOpt =
         ResourceReferenceParser.parseParentPattern("projects/{project}/foobars");
-    assertFalse(parentPatternOpt.isPresent());
+    assertTrue(parentPatternOpt.isPresent());
+    assertEquals("projects/{project}", parentPatternOpt.get());
   }
 
   @Test
