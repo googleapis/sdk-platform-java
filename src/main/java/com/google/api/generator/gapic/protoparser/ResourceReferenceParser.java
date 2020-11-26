@@ -70,10 +70,8 @@ public class ResourceReferenceParser {
     Preconditions.checkNotNull(
         resourceName,
         String.format(
-                "No resource definition found for reference with type %s",
-                resourceReference.resourceTypeString())
-            + "\nDEL: "
-            + resourceNames.keySet());
+            "No resource definition found for reference with type %s",
+            resourceReference.resourceTypeString()));
     if (!resourceReference.isChildType() || resourceName.isOnlyWildcard()) {
       return Arrays.asList(resourceName);
     }
@@ -189,17 +187,20 @@ public class ResourceReferenceParser {
       return Optional.empty();
     }
 
+    int lastTokenIndex = tokens.length - 2;
+    int minLengthWithParent = 4;
+    // Singleton patterns, e.g. projects/{project}/agent.
+    if (!lastToken.contains("{")) {
+      minLengthWithParent = 3;
+      lastTokenIndex = tokens.length - 1;
+    }
+
     // No fully-formed parent. Expected: ancestors/{ancestor}/childNodes/{child_node}.
-    if (tokens.length < 4) {
+    if (tokens.length < minLengthWithParent) {
       return Optional.empty();
     }
 
-    Preconditions.checkState(
-        lastToken.contains("{"),
-        String.format(
-            "Pattern %s must end with a brace-encapsulated variable, e.g. {foobar}", pattern));
-
-    return Optional.of(String.join(SLASH, Arrays.asList(tokens).subList(0, tokens.length - 2)));
+    return Optional.of(String.join(SLASH, Arrays.asList(tokens).subList(0, lastTokenIndex)));
   }
 
   @VisibleForTesting
