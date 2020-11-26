@@ -216,4 +216,26 @@ public class ResourceNameHelperClassComposerTest {
     Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "TestName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
+
+  @Test
+  public void generateResourceNameClass_childSingleton() {
+    ResourceName agentResname =
+        ResourceName.builder()
+            .setVariableName("agent")
+            .setPakkage("com.google.cloud.dialogflow.v2beta1")
+            .setResourceTypeString("dialogflow.googleapis.com/Agent")
+            .setPatterns(
+                Arrays.asList(
+                    "projects/{project}/locations/{location}/agent", "projects/{project}/agent"))
+            .setParentMessageName("Agent")
+            .setDescription("This is a description")
+            .build();
+
+    GapicClass clazz = ResourceNameHelperClassComposer.instance().generate(agentResname);
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    Utils.saveCodegenToFile(this.getClass(), "AgentName.golden", visitor.write());
+    Path goldenFilePath = Paths.get(ComposerConstants.GOLDENFILES_DIRECTORY, "AgentName.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
 }
