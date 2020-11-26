@@ -1,6 +1,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -96,6 +97,9 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final StreamingCallSettings<EchoRequest, EchoResponse> chatAgainSettings;
   private final PagedCallSettings<PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       pagedExpandSettings;
+  private final PagedCallSettings<
+          PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      simplePagedExpandSettings;
   private final UnaryCallSettings<WaitRequest, Operation> waitSettings;
   private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
       waitOperationSettings;
@@ -103,6 +107,42 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
+          new PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public PagedExpandRequest injectToken(PagedExpandRequest payload, String token) {
+              return PagedExpandRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public PagedExpandRequest injectPageSize(PagedExpandRequest payload, int pageSize) {
+              return PagedExpandRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(PagedExpandRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(PagedExpandResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
+              return Objects.isNull(payload.getResponsesList())
+                  ? ImmutableList.<EchoResponse>of()
+                  : payload.getResponsesList();
+            }
+          };
+
+  private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
+      SIMPLE_PAGED_EXPAND_PAGE_STR_DESC =
           new PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>() {
             @Override
             public String emptyToken() {
@@ -154,6 +194,23 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             }
           };
 
+  private static final PagedListResponseFactory<
+          PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      SIMPLE_PAGED_EXPAND_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>() {
+            @Override
+            public ApiFuture<SimplePagedExpandPagedResponse> getFuturePagedResponse(
+                UnaryCallable<PagedExpandRequest, PagedExpandResponse> callable,
+                PagedExpandRequest request,
+                ApiCallContext context,
+                ApiFuture<PagedExpandResponse> futureResponse) {
+              PageContext<PagedExpandRequest, PagedExpandResponse, EchoResponse> pageContext =
+                  PageContext.create(callable, SIMPLE_PAGED_EXPAND_PAGE_STR_DESC, request, context);
+              return SimplePagedExpandPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
   /** Returns the object with the settings used for calls to echo. */
   public UnaryCallSettings<EchoRequest, EchoResponse> echoSettings() {
     return echoSettings;
@@ -183,6 +240,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       pagedExpandSettings() {
     return pagedExpandSettings;
+  }
+
+  /** Returns the object with the settings used for calls to simplePagedExpand. */
+  public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      simplePagedExpandSettings() {
+    return simplePagedExpandSettings;
   }
 
   /** Returns the object with the settings used for calls to wait. */
@@ -274,6 +337,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     chatSettings = settingsBuilder.chatSettings().build();
     chatAgainSettings = settingsBuilder.chatAgainSettings().build();
     pagedExpandSettings = settingsBuilder.pagedExpandSettings().build();
+    simplePagedExpandSettings = settingsBuilder.simplePagedExpandSettings().build();
     waitSettings = settingsBuilder.waitSettings().build();
     waitOperationSettings = settingsBuilder.waitOperationSettings().build();
     blockSettings = settingsBuilder.blockSettings().build();
@@ -290,6 +354,9 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     private final PagedCallSettings.Builder<
             PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
         pagedExpandSettings;
+    private final PagedCallSettings.Builder<
+            PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+        simplePagedExpandSettings;
     private final UnaryCallSettings.Builder<WaitRequest, Operation> waitSettings;
     private final OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
         waitOperationSettings;
@@ -350,13 +417,18 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       chatSettings = StreamingCallSettings.newBuilder();
       chatAgainSettings = StreamingCallSettings.newBuilder();
       pagedExpandSettings = PagedCallSettings.newBuilder(PAGED_EXPAND_PAGE_STR_FACT);
+      simplePagedExpandSettings = PagedCallSettings.newBuilder(SIMPLE_PAGED_EXPAND_PAGE_STR_FACT);
       waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
-              echoSettings, pagedExpandSettings, waitSettings, blockSettings);
+              echoSettings,
+              pagedExpandSettings,
+              simplePagedExpandSettings,
+              waitSettings,
+              blockSettings);
       initDefaults(this);
     }
 
@@ -369,13 +441,18 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       chatSettings = settings.chatSettings.toBuilder();
       chatAgainSettings = settings.chatAgainSettings.toBuilder();
       pagedExpandSettings = settings.pagedExpandSettings.toBuilder();
+      simplePagedExpandSettings = settings.simplePagedExpandSettings.toBuilder();
       waitSettings = settings.waitSettings.toBuilder();
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
-              echoSettings, pagedExpandSettings, waitSettings, blockSettings);
+              echoSettings,
+              pagedExpandSettings,
+              simplePagedExpandSettings,
+              waitSettings,
+              blockSettings);
     }
 
     private static Builder createDefault() {
@@ -404,6 +481,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           .pagedExpandSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .simplePagedExpandSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
       builder
           .waitSettings()
@@ -487,6 +569,13 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
         pagedExpandSettings() {
       return pagedExpandSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to simplePagedExpand. */
+    public PagedCallSettings.Builder<
+            PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+        simplePagedExpandSettings() {
+      return simplePagedExpandSettings;
     }
 
     /** Returns the builder for the settings used for calls to wait. */
