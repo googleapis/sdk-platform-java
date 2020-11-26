@@ -245,6 +245,15 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String parent = "parent-995424086";
+   *   Feed response = assetServiceClient.createFeed(parent);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The name of the project/folder/organization where this feed should be
    *     created in. It can only be an organization number (such as "organizations/123"), a folder
    *     number (such as "folders/123"), a project ID (such as "projects/my-project-id")", or a
@@ -281,6 +290,15 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Gets details about an asset feed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   Feed response = assetServiceClient.getFeed(name);
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -295,6 +313,15 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets details about an asset feed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String name = "name3373707";
+   *   Feed response = assetServiceClient.getFeed(name);
+   * }
+   * }</pre>
    *
    * @param name Required. The name of the Feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
@@ -331,6 +358,15 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Lists all asset feeds in a parent project/folder/organization.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String parent = "parent-995424086";
+   *   ListFeedsResponse response = assetServiceClient.listFeeds(parent);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent project/folder/organization whose feeds are to be listed. It
    *     can only be using project/folder/organization number (such as "folders/12345")", or a
    *     project ID (such as "projects/my-project-id").
@@ -365,6 +401,15 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates an asset feed configuration.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   Feed feed = Feed.newBuilder().build();
+   *   Feed response = assetServiceClient.updateFeed(feed);
+   * }
+   * }</pre>
    *
    * @param feed Required. The new values of feed details. It must match an existing feed and the
    *     field `name` must be in the format of: projects/project_number/feeds/feed_id or
@@ -401,6 +446,15 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Deletes an asset feed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   FeedName name = FeedName.ofProjectFeedName("[PROJECT]", "[FEED]");
+   *   assetServiceClient.deleteFeed(name);
+   * }
+   * }</pre>
+   *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
    *     organizations/organization_number/feeds/feed_id
@@ -415,6 +469,15 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes an asset feed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String name = "name3373707";
+   *   assetServiceClient.deleteFeed(name);
+   * }
+   * }</pre>
    *
    * @param name Required. The name of the feed and it must be in the format of:
    *     projects/project_number/feeds/feed_id folders/folder_number/feeds/feed_id
