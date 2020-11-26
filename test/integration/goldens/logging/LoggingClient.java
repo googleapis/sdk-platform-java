@@ -164,6 +164,15 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   loggingClient.deleteLog(logName);
+   * }
+   * }</pre>
+   *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -185,6 +194,15 @@ public class LoggingClient implements BackgroundResource {
    * Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String logName = "log_name2013526694";
+   *   loggingClient.deleteLog(logName);
+   * }
+   * }</pre>
    *
    * @param log_name Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
@@ -230,6 +248,19 @@ public class LoggingClient implements BackgroundResource {
    * This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesResponse response =
+   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * }
+   * }</pre>
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
@@ -292,6 +323,19 @@ public class LoggingClient implements BackgroundResource {
    * This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String logName = "log_name2013526694";
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesResponse response =
+   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * }
+   * }</pre>
    *
    * @param log_name Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:

@@ -171,6 +171,15 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Creates a shelf, and returns the new Shelf.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   Shelf shelf = Shelf.newBuilder().build();
+   *   Shelf response = libraryServiceClient.createShelf(shelf);
+   * }
+   * }</pre>
+   *
    * @param shelf The shelf to create.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -204,6 +213,15 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   Shelf response = libraryServiceClient.getShelf(name);
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf to retrieve.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -216,6 +234,15 @@ public class LibraryServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   Shelf response = libraryServiceClient.getShelf(name);
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf to retrieve.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -285,6 +312,15 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   libraryServiceClient.deleteShelf(name);
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf to delete.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -299,6 +335,15 @@ public class LibraryServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   libraryServiceClient.deleteShelf(name);
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf to delete.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -338,6 +383,16 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified
    * shelves are the same.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf we're adding books to.
    * @param other_shelf_name The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -359,6 +414,16 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <p>Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified
    * shelves are the same.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   String otherShelfName = "other_shelf_name145746959";
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
    * @param other_shelf_name The name of the shelf we're removing books from and deleting.
@@ -382,6 +447,16 @@ public class LibraryServiceClient implements BackgroundResource {
    * <p>Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified
    * shelves are the same.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf we're adding books to.
    * @param other_shelf_name The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -403,6 +478,16 @@ public class LibraryServiceClient implements BackgroundResource {
    *
    * <p>Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified
    * shelves are the same.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   String otherShelfName = "other_shelf_name145746959";
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf we're adding books to.
    * @param other_shelf_name The name of the shelf we're removing books from and deleting.
@@ -449,6 +534,16 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Creates a book, and returns the new Book.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   Book book = Book.newBuilder().build();
+   *   Book response = libraryServiceClient.createBook(name, book);
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf in which the book is created.
    * @param book The book to create.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -465,6 +560,16 @@ public class LibraryServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Creates a book, and returns the new Book.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   Book book = Book.newBuilder().build();
+   *   Book response = libraryServiceClient.createBook(name, book);
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf in which the book is created.
    * @param book The book to create.
@@ -500,6 +605,15 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Gets a book. Returns NOT_FOUND if the book does not exist.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+   *   Book response = libraryServiceClient.getBook(name);
+   * }
+   * }</pre>
+   *
    * @param name The name of the book to retrieve.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -512,6 +626,15 @@ public class LibraryServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a book. Returns NOT_FOUND if the book does not exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   Book response = libraryServiceClient.getBook(name);
+   * }
+   * }</pre>
    *
    * @param name The name of the book to retrieve.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -636,6 +759,15 @@ public class LibraryServiceClient implements BackgroundResource {
    * Updates a book. Returns INVALID_ARGUMENT if the name of the book is non-empty and does not
    * equal the existing name.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   Book book = Book.newBuilder().build();
+   *   Book response = libraryServiceClient.updateBook(book);
+   * }
+   * }</pre>
+   *
    * @param book The book to update with. The name must match or be empty.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -672,6 +804,16 @@ public class LibraryServiceClient implements BackgroundResource {
    * Moves a book to another shelf, and returns the new book. The book id of the new book may not be
    * the same as the original book.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   * }
+   * }</pre>
+   *
    * @param name The name of the book to move.
    * @param other_shelf_name The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -689,6 +831,16 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Moves a book to another shelf, and returns the new book. The book id of the new book may not be
    * the same as the original book.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
+   *   String otherShelfName = "other_shelf_name145746959";
+   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   * }
+   * }</pre>
    *
    * @param name The name of the book to move.
    * @param other_shelf_name The name of the destination shelf.
@@ -708,6 +860,16 @@ public class LibraryServiceClient implements BackgroundResource {
    * Moves a book to another shelf, and returns the new book. The book id of the new book may not be
    * the same as the original book.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
+   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   * }
+   * }</pre>
+   *
    * @param name The name of the book to move.
    * @param other_shelf_name The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -725,6 +887,16 @@ public class LibraryServiceClient implements BackgroundResource {
   /**
    * Moves a book to another shelf, and returns the new book. The book id of the new book may not be
    * the same as the original book.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   String otherShelfName = "other_shelf_name145746959";
+   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   * }
+   * }</pre>
    *
    * @param name The name of the book to move.
    * @param other_shelf_name The name of the destination shelf.
