@@ -112,7 +112,7 @@ public class ServiceClientClassComposer {
   public GapicClass generate(
       Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
     // TODO(miraleung): Clean up the hierarchy to avoid pass another parameter (resourceNames is
-    // only used for composing sample code). See b/174257081.
+    // only used for composing sample code).
     Map<String, TypeNode> types = createTypes(service, messageTypes);
     String className = getClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
