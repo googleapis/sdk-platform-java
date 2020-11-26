@@ -130,7 +130,8 @@ public class ServiceClientClassComposer {
             .setName(className)
             .setImplementsTypes(createClassImplements(types))
             .setStatements(createFieldDeclarations(service, types, hasLroClient))
-            .setMethods(createClassMethods(service, messageTypes, types, hasLroClient))
+            .setMethods(
+                createClassMethods(service, messageTypes, types, resourceNames, hasLroClient))
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, types))
             .build();
     return GapicClass.create(kind, classDef);
@@ -153,12 +154,13 @@ public class ServiceClientClassComposer {
       Service service,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames,
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, types));
     methods.addAll(createConstructorMethods(service, types, hasLroClient));
     methods.addAll(createGetterMethods(service, types, hasLroClient));
-    methods.addAll(createServiceMethods(service, messageTypes, types));
+    methods.addAll(createServiceMethods(service, messageTypes, types, resourceNames));
     methods.addAll(createBackgroundResourceMethods(service, types));
     return methods;
   }
@@ -472,11 +474,16 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createServiceMethods(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    String clientName = getClientClassName(service);
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
+        javaMethods.addAll(
+            createMethodVariants(method, messageTypes, types, clientName, resourceNames));
         javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
@@ -491,7 +498,11 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Method method,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types,
+      String clientName,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -553,10 +564,19 @@ public class ServiceClientClassComposer {
               .setReturnType(methodOutputType)
               .build();
 
+      String methodSampleCode = "";
+      if (!method.isPaged() && !method.hasLro()) {
+        // TODO(summerji): Remove the condition check once finished the implementation on paged
+        // sample code and lro sample code.
+        methodSampleCode =
+            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                method, signature, types.get(clientName), resourceNames);
+      }
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
-                  ServiceClientCommentComposer.createRpcMethodHeaderComment(method, signature))
+                  ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                      method, signature, methodSampleCode))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
