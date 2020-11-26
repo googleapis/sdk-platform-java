@@ -96,6 +96,7 @@ service Echo {
       post: "/v1beta1/echo:pagedExpand"
       body: "*"
     };
+    option (google.api.method_signature) = "";
   }
 
   rpc SimplePagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
