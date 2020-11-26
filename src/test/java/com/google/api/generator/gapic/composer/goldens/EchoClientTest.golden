@@ -1,6 +1,7 @@
 package com.google.showcase.v1beta1;
 
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;
@@ -81,6 +82,44 @@ public class EchoClientTest {
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
 
+    EchoResponse actualResponse = client.echo();
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    EchoRequest actualRequest = ((EchoRequest) actualRequests.get(0));
+
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void echoExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      EchoRequest request =
+          EchoRequest.newBuilder()
+              .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setFoobar(Foobar.newBuilder().build())
+              .build();
+      client.echo(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void echoTest2() throws Exception {
+    EchoResponse expectedResponse =
+        EchoResponse.newBuilder().setContent("content951530617").build();
+    mockEcho.addResponse(expectedResponse);
+
     ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
 
     EchoResponse actualResponse = client.echo(parent);
@@ -98,7 +137,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest() throws Exception {
+  public void echoExceptionTest2() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -112,7 +151,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest2() throws Exception {
+  public void echoTest3() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -134,7 +173,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest2() throws Exception {
+  public void echoExceptionTest3() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -148,7 +187,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest3() throws Exception {
+  public void echoTest4() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -170,7 +209,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest3() throws Exception {
+  public void echoExceptionTest4() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -184,7 +223,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest4() throws Exception {
+  public void echoTest5() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -206,7 +245,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest4() throws Exception {
+  public void echoExceptionTest5() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -220,7 +259,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest5() throws Exception {
+  public void echoTest6() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -242,7 +281,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest5() throws Exception {
+  public void echoExceptionTest6() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -256,7 +295,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest6() throws Exception {
+  public void echoTest7() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -278,7 +317,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest6() throws Exception {
+  public void echoExceptionTest7() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -292,7 +331,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoTest7() throws Exception {
+  public void echoTest8() throws Exception {
     EchoResponse expectedResponse =
         EchoResponse.newBuilder().setContent("content951530617").build();
     mockEcho.addResponse(expectedResponse);
@@ -316,7 +355,7 @@ public class EchoClientTest {
   }
 
   @Test
-  public void echoExceptionTest7() throws Exception {
+  public void echoExceptionTest8() throws Exception {
     StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
     mockEcho.addException(exception);
 
@@ -581,6 +620,52 @@ public class EchoClientTest {
               .setPageToken("page_token1630607433")
               .build();
       client.pagedExpand(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void simplePagedExpandTest() throws Exception {
+    EchoResponse responsesElement = EchoResponse.newBuilder().build();
+    PagedExpandResponse expectedResponse =
+        PagedExpandResponse.newBuilder()
+            .setNextPageToken("")
+            .addAllResponses(Arrays.asList(responsesElement))
+            .build();
+    mockEcho.addResponse(expectedResponse);
+
+    SimplePagedExpandPagedResponse pagedListResponse = client.simplePagedExpand();
+
+    List<EchoResponse> resources = Lists.newArrayList(pagedListResponse.iterateAll());
+
+    Assert.assertEquals(1, resources.size());
+    Assert.assertEquals(expectedResponse.getResponsesList().get(0), resources.get(0));
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    PagedExpandRequest actualRequest = ((PagedExpandRequest) actualRequests.get(0));
+
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void simplePagedExpandExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      PagedExpandRequest request =
+          PagedExpandRequest.newBuilder()
+              .setContent("content951530617")
+              .setPageSize(883849137)
+              .setPageToken("page_token1630607433")
+              .build();
+      client.simplePagedExpand(request);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
