@@ -57,6 +57,7 @@ service Echo {
     option (google.api.method_signature) = "content,severity";
     option (google.api.method_signature) = "name";
     option (google.api.method_signature) = "parent";
+    option (google.api.method_signature) = "";
   }
 
   // This method split the given content into words and will pass each word back
@@ -77,7 +78,6 @@ service Echo {
       post: "/v1beta1/echo:collect"
       body: "*"
     };
-    option (google.api.method_signature) = "content";
   }
 
   // This method, upon receiving a request on the stream, the same content will
@@ -92,6 +92,13 @@ service Echo {
   // This is similar to the Expand method but instead of returning a stream of
   // expanded words, this method returns a paged list of expanded words.
   rpc PagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
+    option (google.api.http) = {
+      post: "/v1beta1/echo:pagedExpand"
+      body: "*"
+    };
+  }
+
+  rpc SimplePagedExpand(PagedExpandRequest) returns (PagedExpandResponse) {
     option (google.api.http) = {
       post: "/v1beta1/echo:pagedExpand"
       body: "*"

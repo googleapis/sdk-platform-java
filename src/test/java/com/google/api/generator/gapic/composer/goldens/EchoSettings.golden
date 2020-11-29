@@ -1,6 +1,7 @@
 package com.google.showcase.v1beta1;
 
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -86,6 +87,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       pagedExpandSettings() {
     return ((EchoStubSettings) getStubSettings()).pagedExpandSettings();
+  }
+
+  /** Returns the object with the settings used for calls to simplePagedExpand. */
+  public PagedCallSettings<PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+      simplePagedExpandSettings() {
+    return ((EchoStubSettings) getStubSettings()).simplePagedExpandSettings();
   }
 
   /** Returns the object with the settings used for calls to wait. */
@@ -230,6 +237,13 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
             PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
         pagedExpandSettings() {
       return getStubSettingsBuilder().pagedExpandSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to simplePagedExpand. */
+    public PagedCallSettings.Builder<
+            PagedExpandRequest, PagedExpandResponse, SimplePagedExpandPagedResponse>
+        simplePagedExpandSettings() {
+      return getStubSettingsBuilder().simplePagedExpandSettings();
     }
 
     /** Returns the builder for the settings used for calls to wait. */

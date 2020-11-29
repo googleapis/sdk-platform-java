@@ -424,6 +424,7 @@ public class ServiceClientTestClassComposer {
                 service,
                 Collections.emptyList(),
                 0,
+                true,
                 classMemberVarExprs,
                 resourceNames,
                 messageTypes));
@@ -444,6 +445,7 @@ public class ServiceClientTestClassComposer {
                   service,
                   method.methodSignatures().get(i),
                   i,
+                  false,
                   classMemberVarExprs,
                   resourceNames,
                   messageTypes));
@@ -467,6 +469,7 @@ public class ServiceClientTestClassComposer {
       Service service,
       List<MethodArgument> methodSignature,
       int variantIndex,
+      boolean isRequestArg,
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
@@ -584,7 +587,6 @@ public class ServiceClientTestClassComposer {
     methodStatements.add(EMPTY_LINE_STATEMENT);
 
     // Construct the request or method arguments.
-    boolean isRequestArg = methodSignature.isEmpty();
     VariableExpr requestVarExpr = null;
     Message requestMessage = null;
     List<VariableExpr> argExprs = new ArrayList<>();

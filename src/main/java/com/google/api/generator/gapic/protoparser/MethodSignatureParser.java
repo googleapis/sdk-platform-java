@@ -27,6 +27,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,7 @@ public class MethodSignatureParser {
     // stringSigs: ["content,error", "content,error,info"].
     for (String stringSig : stringSigs) {
       if (Strings.isNullOrEmpty(stringSig)) {
+        signatures.add(Collections.emptyList());
         continue;
       }
 

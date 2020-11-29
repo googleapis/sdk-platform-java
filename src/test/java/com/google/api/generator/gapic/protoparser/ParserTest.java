@@ -38,6 +38,7 @@ import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,7 @@ public class ParserTest {
         Parser.parseMethods(
             echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
 
-    assertEquals(8, methods.size());
+    assertEquals(9, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
     Method echoMethod = methods.get(0);
@@ -111,7 +112,7 @@ public class ParserTest {
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
-    assertEquals(7, methodSignatures.size());
+    assertEquals(8, methodSignatures.size());
 
     Method expandMethod = methods.get(1);
     assertEquals("Expand", expandMethod.name());
@@ -154,10 +155,10 @@ public class ParserTest {
         Parser.parseMethods(
             echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
 
-    assertEquals(8, methods.size());
+    assertEquals(9, methods.size());
 
     // Methods should appear in the same order as in the protobuf file.
-    Method waitMethod = methods.get(6);
+    Method waitMethod = methods.get(7);
     assertEquals("Wait", waitMethod.name());
     assertTrue(waitMethod.hasLro());
     TypeNode waitResponseType = messageTypes.get("WaitResponse").type();
@@ -169,7 +170,8 @@ public class ParserTest {
   @Test
   public void parseLro_missingResponseType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(6);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
+    assertEquals("Wait", waitMethodDescriptor.getName());
     messageTypes.remove("WaitResponse");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
@@ -178,7 +180,8 @@ public class ParserTest {
   @Test
   public void parseLro_missingMetadataType() {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(6);
+    MethodDescriptor waitMethodDescriptor = echoService.getMethods().get(7);
+    assertEquals("Wait", waitMethodDescriptor.getName());
     messageTypes.remove("WaitMetadata");
     assertThrows(
         NullPointerException.class, () -> Parser.parseLro(waitMethodDescriptor, messageTypes));
@@ -186,30 +189,6 @@ public class ParserTest {
 
   @Test
   public void parseMethodSignatures_empty() {
-    // TODO(miraleung): Move this to MethodSignatureParserTest.
-    MethodDescriptor methodDescriptor = echoService.getMethods().get(3);
-    assertEquals("Chat", methodDescriptor.getName());
-    TypeNode inputType = TypeParser.parseType(methodDescriptor.getInputType());
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-
-    List<Method> methods =
-        Parser.parseMethods(
-            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
-    assertThat(
-            MethodSignatureParser.parseMethodSignatures(
-                methodDescriptor,
-                ECHO_PACKAGE,
-                inputType,
-                messageTypes,
-                resourceNames,
-                outputResourceNames))
-        .isEmpty();
-  }
-
-  @Test
-  public void parseMethodSignatures_emptyString() {
     // TODO(miraleung): Move this to MethodSignatureParserTest.
     MethodDescriptor methodDescriptor = echoService.getMethods().get(5);
     assertEquals("PagedExpand", methodDescriptor.getName());
@@ -233,6 +212,32 @@ public class ParserTest {
   }
 
   @Test
+  public void parseMethodSignatures_validArgstAndEmptyString() {
+    // TODO(miraleung): Move this to MethodSignatureParserTest.
+    MethodDescriptor methodDescriptor = echoService.getMethods().get(0);
+    assertEquals("Echo", methodDescriptor.getName());
+    TypeNode inputType = TypeParser.parseType(methodDescriptor.getInputType());
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+
+    List<Method> methods =
+        Parser.parseMethods(
+            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+    List<List<MethodArgument>> methodArgs =
+        MethodSignatureParser.parseMethodSignatures(
+            methodDescriptor,
+            ECHO_PACKAGE,
+            inputType,
+            messageTypes,
+            resourceNames,
+            outputResourceNames);
+    assertEquals(Collections.emptyList(), methodArgs.get(0));
+    assertEquals(1, methodArgs.get(1).size());
+    assertEquals("parent", methodArgs.get(1).get(0).name());
+  }
+
+  @Test
   public void parseMethodSignatures_basic() {
     MethodDescriptor echoMethodDescriptor = echoService.getMethods().get(0);
     TypeNode inputType = TypeParser.parseType(echoMethodDescriptor.getInputType());
@@ -248,10 +253,14 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             outputResourceNames);
-    assertEquals(7, methodSignatures.size());
+    assertEquals(8, methodSignatures.size());
+
+    // Signature contents: [].
+    List<MethodArgument> methodArgs = methodSignatures.get(0);
+    assertEquals(Collections.emptyList(), methodArgs);
 
     // Signature contents: ["parent"].
-    List<MethodArgument> methodArgs = methodSignatures.get(0);
+    methodArgs = methodSignatures.get(1);
     assertEquals(1, methodArgs.size());
     MethodArgument argument = methodArgs.get(0);
     TypeNode resourceNameType =
@@ -260,14 +269,14 @@ public class ParserTest {
     assertMethodArgumentEquals("parent", resourceNameType, ImmutableList.of(), argument);
 
     // Signature contents: ["error"].
-    methodArgs = methodSignatures.get(1);
+    methodArgs = methodSignatures.get(2);
     assertEquals(1, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals(
         "error", TypeNode.withReference(createStatusReference()), ImmutableList.of(), argument);
 
     // Signature contents: ["name"], resource helper variant.
-    methodArgs = methodSignatures.get(2);
+    methodArgs = methodSignatures.get(3);
     assertEquals(1, methodArgs.size());
     argument = methodArgs.get(0);
     TypeNode foobarNameType =
@@ -276,25 +285,25 @@ public class ParserTest {
     assertMethodArgumentEquals("name", foobarNameType, ImmutableList.of(), argument);
 
     // Signature contents: ["content"].
-    methodArgs = methodSignatures.get(3);
+    methodArgs = methodSignatures.get(4);
     assertEquals(1, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals("content", TypeNode.STRING, ImmutableList.of(), argument);
 
     // Signature contents: ["name"], String variant.
-    methodArgs = methodSignatures.get(4);
+    methodArgs = methodSignatures.get(5);
     assertEquals(1, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals("name", TypeNode.STRING, ImmutableList.of(), argument);
 
     // Signature contents: ["parent"], String variant.
-    methodArgs = methodSignatures.get(5);
+    methodArgs = methodSignatures.get(6);
     assertEquals(1, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals("parent", TypeNode.STRING, ImmutableList.of(), argument);
 
     // Signature contents: ["content", "severity"].
-    methodArgs = methodSignatures.get(6);
+    methodArgs = methodSignatures.get(7);
     assertEquals(2, methodArgs.size());
     argument = methodArgs.get(0);
     assertMethodArgumentEquals("content", TypeNode.STRING, ImmutableList.of(), argument);

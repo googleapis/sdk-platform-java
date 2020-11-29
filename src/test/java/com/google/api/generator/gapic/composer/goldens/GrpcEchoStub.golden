@@ -1,6 +1,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
@@ -88,6 +89,16 @@ public class GrpcEchoStub extends EchoStub {
                   ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
               .build();
 
+  private static final MethodDescriptor<PagedExpandRequest, PagedExpandResponse>
+      simplePagedExpandMethodDescriptor =
+          MethodDescriptor.<PagedExpandRequest, PagedExpandResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Echo/SimplePagedExpand")
+              .setRequestMarshaller(ProtoUtils.marshaller(PagedExpandRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(PagedExpandResponse.getDefaultInstance()))
+              .build();
+
   private static final MethodDescriptor<WaitRequest, Operation> waitMethodDescriptor =
       MethodDescriptor.<WaitRequest, Operation>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -112,6 +123,9 @@ public class GrpcEchoStub extends EchoStub {
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
       pagedExpandPagedCallable;
+  private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> simplePagedExpandCallable;
+  private final UnaryCallable<PagedExpandRequest, SimplePagedExpandPagedResponse>
+      simplePagedExpandPagedCallable;
   private final UnaryCallable<WaitRequest, Operation> waitCallable;
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
@@ -170,6 +184,10 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<PagedExpandRequest, PagedExpandResponse>newBuilder()
             .setMethodDescriptor(pagedExpandMethodDescriptor)
             .build();
+    GrpcCallSettings<PagedExpandRequest, PagedExpandResponse> simplePagedExpandTransportSettings =
+        GrpcCallSettings.<PagedExpandRequest, PagedExpandResponse>newBuilder()
+            .setMethodDescriptor(simplePagedExpandMethodDescriptor)
+            .build();
     GrpcCallSettings<WaitRequest, Operation> waitTransportSettings =
         GrpcCallSettings.<WaitRequest, Operation>newBuilder()
             .setMethodDescriptor(waitMethodDescriptor)
@@ -200,6 +218,16 @@ public class GrpcEchoStub extends EchoStub {
     this.pagedExpandPagedCallable =
         callableFactory.createPagedCallable(
             pagedExpandTransportSettings, settings.pagedExpandSettings(), clientContext);
+    this.simplePagedExpandCallable =
+        callableFactory.createUnaryCallable(
+            simplePagedExpandTransportSettings,
+            settings.simplePagedExpandSettings(),
+            clientContext);
+    this.simplePagedExpandPagedCallable =
+        callableFactory.createPagedCallable(
+            simplePagedExpandTransportSettings,
+            settings.simplePagedExpandSettings(),
+            clientContext);
     this.waitCallable =
         callableFactory.createUnaryCallable(
             waitTransportSettings, settings.waitSettings(), clientContext);
@@ -244,6 +272,15 @@ public class GrpcEchoStub extends EchoStub {
 
   public UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse> pagedExpandPagedCallable() {
     return pagedExpandPagedCallable;
+  }
+
+  public UnaryCallable<PagedExpandRequest, PagedExpandResponse> simplePagedExpandCallable() {
+    return simplePagedExpandCallable;
+  }
+
+  public UnaryCallable<PagedExpandRequest, SimplePagedExpandPagedResponse>
+      simplePagedExpandPagedCallable() {
+    return simplePagedExpandPagedCallable;
   }
 
   public UnaryCallable<WaitRequest, Operation> waitCallable() {
