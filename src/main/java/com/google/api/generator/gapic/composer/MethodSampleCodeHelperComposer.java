@@ -15,9 +15,13 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
@@ -27,6 +31,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -78,6 +83,49 @@ public class MethodSampleCodeHelperComposer {
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
         .setTryBody(
             bodyExpr.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  public static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      TypeNode pagedItemType) {
+    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    // Assign each method arguments with its default value.
+    Map<String, VariableExpr> methodArgVarExprMap = createMethodArgumentsVariableExprs(arguments);
+    List<Expr> methodArgumentsAssignmentExpr =
+        assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
+    List<Expr> methodArgVarExprs =
+        arguments.stream()
+            .map(arg -> methodArgVarExprMap.get(arg.name()))
+            .collect(Collectors.toList());
+    // For loop client on iterateAll method.
+    // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    //          //doThingsWith(element);
+    //      }
+    VariableExpr elementVarExpr = createVariableExpr("element", pagedItemType);
+    Expr clientMethodIterateAllExpr =
+        createClientMethodIteratorAllExpr(
+            clientVarExpr, method.name(), methodArgVarExprs, pagedItemType);
+    ForStatement loopIteratorStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(elementVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(clientMethodIterateAllExpr)
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build();
+
+    List<Expr> bodyExpr = new ArrayList<>();
+    bodyExpr.addAll(methodArgumentsAssignmentExpr);
+    List<Statement> bodyStatements =
+        bodyExpr.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    bodyStatements.add(loopIteratorStatement);
+
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(bodyStatements)
         .setIsSampleCode(true)
         .build();
   }
@@ -143,6 +191,24 @@ public class MethodSampleCodeHelperComposer {
         .build();
   }
 
+  private static Expr createClientMethodIteratorAllExpr(
+      VariableExpr clientVarExpr,
+      String methodName,
+      List<Expr> methodArgVarExprs,
+      TypeNode pagedItemType) {
+    MethodInvocationExpr clientMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(methodName))
+            .setArguments(methodArgVarExprs)
+            .build();
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(clientMethodExpr)
+        .setMethodName("iterateAll")
+        .setReturnType(pagedItemType)
+        .build();
+  }
+
   private static String getClientName(TypeNode clientType) {
     return JavaStyle.toLowerCamelCase(clientType.reference().name());
   }
@@ -150,6 +216,10 @@ public class MethodSampleCodeHelperComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
+  }
+
+  private static CommentStatement createLineCommentStatement(String content) {
+    return CommentStatement.withComment(LineComment.withComment(content));
   }
 
   private static AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {

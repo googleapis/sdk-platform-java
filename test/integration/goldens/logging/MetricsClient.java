@@ -152,6 +152,17 @@ public class MetricsClient implements BackgroundResource {
   /**
    * Lists logs-based metrics.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -167,6 +178,17 @@ public class MetricsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists logs-based metrics.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   String parent = "parent-995424086";
+   *   for (LogMetric element : metricsClient.listLogMetrics(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The name of the project containing the metrics:
    *     <p>"projects/[PROJECT_ID]"

@@ -189,6 +189,17 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
    * are queried, and the results are aggregated.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -214,6 +225,17 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>If `location_id` is specified as `-` (wildcard), then all regions available to the project
    * are queried, and the results are aggregated.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String parent = "parent-995424086";
+   *   for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
