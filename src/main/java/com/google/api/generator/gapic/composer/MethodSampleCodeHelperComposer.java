@@ -26,7 +26,6 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class MethodSampleCodeHelperComposer {
     VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
     // Assign each method arguments with its default value.
     Map<String, VariableExpr> methodArgVarExprMap = createMethodArgumentsVariableExprs(arguments);
-    List<Expr> methodArgumentsAssignmentExpr =
+    List<Expr> bodyExpr =
         assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
     List<Expr> methodVarExprs =
         arguments.stream()
@@ -52,27 +51,22 @@ public class MethodSampleCodeHelperComposer {
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
     boolean returnsVoid = isProtoEmptyType(method.outputType());
-    Expr responseExpr = null;
     if (returnsVoid) {
-      responseExpr =
+      bodyExpr.add(
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(clientVarExpr)
               .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
               .setArguments(methodVarExprs)
               .setReturnType(clientType)
-              .build();
+              .build());
     } else {
-      responseExpr =
+      bodyExpr.add(
           createAssignExprForVariableWithClientMethod(
               createVariableExpr(RESPONSE, method.outputType()),
               clientVarExpr,
               JavaStyle.toLowerCamelCase(method.name()),
-              methodVarExprs);
+              methodVarExprs));
     }
-
-    List<Expr> bodyExpr = new ArrayList<>();
-    bodyExpr.addAll(methodArgumentsAssignmentExpr);
-    bodyExpr.add(responseExpr);
 
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
