@@ -503,8 +503,7 @@ public class ServiceClientTestClassComposer {
                           .setType(repeatedResponseType)
                           .setName("responsesElement")
                           .setIsMessage(!repeatedResponseType.isProtoPrimitiveType())
-                          .build(),
-                      false))
+                          .build()))
               .build());
     }
 
@@ -540,8 +539,7 @@ public class ServiceClientTestClassComposer {
                     .setType(methodOutputType)
                     .setIsMessage(true)
                     .setName("expectedResponse")
-                    .build(),
-                false);
+                    .build());
       }
     }
 
@@ -969,8 +967,7 @@ public class ServiceClientTestClassComposer {
                   .setType(methodOutputType)
                   .setIsMessage(true)
                   .setName("expectedResponse")
-                  .build(),
-              false);
+                  .build());
     }
     methodExprs.add(
         AssignmentExpr.builder()

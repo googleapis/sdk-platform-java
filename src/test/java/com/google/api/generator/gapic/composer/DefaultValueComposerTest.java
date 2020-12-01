@@ -55,7 +55,7 @@ public class DefaultValueComposerTest {
             .setIsMap(true)
             .setIsRepeated(true)
             .build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("new HashMap<>()", writerVisitor.write());
 
@@ -64,7 +64,7 @@ public class DefaultValueComposerTest {
     // isMap() and isRepeated() will be set by protoc simultaneously, but we check this edge case.
     // for completeness.
     field = Field.builder().setName("foobar").setType(TypeNode.STRING).setIsMap(true).build();
-    expr = DefaultValueComposer.createDefaultValue(field, false);
+    expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"foobar-1268878963\"", writerVisitor.write());
   }
@@ -75,7 +75,7 @@ public class DefaultValueComposerTest {
     // isRepeated rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsRepeated(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("new ArrayList<>()", writerVisitor.write());
   }
@@ -86,7 +86,7 @@ public class DefaultValueComposerTest {
     // isEnum() rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsEnum(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("String.forNumber(0)", writerVisitor.write());
   }
@@ -97,7 +97,7 @@ public class DefaultValueComposerTest {
     // isMessage() rather than type().
     Field field =
         Field.builder().setName("foobar").setType(TypeNode.STRING).setIsMessage(true).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("String.newBuilder().build()", writerVisitor.write());
   }
@@ -105,7 +105,7 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_stringField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.STRING).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"foobar-1268878963\"", writerVisitor.write());
   }
@@ -113,13 +113,13 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_numericField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.INT).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("-1268878963", writerVisitor.write());
 
     writerVisitor.clear();
     field = Field.builder().setName("foobar").setType(TypeNode.DOUBLE).build();
-    expr = DefaultValueComposer.createDefaultValue(field, false);
+    expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("-1268878963", writerVisitor.write());
   }
@@ -127,7 +127,7 @@ public class DefaultValueComposerTest {
   @Test
   public void defaultValue_booleanField() {
     Field field = Field.builder().setName("foobar").setType(TypeNode.BOOLEAN).build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("true", writerVisitor.write());
   }
@@ -139,7 +139,7 @@ public class DefaultValueComposerTest {
             .setName("foobar")
             .setType(TypeNode.withReference(ConcreteReference.withClazz(ByteString.class)))
             .build();
-    Expr expr = DefaultValueComposer.createDefaultValue(field, false);
+    Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("ByteString.EMPTY", writerVisitor.write());
   }

@@ -85,8 +85,8 @@ public class DefaultValueComposer {
     return createDefaultValue(f, resourceNames, false, useSampleCode);
   }
 
-  static Expr createDefaultValue(Field f, Boolean useSampleCode) {
-    return createDefaultValue(f, new HashMap<>(), false, useSampleCode);
+  static Expr createDefaultValue(Field f) {
+    return createDefaultValue(f, new HashMap<>(), false, false);
   }
 
   static Expr createDefaultValue(
