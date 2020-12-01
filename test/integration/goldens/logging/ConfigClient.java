@@ -517,7 +517,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink response = configClient.getSink(sinkName.toString());
    * }
    * }</pre>
@@ -800,7 +800,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
    *   LogSink response = configClient.updateSink(sinkName.toString(), sink);
    * }
@@ -884,7 +884,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
    *   FieldMask updateMask = FieldMask.newBuilder().build();
    *   LogSink response = configClient.updateSink(sinkName.toString(), sink, updateMask);
@@ -990,7 +990,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   LogSinkName sink_name = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   configClient.deleteSink(sinkName.toString());
    * }
    * }</pre>

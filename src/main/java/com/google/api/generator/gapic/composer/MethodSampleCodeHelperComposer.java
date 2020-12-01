@@ -45,7 +45,8 @@ public class MethodSampleCodeHelperComposer {
     Map<String, VariableExpr> methodArgVarExprMap = createMethodArgumentsVariableExprs(arguments);
     List<Expr> methodArgumentsAssignmentExpr =
         assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
-    List<Expr> methodVarExprs = createMethodArgVarExprs(arguments, methodArgVarExprMap);
+    List<Expr> methodVarExprs =
+        createMethodArgVarExprs(arguments, methodArgVarExprMap, resourceNames);
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
@@ -135,15 +136,20 @@ public class MethodSampleCodeHelperComposer {
             ? TypeNode.withReference(
                 ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class))
             : defaultValueExpr.type();
-    return createVariableExpr(methodArg.name(), resourceReferenceType);
+    return createVariableExpr(JavaStyle.toLowerCamelCase(methodArg.name()), resourceReferenceType);
   }
 
   private static List<Expr> createMethodArgVarExprs(
-      List<MethodArgument> arguments, Map<String, VariableExpr> methodArgVarExprMap) {
+      List<MethodArgument> arguments,
+      Map<String, VariableExpr> methodArgVarExprMap,
+      Map<String, ResourceName> resourceNames) {
     return arguments.stream()
         .map(
             arg -> {
-              if (!arg.isResourceNameHelper() && arg.field().hasResourceReference()) {
+              if (!arg.isResourceNameHelper()
+                  && arg.field().hasResourceReference()
+                  && resourceNames.containsKey(
+                      arg.field().resourceReference().resourceTypeString())) {
                 return MethodInvocationExpr.builder()
                     .setExprReferenceExpr(methodArgVarExprMap.get(arg.name()))
                     .setMethodName("toString")

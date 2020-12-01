@@ -321,6 +321,46 @@ public class MethodSampleCodeHelperComposerTest {
   }
 
   @Test
+  public void composeUnaryRpcMethodSampleCode_noMatchedResourceReferenceMethodArgument() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+    Field methodArgField =
+        Field.builder()
+            .setName("display_name")
+            .setType(TypeNode.STRING)
+            .setResourceReference(ResourceReference.withType("no.matched.resource.name/abc"))
+            .build();
+    MethodArgument arg =
+        MethodArgument.builder()
+            .setName("display_name")
+            .setType(TypeNode.STRING)
+            .setField(methodArgField)
+            .build();
+    List<List<MethodArgument>> signatures = Arrays.asList(Arrays.asList(arg));
+    Method unaryMethod =
+        Method.builder()
+            .setName("echo")
+            .setMethodSignatures(signatures)
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    String results =
+        SampleCodeWriter.write(
+            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+                unaryMethod, signatures.get(0), clientType, resourceNames));
+    String expected =
+        "try (EchoClient echoClient = EchoClient.create()) {\n"
+            + "  String displayName = \"display_name1615086568\";\n"
+            + "  EchoResponse response = echoClient.echo(displayName);\n"
+            + "}";
+    assertEquals(expected, results);
+  }
+
+  @Test
   public void composeUnaryRpcMethodSampleCode_multipleWordNameMethodArgument() {
     TypeNode inputType =
         TypeNode.withReference(
@@ -363,7 +403,7 @@ public class MethodSampleCodeHelperComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  ResourceName display_name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  ResourceName displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
             + "  EchoResponse response = echoClient.echo(displayName.toString());\n"
             + "}";
     assertEquals(expected, results);

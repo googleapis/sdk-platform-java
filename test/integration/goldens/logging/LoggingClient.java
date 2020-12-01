@@ -199,7 +199,7 @@ public class LoggingClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
    *   loggingClient.deleteLog(logName.toString());
    * }
    * }</pre>
@@ -328,7 +328,7 @@ public class LoggingClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   LogName log_name = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
    *   MonitoredResource resource = MonitoredResource.newBuilder().build();
    *   Map<String, String> labels = new HashMap<>();
    *   List<LogEntry> entries = new ArrayList<>();
