@@ -16,3 +16,6 @@ tmp_gh-pages
 *.iml
 *.iws
 *.ipr
+
+# Vim
+*.sw*
