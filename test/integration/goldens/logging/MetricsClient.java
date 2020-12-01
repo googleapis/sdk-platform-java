@@ -244,8 +244,8 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = "metric_name-1737602118";
-   *   LogMetric response = metricsClient.getLogMetric(metricName);
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   LogMetric response = metricsClient.getLogMetric(metricName.toString());
    * }
    * }</pre>
    *
@@ -318,9 +318,9 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = LogMetricName.of("[PROJECT]", "[METRIC]");
    *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.createLogMetric(parent, metric);
+   *   LogMetric response = metricsClient.createLogMetric(parent.toString(), metric);
    * }
    * }</pre>
    *
@@ -397,9 +397,9 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = "metric_name-1737602118";
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
    *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.updateLogMetric(metricName, metric);
+   *   LogMetric response = metricsClient.updateLogMetric(metricName.toString(), metric);
    * }
    * }</pre>
    *
@@ -471,8 +471,8 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   String metricName = "metric_name-1737602118";
-   *   metricsClient.deleteLogMetric(metricName);
+   *   LogMetricName metric_name = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   metricsClient.deleteLogMetric(metricName.toString());
    * }
    * }</pre>
    *

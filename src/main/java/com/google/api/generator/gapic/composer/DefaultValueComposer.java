@@ -50,7 +50,7 @@ public class DefaultValueComposer {
       TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
   static Expr createDefaultValue(
-      MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
+      MethodArgument methodArg, Map<String, ResourceName> resourceNames, boolean useSampleCode) {
     if (methodArg.isResourceNameHelper()) {
       Preconditions.checkState(
           methodArg.field().hasResourceReference(),
@@ -71,18 +71,29 @@ public class DefaultValueComposer {
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
-      return createDefaultValue(methodArg.field());
+      return createDefaultValue(methodArg.field(), resourceNames, useSampleCode);
     }
 
     return createDefaultValue(
-        Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
+        Field.builder().setName(methodArg.name()).setType(methodArg.type()).build(),
+        resourceNames,
+        useSampleCode);
   }
 
-  static Expr createDefaultValue(Field f) {
-    return createDefaultValue(f, false);
+  static Expr createDefaultValue(
+      Field f, Map<String, ResourceName> resourceNames, Boolean useSampleCode) {
+    return createDefaultValue(f, resourceNames, false, useSampleCode);
   }
 
-  static Expr createDefaultValue(Field f, boolean useExplicitInitTypeInGenerics) {
+  static Expr createDefaultValue(Field f, Boolean useSampleCode) {
+    return createDefaultValue(f, new HashMap<>(), false, useSampleCode);
+  }
+
+  static Expr createDefaultValue(
+      Field f,
+      Map<String, ResourceName> resourceNames,
+      boolean useExplicitInitTypeInGenerics,
+      boolean useSampleCode) {
     if (f.isRepeated()) {
       ConcreteReference.Builder refBuilder =
           ConcreteReference.builder().setClazz(f.isMap() ? HashMap.class : ArrayList.class);
@@ -123,6 +134,13 @@ public class DefaultValueComposer {
     }
 
     if (f.type().equals(TypeNode.STRING)) {
+      if (useSampleCode
+          && f.hasResourceReference()
+          && resourceNames.containsKey(f.resourceReference().resourceTypeString())) {
+        ResourceName resourceName = resourceNames.get(f.resourceReference().resourceTypeString());
+        return createDefaultValue(
+            resourceName, resourceNames.values().stream().collect(Collectors.toList()), f.name());
+      }
       return ValueExpr.withValue(
           StringObjectValue.withValue(String.format("%s%s", f.name(), f.name().hashCode())));
     }
@@ -255,7 +273,7 @@ public class DefaultValueComposer {
                 .setReturnType(TypeNode.STRING)
                 .build();
       } else {
-        defaultExpr = createDefaultValue(field, true);
+        defaultExpr = createDefaultValue(field, resourceNames, true, false);
       }
       builderExpr =
           MethodInvocationExpr.builder()

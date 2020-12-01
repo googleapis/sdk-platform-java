@@ -229,8 +229,8 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   String name = "name3373707";
-   *   EchoResponse response = echoClient.echo(name);
+   *   FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoResponse response = echoClient.echo(name.toString());
    * }
    * }</pre>
    *
@@ -248,8 +248,8 @@ public class EchoClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (EchoClient echoClient = EchoClient.create()) {
-   *   String parent = "parent-995424086";
-   *   EchoResponse response = echoClient.echo(parent);
+   *   ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
+   *   EchoResponse response = echoClient.echo(parent.toString());
    * }
    * }</pre>
    *

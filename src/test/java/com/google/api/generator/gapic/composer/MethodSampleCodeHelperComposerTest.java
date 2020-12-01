@@ -273,8 +273,8 @@ public class MethodSampleCodeHelperComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String name = \"name3373707\";\n"
-            + "  EchoResponse response = echoClient.echo(name);\n"
+            + "  FoobarName name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  EchoResponse response = echoClient.echo(name.toString());\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -314,8 +314,8 @@ public class MethodSampleCodeHelperComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String parent = \"parent-995424086\";\n"
-            + "  EchoResponse response = echoClient.echo(parent);\n"
+            + "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  EchoResponse response = echoClient.echo(parent.toString());\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -363,8 +363,8 @@ public class MethodSampleCodeHelperComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String displayName = \"display_name1615086568\";\n"
-            + "  EchoResponse response = echoClient.echo(displayName);\n"
+            + "  ResourceName display_name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  EchoResponse response = echoClient.echo(displayName.toString());\n"
             + "}";
     assertEquals(expected, results);
   }

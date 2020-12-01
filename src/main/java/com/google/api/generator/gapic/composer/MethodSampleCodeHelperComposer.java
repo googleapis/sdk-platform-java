@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -44,10 +45,7 @@ public class MethodSampleCodeHelperComposer {
     Map<String, VariableExpr> methodArgVarExprMap = createMethodArgumentsVariableExprs(arguments);
     List<Expr> methodArgumentsAssignmentExpr =
         assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
-    List<Expr> methodVarExprs =
-        arguments.stream()
-            .map(arg -> methodArgVarExprMap.get(arg.name()))
-            .collect(Collectors.toList());
+    List<Expr> methodVarExprs = createMethodArgVarExprs(arguments, methodArgVarExprMap);
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
@@ -118,10 +116,41 @@ public class MethodSampleCodeHelperComposer {
       Map<String, ResourceName> resourceNames) {
     return arguments.stream()
         .map(
-            arg ->
-                createAssignmentExpr(
-                    argVarExprs.get(arg.name()),
-                    DefaultValueComposer.createDefaultValue(arg, resourceNames)))
+            arg -> {
+              Expr defaultValueExpr =
+                  DefaultValueComposer.createDefaultValue(arg, resourceNames, true);
+              VariableExpr argVarExpr =
+                  (arg.field().hasResourceReference() && !arg.isResourceNameHelper())
+                      ? getMethodArgumentResourceReferenceVariableExpr(arg, defaultValueExpr)
+                      : argVarExprs.get(arg.name());
+              return createAssignmentExpr(argVarExpr, defaultValueExpr);
+            })
+        .collect(Collectors.toList());
+  }
+
+  private static VariableExpr getMethodArgumentResourceReferenceVariableExpr(
+      MethodArgument methodArg, Expr defaultValueExpr) {
+    TypeNode resourceReferenceType =
+        methodArg.field().resourceReference().isChildType()
+            ? TypeNode.withReference(
+                ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class))
+            : defaultValueExpr.type();
+    return createVariableExpr(methodArg.name(), resourceReferenceType);
+  }
+
+  private static List<Expr> createMethodArgVarExprs(
+      List<MethodArgument> arguments, Map<String, VariableExpr> methodArgVarExprMap) {
+    return arguments.stream()
+        .map(
+            arg -> {
+              if (!arg.isResourceNameHelper() && arg.field().hasResourceReference()) {
+                return MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(methodArgVarExprMap.get(arg.name()))
+                    .setMethodName("toString")
+                    .build();
+              }
+              return methodArgVarExprMap.get(arg.name());
+            })
         .collect(Collectors.toList());
   }
 

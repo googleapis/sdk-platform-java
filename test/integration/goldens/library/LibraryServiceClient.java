@@ -240,7 +240,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
-   *   Shelf response = libraryServiceClient.getShelf(name);
+   *   Shelf response = libraryServiceClient.getShelf(name.toString());
    * }
    * }</pre>
    *
@@ -341,7 +341,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
-   *   libraryServiceClient.deleteShelf(name);
+   *   libraryServiceClient.deleteShelf(name.toString());
    * }
    * }</pre>
    *
@@ -420,8 +420,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   ShelfName name = ShelfName.of("[SHELF_ID]");
-   *   String otherShelfName = "other_shelf_name145746959";
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   String other_shelf_name = "other_shelf_name145746959";
+   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName.toString());
    * }
    * }</pre>
    *
@@ -453,7 +453,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   Shelf response = libraryServiceClient.mergeShelves(name.toString(), otherShelfName);
    * }
    * }</pre>
    *
@@ -484,8 +484,9 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
-   *   String otherShelfName = "other_shelf_name145746959";
-   *   Shelf response = libraryServiceClient.mergeShelves(name, otherShelfName);
+   *   String other_shelf_name = "other_shelf_name145746959";
+   *   Shelf response =
+   *       libraryServiceClient.mergeShelves(name.toString(), otherShelfName.toString());
    * }
    * }</pre>
    *
@@ -567,7 +568,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
    *   Book book = Book.newBuilder().build();
-   *   Book response = libraryServiceClient.createBook(name, book);
+   *   Book response = libraryServiceClient.createBook(name.toString(), book);
    * }
    * }</pre>
    *
@@ -632,7 +633,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
-   *   Book response = libraryServiceClient.getBook(name);
+   *   Book response = libraryServiceClient.getBook(name.toString());
    * }
    * }</pre>
    *
@@ -837,8 +838,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
-   *   String otherShelfName = "other_shelf_name145746959";
-   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   *   String other_shelf_name = "other_shelf_name145746959";
+   *   Book response = libraryServiceClient.moveBook(name, otherShelfName.toString());
    * }
    * }</pre>
    *
@@ -866,7 +867,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
    *   ShelfName otherShelfName = ShelfName.of("[SHELF_ID]");
-   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   *   Book response = libraryServiceClient.moveBook(name.toString(), otherShelfName);
    * }
    * }</pre>
    *
@@ -893,8 +894,8 @@ public class LibraryServiceClient implements BackgroundResource {
    * <pre>{@code
    * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
    *   String name = "name3373707";
-   *   String otherShelfName = "other_shelf_name145746959";
-   *   Book response = libraryServiceClient.moveBook(name, otherShelfName);
+   *   String other_shelf_name = "other_shelf_name145746959";
+   *   Book response = libraryServiceClient.moveBook(name.toString(), otherShelfName.toString());
    * }
    * }</pre>
    *

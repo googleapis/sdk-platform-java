@@ -503,7 +503,8 @@ public class ServiceClientTestClassComposer {
                           .setType(repeatedResponseType)
                           .setName("responsesElement")
                           .setIsMessage(!repeatedResponseType.isProtoPrimitiveType())
-                          .build()))
+                          .build(),
+                      false))
               .build());
     }
 
@@ -539,7 +540,8 @@ public class ServiceClientTestClassComposer {
                     .setType(methodOutputType)
                     .setIsMessage(true)
                     .setName("expectedResponse")
-                    .build());
+                    .build(),
+                false);
       }
     }
 
@@ -610,7 +612,7 @@ public class ServiceClientTestClassComposer {
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames, false);
         methodExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
@@ -967,7 +969,8 @@ public class ServiceClientTestClassComposer {
                   .setType(methodOutputType)
                   .setIsMessage(true)
                   .setName("expectedResponse")
-                  .build());
+                  .build(),
+              false);
     }
     methodExprs.add(
         AssignmentExpr.builder()
@@ -1484,7 +1487,7 @@ public class ServiceClientTestClassComposer {
             VariableExpr.withVariable(
                 Variable.builder().setType(methodArg.type()).setName(methodArgName).build());
         argVarExprs.add(varExpr);
-        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames);
+        Expr valExpr = DefaultValueComposer.createDefaultValue(methodArg, resourceNames, false);
         tryBodyExprs.add(
             AssignmentExpr.builder()
                 .setVariableExpr(varExpr.toBuilder().setIsDecl(true).build())
