@@ -99,6 +99,26 @@ _java_gapic_postprocess_srcjar = rule(
     implementation = _java_gapic_postprocess_srcjar_impl,
 )
 
+def _extract_common_proto_dep(dep):
+    return dep[dep.index("/"):] if "//google" in dep else dep
+
+def _append_dep_without_duplicates(dest_deps, new_deps):
+    """
+    Appends new_deps into dest_deps only if elements in new_deps
+    are not already present in dest_deps.
+    A workaround for the lack of sets in skylark.
+    """
+
+    # Naive dep checking, since the source (i.e. prefixed) repo can vary.
+    # Examine only "//google"-prefixed targets, since common proto deps
+    # are more likely to be duplicated.
+    processed_dest_deps = [_extract_common_proto_dep(dep) for dep in dest_deps]
+    processed_new_deps = [_extract_common_proto_dep(dep) for dep in new_deps]
+    for i in range(len(new_deps)):
+        if processed_new_deps[i] not in processed_dest_deps:
+            dest_deps.append(new_deps[i])
+    return dest_deps
+
 def java_gapic_library(
         name,
         srcs,
@@ -169,7 +189,7 @@ def java_gapic_library(
     )
 
     # General additional deps.
-    actual_deps = deps + resource_name_deps + [
+    actual_deps = resource_name_deps + [
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_protobuf//:protobuf_java",
@@ -187,6 +207,7 @@ def java_gapic_library(
         "@com_google_http_client_google_http_client//jar",
         "@javax_annotation_javax_annotation_api//jar",
     ]
+    _append_dep_without_duplicates(actual_deps, deps)
 
     native.java_library(
         name = name,
@@ -196,7 +217,7 @@ def java_gapic_library(
     )
 
     # Test deps.
-    actual_test_deps = test_deps + actual_deps + [
+    actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
         "@com_google_api_gax_java//gax-grpc:gax_grpc_testlib",
         "@com_google_api_gax_java//gax:gax_testlib",
@@ -207,6 +228,8 @@ def java_gapic_library(
         "@io_opencensus_opencensus_contrib_grpc_metrics//jar",
         "@junit_junit//jar",
     ]
+    _append_dep_without_duplicates(actual_test_deps, test_deps)
+    _append_dep_without_duplicates(actual_test_deps, actual_deps)
 
     native.java_library(
         name = "%s_test" % name,
