@@ -115,11 +115,17 @@ public class MethodSampleCodeHelperComposer {
       List<MethodArgument> arguments,
       Map<String, VariableExpr> argVarExprs,
       Map<String, ResourceName> resourceNames) {
+    List<ResourceName> resourceNameList = resourceNames.values().stream().collect(Collectors.toList());
     return arguments.stream()
         .map(
             arg -> {
               Expr defaultValueExpr =
-                  DefaultValueComposer.createDefaultValue(arg, resourceNames, true);
+                  DefaultValueComposer.createDefaultValue(arg, resourceNames, false);
+              if (!arg.isResourceNameHelper() && arg.type().equals(TypeNode.STRING) && arg.field().hasResourceReference() && resourceNames.containsKey(arg.field().resourceReference().resourceTypeString())) {
+                ResourceName resourceName =
+                    resourceNames.get(arg.field().resourceReference().resourceTypeString());
+                defaultValueExpr = DefaultValueComposer.createDefaultValue(resourceName, resourceNameList, arg.field().name());
+              }
               VariableExpr argVarExpr =
                   (arg.field().hasResourceReference() && !arg.isResourceNameHelper())
                       ? getMethodArgumentResourceReferenceVariableExpr(arg, defaultValueExpr)
