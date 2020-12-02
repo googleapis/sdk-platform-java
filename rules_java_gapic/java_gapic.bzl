@@ -189,7 +189,7 @@ def java_gapic_library(
     )
 
     # General additional deps.
-    actual_deps = resource_name_deps + [
+    actual_deps = deps + resource_name_deps + [
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_protobuf//:protobuf_java",
@@ -207,7 +207,6 @@ def java_gapic_library(
         "@com_google_http_client_google_http_client//jar",
         "@javax_annotation_javax_annotation_api//jar",
     ]
-    _append_dep_without_duplicates(actual_deps, deps)
 
     native.java_library(
         name = name,
