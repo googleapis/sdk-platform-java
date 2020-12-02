@@ -19,6 +19,8 @@ import com.google.auto.value.AutoValue;
 
 @AutoValue
 public abstract class GapicClass {
+  // TODO(miraleung): Clean up the hierarchy to avoid pass another parameter (resourceNames is
+  // only used for composing sample code).
   // TODO(miraleung): Add enum for resource name classes.
   public enum Kind {
     MAIN,
