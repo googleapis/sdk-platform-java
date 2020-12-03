@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ServiceClientSampleCodeComposer {
-  private static String RESPONSE = "response";
+  // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
       // TODO(summerji): Add unit tests for composeClassHeaderCredentialsSampleCode.
