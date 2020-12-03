@@ -1,17 +1,3 @@
-// Copyright 2020 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//      http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.google.api.generator.gapic.composer;
 
 import static junit.framework.Assert.assertEquals;
@@ -26,44 +12,33 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
+import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.protobuf.Descriptors.FileDescriptor;
+import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class MethodSampleCodeHelperComposerTest {
+public class ServiceClientSampleCodeComposerTest {
   private static final String PACKAGE_NAME = "com.google.showcase.v1beta1";
   private static final TypeNode clientType =
       TypeNode.withReference(
           VaporReference.builder().setName("EchoClient").setPakkage(PACKAGE_NAME).build());
-  Map<String, ResourceName> resourceNames = new HashMap<>();
+
+  FileDescriptor echoFileDescriptor;
+  Map<String, ResourceName> resourceNames;
 
   @Before
   public void setUp() {
-    ResourceName foobarResourceName =
-        ResourceName.builder()
-            .setVariableName("foobar")
-            .setPakkage(PACKAGE_NAME)
-            .setResourceTypeString("showcase.googleapis.com/Foobar")
-            .setPatterns(
-                Arrays.asList(
-                    "projects/{project}/foobars/{foobar}",
-                    "projects/{project}/chocolate/variants/{variant}/foobars/{foobar}",
-                    "foobars/{foobar}",
-                    "bar_foo/{bar_foo}/foobars/{foobar}"))
-            .setParentMessageName("Foobar")
-            .build();
-    ResourceName anythingGoesResourceName =
-        ResourceName.createWildcard("showcase.googleapis.com/AnythingGoes", PACKAGE_NAME);
-    resourceNames.put("showcase.googleapis.com/Foobar", foobarResourceName);
-    resourceNames.put("showcase.googleapis.com/AnythingGoes", anythingGoesResourceName);
+    echoFileDescriptor = EchoOuterClass.getDescriptor();
+    resourceNames = Parser.parseResourceNames(echoFileDescriptor);
   }
 
   @Test
-  public void composeUnaryRpcMethodSampleCode_resourceNameHelperMethodArgument() {
+  public void composeUnaryRpcMethodSampleCode_resourceNameMethodArgument() {
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
@@ -96,56 +71,12 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
             + "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
             + "  EchoResponse response = echoClient.echo(parent);\n"
-            + "}";
-    assertEquals(expected, results);
-  }
-
-  @Test
-  public void composeUnaryRpcMethodSampleCode_isMessageMethodArgument() {
-    TypeNode inputType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
-    TypeNode outputType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
-    TypeNode methodArgType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build());
-    Field methodArgField =
-        Field.builder()
-            .setName("error")
-            .setType(methodArgType)
-            .setIsMessage(true)
-            .setIsContainedInOneof(true)
-            .build();
-    MethodArgument arg =
-        MethodArgument.builder()
-            .setName("error")
-            .setType(methodArgType)
-            .setField(methodArgField)
-            .build();
-    List<List<MethodArgument>> signatures = Arrays.asList(Arrays.asList(arg));
-    Method unaryMethod =
-        Method.builder()
-            .setName("echo")
-            .setMethodSignatures(signatures)
-            .setInputType(inputType)
-            .setOutputType(outputType)
-            .build();
-    String results =
-        SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
-    String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  Status error = Status.newBuilder().build();\n"
-            + "  EchoResponse response = echoClient.echo(error);\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -189,7 +120,7 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
@@ -200,47 +131,7 @@ public class MethodSampleCodeHelperComposerTest {
   }
 
   @Test
-  public void composeUnaryRpcMethodSampleCode_stringIsContainedInOneOfMethodArgument() {
-    TypeNode inputType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
-    TypeNode outputType =
-        TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
-    Field methodArgField =
-        Field.builder()
-            .setName("content")
-            .setType(TypeNode.STRING)
-            .setIsContainedInOneof(true)
-            .build();
-    MethodArgument arg =
-        MethodArgument.builder()
-            .setName("content")
-            .setType(TypeNode.STRING)
-            .setField(methodArgField)
-            .build();
-    List<List<MethodArgument>> signatures = Arrays.asList(Arrays.asList(arg));
-    Method unaryMethod =
-        Method.builder()
-            .setName("echo")
-            .setMethodSignatures(signatures)
-            .setInputType(inputType)
-            .setOutputType(outputType)
-            .build();
-    String results =
-        SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
-    String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String content = \"content951530617\";\n"
-            + "  EchoResponse response = echoClient.echo(content);\n"
-            + "}";
-    assertEquals(expected, results);
-  }
-
-  @Test
-  public void composeUnaryRpcMethodSampleCode_strinWithResourceReferenceMethodArgument() {
+  public void composeUnaryRpcMethodSampleCode_stringWithResourceReferenceMethodArgument() {
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
@@ -269,12 +160,12 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String name = \"name3373707\";\n"
-            + "  EchoResponse response = echoClient.echo(name);\n"
+            + "  FoobarName name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  EchoResponse response = echoClient.echo(name.toString());\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -310,12 +201,56 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String parent = \"parent-995424086\";\n"
-            + "  EchoResponse response = echoClient.echo(parent);\n"
+            + "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  EchoResponse response = echoClient.echo(parent.toString());\n"
+            + "}";
+    assertEquals(expected, results);
+  }
+
+  @Test
+  public void composeUnaryRpcMethodSampleCode_isMessageMethodArgument() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+    TypeNode methodArgType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build());
+    Field methodArgField =
+        Field.builder()
+            .setName("error")
+            .setType(methodArgType)
+            .setIsMessage(true)
+            .setIsContainedInOneof(true)
+            .build();
+    MethodArgument arg =
+        MethodArgument.builder()
+            .setName("error")
+            .setType(methodArgType)
+            .setField(methodArgField)
+            .build();
+    List<List<MethodArgument>> signatures = Arrays.asList(Arrays.asList(arg));
+    Method unaryMethod =
+        Method.builder()
+            .setName("echo")
+            .setMethodSignatures(signatures)
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    String results =
+        SampleCodeWriter.write(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
+                unaryMethod, signatures.get(0), clientType, resourceNames));
+    String expected =
+        "try (EchoClient echoClient = EchoClient.create()) {\n"
+            + "  Status error = Status.newBuilder().build();\n"
+            + "  EchoResponse response = echoClient.echo(error);\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -342,12 +277,61 @@ public class MethodSampleCodeHelperComposerTest {
             .setType(TypeNode.withReference(userRef))
             .setIsMessage(true)
             .build();
-    MethodArgument arg =
+    MethodArgument argDisplayName =
         MethodArgument.builder()
             .setName("display_name")
             .setType(TypeNode.STRING)
             .setField(methodArgField)
             .setNestedFields(Arrays.asList(nestFiled))
+            .build();
+    MethodArgument argOtherName =
+        MethodArgument.builder()
+            .setName("other_name")
+            .setType(TypeNode.STRING)
+            .setField(Field.builder().setName("other_name").setType(TypeNode.STRING).build())
+            .setNestedFields(Arrays.asList(nestFiled))
+            .build();
+    List<List<MethodArgument>> signatures =
+        Arrays.asList(Arrays.asList(argDisplayName, argOtherName));
+    Method unaryMethod =
+        Method.builder()
+            .setName("echo")
+            .setMethodSignatures(signatures)
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    String results =
+        SampleCodeWriter.write(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
+                unaryMethod, signatures.get(0), clientType, resourceNames));
+    String expected =
+        "try (EchoClient echoClient = EchoClient.create()) {\n"
+            + "  ResourceName displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  String otherName = \"other_name-182411686\";\n"
+            + "  EchoResponse response = echoClient.echo(displayName.toString(), otherName);\n"
+            + "}";
+    assertEquals(expected, results);
+  }
+
+  @Test
+  public void composeUnaryRpcMethodSampleCode_stringIsContainedInOneOfMethodArgument() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+    Field methodArgField =
+        Field.builder()
+            .setName("content")
+            .setType(TypeNode.STRING)
+            .setIsContainedInOneof(true)
+            .build();
+    MethodArgument arg =
+        MethodArgument.builder()
+            .setName("content")
+            .setType(TypeNode.STRING)
+            .setField(methodArgField)
             .build();
     List<List<MethodArgument>> signatures = Arrays.asList(Arrays.asList(arg));
     Method unaryMethod =
@@ -359,12 +343,12 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String displayName = \"display_name1615086568\";\n"
-            + "  EchoResponse response = echoClient.echo(displayName);\n"
+            + "  String content = \"content951530617\";\n"
+            + "  EchoResponse response = echoClient.echo(content);\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -403,7 +387,7 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
@@ -442,7 +426,7 @@ public class MethodSampleCodeHelperComposerTest {
             .build();
     String results =
         SampleCodeWriter.write(
-            MethodSampleCodeHelperComposer.composeUnaryRpcMethodSampleCode(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, methodSignatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"

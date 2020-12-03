@@ -22,7 +22,7 @@ TESTS = UPDATE_GOLDENS_TESTS + [
     "DefaultValueComposerTest",
     "ResourceNameTokenizerTest",
     "RetrySettingsComposerTest",
-    "MethodSampleCodeHelperComposerTest",
+    "ServiceClientSampleCodeComposerTest",
 ]
 
 TEST_DEPS = [
