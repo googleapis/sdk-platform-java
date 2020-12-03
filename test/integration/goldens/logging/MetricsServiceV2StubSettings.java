@@ -54,7 +54,6 @@ import com.google.logging.v2.UpdateLogMetricRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -142,7 +141,7 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
 
             @Override
             public Iterable<LogMetric> extractResources(ListLogMetricsResponse payload) {
-              return Objects.isNull(payload.getMetricsList())
+              return payload.getMetricsList() == null
                   ? ImmutableList.<LogMetric>of()
                   : payload.getMetricsList();
             }

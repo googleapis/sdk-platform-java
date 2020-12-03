@@ -64,7 +64,6 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -162,7 +161,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
 
             @Override
             public Iterable<Instance> extractResources(ListInstancesResponse payload) {
-              return Objects.isNull(payload.getInstancesList())
+              return payload.getInstancesList() == null
                   ? ImmutableList.<Instance>of()
                   : payload.getInstancesList();
             }

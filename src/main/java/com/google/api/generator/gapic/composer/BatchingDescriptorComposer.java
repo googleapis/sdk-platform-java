@@ -29,8 +29,10 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -50,7 +52,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class BatchingDescriptorComposer {
@@ -203,12 +204,8 @@ public class BatchingDescriptorComposer {
                 Arrays.asList(
                     IfStatement.builder()
                         .setConditionExpr(
-                            MethodInvocationExpr.builder()
-                                .setStaticReferenceType(toType(Objects.class))
-                                .setMethodName("isNull")
-                                .setArguments(builderVarExpr)
-                                .setReturnType(TypeNode.BOOLEAN)
-                                .build())
+                            RelationalOperationExpr.equalToWithExprs(
+                                builderVarExpr, ValueExpr.withValue(NullObjectValue.create())))
                         .setBody(Arrays.asList(ExprStatement.withExpr(toBuilderExpr)))
                         .setElseBody(Arrays.asList(ExprStatement.withExpr(addAllExpr)))
                         .build()))

@@ -10,7 +10,7 @@ return new RequestBuilder<PublishRequest>() {
 private PublishRequest.Builder builder;
 @Override
 public void appendRequest(PublishRequest request) {
-if (Objects.isNull(builder)) {
+if (builder == null) {
 builder = request.toBuilder();
 } else {
 builder.addAllMessages(request.getMessagesList());

@@ -57,7 +57,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -150,7 +149,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<Topic> extractResources(ListTopicsResponse payload) {
-              return Objects.isNull(payload.getTopicsList())
+              return payload.getTopicsList() == null
                   ? ImmutableList.<Topic>of()
                   : payload.getTopicsList();
             }
@@ -192,7 +191,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSubscriptionsResponse payload) {
-              return Objects.isNull(payload.getSubscriptionsList())
+              return payload.getSubscriptionsList() == null
                   ? ImmutableList.<String>of()
                   : payload.getSubscriptionsList();
             }
@@ -231,7 +230,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public Iterable<String> extractResources(ListTopicSnapshotsResponse payload) {
-              return Objects.isNull(payload.getSnapshotsList())
+              return payload.getSnapshotsList() == null
                   ? ImmutableList.<String>of()
                   : payload.getSnapshotsList();
             }
@@ -313,7 +312,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
 
             @Override
             public void appendRequest(PublishRequest request) {
-              if (Objects.isNull(builder)) {
+              if (builder == null) {
                 builder = request.toBuilder();
               } else {
                 builder.addAllMessages(request.getMessagesList());
