@@ -35,7 +35,6 @@ import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
@@ -611,7 +610,7 @@ public class ImportWriterVisitorTest {
             .setMethodName("getSomething")
             .setReturnType(TypeNode.STRING)
             .build();
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     ArithmeticOperationExpr arithmeticOperationExpr =
         ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
     arithmeticOperationExpr.accept(writerVisitor);

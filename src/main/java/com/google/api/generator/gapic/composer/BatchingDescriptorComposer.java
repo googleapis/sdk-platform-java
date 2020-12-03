@@ -29,7 +29,6 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -205,7 +204,7 @@ public class BatchingDescriptorComposer {
                     IfStatement.builder()
                         .setConditionExpr(
                             RelationalOperationExpr.equalToWithExprs(
-                                builderVarExpr, ValueExpr.withValue(NullObjectValue.create())))
+                                builderVarExpr, ValueExpr.createNullExpr()))
                         .setBody(Arrays.asList(ExprStatement.withExpr(toBuilderExpr)))
                         .setElseBody(Arrays.asList(ExprStatement.withExpr(addAllExpr)))
                         .build()))

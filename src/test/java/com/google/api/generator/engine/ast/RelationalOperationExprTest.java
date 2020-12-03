@@ -93,7 +93,7 @@ public class RelationalOperationExprTest {
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNullWithNumericType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.notEqualToWithExprs(lhsExpr, rhsExpr));
@@ -163,7 +163,7 @@ public class RelationalOperationExprTest {
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -252,7 +252,7 @@ public class RelationalOperationExprTest {
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithBooleanBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -310,7 +310,7 @@ public class RelationalOperationExprTest {
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidNullWithBooleanType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr));
@@ -452,7 +452,7 @@ public class RelationalOperationExprTest {
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithReferenceType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.STRING, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -497,7 +497,7 @@ public class RelationalOperationExprTest {
                 .setPakkage("com.google.api.some.pakkage")
                 .build());
     VariableExpr lhsExpr = createVariableExpr(someType, "y");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -590,7 +590,7 @@ public class RelationalOperationExprTest {
     // LHS: Null type, RHS: any reference type
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validAnyReferenceTypeWithNull".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     TypeNode someType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -607,7 +607,7 @@ public class RelationalOperationExprTest {
     // LHS: Object, RHS: Null.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validNullWithObjectType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -617,7 +617,7 @@ public class RelationalOperationExprTest {
     // LHS: Null, RHS: Object.
     // Swapping LHS and RHS test case is covered in "equalToOperationExpr_validObjectWithNullType".
     VariableExpr rhsExpr = createVariableExpr(TypeNode.OBJECT, "x");
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -626,8 +626,8 @@ public class RelationalOperationExprTest {
   public void equalToOperationExpr_validNullWithNullType() {
     // LHS: Null, RHS: Null.
     // No need swap LHS and RHS test case.
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
@@ -670,7 +670,7 @@ public class RelationalOperationExprTest {
     // LHS: Null type, RHS: Reference type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNullWithReferenceType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.STRING, "y");
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
@@ -681,7 +681,7 @@ public class RelationalOperationExprTest {
     // LHS: Object type, RHS: Any Boxed type
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_validBooleanBoxedToNullType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN_OBJECT, "y");
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
@@ -692,7 +692,7 @@ public class RelationalOperationExprTest {
     // LHS: Object type, RHS: Any Boxed type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_validNumericBoxedWithNullType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "y");
     RelationalOperationExpr.equalToWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
@@ -716,7 +716,7 @@ public class RelationalOperationExprTest {
     // LHS: Null type, RHS: Nny Numeric type.
     // Swapping LHS and RHS test case is covered in
     // "notEqualToOperationExpr_invalidNumericNullType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "y");
     assertThrows(
         IllegalStateException.class,
@@ -728,7 +728,7 @@ public class RelationalOperationExprTest {
     // LHS: Null type, RHS: Boolean type.
     // Swapping LHS and RHS test case is covered in
     // "equalToOperationExpr_invalidBooleanWithNullType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.BOOLEAN, "y");
     assertThrows(
         IllegalStateException.class,
@@ -860,7 +860,7 @@ public class RelationalOperationExprTest {
     // LHS: Null type, RHS: Numeric type.
     // Swap case in "lessThanOperationExpr_invalidNumericWithNullType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
@@ -871,7 +871,7 @@ public class RelationalOperationExprTest {
     // LHS: Numeric boxed type, RHS: Null type.
     // Swap case in "lessThanOperationExpr_invalidNullWithNumericBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> RelationalOperationExpr.lessThanWithExprs(lhsExpr, rhsExpr));
@@ -947,7 +947,7 @@ public class RelationalOperationExprTest {
   public void lessThanOperationExpr_invalidNumericWithNullType() {
     // LHS: Null type, RHS: Numeric box type.
 
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT, "x");
     assertThrows(
         IllegalStateException.class,
@@ -958,7 +958,7 @@ public class RelationalOperationExprTest {
   public void lessThanOperationExpr_invalidNullWithNumericBoxedType() {
     // LHS: Null type, RHS: Numeric box type.
     // Swap case in "lessThanOperationExpr_invalidNumericTypeWithNullType".
-    ValueExpr lhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr lhsExpr = ValueExpr.createNullExpr();
     VariableExpr rhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
     assertThrows(
         IllegalStateException.class,
