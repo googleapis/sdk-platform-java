@@ -36,7 +36,7 @@ public class CastExprTest {
     VariableExpr variableExpr = VariableExpr.builder().setVariable(variable).build();
     CastExpr.builder()
         .setType(TypeNode.withReference(ConcreteReference.withClazz(Object.class)))
-        .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+        .setExpr(ValueExpr.createNullExpr())
         .build();
     // No exception thrown, so we succeeded.
   }

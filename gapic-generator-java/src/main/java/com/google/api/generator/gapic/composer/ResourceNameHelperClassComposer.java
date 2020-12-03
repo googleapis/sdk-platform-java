@@ -31,7 +31,6 @@ import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -288,7 +287,7 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    final ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+    final ValueExpr nullExpr = ValueExpr.createNullExpr();
     Function<String, AssignmentExpr> assignTokenToNullExpr =
         t ->
             AssignmentExpr.builder()
@@ -622,8 +621,7 @@ public class ResourceNameHelperClassComposer {
                     .build())
             .setBody(
                 Arrays.asList(
-                    ExprStatement.withExpr(
-                        ReturnExpr.withExpr(ValueExpr.withValue(NullObjectValue.create())))))
+                    ExprStatement.withExpr(ReturnExpr.withExpr(ValueExpr.createNullExpr()))))
             .build());
 
     List<Expr> formattedStringArgList = Arrays.asList(formattedStringArgExpr);
@@ -864,8 +862,7 @@ public class ResourceNameHelperClassComposer {
             Variable.builder().setName("value").setType(thisClassType).build());
     // We use an equality check instead of Objects.isNull() for Java 7 compatibility.
     Expr isNullCheck =
-        RelationalOperationExpr.equalToWithExprs(
-            valueVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+        RelationalOperationExpr.equalToWithExprs(valueVarExpr, ValueExpr.createNullExpr());
     Statement listAddEmptyStringStatement =
         ExprStatement.withExpr(
             MethodInvocationExpr.builder()
@@ -1002,8 +999,7 @@ public class ResourceNameHelperClassComposer {
               .setArguments(ValueExpr.withValue(tokenStrVal), tokenVarExpr)
               .build();
       Expr notNullCheckExpr =
-          RelationalOperationExpr.notEqualToWithExprs(
-              tokenVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+          RelationalOperationExpr.notEqualToWithExprs(tokenVarExpr, ValueExpr.createNullExpr());
       tokenIfStatements.add(
           IfStatement.builder()
               .setConditionExpr(notNullCheckExpr)
@@ -1031,8 +1027,7 @@ public class ResourceNameHelperClassComposer {
 
     // Middle if-block, i.e. `if (fieldValuesMap == null)`.
     Expr fieldValuesMapNullCheckExpr =
-        RelationalOperationExpr.equalToWithExprs(
-            fieldValuesMapVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+        RelationalOperationExpr.equalToWithExprs(fieldValuesMapVarExpr, ValueExpr.createNullExpr());
     IfStatement fieldValuesMapIfStatement =
         IfStatement.builder()
             .setConditionExpr(fieldValuesMapNullCheckExpr)
@@ -1125,8 +1120,7 @@ public class ResourceNameHelperClassComposer {
     VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
     // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
     Expr fixedValueNullCheck =
-        RelationalOperationExpr.notEqualToWithExprs(
-            fixedValueVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+        RelationalOperationExpr.notEqualToWithExprs(fixedValueVarExpr, ValueExpr.createNullExpr());
 
     MethodInvocationExpr instantiateExpr =
         MethodInvocationExpr.builder()
@@ -1171,8 +1165,7 @@ public class ResourceNameHelperClassComposer {
     RelationalOperationExpr oEqualsThisExpr =
         RelationalOperationExpr.equalToWithExprs(argVarExpr, thisValueExpr);
     RelationalOperationExpr oNotEqualsNullExpr =
-        RelationalOperationExpr.notEqualToWithExprs(
-            argVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+        RelationalOperationExpr.notEqualToWithExprs(argVarExpr, ValueExpr.createNullExpr());
     MethodInvocationExpr getClassMethodInvocationExpr =
         MethodInvocationExpr.builder().setMethodName("getClass").build();
     RelationalOperationExpr getClassEqualsExpr =

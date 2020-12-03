@@ -119,7 +119,7 @@ public class TernaryExprTest {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
             .setThenExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
-            .setElseExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setElseExpr(ValueExpr.createNullExpr())
             .build();
     assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());
     assertEquals(TypeNode.STRING, ternaryExpr.type());
@@ -132,7 +132,7 @@ public class TernaryExprTest {
             .setConditionExpr(
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("false").build()))
-            .setThenExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setThenExpr(ValueExpr.createNullExpr())
             .setElseExpr(ValueExpr.withValue(StringObjectValue.withValue("foobar")))
             .build();
     assertEquals(TypeNode.BOOLEAN, ternaryExpr.conditionExpr().type());

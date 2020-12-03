@@ -38,7 +38,7 @@ public class ArithmeticOperationExprTest {
     // Type-checking for String variable x and null object value.
     VariableExpr lhsExpr =
         VariableExpr.withVariable(Variable.builder().setType(TypeNode.STRING).setName("x").build());
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     ArithmeticOperationExpr.concatWithExprs(lhsExpr, rhsExpr);
     // No exception thrown, so we succeeded.
   }
