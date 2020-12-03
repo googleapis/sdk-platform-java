@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
@@ -26,6 +27,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,15 +40,16 @@ public class MethodSampleCodeHelperComposer {
       List<MethodArgument> arguments,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames) {
-    VariableExpr clientVarExpr = createVariableExpr(getClientName(clientType), clientType);
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
     // Assign each method arguments with its default value.
-    Map<String, VariableExpr> methodArgVarExprMap = createMethodArgumentsVariableExprs(arguments);
+    List<Expr> methodArgExprs = createMethodArgVarExprs(arguments, resourceNames);
     List<Expr> bodyExpr =
-        assignMethodArgumentsWithDefaultValues(arguments, methodArgVarExprMap, resourceNames);
-    List<Expr> methodVarExprs =
-        arguments.stream()
-            .map(arg -> methodArgVarExprMap.get(arg.name()))
-            .collect(Collectors.toList());
+        assignMethodArgumentsWithDefaultValues(arguments, methodArgExprs, resourceNames);
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
@@ -56,16 +59,19 @@ public class MethodSampleCodeHelperComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(clientVarExpr)
               .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(methodVarExprs)
+              .setArguments(methodArgExprs)
               .setReturnType(clientType)
               .build());
     } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName(RESPONSE).setType(method.outputType()).build());
       bodyExpr.add(
           createAssignExprForVariableWithClientMethod(
-              createVariableExpr(RESPONSE, method.outputType()),
+              responseVarExpr,
               clientVarExpr,
               JavaStyle.toLowerCamelCase(method.name()),
-              methodVarExprs));
+              methodArgExprs));
     }
 
     return TryCatchStatement.builder()
@@ -93,30 +99,72 @@ public class MethodSampleCodeHelperComposer {
         .build();
   }
 
-  // Create a Map where key is method's argument name, and value is its VariableExpr.
-  private static Map<String, VariableExpr> createMethodArgumentsVariableExprs(
-      List<MethodArgument> arguments) {
+  // Create a list of Expr for method argument variable expression.
+  private static List<Expr> createMethodArgVarExprs(
+      List<MethodArgument> arguments, Map<String, ResourceName> resourceNames) {
     return arguments.stream()
-        .collect(
-            Collectors.toMap(
-                methodArg -> methodArg.name(),
-                methodArg ->
-                    createVariableExpr(
-                        JavaStyle.toLowerCamelCase(methodArg.name()), methodArg.type())));
+        .map(
+            arg -> {
+              VariableExpr argVarExpr =
+                  VariableExpr.withVariable(
+                      Variable.builder()
+                          .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                          .setType(arg.type())
+                          .build());
+              if (arg.type().equals(TypeNode.STRING)
+                  && arg.field().hasResourceReference()
+                  && resourceNames.containsKey(
+                      arg.field().resourceReference().resourceTypeString())) {
+                return MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(argVarExpr)
+                    .setMethodName("toString")
+                    .build();
+              }
+              return argVarExpr;
+            })
+        .collect(Collectors.toList());
   }
 
   // Return a list of AssignmentExpr for method argument with its default value.
   private static List<Expr> assignMethodArgumentsWithDefaultValues(
       List<MethodArgument> arguments,
-      Map<String, VariableExpr> argVarExprs,
+      List<Expr> argVarExprs,
       Map<String, ResourceName> resourceNames) {
-    return arguments.stream()
-        .map(
-            arg ->
-                createAssignmentExpr(
-                    argVarExprs.get(arg.name()),
-                    DefaultValueComposer.createDefaultValue(arg, resourceNames)))
-        .collect(Collectors.toList());
+    List<ResourceName> resourceNameList =
+        resourceNames.values().stream().collect(Collectors.toList());
+    List<Expr> assignmentExprs = new ArrayList<>();
+    for (int i = 0; i < arguments.size(); i++) {
+      MethodArgument arg = arguments.get(i);
+      VariableExpr argVarExpr =
+          (argVarExprs.get(i) instanceof VariableExpr) ? (VariableExpr) argVarExprs.get(i) : null;
+      Expr defaultValueExpr = DefaultValueComposer.createDefaultValue(arg, resourceNames);
+      if (arg.type().equals(TypeNode.STRING)
+          && arg.field().hasResourceReference()
+          && resourceNames.containsKey(arg.field().resourceReference().resourceTypeString())) {
+        ResourceName resourceName =
+            resourceNames.get(arg.field().resourceReference().resourceTypeString());
+        defaultValueExpr =
+            DefaultValueComposer.createDefaultValue(
+                resourceName, resourceNameList, arg.field().name());
+        TypeNode resourceReferenceType =
+            arg.field().resourceReference().isChildType()
+                ? TypeNode.withReference(
+                    ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class))
+                : defaultValueExpr.type();
+        argVarExpr =
+            VariableExpr.withVariable(
+                Variable.builder()
+                    .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                    .setType(resourceReferenceType)
+                    .build());
+      }
+      assignmentExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(argVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(defaultValueExpr)
+              .build());
+    }
+    return assignmentExprs;
   }
 
   private static Expr createAssignExprForVariableWithClientMethod(
@@ -144,18 +192,5 @@ public class MethodSampleCodeHelperComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
-  }
-
-  private static AssignmentExpr createAssignmentExpr(VariableExpr variableExpr, Expr valueExpr) {
-    return AssignmentExpr.builder()
-        .setVariableExpr(variableExpr.toBuilder().setIsDecl(true).build())
-        .setValueExpr(valueExpr)
-        .build();
-  }
-
-  private static VariableExpr createVariableExpr(String variableName, TypeNode type) {
-    return VariableExpr.builder()
-        .setVariable(Variable.builder().setName(variableName).setType(type).build())
-        .build();
   }
 }

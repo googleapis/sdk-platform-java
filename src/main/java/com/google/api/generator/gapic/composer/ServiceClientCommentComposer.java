@@ -170,7 +170,7 @@ class ServiceClientCommentComposer {
           processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
-    if (!sampleCode.isEmpty()) {
+    if (!Strings.isNullOrEmpty(sampleCode)) {
       methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
       methodJavadocBuilder.addSampleCode(sampleCode);
     }

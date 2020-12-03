@@ -508,8 +508,8 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = "sink_name-1391757129";
-   *   LogSink response = configClient.getSink(sinkName);
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink response = configClient.getSink(sinkName.toString());
    * }
    * }</pre>
    *
@@ -694,9 +694,9 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.createSink(parent, sink);
+   *   LogSink response = configClient.createSink(parent.toString(), sink);
    * }
    * }</pre>
    *
@@ -791,9 +791,9 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = "sink_name-1391757129";
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink);
+   *   LogSink response = configClient.updateSink(sinkName.toString(), sink);
    * }
    * }</pre>
    *
@@ -875,10 +875,10 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = "sink_name-1391757129";
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
    *   LogSink sink = LogSink.newBuilder().build();
    *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   *   LogSink response = configClient.updateSink(sinkName.toString(), sink, updateMask);
    * }
    * }</pre>
    *
@@ -981,8 +981,8 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String sinkName = "sink_name-1391757129";
-   *   configClient.deleteSink(sinkName);
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   configClient.deleteSink(sinkName.toString());
    * }
    * }</pre>
    *
@@ -1173,8 +1173,8 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = "name3373707";
-   *   LogExclusion response = configClient.getExclusion(name);
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   LogExclusion response = configClient.getExclusion(name.toString());
    * }
    * }</pre>
    *
@@ -1349,9 +1349,9 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
-   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   *   LogExclusion response = configClient.createExclusion(parent.toString(), exclusion);
    * }
    * }</pre>
    *
@@ -1442,10 +1442,10 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = "name3373707";
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
    *   LogExclusion exclusion = LogExclusion.newBuilder().build();
    *   FieldMask updateMask = FieldMask.newBuilder().build();
-   *   LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   *   LogExclusion response = configClient.updateExclusion(name.toString(), exclusion, updateMask);
    * }
    * }</pre>
    *
@@ -1532,8 +1532,8 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String name = "name3373707";
-   *   configClient.deleteExclusion(name);
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   configClient.deleteExclusion(name.toString());
    * }
    * }</pre>
    *

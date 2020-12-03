@@ -128,10 +128,10 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = UserName.of("[USER]");
    *   String displayName = "display_name1615086568";
    *   String email = "email96619420";
-   *   User response = identityClient.createUser(parent, displayName, email);
+   *   User response = identityClient.createUser(parent.toString(), displayName, email);
    * }
    * }</pre>
    *
@@ -156,7 +156,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String parent = "parent-995424086";
+   *   ResourceName parent = UserName.of("[USER]");
    *   String displayName = "display_name1615086568";
    *   String email = "email96619420";
    *   int age = 96511;
@@ -165,7 +165,13 @@ public class IdentityClient implements BackgroundResource {
    *   double heightFeet = -1032737338;
    *   User response =
    *       identityClient.createUser(
-   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
+   *           parent.toString(),
+   *           displayName,
+   *           email,
+   *           age,
+   *           nickname,
+   *           enableNotifications,
+   *           heightFeet);
    * }
    * }</pre>
    *
@@ -240,8 +246,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = "name3373707";
-   *   User response = identityClient.getUser(name);
+   *   UserName name = UserName.of("[USER]");
+   *   User response = identityClient.getUser(name.toString());
    * }
    * }</pre>
    *
@@ -309,8 +315,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   String name = "name3373707";
-   *   identityClient.deleteUser(name);
+   *   UserName name = UserName.of("[USER]");
+   *   identityClient.deleteUser(name.toString());
    * }
    * }</pre>
    *
