@@ -34,6 +34,10 @@ public abstract class ValueExpr implements Expr {
     return builder().setValue(value).build();
   }
 
+  public static ValueExpr createNullExpr() {
+    return withValue(NullObjectValue.create());
+  }
+
   public static Builder builder() {
     return new AutoValue_ValueExpr.Builder();
   }
