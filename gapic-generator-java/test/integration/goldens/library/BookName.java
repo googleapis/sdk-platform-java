@@ -91,7 +91,7 @@ public class BookName implements ResourceName {
   public static List<String> toStringList(List<BookName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (BookName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -106,14 +106,14 @@ public class BookName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(shelfId)) {
+          if (shelfId != null) {
             fieldMapBuilder.put("shelf_id", shelfId);
           }
-          if (!Objects.isNull(bookId)) {
+          if (bookId != null) {
             fieldMapBuilder.put("book_id", bookId);
           }
           fieldValuesMap = fieldMapBuilder.build();

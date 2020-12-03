@@ -16,7 +16,6 @@ import com.google.showcase.v1beta1.stub.IdentityStub;
 import com.google.showcase.v1beta1.stub.IdentityStubSettings;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -194,7 +193,7 @@ public class IdentityClient implements BackgroundResource {
    */
   public final User getUser(UserName name) {
     GetUserRequest request =
-        GetUserRequest.newBuilder().setName(Objects.isNull(name) ? null : name.toString()).build();
+        GetUserRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getUser(request);
   }
 
@@ -245,9 +244,7 @@ public class IdentityClient implements BackgroundResource {
    */
   public final void deleteUser(UserName name) {
     DeleteUserRequest request =
-        DeleteUserRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        DeleteUserRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     deleteUser(request);
   }
 

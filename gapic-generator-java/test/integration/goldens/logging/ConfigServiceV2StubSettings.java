@@ -71,7 +71,6 @@ import com.google.logging.v2.UpdateSinkRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -170,7 +169,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogBucket> extractResources(ListBucketsResponse payload) {
-              return Objects.isNull(payload.getBucketsList())
+              return payload.getBucketsList() == null
                   ? ImmutableList.<LogBucket>of()
                   : payload.getBucketsList();
             }
@@ -206,7 +205,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogSink> extractResources(ListSinksResponse payload) {
-              return Objects.isNull(payload.getSinksList())
+              return payload.getSinksList() == null
                   ? ImmutableList.<LogSink>of()
                   : payload.getSinksList();
             }
@@ -244,7 +243,7 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
 
             @Override
             public Iterable<LogExclusion> extractResources(ListExclusionsResponse payload) {
-              return Objects.isNull(payload.getExclusionsList())
+              return payload.getExclusionsList() == null
                   ? ImmutableList.<LogExclusion>of()
                   : payload.getExclusionsList();
             }

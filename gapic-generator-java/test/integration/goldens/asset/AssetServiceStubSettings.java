@@ -70,7 +70,6 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -168,7 +167,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             @Override
             public Iterable<ResourceSearchResult> extractResources(
                 SearchAllResourcesResponse payload) {
-              return Objects.isNull(payload.getResultsList())
+              return payload.getResultsList() == null
                   ? ImmutableList.<ResourceSearchResult>of()
                   : payload.getResultsList();
             }
@@ -209,7 +208,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             @Override
             public Iterable<IamPolicySearchResult> extractResources(
                 SearchAllIamPoliciesResponse payload) {
-              return Objects.isNull(payload.getResultsList())
+              return payload.getResultsList() == null
                   ? ImmutableList.<IamPolicySearchResult>of()
                   : payload.getResultsList();
             }
