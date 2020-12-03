@@ -65,7 +65,6 @@ import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -189,7 +188,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListBucketsPagedResponse listBuckets(BillingAccountLocationName parent) {
     ListBucketsRequest request =
         ListBucketsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listBuckets(request);
   }
@@ -210,7 +209,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListBucketsPagedResponse listBuckets(FolderLocationName parent) {
     ListBucketsRequest request =
         ListBucketsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listBuckets(request);
   }
@@ -231,7 +230,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListBucketsPagedResponse listBuckets(LocationName parent) {
     ListBucketsRequest request =
         ListBucketsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listBuckets(request);
   }
@@ -252,7 +251,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListBucketsPagedResponse listBuckets(OrganizationLocationName parent) {
     ListBucketsRequest request =
         ListBucketsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listBuckets(request);
   }
@@ -378,9 +377,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final ListSinksPagedResponse listSinks(BillingAccountName parent) {
     ListSinksRequest request =
-        ListSinksRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListSinksRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listSinks(request);
   }
 
@@ -395,9 +392,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final ListSinksPagedResponse listSinks(FolderName parent) {
     ListSinksRequest request =
-        ListSinksRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListSinksRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listSinks(request);
   }
 
@@ -412,9 +407,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final ListSinksPagedResponse listSinks(OrganizationName parent) {
     ListSinksRequest request =
-        ListSinksRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListSinksRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listSinks(request);
   }
 
@@ -429,9 +422,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final ListSinksPagedResponse listSinks(ProjectName parent) {
     ListSinksRequest request =
-        ListSinksRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListSinksRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listSinks(request);
   }
 
@@ -495,7 +486,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink getSink(LogSinkName sinkName) {
     GetSinkRequest request =
         GetSinkRequest.newBuilder()
-            .setSinkName(Objects.isNull(sinkName) ? null : sinkName.toString())
+            .setSinkName(sinkName == null ? null : sinkName.toString())
             .build();
     return getSink(request);
   }
@@ -556,7 +547,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink createSink(BillingAccountName parent, LogSink sink) {
     CreateSinkRequest request =
         CreateSinkRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setSink(sink)
             .build();
     return createSink(request);
@@ -580,7 +571,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink createSink(FolderName parent, LogSink sink) {
     CreateSinkRequest request =
         CreateSinkRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setSink(sink)
             .build();
     return createSink(request);
@@ -604,7 +595,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink createSink(OrganizationName parent, LogSink sink) {
     CreateSinkRequest request =
         CreateSinkRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setSink(sink)
             .build();
     return createSink(request);
@@ -628,7 +619,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink createSink(ProjectName parent, LogSink sink) {
     CreateSinkRequest request =
         CreateSinkRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setSink(sink)
             .build();
     return createSink(request);
@@ -704,7 +695,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink) {
     UpdateSinkRequest request =
         UpdateSinkRequest.newBuilder()
-            .setSinkName(Objects.isNull(sinkName) ? null : sinkName.toString())
+            .setSinkName(sinkName == null ? null : sinkName.toString())
             .setSink(sink)
             .build();
     return updateSink(request);
@@ -766,7 +757,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogSink updateSink(LogSinkName sinkName, LogSink sink, FieldMask updateMask) {
     UpdateSinkRequest request =
         UpdateSinkRequest.newBuilder()
-            .setSinkName(Objects.isNull(sinkName) ? null : sinkName.toString())
+            .setSinkName(sinkName == null ? null : sinkName.toString())
             .setSink(sink)
             .setUpdateMask(updateMask)
             .build();
@@ -857,7 +848,7 @@ public class ConfigClient implements BackgroundResource {
   public final void deleteSink(LogSinkName sinkName) {
     DeleteSinkRequest request =
         DeleteSinkRequest.newBuilder()
-            .setSinkName(Objects.isNull(sinkName) ? null : sinkName.toString())
+            .setSinkName(sinkName == null ? null : sinkName.toString())
             .build();
     deleteSink(request);
   }
@@ -916,7 +907,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListExclusionsPagedResponse listExclusions(BillingAccountName parent) {
     ListExclusionsRequest request =
         ListExclusionsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listExclusions(request);
   }
@@ -933,7 +924,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListExclusionsPagedResponse listExclusions(FolderName parent) {
     ListExclusionsRequest request =
         ListExclusionsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listExclusions(request);
   }
@@ -950,7 +941,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListExclusionsPagedResponse listExclusions(OrganizationName parent) {
     ListExclusionsRequest request =
         ListExclusionsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listExclusions(request);
   }
@@ -967,7 +958,7 @@ public class ConfigClient implements BackgroundResource {
   public final ListExclusionsPagedResponse listExclusions(ProjectName parent) {
     ListExclusionsRequest request =
         ListExclusionsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listExclusions(request);
   }
@@ -1033,9 +1024,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final LogExclusion getExclusion(LogExclusionName name) {
     GetExclusionRequest request =
-        GetExclusionRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        GetExclusionRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getExclusion(request);
   }
 
@@ -1093,7 +1082,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogExclusion createExclusion(BillingAccountName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
         CreateExclusionRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setExclusion(exclusion)
             .build();
     return createExclusion(request);
@@ -1115,7 +1104,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogExclusion createExclusion(FolderName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
         CreateExclusionRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setExclusion(exclusion)
             .build();
     return createExclusion(request);
@@ -1137,7 +1126,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogExclusion createExclusion(OrganizationName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
         CreateExclusionRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setExclusion(exclusion)
             .build();
     return createExclusion(request);
@@ -1159,7 +1148,7 @@ public class ConfigClient implements BackgroundResource {
   public final LogExclusion createExclusion(ProjectName parent, LogExclusion exclusion) {
     CreateExclusionRequest request =
         CreateExclusionRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setExclusion(exclusion)
             .build();
     return createExclusion(request);
@@ -1231,7 +1220,7 @@ public class ConfigClient implements BackgroundResource {
       LogExclusionName name, LogExclusion exclusion, FieldMask updateMask) {
     UpdateExclusionRequest request =
         UpdateExclusionRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setExclusion(exclusion)
             .setUpdateMask(updateMask)
             .build();
@@ -1304,9 +1293,7 @@ public class ConfigClient implements BackgroundResource {
    */
   public final void deleteExclusion(LogExclusionName name) {
     DeleteExclusionRequest request =
-        DeleteExclusionRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        DeleteExclusionRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     deleteExclusion(request);
   }
 

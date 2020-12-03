@@ -44,6 +44,7 @@ import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.SuperObjectValue;
@@ -1347,14 +1348,8 @@ public class ServiceClientClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName(argumentName).setType(argumentType).build());
     if (argument.isResourceNameHelper()) {
-      MethodInvocationExpr isNullCheckExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(OBJECTS_TYPE)
-              .setMethodName("isNull")
-              .setArguments(Arrays.asList(argVarExpr))
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
       Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+      Expr isNullCheckExpr = RelationalOperationExpr.equalToWithExprs(argVarExpr, nullExpr);
       MethodInvocationExpr toStringExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(argVarExpr)

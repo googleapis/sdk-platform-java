@@ -49,7 +49,6 @@ import com.google.example.library.v1.UpdateBookRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -209,7 +208,7 @@ public class LibraryServiceClient implements BackgroundResource {
    */
   public final Shelf getShelf(ShelfName name) {
     GetShelfRequest request =
-        GetShelfRequest.newBuilder().setName(Objects.isNull(name) ? null : name.toString()).build();
+        GetShelfRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getShelf(request);
   }
 
@@ -290,9 +289,7 @@ public class LibraryServiceClient implements BackgroundResource {
    */
   public final void deleteShelf(ShelfName name) {
     DeleteShelfRequest request =
-        DeleteShelfRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        DeleteShelfRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     deleteShelf(request);
   }
 
@@ -345,8 +342,8 @@ public class LibraryServiceClient implements BackgroundResource {
   public final Shelf mergeShelves(ShelfName name, ShelfName otherShelfName) {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .setOtherShelfName(Objects.isNull(otherShelfName) ? null : otherShelfName.toString())
+            .setName(name == null ? null : name.toString())
+            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
             .build();
     return mergeShelves(request);
   }
@@ -367,7 +364,7 @@ public class LibraryServiceClient implements BackgroundResource {
   public final Shelf mergeShelves(ShelfName name, String otherShelfName) {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setOtherShelfName(otherShelfName)
             .build();
     return mergeShelves(request);
@@ -390,7 +387,7 @@ public class LibraryServiceClient implements BackgroundResource {
     MergeShelvesRequest request =
         MergeShelvesRequest.newBuilder()
             .setName(name)
-            .setOtherShelfName(Objects.isNull(otherShelfName) ? null : otherShelfName.toString())
+            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
             .build();
     return mergeShelves(request);
   }
@@ -456,7 +453,7 @@ public class LibraryServiceClient implements BackgroundResource {
   public final Book createBook(ShelfName name, Book book) {
     CreateBookRequest request =
         CreateBookRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setBook(book)
             .build();
     return createBook(request);
@@ -505,7 +502,7 @@ public class LibraryServiceClient implements BackgroundResource {
    */
   public final Book getBook(BookName name) {
     GetBookRequest request =
-        GetBookRequest.newBuilder().setName(Objects.isNull(name) ? null : name.toString()).build();
+        GetBookRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getBook(request);
   }
 
@@ -553,9 +550,7 @@ public class LibraryServiceClient implements BackgroundResource {
    */
   public final ListBooksPagedResponse listBooks(ShelfName name) {
     ListBooksRequest request =
-        ListBooksRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        ListBooksRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return listBooks(request);
   }
 
@@ -679,8 +674,8 @@ public class LibraryServiceClient implements BackgroundResource {
   public final Book moveBook(BookName name, ShelfName otherShelfName) {
     MoveBookRequest request =
         MoveBookRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .setOtherShelfName(Objects.isNull(otherShelfName) ? null : otherShelfName.toString())
+            .setName(name == null ? null : name.toString())
+            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
             .build();
     return moveBook(request);
   }
@@ -697,7 +692,7 @@ public class LibraryServiceClient implements BackgroundResource {
   public final Book moveBook(BookName name, String otherShelfName) {
     MoveBookRequest request =
         MoveBookRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setOtherShelfName(otherShelfName)
             .build();
     return moveBook(request);
@@ -716,7 +711,7 @@ public class LibraryServiceClient implements BackgroundResource {
     MoveBookRequest request =
         MoveBookRequest.newBuilder()
             .setName(name)
-            .setOtherShelfName(Objects.isNull(otherShelfName) ? null : otherShelfName.toString())
+            .setOtherShelfName(otherShelfName == null ? null : otherShelfName.toString())
             .build();
     return moveBook(request);
   }
