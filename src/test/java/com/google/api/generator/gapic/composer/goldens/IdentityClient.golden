@@ -129,10 +129,10 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   ResourceName parent = UserName.of("[USER]");
+   *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "display_name1615086568";
    *   String email = "email96619420";
-   *   User response = identityClient.createUser(parent.toString(), displayName, email);
+   *   User response = identityClient.createUser(parent, displayName, email);
    * }
    * }</pre>
    *
@@ -157,7 +157,7 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   ResourceName parent = UserName.of("[USER]");
+   *   String parent = UserName.of("[USER]").toString();
    *   String displayName = "display_name1615086568";
    *   String email = "email96619420";
    *   int age = 96511;
@@ -166,13 +166,7 @@ public class IdentityClient implements BackgroundResource {
    *   double heightFeet = -1032737338;
    *   User response =
    *       identityClient.createUser(
-   *           parent.toString(),
-   *           displayName,
-   *           email,
-   *           age,
-   *           nickname,
-   *           enableNotifications,
-   *           heightFeet);
+   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
    * }
    * }</pre>
    *
@@ -247,8 +241,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UserName name = UserName.of("[USER]");
-   *   User response = identityClient.getUser(name.toString());
+   *   String name = UserName.of("[USER]").toString();
+   *   User response = identityClient.getUser(name);
    * }
    * }</pre>
    *
@@ -318,8 +312,8 @@ public class IdentityClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
-   *   UserName name = UserName.of("[USER]");
-   *   identityClient.deleteUser(name.toString());
+   *   String name = UserName.of("[USER]").toString();
+   *   identityClient.deleteUser(name);
    * }
    * }</pre>
    *

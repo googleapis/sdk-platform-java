@@ -178,8 +178,8 @@ public class ServiceClientSampleCodeComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  FoobarName name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
-            + "  EchoResponse response = echoClient.echo(name.toString());\n"
+            + "  String name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
+            + "  EchoResponse response = echoClient.echo(name);\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -219,8 +219,8 @@ public class ServiceClientSampleCodeComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
-            + "  EchoResponse response = echoClient.echo(parent.toString());\n"
+            + "  String parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
+            + "  EchoResponse response = echoClient.echo(parent);\n"
             + "}";
     assertEquals(expected, results);
   }
@@ -320,9 +320,9 @@ public class ServiceClientSampleCodeComposerTest {
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
         "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  ResourceName displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
+            + "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
             + "  String otherName = \"other_name-182411686\";\n"
-            + "  EchoResponse response = echoClient.echo(displayName.toString(), otherName);\n"
+            + "  EchoResponse response = echoClient.echo(displayName, otherName);\n"
             + "}";
     assertEquals(expected, results);
   }

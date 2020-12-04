@@ -80,6 +80,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -479,11 +480,11 @@ public class ServiceClientClassComposer {
       Map<String, TypeNode> types,
       Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    String clientName = getClientClassName(service);
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(
-            createMethodVariants(method, messageTypes, types, clientName, resourceNames));
+            createMethodVariants(
+                method, getClientClassName(service), messageTypes, types, resourceNames));
         javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
@@ -499,9 +500,9 @@ public class ServiceClientClassComposer {
 
   private static List<MethodDefinition> createMethodVariants(
       Method method,
+      String clientName,
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
-      String clientName,
       Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
@@ -564,13 +565,14 @@ public class ServiceClientClassComposer {
               .setReturnType(methodOutputType)
               .build();
 
-      String methodSampleCode = "";
+      Optional<String> methodSampleCode = Optional.empty();
       if (!method.isPaged() && !method.hasLro()) {
         // TODO(summerji): Remove the condition check once finished the implementation on paged
         // sample code and lro sample code.
         methodSampleCode =
-            ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                method, signature, types.get(clientName), resourceNames);
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                    method, signature, types.get(clientName), resourceNames));
       }
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()

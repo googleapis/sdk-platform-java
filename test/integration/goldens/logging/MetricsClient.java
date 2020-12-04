@@ -244,8 +244,8 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
-   *   LogMetric response = metricsClient.getLogMetric(metricName.toString());
+   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *   LogMetric response = metricsClient.getLogMetric(metricName);
    * }
    * }</pre>
    *
@@ -318,9 +318,9 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   ResourceName parent = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   String parent = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
    *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.createLogMetric(parent.toString(), metric);
+   *   LogMetric response = metricsClient.createLogMetric(parent, metric);
    * }
    * }</pre>
    *
@@ -397,9 +397,9 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
+   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
    *   LogMetric metric = LogMetric.newBuilder().build();
-   *   LogMetric response = metricsClient.updateLogMetric(metricName.toString(), metric);
+   *   LogMetric response = metricsClient.updateLogMetric(metricName, metric);
    * }
    * }</pre>
    *
@@ -471,8 +471,8 @@ public class MetricsClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (MetricsClient metricsClient = MetricsClient.create()) {
-   *   LogMetricName metricName = LogMetricName.of("[PROJECT]", "[METRIC]");
-   *   metricsClient.deleteLogMetric(metricName.toString());
+   *   String metricName = LogMetricName.of("[PROJECT]", "[METRIC]").toString();
+   *   metricsClient.deleteLogMetric(metricName);
    * }
    * }</pre>
    *

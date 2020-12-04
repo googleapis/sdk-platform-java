@@ -321,8 +321,8 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   Instance response = cloudRedisClient.getInstance(name.toString());
+   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *   Instance response = cloudRedisClient.getInstance(name);
    * }
    * }</pre>
    *
