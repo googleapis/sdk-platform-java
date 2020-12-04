@@ -305,32 +305,6 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
-  // Create a list of Expr for method argument variable expression.
-  private static List<Expr> createRpcMethodArgVarExprs(
-      List<MethodArgument> arguments, Map<String, ResourceName> resourceNames) {
-    return arguments.stream()
-        .map(
-            arg -> {
-              VariableExpr argVarExpr =
-                  VariableExpr.withVariable(
-                      Variable.builder()
-                          .setName(JavaStyle.toLowerCamelCase(arg.name()))
-                          .setType(arg.type())
-                          .build());
-              if (arg.type().equals(TypeNode.STRING)
-                  && arg.field().hasResourceReference()
-                  && resourceNames.containsKey(
-                      arg.field().resourceReference().resourceTypeString())) {
-                return MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(argVarExpr)
-                    .setMethodName("toString")
-                    .build();
-              }
-              return argVarExpr;
-            })
-        .collect(Collectors.toList());
-  }
-
   private static boolean isStringTypedResourceName(
       MethodArgument arg, Map<String, ResourceName> resourceNames) {
     return arg.type().equals(TypeNode.STRING)
