@@ -682,7 +682,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -728,14 +728,14 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
-    String sinkName = "sink_name-1391757129";
+    String sinkName = "sinkName508775358";
 
     LogSink actualResponse = client.getSink(sinkName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -757,7 +757,7 @@ public class ConfigClientTest {
     mockConfigServiceV2.addException(exception);
 
     try {
-      String sinkName = "sink_name-1391757129";
+      String sinkName = "sinkName508775358";
       client.getSink(sinkName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -774,7 +774,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -823,7 +823,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -872,7 +872,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -921,7 +921,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -970,7 +970,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -1019,7 +1019,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -1068,14 +1068,14 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
-    String sinkName = "sink_name-1391757129";
+    String sinkName = "sinkName508775358";
     LogSink sink = LogSink.newBuilder().build();
 
     LogSink actualResponse = client.updateSink(sinkName, sink);
@@ -1099,7 +1099,7 @@ public class ConfigClientTest {
     mockConfigServiceV2.addException(exception);
 
     try {
-      String sinkName = "sink_name-1391757129";
+      String sinkName = "sinkName508775358";
       LogSink sink = LogSink.newBuilder().build();
       client.updateSink(sinkName, sink);
       Assert.fail("No exception raised");
@@ -1117,7 +1117,7 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -1169,14 +1169,14 @@ public class ConfigClientTest {
             .setFilter("filter-1274492040")
             .setDescription("description-1724546052")
             .setDisabled(true)
-            .setWriterIdentity("writer_identity775638794")
+            .setWriterIdentity("writerIdentity925193809")
             .setIncludeChildren(true)
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
-    String sinkName = "sink_name-1391757129";
+    String sinkName = "sinkName508775358";
     LogSink sink = LogSink.newBuilder().build();
     FieldMask updateMask = FieldMask.newBuilder().build();
 
@@ -1202,7 +1202,7 @@ public class ConfigClientTest {
     mockConfigServiceV2.addException(exception);
 
     try {
-      String sinkName = "sink_name-1391757129";
+      String sinkName = "sinkName508775358";
       LogSink sink = LogSink.newBuilder().build();
       FieldMask updateMask = FieldMask.newBuilder().build();
       client.updateSink(sinkName, sink, updateMask);
@@ -1251,7 +1251,7 @@ public class ConfigClientTest {
     Empty expectedResponse = Empty.newBuilder().build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
-    String sinkName = "sink_name-1391757129";
+    String sinkName = "sinkName508775358";
 
     client.deleteSink(sinkName);
 
@@ -1272,7 +1272,7 @@ public class ConfigClientTest {
     mockConfigServiceV2.addException(exception);
 
     try {
-      String sinkName = "sink_name-1391757129";
+      String sinkName = "sinkName508775358";
       client.deleteSink(sinkName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -1987,8 +1987,8 @@ public class ConfigClientTest {
     CmekSettings expectedResponse =
         CmekSettings.newBuilder()
             .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-            .setKmsKeyName("kms_key_name2094986649")
-            .setServiceAccountId("service_account_id-111486921")
+            .setKmsKeyName("kmsKeyName412586233")
+            .setServiceAccountId("serviceAccountId1964232947")
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 
@@ -2033,8 +2033,8 @@ public class ConfigClientTest {
     CmekSettings expectedResponse =
         CmekSettings.newBuilder()
             .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
-            .setKmsKeyName("kms_key_name2094986649")
-            .setServiceAccountId("service_account_id-111486921")
+            .setKmsKeyName("kmsKeyName412586233")
+            .setServiceAccountId("serviceAccountId1964232947")
             .build();
     mockConfigServiceV2.addResponse(expectedResponse);
 

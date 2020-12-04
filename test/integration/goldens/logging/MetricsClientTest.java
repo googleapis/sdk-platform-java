@@ -187,7 +187,7 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -232,14 +232,14 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
-    String metricName = "metric_name-1737602118";
+    String metricName = "metricName-610759589";
 
     LogMetric actualResponse = client.getLogMetric(metricName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -261,7 +261,7 @@ public class MetricsClientTest {
     mockMetricsServiceV2.addException(exception);
 
     try {
-      String metricName = "metric_name-1737602118";
+      String metricName = "metricName-610759589";
       client.getLogMetric(metricName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -277,7 +277,7 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -325,7 +325,7 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -373,7 +373,7 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
@@ -421,14 +421,14 @@ public class MetricsClientTest {
             .setDescription("description-1724546052")
             .setFilter("filter-1274492040")
             .setMetricDescriptor(MetricDescriptor.newBuilder().build())
-            .setValueExtractor("value_extractor2047672534")
+            .setValueExtractor("valueExtractor-1867420749")
             .putAllLabelExtractors(new HashMap<String, String>())
             .setCreateTime(Timestamp.newBuilder().build())
             .setUpdateTime(Timestamp.newBuilder().build())
             .build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
-    String metricName = "metric_name-1737602118";
+    String metricName = "metricName-610759589";
     LogMetric metric = LogMetric.newBuilder().build();
 
     LogMetric actualResponse = client.updateLogMetric(metricName, metric);
@@ -452,7 +452,7 @@ public class MetricsClientTest {
     mockMetricsServiceV2.addException(exception);
 
     try {
-      String metricName = "metric_name-1737602118";
+      String metricName = "metricName-610759589";
       LogMetric metric = LogMetric.newBuilder().build();
       client.updateLogMetric(metricName, metric);
       Assert.fail("No exception raised");
@@ -500,7 +500,7 @@ public class MetricsClientTest {
     Empty expectedResponse = Empty.newBuilder().build();
     mockMetricsServiceV2.addResponse(expectedResponse);
 
-    String metricName = "metric_name-1737602118";
+    String metricName = "metricName-610759589";
 
     client.deleteLogMetric(metricName);
 
@@ -521,7 +521,7 @@ public class MetricsClientTest {
     mockMetricsServiceV2.addException(exception);
 
     try {
-      String metricName = "metric_name-1737602118";
+      String metricName = "metricName-610759589";
       client.deleteLogMetric(metricName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
