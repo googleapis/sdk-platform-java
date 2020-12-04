@@ -69,7 +69,6 @@ import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -163,7 +162,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<LogEntry> extractResources(ListLogEntriesResponse payload) {
-              return Objects.isNull(payload.getEntriesList())
+              return payload.getEntriesList() == null
                   ? ImmutableList.<LogEntry>of()
                   : payload.getEntriesList();
             }
@@ -212,7 +211,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             @Override
             public Iterable<MonitoredResourceDescriptor> extractResources(
                 ListMonitoredResourceDescriptorsResponse payload) {
-              return Objects.isNull(payload.getResourceDescriptorsList())
+              return payload.getResourceDescriptorsList() == null
                   ? ImmutableList.<MonitoredResourceDescriptor>of()
                   : payload.getResourceDescriptorsList();
             }
@@ -248,7 +247,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
             @Override
             public Iterable<String> extractResources(ListLogsResponse payload) {
-              return Objects.isNull(payload.getLogNamesList())
+              return payload.getLogNamesList() == null
                   ? ImmutableList.<String>of()
                   : payload.getLogNamesList();
             }
@@ -336,7 +335,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
 
                 @Override
                 public void appendRequest(WriteLogEntriesRequest request) {
-                  if (Objects.isNull(builder)) {
+                  if (builder == null) {
                     builder = request.toBuilder();
                   } else {
                     builder.addAllEntries(request.getEntriesList());

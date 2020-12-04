@@ -224,7 +224,7 @@ public class LogName implements ResourceName {
   public static List<String> toStringList(List<LogName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (LogName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -242,23 +242,23 @@ public class LogName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
+          if (project != null) {
             fieldMapBuilder.put("project", project);
           }
-          if (!Objects.isNull(log)) {
+          if (log != null) {
             fieldMapBuilder.put("log", log);
           }
-          if (!Objects.isNull(organization)) {
+          if (organization != null) {
             fieldMapBuilder.put("organization", organization);
           }
-          if (!Objects.isNull(folder)) {
+          if (folder != null) {
             fieldMapBuilder.put("folder", folder);
           }
-          if (!Objects.isNull(billingAccount)) {
+          if (billingAccount != null) {
             fieldMapBuilder.put("billing_account", billingAccount);
           }
           fieldValuesMap = fieldMapBuilder.build();
@@ -274,7 +274,7 @@ public class LogName implements ResourceName {
 
   @Override
   public String toString() {
-    return !Objects.isNull(fixedValue) ? fixedValue : pathTemplate.instantiate(getFieldValuesMap());
+    return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap());
   }
 
   @Override

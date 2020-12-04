@@ -31,7 +31,6 @@ import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
@@ -44,7 +43,6 @@ import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.UnaryOperationExpr;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
@@ -289,7 +287,7 @@ public class ResourceNameHelperClassComposer {
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    final ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+    final ValueExpr nullExpr = ValueExpr.createNullExpr();
     Function<String, AssignmentExpr> assignTokenToNullExpr =
         t ->
             AssignmentExpr.builder()
@@ -623,8 +621,7 @@ public class ResourceNameHelperClassComposer {
                     .build())
             .setBody(
                 Arrays.asList(
-                    ExprStatement.withExpr(
-                        ReturnExpr.withExpr(ValueExpr.withValue(NullObjectValue.create())))))
+                    ExprStatement.withExpr(ReturnExpr.withExpr(ValueExpr.createNullExpr()))))
             .build());
 
     List<Expr> formattedStringArgList = Arrays.asList(formattedStringArgExpr);
@@ -860,17 +857,12 @@ public class ResourceNameHelperClassComposer {
                     .build())
             .build();
 
-    // TODO(miraleung): Use equality check instead of Objects.
     VariableExpr valueVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("value").setType(thisClassType).build());
+    // We use an equality check instead of Objects.isNull() for Java 7 compatibility.
     Expr isNullCheck =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("isNull")
-            .setArguments(valueVarExpr)
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
+        RelationalOperationExpr.equalToWithExprs(valueVarExpr, ValueExpr.createNullExpr());
     Statement listAddEmptyStringStatement =
         ExprStatement.withExpr(
             MethodInvocationExpr.builder()
@@ -1007,13 +999,7 @@ public class ResourceNameHelperClassComposer {
               .setArguments(ValueExpr.withValue(tokenStrVal), tokenVarExpr)
               .build();
       Expr notNullCheckExpr =
-          UnaryOperationExpr.logicalNotWithExpr(
-              MethodInvocationExpr.builder()
-                  .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-                  .setMethodName("isNull")
-                  .setArguments(tokenVarExpr)
-                  .setReturnType(TypeNode.BOOLEAN)
-                  .build());
+          RelationalOperationExpr.notEqualToWithExprs(tokenVarExpr, ValueExpr.createNullExpr());
       tokenIfStatements.add(
           IfStatement.builder()
               .setConditionExpr(notNullCheckExpr)
@@ -1040,14 +1026,8 @@ public class ResourceNameHelperClassComposer {
     middleIfBlockStatements.add(ExprStatement.withExpr(fieldValuesMapAssignExpr));
 
     // Middle if-block, i.e. `if (fieldValuesMap == null)`.
-    // TODO(miraleung): Use eq operator here.
-    MethodInvocationExpr fieldValuesMapNullCheckExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-            .setMethodName("isNull")
-            .setArguments(fieldValuesMapVarExpr)
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
+    Expr fieldValuesMapNullCheckExpr =
+        RelationalOperationExpr.equalToWithExprs(fieldValuesMapVarExpr, ValueExpr.createNullExpr());
     IfStatement fieldValuesMapIfStatement =
         IfStatement.builder()
             .setConditionExpr(fieldValuesMapNullCheckExpr)
@@ -1140,13 +1120,7 @@ public class ResourceNameHelperClassComposer {
     VariableExpr fixedValueVarExpr = FIXED_CLASS_VARS.get("fixedValue");
     // Code:  return fixedValue != null ? fixedValue : pathTemplate.instantiate(getFieldValuesMap())
     Expr fixedValueNullCheck =
-        UnaryOperationExpr.logicalNotWithExpr(
-            MethodInvocationExpr.builder()
-                .setStaticReferenceType(STATIC_TYPES.get("Objects"))
-                .setMethodName("isNull")
-                .setArguments(fixedValueVarExpr)
-                .setReturnType(TypeNode.BOOLEAN)
-                .build());
+        RelationalOperationExpr.notEqualToWithExprs(fixedValueVarExpr, ValueExpr.createNullExpr());
 
     MethodInvocationExpr instantiateExpr =
         MethodInvocationExpr.builder()
@@ -1191,8 +1165,7 @@ public class ResourceNameHelperClassComposer {
     RelationalOperationExpr oEqualsThisExpr =
         RelationalOperationExpr.equalToWithExprs(argVarExpr, thisValueExpr);
     RelationalOperationExpr oNotEqualsNullExpr =
-        RelationalOperationExpr.notEqualToWithExprs(
-            argVarExpr, ValueExpr.withValue(NullObjectValue.create()));
+        RelationalOperationExpr.notEqualToWithExprs(argVarExpr, ValueExpr.createNullExpr());
     MethodInvocationExpr getClassMethodInvocationExpr =
         MethodInvocationExpr.builder().setMethodName("getClass").build();
     RelationalOperationExpr getClassEqualsExpr =

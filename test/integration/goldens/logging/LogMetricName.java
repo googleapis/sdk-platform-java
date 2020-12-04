@@ -91,7 +91,7 @@ public class LogMetricName implements ResourceName {
   public static List<String> toStringList(List<LogMetricName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (LogMetricName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -106,14 +106,14 @@ public class LogMetricName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(project)) {
+          if (project != null) {
             fieldMapBuilder.put("project", project);
           }
-          if (!Objects.isNull(metric)) {
+          if (metric != null) {
             fieldMapBuilder.put("metric", metric);
           }
           fieldValuesMap = fieldMapBuilder.build();

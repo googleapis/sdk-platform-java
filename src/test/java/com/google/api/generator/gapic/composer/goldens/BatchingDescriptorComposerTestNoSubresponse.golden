@@ -10,7 +10,7 @@ return new RequestBuilder<WriteLogEntriesRequest>() {
 private WriteLogEntriesRequest.Builder builder;
 @Override
 public void appendRequest(WriteLogEntriesRequest request) {
-if (Objects.isNull(builder)) {
+if (builder == null) {
 builder = request.toBuilder();
 } else {
 builder.addAllEntries(request.getEntriesList());

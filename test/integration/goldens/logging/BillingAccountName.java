@@ -84,7 +84,7 @@ public class BillingAccountName implements ResourceName {
   public static List<String> toStringList(List<BillingAccountName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (BillingAccountName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -99,11 +99,11 @@ public class BillingAccountName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(billingAccount)) {
+          if (billingAccount != null) {
             fieldMapBuilder.put("billing_account", billingAccount);
           }
           fieldValuesMap = fieldMapBuilder.build();

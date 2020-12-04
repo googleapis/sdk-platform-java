@@ -48,7 +48,6 @@ import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
 
@@ -135,7 +134,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return Objects.isNull(payload.getResponsesList())
+              return payload.getResponsesList() == null
                   ? ImmutableList.<EchoResponse>of()
                   : payload.getResponsesList();
             }
@@ -171,7 +170,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
             @Override
             public Iterable<EchoResponse> extractResources(PagedExpandResponse payload) {
-              return Objects.isNull(payload.getResponsesList())
+              return payload.getResponsesList() == null
                   ? ImmutableList.<EchoResponse>of()
                   : payload.getResponsesList();
             }

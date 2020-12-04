@@ -65,9 +65,9 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
@@ -545,13 +545,7 @@ public class ServiceStubSettingsClassComposer {
             .setReturnType(returnType)
             .build();
     Expr conditionExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                TypeNode.withReference(ConcreteReference.withClazz(Objects.class)))
-            .setMethodName("isNull")
-            .setArguments(getResponsesListExpr)
-            .setReturnType(TypeNode.BOOLEAN)
-            .build();
+        RelationalOperationExpr.equalToWithExprs(getResponsesListExpr, ValueExpr.createNullExpr());
     Expr thenExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
@@ -1349,7 +1343,7 @@ public class ServiceStubSettingsClassComposer {
                             .setArguments(
                                 CastExpr.builder()
                                     .setType(STATIC_TYPES.get("ClientContext"))
-                                    .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                    .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
             .build());
@@ -1601,7 +1595,7 @@ public class ServiceStubSettingsClassComposer {
                         .setArguments(
                             CastExpr.builder()
                                 .setType(STATIC_TYPES.get("ClientContext"))
-                                .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                .setExpr(ValueExpr.createNullExpr())
                                 .build())
                         .build())
                 .build()));

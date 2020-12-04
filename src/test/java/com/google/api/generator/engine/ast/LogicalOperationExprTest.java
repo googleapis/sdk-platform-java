@@ -99,7 +99,7 @@ public class LogicalOperationExprTest {
     VariableExpr lhsExpr =
         VariableExpr.withVariable(
             Variable.builder().setType(TypeNode.BOOLEAN).setName("x").build());
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> LogicalOperationExpr.logicalOrWithExprs(lhsExpr, rhsExpr));
