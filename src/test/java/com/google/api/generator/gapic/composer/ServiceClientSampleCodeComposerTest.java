@@ -27,9 +27,11 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.protoparser.Parser;
+import com.google.api.generator.testutils.LineFormatter;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.junit.Assert;
@@ -88,10 +90,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
-            + "  EchoResponse response = echoClient.echo(parent);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n",
+            "  EchoResponse response = echoClient.echo(parent);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -137,10 +140,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  FoobarName name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n"
-            + "  EchoResponse response = echoClient.echo(name);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  FoobarName name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n",
+            "  EchoResponse response = echoClient.echo(name);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -177,10 +181,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
-            + "  EchoResponse response = echoClient.echo(name);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  EchoResponse response = echoClient.echo(name);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -218,10 +223,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
-            + "  EchoResponse response = echoClient.echo(parent);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  EchoResponse response = echoClient.echo(parent);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -262,10 +268,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  Status error = Status.newBuilder().build();\n"
-            + "  EchoResponse response = echoClient.echo(error);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  Status error = Status.newBuilder().build();\n",
+            "  EchoResponse response = echoClient.echo(error);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -319,11 +326,12 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n"
-            + "  String otherName = \"other_name-182411686\";\n"
-            + "  EchoResponse response = echoClient.echo(displayName, otherName);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  String otherName = \"other_name-182411686\";\n",
+            "  EchoResponse response = echoClient.echo(displayName, otherName);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -360,10 +368,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String content = \"content951530617\";\n"
-            + "  EchoResponse response = echoClient.echo(content);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String content = \"content951530617\";\n",
+            "  EchoResponse response = echoClient.echo(content);\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -404,11 +413,40 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, signatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String content = \"content951530617\";\n"
-            + "  Severity severity = Severity.forNumber(0);\n"
-            + "  EchoResponse response = echoClient.echo(content, severity);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String content = \"content951530617\";\n",
+            "  Severity severity = Severity.forNumber(0);\n",
+            "  EchoResponse response = echoClient.echo(content, severity);\n",
+            "}");
+    assertEquals(expected, results);
+  }
+
+  @Test
+  public void composeUnaryRpcMethodSampleCode_noMethodArguments() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+    List<List<MethodArgument>> signatures = Arrays.asList(Collections.emptyList());
+    Method unaryMethod =
+        Method.builder()
+            .setName("echo")
+            .setMethodSignatures(signatures)
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    String results =
+        SampleCodeWriter.write(
+            ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
+                unaryMethod, signatures.get(0), clientType, resourceNames));
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoResponse response = echoClient.echo();\n",
+            "}");
     assertEquals(expected, results);
   }
 
@@ -443,10 +481,11 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
                 unaryMethod, methodSignatures.get(0), clientType, resourceNames));
     String expected =
-        "try (EchoClient echoClient = EchoClient.create()) {\n"
-            + "  String name = \"name3373707\";\n"
-            + "  echoClient.delete(name);\n"
-            + "}";
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  String name = \"name3373707\";\n",
+            "  echoClient.delete(name);\n",
+            "}");
     Assert.assertEquals(results, expected);
   }
 }
