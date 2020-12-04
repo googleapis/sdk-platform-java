@@ -236,7 +236,8 @@ public class ServiceClientSampleCodeComposer {
 
     List<Expr> bodyExprs = new ArrayList<>();
     Preconditions.checkState(
-        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(), "Error message here");
+        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        "The method arguments' the number of variable expressions should equal to the number of default value expressions.");
     bodyExprs.addAll(
         IntStream.range(0, rpcMethodArgVarExprs.size())
             .mapToObj(
