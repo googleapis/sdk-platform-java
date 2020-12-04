@@ -123,8 +123,10 @@ public class DefaultValueComposer {
     }
 
     if (f.type().equals(TypeNode.STRING)) {
+      String javaFieldName = JavaStyle.toLowerCamelCase(f.name());
       return ValueExpr.withValue(
-          StringObjectValue.withValue(String.format("%s%s", f.name(), f.name().hashCode())));
+          StringObjectValue.withValue(
+              String.format("%s%s", javaFieldName, javaFieldName.hashCode())));
     }
 
     if (TypeNode.isNumericType(f.type())) {

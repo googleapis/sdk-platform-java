@@ -140,7 +140,7 @@ public class LoggingClientTest {
     Empty expectedResponse = Empty.newBuilder().build();
     mockLoggingServiceV2.addResponse(expectedResponse);
 
-    String logName = "log_name2013526694";
+    String logName = "logName341528559";
 
     client.deleteLog(logName);
 
@@ -161,7 +161,7 @@ public class LoggingClientTest {
     mockLoggingServiceV2.addException(exception);
 
     try {
-      String logName = "log_name2013526694";
+      String logName = "logName341528559";
       client.deleteLog(logName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -219,7 +219,7 @@ public class LoggingClientTest {
     WriteLogEntriesResponse expectedResponse = WriteLogEntriesResponse.newBuilder().build();
     mockLoggingServiceV2.addResponse(expectedResponse);
 
-    String logName = "log_name2013526694";
+    String logName = "logName341528559";
     MonitoredResource resource = MonitoredResource.newBuilder().build();
     Map<String, String> labels = new HashMap<>();
     List<LogEntry> entries = new ArrayList<>();
@@ -248,7 +248,7 @@ public class LoggingClientTest {
     mockLoggingServiceV2.addException(exception);
 
     try {
-      String logName = "log_name2013526694";
+      String logName = "logName341528559";
       MonitoredResource resource = MonitoredResource.newBuilder().build();
       Map<String, String> labels = new HashMap<>();
       List<LogEntry> entries = new ArrayList<>();
@@ -271,7 +271,7 @@ public class LoggingClientTest {
 
     List<String> resourceNames = new ArrayList<>();
     String filter = "filter-1274492040";
-    String orderBy = "order_by1234304744";
+    String orderBy = "orderBy-1207110587";
 
     ListLogEntriesPagedResponse pagedListResponse =
         client.listLogEntries(resourceNames, filter, orderBy);
@@ -302,7 +302,7 @@ public class LoggingClientTest {
     try {
       List<String> resourceNames = new ArrayList<>();
       String filter = "filter-1274492040";
-      String orderBy = "order_by1234304744";
+      String orderBy = "orderBy-1207110587";
       client.listLogEntries(resourceNames, filter, orderBy);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -323,7 +323,7 @@ public class LoggingClientTest {
     ListMonitoredResourceDescriptorsRequest request =
         ListMonitoredResourceDescriptorsRequest.newBuilder()
             .setPageSize(883849137)
-            .setPageToken("page_token1630607433")
+            .setPageToken("pageToken873572522")
             .build();
 
     ListMonitoredResourceDescriptorsPagedResponse pagedListResponse =
@@ -357,7 +357,7 @@ public class LoggingClientTest {
       ListMonitoredResourceDescriptorsRequest request =
           ListMonitoredResourceDescriptorsRequest.newBuilder()
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.listMonitoredResourceDescriptors(request);
       Assert.fail("No exception raised");

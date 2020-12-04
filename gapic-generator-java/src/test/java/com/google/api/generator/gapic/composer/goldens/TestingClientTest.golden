@@ -164,7 +164,7 @@ public class TestingClientTest {
     ListSessionsRequest request =
         ListSessionsRequest.newBuilder()
             .setPageSize(883849137)
-            .setPageToken("page_token1630607433")
+            .setPageToken("pageToken873572522")
             .build();
 
     ListSessionsPagedResponse pagedListResponse = client.listSessions(request);
@@ -195,7 +195,7 @@ public class TestingClientTest {
       ListSessionsRequest request =
           ListSessionsRequest.newBuilder()
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.listSessions(request);
       Assert.fail("No exception raised");
@@ -371,7 +371,7 @@ public class TestingClientTest {
         ListTestsRequest.newBuilder()
             .setParent(SessionName.of("[SESSION]").toString())
             .setPageSize(883849137)
-            .setPageToken("page_token1630607433")
+            .setPageToken("pageToken873572522")
             .build();
 
     ListTestsPagedResponse pagedListResponse = client.listTests(request);
@@ -405,7 +405,7 @@ public class TestingClientTest {
           ListTestsRequest.newBuilder()
               .setParent(SessionName.of("[SESSION]").toString())
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.listTests(request);
       Assert.fail("No exception raised");
