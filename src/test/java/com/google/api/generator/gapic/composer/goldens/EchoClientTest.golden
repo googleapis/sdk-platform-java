@@ -424,8 +424,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.clientStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.clientStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -449,8 +448,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.clientStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.clientStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 
