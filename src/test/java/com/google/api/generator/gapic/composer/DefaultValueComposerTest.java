@@ -106,6 +106,14 @@ public class DefaultValueComposerTest {
     Expr expr = DefaultValueComposer.createDefaultValue(field);
     expr.accept(writerVisitor);
     assertEquals("\"foobar-1268878963\"", writerVisitor.write());
+
+    writerVisitor.clear();
+
+    // Original name is very clearly in lower_camel_case.
+    field = Field.builder().setName("foo_bar_baz").setType(TypeNode.STRING).build();
+    expr = DefaultValueComposer.createDefaultValue(field);
+    expr.accept(writerVisitor);
+    assertEquals("\"fooBarBaz-2082080914\"", writerVisitor.write());
   }
 
   @Test
@@ -281,7 +289,7 @@ public class DefaultValueComposerTest {
     expr.accept(writerVisitor);
     assertEquals(
         "PagedExpandResponse.newBuilder().addAllResponses(new ArrayList<EchoResponse>())"
-            + ".setNextPageToken(\"next_page_token-1530815211\").build()",
+            + ".setNextPageToken(\"nextPageToken-1386094857\").build()",
         writerVisitor.write());
   }
 

@@ -870,7 +870,7 @@ public class SubscriberClientTest {
             .addAllModifyDeadlineSeconds(new ArrayList<Integer>())
             .addAllModifyDeadlineAckIds(new ArrayList<String>())
             .setStreamAckDeadlineSeconds(1875467245)
-            .setClientId("client_id-1904089585")
+            .setClientId("clientId908408390")
             .setMaxOutstandingMessages(-1315266996)
             .setMaxOutstandingBytes(-2103098517)
             .build();
@@ -901,7 +901,7 @@ public class SubscriberClientTest {
             .addAllModifyDeadlineSeconds(new ArrayList<Integer>())
             .addAllModifyDeadlineAckIds(new ArrayList<String>())
             .setStreamAckDeadlineSeconds(1875467245)
-            .setClientId("client_id-1904089585")
+            .setClientId("clientId908408390")
             .setMaxOutstandingMessages(-1315266996)
             .setMaxOutstandingBytes(-2103098517)
             .build();
