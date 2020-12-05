@@ -39,7 +39,6 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -452,7 +451,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             .setArguments(
                                 CastExpr.builder()
                                     .setType(staticTypes.get("ClientContext"))
-                                    .setExpr(ValueExpr.withValue(NullObjectValue.create()))
+                                    .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
             .build();

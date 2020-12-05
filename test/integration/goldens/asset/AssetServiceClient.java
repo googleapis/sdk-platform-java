@@ -36,7 +36,6 @@ import com.google.longrunning.OperationsClient;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -307,7 +306,7 @@ public class AssetServiceClient implements BackgroundResource {
    */
   public final Feed getFeed(FeedName name) {
     GetFeedRequest request =
-        GetFeedRequest.newBuilder().setName(Objects.isNull(name) ? null : name.toString()).build();
+        GetFeedRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getFeed(request);
   }
 
@@ -463,9 +462,7 @@ public class AssetServiceClient implements BackgroundResource {
    */
   public final void deleteFeed(FeedName name) {
     DeleteFeedRequest request =
-        DeleteFeedRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        DeleteFeedRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     deleteFeed(request);
   }
 

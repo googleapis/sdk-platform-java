@@ -40,10 +40,10 @@ import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
+import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.SuperObjectValue;
@@ -393,7 +393,7 @@ public class ServiceClientClassComposer {
     ctorAssignmentExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setExprReferenceExpr(thisExpr).build())
-            .setValueExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setValueExpr(ValueExpr.createNullExpr())
             .build());
     ctorAssignmentExprs.add(
         AssignmentExpr.builder()
@@ -1147,7 +1147,7 @@ public class ServiceClientClassComposer {
             .build();
 
     // createEmptyPage method.
-    ValueExpr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr nullExpr = ValueExpr.createNullExpr();
     MethodDefinition createEmptyPageMethod =
         MethodDefinition.builder()
             .setScope(ScopeNode.PRIVATE)
@@ -1298,7 +1298,7 @@ public class ServiceClientClassComposer {
                 NewObjectExpr.builder()
                     .setType(classType)
                     .setArguments(
-                        ValueExpr.withValue(NullObjectValue.create()),
+                        ValueExpr.createNullExpr(),
                         ValueExpr.withValue(
                             PrimitiveValue.builder().setType(TypeNode.INT).setValue("0").build()))
                     .build())
@@ -1370,14 +1370,8 @@ public class ServiceClientClassComposer {
         VariableExpr.withVariable(
             Variable.builder().setName(argumentName).setType(argumentType).build());
     if (argument.isResourceNameHelper()) {
-      MethodInvocationExpr isNullCheckExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(OBJECTS_TYPE)
-              .setMethodName("isNull")
-              .setArguments(Arrays.asList(argVarExpr))
-              .setReturnType(TypeNode.BOOLEAN)
-              .build();
-      Expr nullExpr = ValueExpr.withValue(NullObjectValue.create());
+      Expr nullExpr = ValueExpr.createNullExpr();
+      Expr isNullCheckExpr = RelationalOperationExpr.equalToWithExprs(argVarExpr, nullExpr);
       MethodInvocationExpr toStringExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(argVarExpr)

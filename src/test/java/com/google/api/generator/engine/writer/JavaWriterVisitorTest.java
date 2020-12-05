@@ -2136,7 +2136,7 @@ public class JavaWriterVisitorTest {
             .setStaticReferenceType(someType)
             .setReturnType(TypeNode.STRING)
             .build();
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
 
     RelationalOperationExpr notEqualToOperationExpr =
         RelationalOperationExpr.notEqualToWithExprs(lhsExpr, rhsExpr);

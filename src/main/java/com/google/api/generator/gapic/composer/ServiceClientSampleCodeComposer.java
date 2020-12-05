@@ -317,4 +317,3 @@ public class ServiceClientSampleCodeComposer {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
   }
-}

@@ -26,7 +26,6 @@ import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -177,9 +176,7 @@ public class EchoClient implements BackgroundResource {
    */
   public final EchoResponse echo(ResourceName parent) {
     EchoRequest request =
-        EchoRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        EchoRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return echo(request);
   }
 
@@ -218,7 +215,7 @@ public class EchoClient implements BackgroundResource {
    */
   public final EchoResponse echo(FoobarName name) {
     EchoRequest request =
-        EchoRequest.newBuilder().setName(Objects.isNull(name) ? null : name.toString()).build();
+        EchoRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return echo(request);
   }
 

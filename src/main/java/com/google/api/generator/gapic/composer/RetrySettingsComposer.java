@@ -30,7 +30,6 @@ import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.NullObjectValue;
 import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -108,7 +107,7 @@ public class RetrySettingsComposer {
     bodyExprs.add(
         AssignmentExpr.builder()
             .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(ValueExpr.withValue(NullObjectValue.create()))
+            .setValueExpr(ValueExpr.createNullExpr())
             .build());
 
     // Build the settings object for each config.

@@ -50,7 +50,6 @@ import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -184,7 +183,7 @@ public class LoggingClient implements BackgroundResource {
   public final void deleteLog(LogName logName) {
     DeleteLogRequest request =
         DeleteLogRequest.newBuilder()
-            .setLogName(Objects.isNull(logName) ? null : logName.toString())
+            .setLogName(logName == null ? null : logName.toString())
             .build();
     deleteLog(request);
   }
@@ -309,7 +308,7 @@ public class LoggingClient implements BackgroundResource {
       List<LogEntry> entries) {
     WriteLogEntriesRequest request =
         WriteLogEntriesRequest.newBuilder()
-            .setLogName(Objects.isNull(logName) ? null : logName.toString())
+            .setLogName(logName == null ? null : logName.toString())
             .setResource(resource)
             .putAllLabels(labels)
             .addAllEntries(entries)
@@ -542,9 +541,7 @@ public class LoggingClient implements BackgroundResource {
    */
   public final ListLogsPagedResponse listLogs(BillingAccountName parent) {
     ListLogsRequest request =
-        ListLogsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListLogsRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listLogs(request);
   }
 
@@ -560,9 +557,7 @@ public class LoggingClient implements BackgroundResource {
    */
   public final ListLogsPagedResponse listLogs(FolderName parent) {
     ListLogsRequest request =
-        ListLogsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListLogsRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listLogs(request);
   }
 
@@ -578,9 +573,7 @@ public class LoggingClient implements BackgroundResource {
    */
   public final ListLogsPagedResponse listLogs(OrganizationName parent) {
     ListLogsRequest request =
-        ListLogsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListLogsRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listLogs(request);
   }
 
@@ -596,9 +589,7 @@ public class LoggingClient implements BackgroundResource {
    */
   public final ListLogsPagedResponse listLogs(ProjectName parent) {
     ListLogsRequest request =
-        ListLogsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
-            .build();
+        ListLogsRequest.newBuilder().setParent(parent == null ? null : parent.toString()).build();
     return listLogs(request);
   }
 

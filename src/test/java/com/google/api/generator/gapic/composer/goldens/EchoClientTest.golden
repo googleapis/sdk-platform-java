@@ -424,8 +424,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.clientStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.clientStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
     requestObserver.onCompleted();
@@ -449,8 +448,7 @@ public class EchoClientTest {
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
 
     ClientStreamingCallable<EchoRequest, EchoResponse> callable = client.collectCallable();
-    ApiStreamObserver<EchoRequest> requestObserver =
-        callable.clientStreamingCall(request, responseObserver);
+    ApiStreamObserver<EchoRequest> requestObserver = callable.clientStreamingCall(responseObserver);
 
     requestObserver.onNext(request);
 
@@ -584,7 +582,7 @@ public class EchoClientTest {
         PagedExpandRequest.newBuilder()
             .setContent("content951530617")
             .setPageSize(883849137)
-            .setPageToken("page_token1630607433")
+            .setPageToken("pageToken873572522")
             .build();
 
     PagedExpandPagedResponse pagedListResponse = client.pagedExpand(request);
@@ -617,7 +615,7 @@ public class EchoClientTest {
           PagedExpandRequest.newBuilder()
               .setContent("content951530617")
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.pagedExpand(request);
       Assert.fail("No exception raised");
@@ -663,7 +661,7 @@ public class EchoClientTest {
           PagedExpandRequest.newBuilder()
               .setContent("content951530617")
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.simplePagedExpand(request);
       Assert.fail("No exception raised");

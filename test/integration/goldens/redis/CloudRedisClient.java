@@ -37,7 +37,6 @@ import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -197,7 +196,7 @@ public class CloudRedisClient implements BackgroundResource {
   public final ListInstancesPagedResponse listInstances(LocationName parent) {
     ListInstancesRequest request =
         ListInstancesRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listInstances(request);
   }
@@ -307,9 +306,7 @@ public class CloudRedisClient implements BackgroundResource {
    */
   public final Instance getInstance(InstanceName name) {
     GetInstanceRequest request =
-        GetInstanceRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        GetInstanceRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return getInstance(request);
   }
 
@@ -391,7 +388,7 @@ public class CloudRedisClient implements BackgroundResource {
       LocationName parent, String instanceId, Instance instance) {
     CreateInstanceRequest request =
         CreateInstanceRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setInstanceId(instanceId)
             .setInstance(instance)
             .build();
@@ -586,7 +583,7 @@ public class CloudRedisClient implements BackgroundResource {
       InstanceName name, String redisVersion) {
     UpgradeInstanceRequest request =
         UpgradeInstanceRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setRedisVersion(redisVersion)
             .build();
     return upgradeInstanceAsync(request);
@@ -802,7 +799,7 @@ public class CloudRedisClient implements BackgroundResource {
       InstanceName name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode) {
     FailoverInstanceRequest request =
         FailoverInstanceRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
+            .setName(name == null ? null : name.toString())
             .setDataProtectionMode(dataProtectionMode)
             .build();
     return failoverInstanceAsync(request);
@@ -877,9 +874,7 @@ public class CloudRedisClient implements BackgroundResource {
    */
   public final OperationFuture<Empty, OperationMetadata> deleteInstanceAsync(InstanceName name) {
     DeleteInstanceRequest request =
-        DeleteInstanceRequest.newBuilder()
-            .setName(Objects.isNull(name) ? null : name.toString())
-            .build();
+        DeleteInstanceRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return deleteInstanceAsync(request);
   }
 

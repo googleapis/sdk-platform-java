@@ -349,7 +349,7 @@ public class AssignmentOperationExprTest {
   public void invalidMultiplyAndAssignmentOperationExpr_floatBoxedWithNullType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.FLOAT_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
@@ -463,7 +463,7 @@ public class AssignmentOperationExprTest {
   public void invalidMultiplyAndAssignmentOperationExpr_doubleBoxedWithNullType() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.DOUBLE_OBJECT, "x");
-    ValueExpr valueExprExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr valueExprExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, valueExprExpr));
@@ -533,7 +533,7 @@ public class AssignmentOperationExprTest {
   public void invalidMultiplyAndAssignmentOperationExpr_longBoxedWithNullType() {
     // Swap test case in "invalidMultiplyAndAssignmentOperationExpr_nullWithLongBoxedType".
     VariableExpr lhsExpr = createVariableExpr(TypeNode.LONG_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.multiplyAssignmentWithExprs(lhsExpr, rhsExpr));
@@ -715,7 +715,7 @@ public class AssignmentOperationExprTest {
   public void invalidXorAssignmentOperationExpr_booleanWithNullTypes() {
     // No valid swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.BOOLEAN, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));
@@ -894,7 +894,7 @@ public class AssignmentOperationExprTest {
   public void invalidXorAssignmentOperationExpr_integerWithNullTypes() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));
@@ -1091,7 +1091,7 @@ public class AssignmentOperationExprTest {
   public void invalidXorAssignmentOperationExpr_integerBoxedWithNullTypes() {
     // No need swap case.
     VariableExpr lhsExpr = createVariableExpr(TypeNode.INT_OBJECT, "x");
-    ValueExpr rhsExpr = ValueExpr.withValue(NullObjectValue.create());
+    ValueExpr rhsExpr = ValueExpr.createNullExpr();
     assertThrows(
         IllegalStateException.class,
         () -> AssignmentOperationExpr.xorAssignmentWithExprs(lhsExpr, rhsExpr));

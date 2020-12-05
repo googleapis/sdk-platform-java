@@ -41,7 +41,6 @@ import com.google.logging.v2.UpdateLogMetricRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -160,7 +159,7 @@ public class MetricsClient implements BackgroundResource {
   public final ListLogMetricsPagedResponse listLogMetrics(ProjectName parent) {
     ListLogMetricsRequest request =
         ListLogMetricsRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .build();
     return listLogMetrics(request);
   }
@@ -231,7 +230,7 @@ public class MetricsClient implements BackgroundResource {
   public final LogMetric getLogMetric(LogMetricName metricName) {
     GetLogMetricRequest request =
         GetLogMetricRequest.newBuilder()
-            .setMetricName(Objects.isNull(metricName) ? null : metricName.toString())
+            .setMetricName(metricName == null ? null : metricName.toString())
             .build();
     return getLogMetric(request);
   }
@@ -304,7 +303,7 @@ public class MetricsClient implements BackgroundResource {
   public final LogMetric createLogMetric(ProjectName parent, LogMetric metric) {
     CreateLogMetricRequest request =
         CreateLogMetricRequest.newBuilder()
-            .setParent(Objects.isNull(parent) ? null : parent.toString())
+            .setParent(parent == null ? null : parent.toString())
             .setMetric(metric)
             .build();
     return createLogMetric(request);
@@ -383,7 +382,7 @@ public class MetricsClient implements BackgroundResource {
   public final LogMetric updateLogMetric(LogMetricName metricName, LogMetric metric) {
     UpdateLogMetricRequest request =
         UpdateLogMetricRequest.newBuilder()
-            .setMetricName(Objects.isNull(metricName) ? null : metricName.toString())
+            .setMetricName(metricName == null ? null : metricName.toString())
             .setMetric(metric)
             .build();
     return updateLogMetric(request);
@@ -458,7 +457,7 @@ public class MetricsClient implements BackgroundResource {
   public final void deleteLogMetric(LogMetricName metricName) {
     DeleteLogMetricRequest request =
         DeleteLogMetricRequest.newBuilder()
-            .setMetricName(Objects.isNull(metricName) ? null : metricName.toString())
+            .setMetricName(metricName == null ? null : metricName.toString())
             .build();
     deleteLogMetric(request);
   }

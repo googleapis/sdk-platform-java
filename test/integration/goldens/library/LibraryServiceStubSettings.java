@@ -63,7 +63,6 @@ import com.google.example.library.v1.UpdateBookRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -150,7 +149,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
 
             @Override
             public Iterable<Shelf> extractResources(ListShelvesResponse payload) {
-              return Objects.isNull(payload.getShelvesList())
+              return payload.getShelvesList() == null
                   ? ImmutableList.<Shelf>of()
                   : payload.getShelvesList();
             }
@@ -186,7 +185,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
 
             @Override
             public Iterable<Book> extractResources(ListBooksResponse payload) {
-              return Objects.isNull(payload.getBooksList())
+              return payload.getBooksList() == null
                   ? ImmutableList.<Book>of()
                   : payload.getBooksList();
             }

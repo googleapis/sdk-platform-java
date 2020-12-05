@@ -93,7 +93,7 @@ public class BillingAccountLocationName implements ResourceName {
   public static List<String> toStringList(List<BillingAccountLocationName> values) {
     List<String> list = new ArrayList<>(values.size());
     for (BillingAccountLocationName value : values) {
-      if (Objects.isNull(value)) {
+      if (value == null) {
         list.add("");
       } else {
         list.add(value.toString());
@@ -108,14 +108,14 @@ public class BillingAccountLocationName implements ResourceName {
 
   @Override
   public Map<String, String> getFieldValuesMap() {
-    if (Objects.isNull(fieldValuesMap)) {
+    if (fieldValuesMap == null) {
       synchronized (this) {
-        if (Objects.isNull(fieldValuesMap)) {
+        if (fieldValuesMap == null) {
           ImmutableMap.Builder<String, String> fieldMapBuilder = ImmutableMap.builder();
-          if (!Objects.isNull(billingAccount)) {
+          if (billingAccount != null) {
             fieldMapBuilder.put("billing_account", billingAccount);
           }
-          if (!Objects.isNull(location)) {
+          if (location != null) {
             fieldMapBuilder.put("location", location);
           }
           fieldValuesMap = fieldMapBuilder.build();
