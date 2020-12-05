@@ -431,7 +431,7 @@ public class LoggingClient implements BackgroundResource {
    * try (LoggingClient loggingClient = LoggingClient.create()) {
    *   List<String> resourceNames = new ArrayList<>();
    *   String filter = "filter-1274492040";
-   *   String orderBy = "order_by1234304744";
+   *   String orderBy = "orderBy-1207110587";
    *   for (LogEntry element :
    *       loggingClient.listLogEntries(resourceNames, filter, orderBy).iterateAll()) {
    *     // doThingsWith(element);

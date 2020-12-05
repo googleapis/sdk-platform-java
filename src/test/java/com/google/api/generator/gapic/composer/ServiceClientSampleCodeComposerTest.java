@@ -85,6 +85,42 @@ public class ServiceClientSampleCodeComposerTest {
   }
 
   @Test
+  public void validComposeRpcMethodHeaderSampleCode_pagedUnaryRpc() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandRequest")
+                .setPakkage(PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(PACKAGE_NAME)
+                .build());
+    List<MethodArgument> methodArguments = Collections.emptyList();
+    Method method =
+        Method.builder()
+            .setName("SimplePagedExpand")
+            .setMethodSignatures(Arrays.asList(methodArguments))
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+            method, methodArguments, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  for (EchoResponse element : echoClient.simplePagedExpand().iterateAll()) {\n",
+            "    // doThingsWith(element);\n",
+            "  }\n",
+            "}");
+    assertEquals(expected, results);
+  }
+
+  @Test
   public void invalidComposeRpcMethodHeaderSampleCode_noMatchedRepeatedResponseTypeInPagedMethod() {
     TypeNode inputType =
         TypeNode.withReference(
@@ -430,7 +466,7 @@ public class ServiceClientSampleCodeComposerTest {
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
-            "  String otherName = \"other_name-182411686\";\n",
+            "  String otherName = \"otherName-1946065477\";\n",
             "  EchoResponse response = echoClient.echo(displayName, otherName);\n",
             "}");
     assertEquals(expected, results);
@@ -592,7 +628,7 @@ public class ServiceClientSampleCodeComposerTest {
 
   // ===================================Unary Paged RPC Method Sample Code ======================//
   @Test
-  public void validComposeUnaryPagedRpcMethodSampleCode_multipleMethodArguments() {
+  public void composeUnaryPagedRpcMethodSampleCode_multipleMethodArguments() {
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -657,7 +693,7 @@ public class ServiceClientSampleCodeComposerTest {
   }
 
   @Test
-  public void validComposeUnaryPagedRpcMethodSampleCode_noMethodArguments() {
+  public void composeUnaryPagedRpcMethodSampleCode_noMethodArguments() {
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
