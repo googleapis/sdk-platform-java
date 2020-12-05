@@ -16,16 +16,22 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -186,8 +192,24 @@ public class ServiceClientSampleCodeComposer {
       Method method,
       TypeNode clientType,
       List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     // TODO(summerji): Add other types RPC methods' sample code.
+    if (method.isPaged()) {
+      // Find the repeated field.
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Preconditions.checkNotNull(
+          repeatedPagedResultsField,
+          String.format(
+              "No repeated field found on message %s for method %s",
+              methodOutputMessage.name(), method.name()));
+
+      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+      return SampleCodeWriter.write(
+          composeUnaryPagedRpcMethodSampleCode(
+              method, arguments, clientType, resourceNames, repeatedResponseType));
+    }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
   }
@@ -290,6 +312,106 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
+  public static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      TypeNode repeatedResponseType) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // List of rpc method arguments' variable expressions.
+    List<Expr> rpcMethodArgVarExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                            .setType(arg.type())
+                            .build()))
+            .collect(Collectors.toList());
+    // List of rpc method arguments' default value expression.
+    List<ResourceName> resourceNameList =
+        resourceNames.values().stream().collect(Collectors.toList());
+    List<Expr> rpcMethodArgDefaultValueExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    !isStringTypedResourceName(arg, resourceNames)
+                        ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                        : MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(
+                                DefaultValueComposer.createDefaultValue(
+                                    resourceNames.get(
+                                        arg.field().resourceReference().resourceTypeString()),
+                                    resourceNameList,
+                                    arg.field().name()))
+                            .setMethodName("toString")
+                            .setReturnType(TypeNode.STRING)
+                            .build())
+            .collect(Collectors.toList());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    Preconditions.checkState(
+        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        "The method arguments' the number of variable expressions should equal to the number of default value expressions.");
+    bodyExprs.addAll(
+        IntStream.range(0, rpcMethodArgVarExprs.size())
+            .mapToObj(
+                i ->
+                    AssignmentExpr.builder()
+                        .setVariableExpr(
+                            ((VariableExpr) rpcMethodArgVarExprs.get(i))
+                                .toBuilder()
+                                .setIsDecl(true)
+                                .build())
+                        .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
+                        .build())
+            .collect(Collectors.toList()));
+    // For loop paged response item on iterateAll method.
+    // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
+    //          //doThingsWith(element);
+    //      }
+    MethodInvocationExpr clientMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+            .setArguments(rpcMethodArgVarExprs)
+            .build();
+    Expr clientMethodIteratorAllExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientMethodExpr)
+            .setMethodName("iterateAll")
+            .setReturnType(repeatedResponseType)
+            .build();
+    ForStatement loopIteratorStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setName("element").setType(repeatedResponseType).build())
+                    .setIsDecl(true)
+                    .build())
+            .setCollectionExpr(clientMethodIteratorAllExpr)
+            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .build();
+
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    bodyStatements.add(loopIteratorStatement);
+
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(bodyStatements)
+        .setIsSampleCode(true)
+        .build();
+  }
+
   // ==================================Helpers===================================================//
 
   // Assign client variable expr with create client.
@@ -317,5 +439,9 @@ public class ServiceClientSampleCodeComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
+  }
+
+  private static CommentStatement createLineCommentStatement(String content) {
+    return CommentStatement.withComment(LineComment.withComment(content));
   }
 }

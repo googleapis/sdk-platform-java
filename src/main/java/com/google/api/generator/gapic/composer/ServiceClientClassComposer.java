@@ -484,7 +484,8 @@ public class ServiceClientClassComposer {
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(
-            createMethodVariants(method, messageTypes, types, clientName, resourceNames));
+            createMethodVariants(
+                method, getClientClassName(service), messageTypes, types, resourceNames));
         javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
@@ -566,13 +567,13 @@ public class ServiceClientClassComposer {
               .build();
 
       Optional<String> methodSampleCode = Optional.empty();
-      if (!method.isPaged() && !method.hasLro()) {
-        // TODO(summerji): Remove the condition check once finished the implementation on paged
-        // sample code and lro sample code.
+      if (!method.hasLro()) {
+        // TODO(summerji): Remove the condition check once finished the implementation on lro sample
+        // code.
         methodSampleCode =
             Optional.of(
                 ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                    method, types.get(clientName), signature, resourceNames));
+                    method, types.get(clientName), signature, resourceNames, messageTypes));
       }
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
