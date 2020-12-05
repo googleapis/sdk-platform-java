@@ -68,7 +68,6 @@ public class ServiceClientSampleCodeComposerTest {
             .setMethodSignatures(Arrays.asList(methodArguments))
             .setInputType(inputType)
             .setOutputType(outputType)
-            .setIsPaged(true)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
