@@ -309,7 +309,9 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
+   *   String parent =
+   *       LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *           .toString();
    *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -534,7 +536,7 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
+   *   String parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
    *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
@@ -1254,7 +1256,8 @@ public class ConfigClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (ConfigClient configClient = ConfigClient.create()) {
-   *   String parent = "parent-995424086";
+   *   String parent =
+   *       LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
    *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }

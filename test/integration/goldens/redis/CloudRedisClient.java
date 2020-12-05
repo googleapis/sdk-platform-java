@@ -230,7 +230,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
-   *   String parent = "parent-995424086";
+   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
    *   for (Instance element : cloudRedisClient.listInstances(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }

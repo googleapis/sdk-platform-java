@@ -660,7 +660,7 @@ public class LoggingClient implements BackgroundResource {
    *
    * <pre>{@code
    * try (LoggingClient loggingClient = LoggingClient.create()) {
-   *   String parent = "parent-995424086";
+   *   String parent = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
    *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
    *     // doThingsWith(element);
    *   }
