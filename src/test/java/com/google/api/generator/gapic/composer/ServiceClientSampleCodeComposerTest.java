@@ -54,6 +54,34 @@ public class ServiceClientSampleCodeComposerTest {
   }
 
   @Test
+  public void validComposeRpcMethodHeaderSampleCode_pureUnaryRpc() {
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+    List<MethodArgument> methodArguments = Collections.emptyList();
+    Method method =
+        Method.builder()
+            .setName("echo")
+            .setMethodSignatures(Arrays.asList(methodArguments))
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+            method, methodArguments, clientType, resourceNames);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoResponse response = echoClient.echo();\n",
+            "}");
+    assertEquals(expected, results);
+  }
+
+  @Test
   public void composeUnaryRpcMethodSampleCode_resourceNameMethodArgument() {
     TypeNode inputType =
         TypeNode.withReference(
@@ -329,7 +357,7 @@ public class ServiceClientSampleCodeComposerTest {
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
-            "  String otherName = \"other_name-182411686\";\n",
+            "  String otherName = \"otherName-1946065477\";\n",
             "  EchoResponse response = echoClient.echo(displayName, otherName);\n",
             "}");
     assertEquals(expected, results);
