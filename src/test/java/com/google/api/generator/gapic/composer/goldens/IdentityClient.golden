@@ -129,7 +129,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
-   *   String displayName = "display_name1615086568";
+   *   String displayName = "displayName1714148973";
    *   String email = "email96619420";
    *   User response = identityClient.createUser(parent, displayName, email);
    * }
@@ -157,7 +157,7 @@ public class IdentityClient implements BackgroundResource {
    * <pre>{@code
    * try (IdentityClient identityClient = IdentityClient.create()) {
    *   String parent = UserName.of("[USER]").toString();
-   *   String displayName = "display_name1615086568";
+   *   String displayName = "displayName1714148973";
    *   String email = "email96619420";
    *   int age = 96511;
    *   String nickname = "nickname70690926";
