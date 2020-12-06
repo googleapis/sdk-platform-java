@@ -30,6 +30,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -191,7 +192,8 @@ public class ServiceClientSampleCodeComposer {
         composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames));
   }
 
-  public static TryCatchStatement composeUnaryRpcMethodSampleCode(
+  @VisibleForTesting
+  static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method,
       List<MethodArgument> arguments,
       TypeNode clientType,
