@@ -212,7 +212,8 @@ public class ServiceClientSampleCodeComposer {
     }
     if (method.hasLro()) {
       return SampleCodeWriter.write(
-          composeUnaryLroRpcMethodSampleCode(method, arguments, clientType, resourceNames));
+          composeUnaryLroRpcMethodSampleCode(
+              method, arguments, clientType, resourceNames, messageTypes));
     }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames));
@@ -423,7 +424,8 @@ public class ServiceClientSampleCodeComposer {
       Method method,
       List<MethodArgument> arguments,
       TypeNode clientType,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -480,7 +482,7 @@ public class ServiceClientSampleCodeComposer {
                         .build())
             .collect(Collectors.toList()));
     // Assign response variable with invoking client's lro method.
-    // e.g. WaitResponse reponse = echoClient.waitAsync(ttl).get();
+    // e.g. WaitResponse response = echoClient.waitAsync(ttl).get();
     Expr invokeLroMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
@@ -493,17 +495,24 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    VariableExpr responseVarExpr =
-        VariableExpr.builder()
-            .setVariable(
-                Variable.builder().setName("response").setType(method.lro().responseType()).build())
-            .setIsDecl(true)
-            .build();
-    bodyExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(responseVarExpr)
-            .setValueExpr(getResponseMethodExpr)
-            .build());
+    if (isProtoEmptyType(method.outputType())) {
+      bodyExprs.add(getResponseMethodExpr);
+    } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.builder()
+              .setVariable(
+                  Variable.builder()
+                      .setName("response")
+                      .setType(method.lro().responseType())
+                      .build())
+              .setIsDecl(true)
+              .build();
+      bodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(responseVarExpr)
+              .setValueExpr(getResponseMethodExpr)
+              .build());
+    }
 
     return TryCatchStatement.builder()
         .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
