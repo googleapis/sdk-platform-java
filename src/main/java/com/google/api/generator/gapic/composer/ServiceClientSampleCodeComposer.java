@@ -313,7 +313,8 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
-  public static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
+  @VisibleForTesting
+  static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
       Method method,
       List<MethodArgument> arguments,
       TypeNode clientType,
