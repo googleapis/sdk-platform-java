@@ -565,15 +565,10 @@ public class ServiceClientClassComposer {
               .setReturnType(methodOutputType)
               .build();
 
-      Optional<String> methodSampleCode = Optional.empty();
-      if (!method.hasLro()) {
-        // TODO(summerji): Remove the condition check once finished the implementation on lro sample
-        // code.
-        methodSampleCode =
-            Optional.of(
-                ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                    method, signature, types.get(clientName), resourceNames, messageTypes));
-      }
+      Optional<String> methodSampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                  method, signature, types.get(clientName), resourceNames, messageTypes));
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(

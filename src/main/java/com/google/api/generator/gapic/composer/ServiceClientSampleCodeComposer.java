@@ -210,6 +210,10 @@ public class ServiceClientSampleCodeComposer {
           composeUnaryPagedRpcMethodSampleCode(
               method, arguments, clientType, resourceNames, repeatedResponseType));
     }
+    if (method.hasLro()) {
+      return SampleCodeWriter.write(
+          composeUnaryLroRpcMethodSampleCode(method, arguments, clientType, resourceNames));
+    }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames));
   }
@@ -414,6 +418,100 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
+  @VisibleForTesting
+  static TryCatchStatement composeUnaryLroRpcMethodSampleCode(
+      Method method,
+      List<MethodArgument> arguments,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // List of rpc method arguments' variable expressions.
+    List<Expr> rpcMethodArgVarExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                            .setType(arg.type())
+                            .build()))
+            .collect(Collectors.toList());
+    // List of rpc method arguments' default value expression.
+    List<ResourceName> resourceNameList =
+        resourceNames.values().stream().collect(Collectors.toList());
+    List<Expr> rpcMethodArgDefaultValueExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    !isStringTypedResourceName(arg, resourceNames)
+                        ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                        : MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(
+                                DefaultValueComposer.createDefaultValue(
+                                    resourceNames.get(
+                                        arg.field().resourceReference().resourceTypeString()),
+                                    resourceNameList,
+                                    arg.field().name()))
+                            .setMethodName("toString")
+                            .setReturnType(TypeNode.STRING)
+                            .build())
+            .collect(Collectors.toList());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    Preconditions.checkState(
+        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        "The method arguments' the number of variable expressions should equal to the number of default value expressions.");
+    bodyExprs.addAll(
+        IntStream.range(0, rpcMethodArgVarExprs.size())
+            .mapToObj(
+                i ->
+                    AssignmentExpr.builder()
+                        .setVariableExpr(
+                            ((VariableExpr) rpcMethodArgVarExprs.get(i))
+                                .toBuilder()
+                                .setIsDecl(true)
+                                .build())
+                        .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
+                        .build())
+            .collect(Collectors.toList()));
+    // Assign response variable with invoking client's lro method.
+    // e.g. WaitResponse reponse = echoClient.waitAsync(ttl).get();
+    Expr invokeLroMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(String.format("%sAsync", JavaStyle.toLowerCamelCase(method.name())))
+            .setArguments(rpcMethodArgVarExprs)
+            .build();
+    Expr getResponseMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(invokeLroMethodExpr)
+            .setMethodName("get")
+            .setReturnType(method.lro().responseType())
+            .build();
+    VariableExpr responseVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("response").setType(method.lro().responseType()).build())
+            .setIsDecl(true)
+            .build();
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(responseVarExpr)
+            .setValueExpr(getResponseMethodExpr)
+            .build());
+
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setIsSampleCode(true)
+        .build();
+  }
   // ==================================Helpers===================================================//
 
   // Assign client variable expr with create client.

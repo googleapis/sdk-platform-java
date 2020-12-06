@@ -403,6 +403,15 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   Duration ttl = Duration.newBuilder().build();
+   *   WaitResponse response = echoClient.waitAsync(ttl).get();
+   * }
+   * }</pre>
+   *
    * @param ttl
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -413,6 +422,15 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   Timestamp endTime = Timestamp.newBuilder().build();
+   *   WaitResponse response = echoClient.waitAsync(endTime).get();
+   * }
+   * }</pre>
+   *
    * @param end_time
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
