@@ -465,6 +465,8 @@ public class TestingClientTest {
             .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
             .setAnswer(ByteString.EMPTY)
             .addAllAnswers(new ArrayList<ByteString>())
+            .setFoo("foo101574")
+            .setTestToVerify(com.google.showcase.v1beta1.Test.newBuilder().build())
             .build();
 
     VerifyTestResponse actualResponse = client.verifyTest(request);
@@ -477,6 +479,8 @@ public class TestingClientTest {
     Assert.assertEquals(request.getName(), actualRequest.getName());
     Assert.assertEquals(request.getAnswer(), actualRequest.getAnswer());
     Assert.assertEquals(request.getAnswersList(), actualRequest.getAnswersList());
+    Assert.assertEquals(request.getFoo(), actualRequest.getFoo());
+    Assert.assertEquals(request.getTestToVerify(), actualRequest.getTestToVerify());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -494,6 +498,8 @@ public class TestingClientTest {
               .setName(TestName.of("[SESSION]", "[SHARD_ID]", "[TEST_ID]").toString())
               .setAnswer(ByteString.EMPTY)
               .addAllAnswers(new ArrayList<ByteString>())
+              .setFoo("foo101574")
+              .setTestToVerify(com.google.showcase.v1beta1.Test.newBuilder().build())
               .build();
       client.verifyTest(request);
       Assert.fail("No exception raised");
