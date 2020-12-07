@@ -46,12 +46,31 @@ public class HttpRuleParserTest {
         HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertFalse(httpBindingsOpt.isPresent());
 
-    // VerityTest method.
-    rpcMethod = testingService.getMethods().get(testingService.getMethods().size() - 1);
-    inputMessage = messages.get("VerifyTestRequest");
+    // GetSession method.
+    rpcMethod = testingService.getMethods().get(1);
+    inputMessage = messages.get("GetSessionRequest");
     httpBindingsOpt = HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
     assertTrue(httpBindingsOpt.isPresent());
     assertThat(httpBindingsOpt.get()).containsExactly("name");
+  }
+
+  @Test
+  public void parseHttpAnnotation_multipleBindings() {
+    FileDescriptor testingFileDescriptor = TestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals("Testing", testingService.getName());
+
+    Map<String, Message> messages = Parser.parseMessages(testingFileDescriptor);
+
+    // VerityTest method.
+    MethodDescriptor rpcMethod =
+        testingService.getMethods().get(testingService.getMethods().size() - 1);
+    Message inputMessage = messages.get("VerifyTestRequest");
+    Optional<List<String>> httpBindingsOpt =
+        HttpRuleParser.parseHttpBindings(rpcMethod, inputMessage, messages);
+    assertTrue(httpBindingsOpt.isPresent());
+    assertThat(httpBindingsOpt.get())
+        .containsExactly("answer", "foo", "name", "test_to_verify.name");
   }
 
   @Test

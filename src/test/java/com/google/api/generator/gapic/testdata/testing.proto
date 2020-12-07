@@ -107,6 +107,19 @@ service Testing {
   rpc VerifyTest(VerifyTestRequest) returns (VerifyTestResponse) {
     option (google.api.http) = {
       post: "/v1beta1/{name=sessions/*/tests/*}:check"
+      body: "*"
+      additional_bindings {
+        post: "/v1beta1/{foo=sessions/*/tests/*}:check"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v1beta1/{answer=sessions/*/tests/*}:check"
+        body: "*"
+      }
+      additional_bindings {
+        post: "/v1beta1/{test_to_verify.name=sessions/*/tests/*}:check"
+        body: "*"
+      }
     };
   }
 }
@@ -392,6 +405,11 @@ message VerifyTestRequest {
 
   // The answers from the test if multiple are to be checked
   repeated bytes answers = 3;
+
+  // Test fields for HTTP annotations.
+  string foo = 4;
+
+  Test test_to_verify = 5;
 }
 
 message VerifyTestResponse {
