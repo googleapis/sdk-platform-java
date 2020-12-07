@@ -353,8 +353,8 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
-   * @param instance_id Required. The logical name of the Redis instance in the customer project
-   *     with the following restrictions:
+   * @param instanceId Required. The logical name of the Redis instance in the customer project with
+   *     the following restrictions:
    *     <ul>
    *       <li>Must contain only lowercase letters, numbers, and hyphens.
    *       <li>Must start with a letter.
@@ -394,8 +394,8 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
-   * @param instance_id Required. The logical name of the Redis instance in the customer project
-   *     with the following restrictions:
+   * @param instanceId Required. The logical name of the Redis instance in the customer project with
+   *     the following restrictions:
    *     <ul>
    *       <li>Must contain only lowercase letters, numbers, and hyphens.
    *       <li>Must start with a letter.
@@ -492,7 +492,7 @@ public class CloudRedisClient implements BackgroundResource {
    * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
-   * @param update_mask Required. Mask of fields to update. At least one path must be supplied in
+   * @param updateMask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
    *     [Instance][google.cloud.redis.v1.Instance]:
    *     <p>&#42; `displayName` &#42; `labels` &#42; `memorySizeGb` &#42; `redisConfig`
@@ -558,7 +558,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param redis_version Required. Specifies the target version of Redis software to upgrade to.
+   * @param redisVersion Required. Specifies the target version of Redis software to upgrade to.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Instance, OperationMetadata> upgradeInstanceAsync(
@@ -578,7 +578,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param redis_version Required. Specifies the target version of Redis software to upgrade to.
+   * @param redisVersion Required. Specifies the target version of Redis software to upgrade to.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Instance, OperationMetadata> upgradeInstanceAsync(
@@ -634,7 +634,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param input_config Required. Specify data to be imported.
+   * @param inputConfig Required. Specify data to be imported.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Instance, OperationMetadata> importInstanceAsync(
@@ -707,7 +707,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param output_config Required. Specify data to be exported.
+   * @param outputConfig Required. Specify data to be exported.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Instance, OperationMetadata> exportInstanceAsync(
@@ -773,7 +773,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param data_protection_mode Optional. Available data protection modes that the user can choose.
+   * @param dataProtectionMode Optional. Available data protection modes that the user can choose.
    *     If it's unspecified, data protection mode will be LIMITED_DATA_LOSS by default.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -795,7 +795,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
-   * @param data_protection_mode Optional. Available data protection modes that the user can choose.
+   * @param dataProtectionMode Optional. Available data protection modes that the user can choose.
    *     If it's unspecified, data protection mode will be LIMITED_DATA_LOSS by default.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
