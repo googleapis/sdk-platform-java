@@ -227,7 +227,7 @@ public class LibraryServiceClientTest {
     ListShelvesRequest request =
         ListShelvesRequest.newBuilder()
             .setPageSize(883849137)
-            .setPageToken("page_token1630607433")
+            .setPageToken("pageToken873572522")
             .build();
 
     ListShelvesPagedResponse pagedListResponse = client.listShelves(request);
@@ -258,7 +258,7 @@ public class LibraryServiceClientTest {
       ListShelvesRequest request =
           ListShelvesRequest.newBuilder()
               .setPageSize(883849137)
-              .setPageToken("page_token1630607433")
+              .setPageToken("pageToken873572522")
               .build();
       client.listShelves(request);
       Assert.fail("No exception raised");
@@ -387,7 +387,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     ShelfName name = ShelfName.of("[SHELF_ID]");
-    String otherShelfName = "other_shelf_name145746959";
+    String otherShelfName = "otherShelfName-1942963547";
 
     Shelf actualResponse = client.mergeShelves(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -411,7 +411,7 @@ public class LibraryServiceClientTest {
 
     try {
       ShelfName name = ShelfName.of("[SHELF_ID]");
-      String otherShelfName = "other_shelf_name145746959";
+      String otherShelfName = "otherShelfName-1942963547";
       client.mergeShelves(name, otherShelfName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -471,7 +471,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     String name = "name3373707";
-    String otherShelfName = "other_shelf_name145746959";
+    String otherShelfName = "otherShelfName-1942963547";
 
     Shelf actualResponse = client.mergeShelves(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -495,7 +495,7 @@ public class LibraryServiceClientTest {
 
     try {
       String name = "name3373707";
-      String otherShelfName = "other_shelf_name145746959";
+      String otherShelfName = "otherShelfName-1942963547";
       client.mergeShelves(name, otherShelfName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -892,7 +892,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
-    String otherShelfName = "other_shelf_name145746959";
+    String otherShelfName = "otherShelfName-1942963547";
 
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -916,7 +916,7 @@ public class LibraryServiceClientTest {
 
     try {
       BookName name = BookName.of("[SHELF_ID]", "[BOOK_ID]");
-      String otherShelfName = "other_shelf_name145746959";
+      String otherShelfName = "otherShelfName-1942963547";
       client.moveBook(name, otherShelfName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
@@ -980,7 +980,7 @@ public class LibraryServiceClientTest {
     mockLibraryService.addResponse(expectedResponse);
 
     String name = "name3373707";
-    String otherShelfName = "other_shelf_name145746959";
+    String otherShelfName = "otherShelfName-1942963547";
 
     Book actualResponse = client.moveBook(name, otherShelfName);
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -1004,7 +1004,7 @@ public class LibraryServiceClientTest {
 
     try {
       String name = "name3373707";
-      String otherShelfName = "other_shelf_name145746959";
+      String otherShelfName = "otherShelfName-1942963547";
       client.moveBook(name, otherShelfName);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {

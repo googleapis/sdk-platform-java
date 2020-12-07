@@ -1089,7 +1089,8 @@ public class ServiceClientTestClassComposer {
                   .setName("requestObserver")
                   .build());
       List<Expr> callableMethodArgs = new ArrayList<>();
-      if (!method.stream().equals(Method.Stream.BIDI)) {
+      if (!method.stream().equals(Method.Stream.BIDI)
+          && !method.stream().equals(Method.Stream.CLIENT)) {
         callableMethodArgs.add(requestVarExpr);
       }
       callableMethodArgs.add(responseObserverVarExpr);
@@ -1361,7 +1362,8 @@ public class ServiceClientTestClassComposer {
                   .build());
 
       List<Expr> callableMethodArgs = new ArrayList<>();
-      if (!method.stream().equals(Method.Stream.BIDI)) {
+      if (!method.stream().equals(Method.Stream.BIDI)
+          && !method.stream().equals(Method.Stream.CLIENT)) {
         callableMethodArgs.add(requestVarExpr);
       }
       callableMethodArgs.add(responseObserverVarExpr);

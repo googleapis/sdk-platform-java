@@ -179,21 +179,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     mockCloudRedis.addResponse(expectedResponse);
 
@@ -232,21 +232,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     mockCloudRedis.addResponse(expectedResponse);
 
@@ -285,21 +285,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -310,7 +310,7 @@ public class CloudRedisClientTest {
     mockCloudRedis.addResponse(resultOperation);
 
     LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-    String instanceId = "instance_id-2101995259";
+    String instanceId = "instanceId902024336";
     Instance instance = Instance.newBuilder().build();
 
     Instance actualResponse = client.createInstanceAsync(parent, instanceId, instance).get();
@@ -336,7 +336,7 @@ public class CloudRedisClientTest {
 
     try {
       LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
-      String instanceId = "instance_id-2101995259";
+      String instanceId = "instanceId902024336";
       Instance instance = Instance.newBuilder().build();
       client.createInstanceAsync(parent, instanceId, instance).get();
       Assert.fail("No exception raised");
@@ -352,21 +352,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -377,7 +377,7 @@ public class CloudRedisClientTest {
     mockCloudRedis.addResponse(resultOperation);
 
     String parent = "parent-995424086";
-    String instanceId = "instance_id-2101995259";
+    String instanceId = "instanceId902024336";
     Instance instance = Instance.newBuilder().build();
 
     Instance actualResponse = client.createInstanceAsync(parent, instanceId, instance).get();
@@ -403,7 +403,7 @@ public class CloudRedisClientTest {
 
     try {
       String parent = "parent-995424086";
-      String instanceId = "instance_id-2101995259";
+      String instanceId = "instanceId902024336";
       Instance instance = Instance.newBuilder().build();
       client.createInstanceAsync(parent, instanceId, instance).get();
       Assert.fail("No exception raised");
@@ -419,21 +419,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -483,21 +483,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -508,7 +508,7 @@ public class CloudRedisClientTest {
     mockCloudRedis.addResponse(resultOperation);
 
     InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-    String redisVersion = "redis_version-685310444";
+    String redisVersion = "redisVersion-1972584739";
 
     Instance actualResponse = client.upgradeInstanceAsync(name, redisVersion).get();
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -532,7 +532,7 @@ public class CloudRedisClientTest {
 
     try {
       InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-      String redisVersion = "redis_version-685310444";
+      String redisVersion = "redisVersion-1972584739";
       client.upgradeInstanceAsync(name, redisVersion).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
@@ -547,21 +547,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -572,7 +572,7 @@ public class CloudRedisClientTest {
     mockCloudRedis.addResponse(resultOperation);
 
     String name = "name3373707";
-    String redisVersion = "redis_version-685310444";
+    String redisVersion = "redisVersion-1972584739";
 
     Instance actualResponse = client.upgradeInstanceAsync(name, redisVersion).get();
     Assert.assertEquals(expectedResponse, actualResponse);
@@ -596,7 +596,7 @@ public class CloudRedisClientTest {
 
     try {
       String name = "name3373707";
-      String redisVersion = "redis_version-685310444";
+      String redisVersion = "redisVersion-1972584739";
       client.upgradeInstanceAsync(name, redisVersion).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
@@ -611,21 +611,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -675,21 +675,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -739,21 +739,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -805,21 +805,21 @@ public class CloudRedisClientTest {
     Instance expectedResponse =
         Instance.newBuilder()
             .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
-            .setDisplayName("display_name1615086568")
+            .setDisplayName("displayName1714148973")
             .putAllLabels(new HashMap<String, String>())
-            .setLocationId("location_id552319461")
-            .setAlternativeLocationId("alternative_location_id-718920621")
-            .setRedisVersion("redis_version-685310444")
-            .setReservedIpRange("reserved_ip_range-1082940580")
+            .setLocationId("locationId1541836720")
+            .setAlternativeLocationId("alternativeLocationId1787141949")
+            .setRedisVersion("redisVersion-1972584739")
+            .setReservedIpRange("reservedIpRange575015950")
             .setHost("host3208616")
             .setPort(3446913)
-            .setCurrentLocationId("current_location_id1312712735")
+            .setCurrentLocationId("currentLocationId-1808505335")
             .setCreateTime(Timestamp.newBuilder().build())
-            .setStatusMessage("status_message-239442758")
+            .setStatusMessage("statusMessage-958704715")
             .putAllRedisConfigs(new HashMap<String, String>())
             .setMemorySizeGb(34199707)
-            .setAuthorizedNetwork("authorized_network-1733809270")
-            .setPersistenceIamIdentity("persistence_iam_identity1061944584")
+            .setAuthorizedNetwork("authorizedNetwork1515554835")
+            .setPersistenceIamIdentity("persistenceIamIdentity1464017428")
             .build();
     Operation resultOperation =
         Operation.newBuilder()
