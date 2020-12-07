@@ -163,7 +163,7 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
-   * @param log_name Required. The resource name of the log to delete:
+   * @param logName Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
    *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
@@ -185,7 +185,7 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
-   * @param log_name Required. The resource name of the log to delete:
+   * @param logName Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
    *     <p>`[LOG_ID]` must be URL-encoded. For example, `"projects/my-project-id/logs/syslog"`,
@@ -230,7 +230,7 @@ public class LoggingClient implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
-   * @param log_name Optional. A default log resource name that is assigned to all log entries in
+   * @param logName Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -292,7 +292,7 @@ public class LoggingClient implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
-   * @param log_name Optional. A default log resource name that is assigned to all log entries in
+   * @param logName Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -381,8 +381,8 @@ public class LoggingClient implements BackgroundResource {
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
    *
-   * @param resource_names Required. Names of one or more parent resources from which to retrieve
-   *     log entries:
+   * @param resourceNames Required. Names of one or more parent resources from which to retrieve log
+   *     entries:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
    *     <p>Projects listed in the `project_ids` field are added to this list.
@@ -392,11 +392,11 @@ public class LoggingClient implements BackgroundResource {
    *     resources listed in `resource_names`. Referencing a parent resource that is not listed in
    *     `resource_names` will cause the filter to return no results. The maximum length of the
    *     filter is 20000 characters.
-   * @param order_by Optional. How the results should be sorted. Presently, the only permitted
-   *     values are `"timestamp asc"` (default) and `"timestamp desc"`. The first option returns
-   *     entries in order of increasing values of `LogEntry.timestamp` (oldest first), and the
-   *     second option returns entries in order of decreasing timestamps (newest first). Entries
-   *     with equal timestamps are returned in order of their `insert_id` values.
+   * @param orderBy Optional. How the results should be sorted. Presently, the only permitted values
+   *     are `"timestamp asc"` (default) and `"timestamp desc"`. The first option returns entries in
+   *     order of increasing values of `LogEntry.timestamp` (oldest first), and the second option
+   *     returns entries in order of decreasing timestamps (newest first). Entries with equal
+   *     timestamps are returned in order of their `insert_id` values.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListLogEntriesPagedResponse listLogEntries(
