@@ -146,11 +146,21 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
         LoggingServiceV2StubSettings.newBuilder().build(), clientContext, callableFactory);
   }
 
+  /**
+   * Constructs an instance of GrpcLoggingServiceV2Stub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
   protected GrpcLoggingServiceV2Stub(
       LoggingServiceV2StubSettings settings, ClientContext clientContext) throws IOException {
     this(settings, clientContext, new GrpcLoggingServiceV2CallableFactory());
   }
 
+  /**
+   * Constructs an instance of GrpcLoggingServiceV2Stub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
   protected GrpcLoggingServiceV2Stub(
       LoggingServiceV2StubSettings settings,
       ClientContext clientContext,
