@@ -262,7 +262,11 @@ public class GrpcTestingStub extends TestingStub {
                   @Override
                   public Map<String, String> extract(VerifyTestRequest request) {
                     ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                    params.put("answer", String.valueOf(request.getAnswer()));
+                    params.put("foo", String.valueOf(request.getFoo()));
                     params.put("name", String.valueOf(request.getName()));
+                    params.put(
+                        "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
                     return params.build();
                   }
                 })
