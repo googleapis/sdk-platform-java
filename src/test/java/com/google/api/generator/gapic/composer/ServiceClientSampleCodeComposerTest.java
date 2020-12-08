@@ -36,7 +36,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -105,18 +104,17 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("PagedExpandResponse")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
             .setName("SimplePagedExpand")
-            .setMethodSignatures(Arrays.asList(methodArguments))
+            .setMethodSignatures(Collections.emptyList())
             .setInputType(inputType)
             .setOutputType(outputType)
             .setIsPaged(true)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, clientType, methodArguments, resourceNames, messageTypes);
+            method, clientType, Collections.emptyList(), resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -698,12 +696,12 @@ public class ServiceClientSampleCodeComposerTest {
             "  String name = \"name3373707\";\n",
             "  echoClient.delete(name);\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 
   // ===================================Unary Paged RPC Method Sample Code ======================//
   @Test
-  public void validComposeUnaryPagedRpcMethodSampleCode_multipleMethodArguments() {
+  public void composeUnaryPagedRpcMethodSampleCode_multipleMethodArguments() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
@@ -769,11 +767,11 @@ public class ServiceClientSampleCodeComposerTest {
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 
   @Test
-  public void validComposeUnaryPagedRpcMethodSampleCode_noMethodArguments() {
+  public void composeUnaryPagedRpcMethodSampleCode_noMethodArguments() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
@@ -815,6 +813,6 @@ public class ServiceClientSampleCodeComposerTest {
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 }

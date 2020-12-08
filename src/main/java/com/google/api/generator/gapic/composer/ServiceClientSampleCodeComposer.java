@@ -38,7 +38,6 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -226,52 +225,12 @@ public class ServiceClientSampleCodeComposer {
                 .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
                 .setType(clientType)
                 .build());
-    // List of rpc method arguments' variable expressions.
-    List<VariableExpr> rpcMethodArgVarExprs =
-        arguments.stream()
-            .map(
-                arg ->
-                    VariableExpr.withVariable(
-                        Variable.builder()
-                            .setName(JavaStyle.toLowerCamelCase(arg.name()))
-                            .setType(arg.type())
-                            .build()))
-            .collect(Collectors.toList());
-    // List of rpc method arguments' default value expression.
-    List<ResourceName> resourceNameList =
-        resourceNames.values().stream().collect(Collectors.toList());
+    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
     List<Expr> rpcMethodArgDefaultValueExprs =
-        arguments.stream()
-            .map(
-                arg ->
-                    !isStringTypedResourceName(arg, resourceNames)
-                        ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
-                        : MethodInvocationExpr.builder()
-                            .setExprReferenceExpr(
-                                DefaultValueComposer.createDefaultValue(
-                                    resourceNames.get(
-                                        arg.field().resourceReference().resourceTypeString()),
-                                    resourceNameList,
-                                    arg.field().name()))
-                            .setMethodName("toString")
-                            .setReturnType(TypeNode.STRING)
-                            .build())
-            .collect(Collectors.toList());
-
-    List<Expr> bodyExprs = new ArrayList<>();
-    Preconditions.checkState(
-        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
-        "Expected the number of method arguments to match the number of default values.");
-    bodyExprs.addAll(
-        IntStream.range(0, rpcMethodArgVarExprs.size())
-            .mapToObj(
-                i ->
-                    AssignmentExpr.builder()
-                        .setVariableExpr(
-                            (rpcMethodArgVarExprs.get(i)).toBuilder().setIsDecl(true).build())
-                        .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
-                        .build())
-            .collect(Collectors.toList()));
+        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+    List<Expr> bodyExprs =
+        createMethodArgAssignmentWithDefaultValue(
+            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
@@ -325,55 +284,12 @@ public class ServiceClientSampleCodeComposer {
                 .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
                 .setType(clientType)
                 .build());
-    // List of rpc method arguments' variable expressions.
-    List<Expr> rpcMethodArgVarExprs =
-        arguments.stream()
-            .map(
-                arg ->
-                    VariableExpr.withVariable(
-                        Variable.builder()
-                            .setName(JavaStyle.toLowerCamelCase(arg.name()))
-                            .setType(arg.type())
-                            .build()))
-            .collect(Collectors.toList());
-    // List of rpc method arguments' default value expression.
-    List<ResourceName> resourceNameList =
-        resourceNames.values().stream().collect(Collectors.toList());
+    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
     List<Expr> rpcMethodArgDefaultValueExprs =
-        arguments.stream()
-            .map(
-                arg ->
-                    !isStringTypedResourceName(arg, resourceNames)
-                        ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
-                        : MethodInvocationExpr.builder()
-                            .setExprReferenceExpr(
-                                DefaultValueComposer.createDefaultValue(
-                                    resourceNames.get(
-                                        arg.field().resourceReference().resourceTypeString()),
-                                    resourceNameList,
-                                    arg.field().name()))
-                            .setMethodName("toString")
-                            .setReturnType(TypeNode.STRING)
-                            .build())
-            .collect(Collectors.toList());
-
-    List<Expr> bodyExprs = new ArrayList<>();
-    Preconditions.checkState(
-        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
-        "The method arguments' the number of variable expressions should equal to the number of default value expressions.");
-    bodyExprs.addAll(
-        IntStream.range(0, rpcMethodArgVarExprs.size())
-            .mapToObj(
-                i ->
-                    AssignmentExpr.builder()
-                        .setVariableExpr(
-                            ((VariableExpr) rpcMethodArgVarExprs.get(i))
-                                .toBuilder()
-                                .setIsDecl(true)
-                                .build())
-                        .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
-                        .build())
-            .collect(Collectors.toList()));
+        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+    List<Expr> bodyExprs =
+        createMethodArgAssignmentWithDefaultValue(
+            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
     // For loop paged response item on iterateAll method.
     // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
     //          //doThingsWith(element);
@@ -382,7 +298,8 @@ public class ServiceClientSampleCodeComposer {
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-            .setArguments(rpcMethodArgVarExprs)
+            .setArguments(
+                rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
     Expr clientMethodIteratorAllExpr =
         MethodInvocationExpr.builder()
@@ -414,6 +331,60 @@ public class ServiceClientSampleCodeComposer {
   }
 
   // ==================================Helpers===================================================//
+
+  // Create a list of RPC method arguments' variable expressions.
+  private static List<VariableExpr> createRpcMethodArgumentVariableExprs(
+      List<MethodArgument> arguments) {
+    return arguments.stream()
+        .map(
+            arg ->
+                VariableExpr.withVariable(
+                    Variable.builder()
+                        .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                        .setType(arg.type())
+                        .build()))
+        .collect(Collectors.toList());
+  }
+
+  // Create a list of RPC method arguments' default value expression.
+  private static List<Expr> createRpcMethodArgumentDefaultValueExprs(
+      List<MethodArgument> arguments, Map<String, ResourceName> resourceNames) {
+    List<ResourceName> resourceNameList =
+        resourceNames.values().stream().collect(Collectors.toList());
+    return arguments.stream()
+        .map(
+            arg ->
+                !isStringTypedResourceName(arg, resourceNames)
+                    ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                    : MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(
+                            DefaultValueComposer.createDefaultValue(
+                                resourceNames.get(
+                                    arg.field().resourceReference().resourceTypeString()),
+                                resourceNameList,
+                                arg.field().name()))
+                        .setMethodName("toString")
+                        .setReturnType(TypeNode.STRING)
+                        .build())
+        .collect(Collectors.toList());
+  }
+
+  // Create a list of assignment expressions for method argument with its default value.
+  private static List<Expr> createMethodArgAssignmentWithDefaultValue(
+      List<VariableExpr> rpcMethodArgVarExprs, List<Expr> rpcMethodArgDefaultValueExprs) {
+    Preconditions.checkState(
+        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        "Expected the number of method arguments to match the number of default values.");
+    return IntStream.range(0, rpcMethodArgVarExprs.size())
+        .mapToObj(
+            i ->
+                AssignmentExpr.builder()
+                    .setVariableExpr(
+                        rpcMethodArgVarExprs.get(i).toBuilder().setIsDecl(true).build())
+                    .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
+                    .build())
+        .collect(Collectors.toList());
+  }
 
   // Assign client variable expr with create client.
   // e.g EchoClient echoClient = EchoClient.create()
