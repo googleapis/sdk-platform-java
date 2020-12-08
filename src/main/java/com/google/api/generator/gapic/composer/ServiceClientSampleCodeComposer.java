@@ -184,19 +184,19 @@ public class ServiceClientSampleCodeComposer {
 
   public static String composeRpcMethodHeaderSampleCode(
       Method method,
-      List<MethodArgument> arguments,
       TypeNode clientType,
+      List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Add other types RPC methods' sample code.
     return SampleCodeWriter.write(
-        composeUnaryRpcMethodSampleCode(method, arguments, clientType, resourceNames));
+        composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
   }
 
   @VisibleForTesting
   static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method,
-      List<MethodArgument> arguments,
       TypeNode clientType,
+      List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
@@ -205,7 +205,7 @@ public class ServiceClientSampleCodeComposer {
                 .setType(clientType)
                 .build());
     // List of rpc method arguments' variable expressions.
-    List<Expr> rpcMethodArgVarExprs =
+    List<VariableExpr> rpcMethodArgVarExprs =
         arguments.stream()
             .map(
                 arg ->
@@ -239,17 +239,14 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> bodyExprs = new ArrayList<>();
     Preconditions.checkState(
         rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
-        "The method arguments' the number of variable expressions should equal to the number of default value expressions.");
+        "Expected the number of method arguments to match the number of default values.");
     bodyExprs.addAll(
         IntStream.range(0, rpcMethodArgVarExprs.size())
             .mapToObj(
                 i ->
                     AssignmentExpr.builder()
                         .setVariableExpr(
-                            ((VariableExpr) rpcMethodArgVarExprs.get(i))
-                                .toBuilder()
-                                .setIsDecl(true)
-                                .build())
+                            (rpcMethodArgVarExprs.get(i)).toBuilder().setIsDecl(true).build())
                         .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
                         .build())
             .collect(Collectors.toList()));
@@ -262,7 +259,8 @@ public class ServiceClientSampleCodeComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(clientVarExpr)
               .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(rpcMethodArgVarExprs)
+              .setArguments(
+                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
               .setReturnType(clientType)
               .build());
     } else {
@@ -273,7 +271,8 @@ public class ServiceClientSampleCodeComposer {
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(clientVarExpr)
               .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(rpcMethodArgVarExprs)
+              .setArguments(
+                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
               .setReturnType(responseVarExpr.variable().type())
               .build();
       bodyExprs.add(
