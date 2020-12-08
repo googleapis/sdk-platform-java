@@ -316,7 +316,10 @@ public class ServiceClientSampleCodeComposer {
                     .setIsDecl(true)
                     .build())
             .setCollectionExpr(clientMethodIteratorAllExpr)
-            .setBody(Arrays.asList(createLineCommentStatement("doThingsWith(element);")))
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("doThingsWith(element);"))))
             .build();
 
     List<Statement> bodyStatements =
@@ -411,9 +414,5 @@ public class ServiceClientSampleCodeComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
-  }
-
-  private static CommentStatement createLineCommentStatement(String content) {
-    return CommentStatement.withComment(LineComment.withComment(content));
   }
 }

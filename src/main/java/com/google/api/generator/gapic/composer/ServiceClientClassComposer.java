@@ -480,7 +480,6 @@ public class ServiceClientClassComposer {
       Map<String, TypeNode> types,
       Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    String clientName = getClientClassName(service);
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(

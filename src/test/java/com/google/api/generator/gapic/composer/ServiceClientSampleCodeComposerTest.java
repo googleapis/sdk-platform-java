@@ -212,7 +212,7 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, methodArguments, resourceNames, messageTypes));
   }
 
-  // ==========================================Unary RPC Method Sample Code=======================//
+  // =======================================Unary RPC Method Sample Code=======================//
   @Test
   public void composeUnaryRpcMethodSampleCode_resourceNameMethodArgument() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
