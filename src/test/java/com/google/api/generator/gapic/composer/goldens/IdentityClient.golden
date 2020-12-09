@@ -124,6 +124,17 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   String parent = UserName.of("[USER]").toString();
+   *   String displayName = "displayName1714148973";
+   *   String email = "email96619420";
+   *   User response = identityClient.createUser(parent, displayName, email);
+   * }
+   * }</pre>
+   *
    * @param parent
    * @param displayName
    * @param email
@@ -140,6 +151,23 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   String parent = UserName.of("[USER]").toString();
+   *   String displayName = "displayName1714148973";
+   *   String email = "email96619420";
+   *   int age = 96511;
+   *   String nickname = "nickname70690926";
+   *   boolean enableNotifications = true;
+   *   double heightFeet = -1032737338;
+   *   User response =
+   *       identityClient.createUser(
+   *           parent, displayName, email, age, nickname, enableNotifications, heightFeet);
+   * }
+   * }</pre>
+   *
    * @param parent
    * @param displayName
    * @param email
@@ -246,6 +274,15 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   UserName name = UserName.of("[USER]");
+   *   User response = identityClient.getUser(name);
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -257,6 +294,15 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   String name = UserName.of("[USER]").toString();
+   *   User response = identityClient.getUser(name);
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -297,6 +343,15 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   UserName name = UserName.of("[USER]");
+   *   identityClient.deleteUser(name);
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -308,6 +363,15 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   String name = UserName.of("[USER]").toString();
+   *   identityClient.deleteUser(name);
+   * }
+   * }</pre>
+   *
    * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */

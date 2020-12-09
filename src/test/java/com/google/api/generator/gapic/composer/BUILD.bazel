@@ -19,6 +19,7 @@ UPDATE_GOLDENS_TESTS = [
 
 TESTS = UPDATE_GOLDENS_TESTS + [
     "RetrySettingsComposerTest",
+    "ServiceClientSampleCodeComposerTest",
 ]
 
 TEST_DEPS = [
