@@ -132,6 +132,76 @@ public class ServiceClientSampleCodeComposerTest {
   }
 
   @Test
+  public void validComposeRpcMethodHeaderSampleCode_lroUnaryRpc() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
+    TypeNode responseType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode metadataType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitMetadata")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    TypeNode ttlTypeNode =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Duration").setPakkage(PROTO_PACKAGE_NAME).build());
+    MethodArgument ttl =
+        MethodArgument.builder()
+            .setName("ttl")
+            .setType(ttlTypeNode)
+            .setField(
+                Field.builder()
+                    .setName("ttl")
+                    .setType(ttlTypeNode)
+                    .setIsMessage(true)
+                    .setIsContainedInOneof(true)
+                    .build())
+            .build();
+    List<MethodArgument> arguments = Arrays.asList(ttl);
+    Method method =
+        Method.builder()
+            .setName("Wait")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setLro(lro)
+            .setMethodSignatures(Arrays.asList(arguments))
+            .build();
+
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+            method, clientType, arguments, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  Duration ttl = Duration.newBuilder().build();\n",
+            "  WaitResponse response = echoClient.waitAsync(ttl).get();\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
   public void invalidComposeRpcMethodHeaderSampleCode_noMatchedRepeatedResponseTypeInPagedMethod() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
