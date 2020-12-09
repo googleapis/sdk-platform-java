@@ -477,18 +477,12 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createServiceMethods(
-      Service service,
-      Map<String, Message> messageTypes,
-      Map<String, TypeNode> types,
-      Map<String, ResourceName> resourceNames) {
-    String clientName = getClientClassName(service);
+      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(
-            createMethodVariants(method, clientName, messageTypes, types, resourceNames));
-        javaMethods.add(
-            createMethodDefaultMethod(method, clientName, messageTypes, types, resourceNames));
+        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
+        javaMethods.add(createMethodDefaultMethod(method, types));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service, method, types));
@@ -502,11 +496,7 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method,
-      String clientName,
-      Map<String, Message> messageTypes,
-      Map<String, TypeNode> types,
-      Map<String, ResourceName> resourceNames) {
+      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -1540,11 +1530,6 @@ public class ServiceClientClassComposer {
       String pakkage, Map<String, Message> messageTypes) {
     // Vapor message types.
     return messageTypes.entrySet().stream()
-        // Short-term hack for messages that have nested subtypes with colliding names. This
-        // should work as long as there isn't heavy usage of fully-qualified nested subtypes in
-        // general. A long-term fix would involve adding a custom type-store that handles
-        // fully-qualified types.
-        .filter(e -> e.getValue().outerNestedTypes().isEmpty())
         .collect(
             Collectors.toMap(
                 e -> e.getValue().name(),
