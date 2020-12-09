@@ -614,7 +614,12 @@ public class ServiceClientClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createMethodDefaultMethod(Method method, TypeStore typeStore) {
+  private static MethodDefinition createMethodDefaultMethod(
+      Method method,
+      String clientName,
+      Map<String, Message> messageTypes,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -647,6 +652,11 @@ public class ServiceClientClassComposer {
       callableMethodName = String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName);
     }
 
+    Optional<String> defaultMethodSampleCode =
+        Optional.of(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, typeStore.get(clientName), resourceNames, messageTypes));
+
     MethodInvocationExpr callableMethodExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
     callableMethodExpr =
@@ -659,7 +669,8 @@ public class ServiceClientClassComposer {
     MethodDefinition.Builder methodBuilder =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                    method, defaultMethodSampleCode))
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
