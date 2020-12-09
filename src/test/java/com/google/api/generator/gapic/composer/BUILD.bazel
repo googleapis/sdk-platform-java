@@ -38,6 +38,7 @@ TEST_DEPS = [
     "//src/test/java/com/google/api/generator/gapic/testdata:showcase_java_proto",
     "//src/test/java/com/google/api/generator/gapic/testdata:testgapic_java_proto",
     "//src/test/java/com/google/api/generator/gapic/composer/constants",
+    "@com_google_api_api_common//jar",
     "@com_google_api_gax_java//gax",
     "@com_google_api_api_common",
     "@com_google_googleapis//google/logging/v2:logging_java_proto",
