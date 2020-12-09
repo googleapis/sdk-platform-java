@@ -159,7 +159,7 @@ public class ServiceClientCommentComposer {
             CREATE_METHOD_STUB_ARG_PATTERN, serviceName, settingsType.reference().name()));
   }
 
- public static List<CommentStatement> createRpcMethodHeaderComment(
+  public static List<CommentStatement> createRpcMethodHeaderComment(
       Method method, List<MethodArgument> methodArguments, Optional<String> sampleCode) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
@@ -195,7 +195,7 @@ public class ServiceClientCommentComposer {
     return comments;
   }
 
- public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
+  public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
     // TODO(summerji): Refactor this method when implement default method sample code.
     return createRpcMethodHeaderComment(method, Collections.emptyList(), Optional.empty());
   }
