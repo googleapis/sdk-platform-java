@@ -20,18 +20,29 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
+import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ServiceClientSampleCodeComposer {
-  // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
+      // TODO(summerji): Add unit tests for composeClassHeaderCredentialsSampleCode.
       TypeNode clientType, TypeNode settingsType) {
     // Initialize clientSettings with builder() method.
     // e.g. EchoSettings echoSettings =
@@ -105,6 +116,7 @@ public class ServiceClientSampleCodeComposer {
   }
 
   public static String composeClassHeaderEndpointSampleCode(
+      // TODO(summerji): Add unit tests for composeClassHeaderEndpointSampleCode.
       TypeNode clientType, TypeNode settingsType) {
     // Initialize client settings with builder() method.
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
@@ -168,5 +180,142 @@ public class ServiceClientSampleCodeComposer {
         Arrays.asList(
             ExprStatement.withExpr(initSettingsVarExpr),
             ExprStatement.withExpr(initClientVarExpr)));
+  }
+
+  public static String composeRpcMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      List<MethodArgument> arguments,
+      Map<String, ResourceName> resourceNames) {
+    // TODO(summerji): Add other types RPC methods' sample code.
+    return SampleCodeWriter.write(
+        composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
+  }
+
+  @VisibleForTesting
+  static TryCatchStatement composeUnaryRpcMethodSampleCode(
+      Method method,
+      TypeNode clientType,
+      List<MethodArgument> arguments,
+      Map<String, ResourceName> resourceNames) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // List of rpc method arguments' variable expressions.
+    List<VariableExpr> rpcMethodArgVarExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    VariableExpr.withVariable(
+                        Variable.builder()
+                            .setName(JavaStyle.toLowerCamelCase(arg.name()))
+                            .setType(arg.type())
+                            .build()))
+            .collect(Collectors.toList());
+    // List of rpc method arguments' default value expression.
+    List<ResourceName> resourceNameList =
+        resourceNames.values().stream().collect(Collectors.toList());
+    List<Expr> rpcMethodArgDefaultValueExprs =
+        arguments.stream()
+            .map(
+                arg ->
+                    !isStringTypedResourceName(arg, resourceNames)
+                        ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
+                        : MethodInvocationExpr.builder()
+                            .setExprReferenceExpr(
+                                DefaultValueComposer.createDefaultValue(
+                                    resourceNames.get(
+                                        arg.field().resourceReference().resourceTypeString()),
+                                    resourceNameList,
+                                    arg.field().name()))
+                            .setMethodName("toString")
+                            .setReturnType(TypeNode.STRING)
+                            .build())
+            .collect(Collectors.toList());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    Preconditions.checkState(
+        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        "Expected the number of method arguments to match the number of default values.");
+    bodyExprs.addAll(
+        IntStream.range(0, rpcMethodArgVarExprs.size())
+            .mapToObj(
+                i ->
+                    AssignmentExpr.builder()
+                        .setVariableExpr(
+                            (rpcMethodArgVarExprs.get(i)).toBuilder().setIsDecl(true).build())
+                        .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
+                        .build())
+            .collect(Collectors.toList()));
+    // Invoke current method based on return type.
+    // e.g. if return void, echoClient.echo(..); or,
+    // e.g. if return other type, EchoResponse response = echoClient.echo(...);
+    boolean returnsVoid = isProtoEmptyType(method.outputType());
+    if (returnsVoid) {
+      bodyExprs.add(
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+              .setArguments(
+                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+              .setReturnType(clientType)
+              .build());
+    } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName("response").setType(method.outputType()).build());
+      MethodInvocationExpr clientMethodInvocationExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+              .setArguments(
+                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+              .setReturnType(responseVarExpr.variable().type())
+              .build();
+      bodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(clientMethodInvocationExpr)
+              .build());
+    }
+
+    return TryCatchStatement.builder()
+        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+        .setTryBody(
+            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
+        .setIsSampleCode(true)
+        .build();
+  }
+
+  // ==================================Helpers===================================================//
+
+  // Assign client variable expr with create client.
+  // e.g EchoClient echoClient = EchoClient.create()
+  private static AssignmentExpr assignClientVariableWithCreateMethodExpr(
+      VariableExpr clientVarExpr) {
+    return AssignmentExpr.builder()
+        .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(clientVarExpr.variable().type())
+                .setReturnType(clientVarExpr.variable().type())
+                .setMethodName("create")
+                .build())
+        .build();
+  }
+
+  private static boolean isStringTypedResourceName(
+      MethodArgument arg, Map<String, ResourceName> resourceNames) {
+    return arg.type().equals(TypeNode.STRING)
+        && arg.field().hasResourceReference()
+        && resourceNames.containsKey(arg.field().resourceReference().resourceTypeString());
+  }
+
+  private static boolean isProtoEmptyType(TypeNode type) {
+    return type.reference().pakkage().equals("com.google.protobuf")
+        && type.reference().name().equals("Empty");
   }
 }
