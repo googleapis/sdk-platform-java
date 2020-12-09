@@ -36,12 +36,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceClientSampleCodeComposerTest {
   private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
 
+  // =======================================RPC Method Header Sample Code=======================//
   @Test
   public void validComposeRpcMethodHeaderSampleCode_pureUnaryRpc() {
     FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
@@ -91,7 +91,10 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -138,10 +141,16 @@ public class ServiceClientSampleCodeComposerTest {
                 .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("PagedResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("PagedResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
@@ -171,10 +180,16 @@ public class ServiceClientSampleCodeComposerTest {
                 .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("PagedResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("PagedResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
@@ -219,13 +234,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode resourceNameType =
         TypeNode.withReference(
             ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
@@ -269,13 +293,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode methodArgType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -324,13 +357,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("name")
@@ -370,13 +412,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("parent")
@@ -417,13 +468,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode methodArgType =
         TypeNode.withReference(
             VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build());
@@ -467,13 +527,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("display_name")
@@ -481,7 +550,8 @@ public class ServiceClientSampleCodeComposerTest {
             .setResourceReference(
                 ResourceReference.withChildType("showcase.googleapis.com/AnythingGoes"))
             .build();
-    Reference userRef = VaporReference.builder().setName("User").setPakkage(SHOWCASE_PACKAGE_NAME).build();
+    Reference userRef =
+        VaporReference.builder().setName("User").setPakkage(SHOWCASE_PACKAGE_NAME).build();
     Field nestFiled =
         Field.builder()
             .setName("user")
@@ -531,13 +601,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("content")
@@ -577,13 +656,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     MethodArgument arg1 =
         MethodArgument.builder()
             .setName("content")
@@ -628,13 +716,22 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<List<MethodArgument>> signatures = Arrays.asList(Collections.emptyList());
     Method unaryMethod =
         Method.builder()
@@ -661,7 +758,10 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -706,7 +806,10 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -776,7 +879,10 @@ public class ServiceClientSampleCodeComposerTest {
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     TypeNode clientType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoClient").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()

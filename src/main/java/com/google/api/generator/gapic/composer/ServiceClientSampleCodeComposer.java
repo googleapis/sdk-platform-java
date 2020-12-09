@@ -41,6 +41,7 @@ import com.google.common.base.Preconditions;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -229,7 +230,7 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> rpcMethodArgDefaultValueExprs =
         createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
     List<Expr> bodyExprs =
-        createMethodArgAssignmentWithDefaultValue(
+        createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
@@ -288,7 +289,7 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> rpcMethodArgDefaultValueExprs =
         createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
     List<Expr> bodyExprs =
-        createMethodArgAssignmentWithDefaultValue(
+        createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
     // For loop paged response item on iterateAll method.
     // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
@@ -354,37 +355,38 @@ public class ServiceClientSampleCodeComposer {
       List<MethodArgument> arguments, Map<String, ResourceName> resourceNames) {
     List<ResourceName> resourceNameList =
         resourceNames.values().stream().collect(Collectors.toList());
+    Function<MethodArgument, MethodInvocationExpr> stringResourceNameDefaultValueExpr =
+        arg ->
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(
+                    DefaultValueComposer.createDefaultValue(
+                        resourceNames.get(arg.field().resourceReference().resourceTypeString()),
+                        resourceNameList,
+                        arg.field().name()))
+                .setMethodName("toString")
+                .setReturnType(TypeNode.STRING)
+                .build();
     return arguments.stream()
         .map(
             arg ->
                 !isStringTypedResourceName(arg, resourceNames)
                     ? DefaultValueComposer.createDefaultValue(arg, resourceNames)
-                    : MethodInvocationExpr.builder()
-                        .setExprReferenceExpr(
-                            DefaultValueComposer.createDefaultValue(
-                                resourceNames.get(
-                                    arg.field().resourceReference().resourceTypeString()),
-                                resourceNameList,
-                                arg.field().name()))
-                        .setMethodName("toString")
-                        .setReturnType(TypeNode.STRING)
-                        .build())
+                    : stringResourceNameDefaultValueExpr.apply(arg))
         .collect(Collectors.toList());
   }
 
-  // Create a list of assignment expressions for method argument with its default value.
-  private static List<Expr> createMethodArgAssignmentWithDefaultValue(
-      List<VariableExpr> rpcMethodArgVarExprs, List<Expr> rpcMethodArgDefaultValueExprs) {
+  // Create a list of assignment expressions for variable expr with value expr.
+  private static List<Expr> createAssignmentsForVarExprsWithValueExprs(
+      List<VariableExpr> variableExprs, List<Expr> valueExprs) {
     Preconditions.checkState(
-        rpcMethodArgVarExprs.size() == rpcMethodArgDefaultValueExprs.size(),
+        variableExprs.size() == valueExprs.size(),
         "Expected the number of method arguments to match the number of default values.");
-    return IntStream.range(0, rpcMethodArgVarExprs.size())
+    return IntStream.range(0, variableExprs.size())
         .mapToObj(
             i ->
                 AssignmentExpr.builder()
-                    .setVariableExpr(
-                        rpcMethodArgVarExprs.get(i).toBuilder().setIsDecl(true).build())
-                    .setValueExpr(rpcMethodArgDefaultValueExprs.get(i))
+                    .setVariableExpr(variableExprs.get(i).toBuilder().setIsDecl(true).build())
+                    .setValueExpr(valueExprs.get(i))
                     .build())
         .collect(Collectors.toList());
   }
