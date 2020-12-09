@@ -568,7 +568,7 @@ public class ServiceClientClassComposer {
       Optional<String> methodSampleCode =
           Optional.of(
               ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                  method, signature, types.get(clientName), resourceNames, messageTypes));
+                  method, types.get(clientName), signature, resourceNames, messageTypes));
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
