@@ -208,7 +208,7 @@ public class ServiceClientSampleCodeComposer {
       TypeNode repeatedResponseType = repeatedPagedResultsField.type();
       return SampleCodeWriter.write(
           composeUnaryPagedRpcMethodSampleCode(
-              method, arguments, clientType, resourceNames, repeatedResponseType));
+              method, clientType, arguments, resourceNames, repeatedResponseType));
     }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
@@ -275,8 +275,8 @@ public class ServiceClientSampleCodeComposer {
   @VisibleForTesting
   static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
       Method method,
-      List<MethodArgument> arguments,
       TypeNode clientType,
+      List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
       TypeNode repeatedResponseType) {
     VariableExpr clientVarExpr =

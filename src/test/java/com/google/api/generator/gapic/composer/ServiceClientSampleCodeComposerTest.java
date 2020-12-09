@@ -860,7 +860,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryPagedRpcMethodSampleCode(
-                method, arguments, clientType, resourceNames, repeatedResponseType));
+                method, clientType, arguments, resourceNames, repeatedResponseType));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -911,7 +911,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryPagedRpcMethodSampleCode(
-                method, arguments, clientType, resourceNames, repeatedResponseType));
+                method, clientType, arguments, resourceNames, repeatedResponseType));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
