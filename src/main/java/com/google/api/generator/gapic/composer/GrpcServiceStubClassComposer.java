@@ -29,11 +29,13 @@ import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.EmptyLineStatement;
 import com.google.api.generator.engine.ast.EnumRefExpr;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
+import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
@@ -525,6 +527,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             MethodDefinition.constructorBuilder()
                 .setScope(ScopeNode.PROTECTED)
                 .setReturnType(thisClassType)
+                .setHeaderCommentStatements(
+                    Arrays.asList(createProtectedCtorComment(service.name())))
                 .setArguments(
                     args.stream()
                         .map(v -> v.toBuilder().setIsDecl(true).build())
@@ -1142,5 +1146,15 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
 
   private static String getThisClassName(String serviceName) {
     return String.format(CLASS_NAME_PATTERN, serviceName);
+  }
+
+  private static CommentStatement createProtectedCtorComment(String serviceName) {
+    return CommentStatement.withComment(
+        JavaDocComment.withComment(
+            String.format(
+                "Constructs an instance of %s, using the given settings. This is protected so that"
+                    + " it is easy to make a subclass, but otherwise, the static factory methods"
+                    + " should be  preferred.",
+                getThisClassName(serviceName))));
   }
 }

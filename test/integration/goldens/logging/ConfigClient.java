@@ -597,7 +597,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The resource name of the sink:
+   * @param sinkName Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
@@ -626,7 +626,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The resource name of the sink:
+   * @param sinkName Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/sinks/[SINK_ID]"
@@ -872,7 +872,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to update, including the parent
+   * @param sinkName Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -910,7 +910,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to update, including the parent
+   * @param sinkName Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -946,7 +946,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to update, including the parent
+   * @param sinkName Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -955,9 +955,9 @@ public class ConfigClient implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
-   * @param update_mask Optional. Field mask that specifies the fields in `sink` that need an
-   *     update. A sink field will be overwritten if, and only if, it is in the update mask. `name`
-   *     and output only fields cannot be updated.
+   * @param updateMask Optional. Field mask that specifies the fields in `sink` that need an update.
+   *     A sink field will be overwritten if, and only if, it is in the update mask. `name` and
+   *     output only fields cannot be updated.
    *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
    *     compatibility purposes: destination,filter,includeChildren At some point in the future,
    *     behavior will be removed and specifying an empty updateMask will be an error.
@@ -995,7 +995,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to update, including the parent
+   * @param sinkName Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -1004,9 +1004,9 @@ public class ConfigClient implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/sinks/my-sink-id"`.
    * @param sink Required. The updated sink, whose name is the same identifier that appears as part
    *     of `sink_name`.
-   * @param update_mask Optional. Field mask that specifies the fields in `sink` that need an
-   *     update. A sink field will be overwritten if, and only if, it is in the update mask. `name`
-   *     and output only fields cannot be updated.
+   * @param updateMask Optional. Field mask that specifies the fields in `sink` that need an update.
+   *     A sink field will be overwritten if, and only if, it is in the update mask. `name` and
+   *     output only fields cannot be updated.
    *     <p>An empty updateMask is temporarily treated as using the following mask for backwards
    *     compatibility purposes: destination,filter,includeChildren At some point in the future,
    *     behavior will be removed and specifying an empty updateMask will be an error.
@@ -1068,7 +1068,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to delete, including the parent
+   * @param sinkName Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -1099,7 +1099,7 @@ public class ConfigClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param sink_name Required. The full resource name of the sink to delete, including the parent
+   * @param sinkName Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -1585,8 +1585,8 @@ public class ConfigClient implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
-   * @param update_mask Required. A non-empty list of fields to change in the existing exclusion.
-   *     New values for the fields are taken from the corresponding fields in the
+   * @param updateMask Required. A non-empty list of fields to change in the existing exclusion. New
+   *     values for the fields are taken from the corresponding fields in the
    *     [LogExclusion][google.logging.v2.LogExclusion] included in this request. Fields not
    *     mentioned in `update_mask` are not changed and are ignored in the request.
    *     <p>For example, to change the filter and description of an exclusion, specify an
@@ -1627,8 +1627,8 @@ public class ConfigClient implements BackgroundResource {
    *     <p>Example: `"projects/my-project-id/exclusions/my-exclusion-id"`.
    * @param exclusion Required. New values for the existing exclusion. Only the fields specified in
    *     `update_mask` are relevant.
-   * @param update_mask Required. A non-empty list of fields to change in the existing exclusion.
-   *     New values for the fields are taken from the corresponding fields in the
+   * @param updateMask Required. A non-empty list of fields to change in the existing exclusion. New
+   *     values for the fields are taken from the corresponding fields in the
    *     [LogExclusion][google.logging.v2.LogExclusion] included in this request. Fields not
    *     mentioned in `update_mask` are not changed and are ignored in the request.
    *     <p>For example, to change the filter and description of an exclusion, specify an

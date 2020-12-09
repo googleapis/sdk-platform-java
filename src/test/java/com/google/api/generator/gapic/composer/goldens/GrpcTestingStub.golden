@@ -155,11 +155,19 @@ public class GrpcTestingStub extends TestingStub {
         TestingStubSettings.newBuilder().build(), clientContext, callableFactory);
   }
 
+  /**
+   * Constructs an instance of GrpcTestingStub, using the given settings. This is protected so that
+   * it is easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   */
   protected GrpcTestingStub(TestingStubSettings settings, ClientContext clientContext)
       throws IOException {
     this(settings, clientContext, new GrpcTestingCallableFactory());
   }
 
+  /**
+   * Constructs an instance of GrpcTestingStub, using the given settings. This is protected so that
+   * it is easy to make a subclass, but otherwise, the static factory methods should be preferred.
+   */
   protected GrpcTestingStub(
       TestingStubSettings settings,
       ClientContext clientContext,
@@ -262,7 +270,11 @@ public class GrpcTestingStub extends TestingStub {
                   @Override
                   public Map<String, String> extract(VerifyTestRequest request) {
                     ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                    params.put("answer", String.valueOf(request.getAnswer()));
+                    params.put("foo", String.valueOf(request.getFoo()));
                     params.put("name", String.valueOf(request.getName()));
+                    params.put(
+                        "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
                     return params.build();
                   }
                 })
