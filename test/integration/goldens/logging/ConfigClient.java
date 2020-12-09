@@ -475,6 +475,15 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets a sink.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink response = configClient.getSink(sinkName);
+   * }
+   * }</pre>
+   *
    * @param sink_name Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
    *     "organizations/[ORGANIZATION_ID]/sinks/[SINK_ID]"
@@ -494,6 +503,15 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a sink.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   LogSink response = configClient.getSink(sinkName);
+   * }
+   * }</pre>
    *
    * @param sink_name Required. The resource name of the sink:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -536,6 +554,16 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.createSink(parent, sink);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -559,6 +587,16 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.createSink(parent, sink);
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -584,6 +622,16 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.createSink(parent, sink);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -608,6 +656,16 @@ public class ConfigClient implements BackgroundResource {
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.createSink(parent, sink);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -631,6 +689,16 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.createSink(parent, sink);
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource in which to create the sink:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -681,6 +749,16 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.updateSink(sinkName, sink);
+   * }
+   * }</pre>
+   *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -709,6 +787,16 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   LogSink response = configClient.updateSink(sinkName, sink);
+   * }
+   * }</pre>
+   *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -733,6 +821,17 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   * }
+   * }</pre>
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
@@ -771,6 +870,17 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   LogSink sink = LogSink.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   LogSink response = configClient.updateSink(sinkName, sink, updateMask);
+   * }
+   * }</pre>
    *
    * @param sink_name Required. The full resource name of the sink to update, including the parent
    *     resource and the sink identifier:
@@ -836,6 +946,15 @@ public class ConfigClient implements BackgroundResource {
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogSinkName sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]");
+   *   configClient.deleteSink(sinkName);
+   * }
+   * }</pre>
+   *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
    *     <p>"projects/[PROJECT_ID]/sinks/[SINK_ID]"
@@ -857,6 +976,15 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String sinkName = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   configClient.deleteSink(sinkName);
+   * }
+   * }</pre>
    *
    * @param sink_name Required. The full resource name of the sink to delete, including the parent
    *     resource and the sink identifier:
@@ -1014,6 +1142,15 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets the description of an exclusion.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   LogExclusion response = configClient.getExclusion(name);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of an existing exclusion:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1031,6 +1168,15 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets the description of an exclusion.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   LogExclusion response = configClient.getExclusion(name);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of an existing exclusion:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
@@ -1071,6 +1217,16 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1092,6 +1248,16 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1115,6 +1281,16 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1137,6 +1313,16 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1158,6 +1344,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent =
+   *       LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   LogExclusion response = configClient.createExclusion(parent, exclusion);
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource in which to create the exclusion:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1200,6 +1397,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Changes one or more properties of an existing exclusion.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of the exclusion to update:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1230,6 +1438,17 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Changes one or more properties of an existing exclusion.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   LogExclusion exclusion = LogExclusion.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   LogExclusion response = configClient.updateExclusion(name, exclusion, updateMask);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of the exclusion to update:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
@@ -1283,6 +1502,15 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes an exclusion.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LogExclusionName name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]");
+   *   configClient.deleteExclusion(name);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of an existing exclusion to delete:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
    *     "organizations/[ORGANIZATION_ID]/exclusions/[EXCLUSION_ID]"
@@ -1300,6 +1528,15 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes an exclusion.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String name = LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   configClient.deleteExclusion(name);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of an existing exclusion to delete:
    *     <p>"projects/[PROJECT_ID]/exclusions/[EXCLUSION_ID]"
