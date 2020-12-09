@@ -212,8 +212,7 @@ public class ServiceClientSampleCodeComposer {
     }
     if (method.hasLro()) {
       return SampleCodeWriter.write(
-          composeUnaryLroRpcMethodSampleCode(
-              method, arguments, clientType, resourceNames, messageTypes));
+          composeUnaryLroRpcMethodSampleCode(method, clientType, arguments, resourceNames));
     }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
@@ -342,10 +341,9 @@ public class ServiceClientSampleCodeComposer {
   @VisibleForTesting
   static TryCatchStatement composeUnaryLroRpcMethodSampleCode(
       Method method,
-      List<MethodArgument> arguments,
       TypeNode clientType,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      List<MethodArgument> arguments,
+      Map<String, ResourceName> resourceNames) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -359,7 +357,8 @@ public class ServiceClientSampleCodeComposer {
         createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
     // Assign response variable with invoking client's lro method.
-    // e.g. WaitResponse response = echoClient.waitAsync(ttl).get();
+    // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
+    // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
     Expr invokeLroMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
@@ -373,7 +372,8 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    if (isProtoEmptyType(method.outputType())) {
+    boolean returnsVoid = isProtoEmptyType(method.lro().responseType());
+    if (returnsVoid) {
       bodyExprs.add(getResponseMethodExpr);
     } else {
       VariableExpr responseVarExpr =

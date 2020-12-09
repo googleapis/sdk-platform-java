@@ -988,7 +988,7 @@ public class CloudRedisClient implements BackgroundResource {
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
-   *   Empty response = cloudRedisClient.deleteInstanceAsync(name).get();
+   *   cloudRedisClient.deleteInstanceAsync(name).get();
    * }
    * }</pre>
    *
@@ -1012,7 +1012,7 @@ public class CloudRedisClient implements BackgroundResource {
    * <pre>{@code
    * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
    *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
-   *   Empty response = cloudRedisClient.deleteInstanceAsync(name).get();
+   *   cloudRedisClient.deleteInstanceAsync(name).get();
    * }
    * }</pre>
    *
