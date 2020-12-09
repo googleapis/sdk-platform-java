@@ -213,13 +213,13 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     Field nextPageToken =
         Field.builder().setName("next_page_token").setType(TypeNode.STRING).build();
-    Message noRepeatedFiledMessage =
+    Message noRepeatedFieldMessage =
         Message.builder()
             .setName("PagedResponse")
             .setType(outputType)
             .setFields(Arrays.asList(responseField, nextPageToken))
             .build();
-    messageTypes.put("PagedResponse", noRepeatedFiledMessage);
+    messageTypes.put("PagedResponse", noRepeatedFieldMessage);
     assertThrows(
         NullPointerException.class,
         () ->
