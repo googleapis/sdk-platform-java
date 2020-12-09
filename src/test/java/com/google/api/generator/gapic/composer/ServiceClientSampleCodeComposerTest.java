@@ -36,35 +36,35 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ServiceClientSampleCodeComposerTest {
-  private static final String PACKAGE_NAME = "com.google.showcase.v1beta1";
-  private static final TypeNode clientType =
-      TypeNode.withReference(
-          VaporReference.builder().setName("EchoClient").setPakkage(PACKAGE_NAME).build());
+  private static final String SHOWCASE_PACKAGE_NAME = "com.google.showcase.v1beta1";
 
-  FileDescriptor echoFileDescriptor;
-  Map<String, ResourceName> resourceNames;
-  Map<String, Message> messageTypes;
-
-  @Before
-  public void setUp() {
-    echoFileDescriptor = EchoOuterClass.getDescriptor();
-    resourceNames = Parser.parseResourceNames(echoFileDescriptor);
-    messageTypes = Parser.parseMessages(echoFileDescriptor);
-  }
-
+  // =======================================RPC Method Header Sample Code=======================//
   @Test
   public void validComposeRpcMethodHeaderSampleCode_pureUnaryRpc() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
@@ -75,7 +75,7 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, methodArguments, clientType, resourceNames, messageTypes);
+            method, clientType, methodArguments, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -86,30 +86,38 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void validComposeRpcMethodHeaderSampleCode_pagedUnaryRpc() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("PagedExpandRequest")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     TypeNode outputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("PagedExpandResponse")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
             .setName("SimplePagedExpand")
-            .setMethodSignatures(Arrays.asList(methodArguments))
+            .setMethodSignatures(Collections.emptyList())
             .setInputType(inputType)
             .setOutputType(outputType)
             .setIsPaged(true)
             .build();
     String results =
         ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-            method, methodArguments, clientType, resourceNames, messageTypes);
+            method, clientType, Collections.emptyList(), resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -122,12 +130,27 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void invalidComposeRpcMethodHeaderSampleCode_noMatchedRepeatedResponseTypeInPagedMethod() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("PagedResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("PagedResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
@@ -141,17 +164,32 @@ public class ServiceClientSampleCodeComposerTest {
         NullPointerException.class,
         () ->
             ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                method, methodArguments, clientType, resourceNames, messageTypes));
+                method, clientType, methodArguments, resourceNames, messageTypes));
   }
 
   @Test
   public void invalidComposeRpcMethodHeaderSampleCode_noRepeatedResponseTypeInPagedMethod() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("PagedResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("PagedResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<MethodArgument> methodArguments = Collections.emptyList();
     Method method =
         Method.builder()
@@ -175,29 +213,43 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     Field nextPageToken =
         Field.builder().setName("next_page_token").setType(TypeNode.STRING).build();
-    Message noRepeatedFiledMessage =
+    Message noRepeatedFieldMessage =
         Message.builder()
             .setName("PagedResponse")
             .setType(outputType)
             .setFields(Arrays.asList(responseField, nextPageToken))
             .build();
-    messageTypes.put("PagedResponse", noRepeatedFiledMessage);
+    messageTypes.put("PagedResponse", noRepeatedFieldMessage);
     assertThrows(
         NullPointerException.class,
         () ->
             ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                method, methodArguments, clientType, resourceNames, messageTypes));
+                method, clientType, methodArguments, resourceNames, messageTypes));
   }
 
-  // ==========================================Unary RPC Method Sample Code=======================//
+  // =======================================Unary RPC Method Sample Code=======================//
   @Test
   public void composeUnaryRpcMethodSampleCode_resourceNameMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode resourceNameType =
         TypeNode.withReference(
             ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class));
@@ -225,7 +277,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -237,17 +289,31 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_superReferenceIsResourceNameMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode methodArgType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("FoobarName")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .setSupertypeReference(
                     ConcreteReference.withClazz(com.google.api.resourcenames.ResourceName.class))
                 .build());
@@ -275,7 +341,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -287,12 +353,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_stringWithResourceReferenceMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("name")
@@ -316,7 +396,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -328,12 +408,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_stringWithParentResourceReferenceMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("parent")
@@ -358,7 +452,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -370,12 +464,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_isMessageMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode methodArgType =
         TypeNode.withReference(
             VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build());
@@ -403,7 +511,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -415,12 +523,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_multipleWordNameMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("display_name")
@@ -428,7 +550,8 @@ public class ServiceClientSampleCodeComposerTest {
             .setResourceReference(
                 ResourceReference.withChildType("showcase.googleapis.com/AnythingGoes"))
             .build();
-    Reference userRef = VaporReference.builder().setName("User").setPakkage(PACKAGE_NAME).build();
+    Reference userRef =
+        VaporReference.builder().setName("User").setPakkage(SHOWCASE_PACKAGE_NAME).build();
     Field nestFiled =
         Field.builder()
             .setName("user")
@@ -461,7 +584,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -474,12 +597,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_stringIsContainedInOneOfMethodArgument() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Field methodArgField =
         Field.builder()
             .setName("content")
@@ -503,7 +640,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -515,12 +652,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_multipleMethodArguments() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     MethodArgument arg1 =
         MethodArgument.builder()
             .setName("content")
@@ -529,7 +680,7 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     TypeNode severityType =
         TypeNode.withReference(
-            VaporReference.builder().setName("Severity").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder().setName("Severity").setPakkage(SHOWCASE_PACKAGE_NAME).build());
     MethodArgument arg2 =
         MethodArgument.builder()
             .setName("severity")
@@ -548,7 +699,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -561,12 +712,26 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_noMethodArguments() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoRequest").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     List<List<MethodArgument>> signatures = Arrays.asList(Collections.emptyList());
     Method unaryMethod =
         Method.builder()
@@ -578,7 +743,7 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, signatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, signatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -589,6 +754,14 @@ public class ServiceClientSampleCodeComposerTest {
 
   @Test
   public void composeUnaryRpcMethodSampleCode_methodReturnVoid() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -616,30 +789,38 @@ public class ServiceClientSampleCodeComposerTest {
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryRpcMethodSampleCode(
-                unaryMethod, methodSignatures.get(0), clientType, resourceNames));
+                unaryMethod, clientType, methodSignatures.get(0), resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  String name = \"name3373707\";\n",
             "  echoClient.delete(name);\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 
   // ===================================Unary Paged RPC Method Sample Code ======================//
   @Test
   public void composeUnaryPagedRpcMethodSampleCode_multipleMethodArguments() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("ListContentRequest")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     TypeNode outputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("ListContentResponse")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     TypeNode resourceNameType =
         TypeNode.withReference(
@@ -674,12 +855,12 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     TypeNode repeatedResponseType =
         TypeNode.withReference(
-            VaporReference.builder().setName("Content").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder().setName("Content").setPakkage(SHOWCASE_PACKAGE_NAME).build());
 
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryPagedRpcMethodSampleCode(
-                method, arguments, clientType, resourceNames, repeatedResponseType));
+                method, clientType, repeatedResponseType, arguments, resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -689,22 +870,30 @@ public class ServiceClientSampleCodeComposerTest {
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 
   @Test
   public void composeUnaryPagedRpcMethodSampleCode_noMethodArguments() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     TypeNode inputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("ListContentRequest")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     TypeNode outputType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("ListContentResponse")
-                .setPakkage(PACKAGE_NAME)
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     List<MethodArgument> arguments = Collections.emptyList();
     Method method =
@@ -717,12 +906,12 @@ public class ServiceClientSampleCodeComposerTest {
             .build();
     TypeNode repeatedResponseType =
         TypeNode.withReference(
-            VaporReference.builder().setName("Content").setPakkage(PACKAGE_NAME).build());
+            VaporReference.builder().setName("Content").setPakkage(SHOWCASE_PACKAGE_NAME).build());
 
     String results =
         SampleCodeWriter.write(
             ServiceClientSampleCodeComposer.composeUnaryPagedRpcMethodSampleCode(
-                method, arguments, clientType, resourceNames, repeatedResponseType));
+                method, clientType, repeatedResponseType, arguments, resourceNames));
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -730,6 +919,6 @@ public class ServiceClientSampleCodeComposerTest {
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
-    Assert.assertEquals(results, expected);
+    assertEquals(results, expected);
   }
 }
