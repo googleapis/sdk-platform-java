@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -158,8 +159,8 @@ public class ServiceClientCommentComposer {
             CREATE_METHOD_STUB_ARG_PATTERN, serviceName, settingsType.reference().name()));
   }
 
-  public static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments) {
+ public static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, List<MethodArgument> methodArguments, Optional<String> sampleCode) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -167,8 +168,10 @@ public class ServiceClientCommentComposer {
           processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
-    // methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here and uncomment the above.
+    if (sampleCode.isPresent()) {
+      methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
+      methodJavadocBuilder.addSampleCode(sampleCode.get());
+    }
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -192,8 +195,9 @@ public class ServiceClientCommentComposer {
     return comments;
   }
 
-  public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList());
+ public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
+    // TODO(summerji): Refactor this method when implement default method sample code.
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), Optional.empty());
   }
 
   public static CommentStatement createMethodNoArgComment(String serviceName) {
