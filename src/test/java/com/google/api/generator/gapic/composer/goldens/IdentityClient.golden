@@ -125,7 +125,7 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * @param parent
-   * @param display_name
+   * @param displayName
    * @param email
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -142,12 +142,12 @@ public class IdentityClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * @param parent
-   * @param display_name
+   * @param displayName
    * @param email
    * @param age
    * @param nickname
-   * @param enable_notifications
-   * @param height_feet
+   * @param enableNotifications
+   * @param heightFeet
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final User createUser(

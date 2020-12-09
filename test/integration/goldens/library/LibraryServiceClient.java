@@ -336,7 +336,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * shelves are the same.
    *
    * @param name The name of the shelf we're adding books to.
-   * @param other_shelf_name The name of the shelf we're removing books from and deleting.
+   * @param otherShelfName The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Shelf mergeShelves(ShelfName name, ShelfName otherShelfName) {
@@ -358,7 +358,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * shelves are the same.
    *
    * @param name The name of the shelf we're adding books to.
-   * @param other_shelf_name The name of the shelf we're removing books from and deleting.
+   * @param otherShelfName The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Shelf mergeShelves(ShelfName name, String otherShelfName) {
@@ -380,7 +380,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * shelves are the same.
    *
    * @param name The name of the shelf we're adding books to.
-   * @param other_shelf_name The name of the shelf we're removing books from and deleting.
+   * @param otherShelfName The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Shelf mergeShelves(String name, ShelfName otherShelfName) {
@@ -402,7 +402,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * shelves are the same.
    *
    * @param name The name of the shelf we're adding books to.
-   * @param other_shelf_name The name of the shelf we're removing books from and deleting.
+   * @param otherShelfName The name of the shelf we're removing books from and deleting.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Shelf mergeShelves(String name, String otherShelfName) {
@@ -668,7 +668,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * the same as the original book.
    *
    * @param name The name of the book to move.
-   * @param other_shelf_name The name of the destination shelf.
+   * @param otherShelfName The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book moveBook(BookName name, ShelfName otherShelfName) {
@@ -686,7 +686,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * the same as the original book.
    *
    * @param name The name of the book to move.
-   * @param other_shelf_name The name of the destination shelf.
+   * @param otherShelfName The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book moveBook(BookName name, String otherShelfName) {
@@ -704,7 +704,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * the same as the original book.
    *
    * @param name The name of the book to move.
-   * @param other_shelf_name The name of the destination shelf.
+   * @param otherShelfName The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book moveBook(String name, ShelfName otherShelfName) {
@@ -722,7 +722,7 @@ public class LibraryServiceClient implements BackgroundResource {
    * the same as the original book.
    *
    * @param name The name of the book to move.
-   * @param other_shelf_name The name of the destination shelf.
+   * @param otherShelfName The name of the destination shelf.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Book moveBook(String name, String otherShelfName) {

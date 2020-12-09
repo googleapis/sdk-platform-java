@@ -331,7 +331,7 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * @param end_time
+   * @param endTime
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<WaitResponse, WaitMetadata> waitAsync(Timestamp endTime) {

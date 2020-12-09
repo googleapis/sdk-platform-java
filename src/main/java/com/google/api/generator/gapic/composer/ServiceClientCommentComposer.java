@@ -20,6 +20,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Strings;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,7 +182,7 @@ class ServiceClientCommentComposer {
         // TODO(miraleung): Remove the newline replacement when we support CommonMark.
         String description =
             argument.field().hasDescription() ? argument.field().description() : EMPTY_STRING;
-        methodJavadocBuilder.addParam(argument.name(), description);
+        methodJavadocBuilder.addParam(JavaStyle.toLowerCamelCase(argument.name()), description);
       }
     }
 

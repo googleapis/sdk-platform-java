@@ -497,7 +497,7 @@ public class AssetServiceClient implements BackgroundResource {
    *           "us-west1" region or the "global" location.
    *     </ul>
    *
-   * @param asset_types Optional. A list of asset types that this request searches for. If empty, it
+   * @param assetTypes Optional. A list of asset types that this request searches for. If empty, it
    *     will search all the [searchable asset
    *     types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

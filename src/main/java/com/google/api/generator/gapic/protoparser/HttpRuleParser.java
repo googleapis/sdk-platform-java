@@ -26,9 +26,11 @@ import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
@@ -48,10 +50,19 @@ public class HttpRuleParser {
     }
 
     // Get pattern.
-    List<String> bindings = getPatternBindings(httpRule);
-    if (bindings.isEmpty()) {
+    Set<String> uniqueBindings = getPatternBindings(httpRule);
+    if (uniqueBindings.isEmpty()) {
       return Optional.empty();
     }
+
+    if (httpRule.getAdditionalBindingsCount() > 0) {
+      for (HttpRule additionalRule : httpRule.getAdditionalBindingsList()) {
+        uniqueBindings.addAll(getPatternBindings(additionalRule));
+      }
+    }
+
+    List<String> bindings = new ArrayList<>(uniqueBindings);
+    Collections.sort(bindings);
 
     // Binding validation.
     for (String binding : bindings) {
@@ -77,7 +88,7 @@ public class HttpRuleParser {
     return Optional.of(bindings);
   }
 
-  private static List<String> getPatternBindings(HttpRule httpRule) {
+  private static Set<String> getPatternBindings(HttpRule httpRule) {
     String pattern = null;
     // Assign a temp variable to prevent the formatter from removing the import.
     PatternCase patternCase = httpRule.getPatternCase();
@@ -100,12 +111,11 @@ public class HttpRuleParser {
       case CUSTOM: // Invalid pattern.
         // Fall through.
       default:
-        return Collections.emptyList();
+        return Collections.emptySet();
     }
 
     PathTemplate template = PathTemplate.create(pattern);
-    List<String> bindings = new ArrayList<String>(template.vars());
-    Collections.sort(bindings);
+    Set<String> bindings = new HashSet<String>(template.vars());
     return bindings;
   }
 
