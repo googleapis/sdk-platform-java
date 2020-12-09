@@ -247,11 +247,21 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
         ConfigServiceV2StubSettings.newBuilder().build(), clientContext, callableFactory);
   }
 
+  /**
+   * Constructs an instance of GrpcConfigServiceV2Stub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
   protected GrpcConfigServiceV2Stub(
       ConfigServiceV2StubSettings settings, ClientContext clientContext) throws IOException {
     this(settings, clientContext, new GrpcConfigServiceV2CallableFactory());
   }
 
+  /**
+   * Constructs an instance of GrpcConfigServiceV2Stub, using the given settings. This is protected
+   * so that it is easy to make a subclass, but otherwise, the static factory methods should be
+   * preferred.
+   */
   protected GrpcConfigServiceV2Stub(
       ConfigServiceV2StubSettings settings,
       ClientContext clientContext,
