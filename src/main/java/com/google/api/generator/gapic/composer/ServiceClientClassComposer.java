@@ -229,7 +229,7 @@ public class ServiceClientClassComposer {
     TypeNode thisClassType = typeStore.get(thisClientName);
     TypeNode exceptionType = typeStore.get("IOException");
 
-    TypeNode settingsType = types.get(settingsName);
+    TypeNode settingsType = typeStore.get(settingsName);
     Preconditions.checkNotNull(settingsType, String.format("Type %s not found", settingsName));
 
     MethodInvocationExpr newBuilderExpr =
@@ -587,13 +587,13 @@ public class ServiceClientClassComposer {
               .build();
 
       Optional<String> methodSampleCode = Optional.empty();
-      if (!method.isPaged() && !method.hasLro()) {
-        // TODO(summerji): Remove the condition check once finished the implementation on paged
-        // sample code and lro sample code.
+      if (!method.hasLro()) {
+        // TODO(summerji): Remove the condition check once finished the implementation on lro sample
+        // code.
         methodSampleCode =
             Optional.of(
                 ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
-                    method, typeStore.get(clientName), signature, resourceNames));
+                    method, typeStore.get(clientName), signature, resourceNames, messageTypes));
       }
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
