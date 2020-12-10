@@ -336,6 +336,24 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListBucketsRequest request =
+   *       ListBucketsRequest.newBuilder()
+   *           .setParent(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   for (LogBucket element : configClient.listBuckets(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -368,6 +386,20 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Gets a bucket (Beta).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetBucketRequest request =
+   *       GetBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   LogBucket response = configClient.getBucket(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -397,6 +429,22 @@ public class ConfigClient implements BackgroundResource {
    * returned.
    *
    * <p>A buckets region may not be modified after it is created. This method is in Beta.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateBucketRequest request =
+   *       UpdateBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setBucket(LogBucket.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   LogBucket response = configClient.updateBucket(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -557,6 +605,22 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListSinksRequest request =
+   *       ListSinksRequest.newBuilder()
+   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   for (LogSink element : configClient.listSinks(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -642,6 +706,18 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets a sink.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetSinkRequest request =
+   *       GetSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .build();
+   *   LogSink response = configClient.getSink(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -833,6 +909,20 @@ public class ConfigClient implements BackgroundResource {
    * newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not
    * permitted to write to the destination. A sink can export log entries only from the resource
    * owning the sink.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateSinkRequest request =
+   *       CreateSinkRequest.newBuilder()
+   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setSink(LogSink.newBuilder().build())
+   *           .setUniqueWriterIdentity(true)
+   *           .build();
+   *   LogSink response = configClient.createSink(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1033,6 +1123,21 @@ public class ConfigClient implements BackgroundResource {
    * <p>The updated sink might also have a new `writer_identity`; see the `unique_writer_identity`
    * field.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateSinkRequest request =
+   *       UpdateSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setSink(LogSink.newBuilder().build())
+   *           .setUniqueWriterIdentity(true)
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   LogSink response = configClient.updateSink(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1117,6 +1222,18 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also
    * deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteSinkRequest request =
+   *       DeleteSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .build();
+   *   configClient.deleteSink(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1278,6 +1395,23 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListExclusionsRequest request =
+   *       ListExclusionsRequest.newBuilder()
+   *           .setParent(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   for (LogExclusion element : configClient.listExclusions(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1363,6 +1497,19 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Gets the description of an exclusion.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetExclusionRequest request =
+   *       GetExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .build();
+   *   LogExclusion response = configClient.getExclusion(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1544,6 +1691,20 @@ public class ConfigClient implements BackgroundResource {
    * Creates a new exclusion in a specified parent resource. Only log entries belonging to that
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateExclusionRequest request =
+   *       CreateExclusionRequest.newBuilder()
+   *           .setParent(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setExclusion(LogExclusion.newBuilder().build())
+   *           .build();
+   *   LogExclusion response = configClient.createExclusion(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1650,6 +1811,21 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Changes one or more properties of an existing exclusion.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateExclusionRequest request =
+   *       UpdateExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setExclusion(LogExclusion.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   LogExclusion response = configClient.updateExclusion(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1724,6 +1900,19 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Deletes an exclusion.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteExclusionRequest request =
+   *       DeleteExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .build();
+   *   configClient.deleteExclusion(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -1750,6 +1939,18 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetCmekSettingsRequest request =
+   *       GetCmekSettingsRequest.newBuilder()
+   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
+   *   CmekSettings response = configClient.getCmekSettings(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -1788,6 +1989,20 @@ public class ConfigClient implements BackgroundResource {
    *
    * <p>See [Enabling CMEK for Logs
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateCmekSettingsRequest request =
+   *       UpdateCmekSettingsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setCmekSettings(CmekSettings.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   CmekSettings response = configClient.updateCmekSettings(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

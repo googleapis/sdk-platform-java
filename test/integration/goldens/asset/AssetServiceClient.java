@@ -167,6 +167,21 @@ public class AssetServiceClient implements BackgroundResource {
    * exponential retry to poll the export operation result. For regular-size resource parent, the
    * export operation usually finishes within 5 minutes.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ExportAssetsRequest request =
+   *       ExportAssetsRequest.newBuilder()
+   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setReadTime(Timestamp.newBuilder().build())
+   *           .addAllAssetTypes(new ArrayList<String>())
+   *           .setOutputConfig(OutputConfig.newBuilder().build())
+   *           .build();
+   *   ExportAssetsResponse response = assetServiceClient.exportAssetsAsync(request).get();
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -218,6 +233,20 @@ public class AssetServiceClient implements BackgroundResource {
    * or deleted status. If a specified asset does not exist, this API returns an INVALID_ARGUMENT
    * error.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   BatchGetAssetsHistoryRequest request =
+   *       BatchGetAssetsHistoryRequest.newBuilder()
+   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .addAllAssetNames(new ArrayList<String>())
+   *           .setReadTimeWindow(TimeWindow.newBuilder().build())
+   *           .build();
+   *   BatchGetAssetsHistoryResponse response = assetServiceClient.batchGetAssetsHistory(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -268,6 +297,20 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   CreateFeedRequest request =
+   *       CreateFeedRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setFeedId("feedId-1278410919")
+   *           .setFeed(Feed.newBuilder().build())
+   *           .build();
+   *   Feed response = assetServiceClient.createFeed(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -337,6 +380,18 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Gets details about an asset feed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   GetFeedRequest request =
+   *       GetFeedRequest.newBuilder()
+   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .build();
+   *   Feed response = assetServiceClient.getFeed(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -381,6 +436,16 @@ public class AssetServiceClient implements BackgroundResource {
   /**
    * Lists all asset feeds in a parent project/folder/organization.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ListFeedsRequest request =
+   *       ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
+   *   ListFeedsResponse response = assetServiceClient.listFeeds(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -424,6 +489,19 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Updates an asset feed configuration.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   UpdateFeedRequest request =
+   *       UpdateFeedRequest.newBuilder()
+   *           .setFeed(Feed.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   Feed response = assetServiceClient.updateFeed(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -492,6 +570,18 @@ public class AssetServiceClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes an asset feed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   DeleteFeedRequest request =
+   *       DeleteFeedRequest.newBuilder()
+   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .build();
+   *   assetServiceClient.deleteFeed(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -596,6 +686,26 @@ public class AssetServiceClient implements BackgroundResource {
    * organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission
    * on the desired scope, otherwise the request will be rejected.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SearchAllResourcesRequest request =
+   *       SearchAllResourcesRequest.newBuilder()
+   *           .setScope("scope109264468")
+   *           .setQuery("query107944136")
+   *           .addAllAssetTypes(new ArrayList<String>())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
+   *   for (ResourceSearchResult element :
+   *       assetServiceClient.searchAllResources(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -698,6 +808,24 @@ public class AssetServiceClient implements BackgroundResource {
    * Searches all IAM policies within the specified scope, such as a project, folder, or
    * organization. The caller must be granted the `cloudasset.assets.searchAllIamPolicies`
    * permission on the desired scope, otherwise the request will be rejected.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SearchAllIamPoliciesRequest request =
+   *       SearchAllIamPoliciesRequest.newBuilder()
+   *           .setScope("scope109264468")
+   *           .setQuery("query107944136")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (IamPolicySearchResult element :
+   *       assetServiceClient.searchAllIamPolicies(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

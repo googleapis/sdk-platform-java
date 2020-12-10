@@ -38,6 +38,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -194,7 +195,6 @@ public class ServiceClientSampleCodeComposer {
       List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    // TODO(summerji): Add other types RPC methods' sample code.
     if (method.isPaged()) {
       // Find the repeated field.
       Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
@@ -216,6 +216,120 @@ public class ServiceClientSampleCodeComposer {
     }
     return SampleCodeWriter.write(
         composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
+  }
+
+  public static String composeRpcDefaultMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // Assign method's request variable with the default value.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(requestMessage);
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build());
+    List<Statement> bodyStatements = new ArrayList<>();
+    if (method.isPaged()) {
+      bodyStatements.addAll(
+          bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+      bodyExprs.clear();
+      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+      Preconditions.checkNotNull(
+          repeatedPagedResultsField,
+          String.format(
+              "Expected paged RPC %s to have a repeated field in the response %s but found none",
+              method.name(), methodOutputMessage.name()));
+      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+      MethodInvocationExpr clientMethodExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+              .setArguments(requestVarExpr)
+              .build();
+      Expr clientMethodIteratorAllExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientMethodExpr)
+              .setMethodName("iterateAll")
+              .setReturnType(repeatedResponseType)
+              .build();
+      ForStatement loopIteratorStatement =
+          ForStatement.builder()
+              .setLocalVariableExpr(
+                  VariableExpr.builder()
+                      .setVariable(
+                          Variable.builder()
+                              .setName("element")
+                              .setType(repeatedResponseType)
+                              .build())
+                      .setIsDecl(true)
+                      .build())
+              .setCollectionExpr(clientMethodIteratorAllExpr)
+              .setBody(
+                  Arrays.asList(
+                      CommentStatement.withComment(
+                          LineComment.withComment("doThingsWith(element);"))))
+              .build();
+      bodyStatements.add(loopIteratorStatement);
+    } else {
+      TypeNode methodOutputType =
+          method.hasLro() ? method.lro().responseType() : method.outputType();
+      Expr invokeMethodExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(clientVarExpr)
+              .setMethodName(
+                  JavaStyle.toLowerCamelCase(method.name()) + (method.hasLro() ? "Async" : ""))
+              .setArguments(requestVarExpr)
+              .setReturnType(methodOutputType)
+              .build();
+      if (method.hasLro()) {
+        invokeMethodExpr =
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(invokeMethodExpr)
+                .setMethodName("get")
+                .setReturnType(methodOutputType)
+                .build();
+      }
+      boolean returnVoid = isProtoEmptyType(methodOutputType);
+      if (returnVoid) {
+        bodyExprs.add(invokeMethodExpr);
+      } else {
+        VariableExpr responseVarExpr =
+            VariableExpr.withVariable(
+                Variable.builder().setName("response").setType(methodOutputType).build());
+        bodyExprs.add(
+            AssignmentExpr.builder()
+                .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+                .setValueExpr(invokeMethodExpr)
+                .build());
+      }
+      bodyStatements.addAll(
+          bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+      bodyExprs.clear();
+    }
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
   }
 
   @VisibleForTesting
