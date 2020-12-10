@@ -27,7 +27,7 @@ public interface ServiceOrBuilder
    *
    *
    * <pre>
-   * This field is obsolete. Its value must be set to `3`.
+   * Deprecated. The service config compiler always sets this field to `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -39,7 +39,7 @@ public interface ServiceOrBuilder
    *
    *
    * <pre>
-   * This field is obsolete. Its value must be set to `3`.
+   * Deprecated. The service config compiler always sets this field to `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>
@@ -51,7 +51,7 @@ public interface ServiceOrBuilder
    *
    *
    * <pre>
-   * This field is obsolete. Its value must be set to `3`.
+   * Deprecated. The service config compiler always sets this field to `3`.
    * </pre>
    *
    * <code>.google.protobuf.UInt32Value config_version = 20;</code>

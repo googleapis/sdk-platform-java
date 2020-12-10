@@ -95,8 +95,8 @@ public interface AuthProviderOrBuilder
    * Optional if the key set document:
    *  - can be retrieved from
    *    [OpenID
-   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
-   *    the issuer.
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+   *    of the issuer.
    *  - can be inferred from the email domain of the issuer (e.g. a Google
    *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
@@ -117,8 +117,8 @@ public interface AuthProviderOrBuilder
    * Optional if the key set document:
    *  - can be retrieved from
    *    [OpenID
-   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html of
-   *    the issuer.
+   *    Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)
+   *    of the issuer.
    *  - can be inferred from the email domain of the issuer (e.g. a Google
    *  service account).
    * Example: https://www.googleapis.com/oauth2/v1/certs
