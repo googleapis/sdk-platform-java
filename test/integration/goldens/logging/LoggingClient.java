@@ -424,6 +424,20 @@ public class LoggingClient implements BackgroundResource {
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   List<String> resourceNames = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String orderBy = "orderBy-1207110587";
+   *   for (LogEntry element :
+   *       loggingClient.listLogEntries(resourceNames, filter, orderBy).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param resourceNames Required. Names of one or more parent resources from which to retrieve log
    *     entries:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -533,6 +547,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -548,6 +573,17 @@ public class LoggingClient implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -565,6 +601,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -581,6 +628,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -596,6 +654,17 @@ public class LoggingClient implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String parent = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"

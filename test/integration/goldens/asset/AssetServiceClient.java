@@ -515,6 +515,20 @@ public class AssetServiceClient implements BackgroundResource {
    * organization. The caller must be granted the `cloudasset.assets.searchAllResources` permission
    * on the desired scope, otherwise the request will be rejected.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   List<String> assetTypes = new ArrayList<>();
+   *   for (ResourceSearchResult element :
+   *       assetServiceClient.searchAllResources(scope, query, assetTypes).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the resources within the `scope`. The caller must be granted the
    *     [`cloudasset.assets.searchAllResources`](http://cloud.google.com/asset-inventory/docs/access-control#required_permissions)
@@ -620,6 +634,19 @@ public class AssetServiceClient implements BackgroundResource {
    * Searches all IAM policies within the specified scope, such as a project, folder, or
    * organization. The caller must be granted the `cloudasset.assets.searchAllIamPolicies`
    * permission on the desired scope, otherwise the request will be rejected.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   String scope = "scope109264468";
+   *   String query = "query107944136";
+   *   for (IamPolicySearchResult element :
+   *       assetServiceClient.searchAllIamPolicies(scope, query).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param scope Required. A scope can be a project, a folder, or an organization. The search is
    *     limited to the IAM policies within the `scope`. The caller must be granted the

@@ -175,6 +175,18 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   BillingAccountLocationName parent =
+   *       BillingAccountLocationName.of("[BILLING_ACCOUNT]", "[LOCATION]");
+   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -195,6 +207,17 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists buckets (Beta).
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   FolderLocationName parent = FolderLocationName.of("[FOLDER]", "[LOCATION]");
+   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
@@ -217,6 +240,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -238,6 +272,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists buckets (Beta).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   OrganizationLocationName parent = OrganizationLocationName.of("[ORGANIZATION]", "[LOCATION]");
+   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
    *     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
@@ -258,6 +303,19 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists buckets (Beta).
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent =
+   *       LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *           .toString();
+   *   for (LogBucket element : configClient.listBuckets(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose buckets are to be listed:
    *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]"
@@ -369,6 +427,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -383,6 +452,17 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists sinks.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -399,6 +479,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -414,6 +505,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists sinks.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -428,6 +530,17 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists sinks.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent = LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString();
+   *   for (LogSink element : configClient.listSinks(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose sinks are to be listed:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1026,6 +1139,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1042,6 +1166,17 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all the exclusions in a parent resource.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -1060,6 +1195,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1077,6 +1223,17 @@ public class ConfigClient implements BackgroundResource {
   /**
    * Lists all the exclusions in a parent resource.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -1093,6 +1250,18 @@ public class ConfigClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists all the exclusions in a parent resource.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent =
+   *       LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString();
+   *   for (LogExclusion element : configClient.listExclusions(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The parent resource whose exclusions are to be listed.
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"

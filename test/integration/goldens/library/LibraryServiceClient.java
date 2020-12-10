@@ -667,6 +667,17 @@ public class LibraryServiceClient implements BackgroundResource {
    * not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not
    * exist.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ShelfName name = ShelfName.of("[SHELF_ID]");
+   *   for (Book element : libraryServiceClient.listBooks(name).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param name The name of the shelf whose books we'd like to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -681,6 +692,17 @@ public class LibraryServiceClient implements BackgroundResource {
    * Lists books in a shelf. The order is unspecified but deterministic. Newly created books will
    * not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not
    * exist.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   String name = "name3373707";
+   *   for (Book element : libraryServiceClient.listBooks(name).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param name The name of the shelf whose books we'd like to list.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
