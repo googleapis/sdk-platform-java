@@ -55,7 +55,8 @@ public class MethodSignatureParser {
       return signatures;
     }
 
-    Map<String, ResourceName> patternsToResourceNames = createPatternResourceNameMap(resourceNames);
+    Map<String, ResourceName> patternsToResourceNames =
+        ResourceParserHelpers.createPatternResourceNameMap(resourceNames);
     Message inputMessage = messageTypes.get(methodInputType.reference().simpleName());
 
     // Example from Expand in echo.proto:

@@ -113,12 +113,15 @@ public class Parser {
             ? ServiceYamlParser.parse(serviceYamlConfigPathOpt.get())
             : Optional.empty();
 
+    // Collect the resource references seen in messages.
+    Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
     // Keep message and resource name parsing separate for cleaner logic.
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
-    Map<String, Message> messages = parseMessages(request);
+    Map<String, Message> messages = parseMessages(request, outputResourceReferencesSeen);
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
+
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
     List<Service> services =
         parseServices(
@@ -128,6 +131,25 @@ public class Parser {
             outputArgResourceNames,
             serviceYamlProtoOpt,
             serviceConfigOpt);
+
+    Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+
+    // Include all resource names present in message types for backwards-compatibility with the
+    // monolith. In the future, this should be removed on a client library major semver update.
+    outputArgResourceNames.addAll(
+        resourceNames.values().stream()
+            .filter(r -> r.hasParentMessageName())
+            .collect(Collectors.toSet()));
+
+    String servicePackage = services.get(0).pakkage();
+    Map<String, ResourceName> patternsToResourceNames =
+        ResourceParserHelpers.createPatternResourceNameMap(resourceNames);
+    for (ResourceReference resourceReference : outputResourceReferencesSeen) {
+      outputArgResourceNames.addAll(
+          ResourceReferenceParser.parseResourceNames(
+              resourceReference, servicePackage, null, resourceNames, patternsToResourceNames));
+    }
+
     return GapicContext.builder()
         .setServices(services)
         .setMessages(messages)
@@ -278,33 +300,43 @@ public class Parser {
         .collect(Collectors.toList());
   }
 
-  public static Map<String, Message> parseMessages(CodeGeneratorRequest request) {
+  public static Map<String, Message> parseMessages(
+      CodeGeneratorRequest request, Set<ResourceReference> outputResourceReferencesSeen) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, Message> messages = new HashMap<>();
     // Look for message types amongst all the protos, not just the ones to generate. This will
     // ensure we track commonly-used protos like Empty.
     for (FileDescriptor fileDescriptor : fileDescriptors.values()) {
-      messages.putAll(parseMessages(fileDescriptor));
+      messages.putAll(parseMessages(fileDescriptor, outputResourceReferencesSeen));
     }
 
     return messages;
   }
 
+  // TODO(miraleung): Propagate the internal method to all tests, and remove this wrapper.
   public static Map<String, Message> parseMessages(FileDescriptor fileDescriptor) {
+    return parseMessages(fileDescriptor, new HashSet<>());
+  }
+
+  public static Map<String, Message> parseMessages(
+      FileDescriptor fileDescriptor, Set<ResourceReference> outputResourceReferencesSeen) {
     // TODO(miraleung): Preserve nested type and package data in the type key.
     Map<String, Message> messages = new HashMap<>();
     for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
-      messages.putAll(parseMessages(messageDescriptor));
+      messages.putAll(parseMessages(messageDescriptor, outputResourceReferencesSeen));
     }
     return messages;
   }
 
-  private static Map<String, Message> parseMessages(Descriptor messageDescriptor) {
-    return parseMessages(messageDescriptor, new ArrayList<String>());
+  private static Map<String, Message> parseMessages(
+      Descriptor messageDescriptor, Set<ResourceReference> outputResourceReferencesSeen) {
+    return parseMessages(messageDescriptor, outputResourceReferencesSeen, new ArrayList<String>());
   }
 
   private static Map<String, Message> parseMessages(
-      Descriptor messageDescriptor, List<String> outerNestedTypes) {
+      Descriptor messageDescriptor,
+      Set<ResourceReference> outputResourceReferencesSeen,
+      List<String> outerNestedTypes) {
     Map<String, Message> messages = new HashMap<>();
     String messageName = messageDescriptor.getName();
     if (!messageDescriptor.getNestedTypes().isEmpty()) {
@@ -313,7 +345,8 @@ public class Parser {
           continue;
         }
         outerNestedTypes.add(messageName);
-        messages.putAll(parseMessages(nestedMessage, outerNestedTypes));
+        messages.putAll(
+            parseMessages(nestedMessage, outputResourceReferencesSeen, outerNestedTypes));
       }
     }
     messages.put(
@@ -321,7 +354,7 @@ public class Parser {
         Message.builder()
             .setType(TypeParser.parseType(messageDescriptor))
             .setName(messageName)
-            .setFields(parseFields(messageDescriptor))
+            .setFields(parseFields(messageDescriptor, outputResourceReferencesSeen))
             .setOuterNestedTypes(outerNestedTypes)
             .build());
     return messages;
@@ -532,15 +565,21 @@ public class Parser {
     return String.format("%s:%s", rawDefaultHost, DEFAULT_PORT);
   }
 
-  private static List<Field> parseFields(Descriptor messageDescriptor) {
+  private static List<Field> parseFields(
+      Descriptor messageDescriptor, Set<ResourceReference> outputResourceReferencesSeen) {
     List<FieldDescriptor> fields = new ArrayList<>(messageDescriptor.getFields());
     // Sort by ascending field index order. This is important for paged responses, where the first
     // repeated type is taken.
     fields.sort((f1, f2) -> f1.getIndex() - f2.getIndex());
-    return fields.stream().map(f -> parseField(f, messageDescriptor)).collect(Collectors.toList());
+    return fields.stream()
+        .map(f -> parseField(f, messageDescriptor, outputResourceReferencesSeen))
+        .collect(Collectors.toList());
   }
 
-  private static Field parseField(FieldDescriptor fieldDescriptor, Descriptor messageDescriptor) {
+  private static Field parseField(
+      FieldDescriptor fieldDescriptor,
+      Descriptor messageDescriptor,
+      Set<ResourceReference> outputResourceReferencesSeen) {
     FieldOptions fieldOptions = fieldDescriptor.getOptions();
     MessageOptions messageOptions = messageDescriptor.getOptions();
     ResourceReference resourceReference = null;
@@ -560,6 +599,7 @@ public class Parser {
           isChildType
               ? ResourceReference.withChildType(childTypeString)
               : ResourceReference.withType(typeString);
+      outputResourceReferencesSeen.add(resourceReference);
 
     } else if (messageOptions.hasExtension(ResourceProto.resource)) {
       ResourceDescriptor protoResource = messageOptions.getExtension(ResourceProto.resource);
