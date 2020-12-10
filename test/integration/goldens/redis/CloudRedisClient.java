@@ -392,6 +392,17 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>The returned operation is automatically deleted after a few hours, so there is no need to
    * call DeleteOperation.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   LocationName parent = LocationName.of("[PROJECT]", "[LOCATION]");
+   *   String instanceId = "instanceId902024336";
+   *   Instance instance = Instance.newBuilder().build();
+   *   Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
    * @param instanceId Required. The logical name of the Redis instance in the customer project with
@@ -432,6 +443,17 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>The returned operation is automatically deleted after a few hours, so there is no need to
    * call DeleteOperation.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String parent = LocationName.of("[PROJECT]", "[LOCATION]").toString();
+   *   String instanceId = "instanceId902024336";
+   *   Instance instance = Instance.newBuilder().build();
+   *   Instance response = cloudRedisClient.createInstanceAsync(parent, instanceId, instance).get();
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name of the instance location using the form:
    *     `projects/{project_id}/locations/{location_id}` where `location_id` refers to a GCP region.
@@ -532,6 +554,16 @@ public class CloudRedisClient implements BackgroundResource {
    * The returned operation is automatically deleted after a few hours, so there is no need to call
    * DeleteOperation.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   Instance instance = Instance.newBuilder().build();
+   *   Instance response = cloudRedisClient.updateInstanceAsync(updateMask, instance).get();
+   * }
+   * }</pre>
+   *
    * @param updateMask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
    *     [Instance][google.cloud.redis.v1beta1.Instance]:
@@ -594,6 +626,16 @@ public class CloudRedisClient implements BackgroundResource {
   /**
    * Upgrades Redis instance to the newer Redis version specified in the request.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   String redisVersion = "redisVersion-1972584739";
+   *   Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -613,6 +655,16 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Upgrades Redis instance to the newer Redis version specified in the request.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *   String redisVersion = "redisVersion-1972584739";
+   *   Instance response = cloudRedisClient.upgradeInstanceAsync(name, redisVersion).get();
+   * }
+   * }</pre>
    *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
@@ -668,6 +720,16 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>The returned operation is automatically deleted after a few hours, so there is no need to
    * call DeleteOperation.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String name = "name3373707";
+   *   InputConfig inputConfig = InputConfig.newBuilder().build();
+   *   Instance response = cloudRedisClient.importInstanceAsync(name, inputConfig).get();
+   * }
+   * }</pre>
    *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
@@ -741,6 +803,16 @@ public class CloudRedisClient implements BackgroundResource {
    * <p>The returned operation is automatically deleted after a few hours, so there is no need to
    * call DeleteOperation.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String name = "name3373707";
+   *   OutputConfig outputConfig = OutputConfig.newBuilder().build();
+   *   Instance response = cloudRedisClient.exportInstanceAsync(name, outputConfig).get();
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -806,6 +878,17 @@ public class CloudRedisClient implements BackgroundResource {
    * Initiates a failover of the master node to current replica node for a specific STANDARD tier
    * Cloud Memorystore for Redis instance.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
+   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *   Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -827,6 +910,17 @@ public class CloudRedisClient implements BackgroundResource {
   /**
    * Initiates a failover of the master node to current replica node for a specific STANDARD tier
    * Cloud Memorystore for Redis instance.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *   FailoverInstanceRequest.DataProtectionMode dataProtectionMode =
+   *       FailoverInstanceRequest.DataProtectionMode.forNumber(0);
+   *   Instance response = cloudRedisClient.failoverInstanceAsync(name, dataProtectionMode).get();
+   * }
+   * }</pre>
    *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
@@ -885,6 +979,15 @@ public class CloudRedisClient implements BackgroundResource {
   /**
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   InstanceName name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]");
+   *   cloudRedisClient.deleteInstanceAsync(name).get();
+   * }
+   * }</pre>
+   *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
    *     refers to a GCP region.
@@ -899,6 +1002,15 @@ public class CloudRedisClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   String name = InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString();
+   *   cloudRedisClient.deleteInstanceAsync(name).get();
+   * }
+   * }</pre>
    *
    * @param name Required. Redis instance resource name using the form:
    *     `projects/{project_id}/locations/{location_id}/instances/{instance_id}` where `location_id`
