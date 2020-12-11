@@ -28,6 +28,25 @@ public abstract class ResourceReference {
     return resourceTypeString().equals(ResourceNameConstants.WILDCARD_PATTERN);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof ResourceReference)) {
+      return false;
+    }
+
+    ResourceReference other = (ResourceReference) o;
+    return resourceTypeString().equals(other.resourceTypeString())
+        && isChildType() == other.isChildType()
+        && isOnlyWildcard() == other.isOnlyWildcard();
+  }
+
+  @Override
+  public int hashCode() {
+    return 17 * resourceTypeString().hashCode()
+        + (isChildType() ? 1 : 0) * 19
+        + (isOnlyWildcard() ? 1 : 0) * 31;
+  }
+
   public static ResourceReference withType(String resourceTypeString) {
     return builder().setResourceTypeString(resourceTypeString).setIsChildType(false).build();
   }
