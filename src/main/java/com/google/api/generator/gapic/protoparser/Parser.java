@@ -61,6 +61,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Parser {
@@ -133,21 +134,31 @@ public class Parser {
             serviceConfigOpt);
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+    Function<ResourceName, String> typeNameFn =
+        r -> r.resourceTypeString().substring(r.resourceTypeString().indexOf("/") + 1);
+    Function<Set<ResourceName>, Set<String>> typeStringSetFn =
+        sr -> sr.stream().map(r -> typeNameFn.apply(r)).collect(Collectors.toSet());
 
     // Include all resource names present in message types for backwards-compatibility with the
     // monolith. In the future, this should be removed on a client library major semver update.
+    // Resolve type name collisions with the ones present in the method arguments.
+    final Set<String> typeStringSet = typeStringSetFn.apply(outputArgResourceNames);
     outputArgResourceNames.addAll(
         resourceNames.values().stream()
-            .filter(r -> r.hasParentMessageName())
+            .filter(r -> r.hasParentMessageName() && !typeStringSet.contains(typeNameFn.apply(r)))
             .collect(Collectors.toSet()));
 
     String servicePackage = services.get(0).pakkage();
     Map<String, ResourceName> patternsToResourceNames =
         ResourceParserHelpers.createPatternResourceNameMap(resourceNames);
     for (ResourceReference resourceReference : outputResourceReferencesSeen) {
+      final Set<String> interimTypeStringSet = typeStringSetFn.apply(outputArgResourceNames);
       outputArgResourceNames.addAll(
           ResourceReferenceParser.parseResourceNames(
-              resourceReference, servicePackage, null, resourceNames, patternsToResourceNames));
+                  resourceReference, servicePackage, null, resourceNames, patternsToResourceNames)
+              .stream()
+              .filter(r -> !interimTypeStringSet.contains(typeNameFn.apply(r)))
+              .collect(Collectors.toSet()));
     }
 
     return GapicContext.builder()
