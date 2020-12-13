@@ -1132,4 +1132,249 @@ public class ServiceClientSampleCodeComposerTest {
             "}");
     assertEquals(results, expected);
   }
+
+  // ================================Unary RPC Default Method Sample Code ====================//
+  @Test
+  public void composeRpcDefaultMethodHeaderSampleCode_isPagedMethod() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setIsPaged(true)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  PagedExpandRequest request =\n",
+            "      PagedExpandRequest.newBuilder()\n",
+            "          .setContent(\"content951530617\")\n",
+            "          .setPageSize(883849137)\n",
+            "          .setPageToken(\"pageToken873572522\")\n",
+            "          .build();\n",
+            "  for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {\n",
+            "    // doThingsWith(element);\n",
+            "  }\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void composeRpcDefaultMethodHeaderSampleCode_hasLroMethodWithReturnResponse() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
+    TypeNode responseType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
+    TypeNode metadataType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitMetadata")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    Method method =
+        Method.builder()
+            .setName("Wait")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setLro(lro)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "  echoClient.waitAsync(request).get();\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void composeRpcDefaultMethodHeaderSampleCode_hasLroMethodWithReturnVoid() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
+    TypeNode responseType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode metadataType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("WaitMetadata")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    LongrunningOperation lro = LongrunningOperation.withTypes(responseType, metadataType);
+    Method method =
+        Method.builder()
+            .setName("Wait")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .setLro(lro)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  WaitRequest request = WaitRequest.newBuilder().build();\n",
+            "  WaitResponse response = echoClient.waitAsync(request).get();\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void composeRpcDefaultMethodHeaderSampleCode_pureUnaryReturnVoid() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
+    Method method =
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  echoClient.echo(request);\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void composeRpcDefaultMethodHeaderSampleCode_pureUnaryReturnResponse() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setMethodSignatures(Collections.emptyList())
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  EchoResponse response = echoClient.echo(request);\n",
+            "}");
+    assertEquals(results, expected);
+  }
 }
