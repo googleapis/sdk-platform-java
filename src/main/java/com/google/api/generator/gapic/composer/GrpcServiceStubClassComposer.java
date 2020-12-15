@@ -163,7 +163,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setExtendsType(types.get(String.format(STUB_PATTERN, service.name())))
+            .setExtendsType(types.get(ClassNames.getServiceStubClassName(service)))
             .setStatements(classStatements)
             .setMethods(
                 createClassMethods(
@@ -500,7 +500,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
       Map<String, VariableExpr> classMemberVarExprs,
       Map<String, VariableExpr> callableClassMemberVarExprs,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
-    TypeNode stubSettingsType = types.get(String.format(STUB_SETTINGS_PATTERN, service.name()));
+    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
@@ -549,8 +549,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                             NewObjectExpr.builder()
                                 .setType(
                                     types.get(
-                                        String.format(
-                                            GRPC_SERVICE_CALLABLE_FACTORY_PATTERN, service.name())))
+                                        ClassNames.getGrpcServiceCallableFactoryClassName(service)))
                                 .build())
                         .build())));
 

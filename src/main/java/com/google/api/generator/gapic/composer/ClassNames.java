@@ -21,6 +21,7 @@ public class ClassNames {
   // Using constants since many of these class names are used often.
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
+  private static final String SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN = "%sClientTest";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN = "%sStubSettings";
   private static final String SERVICE_STUB_CLASS_NAME_PATTERN = "%sStub";
@@ -30,11 +31,42 @@ public class ClassNames {
   private static final String MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN = "Mock%sImpl";
 
   protected static String getServiceClientClassName(Service service) {
-    return String.format(SERVICE_CLIENT_CLASS_NAME_PATTERN, service.overriddenName());
+    return String.format(
+        SERVICE_CLIENT_CLASS_NAME_PATTERN,
+        monolithBackwardsCompatibleName(service.overriddenName()));
   }
 
   protected static String getServiceSettingsClassName(Service service) {
-    return String.format(SERVICE_SETTINGS_CLASS_NAME_PATTERN, service.overriddenName());
+    return String.format(
+        SERVICE_SETTINGS_CLASS_NAME_PATTERN,
+        monolithBackwardsCompatibleName(service.overriddenName()));
+  }
+
+  protected static String getServiceStubSettingsClassName(Service service) {
+    return String.format(
+        SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
+  }
+
+  protected static String getServiceStubClassName(Service service) {
+    return String.format(
+        SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
+  }
+
+  protected static String getGrpcServiceCallableFactoryClassName(Service service) {
+    return String.format(
+        GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
+        monolithBackwardsCompatibleName(service.name()));
+  }
+
+  protected static String getGrpcServiceStubClassName(Service service) {
+    return String.format(
+        GRPC_SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
+  }
+
+  protected static String getServiceClientTestClassName(Service service) {
+    return String.format(
+        SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN,
+        monolithBackwardsCompatibleName(service.overriddenName()));
   }
 
   protected static String getMockServiceClassName(Service service) {
@@ -45,19 +77,9 @@ public class ClassNames {
     return String.format(MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN, service.name());
   }
 
-  protected static String getServiceStubSettingsClassName(Service service) {
-    return String.format(SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN, service.name());
-  }
-
-  protected static String getServiceStubClassName(Service service) {
-    return String.format(SERVICE_STUB_CLASS_NAME_PATTERN, service.name());
-  }
-
-  protected static String getGrpcServiceCallableFactoryClassName(Service service) {
-    return String.format(GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN, service.name());
-  }
-
-  protected static String getGrpcServiceStubClassName(Service service) {
-    return String.format(GRPC_SERVICE_STUB_CLASS_NAME_PATTERN, service.name());
+  private static String monolithBackwardsCompatibleName(String rawServiceName) {
+    return rawServiceName.startsWith("IAMCredentials")
+        ? rawServiceName.replace("IAM", "Iam")
+        : rawServiceName;
   }
 }
