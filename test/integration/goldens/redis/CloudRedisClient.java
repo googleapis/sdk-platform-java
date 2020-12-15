@@ -561,6 +561,21 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   CreateInstanceRequest request =
+   *       CreateInstanceRequest.newBuilder()
+   *           .setParent(LocationName.of("[PROJECT]", "[LOCATION]").toString())
+   *           .setInstanceId("instanceId902024336")
+   *           .setInstance(Instance.newBuilder().build())
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.createInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
       createInstanceOperationCallable() {
@@ -658,6 +673,20 @@ public class CloudRedisClient implements BackgroundResource {
    * DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   UpdateInstanceRequest request =
+   *       UpdateInstanceRequest.newBuilder()
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .setInstance(Instance.newBuilder().build())
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
       updateInstanceOperationCallable() {
@@ -765,6 +794,20 @@ public class CloudRedisClient implements BackgroundResource {
    * Upgrades Redis instance to the newer Redis version specified in the request.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   UpgradeInstanceRequest request =
+   *       UpgradeInstanceRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *           .setRedisVersion("redisVersion-1972584739")
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
       upgradeInstanceOperationCallable() {
@@ -856,6 +899,20 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   ImportInstanceRequest request =
+   *       ImportInstanceRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setInputConfig(InputConfig.newBuilder().build())
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.importInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
       importInstanceOperationCallable() {
@@ -950,6 +1007,20 @@ public class CloudRedisClient implements BackgroundResource {
    * call DeleteOperation.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   ExportInstanceRequest request =
+   *       ExportInstanceRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setOutputConfig(OutputConfig.newBuilder().build())
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
       exportInstanceOperationCallable() {
@@ -1068,6 +1139,19 @@ public class CloudRedisClient implements BackgroundResource {
    * Cloud Memorystore for Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   FailoverInstanceRequest request =
+   *       FailoverInstanceRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *           .build();
+   *   OperationFuture<Instance, OperationMetadata> future =
+   *       cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
       failoverInstanceOperationCallable() {
@@ -1161,6 +1245,19 @@ public class CloudRedisClient implements BackgroundResource {
    * Deletes a specific Redis instance. Instance stops serving and data is deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   DeleteInstanceRequest request =
+   *       DeleteInstanceRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *           .build();
+   *   OperationFuture<Empty, OperationMetadata> future =
+   *       cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
+   *   // Do something;
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
       deleteInstanceOperationCallable() {

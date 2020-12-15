@@ -500,7 +500,8 @@ public class ServiceClientClassComposer {
                 resourceNames));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroCallableMethod(service, method, types));
+        javaMethods.add(
+            createLroCallableMethod(service, method, types, messageTypes, resourceNames));
       }
       if (method.isPaged()) {
         javaMethods.add(createPagedCallableMethod(service, method, types));
@@ -680,25 +681,44 @@ public class ServiceClientClassComposer {
   }
 
   private static MethodDefinition createLroCallableMethod(
-      Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.LRO);
+      Service service,
+      Method method,
+      Map<String, TypeNode> types,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
+    return createCallableMethod(
+        service, method, CallableMethodKind.LRO, types, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createCallableMethod(
       Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.REGULAR);
+    return createCallableMethod(
+        service,
+        method,
+        CallableMethodKind.REGULAR,
+        types,
+        Collections.emptyMap(),
+        Collections.emptyMap());
   }
 
   private static MethodDefinition createPagedCallableMethod(
       Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.PAGED);
+    return createCallableMethod(
+        service,
+        method,
+        CallableMethodKind.PAGED,
+        types,
+        Collections.emptyMap(),
+        Collections.emptyMap());
   }
 
   private static MethodDefinition createCallableMethod(
       Service service,
       Method method,
+      CallableMethodKind callableMethodKind,
       Map<String, TypeNode> types,
-      CallableMethodKind callableMethodKind) {
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     TypeNode rawCallableReturnType = null;
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       rawCallableReturnType = types.get("OperationCallable");
@@ -740,9 +760,19 @@ public class ServiceClientClassComposer {
             .setReturnType(returnType)
             .build();
 
+    Optional<String> sampleCode = Optional.empty();
+    // TODO (summerji): Implement sample code for CallableMethodKind.PAGED and
+    // CallableMethodKind.REGULAR
+    if (callableMethodKind.equals(CallableMethodKind.LRO)) {
+      sampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeRpcLroCallableMethodHeaderSampleCode(
+                  method, types.get(getClientClassName(service)), resourceNames, messageTypes));
+    }
+
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method))
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method, sampleCode))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)

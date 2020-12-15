@@ -504,7 +504,19 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   WaitRequest request = WaitRequest.newBuilder().build();
+   *   OperationFuture<WaitResponse, WaitMetadata> future =
+   *       echoClient.waitOperationCallable().futureCall(request);
+   *   // Do something;
+   *   WaitResponse response = future.get();
+   * }
+   * }</pre>
+   */
   public final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable() {
     return stub.waitOperationCallable();
   }

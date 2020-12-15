@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -281,6 +282,101 @@ public class ServiceClientSampleCodeComposer {
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
+  public static String composeRpcLroCallableMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // Assign method's request variable with the default value.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(requestMessage);
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build());
+    TypeNode operationFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(OperationFuture.class)
+                .setGenerics(
+                    method.lro().responseType().reference(),
+                    method.lro().metadataType().reference())
+                .build());
+    VariableExpr operationFutureVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("future").setType(operationFutureType).build());
+    MethodInvocationExpr rpcMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(
+                String.format("%sOperationCallable", JavaStyle.toLowerCamelCase(method.name())))
+            .build();
+    rpcMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(rpcMethodInvocationExpr)
+            .setMethodName("futureCall")
+            .setArguments(requestVarExpr)
+            .setReturnType(operationFutureType)
+            .build();
+    bodyExprs.add(
+        AssignmentExpr.builder()
+            .setVariableExpr(operationFutureVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(rpcMethodInvocationExpr)
+            .build());
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    bodyExprs.clear();
+    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something;")));
+    MethodInvocationExpr futureGetMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(operationFutureVarExpr)
+            .setMethodName("get")
+            .setReturnType(method.lro().responseType())
+            .build();
+    boolean returnVoid = isProtoEmptyType(method.lro().responseType());
+    if (returnVoid) {
+      bodyExprs.add(futureGetMethodExpr);
+    } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.builder()
+              .setVariable(
+                  Variable.builder()
+                      .setName("response")
+                      .setType(method.lro().responseType())
+                      .build())
+              .setIsDecl(true)
+              .build();
+      bodyExprs.add(
+          AssignmentExpr.builder()
+              .setVariableExpr(responseVarExpr)
+              .setValueExpr(futureGetMethodExpr)
+              .build());
+    }
+    bodyStatements.addAll(
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    bodyExprs.clear();
     return SampleCodeWriter.write(
         TryCatchStatement.builder()
             .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
