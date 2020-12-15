@@ -67,6 +67,18 @@ public class JavaStyleTest {
   }
 
   @Test
+  public void iamCredentialsSpecialCase() {
+    // A string that begins with "IAMCredentials".
+    String value = "IAMCredentialsFooBAR";
+    assertEquals("IamCredentialsFooBAR", JavaStyle.toUpperCamelCase(value));
+    assertEquals("iamCredentialsFooBAR", JavaStyle.toLowerCamelCase(value));
+    assertEquals("IAM_CREDENTIALS_FOO_B_A_R", JavaStyle.toUpperSnakeCase(value));
+    value = "IAMClient";
+    assertEquals("IAMClient", JavaStyle.toUpperCamelCase(value));
+    assertEquals("iAMClient", JavaStyle.toLowerCamelCase(value));
+  }
+
+  @Test
   public void wordAndNumber() {
     String value = "dog2";
     assertEquals("dog2", JavaStyle.toLowerCamelCase(value));
