@@ -36,10 +36,10 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
-import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -196,26 +196,18 @@ public class ServiceClientSampleCodeComposer {
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
     if (method.isPaged()) {
-      // Find the repeated field.
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
-      Preconditions.checkNotNull(
-          repeatedPagedResultsField,
-          String.format(
-              "No repeated field found on message %s for method %s",
-              methodOutputMessage.name(), method.name()));
-
-      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
       return SampleCodeWriter.write(
           composeUnaryPagedRpcMethodSampleCode(
-              method, clientType, repeatedResponseType, arguments, resourceNames));
+              method, clientType, arguments, resourceNames, messageTypes, false));
     }
     if (method.hasLro()) {
       return SampleCodeWriter.write(
-          composeUnaryLroRpcMethodSampleCode(method, clientType, arguments, resourceNames));
+          composeUnaryLroRpcMethodSampleCode(
+              method, clientType, arguments, resourceNames, messageTypes, false));
     }
     return SampleCodeWriter.write(
-        composeUnaryRpcMethodSampleCode(method, clientType, arguments, resourceNames));
+        composeUnaryRpcMethodSampleCode(
+            method, clientType, arguments, resourceNames, messageTypes, false));
   }
 
   public static String composeRpcDefaultMethodHeaderSampleCode(
@@ -223,162 +215,87 @@ public class ServiceClientSampleCodeComposer {
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
-                .setType(clientType)
-                .build());
-    // Assign method's request variable with the default value.
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(requestMessage);
-    Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
-            requestMessage, resourceNames, messageTypes);
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(
-        AssignmentExpr.builder()
-            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(requestBuilderExpr)
-            .build());
-    List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
-      bodyStatements.addAll(
-          bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-      bodyExprs.clear();
-      Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
-      Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
-      Preconditions.checkNotNull(
-          repeatedPagedResultsField,
-          String.format(
-              "Expected paged RPC %s to have a repeated field in the response %s but found none",
-              method.name(), methodOutputMessage.name()));
-      TypeNode repeatedResponseType = repeatedPagedResultsField.type();
-      MethodInvocationExpr clientMethodExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientVarExpr)
-              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(requestVarExpr)
-              .build();
-      Expr clientMethodIteratorAllExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientMethodExpr)
-              .setMethodName("iterateAll")
-              .setReturnType(repeatedResponseType)
-              .build();
-      ForStatement loopIteratorStatement =
-          ForStatement.builder()
-              .setLocalVariableExpr(
-                  VariableExpr.builder()
-                      .setVariable(
-                          Variable.builder()
-                              .setName("element")
-                              .setType(repeatedResponseType)
-                              .build())
-                      .setIsDecl(true)
-                      .build())
-              .setCollectionExpr(clientMethodIteratorAllExpr)
-              .setBody(
-                  Arrays.asList(
-                      CommentStatement.withComment(
-                          LineComment.withComment("doThingsWith(element);"))))
-              .build();
-      bodyStatements.add(loopIteratorStatement);
-    } else {
-      TypeNode methodOutputType =
-          method.hasLro() ? method.lro().responseType() : method.outputType();
-      Expr invokeMethodExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientVarExpr)
-              .setMethodName(
-                  JavaStyle.toLowerCamelCase(method.name()) + (method.hasLro() ? "Async" : ""))
-              .setArguments(requestVarExpr)
-              .setReturnType(methodOutputType)
-              .build();
-      if (method.hasLro()) {
-        invokeMethodExpr =
-            MethodInvocationExpr.builder()
-                .setExprReferenceExpr(invokeMethodExpr)
-                .setMethodName("get")
-                .setReturnType(methodOutputType)
-                .build();
-      }
-      boolean returnVoid = isProtoEmptyType(methodOutputType);
-      if (returnVoid) {
-        bodyExprs.add(invokeMethodExpr);
-      } else {
-        VariableExpr responseVarExpr =
-            VariableExpr.withVariable(
-                Variable.builder().setName("response").setType(methodOutputType).build());
-        bodyExprs.add(
-            AssignmentExpr.builder()
-                .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
-                .setValueExpr(invokeMethodExpr)
-                .build());
-      }
-      bodyStatements.addAll(
-          bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-      bodyExprs.clear();
+      return SampleCodeWriter.write(
+          composeUnaryPagedRpcMethodSampleCode(
+              method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
     }
-
+    if (method.hasLro()) {
+      return SampleCodeWriter.write(
+          composeUnaryLroRpcMethodSampleCode(
+              method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
+    }
     return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
+        composeUnaryRpcMethodSampleCode(
+            method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
   }
 
-  @VisibleForTesting
-  static TryCatchStatement composeUnaryRpcMethodSampleCode(
+  private static TryCatchStatement composeUnaryRpcMethodSampleCode(
       Method method,
       TypeNode clientType,
       List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      boolean isDefaultMethod) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
                 .setType(clientType)
                 .build());
-    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-    List<Expr> rpcMethodArgDefaultValueExprs =
-        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-    List<Expr> bodyExprs =
-        createAssignmentsForVarExprsWithValueExprs(
-            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Assign method's arguments variable with the default values.
+    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
+    if (isDefaultMethod) {
+      VariableExpr requestVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName("request").setType(method.inputType()).build());
+      rpcMethodArgVarExprs.add(requestVarExpr);
+      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+      Preconditions.checkNotNull(requestMessage);
+      Expr requestBuilderExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      AssignmentExpr requestAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(requestBuilderExpr)
+              .build();
+      bodyExprs.add(requestAssignmentExpr);
+    } else {
+      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
+      List<Expr> rpcMethodArgDefaultValueExprs =
+          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+      List<Expr> rpcMethodArgAssignmentExprs =
+          createAssignmentsForVarExprsWithValueExprs(
+              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
+    }
+
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
     // e.g. if return other type, EchoResponse response = echoClient.echo(...);
     boolean returnsVoid = isProtoEmptyType(method.outputType());
+    MethodInvocationExpr clientRpcMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+            .setArguments(
+                rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
+            .setReturnType(method.outputType())
+            .build();
     if (returnsVoid) {
-      bodyExprs.add(
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientVarExpr)
-              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(
-                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
-              .setReturnType(clientType)
-              .build());
+      bodyExprs.add(clientRpcMethodInvocationExpr);
     } else {
       VariableExpr responseVarExpr =
           VariableExpr.withVariable(
               Variable.builder().setName("response").setType(method.outputType()).build());
-      MethodInvocationExpr clientMethodInvocationExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientVarExpr)
-              .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
-              .setArguments(
-                  rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
-              .setReturnType(responseVarExpr.variable().type())
-              .build();
       bodyExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(clientMethodInvocationExpr)
+              .setValueExpr(clientRpcMethodInvocationExpr)
               .build());
     }
 
@@ -390,39 +307,74 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
-  @VisibleForTesting
-  static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
+  private static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
       Method method,
       TypeNode clientType,
-      TypeNode repeatedResponseType,
       List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      Boolean isDefaultMethod) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
                 .setType(clientType)
                 .build());
-    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-    List<Expr> rpcMethodArgDefaultValueExprs =
-        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-    List<Expr> bodyExprs =
-        createAssignmentsForVarExprsWithValueExprs(
-            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Preconditions.checkNotNull(
+        repeatedPagedResultsField,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Assign method's arguments variable with the default values.
+    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
+    if (isDefaultMethod) {
+      VariableExpr requestVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName("request").setType(method.inputType()).build());
+      rpcMethodArgVarExprs.add(requestVarExpr);
+      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+      Preconditions.checkNotNull(requestMessage);
+      Expr requestBuilderExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      AssignmentExpr requestAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(requestBuilderExpr)
+              .build();
+      bodyExprs.add(requestAssignmentExpr);
+    } else {
+      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
+      List<Expr> rpcMethodArgDefaultValueExprs =
+          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+      List<Expr> rpcMethodArgAssignmentExprs =
+          createAssignmentsForVarExprsWithValueExprs(
+              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
+    }
+
     // For loop paged response item on iterateAll method.
     // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
     //          //doThingsWith(element);
     //      }
-    MethodInvocationExpr clientMethodExpr =
+    MethodInvocationExpr clientMethodIterateAllExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
             .setArguments(
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
-    Expr clientMethodIteratorAllExpr =
+    clientMethodIterateAllExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(clientMethodExpr)
+            .setExprReferenceExpr(clientMethodIterateAllExpr)
             .setMethodName("iterateAll")
             .setReturnType(repeatedResponseType)
             .build();
@@ -434,7 +386,7 @@ public class ServiceClientSampleCodeComposer {
                         Variable.builder().setName("element").setType(repeatedResponseType).build())
                     .setIsDecl(true)
                     .build())
-            .setCollectionExpr(clientMethodIteratorAllExpr)
+            .setCollectionExpr(clientMethodIterateAllExpr)
             .setBody(
                 Arrays.asList(
                     CommentStatement.withComment(
@@ -443,6 +395,7 @@ public class ServiceClientSampleCodeComposer {
 
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    bodyExprs.clear();
     bodyStatements.add(loopIteratorStatement);
 
     return TryCatchStatement.builder()
@@ -452,43 +405,69 @@ public class ServiceClientSampleCodeComposer {
         .build();
   }
 
-  @VisibleForTesting
   static TryCatchStatement composeUnaryLroRpcMethodSampleCode(
       Method method,
       TypeNode clientType,
       List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes,
+      boolean isDefaultMethod) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
                 .setType(clientType)
                 .build());
-    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-    List<Expr> rpcMethodArgDefaultValueExprs =
-        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-    List<Expr> bodyExprs =
-        createAssignmentsForVarExprsWithValueExprs(
-            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Assign method's arguments variable with the default values.
+    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
+    if (isDefaultMethod) {
+      VariableExpr requestVarExpr =
+          VariableExpr.withVariable(
+              Variable.builder().setName("request").setType(method.inputType()).build());
+      rpcMethodArgVarExprs.add(requestVarExpr);
+      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+      Preconditions.checkNotNull(requestMessage);
+      Expr requestBuilderExpr =
+          DefaultValueComposer.createSimpleMessageBuilderExpr(
+              requestMessage, resourceNames, messageTypes);
+      AssignmentExpr requestAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+              .setValueExpr(requestBuilderExpr)
+              .build();
+      bodyExprs.add(requestAssignmentExpr);
+    } else {
+      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
+      List<Expr> rpcMethodArgDefaultValueExprs =
+          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+      List<Expr> rpcMethodArgAssignmentExprs =
+          createAssignmentsForVarExprsWithValueExprs(
+              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
+    }
+
     // Assign response variable with invoking client's lro method.
     // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
     // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
-    Expr invokeLroMethodExpr =
+    Expr invokeLroGetMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(clientVarExpr)
             .setMethodName(String.format("%sAsync", JavaStyle.toLowerCamelCase(method.name())))
             .setArguments(
                 rpcMethodArgVarExprs.stream().map(e -> (Expr) e).collect(Collectors.toList()))
             .build();
-    Expr getResponseMethodExpr =
+    invokeLroGetMethodExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(invokeLroMethodExpr)
+            .setExprReferenceExpr(invokeLroGetMethodExpr)
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
     boolean returnsVoid = isProtoEmptyType(method.lro().responseType());
     if (returnsVoid) {
-      bodyExprs.add(getResponseMethodExpr);
+      bodyExprs.add(invokeLroGetMethodExpr);
     } else {
       VariableExpr responseVarExpr =
           VariableExpr.builder()
@@ -502,7 +481,7 @@ public class ServiceClientSampleCodeComposer {
       bodyExprs.add(
           AssignmentExpr.builder()
               .setVariableExpr(responseVarExpr)
-              .setValueExpr(getResponseMethodExpr)
+              .setValueExpr(invokeLroGetMethodExpr)
               .build());
     }
 
