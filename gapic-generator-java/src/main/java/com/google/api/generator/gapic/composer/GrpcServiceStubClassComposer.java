@@ -79,7 +79,6 @@ import javax.annotation.Generated;
 public class GrpcServiceStubClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
-  private static final String CLASS_NAME_PATTERN = "Grpc%sStub";
   private static final String GRPC_SERVICE_CALLABLE_FACTORY_PATTERN = "Grpc%sCallableFactory";
   private static final String METHOD_DESCRIPTOR_NAME_PATTERN = "%sMethodDescriptor";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
@@ -117,7 +116,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   public GapicClass generate(Service service, Map<String, Message> ignore) {
     String pakkage = service.pakkage() + ".stub";
     Map<String, TypeNode> types = createDynamicTypes(service, pakkage);
-    String className = getThisClassName(service.name());
+    String className = ClassNames.getGrpcServiceStubClassName(service);
     GapicClass.Kind kind = Kind.STUB;
 
     Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs =
@@ -400,7 +399,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
       Map<String, VariableExpr> callableClassMemberVarExprs,
       Map<String, VariableExpr> protoMethodNameToDescriptorVarExprs) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(createStaticCreatorMethods(service.name(), types));
+    javaMethods.addAll(createStaticCreatorMethods(service, types));
     javaMethods.addAll(
         createConstructorMethods(
             service,
@@ -417,8 +416,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createStaticCreatorMethods(
-      String serviceName, Map<String, TypeNode> types) {
-    TypeNode creatorMethodReturnType = types.get(getThisClassName(serviceName));
+      Service service, Map<String, TypeNode> types) {
+    TypeNode creatorMethodReturnType = types.get(ClassNames.getGrpcServiceStubClassName(service));
     Function<List<VariableExpr>, MethodDefinition.Builder> creatorMethodStarterFn =
         argList ->
             MethodDefinition.builder()
@@ -439,7 +438,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         argList ->
             NewObjectExpr.builder().setType(creatorMethodReturnType).setArguments(argList).build();
 
-    TypeNode stubSettingsType = types.get(String.format(STUB_SETTINGS_PATTERN, serviceName));
+    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(stubSettingsType).build());
@@ -518,7 +517,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                 .setType(STATIC_TYPES.get("GrpcStubCallableFactory"))
                 .build());
 
-    TypeNode thisClassType = types.get(getThisClassName(service.name()));
+    TypeNode thisClassType = types.get(ClassNames.getGrpcServiceStubClassName(service));
     TypeNode ioExceptionType =
         TypeNode.withReference(ConcreteReference.withClazz(IOException.class));
 
@@ -527,8 +526,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             MethodDefinition.constructorBuilder()
                 .setScope(ScopeNode.PROTECTED)
                 .setReturnType(thisClassType)
-                .setHeaderCommentStatements(
-                    Arrays.asList(createProtectedCtorComment(service.name())))
+                .setHeaderCommentStatements(Arrays.asList(createProtectedCtorComment(service)))
                 .setArguments(
                     args.stream()
                         .map(v -> v.toBuilder().setIsDecl(true).build())
@@ -557,7 +555,8 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                         .build())));
 
     Expr thisExpr =
-        ValueExpr.withValue(ThisObjectValue.withType(types.get(getThisClassName(service.name()))));
+        ValueExpr.withValue(
+            ThisObjectValue.withType(types.get(ClassNames.getGrpcServiceStubClassName(service))));
     // Body of the second constructor method.
     List<Statement> secondCtorStatements = new ArrayList<>();
     List<Expr> secondCtorExprs = new ArrayList<>();
@@ -1049,20 +1048,17 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     Map<String, TypeNode> types = new HashMap<>();
     types.putAll(
         Arrays.asList(
-                CLASS_NAME_PATTERN,
-                STUB_SETTINGS_PATTERN,
-                STUB_PATTERN,
-                GRPC_SERVICE_CALLABLE_FACTORY_PATTERN)
+                ClassNames.getGrpcServiceStubClassName(service),
+                ClassNames.getServiceStubSettingsClassName(service),
+                ClassNames.getServiceStubClassName(service),
+                ClassNames.getGrpcServiceCallableFactoryClassName(service))
             .stream()
             .collect(
                 Collectors.toMap(
-                    p -> String.format(p, service.name()),
-                    p ->
+                    n -> n,
+                    n ->
                         TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(p, service.name()))
-                                .setPakkage(stubPakkage)
-                                .build()))));
+                            VaporReference.builder().setName(n).setPakkage(stubPakkage).build()))));
     // Pagination types.
     types.putAll(
         service.methods().stream()
@@ -1076,7 +1072,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
                                 .setEnclosingClassNames(
-                                    String.format("%sClient", service.overriddenName()))
+                                    ClassNames.getServiceClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -1144,17 +1140,13 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     return String.format("google.iam.v1.IAMPolicy/%s", protoMethod.name());
   }
 
-  private static String getThisClassName(String serviceName) {
-    return String.format(CLASS_NAME_PATTERN, serviceName);
-  }
-
-  private static CommentStatement createProtectedCtorComment(String serviceName) {
+  private static CommentStatement createProtectedCtorComment(Service service) {
     return CommentStatement.withComment(
         JavaDocComment.withComment(
             String.format(
                 "Constructs an instance of %s, using the given settings. This is protected so that"
                     + " it is easy to make a subclass, but otherwise, the static factory methods"
                     + " should be  preferred.",
-                getThisClassName(serviceName))));
+                ClassNames.getGrpcServiceStubClassName(service))));
   }
 }
