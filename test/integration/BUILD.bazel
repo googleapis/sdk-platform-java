@@ -200,7 +200,8 @@ java_gapic_library(
 java_gapic_test(
     name = "credentials_java_gapic_test_suite",
     test_classes = [
-        "com.google.cloud.iam.credentials.v1.IamCredentialsClientTest",
+        # Match google3.
+        "com.google.cloud.iam.credentials.v1.IAMCredentialsClientTest",
     ],
     runtime_deps = [":credentials_java_gapic_test"],
 )
