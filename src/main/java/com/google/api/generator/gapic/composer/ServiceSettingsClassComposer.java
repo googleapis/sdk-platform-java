@@ -72,11 +72,8 @@ import javax.annotation.Generated;
 
 public class ServiceSettingsClassComposer implements ClassComposer {
   private static final String BUILDER_CLASS_NAME = "Builder";
-  private static final String CLASS_NAME_PATTERN = "%sSettings";
-  private static final String CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String CALL_SETTINGS_TYPE_NAME_PATTERN = "%sCallSettings";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String STUB_SETTINGS_PATTERN = "%sStubSettings";
 
   private static final String OPERATION_SETTINGS_LITERAL = "OperationSettings";
   private static final String SETTINGS_LITERAL = "Settings";
@@ -95,7 +92,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   public GapicClass generate(Service service, Map<String, Message> ignore) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
-    String className = getThisClassName(service);
+    String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     ClassDefinition classDef =
@@ -111,7 +108,10 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                         .get("ClientSettings")
                         .reference()
                         .copyAndSetGenerics(
-                            Arrays.asList(types.get(getThisClassName(service)).reference()))))
+                            Arrays.asList(
+                                types
+                                    .get(ClassNames.getServiceSettingsClassName(service))
+                                    .reference()))))
             .setMethods(createClassMethods(service, types))
             .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
             .build();
@@ -131,7 +131,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     .findFirst()
                     .orElse(service.methods().get(0)));
     return SettingsCommentComposer.createClassHeaderComments(
-        getClientClassName(service), service.defaultHost(), methodOpt, classType);
+        ClassNames.getServiceClientClassName(service), service.defaultHost(), methodOpt, classType);
   }
 
   private static List<AnnotationNode> createClassAnnotations() {
@@ -161,7 +161,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setName("settingsBuilder")
                 .setType(types.get(BUILDER_CLASS_NAME))
                 .build());
-    TypeNode thisClassType = types.get(getThisClassName(service));
+    TypeNode thisClassType = types.get(ClassNames.getServiceSettingsClassName(service));
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(thisClassType)
@@ -179,7 +179,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static List<MethodDefinition> createSettingsGetterMethods(
       Service service, Map<String, TypeNode> types) {
-    TypeNode stubSettingsType = types.get(getStubSettingsClassName(service));
+    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
@@ -222,12 +222,12 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static MethodDefinition createCreatorMethod(
       Service service, Map<String, TypeNode> types) {
-    TypeNode stubClassType = types.get(getStubSettingsClassName(service));
+    TypeNode stubClassType = types.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("stub").setType(stubClassType).build());
 
-    TypeNode thisClassType = types.get(getThisClassName(service));
+    TypeNode thisClassType = types.get(ClassNames.getServiceSettingsClassName(service));
     MethodInvocationExpr stubBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(stubVarExpr)
@@ -238,7 +238,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("Builder")
-                .setEnclosingClassNames(getThisClassName(service))
+                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
                 .setPakkage(service.pakkage())
                 .build());
     Expr returnMethodExpr =
@@ -275,7 +275,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setName(mName)
                 .setReturnExpr(
                     MethodInvocationExpr.builder()
-                        .setStaticReferenceType(types.get(getStubSettingsClassName(service)))
+                        .setStaticReferenceType(
+                            types.get(ClassNames.getServiceStubSettingsClassName(service)))
                         .setMethodName(mName)
                         .setReturnType(retType)
                         .build());
@@ -394,7 +395,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     .setType(builderType)
                     .setArguments(
                         ValueExpr.withValue(
-                            ThisObjectValue.withType(types.get(getThisClassName(service)))))
+                            ThisObjectValue.withType(
+                                types.get(ClassNames.getServiceSettingsClassName(service)))))
                     .build())
             .build();
 
@@ -405,7 +407,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
       Service service, Map<String, TypeNode> types) {
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
-            SettingsCommentComposer.createBuilderClassComment(getThisClassName(service)))
+            SettingsCommentComposer.createBuilderClassComment(
+                ClassNames.getServiceSettingsClassName(service)))
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
@@ -416,7 +419,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     .setClazz(ClientSettings.Builder.class)
                     .setGenerics(
                         Arrays.asList(
-                            types.get(getThisClassName(service)).reference(),
+                            types.get(ClassNames.getServiceSettingsClassName(service)).reference(),
                             types.get(BUILDER_CLASS_NAME).reference()))
                     .build()))
         .setMethods(createNestedBuilderClassMethods(service, types))
@@ -481,7 +484,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         ctorMakerFn.apply(
             clientContextVarExpr,
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(types.get(getStubSettingsClassName(service)))
+                .setStaticReferenceType(
+                    types.get(ClassNames.getServiceStubSettingsClassName(service)))
                 .setMethodName("newBuilder")
                 .setArguments(Arrays.asList(clientContextVarExpr))
                 .build());
@@ -490,7 +494,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("settings")
-                .setType(types.get(getThisClassName(service)))
+                .setType(types.get(ClassNames.getServiceSettingsClassName(service)))
                 .build());
     MethodInvocationExpr settingsBuilderMethodExpr =
         MethodInvocationExpr.builder()
@@ -517,7 +521,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
       Service service, Map<String, TypeNode> types) {
     MethodInvocationExpr ctorArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get(getStubSettingsClassName(service)))
+            .setStaticReferenceType(types.get(ClassNames.getServiceStubSettingsClassName(service)))
             .setMethodName("newBuilder")
             .build();
 
@@ -651,7 +655,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static MethodDefinition createNestedBuilderClassBuildMethod(
       Service service, Map<String, TypeNode> types) {
     TypeNode builderType = types.get(BUILDER_CLASS_NAME);
-    TypeNode returnType = types.get(getThisClassName(service));
+    TypeNode returnType = types.get(ClassNames.getServiceSettingsClassName(service));
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
@@ -698,7 +702,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     Map<String, TypeNode> types = new HashMap<>();
 
     // ServiceStubSettings class.
-    String stubSettingsClassName = getStubSettingsClassName(service);
+    String stubSettingsClassName = ClassNames.getServiceStubSettingsClassName(service);
     types.put(
         stubSettingsClassName,
         TypeNode.withReference(
@@ -708,10 +712,10 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .build()));
     // This class.
     types.put(
-        getThisClassName(service),
+        ClassNames.getServiceSettingsClassName(service),
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(getThisClassName(service))
+                .setName(ClassNames.getServiceSettingsClassName(service))
                 .setPakkage(service.pakkage())
                 .build()));
     // Nested Builder class.
@@ -720,7 +724,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         TypeNode.withReference(
             VaporReference.builder()
                 .setName(BUILDER_CLASS_NAME)
-                .setEnclosingClassNames(getThisClassName(service))
+                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
                 .setPakkage(service.pakkage())
                 .setIsStaticImport(true)
                 .build()));
@@ -737,7 +741,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service))
+                                .setEnclosingClassNames(
+                                    ClassNames.getServiceClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -818,24 +823,12 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         ConcreteReference.builder().setClazz(callSettingsClazz).setGenerics(generics).build());
   }
 
-  private static String getThisClassName(Service service) {
-    return String.format(CLASS_NAME_PATTERN, service.overriddenName());
-  }
-
-  private static String getClientClassName(Service service) {
-    return String.format(CLIENT_CLASS_NAME_PATTERN, service.overriddenName());
-  }
-
-  private static String getStubSettingsClassName(Service service) {
-    return String.format(STUB_SETTINGS_PATTERN, service.name());
-  }
-
   private static TypeNode getStubSettingsBuilderType(Service service) {
     return TypeNode.withReference(
         VaporReference.builder()
             .setPakkage(String.format("%s.stub", service.pakkage()))
             .setName(BUILDER_CLASS_NAME)
-            .setEnclosingClassNames(getStubSettingsClassName(service))
+            .setEnclosingClassNames(ClassNames.getServiceStubSettingsClassName(service))
             .build());
   }
 

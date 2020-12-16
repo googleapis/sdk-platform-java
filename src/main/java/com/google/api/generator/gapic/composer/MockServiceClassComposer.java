@@ -44,8 +44,6 @@ import javax.annotation.Generated;
 
 public class MockServiceClassComposer implements ClassComposer {
   private static final MockServiceClassComposer INSTANCE = new MockServiceClassComposer();
-  private static final String MOCK_SERVICE_NAME_PATTERN = "Mock%s";
-  private static final String MOCK_IMPL_NAME_PATTERN = "Mock%sImpl";
   private static final String SERVICE_IMPL_VAR_NAME = "serviceImpl";
 
   private MockServiceClassComposer() {}
@@ -57,7 +55,7 @@ public class MockServiceClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(Service service, Map<String, Message> ignore) {
     Map<String, TypeNode> types = createTypes(service);
-    String className = String.format(MOCK_SERVICE_NAME_PATTERN, service.name());
+    String className = ClassNames.getMockServiceClassName(service);
     GapicClass.Kind kind = Kind.TEST;
     String pakkage = service.pakkage();
 
@@ -68,18 +66,18 @@ public class MockServiceClassComposer implements ClassComposer {
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setImplementsTypes(createClassImplements(types))
-            .setStatements(createFieldDeclarations(service.name(), types))
+            .setStatements(createFieldDeclarations(service, types))
             .setMethods(createClassMethods(service, types))
             .build();
     return GapicClass.create(kind, classDef);
   }
 
   private static List<Statement> createFieldDeclarations(
-      String serviceName, Map<String, TypeNode> types) {
+      Service service, Map<String, TypeNode> types) {
     return Arrays.asList(
         ExprStatement.withExpr(
             VariableExpr.builder()
-                .setVariable(getServiceImplVariable(serviceName, types))
+                .setVariable(getServiceImplVariable(service, types))
                 .setScope(ScopeNode.PRIVATE)
                 .setIsFinal(true)
                 .setIsDecl(true)
@@ -102,9 +100,9 @@ public class MockServiceClassComposer implements ClassComposer {
   private static List<MethodDefinition> createClassMethods(
       Service service, Map<String, TypeNode> types) {
     VariableExpr serviceImplVarExpr =
-        VariableExpr.withVariable(getServiceImplVariable(service.name(), types));
+        VariableExpr.withVariable(getServiceImplVariable(service, types));
     return Arrays.asList(
-        createConstructor(service.name(), serviceImplVarExpr, types),
+        createConstructor(service, serviceImplVarExpr, types),
         createGetRequestsMethod(serviceImplVarExpr, types),
         createAddResponseMethod(serviceImplVarExpr, types),
         createAddExceptionMethod(serviceImplVarExpr),
@@ -113,8 +111,8 @@ public class MockServiceClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createConstructor(
-      String serviceName, VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
-    String mockImplName = String.format(MOCK_IMPL_NAME_PATTERN, serviceName);
+      Service service, VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
+    String mockImplName = ClassNames.getMockServiceImplClassName(service);
     Expr serviceImplAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serviceImplVarExpr)
@@ -124,7 +122,7 @@ public class MockServiceClassComposer implements ClassComposer {
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PUBLIC)
         .setBody(Arrays.asList(ExprStatement.withExpr(serviceImplAssignExpr)))
-        .setReturnType(types.get(String.format(MOCK_SERVICE_NAME_PATTERN, serviceName)))
+        .setReturnType(types.get(ClassNames.getMockServiceClassName(service)))
         .build();
   }
 
@@ -255,13 +253,13 @@ public class MockServiceClassComposer implements ClassComposer {
                 .setPakkage("com.google.api.gax.grpc.testing")
                 .build()));
     // Vapor same-package deps.
-    String mockImplName = String.format(MOCK_IMPL_NAME_PATTERN, service.name());
+    String mockImplName = ClassNames.getMockServiceImplClassName(service);
     types.put(
         mockImplName,
         TypeNode.withReference(
             VaporReference.builder().setName(mockImplName).setPakkage(service.pakkage()).build()));
 
-    String className = String.format(MOCK_SERVICE_NAME_PATTERN, service.name());
+    String className = ClassNames.getMockServiceClassName(service);
     types.put(
         className,
         TypeNode.withReference(
@@ -269,10 +267,10 @@ public class MockServiceClassComposer implements ClassComposer {
     return types;
   }
 
-  private static Variable getServiceImplVariable(String serviceName, Map<String, TypeNode> types) {
+  private static Variable getServiceImplVariable(Service service, Map<String, TypeNode> types) {
     return Variable.builder()
         .setName(SERVICE_IMPL_VAR_NAME)
-        .setType(types.get(String.format(MOCK_IMPL_NAME_PATTERN, serviceName)))
+        .setType(types.get(ClassNames.getMockServiceImplClassName(service)))
         .build();
   }
 }

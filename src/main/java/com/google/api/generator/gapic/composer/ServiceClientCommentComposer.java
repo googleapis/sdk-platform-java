@@ -30,10 +30,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class ServiceClientCommentComposer {
-  // Name Pattern.
-  private static final String SETTINGS_NAME_PATTERN = "%sSettings";
-  private static final String CLASS_NAME_PATTERN = "%sClient";
-
   // Tokens.
   private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
@@ -128,7 +124,8 @@ class ServiceClientCommentComposer {
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
-        String.format(SERVICE_DESCRIPTION_CLOSE_PATTERN, getClientClassName(service)));
+        String.format(
+            SERVICE_DESCRIPTION_CLOSE_PATTERN, ClassNames.getServiceClientClassName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING);
     classHeaderJavadocBuilder.addOrderedList(SERVICE_DESCRIPTION_SURFACE_DESCRIPTION);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
@@ -138,7 +135,9 @@ class ServiceClientCommentComposer {
 
     // Customization examples.
     classHeaderJavadocBuilder.addParagraph(
-        String.format(SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN, getSettingsName(service)));
+        String.format(
+            SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
+            ClassNames.getServiceSettingsClassName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(
         ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
@@ -268,13 +267,5 @@ class ServiceClientCommentComposer {
     }
 
     return commentBuilder;
-  }
-
-  private static String getSettingsName(Service service) {
-    return String.format(SETTINGS_NAME_PATTERN, service.overriddenName());
-  }
-
-  private static String getClientClassName(Service service) {
-    return String.format(CLASS_NAME_PATTERN, service.overriddenName());
   }
 }
