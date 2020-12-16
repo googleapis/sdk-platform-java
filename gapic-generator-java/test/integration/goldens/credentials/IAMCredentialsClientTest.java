@@ -42,7 +42,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
-public class IamCredentialsClientTest {
+public class IAMCredentialsClientTest {
   private static MockServiceHelper mockServiceHelper;
   private static MockIAMCredentials mockIAMCredentials;
   private IamCredentialsClient client;
