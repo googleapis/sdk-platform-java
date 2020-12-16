@@ -64,9 +64,7 @@ public class ClassNames {
   }
 
   protected static String getServiceClientTestClassName(Service service) {
-    return String.format(
-        SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN,
-        monolithBackwardsCompatibleName(service.overriddenName()));
+    return String.format(SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
   protected static String getMockServiceClassName(Service service) {
