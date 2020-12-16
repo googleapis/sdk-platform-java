@@ -18,7 +18,6 @@ import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.Arrays;
@@ -106,7 +105,8 @@ class SettingsCommentComposer {
   static List<CommentStatement> createClassHeaderComments(
       String configuredClassName,
       String defaultHost,
-      Optional<Method> methodOpt,
+      Optional<String> methodNameOpt,
+      Optional<String> sampleCodeOpt,
       TypeNode classType) {
     // Split default address and port.
     int colonIndex = defaultHost.indexOf(COLON);
@@ -131,17 +131,14 @@ class SettingsCommentComposer {
                     CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION))
             .addParagraph(CLASS_HEADER_BUILDER_DESCRIPTION);
 
-    if (methodOpt.isPresent()) {
-      String sampleCode =
-          SettingsSampleCodeComposer.composeSettingClassHeaderSampleCode(
-              methodOpt.get(), classType);
+    if (methodNameOpt.isPresent() && sampleCodeOpt.isPresent()) {
       javaDocCommentBuilder =
           javaDocCommentBuilder
               .addParagraph(
                   String.format(
                       CLASS_HEADER_SAMPLE_CODE_PATTERN,
-                      JavaStyle.toLowerCamelCase(methodOpt.get().name())))
-              .addSampleCode(sampleCode);
+                      JavaStyle.toLowerCamelCase(methodNameOpt.get())))
+              .addSampleCode(sampleCodeOpt.get());
     }
 
     return Arrays.asList(
