@@ -303,7 +303,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     String thisClientName = ClassNames.getServiceClientClassName(service);
     String settingsName = ClassNames.getServiceSettingsClassName(service);
     TypeNode thisClassType = types.get(thisClientName);
-    TypeNode stubSettingsType = types.get(String.format("%sStubSettings", service.name()));
+    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
     TypeNode operationsClientType = types.get("OperationsClient");
     TypeNode exceptionType = types.get("IOException");
 
@@ -1430,26 +1430,32 @@ public class ServiceClientClassComposer implements ClassComposer {
   private static Map<String, TypeNode> createVaporTypes(Service service) {
     // Client stub types.
     Map<String, TypeNode> types =
-        Arrays.asList("%sStub", "%sStubSettings").stream()
+        Arrays.asList(
+                ClassNames.getServiceStubClassName(service),
+                ClassNames.getServiceStubSettingsClassName(service))
+            .stream()
             .collect(
                 Collectors.toMap(
-                    t -> String.format(t, service.name()),
-                    t ->
+                    n -> n,
+                    n ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(String.format(t, service.name()))
+                                .setName(n)
                                 .setPakkage(String.format("%s.stub", service.pakkage()))
                                 .build())));
     // Client ServiceClient and ServiceSettings types.
     types.putAll(
-        Arrays.asList("%sClient", "%sSettings").stream()
+        Arrays.asList(
+                ClassNames.getServiceClientClassName(service),
+                ClassNames.getServiceSettingsClassName(service))
+            .stream()
             .collect(
                 Collectors.toMap(
-                    t -> String.format(t, service.overriddenName()),
-                    t ->
+                    n -> n,
+                    n ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(String.format(t, service.overriddenName()))
+                                .setName(n)
                                 .setPakkage(service.pakkage())
                                 .build()))));
 

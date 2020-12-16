@@ -135,7 +135,7 @@ public class ServiceClientTestClassComposer {
       Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
-    String className = String.format("%sClientTest", service.overriddenName());
+    String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);
