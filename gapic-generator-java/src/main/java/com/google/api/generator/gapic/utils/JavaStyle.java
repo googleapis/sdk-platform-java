@@ -29,6 +29,7 @@ public class JavaStyle {
     if (s.indexOf(UNDERSCORE) >= 0) {
       s = CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, s);
     }
+
     return capitalizeLettersAfterDigits(
         String.format("%s%s", s.substring(0, 1).toLowerCase(), s.substring(1)));
   }
@@ -46,7 +47,8 @@ public class JavaStyle {
   }
 
   public static String toUpperSnakeCase(String s) {
-    return CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, toUpperCamelCase(s));
+    String result = CaseFormat.UPPER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, toUpperCamelCase(s));
+    return result;
   }
 
   private static String capitalizeLettersAfterDigits(String s) {
