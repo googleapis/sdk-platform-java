@@ -126,7 +126,7 @@ public final class SettingsSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(classType)
-                .setName(getServiceSettingsName(className))
+                .setName(JavaStyle.toLowerCamelCase(className).replace("Stub", ""))
                 .build());
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
@@ -145,10 +145,6 @@ public final class SettingsSampleCodeComposer {
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
     return Optional.of(SampleCodeJavaFormatter.format(writeStatements(statements)));
-  }
-
-  private static String getServiceSettingsName(String className) {
-    return JavaStyle.toLowerCamelCase(className).replace(STUB, EMPTY_STRING);
   }
 
   private static String getClassSettingsBuilderName(String className) {
