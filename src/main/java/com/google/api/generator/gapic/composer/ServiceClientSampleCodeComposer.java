@@ -39,7 +39,6 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -195,48 +194,6 @@ public class ServiceClientSampleCodeComposer {
       List<MethodArgument> arguments,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes) {
-    if (method.isPaged()) {
-      return SampleCodeWriter.write(
-          composeUnaryPagedRpcMethodSampleCode(
-              method, clientType, arguments, resourceNames, messageTypes, false));
-    }
-    if (method.hasLro()) {
-      return SampleCodeWriter.write(
-          composeUnaryLroRpcMethodSampleCode(
-              method, clientType, arguments, resourceNames, messageTypes, false));
-    }
-    return SampleCodeWriter.write(
-        composeUnaryRpcMethodSampleCode(
-            method, clientType, arguments, resourceNames, messageTypes, false));
-  }
-
-  public static String composeRpcDefaultMethodHeaderSampleCode(
-      Method method,
-      TypeNode clientType,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
-    if (method.isPaged()) {
-      return SampleCodeWriter.write(
-          composeUnaryPagedRpcMethodSampleCode(
-              method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
-    }
-    if (method.hasLro()) {
-      return SampleCodeWriter.write(
-          composeUnaryLroRpcMethodSampleCode(
-              method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
-    }
-    return SampleCodeWriter.write(
-        composeUnaryRpcMethodSampleCode(
-            method, clientType, Collections.emptyList(), resourceNames, messageTypes, true));
-  }
-
-  private static TryCatchStatement composeUnaryRpcMethodSampleCode(
-      Method method,
-      TypeNode clientType,
-      List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes,
-      boolean isDefaultMethod) {
     VariableExpr clientVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
@@ -247,32 +204,96 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> bodyExprs = new ArrayList<>();
 
     // Assign method's arguments variable with the default values.
-    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
-    if (isDefaultMethod) {
-      VariableExpr requestVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("request").setType(method.inputType()).build());
-      rpcMethodArgVarExprs.add(requestVarExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-      Preconditions.checkNotNull(requestMessage);
-      Expr requestBuilderExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              requestMessage, resourceNames, messageTypes);
-      AssignmentExpr requestAssignmentExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(requestBuilderExpr)
-              .build();
-      bodyExprs.add(requestAssignmentExpr);
+    List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
+    List<Expr> rpcMethodArgDefaultValueExprs =
+        createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
+    List<Expr> rpcMethodArgAssignmentExprs =
+        createAssignmentsForVarExprsWithValueExprs(
+            rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+    bodyExprs.addAll(rpcMethodArgAssignmentExprs);
+
+    List<Statement> bodyStatements = new ArrayList<>();
+    if (method.isPaged()) {
+      bodyStatements.addAll(
+          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
+    } else if (method.hasLro()) {
+      bodyStatements.addAll(
+          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
-      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-      List<Expr> rpcMethodArgDefaultValueExprs =
-          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-      List<Expr> rpcMethodArgAssignmentExprs =
-          createAssignmentsForVarExprsWithValueExprs(
-              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
-      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
+      bodyStatements.addAll(
+          composeUnaryRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
+  public static String composeRpcDefaultMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    List<VariableExpr> rpcMethodArgVarExprs = Arrays.asList(requestVarExpr);
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(requestMessage);
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    AssignmentExpr requestAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build();
+
+    bodyExprs.add(requestAssignmentExpr);
+
+    List<Statement> bodyStatements = new ArrayList<>();
+    if (method.isPaged()) {
+      bodyStatements.addAll(
+          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
+    } else if (method.hasLro()) {
+      bodyStatements.addAll(
+          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
+    } else {
+      bodyStatements.addAll(
+          composeUnaryRpcMethodSampleCodeBodyStatements(
+              method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
+    }
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
+  private static List<Statement> composeUnaryRpcMethodSampleCodeBodyStatements(
+      Method method,
+      VariableExpr clientVarExpr,
+      List<VariableExpr> rpcMethodArgVarExprs,
+      List<Expr> bodyExprs) {
 
     // Invoke current method based on return type.
     // e.g. if return void, echoClient.echo(..); or,
@@ -299,27 +320,15 @@ public class ServiceClientSampleCodeComposer {
               .build());
     }
 
-    return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-        .setIsSampleCode(true)
-        .build();
+    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static TryCatchStatement composeUnaryPagedRpcMethodSampleCode(
+  private static List<Statement> composeUnaryPagedRpcMethodSampleCodeBodyStatements(
       Method method,
-      TypeNode clientType,
-      List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes,
-      Boolean isDefaultMethod) {
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
-                .setType(clientType)
-                .build());
+      VariableExpr clientVarExpr,
+      List<VariableExpr> rpcMethodArgVarExprs,
+      List<Expr> bodyExprs,
+      Map<String, Message> messageTypes) {
 
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
@@ -330,36 +339,6 @@ public class ServiceClientSampleCodeComposer {
             "No repeated field found on message %s for method %s",
             methodOutputMessage.name(), method.name()));
     TypeNode repeatedResponseType = repeatedPagedResultsField.type();
-
-    List<Expr> bodyExprs = new ArrayList<>();
-
-    // Assign method's arguments variable with the default values.
-    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
-    if (isDefaultMethod) {
-      VariableExpr requestVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("request").setType(method.inputType()).build());
-      rpcMethodArgVarExprs.add(requestVarExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-      Preconditions.checkNotNull(requestMessage);
-      Expr requestBuilderExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              requestMessage, resourceNames, messageTypes);
-      AssignmentExpr requestAssignmentExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(requestBuilderExpr)
-              .build();
-      bodyExprs.add(requestAssignmentExpr);
-    } else {
-      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-      List<Expr> rpcMethodArgDefaultValueExprs =
-          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-      List<Expr> rpcMethodArgAssignmentExprs =
-          createAssignmentsForVarExprsWithValueExprs(
-              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
-      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
-    }
 
     // For loop paged response item on iterateAll method.
     // e.g. for (LogEntry element : loggingServiceV2Client.ListLogs(parent).iterateAll()) {
@@ -398,57 +377,14 @@ public class ServiceClientSampleCodeComposer {
     bodyExprs.clear();
     bodyStatements.add(loopIteratorStatement);
 
-    return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(bodyStatements)
-        .setIsSampleCode(true)
-        .build();
+    return bodyStatements;
   }
 
-  static TryCatchStatement composeUnaryLroRpcMethodSampleCode(
+  private static List<Statement> composeUnaryLroRpcMethodSampleCodeBodyStatements(
       Method method,
-      TypeNode clientType,
-      List<MethodArgument> arguments,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes,
-      boolean isDefaultMethod) {
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
-                .setType(clientType)
-                .build());
-
-    List<Expr> bodyExprs = new ArrayList<>();
-
-    // Assign method's arguments variable with the default values.
-    List<VariableExpr> rpcMethodArgVarExprs = new ArrayList<>();
-    if (isDefaultMethod) {
-      VariableExpr requestVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("request").setType(method.inputType()).build());
-      rpcMethodArgVarExprs.add(requestVarExpr);
-      Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-      Preconditions.checkNotNull(requestMessage);
-      Expr requestBuilderExpr =
-          DefaultValueComposer.createSimpleMessageBuilderExpr(
-              requestMessage, resourceNames, messageTypes);
-      AssignmentExpr requestAssignmentExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(requestBuilderExpr)
-              .build();
-      bodyExprs.add(requestAssignmentExpr);
-    } else {
-      rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
-      List<Expr> rpcMethodArgDefaultValueExprs =
-          createRpcMethodArgumentDefaultValueExprs(arguments, resourceNames);
-      List<Expr> rpcMethodArgAssignmentExprs =
-          createAssignmentsForVarExprsWithValueExprs(
-              rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
-      bodyExprs.addAll(rpcMethodArgAssignmentExprs);
-    }
-
+      VariableExpr clientVarExpr,
+      List<VariableExpr> rpcMethodArgVarExprs,
+      List<Expr> bodyExprs) {
     // Assign response variable with invoking client's lro method.
     // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
     // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
@@ -485,12 +421,7 @@ public class ServiceClientSampleCodeComposer {
               .build());
     }
 
-    return TryCatchStatement.builder()
-        .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-        .setTryBody(
-            bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
-        .setIsSampleCode(true)
-        .build();
+    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
   // ==================================Helpers===================================================//
