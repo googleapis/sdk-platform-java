@@ -17,23 +17,23 @@
 /**
  * The interfaces provided are listed below, along with usage samples.
  *
- * <p>======================= LoggingServiceV2Client =======================
+ * <p>======================= LoggingClient =======================
  *
  * <p>Service Description: Service for ingesting and querying logs.
  *
- * <p>Sample for LoggingServiceV2Client:
+ * <p>Sample for LoggingClient:
  *
- * <p>======================= ConfigServiceV2Client =======================
+ * <p>======================= ConfigClient =======================
  *
  * <p>Service Description: Service for configuring sinks used to route log entries.
  *
- * <p>Sample for ConfigServiceV2Client:
+ * <p>Sample for ConfigClient:
  *
- * <p>======================= MetricsServiceV2Client =======================
+ * <p>======================= MetricsClient =======================
  *
  * <p>Service Description: Service for configuring logs-based metrics.
  *
- * <p>Sample for MetricsServiceV2Client:
+ * <p>Sample for MetricsClient:
  */
 @Generated("by gapic-generator-java")
 package com.google.cloud.logging.v2;
