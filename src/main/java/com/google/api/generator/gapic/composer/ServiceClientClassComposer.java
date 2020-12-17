@@ -505,8 +505,18 @@ public class ServiceClientClassComposer {
       if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(
             createMethodVariants(
-                method, ClassNames.getServiceClientClassName(service), messageTypes, typeStore, resourceNames));
-        javaMethods.add(createMethodDefaultMethod(method, typeStore));
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                typeStore,
+                resourceNames));
+        javaMethods.add(
+            createMethodDefaultMethod(
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                typeStore,
+                resourceNames));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service, method, typeStore));

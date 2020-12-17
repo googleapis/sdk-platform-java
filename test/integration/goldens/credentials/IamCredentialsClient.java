@@ -146,6 +146,19 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Generates an OAuth 2.0 access token for a service account.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *   List<String> delegates = new ArrayList<>();
+   *   List<String> scope = new ArrayList<>();
+   *   Duration lifetime = Duration.newBuilder().build();
+   *   GenerateAccessTokenResponse response =
+   *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
@@ -181,6 +194,19 @@ public class IamCredentialsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Generates an OAuth 2.0 access token for a service account.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *   List<String> delegates = new ArrayList<>();
+   *   List<String> scope = new ArrayList<>();
+   *   Duration lifetime = Duration.newBuilder().build();
+   *   GenerateAccessTokenResponse response =
+   *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
@@ -218,6 +244,21 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Generates an OAuth 2.0 access token for a service account.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   GenerateAccessTokenRequest request =
+   *       GenerateAccessTokenRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .addAllScope(new ArrayList<String>())
+   *           .setLifetime(Duration.newBuilder().build())
+   *           .build();
+   *   GenerateAccessTokenResponse response = iamCredentialsClient.generateAccessToken(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -239,6 +280,19 @@ public class IamCredentialsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Generates an OpenID Connect ID token for a service account.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *   List<String> delegates = new ArrayList<>();
+   *   String audience = "audience975628804";
+   *   boolean includeEmail = true;
+   *   GenerateIdTokenResponse response =
+   *       iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
@@ -274,6 +328,19 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Generates an OpenID Connect ID token for a service account.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *   List<String> delegates = new ArrayList<>();
+   *   String audience = "audience975628804";
+   *   boolean includeEmail = true;
+   *   GenerateIdTokenResponse response =
+   *       iamCredentialsClient.generateIdToken(name, delegates, audience, includeEmail);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
@@ -308,6 +375,21 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Generates an OpenID Connect ID token for a service account.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   GenerateIdTokenRequest request =
+   *       GenerateIdTokenRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setAudience("audience975628804")
+   *           .setIncludeEmail(true)
+   *           .build();
+   *   GenerateIdTokenResponse response = iamCredentialsClient.generateIdToken(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -329,6 +411,17 @@ public class IamCredentialsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Signs a blob using a service account's system-managed private key.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *   List<String> delegates = new ArrayList<>();
+   *   ByteString payload = ByteString.EMPTY;
+   *   SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
@@ -360,6 +453,17 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Signs a blob using a service account's system-managed private key.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *   List<String> delegates = new ArrayList<>();
+   *   ByteString payload = ByteString.EMPTY;
+   *   SignBlobResponse response = iamCredentialsClient.signBlob(name, delegates, payload);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
@@ -389,6 +493,20 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Signs a blob using a service account's system-managed private key.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   SignBlobRequest request =
+   *       SignBlobRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setPayload(ByteString.EMPTY)
+   *           .build();
+   *   SignBlobResponse response = iamCredentialsClient.signBlob(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -409,6 +527,17 @@ public class IamCredentialsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Signs a JWT using a service account's system-managed private key.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+   *   List<String> delegates = new ArrayList<>();
+   *   String payload = "payload-786701938";
+   *   SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   * }
+   * }</pre>
    *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
@@ -440,6 +569,17 @@ public class IamCredentialsClient implements BackgroundResource {
   /**
    * Signs a JWT using a service account's system-managed private key.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   String name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString();
+   *   List<String> delegates = new ArrayList<>();
+   *   String payload = "payload-786701938";
+   *   SignJwtResponse response = iamCredentialsClient.signJwt(name, delegates, payload);
+   * }
+   * }</pre>
+   *
    * @param name Required. The resource name of the service account for which the credentials are
    *     requested, in the following format:
    *     `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard character is
@@ -468,6 +608,20 @@ public class IamCredentialsClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Signs a JWT using a service account's system-managed private key.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   SignJwtRequest request =
+   *       SignJwtRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setPayload("payload-786701938")
+   *           .build();
+   *   SignJwtResponse response = iamCredentialsClient.signJwt(request);
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
