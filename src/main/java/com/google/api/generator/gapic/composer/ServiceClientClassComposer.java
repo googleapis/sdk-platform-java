@@ -479,13 +479,14 @@ public class ServiceClientClassComposer {
       Map<String, Message> messageTypes,
       Map<String, TypeNode> types,
       Map<String, ResourceName> resourceNames) {
+    String clientName = getClientClassName(service);
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
         javaMethods.addAll(
-            createMethodVariants(
-                method, getClientClassName(service), messageTypes, types, resourceNames));
-        javaMethods.add(createMethodDefaultMethod(method, types));
+            createMethodVariants(method, clientName, messageTypes, types, resourceNames));
+        javaMethods.add(
+            createMethodDefaultMethod(method, clientName, messageTypes, types, resourceNames));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service, method, types));
@@ -594,7 +595,11 @@ public class ServiceClientClassComposer {
   }
 
   private static MethodDefinition createMethodDefaultMethod(
-      Method method, Map<String, TypeNode> types) {
+      Method method,
+      String clientName,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -627,6 +632,11 @@ public class ServiceClientClassComposer {
       callableMethodName = String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName);
     }
 
+    Optional<String> defaultMethodSampleCode =
+        Optional.of(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, types.get(clientName), resourceNames, messageTypes));
+
     MethodInvocationExpr callableMethodExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
     callableMethodExpr =
@@ -639,7 +649,8 @@ public class ServiceClientClassComposer {
     MethodDefinition.Builder methodBuilder =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                    method, defaultMethodSampleCode))
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))

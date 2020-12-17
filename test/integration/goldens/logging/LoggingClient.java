@@ -222,6 +222,18 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   DeleteLogRequest request =
+   *       DeleteLogRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .build();
+   *   loggingClient.deleteLog(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -398,6 +410,23 @@ public class LoggingClient implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setResource(MonitoredResource.newBuilder().build())
+   *           .putAllLabels(new HashMap<String, String>())
+   *           .addAllEntries(new ArrayList<LogEntry>())
+   *           .setPartialSuccess(true)
+   *           .setDryRun(true)
+   *           .build();
+   *   WriteLogEntriesResponse response = loggingClient.writeLogEntries(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -474,6 +503,24 @@ public class LoggingClient implements BackgroundResource {
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .addAllResourceNames(new ArrayList<String>())
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (LogEntry element : loggingClient.listLogEntries(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -510,6 +557,22 @@ public class LoggingClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists the descriptors for monitored resource types used by Logging.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (MonitoredResourceDescriptor element :
+   *       loggingClient.listMonitoredResourceDescriptors(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -681,6 +744,22 @@ public class LoggingClient implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogsRequest request =
+   *       ListLogsRequest.newBuilder()
+   *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (String element : loggingClient.listLogs(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails

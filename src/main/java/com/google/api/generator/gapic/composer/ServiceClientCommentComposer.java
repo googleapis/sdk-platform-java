@@ -199,9 +199,9 @@ class ServiceClientCommentComposer {
     return comments;
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
-    // TODO(summerji): Refactor this method when implement default method sample code.
-    return createRpcMethodHeaderComment(method, Collections.emptyList(), Optional.empty());
+  static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, Optional<String> sampleCode) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), sampleCode);
   }
 
   static CommentStatement createMethodNoArgComment(String serviceName) {
