@@ -81,6 +81,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -206,8 +207,17 @@ public class ServiceStubSettingsClassComposer {
                     .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
                     .findFirst()
                     .orElse(service.methods().get(0)));
+    Optional<String> methodNameOpt =
+        methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
+    Optional<String> sampleCodeOpt =
+        SettingsSampleCodeComposer.composeSampleCode(methodOpt, classType);
+
     return SettingsCommentComposer.createClassHeaderComments(
-        ClassNames.getServiceStubClassName(service), service.defaultHost(), methodOpt, classType);
+        ClassNames.getServiceStubClassName(service),
+        service.defaultHost(),
+        methodNameOpt,
+        sampleCodeOpt,
+        classType);
   }
 
   private static TypeNode createExtendsType(Service service, Map<String, TypeNode> types) {
