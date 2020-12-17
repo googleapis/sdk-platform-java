@@ -300,6 +300,20 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   EchoResponse response = echoClient.echo(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -339,6 +353,22 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (EchoResponse element : echoClient.pagedExpand(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -381,6 +411,22 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (EchoResponse element : echoClient.simplePagedExpand(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -441,6 +487,15 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   WaitRequest request = WaitRequest.newBuilder().build();
+   *   WaitResponse response = echoClient.waitAsync(request).get();
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -462,6 +517,15 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   BlockResponse response = echoClient.block(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
