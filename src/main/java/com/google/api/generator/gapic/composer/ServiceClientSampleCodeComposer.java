@@ -201,8 +201,6 @@ public class ServiceClientSampleCodeComposer {
                 .setType(clientType)
                 .build());
 
-    List<Expr> bodyExprs = new ArrayList<>();
-
     // Assign method's arguments variable with the default values.
     List<VariableExpr> rpcMethodArgVarExprs = createRpcMethodArgumentVariableExprs(arguments);
     List<Expr> rpcMethodArgDefaultValueExprs =
@@ -210,6 +208,8 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> rpcMethodArgAssignmentExprs =
         createAssignmentsForVarExprsWithValueExprs(
             rpcMethodArgVarExprs, rpcMethodArgDefaultValueExprs);
+
+    List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.addAll(rpcMethodArgAssignmentExprs);
 
     List<Statement> bodyStatements = new ArrayList<>();
@@ -247,8 +247,7 @@ public class ServiceClientSampleCodeComposer {
                 .setType(clientType)
                 .build());
 
-    List<Expr> bodyExprs = new ArrayList<>();
-
+    // Create request variable expression and assign with its default value.
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
@@ -264,6 +263,7 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(requestBuilderExpr)
             .build();
 
+    List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
 
     List<Statement> bodyStatements = new ArrayList<>();
