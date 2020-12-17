@@ -20,6 +20,7 @@ import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
+import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.gax.rpc.OperationCallSettings;
@@ -797,6 +798,9 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
     if (protoMethod.isPaged()) {
       callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
+    } else if (protoMethod.isBatching()) {
+      callSettingsClazz =
+          isBuilder ? BatchingCallSettings.Builder.class : BatchingCallSettings.class;
     } else {
       switch (protoMethod.stream()) {
         case CLIENT:
