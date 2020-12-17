@@ -37,6 +37,8 @@ public abstract class Method {
 
   public abstract TypeNode outputType();
 
+  public abstract boolean isBatching();
+
   public abstract boolean isPaged();
 
   @Nullable
@@ -70,6 +72,7 @@ public abstract class Method {
         .setStream(Stream.NONE)
         .setMethodSignatures(ImmutableList.of())
         .setHttpBindings(ImmutableList.of())
+        .setIsBatching(false)
         .setIsPaged(false);
   }
 
@@ -103,6 +106,8 @@ public abstract class Method {
     public abstract Builder setHttpBindings(List<String> httpBindings);
 
     public abstract Builder setMethodSignatures(List<List<MethodArgument>> methodSignature);
+
+    public abstract Builder setIsBatching(boolean isBatching);
 
     public abstract Builder setIsPaged(boolean isPaged);
 
