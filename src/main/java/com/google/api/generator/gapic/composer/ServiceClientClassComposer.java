@@ -481,8 +481,20 @@ public class ServiceClientClassComposer {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
-        javaMethods.add(createMethodDefaultMethod(method, types));
+        javaMethods.addAll(
+            createMethodVariants(
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                types,
+                resourceNames));
+        javaMethods.add(
+            createMethodDefaultMethod(
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                types,
+                resourceNames));
       }
       if (method.hasLro()) {
         javaMethods.add(createLroCallableMethod(service, method, types));
@@ -496,7 +508,11 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Method method,
+      String clientName,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
