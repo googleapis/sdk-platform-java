@@ -20,6 +20,7 @@ import com.google.api.generator.gapic.model.Service;
 public class ClassNames {
   // Using constants since many of these class names are used often.
   private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
+  private static final String MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN = "Mock%sImpl";
   private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN = "%sClientTest";
   private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
@@ -28,7 +29,6 @@ public class ClassNames {
   private static final String GRPC_SERVICE_STUB_CLASS_NAME_PATTERN = "Grpc%sStub";
   private static final String GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
       "Grpc%sCallableFactory";
-  private static final String MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN = "Mock%sImpl";
 
   protected static String getServiceClientClassName(Service service) {
     return String.format(
@@ -64,9 +64,7 @@ public class ClassNames {
   }
 
   protected static String getServiceClientTestClassName(Service service) {
-    return String.format(
-        SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN,
-        monolithBackwardsCompatibleName(service.overriddenName()));
+    return String.format(SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
   protected static String getMockServiceClassName(Service service) {
