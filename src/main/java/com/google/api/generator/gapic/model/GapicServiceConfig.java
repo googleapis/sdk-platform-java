@@ -159,6 +159,14 @@ public class GapicServiceConfig {
     return batchingSettingsTable.containsKey(toName(service, method));
   }
 
+  public boolean hasBatchingSetting(String protoPakkage, String serviceName, String methodName) {
+    return batchingSettingsTable.containsKey(
+        MethodConfig.Name.newBuilder()
+            .setService(String.format("%s.%s", protoPakkage, serviceName))
+            .setMethod(methodName)
+            .build());
+  }
+
   public Optional<GapicLroRetrySettings> getLroRetrySetting(Service service, Method method) {
     return hasLroRetrySetting(service, method)
         ? Optional.of(lroRetrySettingsTable.get(toName(service, method)))
