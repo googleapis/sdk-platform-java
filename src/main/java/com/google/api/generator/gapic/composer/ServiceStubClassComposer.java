@@ -59,7 +59,7 @@ public class ServiceStubClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(Service service, Map<String, Message> messageTypes) {
     Map<String, TypeNode> types = createTypes(service, messageTypes);
-    String className = String.format("%sStub", service.name());
+    String className = ClassNames.getServiceStubClassName(service);
     GapicClass.Kind kind = Kind.STUB;
     String pakkage = String.format("%s.stub", service.pakkage());
 
@@ -262,7 +262,8 @@ public class ServiceStubClassComposer implements ClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service))
+                                .setEnclosingClassNames(
+                                    ClassNames.getServiceClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
 

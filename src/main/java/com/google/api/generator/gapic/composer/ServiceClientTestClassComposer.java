@@ -101,12 +101,9 @@ public class ServiceClientTestClassComposer {
   private static final String CLASS_NAME_PATTERN = "%sClientTest";
   private static final String CLIENT_VAR_NAME = "client";
   private static final String GRPC_TESTING_PACKAGE = "com.google.api.gax.grpc.testing";
-  private static final String MOCK_SERVICE_CLASS_NAME_PATTERN = "Mock%s";
   private static final String MOCK_SERVICE_VAR_NAME_PATTERN = "mock%s";
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
-  private static final String SERVICE_CLIENT_CLASS_NAME_PATTERN = "%sClient";
   private static final String SERVICE_HELPER_VAR_NAME = "mockServiceHelper";
-  private static final String SERVICE_SETTINGS_CLASS_NAME_PATTERN = "%sSettings";
   private static final String STUB_SETTINGS_PATTERN = "%sSettings";
 
   private static final ServiceClientTestClassComposer INSTANCE =
@@ -138,7 +135,7 @@ public class ServiceClientTestClassComposer {
       Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     String pakkage = service.pakkage();
     Map<String, TypeNode> types = createDynamicTypes(service);
-    String className = String.format("%sClientTest", service.overriddenName());
+    String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, types);
@@ -171,9 +168,10 @@ public class ServiceClientTestClassComposer {
         (name, type) ->
             VariableExpr.withVariable(Variable.builder().setName(name).setType(type).build());
     Map<String, TypeNode> fields = new LinkedHashMap<>();
-    fields.put(getMockServiceVarName(service), types.get(getMockServiceClassName(service)));
+    fields.put(
+        getMockServiceVarName(service), types.get(ClassNames.getMockServiceClassName(service)));
     fields.put(SERVICE_HELPER_VAR_NAME, STATIC_TYPES.get("MockServiceHelper"));
-    fields.put(CLIENT_VAR_NAME, types.get(getClientClassName(service)));
+    fields.put(CLIENT_VAR_NAME, types.get(ClassNames.getServiceClientClassName(service)));
     fields.put(CHANNEL_PROVIDER_VAR_NAME, STATIC_TYPES.get("LocalChannelProvider"));
     return fields.entrySet().stream()
         .collect(Collectors.toMap(e -> e.getKey(), e -> varExprFn.apply(e.getKey(), e.getValue())));
@@ -315,7 +313,7 @@ public class ServiceClientTestClassComposer {
                     .build())
             .build();
 
-    TypeNode settingsType = types.get(getServiceSettingsClassName(service));
+    TypeNode settingsType = types.get(ClassNames.getServiceSettingsClassName(service));
     VariableExpr localSettingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("settings").setType(settingsType).build());
@@ -365,7 +363,8 @@ public class ServiceClientTestClassComposer {
             .setVariableExpr(clientVarExpr)
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(types.get(getClientClassName(service)))
+                    .setStaticReferenceType(
+                        types.get(ClassNames.getServiceClientClassName(service)))
                     .setMethodName("create")
                     .setArguments(Arrays.asList(localSettingsVarExpr))
                     .setReturnType(clientVarExpr.type())
@@ -1739,34 +1738,27 @@ public class ServiceClientTestClassComposer {
   private static Map<String, TypeNode> createDynamicTypes(Service service) {
     Map<String, TypeNode> types = new HashMap<>();
 
-    // ServiceStubSettings class.
-    String stubSettingsClassName = getStubSettingsClassName(service);
     types.put(
-        stubSettingsClassName,
+        ClassNames.getMockServiceClassName(service),
         TypeNode.withReference(
             VaporReference.builder()
-                .setName(stubSettingsClassName)
-                .setPakkage(String.format("%s.stub", service.pakkage()))
-                .build()));
-    types.put(
-        getMockServiceClassName(service),
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(getMockServiceClassName(service))
+                .setName(ClassNames.getMockServiceClassName(service))
                 .setPakkage(String.format("%s", service.pakkage()))
                 .build()));
 
     // Classes in the same package.
     types.putAll(
-        Arrays.asList(SERVICE_CLIENT_CLASS_NAME_PATTERN, SERVICE_SETTINGS_CLASS_NAME_PATTERN)
+        Arrays.asList(
+                ClassNames.getServiceClientClassName(service),
+                ClassNames.getServiceSettingsClassName(service))
             .stream()
             .collect(
                 Collectors.toMap(
-                    p -> String.format(p, service.overriddenName()),
-                    p ->
+                    n -> n,
+                    n ->
                         TypeNode.withReference(
                             VaporReference.builder()
-                                .setName(String.format(p, service.overriddenName()))
+                                .setName(n)
                                 .setPakkage(service.pakkage())
                                 .build()))));
 
@@ -1782,7 +1774,8 @@ public class ServiceClientTestClassComposer {
                             VaporReference.builder()
                                 .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
                                 .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(getClientClassName(service))
+                                .setEnclosingClassNames(
+                                    ClassNames.getServiceClientClassName(service))
                                 .setIsStaticImport(true)
                                 .build()))));
     return types;
@@ -1897,7 +1890,7 @@ public class ServiceClientTestClassComposer {
         VaporReference.builder()
             .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             .setPakkage(service.pakkage())
-            .setEnclosingClassNames(getClientClassName(service))
+            .setEnclosingClassNames(ClassNames.getServiceClientClassName(service))
             .setIsStaticImport(true)
             .build());
   }
@@ -1921,24 +1914,8 @@ public class ServiceClientTestClassComposer {
     }
   }
 
-  private static String getClientClassName(Service service) {
-    return String.format(SERVICE_CLIENT_CLASS_NAME_PATTERN, service.overriddenName());
-  }
-
-  private static String getServiceSettingsClassName(Service service) {
-    return String.format(SERVICE_SETTINGS_CLASS_NAME_PATTERN, service.overriddenName());
-  }
-
   private static String getMockServiceVarName(Service service) {
     return String.format(MOCK_SERVICE_VAR_NAME_PATTERN, service.name());
-  }
-
-  private static String getMockServiceClassName(Service service) {
-    return String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name());
-  }
-
-  private static String getStubSettingsClassName(Service service) {
-    return String.format(STUB_SETTINGS_PATTERN, service.name());
   }
 
   private static boolean isProtoEmptyType(TypeNode type) {

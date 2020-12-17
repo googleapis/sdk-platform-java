@@ -36,7 +36,6 @@ public class ClientLibraryPackageInfoComposer {
   private static final String PACKAGE_INFO_DESCRIPTION =
       "The interfaces provided are listed below, along with usage samples.";
 
-  private static final String CLIENT_PATTERN = "%sClient";
   private static final String PACKAGE_INFO_TITLE_PATTERN = "A client to %s";
   private static final String SAMPLE_CODE_HEADER_PATTERN = "Sample for %s:";
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
@@ -71,7 +70,7 @@ public class ClientLibraryPackageInfoComposer {
     javaDocCommentBuilder = javaDocCommentBuilder.addParagraph(PACKAGE_INFO_DESCRIPTION);
 
     for (Service service : context.services()) {
-      String javaClientName = String.format(CLIENT_PATTERN, service.name());
+      String javaClientName = ClassNames.getServiceClientClassName(service);
       javaDocCommentBuilder =
           javaDocCommentBuilder.addParagraph(
               String.format("%s %s %s", DIVIDER, javaClientName, DIVIDER));
@@ -111,7 +110,6 @@ public class ClientLibraryPackageInfoComposer {
       javaDocCommentBuilder =
           javaDocCommentBuilder.addParagraph(
               String.format(SAMPLE_CODE_HEADER_PATTERN, javaClientName));
-
       // TODO(summerji): Add package-info.java sample code here.
     }
 

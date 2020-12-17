@@ -18,6 +18,7 @@ package(default_visibility = ["//visibility:public"])
 
 INTEGRATION_TEST_LIBRARIES = [
     "asset",
+    "credentials",
     "logging",
     "redis",
     "library",  # No gRPC service config.
@@ -46,7 +47,6 @@ java_gapic_library(
     name = "asset_java_gapic",
     srcs = ["@com_google_googleapis//google/cloud/asset/v1:asset_proto_with_info"],
     grpc_service_config = "@com_google_googleapis//google/cloud/asset/v1:cloudasset_grpc_service_config.json",
-    package = "google.cloud.asset.v1",
     test_deps = [
         "@com_google_googleapis//google/cloud/asset/v1:asset_java_grpc",
         "@com_google_googleapis//google/iam/v1:iam_java_grpc",
@@ -84,7 +84,6 @@ java_gapic_library(
     srcs = ["@com_google_googleapis//google/cloud/redis/v1:redis_proto_with_info"],
     gapic_yaml = "@com_google_googleapis//google/cloud/redis/v1:redis_gapic.yaml",
     grpc_service_config = "@com_google_googleapis//google/cloud/redis/v1:redis_grpc_service_config.json",
-    package = "google.cloud.redis.v1",
     test_deps = [
         "@com_google_googleapis//google/cloud/redis/v1:redis_java_grpc",
     ],
@@ -117,7 +116,6 @@ java_gapic_library(
     srcs = ["@com_google_googleapis//google/logging/v2:logging_proto_with_info"],
     gapic_yaml = "@com_google_googleapis//google/logging/v2:logging_gapic.yaml",
     grpc_service_config = "@com_google_googleapis//google/logging/v2:logging_grpc_service_config.json",
-    package = "google.logging.v2",
     test_deps = [
         "@com_google_googleapis//google/logging/v2:logging_java_grpc",
     ],
@@ -153,7 +151,6 @@ java_gapic_library(
     name = "library_java_gapic",
     srcs = ["@com_google_googleapis//google/example/library/v1:library_proto_with_info"],
     gapic_yaml = "@com_google_googleapis//google/example/library/v1:library_example_gapic.yaml",
-    package = "google.example.library.v1",
     test_deps = [
         "@com_google_googleapis//google/example/library/v1:library_java_grpc",
     ],
@@ -178,5 +175,39 @@ java_gapic_assembly_gradle_pkg(
         "@com_google_googleapis//google/example/library/v1:library_java_grpc",
         "@com_google_googleapis//google/example/library/v1:library_java_proto",
         "@com_google_googleapis//google/example/library/v1:library_proto",
+    ],
+)
+
+# IAMCredentials.
+# Check that the capital name edge case is handled.
+java_gapic_library(
+    name = "credentials_java_gapic",
+    srcs = ["@com_google_googleapis//google/iam/credentials/v1:credentials_proto_with_info"],
+    grpc_service_config = "@com_google_googleapis//google/iam/credentials/v1:iamcredentials_grpc_service_config.json",
+    test_deps = [
+        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_grpc",
+    ],
+    deps = [
+        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_proto",
+    ],
+)
+
+java_gapic_test(
+    name = "credentials_java_gapic_test_suite",
+    test_classes = [
+        # Match google3.
+        "com.google.cloud.iam.credentials.v1.IAMCredentialsClientTest",
+    ],
+    runtime_deps = [":credentials_java_gapic_test"],
+)
+
+# Open Source Packages
+java_gapic_assembly_gradle_pkg(
+    name = "google-cloud-iam-credentials-v1-java",
+    deps = [
+        ":credentials_java_gapic",
+        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_grpc",
+        "@com_google_googleapis//google/iam/credentials/v1:credentials_java_proto",
+        "@com_google_googleapis//google/iam/credentials/v1:credentials_proto",
     ],
 )

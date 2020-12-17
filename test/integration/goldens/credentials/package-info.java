@@ -17,25 +17,20 @@
 /**
  * The interfaces provided are listed below, along with usage samples.
  *
- * <p>======================= LoggingClient =======================
+ * <p>======================= IamCredentialsClient =======================
  *
- * <p>Service Description: Service for ingesting and querying logs.
+ * <p>Service Description: A service account is a special type of Google account that belongs to
+ * your application or a virtual machine (VM), instead of to an individual end user. Your
+ * application assumes the identity of the service account to call Google APIs, so that the users
+ * aren't directly involved.
  *
- * <p>Sample for LoggingClient:
+ * <p>Service account credentials are used to temporarily assume the identity of the service
+ * account. Supported credential types include OAuth 2.0 access tokens, OpenID Connect ID tokens,
+ * self-signed JSON Web Tokens (JWTs), and more.
  *
- * <p>======================= ConfigClient =======================
- *
- * <p>Service Description: Service for configuring sinks used to route log entries.
- *
- * <p>Sample for ConfigClient:
- *
- * <p>======================= MetricsClient =======================
- *
- * <p>Service Description: Service for configuring logs-based metrics.
- *
- * <p>Sample for MetricsClient:
+ * <p>Sample for IamCredentialsClient:
  */
 @Generated("by gapic-generator-java")
-package com.google.cloud.logging.v2;
+package com.google.cloud.iam.credentials.v1;
 
 import javax.annotation.Generated;

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -27,12 +27,12 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.samplecode.SampleCodeJavaFormatter;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class SettingsSampleCodeComposer {
@@ -42,7 +42,12 @@ public final class SettingsSampleCodeComposer {
   private static final String STUB = "Stub";
   private static final String EMPTY_STRING = "";
 
-  public static String composeSettingClassHeaderSampleCode(Method method, TypeNode classType) {
+  public static Optional<String> composeSampleCode(Optional<Method> methodOpt, TypeNode classType) {
+    if (!methodOpt.isPresent()) {
+      return Optional.empty();
+    }
+
+    Method method = methodOpt.get();
     // Initialize services settingsBuilder with newBuilder()
     // e.g. FoobarSettings.Builder foobarSettingsBuilder = FoobarSettings.newBuilder();
     String className = classType.reference().name();
@@ -121,7 +126,7 @@ public final class SettingsSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(classType)
-                .setName(getServiceSettingsName(className))
+                .setName(JavaStyle.toLowerCamelCase(className).replace("Stub", ""))
                 .build());
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
@@ -139,11 +144,7 @@ public final class SettingsSampleCodeComposer {
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return SampleCodeJavaFormatter.format(writeStatements(statements));
-  }
-
-  private static String getServiceSettingsName(String className) {
-    return JavaStyle.toLowerCamelCase(className).replace(STUB, EMPTY_STRING);
+    return Optional.of(SampleCodeJavaFormatter.format(writeStatements(statements)));
   }
 
   private static String getClassSettingsBuilderName(String className) {
