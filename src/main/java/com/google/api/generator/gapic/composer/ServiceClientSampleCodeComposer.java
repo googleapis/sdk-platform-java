@@ -290,7 +290,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
-  public static String composeRpcLroCallableMethodHeaderSampleCode(
+  public static String composeLroCallableMethodHeaderSampleCode(
       Method method,
       TypeNode clientType,
       Map<String, ResourceName> resourceNames,
@@ -310,12 +310,15 @@ public class ServiceClientSampleCodeComposer {
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
-    List<Expr> bodyExprs = new ArrayList<>();
-    bodyExprs.add(
+    AssignmentExpr requestAssignmentExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(requestBuilderExpr)
-            .build());
+            .build();
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(requestAssignmentExpr);
+
     TypeNode operationFutureType =
         TypeNode.withReference(
             ConcreteReference.builder()

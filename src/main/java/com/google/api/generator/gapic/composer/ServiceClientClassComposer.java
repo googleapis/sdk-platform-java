@@ -692,7 +692,8 @@ public class ServiceClientClassComposer {
 
   private static MethodDefinition createCallableMethod(
       Service service, Method method, Map<String, TypeNode> types) {
-    // TODO(summerji): Implement sample code for callable method and pass in actual map of Messages and ResourceNames
+    // TODO(summerji): Implement sample code for callable method and pass in actual map of Messages
+    // and ResourceNames
     return createCallableMethod(
         service,
         method,
@@ -704,7 +705,8 @@ public class ServiceClientClassComposer {
 
   private static MethodDefinition createPagedCallableMethod(
       Service service, Method method, Map<String, TypeNode> types) {
-    // TODO(summerji): Implement sample code for paged callable method and pass in actual map of Messages and ResourceNames
+    // TODO(summerji): Implement sample code for paged callable method and pass in actual map of
+    // Messages and ResourceNames
     return createCallableMethod(
         service,
         method,
@@ -768,8 +770,11 @@ public class ServiceClientClassComposer {
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCode =
           Optional.of(
-              ServiceClientSampleCodeComposer.composeRpcLroCallableMethodHeaderSampleCode(
-                  method, types.get(getClientClassName(service)), resourceNames, messageTypes));
+              ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  method,
+                  types.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
     }
 
     return MethodDefinition.builder()
