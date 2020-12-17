@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.api.generator.engine.ast.AssignmentExpr;
@@ -389,6 +390,121 @@ public class ServiceClientSampleCodeComposer {
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyExprs.clear();
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
+  public static String composePagedCallableMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // Assign method's request variable with the default value.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(requestMessage);
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    AssignmentExpr requestAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build();
+
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(requestAssignmentExpr);
+
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Preconditions.checkNotNull(
+        repeatedPagedResultsField,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+
+    // Create ApiFuture Variable Expression with assign value by invoking client paged callable
+    // method.
+    // e.g. ApiFuture<ListExclusionsPagedResponse> future =
+    //          configServiceV2Client.listExclusionsPagedCallable().futureCall(request);
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(repeatedResponseType.reference())
+                .build());
+    VariableExpr apiFutureVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("future").setType(apiFutureType).build());
+    MethodInvocationExpr pagedCallableFutureMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(
+                String.format("%sPagedCallable", JavaStyle.toLowerCamelCase(method.name())))
+            .build();
+    pagedCallableFutureMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedCallableFutureMethodExpr)
+            .setMethodName("futureCall")
+            .setArguments(requestVarExpr)
+            .setReturnType(apiFutureType)
+            .build();
+    AssignmentExpr apiFutureAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(pagedCallableFutureMethodExpr)
+            .build();
+    bodyExprs.add(apiFutureAssignmentExpr);
+
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+    bodyExprs.clear();
+
+    // Add line comment
+    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
+
+    // For-loop on repeated response element
+    // e.g. for (ListExclusionsResponse element : future.get().iterateAll()) {
+    //        // doThingsWith(element);
+    //      }
+    VariableExpr repeatedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("element").setType(repeatedResponseType).build());
+    MethodInvocationExpr futureGetIterateAllMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiFutureVarExpr)
+            .setMethodName("get")
+            .build();
+    futureGetIterateAllMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(futureGetIterateAllMethodExpr)
+            .setMethodName("iterateAll")
+            .setReturnType(repeatedResponseType)
+            .build();
+    CommentStatement lineCommentStatement =
+        CommentStatement.withComment(LineComment.withComment("doThingsWith(element);"));
+    ForStatement repeatedResponseForStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(repeatedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(futureGetIterateAllMethodExpr)
+            .setBody(Arrays.asList(lineCommentStatement))
+            .build();
+    bodyStatements.add(repeatedResponseForStatement);
 
     return SampleCodeWriter.write(
         TryCatchStatement.builder()

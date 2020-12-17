@@ -405,7 +405,24 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   ListUsersRequest request =
+   *       ListUsersRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<User> future = identityClient.listUsersPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (User element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<ListUsersRequest, ListUsersPagedResponse> listUsersPagedCallable() {
     return stub.listUsersPagedCallable();
   }
