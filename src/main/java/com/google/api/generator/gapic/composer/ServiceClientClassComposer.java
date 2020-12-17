@@ -692,8 +692,9 @@ public class ServiceClientClassComposer {
 
   private static MethodDefinition createCallableMethod(
       Service service, Method method, Map<String, TypeNode> types) {
-    // TODO(summerji): Implement sample code for callable method and pass in actual map of Messages
-    // and ResourceNames
+    // TODO(summerji): Implement sample code for callable methods which include stream methods and
+    // unary methods,
+    //  and pass in actual map of Messages and ResourceNames
     return createCallableMethod(
         service,
         method,
