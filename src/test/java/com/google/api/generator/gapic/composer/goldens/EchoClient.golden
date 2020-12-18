@@ -512,7 +512,7 @@ public class EchoClient implements BackgroundResource {
    *   WaitRequest request = WaitRequest.newBuilder().build();
    *   OperationFuture<WaitResponse, WaitMetadata> future =
    *       echoClient.waitOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   WaitResponse response = future.get();
    * }
    * }</pre>

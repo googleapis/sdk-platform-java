@@ -214,7 +214,7 @@ public class AssetServiceClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<ExportAssetsResponse, ExportAssetsRequest> future =
    *       assetServiceClient.exportAssetsOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   ExportAssetsResponse response = future.get();
    * }
    * }</pre>

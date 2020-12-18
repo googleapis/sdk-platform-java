@@ -1448,7 +1448,7 @@ public class ServiceClientSampleCodeComposerTest {
             "  WaitRequest request = WaitRequest.newBuilder().build();\n",
             "  OperationFuture<WaitResponse, WaitMetadata> future =\n",
             "      echoClient.waitOperationCallable().futureCall(request);\n",
-            "  // Do something;\n",
+            "  // Do something.\n",
             "  WaitResponse response = future.get();\n",
             "}");
     assertEquals(results, expected);
@@ -1500,7 +1500,7 @@ public class ServiceClientSampleCodeComposerTest {
             "  WaitRequest request = WaitRequest.newBuilder().build();\n",
             "  OperationFuture<Empty, WaitMetadata> future =\n",
             "      echoClient.waitOperationCallable().futureCall(request);\n",
-            "  // Do something;\n",
+            "  // Do something.\n",
             "  future.get();\n",
             "}");
     assertEquals(results, expected);

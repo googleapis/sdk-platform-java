@@ -572,7 +572,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.createInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -683,7 +683,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -804,7 +804,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -909,7 +909,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.importInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -1017,7 +1017,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -1148,7 +1148,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Instance, OperationMetadata> future =
    *       cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   Instance response = future.get();
    * }
    * }</pre>
@@ -1254,7 +1254,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   OperationFuture<Empty, OperationMetadata> future =
    *       cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
-   *   // Do something;
+   *   // Do something.
    *   future.get();
    * }
    * }</pre>

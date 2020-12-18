@@ -319,7 +319,7 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
 
-    // Create OperationFuture variable expr with invoking client's lro callable method.
+    // Create OperationFuture variable expr with invoking client's LRO callable method.
     // e.g. OperationFuture<Empty, WaitMetadata> future =
     //          echoClient.waitOperationCallable().futureCall(request);
     TypeNode operationFutureType =
@@ -356,9 +356,9 @@ public class ServiceClientSampleCodeComposer {
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
     bodyExprs.clear();
     // Add a line comment
-    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something;")));
+    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
 
-    // Assign response variable with invoking client's lro method.
+    // Assign response variable with invoking client's LRO method.
     // e.g. if return void, future.get(); or,
     // e.g. if return other type, WaitResponse response = future.get();
     MethodInvocationExpr futureGetMethodExpr =
@@ -494,7 +494,7 @@ public class ServiceClientSampleCodeComposer {
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
       List<Expr> bodyExprs) {
-    // Assign response variable with invoking client's lro method.
+    // Assign response variable with invoking client's LRO method.
     // e.g. if return void, echoClient.waitAsync(ttl).get(); or,
     // e.g. if return other type, WaitResponse response = echoClient.waitAsync(ttl).get();
     Expr invokeLroGetMethodExpr =
