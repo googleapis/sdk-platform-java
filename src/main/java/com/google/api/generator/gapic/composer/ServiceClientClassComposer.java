@@ -801,9 +801,12 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     List<VariableExpr> arguments =
         Arrays.asList(
-            VariableExpr.builder().setVariable(createVariable("duration", TypeNode.LONG)).build(),
             VariableExpr.builder()
-                .setVariable(createVariable("unit", typeStore.get("TimeUnit")))
+                .setVariable(Variable.builder().setName("duration").setType(TypeNode.LONG).build())
+                .build(),
+            VariableExpr.builder()
+                .setVariable(
+                    Variable.builder().setName("unit").setType(typeStore.get("TimeUnit")).build())
                 .build());
 
     MethodDefinition awaitTerminationMethod =
@@ -1454,10 +1457,6 @@ public class ServiceClientClassComposer implements ClassComposer {
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
-  }
-
-  private static Variable createVariable(String name, TypeNode type) {
-    return Variable.builder().setName(name).setType(type).build();
   }
 
   private static List<Reference> getGenericsForCallable(
