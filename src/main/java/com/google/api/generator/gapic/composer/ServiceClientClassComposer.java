@@ -78,6 +78,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
 import com.google.rpc.Status;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -519,7 +520,8 @@ public class ServiceClientClassComposer {
                 resourceNames));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroCallableMethod(service, method, typeStore));
+        javaMethods.add(
+            createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames));
       }
       if (method.isPaged()) {
         javaMethods.add(createPagedCallableMethod(service, method, typeStore));
@@ -699,22 +701,49 @@ public class ServiceClientClassComposer {
   }
 
   private static MethodDefinition createLroCallableMethod(
-      Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.LRO);
+      Service service,
+      Method method,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
+    return createCallableMethod(
+        service, method, CallableMethodKind.LRO, typeStore, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createCallableMethod(
       Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.REGULAR);
+    // TODO(summerji): Implement sample code for callable methods which include stream methods and
+    // unary methods,
+    //  and pass in actual map of Messages and ResourceNames
+    return createCallableMethod(
+        service,
+        method,
+        CallableMethodKind.REGULAR,
+        typeStore,
+        Collections.emptyMap(),
+        Collections.emptyMap());
   }
 
   private static MethodDefinition createPagedCallableMethod(
       Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.PAGED);
+    // TODO(summerji): Implement sample code for paged callable method and pass in actual map of
+    // Messages and ResourceNames
+    return createCallableMethod(
+        service,
+        method,
+        CallableMethodKind.PAGED,
+        typeStore,
+        Collections.emptyMap(),
+        Collections.emptyMap());
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service, Method method, TypeStore typeStore, CallableMethodKind callableMethodKind) {
+      Service service,
+      Method method,
+      CallableMethodKind callableMethodKind,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     TypeNode rawCallableReturnType = null;
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       rawCallableReturnType = typeStore.get("OperationCallable");
@@ -756,9 +785,22 @@ public class ServiceClientClassComposer {
             .setReturnType(returnType)
             .build();
 
+    Optional<String> sampleCode = Optional.empty();
+    // TODO (summerji): Implement sample code for CallableMethodKind.PAGED and
+    // CallableMethodKind.REGULAR
+    if (callableMethodKind.equals(CallableMethodKind.LRO)) {
+      sampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  method,
+                  typeStore.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
+    }
+
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method))
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method, sampleCode))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)
