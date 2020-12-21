@@ -764,8 +764,7 @@ public class ServiceClientClassComposer {
             .build();
 
     Optional<String> sampleCode = Optional.empty();
-    // TODO (summerji): Implement sample code for CallableMethodKind.PAGED and
-    // CallableMethodKind.REGULAR
+    // TODO (summerji): Implement sample code for CallableMethodKind.REGULAR
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCode =
           Optional.of(
