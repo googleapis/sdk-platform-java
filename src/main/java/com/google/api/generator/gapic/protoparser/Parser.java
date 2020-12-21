@@ -305,7 +305,13 @@ public class Parser {
                   .setOriginalJavaPackage(originalJavaPackage)
                   .setProtoPakkage(fileDescriptor.getPackage())
                   .setMethods(
-                      parseMethods(s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
+                      parseMethods(
+                          s,
+                          pakkage,
+                          messageTypes,
+                          resourceNames,
+                          serviceConfigOpt,
+                          outputArgResourceNames))
                   .build();
             })
         .collect(Collectors.toList());
@@ -433,6 +439,7 @@ public class Parser {
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
+      Optional<GapicServiceConfig> serviceConfigOpt,
       Set<ResourceName> outputArgResourceNames) {
     List<Method> methods = new ArrayList<>();
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
@@ -456,6 +463,15 @@ public class Parser {
           HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =
           httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
+      boolean isBatching =
+          !serviceConfigOpt.isPresent()
+              ? false
+              : serviceConfigOpt
+                  .get()
+                  .hasBatchingSetting(
+                      /* protoPakkage */ protoMethod.getFile().getPackage(),
+                      serviceDescriptor.getName(),
+                      protoMethod.getName());
 
       methods.add(
           methodBuilder
@@ -474,6 +490,7 @@ public class Parser {
                       resourceNames,
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
+              .setIsBatching(isBatching)
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
