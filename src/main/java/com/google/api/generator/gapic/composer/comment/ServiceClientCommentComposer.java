@@ -212,7 +212,8 @@ public class ServiceClientCommentComposer {
     return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
   }
 
-  public static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
+  static List<CommentStatement> createRpcCallableMethodHeaderComment(
+      Method method, Optional<String> sampleCode) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -221,7 +222,9 @@ public class ServiceClientCommentComposer {
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here.
+    if (sampleCode.isPresent()) {
+      methodJavadocBuilder.addSampleCode(sampleCode.get());
+    }
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_METHOD_COMMENT,
