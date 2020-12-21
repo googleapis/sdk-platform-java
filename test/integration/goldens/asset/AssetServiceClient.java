@@ -202,6 +202,22 @@ public class AssetServiceClient implements BackgroundResource {
    * export operation usually finishes within 5 minutes.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ExportAssetsRequest request =
+   *       ExportAssetsRequest.newBuilder()
+   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .setReadTime(Timestamp.newBuilder().build())
+   *           .addAllAssetTypes(new ArrayList<String>())
+   *           .setOutputConfig(OutputConfig.newBuilder().build())
+   *           .build();
+   *   OperationFuture<ExportAssetsResponse, ExportAssetsRequest> future =
+   *       assetServiceClient.exportAssetsOperationCallable().futureCall(request);
+   *   // Do something.
+   *   ExportAssetsResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final OperationCallable<ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
       exportAssetsOperationCallable() {
