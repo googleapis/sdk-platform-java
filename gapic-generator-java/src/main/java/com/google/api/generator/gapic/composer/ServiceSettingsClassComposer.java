@@ -51,6 +51,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -63,7 +64,6 @@ import com.google.longrunning.Operation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -82,7 +82,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
 
   private static final ServiceSettingsClassComposer INSTANCE = new ServiceSettingsClassComposer();
 
-  private static final Map<String, TypeNode> staticTypes = createStaticTypes();
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private ServiceSettingsClassComposer() {}
 
@@ -93,29 +93,30 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   @Override
   public GapicClass generate(Service service, Map<String, Message> ignore) {
     String pakkage = service.pakkage();
-    Map<String, TypeNode> types = createDynamicTypes(service);
+    TypeStore typeStore = createDynamicTypes(service);
     String className = ClassNames.getServiceSettingsClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setHeaderCommentStatements(createClassHeaderComments(service, types.get(className)))
+            .setHeaderCommentStatements(
+                createClassHeaderComments(service, typeStore.get(className)))
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(
                 TypeNode.withReference(
-                    staticTypes
+                    FIXED_TYPESTORE
                         .get("ClientSettings")
                         .reference()
                         .copyAndSetGenerics(
                             Arrays.asList(
-                                types
+                                typeStore
                                     .get(ClassNames.getServiceSettingsClassName(service))
                                     .reference()))))
-            .setMethods(createClassMethods(service, types))
-            .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, types)))
+            .setMethods(createClassMethods(service, typeStore))
+            .setNestedClasses(Arrays.asList(createNestedBuilderClass(service, typeStore)))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -147,49 +148,47 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(staticTypes.get("Generated"))
+            .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
 
-  private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, TypeNode> types) {
+  private static List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(createSettingsGetterMethods(service, types));
-    javaMethods.add(createCreatorMethod(service, types));
-    javaMethods.addAll(createDefaultGetterMethods(service, types));
-    javaMethods.addAll(createBuilderHelperMethods(service, types));
-    javaMethods.add(createConstructorMethod(service, types));
+    javaMethods.addAll(createSettingsGetterMethods(service, typeStore));
+    javaMethods.add(createCreatorMethod(service, typeStore));
+    javaMethods.addAll(createDefaultGetterMethods(service, typeStore));
+    javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
+    javaMethods.add(createConstructorMethod(service, typeStore));
     return javaMethods;
   }
 
-  private static MethodDefinition createConstructorMethod(
-      Service service, Map<String, TypeNode> types) {
+  private static MethodDefinition createConstructorMethod(Service service, TypeStore typeStore) {
     VariableExpr settingsBuilderVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("settingsBuilder")
-                .setType(types.get(BUILDER_CLASS_NAME))
+                .setType(typeStore.get(BUILDER_CLASS_NAME))
                 .build());
-    TypeNode thisClassType = types.get(ClassNames.getServiceSettingsClassName(service));
+    TypeNode thisClassType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PROTECTED)
         .setReturnType(thisClassType)
         .setArguments(Arrays.asList(settingsBuilderVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setBody(
             Arrays.asList(
                 ExprStatement.withExpr(
                     ReferenceConstructorExpr.superBuilder()
-                        .setType(staticTypes.get("ClientSettings"))
+                        .setType(FIXED_TYPESTORE.get("ClientSettings"))
                         .setArguments(settingsBuilderVarExpr)
                         .build())))
         .build();
   }
 
   private static List<MethodDefinition> createSettingsGetterMethods(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
+      Service service, TypeStore typeStore) {
+    TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
@@ -207,7 +206,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                                 .setExpr(
                                     MethodInvocationExpr.builder()
                                         .setMethodName("getStubSettings")
-                                        .setReturnType(staticTypes.get("StubSettings"))
+                                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
                                         .build())
                                 .build())
                         .setMethodName(methodName)
@@ -219,7 +218,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
       javaMethods.add(
           methodMakerFn.apply(
-              getCallSettingsType(protoMethod, types), String.format("%sSettings", javaStyleName)));
+              getCallSettingsType(protoMethod, typeStore),
+              String.format("%sSettings", javaStyleName)));
       if (protoMethod.hasLro()) {
         javaMethods.add(
             methodMakerFn.apply(
@@ -230,14 +230,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createCreatorMethod(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode stubClassType = types.get(ClassNames.getServiceStubSettingsClassName(service));
+  private static MethodDefinition createCreatorMethod(Service service, TypeStore typeStore) {
+    TypeNode stubClassType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("stub").setType(stubClassType).build());
 
-    TypeNode thisClassType = types.get(ClassNames.getServiceSettingsClassName(service));
+    TypeNode thisClassType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
     MethodInvocationExpr stubBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(stubVarExpr)
@@ -269,13 +268,13 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .setReturnType(thisClassType)
         .setName("create")
         .setArguments(Arrays.asList(stubVarExpr.toBuilder().setIsDecl(true).build()))
-        .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setReturnExpr(returnMethodExpr)
         .build();
   }
 
   private static List<MethodDefinition> createDefaultGetterMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     BiFunction<String, TypeNode, MethodDefinition.Builder> methodStarterFn =
         (mName, retType) ->
             MethodDefinition.builder()
@@ -286,7 +285,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setReturnExpr(
                     MethodInvocationExpr.builder()
                         .setStaticReferenceType(
-                            types.get(ClassNames.getServiceStubSettingsClassName(service)))
+                            typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
                         .setMethodName(mName)
                         .setReturnType(retType)
                         .build());
@@ -345,7 +344,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setAnnotations(
                 Arrays.asList(
                     AnnotationNode.builder()
-                        .setType(staticTypes.get("BetaApi"))
+                        .setType(FIXED_TYPESTORE.get("BetaApi"))
                         .setDescription(
                             "The surface for customizing headers is not stable yet and may"
                                 + " change in the future.")
@@ -355,8 +354,8 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createBuilderHelperMethods(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
+      Service service, TypeStore typeStore) {
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition newBuilderMethodOne =
         MethodDefinition.builder()
             .setHeaderCommentStatements(SettingsCommentComposer.NEW_BUILDER_METHOD_COMMENT)
@@ -376,7 +375,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(staticTypes.get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .build());
 
     MethodDefinition newBuilderMethodTwo =
@@ -406,15 +405,14 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     .setArguments(
                         ValueExpr.withValue(
                             ThisObjectValue.withType(
-                                types.get(ClassNames.getServiceSettingsClassName(service)))))
+                                typeStore.get(ClassNames.getServiceSettingsClassName(service)))))
                     .build())
             .build();
 
     return Arrays.asList(newBuilderMethodOne, newBuilderMethodTwo, toBuilderMethod);
   }
 
-  private static ClassDefinition createNestedBuilderClass(
-      Service service, Map<String, TypeNode> types) {
+  private static ClassDefinition createNestedBuilderClass(Service service, TypeStore typeStore) {
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             SettingsCommentComposer.createBuilderClassComment(
@@ -429,33 +427,35 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     .setClazz(ClientSettings.Builder.class)
                     .setGenerics(
                         Arrays.asList(
-                            types.get(ClassNames.getServiceSettingsClassName(service)).reference(),
-                            types.get(BUILDER_CLASS_NAME).reference()))
+                            typeStore
+                                .get(ClassNames.getServiceSettingsClassName(service))
+                                .reference(),
+                            typeStore.get(BUILDER_CLASS_NAME).reference()))
                     .build()))
-        .setMethods(createNestedBuilderClassMethods(service, types))
+        .setMethods(createNestedBuilderClassMethods(service, typeStore))
         .build();
   }
 
   private static List<MethodDefinition> createNestedBuilderClassMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(createNestedBuilderConstructorMethods(service, types));
-    javaMethods.add(createNestedBuilderCreatorMethod(service, types));
-    javaMethods.add(createNestedBuilderStubSettingsBuilderMethod(service, types));
-    javaMethods.add(createNestedBuilderApplyToAllUnaryMethod(service, types));
-    javaMethods.addAll(createNestedBuilderSettingsGetterMethods(service, types));
-    javaMethods.add(createNestedBuilderClassBuildMethod(service, types));
+    javaMethods.addAll(createNestedBuilderConstructorMethods(service, typeStore));
+    javaMethods.add(createNestedBuilderCreatorMethod(service, typeStore));
+    javaMethods.add(createNestedBuilderStubSettingsBuilderMethod(service, typeStore));
+    javaMethods.add(createNestedBuilderApplyToAllUnaryMethod(service, typeStore));
+    javaMethods.addAll(createNestedBuilderSettingsGetterMethods(service, typeStore));
+    javaMethods.add(createNestedBuilderClassBuildMethod(service, typeStore));
     return javaMethods;
   }
 
   private static List<MethodDefinition> createNestedBuilderConstructorMethods(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
+      Service service, TypeStore typeStore) {
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     MethodDefinition noArgCtor =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
             .setReturnType(builderType)
-            .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+            .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(
@@ -463,7 +463,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                             .setType(builderType)
                             .setArguments(
                                 CastExpr.builder()
-                                    .setType(staticTypes.get("ClientContext"))
+                                    .setType(FIXED_TYPESTORE.get("ClientContext"))
                                     .setExpr(ValueExpr.createNullExpr())
                                     .build())
                             .build())))
@@ -479,7 +479,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                     Arrays.asList(
                         ExprStatement.withExpr(
                             ReferenceConstructorExpr.superBuilder()
-                                .setType(staticTypes.get("ClientSettings"))
+                                .setType(FIXED_TYPESTORE.get("ClientSettings"))
                                 .setArguments(superArg)
                                 .build())))
                 .build();
@@ -488,14 +488,14 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("clientContext")
-                .setType(staticTypes.get("ClientContext"))
+                .setType(FIXED_TYPESTORE.get("ClientContext"))
                 .build());
     MethodDefinition clientContextCtor =
         ctorMakerFn.apply(
             clientContextVarExpr,
             MethodInvocationExpr.builder()
                 .setStaticReferenceType(
-                    types.get(ClassNames.getServiceStubSettingsClassName(service)))
+                    typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
                 .setMethodName("newBuilder")
                 .setArguments(Arrays.asList(clientContextVarExpr))
                 .build());
@@ -504,7 +504,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setName("settings")
-                .setType(types.get(ClassNames.getServiceSettingsClassName(service)))
+                .setType(typeStore.get(ClassNames.getServiceSettingsClassName(service)))
                 .build());
     MethodInvocationExpr settingsBuilderMethodExpr =
         MethodInvocationExpr.builder()
@@ -528,14 +528,15 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createNestedBuilderCreatorMethod(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     MethodInvocationExpr ctorArg =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get(ClassNames.getServiceStubSettingsClassName(service)))
+            .setStaticReferenceType(
+                typeStore.get(ClassNames.getServiceStubSettingsClassName(service)))
             .setMethodName("newBuilder")
             .build();
 
-    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     return MethodDefinition.builder()
         .setScope(ScopeNode.PRIVATE)
         .setIsStatic(true)
@@ -546,7 +547,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createNestedBuilderStubSettingsBuilderMethod(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     TypeNode retType = getStubSettingsBuilderType(service);
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
@@ -558,15 +559,15 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setExpr(
                     MethodInvocationExpr.builder()
                         .setMethodName("getStubSettings")
-                        .setReturnType(staticTypes.get("StubSettings"))
+                        .setReturnType(FIXED_TYPESTORE.get("StubSettings"))
                         .build())
                 .build())
         .build();
   }
 
   private static MethodDefinition createNestedBuilderApplyToAllUnaryMethod(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
+      Service service, TypeStore typeStore) {
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
     String javaMethodName = "applyToAllUnaryMethods";
 
     TypeNode unaryCallSettingsType =
@@ -582,7 +583,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
                 .setName("settingsUpdater")
                 .setType(
                     TypeNode.withReference(
-                        staticTypes
+                        FIXED_TYPESTORE
                             .get("ApiFunction")
                             .reference()
                             .copyAndSetGenerics(
@@ -625,7 +626,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createNestedBuilderSettingsGetterMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     BiFunction<TypeNode, String, MethodDefinition> methodMakerFn =
         (retType, methodName) ->
             MethodDefinition.builder()
@@ -650,7 +651,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
       String javaStyleName = JavaStyle.toLowerCamelCase(protoMethod.name());
       javaMethods.add(
           methodMakerFn.apply(
-              getCallSettingsBuilderType(protoMethod, types),
+              getCallSettingsBuilderType(protoMethod, typeStore),
               String.format("%sSettings", javaStyleName)));
       if (protoMethod.hasLro()) {
         javaMethods.add(
@@ -663,15 +664,15 @@ public class ServiceSettingsClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createNestedBuilderClassBuildMethod(
-      Service service, Map<String, TypeNode> types) {
-    TypeNode builderType = types.get(BUILDER_CLASS_NAME);
-    TypeNode returnType = types.get(ClassNames.getServiceSettingsClassName(service));
+      Service service, TypeStore typeStore) {
+    TypeNode builderType = typeStore.get(BUILDER_CLASS_NAME);
+    TypeNode returnType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
     return MethodDefinition.builder()
         .setIsOverride(true)
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName("build")
-        .setThrowsExceptions(Arrays.asList(staticTypes.get("IOException")))
+        .setThrowsExceptions(Arrays.asList(FIXED_TYPESTORE.get("IOException")))
         .setReturnExpr(
             NewObjectExpr.builder()
                 .setType(returnType)
@@ -680,7 +681,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         .build();
   }
 
-  private static Map<String, TypeNode> createStaticTypes() {
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ApiClientHeaderProvider.class,
@@ -701,61 +702,37 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             StubSettings.class,
             TransportChannelProvider.class,
             UnaryCallSettings.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    return new TypeStore(concreteClazzes);
   }
 
-  private static Map<String, TypeNode> createDynamicTypes(Service service) {
-    Map<String, TypeNode> types = new HashMap<>();
+  private static TypeStore createDynamicTypes(Service service) {
+    TypeStore typeStore = new TypeStore();
 
     // ServiceStubSettings class.
-    String stubSettingsClassName = ClassNames.getServiceStubSettingsClassName(service);
-    types.put(
-        stubSettingsClassName,
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(stubSettingsClassName)
-                .setPakkage(String.format("%s.stub", service.pakkage()))
-                .build()));
+    typeStore.put(
+        String.format("%s.stub", service.pakkage()),
+        ClassNames.getServiceStubSettingsClassName(service));
+
     // This class.
-    types.put(
-        ClassNames.getServiceSettingsClassName(service),
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(ClassNames.getServiceSettingsClassName(service))
-                .setPakkage(service.pakkage())
-                .build()));
+    typeStore.put(service.pakkage(), ClassNames.getServiceSettingsClassName(service));
+
     // Nested Builder class.
-    types.put(
+    typeStore.put(
+        service.pakkage(),
         BUILDER_CLASS_NAME,
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(BUILDER_CLASS_NAME)
-                .setEnclosingClassNames(ClassNames.getServiceSettingsClassName(service))
-                .setPakkage(service.pakkage())
-                .setIsStaticImport(true)
-                .build()));
+        true,
+        ClassNames.getServiceSettingsClassName(service));
 
     // Pagination types.
-    types.putAll(
+    typeStore.putAll(
+        service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .collect(
-                Collectors.toMap(
-                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
-                    m ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
-                                .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(
-                                    ClassNames.getServiceClientClassName(service))
-                                .setIsStaticImport(true)
-                                .build()))));
-    return types;
+            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .collect(Collectors.toList()),
+        true,
+        ClassNames.getServiceClientClassName(service));
+    return typeStore;
   }
 
   private static TypeNode getOperationCallSettingsType(Method protoMethod) {
@@ -784,17 +761,16 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .build());
   }
 
-  private static TypeNode getCallSettingsType(Method protoMethod, Map<String, TypeNode> types) {
-    return getCallSettingsTypeHelper(protoMethod, types, false);
+  private static TypeNode getCallSettingsType(Method protoMethod, TypeStore typeStore) {
+    return getCallSettingsTypeHelper(protoMethod, typeStore, false);
   }
 
-  private static TypeNode getCallSettingsBuilderType(
-      Method protoMethod, Map<String, TypeNode> types) {
-    return getCallSettingsTypeHelper(protoMethod, types, true);
+  private static TypeNode getCallSettingsBuilderType(Method protoMethod, TypeStore typeStore) {
+    return getCallSettingsTypeHelper(protoMethod, typeStore, true);
   }
 
   private static TypeNode getCallSettingsTypeHelper(
-      Method protoMethod, Map<String, TypeNode> types, boolean isBuilder) {
+      Method protoMethod, TypeStore typeStore, boolean isBuilder) {
     Class callSettingsClazz = isBuilder ? UnaryCallSettings.Builder.class : UnaryCallSettings.class;
     if (protoMethod.isPaged()) {
       callSettingsClazz = isBuilder ? PagedCallSettings.Builder.class : PagedCallSettings.class;
@@ -827,7 +803,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
     generics.add(protoMethod.outputType().reference());
     if (protoMethod.isPaged()) {
       generics.add(
-          types
+          typeStore
               .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, protoMethod.name()))
               .reference());
     }

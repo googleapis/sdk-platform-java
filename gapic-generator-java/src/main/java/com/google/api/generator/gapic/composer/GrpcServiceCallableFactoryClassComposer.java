@@ -31,14 +31,13 @@ import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -65,7 +64,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(Service service, Map<String, Message> ignore) {
-    Map<String, TypeNode> types = createTypes(service);
+    TypeStore typeStore = createTypes(service);
     String className = ClassNames.getGrpcServiceCallableFactoryClassName(service);
     GapicClass.Kind kind = Kind.STUB;
     String pakkage = String.format("%s.stub", service.pakkage());
@@ -76,45 +75,45 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 StubCommentComposer.createGrpcServiceCallableFactoryClassHeaderComments(
                     service.name()))
-            .setAnnotations(createClassAnnotations(types))
-            .setImplementsTypes(createClassImplements(types))
+            .setAnnotations(createClassAnnotations(typeStore))
+            .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
-            .setMethods(createClassMethods(types))
+            .setMethods(createClassMethods(typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
+  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(types.get("Generated"))
+            .setType(typeStore.get("Generated"))
             .setDescription("by gapic-generator")
             .build());
   }
 
-  private static List<TypeNode> createClassImplements(Map<String, TypeNode> types) {
-    return Arrays.asList(types.get("GrpcStubCallableFactory"));
+  private static List<TypeNode> createClassImplements(TypeStore typeStore) {
+    return Arrays.asList(typeStore.get("GrpcStubCallableFactory"));
   }
 
-  private static List<MethodDefinition> createClassMethods(Map<String, TypeNode> types) {
+  private static List<MethodDefinition> createClassMethods(TypeStore typeStore) {
     return Arrays.asList(
-        createUnaryCallableMethod(types),
-        createPagedCallableMethod(types),
-        createBatchingCallableMethod(types),
-        createOperationCallableMethod(types),
-        createBidiStreamingCallableMethod(types),
-        createServerStreamingCallableMethod(types),
-        createClientStreamingCallableMethod(types));
+        createUnaryCallableMethod(typeStore),
+        createPagedCallableMethod(typeStore),
+        createBatchingCallableMethod(typeStore),
+        createOperationCallableMethod(typeStore),
+        createBidiStreamingCallableMethod(typeStore),
+        createServerStreamingCallableMethod(typeStore),
+        createClientStreamingCallableMethod(typeStore));
   }
 
-  private static MethodDefinition createUnaryCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createUnaryCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Unary";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
@@ -128,7 +127,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createPagedCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createPagedCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Paged";
     String requestTemplateName = "RequestT";
     String pagedResponseTemplateName = "PagedListResponseT";
@@ -136,7 +135,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, pagedResponseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ "Unary",
         /*returnCallableTemplateNames=*/ Arrays.asList(
@@ -150,13 +149,13 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createBatchingCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createBatchingCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Batching";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ "Unary",
         /*returnCallableTemplateNames=*/ methodTemplateNames,
@@ -170,33 +169,33 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createOperationCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createOperationCallableMethod(TypeStore typeStore) {
     String methodVariantName = "Operation";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, "MetadataT");
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
         /*methodVariantName=*/ methodVariantName,
         /*grpcCallSettingsTemplateObjects=*/ Arrays.asList(
-            requestTemplateName, types.get("Operation")),
+            requestTemplateName, typeStore.get("Operation")),
         /*callSettingsVariantName=*/ methodVariantName,
         /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
             .map(n -> (Object) n)
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createBidiStreamingCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createBidiStreamingCallableMethod(TypeStore typeStore) {
     String methodVariantName = "BidiStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
@@ -210,13 +209,13 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createServerStreamingCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createServerStreamingCallableMethod(TypeStore typeStore) {
     String methodVariantName = "ServerStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
@@ -230,13 +229,13 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .collect(Collectors.toList()));
   }
 
-  private static MethodDefinition createClientStreamingCallableMethod(Map<String, TypeNode> types) {
+  private static MethodDefinition createClientStreamingCallableMethod(TypeStore typeStore) {
     String methodVariantName = "ClientStreaming";
     String requestTemplateName = "RequestT";
     String responseTemplateName = "ResponseT";
     List<String> methodTemplateNames = Arrays.asList(requestTemplateName, responseTemplateName);
     return createGenericCallableMethod(
-        types,
+        typeStore,
         /*methodTemplateNames=*/ methodTemplateNames,
         /*returnCallableKindName=*/ methodVariantName,
         /*returnCallableTemplateNames=*/ methodTemplateNames,
@@ -251,7 +250,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createGenericCallableMethod(
-      Map<String, TypeNode> types,
+      TypeStore typeStore,
       List<String> methodTemplateNames,
       String returnCallableKindName,
       List<String> returnCallableTemplateNames,
@@ -272,7 +271,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setVariable(
                 Variable.builder()
                     .setName("grpcCallSettings")
-                    .setType(types.get(grpcCallSettingsTypeName))
+                    .setType(typeStore.get(grpcCallSettingsTypeName))
                     .build())
             .setIsDecl(true)
             .setTemplateObjects(grpcCallSettingsTemplateObjects)
@@ -282,7 +281,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setVariable(
                 Variable.builder()
                     .setName("callSettings")
-                    .setType(types.get(callSettingsTypeName))
+                    .setType(typeStore.get(callSettingsTypeName))
                     .build())
             .setIsDecl(true)
             .setTemplateObjects(callSettingsTemplateObjects)
@@ -292,7 +291,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setVariable(
                 Variable.builder()
                     .setName("clientContext")
-                    .setType(types.get("ClientContext"))
+                    .setType(typeStore.get("ClientContext"))
                     .build())
             .setIsDecl(true)
             .build());
@@ -302,18 +301,18 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
               .setVariable(
                   Variable.builder()
                       .setName("operationsStub")
-                      .setType(types.get("OperationsStub"))
+                      .setType(typeStore.get("OperationsStub"))
                       .build())
               .setIsDecl(true)
               .build());
     }
 
     String grpcCallableFactoryTypeName = "GrpcCallableFactory";
-    TypeNode grpcCallableFactoryType = types.get(grpcCallableFactoryTypeName);
+    TypeNode grpcCallableFactoryType = typeStore.get(grpcCallableFactoryTypeName);
     Preconditions.checkNotNull(
         grpcCallableFactoryType, String.format("Type %s not found", grpcCallableFactoryTypeName));
 
-    TypeNode returnType = types.get(returnTypeName);
+    TypeNode returnType = typeStore.get(returnTypeName);
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setMethodName(methodName)
@@ -337,7 +336,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
         .build();
   }
 
-  private static Map<String, TypeNode> createTypes(Service service) {
+  private static TypeStore createTypes(Service service) {
     List<Class> concreteClazzes =
         Arrays.asList(
             // Gax-java classes.
@@ -360,21 +359,8 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             Generated.class,
             Operation.class,
             UnsupportedOperationException.class);
-    Map<String, TypeNode> types =
-        concreteClazzes.stream()
-            .collect(
-                Collectors.toMap(
-                    c -> c.getSimpleName(),
-                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
-
-    // Vapor dependency types.
-    types.put(
-        "OperationsStub",
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("OperationsStub")
-                .setPakkage("com.google.longrunning.stub")
-                .build()));
-    return types;
+    TypeStore typeStore = new TypeStore(concreteClazzes);
+    typeStore.put("com.google.longrunning.stub", "OperationsStub");
+    return typeStore;
   }
 }
