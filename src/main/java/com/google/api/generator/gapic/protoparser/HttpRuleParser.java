@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HttpRuleParser {
   private static final String ASTERISK = "*";
@@ -115,7 +116,10 @@ public class HttpRuleParser {
     }
 
     PathTemplate template = PathTemplate.create(pattern);
-    Set<String> bindings = new HashSet<String>(template.vars());
+    Set<String> bindings =
+        new HashSet<String>(
+            // Filter out any unbound variable like "$0, $1, etc.
+            template.vars().stream().filter(s -> !s.contains("$")).collect(Collectors.toList()));
     return bindings;
   }
 
