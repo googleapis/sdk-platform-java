@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import java.util.Arrays;
 import java.util.List;
 
-class StubCommentComposer {
+public class StubCommentComposer {
   private static final String STUB_CLASS_HEADER_SUMMARY_PATTERN =
       "Base stub class for the %s service API.";
   private static final String GRPC_CALLABLE_FACTORY_CLASS_HEADER_SUMMARY_PATTERN =
@@ -31,7 +31,8 @@ class StubCommentComposer {
   private static final String ADVANCED_USAGE_API_REFLECTION_DESCRIPTION =
       "This class is for advanced usage and reflects the underlying API directly.";
 
-  static List<CommentStatement> createGrpcServiceStubClassHeaderComments(String serviceName) {
+  public static List<CommentStatement> createGrpcServiceStubClassHeaderComments(
+      String serviceName) {
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(
@@ -41,7 +42,7 @@ class StubCommentComposer {
                 .build()));
   }
 
-  static List<CommentStatement> createGrpcServiceCallableFactoryClassHeaderComments(
+  public static List<CommentStatement> createGrpcServiceCallableFactoryClassHeaderComments(
       String serviceName) {
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
@@ -53,7 +54,7 @@ class StubCommentComposer {
                 .build()));
   }
 
-  static List<CommentStatement> createServiceStubClassHeaderComments(String serviceName) {
+  public static List<CommentStatement> createServiceStubClassHeaderComments(String serviceName) {
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_CLASS_COMMENT,
         CommentStatement.withComment(

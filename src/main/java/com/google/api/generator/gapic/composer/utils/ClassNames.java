@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.utils;
 
 import com.google.api.generator.gapic.model.Service;
 
@@ -30,48 +30,48 @@ public class ClassNames {
   private static final String GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN =
       "Grpc%sCallableFactory";
 
-  protected static String getServiceClientClassName(Service service) {
+  public static String getServiceClientClassName(Service service) {
     return String.format(
         SERVICE_CLIENT_CLASS_NAME_PATTERN,
         monolithBackwardsCompatibleName(service.overriddenName()));
   }
 
-  protected static String getServiceSettingsClassName(Service service) {
+  public static String getServiceSettingsClassName(Service service) {
     return String.format(
         SERVICE_SETTINGS_CLASS_NAME_PATTERN,
         monolithBackwardsCompatibleName(service.overriddenName()));
   }
 
-  protected static String getServiceStubSettingsClassName(Service service) {
+  public static String getServiceStubSettingsClassName(Service service) {
     return String.format(
         SERVICE_STUB_SETTINGS_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
-  protected static String getServiceStubClassName(Service service) {
+  public static String getServiceStubClassName(Service service) {
     return String.format(
         SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
-  protected static String getGrpcServiceCallableFactoryClassName(Service service) {
+  public static String getGrpcServiceCallableFactoryClassName(Service service) {
     return String.format(
         GRPC_SERVICE_CALLABLE_FACTORY_CLASS_NAME_PATTERN,
         monolithBackwardsCompatibleName(service.name()));
   }
 
-  protected static String getGrpcServiceStubClassName(Service service) {
+  public static String getGrpcServiceStubClassName(Service service) {
     return String.format(
         GRPC_SERVICE_STUB_CLASS_NAME_PATTERN, monolithBackwardsCompatibleName(service.name()));
   }
 
-  protected static String getServiceClientTestClassName(Service service) {
+  public static String getServiceClientTestClassName(Service service) {
     return String.format(SERVICE_CLIENT_TEST_CLASS_NAME_PATTERN, service.overriddenName());
   }
 
-  protected static String getMockServiceClassName(Service service) {
+  public static String getMockServiceClassName(Service service) {
     return String.format(MOCK_SERVICE_CLASS_NAME_PATTERN, service.name());
   }
 
-  protected static String getMockServiceImplClassName(Service service) {
+  public static String getMockServiceImplClassName(Service service) {
     return String.format(MOCK_SERVICE_IMPL_CLASS_NAME_PATTERN, service.name());
   }
 

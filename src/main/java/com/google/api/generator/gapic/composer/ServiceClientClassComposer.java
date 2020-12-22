@@ -54,8 +54,10 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -95,6 +97,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
+
   private static final TypeNode OBJECTS_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Objects.class));
 
