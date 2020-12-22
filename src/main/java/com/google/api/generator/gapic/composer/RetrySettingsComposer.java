@@ -36,6 +36,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicLroRetrySettings;
 import com.google.api.generator.gapic.model.GapicRetrySettings;
@@ -60,7 +61,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class RetrySettingsComposer {
-  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
   private static final TypeNode STATUS_CODE_CODE_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(StatusCode.Code.class));
 
@@ -89,7 +90,7 @@ public class RetrySettingsComposer {
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(STATIC_TYPES.get("RetrySettings"))
+                .setType(FIXED_TYPESTORE.get("RetrySettings"))
                 .setName("settings")
                 .build());
 
@@ -99,7 +100,7 @@ public class RetrySettingsComposer {
             .setVariableExpr(definitionsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
                     .setMethodName("builder")
                     .setReturnType(definitionsVarExpr.type())
                     .build())
@@ -162,7 +163,7 @@ public class RetrySettingsComposer {
             .setVariableExpr(definitionsVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
                     .setMethodName("builder")
                     .setReturnType(definitionsVarExpr.type())
                     .build())
@@ -264,11 +265,11 @@ public class RetrySettingsComposer {
     // Argument for setInitialCallSettings.
     Expr unaryCallSettingsExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("UnaryCallSettings"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("UnaryCallSettings"))
             .setGenerics(
                 Arrays.asList(
                     method.inputType().reference(),
-                    STATIC_TYPES.get("OperationSnapshot").reference()))
+                    FIXED_TYPESTORE.get("OperationSnapshot").reference()))
             .setMethodName("newUnaryCallSettingsBuilder")
             .build();
     unaryCallSettingsExpr =
@@ -353,7 +354,7 @@ public class RetrySettingsComposer {
     Expr lroRetrySettingsExpr = createLroRetrySettingsExpr(service, method, serviceConfig);
     Expr pollAlgoExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("OperationTimedPollAlgorithm"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("OperationTimedPollAlgorithm"))
             .setMethodName("create")
             .setArguments(lroRetrySettingsExpr)
             .build();
@@ -375,7 +376,7 @@ public class RetrySettingsComposer {
 
     Expr batchingSettingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("BatchingSettings"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("BatchingSettings"))
             .setMethodName("newBuilder")
             .build();
 
@@ -404,7 +405,7 @@ public class RetrySettingsComposer {
     // FlowControlSettings.
     Expr flowControlSettingsExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("FlowControlSettings"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("FlowControlSettings"))
             .setMethodName("newBuilder")
             .build();
     if (batchingSettings.flowControlElementLimit() != null) {
@@ -429,7 +430,7 @@ public class RetrySettingsComposer {
             .setMethodName("setLimitExceededBehavior")
             .setArguments(
                 EnumRefExpr.builder()
-                    .setType(STATIC_TYPES.get("LimitExceededBehavior"))
+                    .setType(FIXED_TYPESTORE.get("LimitExceededBehavior"))
                     .setName(
                         JavaStyle.toUpperCamelCase(
                             batchingSettings
@@ -476,7 +477,7 @@ public class RetrySettingsComposer {
     //          ImmutableSet.copYOf(Lists.<StatusCode.Code>newArrayList()));`
     MethodInvocationExpr codeListExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("Lists"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("Lists"))
             .setGenerics(Arrays.asList(STATUS_CODE_CODE_TYPE.reference()))
             .setMethodName("newArrayList")
             .setArguments(
@@ -487,7 +488,7 @@ public class RetrySettingsComposer {
 
     MethodInvocationExpr codeSetExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("ImmutableSet"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableSet"))
             .setMethodName("copyOf")
             .setArguments(codeListExpr)
             .build();
@@ -505,7 +506,7 @@ public class RetrySettingsComposer {
       VariableExpr definitionsVarExpr) {
     Expr settingsBuilderExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("RetrySettings"))
             .setMethodName("newBuilder")
             .build();
 
@@ -597,7 +598,7 @@ public class RetrySettingsComposer {
       Service service, Method method, GapicServiceConfig serviceConfig) {
     Expr lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(STATIC_TYPES.get("RetrySettings"))
+            .setStaticReferenceType(FIXED_TYPESTORE.get("RetrySettings"))
             .setMethodName("newBuilder")
             .build();
 
@@ -639,7 +640,7 @@ public class RetrySettingsComposer {
             .build();
 
     Expr zeroDurationExpr =
-        EnumRefExpr.builder().setType(STATIC_TYPES.get("Duration")).setName("ZERO").build();
+        EnumRefExpr.builder().setType(FIXED_TYPESTORE.get("Duration")).setName("ZERO").build();
     // TODO(miraleung): Add an "// ignored" comment here.
     lroRetrySettingsExpr =
         MethodInvocationExpr.builder()
@@ -710,13 +711,13 @@ public class RetrySettingsComposer {
 
   private static MethodInvocationExpr createDurationOfMillisExpr(ValueExpr valExpr) {
     return MethodInvocationExpr.builder()
-        .setStaticReferenceType(STATIC_TYPES.get("Duration"))
+        .setStaticReferenceType(FIXED_TYPESTORE.get("Duration"))
         .setMethodName("ofMillis")
         .setArguments(valExpr)
         .build();
   }
 
-  private static Map<String, TypeNode> createStaticTypes() {
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             BatchingSettings.class,
@@ -732,10 +733,6 @@ public class RetrySettingsComposer {
             RetrySettings.class,
             StatusCode.class,
             UnaryCallSettings.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    return new TypeStore(concreteClazzes);
   }
 }

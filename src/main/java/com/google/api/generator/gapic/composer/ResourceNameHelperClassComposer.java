@@ -44,9 +44,9 @@ import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -77,7 +77,7 @@ public class ResourceNameHelperClassComposer {
   private static final ResourceNameHelperClassComposer INSTANCE =
       new ResourceNameHelperClassComposer();
 
-  private static final Map<String, TypeNode> STATIC_TYPES = createStaticTypes();
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private static Map<String, VariableExpr> FIXED_CLASS_VARS = createFixedClassMemberVariables();
 
@@ -90,7 +90,7 @@ public class ResourceNameHelperClassComposer {
   public GapicClass generate(ResourceName resourceName) {
     List<List<String>> tokenHierarchies =
         ResourceNameTokenizer.parseTokenHierarchy(resourceName.patterns());
-    Map<String, TypeNode> types = createDynamicTypes(resourceName, tokenHierarchies);
+    TypeStore typeStore = createDynamicTypes(resourceName, tokenHierarchies);
     List<VariableExpr> templateFinalVarExprs = createTemplateClassMembers(tokenHierarchies);
     Map<String, VariableExpr> patternTokenVarExprs =
         createPatternTokenClassMembers(tokenHierarchies);
@@ -129,10 +129,10 @@ public class ResourceNameHelperClassComposer {
                     templateFinalVarExprs,
                     patternTokenVarExprs,
                     tokenHierarchies,
-                    types))
+                    typeStore))
             .setNestedClasses(
                 createNestedBuilderClasses(
-                    resourceName, tokenHierarchies, templateFinalVarExprs, types))
+                    resourceName, tokenHierarchies, templateFinalVarExprs, typeStore))
             .build();
     return GapicClass.create(GapicClass.Kind.PROTO, classDef);
   }
@@ -140,13 +140,13 @@ public class ResourceNameHelperClassComposer {
   private static List<AnnotationNode> createClassAnnotations() {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("Generated"))
+            .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
 
   private static List<TypeNode> createImplementsTypes() {
-    return Arrays.asList(STATIC_TYPES.get("ResourceName"));
+    return Arrays.asList(FIXED_TYPESTORE.get("ResourceName"));
   }
 
   private static List<VariableExpr> createTemplateClassMembers(
@@ -157,7 +157,7 @@ public class ResourceNameHelperClassComposer {
                 VariableExpr.withVariable(
                     Variable.builder()
                         .setName(concatToUpperSnakeCaseName(ts))
-                        .setType(STATIC_TYPES.get("PathTemplate"))
+                        .setType(FIXED_TYPESTORE.get("PathTemplate"))
                         .build()))
         .collect(Collectors.toList());
   }
@@ -200,11 +200,11 @@ public class ResourceNameHelperClassComposer {
               .build();
       Expr createWithoutUrlEncodingExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(STATIC_TYPES.get("PathTemplate"))
+              .setStaticReferenceType(FIXED_TYPESTORE.get("PathTemplate"))
               .setMethodName("createWithoutUrlEncoding")
               .setArguments(
                   Arrays.asList(ValueExpr.withValue(StringObjectValue.withValue(patterns.get(i)))))
-              .setReturnType(STATIC_TYPES.get("PathTemplate"))
+              .setReturnType(FIXED_TYPESTORE.get("PathTemplate"))
               .build();
       memberVars.add(
           AssignmentExpr.builder()
@@ -246,32 +246,38 @@ public class ResourceNameHelperClassComposer {
       List<VariableExpr> templateFinalVarExprs,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     // TODO(summerji): Add equals and hashCode overrides.
     List<MethodDefinition> javaMethods = new ArrayList<>();
 
     javaMethods.addAll(
         createConstructorMethods(
-            resourceName, templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies, types));
+            resourceName,
+            templateFinalVarExprs,
+            patternTokenVarExprs,
+            tokenHierarchies,
+            typeStore));
 
     javaMethods.addAll(createTokenGetterMethods(patternTokenVarExprs, tokenHierarchies));
 
-    javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, types));
+    javaMethods.addAll(createBuilderCreatorMethods(resourceName, tokenHierarchies, typeStore));
     javaMethods.addAll(
-        createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+        createOfCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, typeStore));
 
     javaMethods.addAll(
-        createFormatCreatorMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+        createFormatCreatorMethods(
+            resourceName, patternTokenVarExprs, tokenHierarchies, typeStore));
 
     javaMethods.addAll(
         createParsingAndSplittingMethods(
-            resourceName, templateFinalVarExprs, tokenHierarchies, types));
+            resourceName, templateFinalVarExprs, tokenHierarchies, typeStore));
 
     javaMethods.addAll(
-        createFieldValueGetterMethods(resourceName, patternTokenVarExprs, tokenHierarchies, types));
+        createFieldValueGetterMethods(
+            resourceName, patternTokenVarExprs, tokenHierarchies, typeStore));
     javaMethods.add(
         createToStringMethod(templateFinalVarExprs, patternTokenVarExprs, tokenHierarchies));
-    javaMethods.add(createEqualsMethod(resourceName, tokenHierarchies, types));
+    javaMethods.add(createEqualsMethod(resourceName, tokenHierarchies, typeStore));
     javaMethods.add(createHashCodeMethod(tokenHierarchies));
     return javaMethods;
   }
@@ -281,9 +287,9 @@ public class ResourceNameHelperClassComposer {
       List<VariableExpr> templateFinalVarExprs,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     String thisClassName = getThisClassName(resourceName);
-    TypeNode thisClassType = types.get(thisClassName);
+    TypeNode thisClassType = typeStore.get(thisClassName);
     boolean hasVariants = tokenHierarchies.size() > 1;
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -313,13 +319,13 @@ public class ResourceNameHelperClassComposer {
     for (int i = 0; i < tokenHierarchies.size(); i++) {
       List<String> tokens = tokenHierarchies.get(i);
       List<Expr> bodyExprs = new ArrayList<>();
-      TypeNode argType = getBuilderType(types, tokenHierarchies, i);
+      TypeNode argType = getBuilderType(typeStore, tokenHierarchies, i);
       VariableExpr builderArgExpr =
           VariableExpr.withVariable(Variable.builder().setName("builder").setType(argType).build());
       for (String token : tokens) {
         MethodInvocationExpr checkNotNullExpr =
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(STATIC_TYPES.get("Preconditions"))
+                .setStaticReferenceType(FIXED_TYPESTORE.get("Preconditions"))
                 .setMethodName("checkNotNull")
                 .setReturnType(TypeNode.STRING)
                 .setArguments(
@@ -384,12 +390,12 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static List<MethodDefinition> createBuilderCreatorMethods(
-      ResourceName resourceName, List<List<String>> tokenHierarchies, Map<String, TypeNode> types) {
+      ResourceName resourceName, List<List<String>> tokenHierarchies, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String newMethodNameFormat = "new%s";
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 "The per-pattern Builders are not stable yet and may be changed in the future.")
             .build();
@@ -398,7 +404,7 @@ public class ResourceNameHelperClassComposer {
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
     for (int i = 0; i < tokenHierarchies.size(); i++) {
-      final TypeNode returnType = getBuilderType(types, tokenHierarchies, i);
+      final TypeNode returnType = getBuilderType(typeStore, tokenHierarchies, i);
       final Expr returnExpr = NewObjectExpr.withType(returnType);
 
       Function<String, MethodDefinition.Builder> methodDefStarterFn =
@@ -429,8 +435,8 @@ public class ResourceNameHelperClassComposer {
 
     // TODO(miraleung, v2): It seems weird that we currently generate a toBuilder method only for
     // the default class, and none for the Builder variants.
-    TypeNode toBuilderReturnType = getBuilderType(types, tokenHierarchies, 0);
-    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode toBuilderReturnType = getBuilderType(typeStore, tokenHierarchies, 0);
+    TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     javaMethods.add(
         MethodDefinition.builder()
             .setScope(ScopeNode.PUBLIC)
@@ -450,25 +456,25 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     return createOfOrFormatMethodHelper(
-        resourceName, patternTokenVarExprs, tokenHierarchies, types, /*isFormatMethod=*/ false);
+        resourceName, patternTokenVarExprs, tokenHierarchies, typeStore, /*isFormatMethod=*/ false);
   }
 
   private static List<MethodDefinition> createFormatCreatorMethods(
       ResourceName resourceName,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     return createOfOrFormatMethodHelper(
-        resourceName, patternTokenVarExprs, tokenHierarchies, types, /*isFormatMethod=*/ true);
+        resourceName, patternTokenVarExprs, tokenHierarchies, typeStore, /*isFormatMethod=*/ true);
   }
 
   private static List<MethodDefinition> createOfOrFormatMethodHelper(
       ResourceName resourceName,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types,
+      TypeStore typeStore,
       boolean isFormatMethod) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodNameFormat = isFormatMethod ? "format%s" : "of%s";
@@ -478,7 +484,7 @@ public class ResourceNameHelperClassComposer {
     String toStringMethodName = "toString";
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 String.format(
                     "The static %s methods are not stable yet and may be changed in the future.",
@@ -486,7 +492,7 @@ public class ResourceNameHelperClassComposer {
             .build();
     List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
 
-    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     TypeNode returnType = isFormatMethod ? TypeNode.STRING : thisClassType;
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
@@ -569,11 +575,11 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName,
       List<VariableExpr> templateFinalVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     javaMethods.add(
-        createParseMethod(thisClassType, templateFinalVarExprs, tokenHierarchies, types));
+        createParseMethod(thisClassType, templateFinalVarExprs, tokenHierarchies, typeStore));
     javaMethods.add(createParseListMethod(thisClassType));
     javaMethods.add(createToStringListMethod(thisClassType));
     javaMethods.add(createIsParseableFromMethod(templateFinalVarExprs));
@@ -585,7 +591,7 @@ public class ResourceNameHelperClassComposer {
       TypeNode thisClassType,
       List<VariableExpr> templateFinalVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     String formattedStringArgName = "formattedString";
     VariableExpr formattedStringArgExpr =
         VariableExpr.withVariable(
@@ -736,7 +742,7 @@ public class ResourceNameHelperClassComposer {
     body.add(
         ExprStatement.withExpr(
             ThrowExpr.builder()
-                .setType(STATIC_TYPES.get("ValidationException"))
+                .setType(FIXED_TYPESTORE.get("ValidationException"))
                 .setMessageExpr(exceptionMessageString)
                 .build()));
     return MethodDefinition.builder()
@@ -946,9 +952,9 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName,
       Map<String, VariableExpr> patternTokenVarExprs,
       List<List<String>> tokenHierarchies,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     javaMethods.add(
         createGetFieldValuesMapMethod(
             resourceName, thisClassType, patternTokenVarExprs, tokenHierarchies));
@@ -978,7 +984,7 @@ public class ResourceNameHelperClassComposer {
             .setVariableExpr(fieldMapBuilderVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(STATIC_TYPES.get("ImmutableMap"))
+                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
                     .setMethodName("builder")
                     .setReturnType(mapBuilderType)
                     .build())
@@ -1147,12 +1153,12 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static MethodDefinition createEqualsMethod(
-      ResourceName resourceName, List<List<String>> tokenHierarchies, Map<String, TypeNode> types) {
+      ResourceName resourceName, List<List<String>> tokenHierarchies, TypeStore typeStore) {
     // Create method definition variables.
     Variable oVariable = Variable.builder().setType(TypeNode.OBJECT).setName("o").build();
     VariableExpr argVarExpr =
         VariableExpr.builder().setIsDecl(false).setVariable(oVariable).build();
-    TypeNode thisClassType = types.get(getThisClassName(resourceName));
+    TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     ValueExpr thisValueExpr = ValueExpr.withValue(ThisObjectValue.withType(thisClassType));
     ValueExpr trueValueExpr =
         ValueExpr.withValue(
@@ -1250,7 +1256,7 @@ public class ResourceNameHelperClassComposer {
     VariableExpr varThatExpr =
         VariableExpr.builder().setVariable(tokenVar).setExprReferenceExpr(thatExpr).build();
     return MethodInvocationExpr.builder()
-        .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+        .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
         .setMethodName("equals")
         .setArguments(Arrays.asList(varThisExpr, varThatExpr))
         .setReturnType(TypeNode.BOOLEAN)
@@ -1319,7 +1325,7 @@ public class ResourceNameHelperClassComposer {
     // code: Objects.hashCode(varExpr)
     return MethodInvocationExpr.builder()
         .setMethodName("hashCode")
-        .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+        .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
         .setArguments(varExpr)
         .setReturnType(TypeNode.INT)
         .build();
@@ -1329,9 +1335,9 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName,
       List<List<String>> tokenHierarchies,
       List<VariableExpr> templateFinalVarExprs,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     String thisClassName = getThisClassName(resourceName);
-    TypeNode outerThisClassType = types.get(thisClassName);
+    TypeNode outerThisClassType = typeStore.get(thisClassName);
     boolean hasVariants = tokenHierarchies.size() > 1;
     return IntStream.range(0, tokenHierarchies.size())
         .mapToObj(
@@ -1341,7 +1347,7 @@ public class ResourceNameHelperClassComposer {
                     tokenHierarchies.get(i),
                     templateFinalVarExprs.get(i),
                     resourceName.patterns().get(i),
-                    types,
+                    typeStore,
                     hasVariants,
                     i == 0))
         .collect(Collectors.toList());
@@ -1352,7 +1358,7 @@ public class ResourceNameHelperClassComposer {
       List<String> tokens,
       VariableExpr templateFinalVarExpr,
       String resourceNamePattern,
-      Map<String, TypeNode> types,
+      TypeStore typeStore,
       boolean hasVariants,
       boolean isDefaultClass) {
     String className = isDefaultClass ? "Builder" : getBuilderTypeName(tokens);
@@ -1377,7 +1383,7 @@ public class ResourceNameHelperClassComposer {
 
     // Constructor.
     List<MethodDefinition> nestedClassMethods = new ArrayList<>();
-    TypeNode thisClassType = types.get(className);
+    TypeNode thisClassType = typeStore.get(className);
     MethodDefinition ctor =
         MethodDefinition.constructorBuilder()
             .setScope(ScopeNode.PROTECTED)
@@ -1442,7 +1448,7 @@ public class ResourceNameHelperClassComposer {
         // TODO(miraleung): Use eq operator instead.
         MethodInvocationExpr equalsCheckExpr =
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(STATIC_TYPES.get("Objects"))
+                .setStaticReferenceType(FIXED_TYPESTORE.get("Objects"))
                 .setMethodName("equals")
                 .setArguments(
                     FIXED_CLASS_VARS
@@ -1455,7 +1461,7 @@ public class ResourceNameHelperClassComposer {
 
         builderCtorBodyExprs.add(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(STATIC_TYPES.get("Preconditions"))
+                .setStaticReferenceType(FIXED_TYPESTORE.get("Preconditions"))
                 .setMethodName("checkArgument")
                 .setArguments(
                     equalsCheckExpr,
@@ -1509,7 +1515,7 @@ public class ResourceNameHelperClassComposer {
     // Return the class.
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
-            .setType(STATIC_TYPES.get("BetaApi"))
+            .setType(FIXED_TYPESTORE.get("BetaApi"))
             .setDescription(
                 "The per-pattern Builders are not stable yet and may be changed in the future.")
             .build();
@@ -1531,7 +1537,7 @@ public class ResourceNameHelperClassComposer {
         .build();
   }
 
-  private static Map<String, TypeNode> createStaticTypes() {
+  private static TypeStore createStaticTypes() {
     List<Class> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
@@ -1545,51 +1551,24 @@ public class ResourceNameHelperClassComposer {
             Preconditions.class,
             com.google.api.resourcenames.ResourceName.class,
             ValidationException.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    return new TypeStore(concreteClazzes);
   }
 
-  private static Map<String, TypeNode> createDynamicTypes(
+  private static TypeStore createDynamicTypes(
       ResourceName resourceName, List<List<String>> tokenHierarchies) {
     String thisClassName = getThisClassName(resourceName);
-    Map<String, TypeNode> dynamicTypes = new HashMap<>();
-    dynamicTypes.put(
-        thisClassName,
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(thisClassName)
-                .setPakkage(resourceName.pakkage())
-                .build()));
-    dynamicTypes.put(
-        "Builder",
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Builder")
-                .setPakkage(resourceName.pakkage())
-                .setEnclosingClassNames(thisClassName)
-                .setIsStaticImport(true)
-                .build()));
+    TypeStore typeStore = new TypeStore();
+    typeStore.put(resourceName.pakkage(), thisClassName);
+    typeStore.put(resourceName.pakkage(), "Builder", true, thisClassName);
 
     if (tokenHierarchies.size() > 1) {
-      dynamicTypes.putAll(
+      typeStore.putAll(
+          resourceName.pakkage(),
           tokenHierarchies.subList(1, tokenHierarchies.size()).stream()
               .map(ts -> getBuilderTypeName(ts))
-              .collect(
-                  Collectors.toMap(
-                      s -> s,
-                      s ->
-                          TypeNode.withReference(
-                              VaporReference.builder()
-                                  .setName(s)
-                                  .setPakkage(resourceName.pakkage())
-                                  .setEnclosingClassNames(thisClassName)
-                                  .setIsStaticImport(true)
-                                  .build()))));
+              .collect(Collectors.toList()));
     }
-    return dynamicTypes;
+    return typeStore;
   }
 
   private static Map<String, VariableExpr> createFixedClassMemberVariables() {
@@ -1624,10 +1603,10 @@ public class ResourceNameHelperClassComposer {
   }
 
   private static TypeNode getBuilderType(
-      Map<String, TypeNode> types, List<List<String>> tokenHierarchies, int index) {
+      TypeStore typeStore, List<List<String>> tokenHierarchies, int index) {
     return index == 0
-        ? types.get("Builder")
-        : types.get(getBuilderTypeName(tokenHierarchies, index));
+        ? typeStore.get("Builder")
+        : typeStore.get(getBuilderTypeName(tokenHierarchies, index));
   }
 
   @VisibleForTesting
