@@ -3,21 +3,20 @@ load("@rules_java//java:defs.bzl", "java_library")
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "samplecode_files",
+    name = "comment_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "samplecode",
+    name = "comment",
     srcs = [
-        ":samplecode_files",
+        ":comment_files",
     ],
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/main/java/com/google/api/generator/gapic/composer/utils",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/utils",
-        "@com_google_api_gax_java//gax",
-        "@google_java_format_all_deps//jar",
+        "@com_google_guava_guava//jar",
     ],
 )

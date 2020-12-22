@@ -22,7 +22,6 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.Reference;
@@ -30,7 +29,9 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.ThrowExpr;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
+import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -58,7 +59,7 @@ public class ServiceStubClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(Service service, Map<String, Message> messageTypes) {
-    Map<String, TypeNode> types = createTypes(service, messageTypes);
+    TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceStubClassName(service);
     GapicClass.Kind kind = Kind.STUB;
     String pakkage = String.format("%s.stub", service.pakkage());
@@ -68,88 +69,87 @@ public class ServiceStubClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 StubCommentComposer.createServiceStubClassHeaderComments(service.name()))
-            .setAnnotations(createClassAnnotations(types))
+            .setAnnotations(createClassAnnotations(typeStore))
             .setIsAbstract(true)
-            .setImplementsTypes(createClassImplements(types))
+            .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
-            .setMethods(createClassMethods(service, messageTypes, types))
+            .setMethods(createClassMethods(service, messageTypes, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .build();
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
+  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
     return Arrays.asList(
         AnnotationNode.builder()
-            .setType(types.get("Generated"))
+            .setType(typeStore.get("Generated"))
             .setDescription("by gapic-generator")
             .build());
   }
 
-  private static List<TypeNode> createClassImplements(Map<String, TypeNode> types) {
-    return Arrays.asList(types.get("BackgroundResource"));
+  private static List<TypeNode> createClassImplements(TypeStore typeStore) {
+    return Arrays.asList(typeStore.get("BackgroundResource"));
   }
 
   private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
     boolean hasLroClient = hasLroMethods(service);
     List<MethodDefinition> methods = new ArrayList<>();
     if (hasLroClient) {
-      methods.add(createOperationsStubGetter(types));
+      methods.add(createOperationsStubGetter(typeStore));
     }
-    methods.addAll(createCallableGetters(service, messageTypes, types));
+    methods.addAll(createCallableGetters(service, messageTypes, typeStore));
     methods.addAll(createBackgroundResourceMethodOverrides());
     return methods;
   }
 
   private static List<MethodDefinition> createCallableGetters(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
     // Use a traditional for-loop since the output cardinality is not necessarily 1:1 with that of
     // service.methods().
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.hasLro()) {
-        javaMethods.add(createOperationCallableGetter(method, types));
+        javaMethods.add(createOperationCallableGetter(method, typeStore));
       }
       if (method.isPaged()) {
-        javaMethods.add(createPagedCallableGetter(method, types));
+        javaMethods.add(createPagedCallableGetter(method, typeStore));
       }
-      javaMethods.add(createCallableGetter(method, types));
+      javaMethods.add(createCallableGetter(method, typeStore));
     }
     return javaMethods;
   }
 
   private static MethodDefinition createOperationCallableGetter(
-      Method method, Map<String, TypeNode> types) {
-    return createCallableGetterHelper(method, types, true, false);
+      Method method, TypeStore typeStore) {
+    return createCallableGetterHelper(method, typeStore, true, false);
   }
 
-  private static MethodDefinition createPagedCallableGetter(
-      Method method, Map<String, TypeNode> types) {
-    return createCallableGetterHelper(method, types, false, true);
+  private static MethodDefinition createPagedCallableGetter(Method method, TypeStore typeStore) {
+    return createCallableGetterHelper(method, typeStore, false, true);
   }
 
-  private static MethodDefinition createCallableGetter(Method method, Map<String, TypeNode> types) {
-    return createCallableGetterHelper(method, types, false, false);
+  private static MethodDefinition createCallableGetter(Method method, TypeStore typeStore) {
+    return createCallableGetterHelper(method, typeStore, false, false);
   }
 
   private static MethodDefinition createCallableGetterHelper(
-      Method method, Map<String, TypeNode> types, boolean isLroCallable, boolean isPaged) {
+      Method method, TypeStore typeStore, boolean isLroCallable, boolean isPaged) {
     TypeNode returnType;
     switch (method.stream()) {
       case CLIENT:
-        returnType = types.get("ClientStreamingCallable");
+        returnType = typeStore.get("ClientStreamingCallable");
         break;
       case SERVER:
-        returnType = types.get("ServerStreamingCallable");
+        returnType = typeStore.get("ServerStreamingCallable");
         break;
       case BIDI:
-        returnType = types.get("BidiStreamingCallable");
+        returnType = typeStore.get("BidiStreamingCallable");
         break;
       case NONE:
         // Fall through.
       default:
-        returnType = types.get(isLroCallable ? "OperationCallable" : "UnaryCallable");
+        returnType = typeStore.get(isLroCallable ? "OperationCallable" : "UnaryCallable");
     }
 
     String methodName =
@@ -164,7 +164,9 @@ public class ServiceStubClassComposer implements ClassComposer {
       genericRefs.add(method.lro().metadataType().reference());
     } else if (isPaged) {
       genericRefs.add(
-          types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name())).reference());
+          typeStore
+              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+              .reference());
     } else {
       genericRefs.add(method.outputType().reference());
     }
@@ -174,17 +176,17 @@ public class ServiceStubClassComposer implements ClassComposer {
         .setScope(ScopeNode.PUBLIC)
         .setReturnType(returnType)
         .setName(methodName)
-        .setBody(createThrowUOEBody(methodName, types))
+        .setBody(createThrowUOEBody(methodName, typeStore))
         .build();
   }
 
-  private static MethodDefinition createOperationsStubGetter(Map<String, TypeNode> types) {
+  private static MethodDefinition createOperationsStubGetter(TypeStore typeStore) {
     String methodName = "getOperationsStub";
     return MethodDefinition.builder()
         .setScope(ScopeNode.PUBLIC)
-        .setReturnType(types.get("OperationsStub"))
+        .setReturnType(typeStore.get("OperationsStub"))
         .setName(methodName)
-        .setBody(createThrowUOEBody(methodName, types))
+        .setBody(createThrowUOEBody(methodName, typeStore))
         .build();
   }
 
@@ -209,8 +211,7 @@ public class ServiceStubClassComposer implements ClassComposer {
     return false;
   }
 
-  private static Map<String, TypeNode> createTypes(
-      Service service, Map<String, Message> messageTypes) {
+  private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
     List<Class> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
@@ -222,60 +223,29 @@ public class ServiceStubClassComposer implements ClassComposer {
             ServerStreamingCallable.class,
             UnaryCallable.class,
             UnsupportedOperationException.class);
-    Map<String, TypeNode> types =
-        concreteClazzes.stream()
-            .collect(
-                Collectors.toMap(
-                    c -> c.getSimpleName(),
-                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    TypeStore typeStore = new TypeStore(concreteClazzes);
+    typeStore.putMessageTypes(service.pakkage(), messageTypes);
 
-    // Vapor message types.
-    types.putAll(
-        messageTypes.entrySet().stream()
-            .collect(
-                Collectors.toMap(
-                    e -> e.getValue().name(),
-                    e ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(e.getValue().name())
-                                .setPakkage(service.pakkage())
-                                .build()))));
+    typeStore.put("com.google.longrunning.stub", "OperationsStub");
 
-    // Vapor dependency types.
-    types.put(
-        "OperationsStub",
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("OperationsStub")
-                .setPakkage("com.google.longrunning.stub")
-                .build()));
     // Pagination types.
-    types.putAll(
+    typeStore.putAll(
+        service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .collect(
-                Collectors.toMap(
-                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
-                    m ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
-                                .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(
-                                    ClassNames.getServiceClientClassName(service))
-                                .setIsStaticImport(true)
-                                .build()))));
+            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .collect(Collectors.toList()),
+        true,
+        ClassNames.getServiceClientClassName(service));
 
-    return types;
+    return typeStore;
   }
 
-  private static List<Statement> createThrowUOEBody(
-      String methodName, Map<String, TypeNode> types) {
+  private static List<Statement> createThrowUOEBody(String methodName, TypeStore typeStore) {
     return Arrays.asList(
         ExprStatement.withExpr(
             ThrowExpr.builder()
-                .setType(types.get("UnsupportedOperationException"))
+                .setType(typeStore.get("UnsupportedOperationException"))
                 .setMessageExpr(String.format("Not implemented: %s()", methodName))
                 .build()));
   }

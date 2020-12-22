@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
@@ -29,7 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class ServiceClientCommentComposer {
+public class ServiceClientCommentComposer {
   // Tokens.
   private static final String COLON = ":";
   private static final String EMPTY_STRING = "";
@@ -102,13 +103,13 @@ class ServiceClientCommentComposer {
           + " should be preferred.";
 
   // Comments.
-  static final CommentStatement GET_OPERATIONS_CLIENT_METHOD_COMMENT =
+  public static final CommentStatement GET_OPERATIONS_CLIENT_METHOD_COMMENT =
       toSimpleComment(
           "Returns the OperationsClient that can be used to query the status of a long-running"
               + " operation returned by another API method call.");
 
-  static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode clientType, TypeNode settingsType) {
+  public static List<CommentStatement> createClassHeaderComments(
+      Service service, String credentialsSampleCode, String endpointSampleCode) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -139,13 +140,9 @@ class ServiceClientCommentComposer {
             SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
             ClassNames.getServiceSettingsClassName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addSampleCode(
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
-            clientType, settingsType));
+    classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addSampleCode(
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientType, settingsType));
+    classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
 
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);
 
@@ -154,14 +151,14 @@ class ServiceClientCommentComposer {
         CommentStatement.withComment(classHeaderJavadocBuilder.build()));
   }
 
-  static CommentStatement createCreateMethodStubArgComment(
+  public static CommentStatement createCreateMethodStubArgComment(
       String serviceName, TypeNode settingsType) {
     return toSimpleComment(
         String.format(
             CREATE_METHOD_STUB_ARG_PATTERN, serviceName, settingsType.reference().name()));
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(
+  public static List<CommentStatement> createRpcMethodHeaderComment(
       Method method, List<MethodArgument> methodArguments) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
@@ -195,23 +192,23 @@ class ServiceClientCommentComposer {
     return comments;
   }
 
-  static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
+  public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
     return createRpcMethodHeaderComment(method, Collections.emptyList());
   }
 
-  static CommentStatement createMethodNoArgComment(String serviceName) {
+  public static CommentStatement createMethodNoArgComment(String serviceName) {
     return toSimpleComment(String.format(CREATE_METHOD_NO_ARG_PATTERN, serviceName));
   }
 
-  static CommentStatement createProtectedCtorSettingsArgComment(String serviceName) {
+  public static CommentStatement createProtectedCtorSettingsArgComment(String serviceName) {
     return toSimpleComment(String.format(PROTECTED_CONSTRUCTOR_SETTINGS_ARG_PATTERN, serviceName));
   }
 
-  static CommentStatement createMethodSettingsArgComment(String serviceName) {
+  public static CommentStatement createMethodSettingsArgComment(String serviceName) {
     return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
   }
 
-  static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
+  public static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {

@@ -305,7 +305,13 @@ public class Parser {
                   .setOriginalJavaPackage(originalJavaPackage)
                   .setProtoPakkage(fileDescriptor.getPackage())
                   .setMethods(
-                      parseMethods(s, pakkage, messageTypes, resourceNames, outputArgResourceNames))
+                      parseMethods(
+                          s,
+                          pakkage,
+                          messageTypes,
+                          resourceNames,
+                          serviceConfigOpt,
+                          outputArgResourceNames))
                   .build();
             })
         .collect(Collectors.toList());
@@ -355,13 +361,18 @@ public class Parser {
         if (isMapType(nestedMessage)) {
           continue;
         }
-        outerNestedTypes.add(messageName);
+        List<String> currentNestedTypes = new ArrayList<>(outerNestedTypes);
+        currentNestedTypes.add(messageName);
         messages.putAll(
-            parseMessages(nestedMessage, outputResourceReferencesSeen, outerNestedTypes));
+            parseMessages(nestedMessage, outputResourceReferencesSeen, currentNestedTypes));
       }
     }
+    String messageKey =
+        outerNestedTypes.isEmpty() || outerNestedTypes.get(0).equals(messageName)
+            ? messageName
+            : String.format("%s.%s", String.join(".", outerNestedTypes), messageName);
     messages.put(
-        messageName,
+        messageKey,
         Message.builder()
             .setType(TypeParser.parseType(messageDescriptor))
             .setName(messageName)
@@ -433,6 +444,7 @@ public class Parser {
       String servicePackage,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
+      Optional<GapicServiceConfig> serviceConfigOpt,
       Set<ResourceName> outputArgResourceNames) {
     List<Method> methods = new ArrayList<>();
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
@@ -456,6 +468,15 @@ public class Parser {
           HttpRuleParser.parseHttpBindings(protoMethod, inputMessage, messageTypes);
       List<String> httpBindings =
           httpBindingsOpt.isPresent() ? httpBindingsOpt.get() : Collections.emptyList();
+      boolean isBatching =
+          !serviceConfigOpt.isPresent()
+              ? false
+              : serviceConfigOpt
+                  .get()
+                  .hasBatchingSetting(
+                      /* protoPakkage */ protoMethod.getFile().getPackage(),
+                      serviceDescriptor.getName(),
+                      protoMethod.getName());
 
       methods.add(
           methodBuilder
@@ -474,6 +495,7 @@ public class Parser {
                       resourceNames,
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
+              .setIsBatching(isBatching)
               .setIsPaged(parseIsPaged(protoMethod, messageTypes))
               .build());
 
@@ -547,8 +569,9 @@ public class Parser {
     Preconditions.checkNotNull(
         metadataMessage,
         String.format(
-            "LRO metadata message %s not found in method %s",
-            metadataTypeName, methodDescriptor.getName()));
+            "LRO metadata message %s not found in method %s" + ", DEL: " + messageTypes.keySet(),
+            metadataTypeName,
+            methodDescriptor.getName()));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }

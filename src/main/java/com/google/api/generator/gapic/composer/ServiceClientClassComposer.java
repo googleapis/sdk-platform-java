@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -51,9 +52,12 @@ import com.google.api.generator.engine.ast.TernaryExpr;
 import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.comment.ServiceClientCommentComposer;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
@@ -93,6 +97,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
+
   private static final TypeNode OBJECTS_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Objects.class));
 
@@ -110,7 +115,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(Service service, Map<String, Message> messageTypes) {
-    Map<String, TypeNode> types = createTypes(service, messageTypes);
+    TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
@@ -118,47 +123,57 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createClassHeaderComments(
-                    service,
-                    types.get(ClassNames.getServiceClientClassName(service)),
-                    types.get(ClassNames.getServiceSettingsClassName(service))))
+            .setHeaderCommentStatements(createClassHeaderComments(service, typeStore))
             .setPackageString(pakkage)
-            .setAnnotations(createClassAnnotations(types))
+            .setAnnotations(createClassAnnotations(typeStore))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setImplementsTypes(createClassImplements(types))
-            .setStatements(createFieldDeclarations(service, types, hasLroClient))
-            .setMethods(createClassMethods(service, messageTypes, types, hasLroClient))
-            .setNestedClasses(createNestedPagingClasses(service, messageTypes, types))
+            .setImplementsTypes(createClassImplements(typeStore))
+            .setStatements(createFieldDeclarations(service, typeStore, hasLroClient))
+            .setMethods(createClassMethods(service, messageTypes, typeStore, hasLroClient))
+            .setNestedClasses(createNestedPagingClasses(service, messageTypes, typeStore))
             .build();
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
+  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
     return Arrays.asList(
-        AnnotationNode.withType(types.get("BetaApi")),
+        AnnotationNode.withType(typeStore.get("BetaApi")),
         AnnotationNode.builder()
-            .setType(types.get("Generated"))
+            .setType(typeStore.get("Generated"))
             .setDescription("by gapic-generator")
             .build());
   }
 
-  private static List<TypeNode> createClassImplements(Map<String, TypeNode> types) {
-    return Arrays.asList(types.get("BackgroundResource"));
+  private static List<TypeNode> createClassImplements(TypeStore typeStore) {
+    return Arrays.asList(typeStore.get("BackgroundResource"));
+  }
+
+  private static List<CommentStatement> createClassHeaderComments(
+      Service service, TypeStore typeStore) {
+    TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
+    TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
+    String credentialsSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientType, settingsType);
+    String endpointSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+            clientType, settingsType);
+    return ServiceClientCommentComposer.createClassHeaderComments(
+        service, credentialsSampleCode, endpointSampleCode);
   }
 
   private static List<MethodDefinition> createClassMethods(
       Service service,
       Map<String, Message> messageTypes,
-      Map<String, TypeNode> types,
+      TypeStore typeStore,
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
-    methods.addAll(createStaticCreatorMethods(service, types));
-    methods.addAll(createConstructorMethods(service, types, hasLroClient));
-    methods.addAll(createGetterMethods(service, types, hasLroClient));
-    methods.addAll(createServiceMethods(service, messageTypes, types));
-    methods.addAll(createBackgroundResourceMethods(service, types));
+    methods.addAll(createStaticCreatorMethods(service, typeStore));
+    methods.addAll(createConstructorMethods(service, typeStore, hasLroClient));
+    methods.addAll(createGetterMethods(service, typeStore, hasLroClient));
+    methods.addAll(createServiceMethods(service, messageTypes, typeStore));
+    methods.addAll(createBackgroundResourceMethods(service, typeStore));
     return methods;
   }
 
@@ -172,12 +187,13 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<Statement> createFieldDeclarations(
-      Service service, Map<String, TypeNode> types, boolean hasLroClient) {
+      Service service, TypeStore typeStore, boolean hasLroClient) {
     Map<String, TypeNode> fieldNameToTypes = new HashMap<>();
-    fieldNameToTypes.put("settings", types.get(ClassNames.getServiceSettingsClassName(service)));
-    fieldNameToTypes.put("stub", types.get(ClassNames.getServiceStubClassName(service)));
+    fieldNameToTypes.put(
+        "settings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
+    fieldNameToTypes.put("stub", typeStore.get(ClassNames.getServiceStubClassName(service)));
     if (hasLroClient) {
-      fieldNameToTypes.put("operationsClient", types.get("OperationsClient"));
+      fieldNameToTypes.put("operationsClient", typeStore.get("OperationsClient"));
     }
 
     return fieldNameToTypes.entrySet().stream()
@@ -199,14 +215,14 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createStaticCreatorMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     List<MethodDefinition> methods = new ArrayList<>();
     String thisClientName = ClassNames.getServiceClientClassName(service);
     String settingsName = ClassNames.getServiceSettingsClassName(service);
-    TypeNode thisClassType = types.get(thisClientName);
-    TypeNode exceptionType = types.get("IOException");
+    TypeNode thisClassType = typeStore.get(thisClientName);
+    TypeNode exceptionType = typeStore.get("IOException");
 
-    TypeNode settingsType = types.get(settingsName);
+    TypeNode settingsType = typeStore.get(settingsName);
     Preconditions.checkNotNull(settingsType, String.format("Type %s not found", settingsName));
 
     MethodInvocationExpr newBuilderExpr =
@@ -223,7 +239,7 @@ public class ServiceClientClassComposer implements ClassComposer {
         MethodInvocationExpr.builder()
             .setMethodName("create")
             .setArguments(Arrays.asList(buildExpr))
-            .setReturnType(types.get(thisClientName))
+            .setReturnType(typeStore.get(thisClientName))
             .build();
 
     MethodDefinition createMethodOne =
@@ -244,7 +260,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     // Second create(ServiceSettings settings) method.
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+            Variable.builder().setName("settings").setType(typeStore.get(settingsName)).build());
 
     methods.add(
         MethodDefinition.builder()
@@ -269,12 +285,12 @@ public class ServiceClientClassComposer implements ClassComposer {
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(ClassNames.getServiceStubClassName(service)))
+                .setType(typeStore.get(ClassNames.getServiceStubClassName(service)))
                 .setName("stub")
                 .build());
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
-            .setType(types.get("BetaApi"))
+            .setType(typeStore.get("BetaApi"))
             .setDescription(
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
@@ -298,23 +314,23 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createConstructorMethods(
-      Service service, Map<String, TypeNode> types, boolean hasLroClient) {
+      Service service, TypeStore typeStore, boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     String thisClientName = ClassNames.getServiceClientClassName(service);
     String settingsName = ClassNames.getServiceSettingsClassName(service);
-    TypeNode thisClassType = types.get(thisClientName);
-    TypeNode stubSettingsType = types.get(ClassNames.getServiceStubSettingsClassName(service));
-    TypeNode operationsClientType = types.get("OperationsClient");
-    TypeNode exceptionType = types.get("IOException");
+    TypeNode thisClassType = typeStore.get(thisClientName);
+    TypeNode stubSettingsType = typeStore.get(ClassNames.getServiceStubSettingsClassName(service));
+    TypeNode operationsClientType = typeStore.get("OperationsClient");
+    TypeNode exceptionType = typeStore.get("IOException");
 
-    TypeNode settingsType = types.get(settingsName);
+    TypeNode settingsType = typeStore.get(settingsName);
     VariableExpr settingsVarExpr =
         VariableExpr.withVariable(
-            Variable.builder().setName("settings").setType(types.get(settingsName)).build());
+            Variable.builder().setName("settings").setType(typeStore.get(settingsName)).build());
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(ClassNames.getServiceStubClassName(service)))
+                .setType(typeStore.get(ClassNames.getServiceStubClassName(service)))
                 .setName("stub")
                 .build());
     VariableExpr operationsClientVarExpr =
@@ -402,7 +418,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     }
     AnnotationNode betaAnnotation =
         AnnotationNode.builder()
-            .setType(types.get("BetaApi"))
+            .setType(typeStore.get("BetaApi"))
             .setDescription(
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
@@ -422,18 +438,18 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createGetterMethods(
-      Service service, Map<String, TypeNode> types, boolean hasLroClient) {
+      Service service, TypeStore typeStore, boolean hasLroClient) {
     Map<String, TypeNode> methodNameToTypes = new LinkedHashMap<>();
     methodNameToTypes.put(
-        "getSettings", types.get(ClassNames.getServiceSettingsClassName(service)));
-    methodNameToTypes.put("getStub", types.get(ClassNames.getServiceStubClassName(service)));
+        "getSettings", typeStore.get(ClassNames.getServiceSettingsClassName(service)));
+    methodNameToTypes.put("getStub", typeStore.get(ClassNames.getServiceStubClassName(service)));
     String getOperationsClientMethodName = "getOperationsClient";
     if (hasLroClient) {
-      methodNameToTypes.put(getOperationsClientMethodName, types.get("OperationsClient"));
+      methodNameToTypes.put(getOperationsClientMethodName, typeStore.get("OperationsClient"));
     }
     AnnotationNode betaStubAnnotation =
         AnnotationNode.builder()
-            .setType(types.get("BetaApi"))
+            .setType(typeStore.get("BetaApi"))
             .setDescription(
                 "A restructuring of stub classes is planned, so this may break in the future")
             .build();
@@ -473,38 +489,38 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createServiceMethods(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, types));
-        javaMethods.add(createMethodDefaultMethod(method, types));
+        javaMethods.addAll(createMethodVariants(method, messageTypes, typeStore));
+        javaMethods.add(createMethodDefaultMethod(method, typeStore));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroCallableMethod(service, method, types));
+        javaMethods.add(createLroCallableMethod(service, method, typeStore));
       }
       if (method.isPaged()) {
-        javaMethods.add(createPagedCallableMethod(service, method, types));
+        javaMethods.add(createPagedCallableMethod(service, method, typeStore));
       }
-      javaMethods.add(createCallableMethod(service, method, types));
+      javaMethods.add(createCallableMethod(service, method, typeStore));
     }
     return javaMethods;
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Method method, Map<String, Message> messageTypes, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
           TypeNode.withReference(
-              types
+              typeStore
                   .get("OperationFuture")
                   .reference()
                   .copyAndSetGenerics(
@@ -536,7 +552,7 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setIsDecl(true)
               .build();
 
-      Expr requestBuilderExpr = createRequestBuilderExpr(method, signature, types);
+      Expr requestBuilderExpr = createRequestBuilderExpr(method, signature, typeStore);
 
       AssignmentExpr requestAssignmentExpr =
           AssignmentExpr.builder()
@@ -577,19 +593,18 @@ public class ServiceClientClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createMethodDefaultMethod(
-      Method method, Map<String, TypeNode> types) {
+  private static MethodDefinition createMethodDefaultMethod(Method method, TypeStore typeStore) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
         method.isPaged()
-            ? types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+            ? typeStore.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
             : method.outputType();
     if (method.hasLro()) {
       LongrunningOperation lro = method.lro();
       methodOutputType =
           TypeNode.withReference(
-              types
+              typeStore
                   .get("OperationFuture")
                   .reference()
                   .copyAndSetGenerics(
@@ -642,43 +657,40 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createLroCallableMethod(
-      Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.LRO);
+      Service service, Method method, TypeStore typeStore) {
+    return createCallableMethod(service, method, typeStore, CallableMethodKind.LRO);
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.REGULAR);
+      Service service, Method method, TypeStore typeStore) {
+    return createCallableMethod(service, method, typeStore, CallableMethodKind.REGULAR);
   }
 
   private static MethodDefinition createPagedCallableMethod(
-      Service service, Method method, Map<String, TypeNode> types) {
-    return createCallableMethod(service, method, types, CallableMethodKind.PAGED);
+      Service service, Method method, TypeStore typeStore) {
+    return createCallableMethod(service, method, typeStore, CallableMethodKind.PAGED);
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service,
-      Method method,
-      Map<String, TypeNode> types,
-      CallableMethodKind callableMethodKind) {
+      Service service, Method method, TypeStore typeStore, CallableMethodKind callableMethodKind) {
     TypeNode rawCallableReturnType = null;
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
-      rawCallableReturnType = types.get("OperationCallable");
+      rawCallableReturnType = typeStore.get("OperationCallable");
     } else {
       switch (method.stream()) {
         case CLIENT:
-          rawCallableReturnType = types.get("ClientStreamingCallable");
+          rawCallableReturnType = typeStore.get("ClientStreamingCallable");
           break;
         case SERVER:
-          rawCallableReturnType = types.get("ServerStreamingCallable");
+          rawCallableReturnType = typeStore.get("ServerStreamingCallable");
           break;
         case BIDI:
-          rawCallableReturnType = types.get("BidiStreamingCallable");
+          rawCallableReturnType = typeStore.get("BidiStreamingCallable");
           break;
         case NONE:
           // Fall through.
         default:
-          rawCallableReturnType = types.get("UnaryCallable");
+          rawCallableReturnType = typeStore.get("UnaryCallable");
       }
     }
 
@@ -687,11 +699,11 @@ public class ServiceClientClassComposer implements ClassComposer {
         TypeNode.withReference(
             rawCallableReturnType
                 .reference()
-                .copyAndSetGenerics(getGenericsForCallable(callableMethodKind, method, types)));
+                .copyAndSetGenerics(getGenericsForCallable(callableMethodKind, method, typeStore)));
 
     String rawMethodName = JavaStyle.toLowerCamelCase(method.name());
     String methodName = getCallableName(callableMethodKind, rawMethodName);
-    TypeNode stubType = types.get(ClassNames.getServiceStubClassName(service));
+    TypeNode stubType = typeStore.get(ClassNames.getServiceStubClassName(service));
     MethodInvocationExpr returnExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(
@@ -714,13 +726,13 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createBackgroundResourceMethods(
-      Service service, Map<String, TypeNode> types) {
+      Service service, TypeStore typeStore) {
     List<MethodDefinition> methods = new ArrayList<>();
 
     VariableExpr stubVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
-                .setType(types.get(ClassNames.getServiceStubClassName(service)))
+                .setType(typeStore.get(ClassNames.getServiceStubClassName(service)))
                 .setName("stub")
                 .build());
     MethodDefinition closeMethod =
@@ -804,9 +816,12 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     List<VariableExpr> arguments =
         Arrays.asList(
-            VariableExpr.builder().setVariable(createVariable("duration", TypeNode.LONG)).build(),
             VariableExpr.builder()
-                .setVariable(createVariable("unit", types.get("TimeUnit")))
+                .setVariable(Variable.builder().setName("duration").setType(TypeNode.LONG).build())
+                .build(),
+            VariableExpr.builder()
+                .setVariable(
+                    Variable.builder().setName("unit").setType(typeStore.get("TimeUnit")).build())
                 .build());
 
     MethodDefinition awaitTerminationMethod =
@@ -819,7 +834,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                 arguments.stream()
                     .map(v -> v.toBuilder().setIsDecl(true).build())
                     .collect(Collectors.toList()))
-            .setThrowsExceptions(Arrays.asList(types.get("InterruptedException")))
+            .setThrowsExceptions(Arrays.asList(typeStore.get("InterruptedException")))
             .setReturnExpr(
                 MethodInvocationExpr.builder()
                     .setExprReferenceExpr(stubVarExpr)
@@ -835,7 +850,7 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<ClassDefinition> createNestedPagingClasses(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
     List<ClassDefinition> nestedClasses = new ArrayList<>();
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
@@ -853,12 +868,12 @@ public class ServiceClientClassComposer implements ClassComposer {
       TypeNode repeatedResponseType = repeatedPagedResultsField.type();
 
       nestedClasses.add(
-          createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, types));
+          createNestedRpcPagedResponseClass(method, repeatedResponseType, messageTypes, typeStore));
       nestedClasses.add(
-          createNestedRpcPageClass(method, repeatedResponseType, messageTypes, types));
+          createNestedRpcPageClass(method, repeatedResponseType, messageTypes, typeStore));
       nestedClasses.add(
           createNestedRpcFixedSizeCollectionClass(
-              method, repeatedResponseType, messageTypes, types));
+              method, repeatedResponseType, messageTypes, typeStore));
     }
 
     return nestedClasses;
@@ -868,15 +883,15 @@ public class ServiceClientClassComposer implements ClassComposer {
       Method method,
       TypeNode repeatedResponseType,
       Map<String, Message> messageTypes,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     Preconditions.checkState(
         method.isPaged(), String.format("Expected method %s to be paged", method.name()));
 
     String className = String.format("%sPagedResponse", JavaStyle.toUpperCamelCase(method.name()));
-    TypeNode thisClassType = types.get(className);
+    TypeNode thisClassType = typeStore.get(className);
 
     String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
-    TypeNode methodPageType = types.get(String.format("%sPage", upperJavaMethodName));
+    TypeNode methodPageType = typeStore.get(String.format("%sPage", upperJavaMethodName));
     TypeNode classExtendsType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -887,7 +902,8 @@ public class ServiceClientClassComposer implements ClassComposer {
                             method.outputType(),
                             repeatedResponseType,
                             methodPageType,
-                            types.get(String.format("%sFixedSizeCollection", upperJavaMethodName)))
+                            typeStore.get(
+                                String.format("%sFixedSizeCollection", upperJavaMethodName)))
                         .stream()
                         .map(t -> t.reference())
                         .collect(Collectors.toList()))
@@ -989,17 +1005,17 @@ public class ServiceClientClassComposer implements ClassComposer {
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(ApiFuture.class)
-                .setGenerics(Arrays.asList(types.get(className).reference()))
+                .setGenerics(Arrays.asList(typeStore.get(className).reference()))
                 .build());
     Expr returnExpr =
         MethodInvocationExpr.builder()
-            .setStaticReferenceType(types.get("ApiFutures"))
+            .setStaticReferenceType(typeStore.get("ApiFutures"))
             .setMethodName("transform")
             .setArguments(
                 futurePageVarExpr,
                 pageToTransformExpr,
                 MethodInvocationExpr.builder()
-                    .setStaticReferenceType(types.get("MoreExecutors"))
+                    .setStaticReferenceType(typeStore.get("MoreExecutors"))
                     .setMethodName("directExecutor")
                     .build())
             .setReturnType(returnType)
@@ -1038,7 +1054,7 @@ public class ServiceClientClassComposer implements ClassComposer {
                                 pageVarExpr,
                                 MethodInvocationExpr.builder()
                                     .setStaticReferenceType(
-                                        types.get(
+                                        typeStore.get(
                                             String.format(
                                                 "%sFixedSizeCollection", upperJavaMethodName)))
                                     .setMethodName("createEmptyCollection")
@@ -1064,13 +1080,13 @@ public class ServiceClientClassComposer implements ClassComposer {
       Method method,
       TypeNode repeatedResponseType,
       Map<String, Message> messageTypes,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     Preconditions.checkState(
         method.isPaged(), String.format("Expected method %s to be paged", method.name()));
 
     String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
     String className = String.format("%sPage", upperJavaMethodName);
-    TypeNode classType = types.get(className);
+    TypeNode classType = typeStore.get(className);
     TypeNode classExtendsType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -1211,11 +1227,11 @@ public class ServiceClientClassComposer implements ClassComposer {
       Method method,
       TypeNode repeatedResponseType,
       Map<String, Message> messageTypes,
-      Map<String, TypeNode> types) {
+      TypeStore typeStore) {
     String upperJavaMethodName = JavaStyle.toUpperCamelCase(method.name());
     String className = String.format("%sFixedSizeCollection", upperJavaMethodName);
-    TypeNode classType = types.get(className);
-    TypeNode methodPageType = types.get(String.format("%sPage", upperJavaMethodName));
+    TypeNode classType = typeStore.get(className);
+    TypeNode methodPageType = typeStore.get(String.format("%sPage", upperJavaMethodName));
 
     TypeNode classExtendsType =
         TypeNode.withReference(
@@ -1318,7 +1334,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   @VisibleForTesting
   static Expr createRequestBuilderExpr(
-      Method method, List<MethodArgument> signature, Map<String, TypeNode> types) {
+      Method method, List<MethodArgument> signature, TypeStore typeStore) {
     TypeNode methodInputType = method.inputType();
     MethodInvocationExpr newBuilderExpr =
         MethodInvocationExpr.builder()
@@ -1387,16 +1403,7 @@ public class ServiceClientClassComposer implements ClassComposer {
     return setterMethodVariantPattern;
   }
 
-  private static Map<String, TypeNode> createTypes(
-      Service service, Map<String, Message> messageTypes) {
-    Map<String, TypeNode> types = new HashMap<>();
-    types.putAll(createConcreteTypes());
-    types.putAll(createVaporTypes(service));
-    types.putAll(createProtoMessageTypes(service.pakkage(), messageTypes));
-    return types;
-  }
-
-  private static Map<String, TypeNode> createConcreteTypes() {
+  private static TypeStore createTypes(Service service, Map<String, Message> messageTypes) {
     List<Class> concreteClazzes =
         Arrays.asList(
             AbstractPagedListResponse.class,
@@ -1420,114 +1427,56 @@ public class ServiceClientClassComposer implements ClassComposer {
             Strings.class,
             TimeUnit.class,
             UnaryCallable.class);
-    return concreteClazzes.stream()
-        .collect(
-            Collectors.toMap(
-                c -> c.getSimpleName(),
-                c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    TypeStore typeStore = new TypeStore(concreteClazzes);
+    typeStore.putMessageTypes(service.pakkage(), messageTypes);
+    createVaporTypes(service, typeStore);
+    return typeStore;
   }
 
-  private static Map<String, TypeNode> createVaporTypes(Service service) {
-    // Client stub types.
-    Map<String, TypeNode> types =
+  private static void createVaporTypes(Service service, TypeStore typeStore) {
+    // Client stub typeStore.
+    typeStore.putAll(
+        String.format("%s.stub", service.pakkage()),
         Arrays.asList(
-                ClassNames.getServiceStubClassName(service),
-                ClassNames.getServiceStubSettingsClassName(service))
-            .stream()
-            .collect(
-                Collectors.toMap(
-                    n -> n,
-                    n ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(n)
-                                .setPakkage(String.format("%s.stub", service.pakkage()))
-                                .build())));
-    // Client ServiceClient and ServiceSettings types.
-    types.putAll(
-        Arrays.asList(
-                ClassNames.getServiceClientClassName(service),
-                ClassNames.getServiceSettingsClassName(service))
-            .stream()
-            .collect(
-                Collectors.toMap(
-                    n -> n,
-                    n ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(n)
-                                .setPakkage(service.pakkage())
-                                .build()))));
+            ClassNames.getServiceStubClassName(service),
+            ClassNames.getServiceStubSettingsClassName(service)));
 
-    // Nested class types.
+    // Client ServiceClient and ServiceSettings typeStore.
+    typeStore.putAll(
+        service.pakkage(),
+        Arrays.asList(
+            ClassNames.getServiceClientClassName(service),
+            ClassNames.getServiceSettingsClassName(service)));
+
+    // Nested class typeStore.
     for (Method method : service.methods()) {
       if (!method.isPaged()) {
         continue;
       }
-      types.putAll(
+      typeStore.putAll(
+          service.pakkage(),
           Arrays.asList("%sPagedResponse", "%sPage", "%sFixedSizeCollection").stream()
-              .collect(
-                  Collectors.toMap(
-                      t -> String.format(t, JavaStyle.toUpperCamelCase(method.name())),
-                      t ->
-                          TypeNode.withReference(
-                              VaporReference.builder()
-                                  .setName(
-                                      String.format(t, JavaStyle.toUpperCamelCase(method.name())))
-                                  .setEnclosingClassNames(
-                                      ClassNames.getServiceClientClassName(service))
-                                  .setPakkage(service.pakkage())
-                                  .setIsStaticImport(true) // Same class, so they won't be imported.
-                                  .build()))));
+              .map(p -> String.format(p, JavaStyle.toUpperCamelCase(method.name())))
+              .collect(Collectors.toList()),
+          true,
+          ClassNames.getServiceClientClassName(service));
     }
+
     // LRO Gapic-generated types.
-    types.put(
-        "OperationsClient",
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName("OperationsClient")
-                .setPakkage("com.google.longrunning")
-                .build()));
+    typeStore.put("com.google.longrunning", "OperationsClient");
     // Pagination types.
-    types.putAll(
+    typeStore.putAll(
+        service.pakkage(),
         service.methods().stream()
             .filter(m -> m.isPaged())
-            .collect(
-                Collectors.toMap(
-                    m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()),
-                    m ->
-                        TypeNode.withReference(
-                            VaporReference.builder()
-                                .setName(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
-                                .setPakkage(service.pakkage())
-                                .setEnclosingClassNames(
-                                    ClassNames.getServiceClientClassName(service))
-                                .setIsStaticImport(true)
-                                .build()))));
-    return types;
-  }
-
-  private static Map<String, TypeNode> createProtoMessageTypes(
-      String pakkage, Map<String, Message> messageTypes) {
-    // Vapor message types.
-    return messageTypes.entrySet().stream()
-        .collect(
-            Collectors.toMap(
-                e -> e.getValue().name(),
-                e ->
-                    TypeNode.withReference(
-                        VaporReference.builder()
-                            .setName(e.getValue().name())
-                            .setPakkage(pakkage)
-                            .build())));
-  }
-
-  private static Variable createVariable(String name, TypeNode type) {
-    return Variable.builder().setName(name).setType(type).build();
+            .map(m -> String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, m.name()))
+            .collect(Collectors.toList()),
+        true,
+        ClassNames.getServiceClientClassName(service));
   }
 
   private static List<Reference> getGenericsForCallable(
-      CallableMethodKind kind, Method method, Map<String, TypeNode> types) {
+      CallableMethodKind kind, Method method, TypeStore typeStore) {
     if (kind.equals(CallableMethodKind.LRO)) {
       return Arrays.asList(
           method.inputType().reference(),
@@ -1537,7 +1486,9 @@ public class ServiceClientClassComposer implements ClassComposer {
     if (kind.equals(CallableMethodKind.PAGED)) {
       return Arrays.asList(
           method.inputType().reference(),
-          types.get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name())).reference());
+          typeStore
+              .get(String.format(PAGED_RESPONSE_TYPE_NAME_PATTERN, method.name()))
+              .reference());
     }
     return Arrays.asList(method.inputType().reference(), method.outputType().reference());
   }

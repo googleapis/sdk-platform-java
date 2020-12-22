@@ -3,24 +3,18 @@ load("@rules_java//java:defs.bzl", "java_library")
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "composer_files",
+    name = "store_files",
     srcs = glob(["*.java"]),
 )
 
 java_library(
-    name = "composer",
+    name = "store",
     srcs = [
-        ":composer_files",
+        ":store_files",
     ],
     deps = [
-        "//:service_config_java_proto",
         "//src/main/java/com/google/api/generator/engine/ast",
-        "//src/main/java/com/google/api/generator/engine/writer",
         "//src/main/java/com/google/api/generator/gapic:status_java_proto",
-        "//src/main/java/com/google/api/generator/gapic/composer/comment",
-        "//src/main/java/com/google/api/generator/gapic/composer/samplecode",
-        "//src/main/java/com/google/api/generator/gapic/composer/store",
-        "//src/main/java/com/google/api/generator/gapic/composer/utils",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/utils",
         "@com_google_api_api_common//jar",

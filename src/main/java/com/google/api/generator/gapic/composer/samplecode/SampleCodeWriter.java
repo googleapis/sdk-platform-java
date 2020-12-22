@@ -21,7 +21,7 @@ import java.util.List;
 
 public final class SampleCodeWriter {
 
-  public static String write(Statement ... statement) {
+  public static String write(Statement... statement) {
     return write(Arrays.asList(statement));
   }
 

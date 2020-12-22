@@ -27,9 +27,10 @@ import com.google.api.generator.engine.ast.NewObjectExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.store.TypeStore;
+import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -39,7 +40,6 @@ import io.grpc.ServerServiceDefinition;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
 public class MockServiceClassComposer implements ClassComposer {
@@ -54,7 +54,7 @@ public class MockServiceClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(Service service, Map<String, Message> ignore) {
-    Map<String, TypeNode> types = createTypes(service);
+    TypeStore typeStore = createTypes(service);
     String className = ClassNames.getMockServiceClassName(service);
     GapicClass.Kind kind = Kind.TEST;
     String pakkage = service.pakkage();
@@ -62,77 +62,75 @@ public class MockServiceClassComposer implements ClassComposer {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString(pakkage)
-            .setAnnotations(createClassAnnotations(types))
+            .setAnnotations(createClassAnnotations(typeStore))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setImplementsTypes(createClassImplements(types))
-            .setStatements(createFieldDeclarations(service, types))
-            .setMethods(createClassMethods(service, types))
+            .setImplementsTypes(createClassImplements(typeStore))
+            .setStatements(createFieldDeclarations(service, typeStore))
+            .setMethods(createClassMethods(service, typeStore))
             .build();
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<Statement> createFieldDeclarations(
-      Service service, Map<String, TypeNode> types) {
+  private static List<Statement> createFieldDeclarations(Service service, TypeStore typeStore) {
     return Arrays.asList(
         ExprStatement.withExpr(
             VariableExpr.builder()
-                .setVariable(getServiceImplVariable(service, types))
+                .setVariable(getServiceImplVariable(service, typeStore))
                 .setScope(ScopeNode.PRIVATE)
                 .setIsFinal(true)
                 .setIsDecl(true)
                 .build()));
   }
 
-  private static List<AnnotationNode> createClassAnnotations(Map<String, TypeNode> types) {
+  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
     return Arrays.asList(
-        AnnotationNode.builder().setType(types.get("BetaApi")).build(),
+        AnnotationNode.builder().setType(typeStore.get("BetaApi")).build(),
         AnnotationNode.builder()
-            .setType(types.get("Generated"))
+            .setType(typeStore.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
   }
 
-  private static List<TypeNode> createClassImplements(Map<String, TypeNode> types) {
-    return Arrays.asList(types.get("MockGrpcService"));
+  private static List<TypeNode> createClassImplements(TypeStore typeStore) {
+    return Arrays.asList(typeStore.get("MockGrpcService"));
   }
 
-  private static List<MethodDefinition> createClassMethods(
-      Service service, Map<String, TypeNode> types) {
+  private static List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
     VariableExpr serviceImplVarExpr =
-        VariableExpr.withVariable(getServiceImplVariable(service, types));
+        VariableExpr.withVariable(getServiceImplVariable(service, typeStore));
     return Arrays.asList(
-        createConstructor(service, serviceImplVarExpr, types),
-        createGetRequestsMethod(serviceImplVarExpr, types),
-        createAddResponseMethod(serviceImplVarExpr, types),
+        createConstructor(service, serviceImplVarExpr, typeStore),
+        createGetRequestsMethod(serviceImplVarExpr, typeStore),
+        createAddResponseMethod(serviceImplVarExpr, typeStore),
         createAddExceptionMethod(serviceImplVarExpr),
-        createGetServiceDefinitionMethod(serviceImplVarExpr, types),
+        createGetServiceDefinitionMethod(serviceImplVarExpr, typeStore),
         createResetMethod(serviceImplVarExpr));
   }
 
   private static MethodDefinition createConstructor(
-      Service service, VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
+      Service service, VariableExpr serviceImplVarExpr, TypeStore typeStore) {
     String mockImplName = ClassNames.getMockServiceImplClassName(service);
     Expr serviceImplAssignExpr =
         AssignmentExpr.builder()
             .setVariableExpr(serviceImplVarExpr)
-            .setValueExpr(NewObjectExpr.builder().setType(types.get(mockImplName)).build())
+            .setValueExpr(NewObjectExpr.builder().setType(typeStore.get(mockImplName)).build())
             .build();
 
     return MethodDefinition.constructorBuilder()
         .setScope(ScopeNode.PUBLIC)
         .setBody(Arrays.asList(ExprStatement.withExpr(serviceImplAssignExpr)))
-        .setReturnType(types.get(ClassNames.getMockServiceClassName(service)))
+        .setReturnType(typeStore.get(ClassNames.getMockServiceClassName(service)))
         .build();
   }
 
   private static MethodDefinition createGetRequestsMethod(
-      VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
+      VariableExpr serviceImplVarExpr, TypeStore typeStore) {
     TypeNode returnType =
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(List.class)
-                .setGenerics(Arrays.asList(types.get("AbstractMessage").reference()))
+                .setGenerics(Arrays.asList(typeStore.get("AbstractMessage").reference()))
                 .build());
     String methodName = "getRequests";
     Expr returnExpr =
@@ -151,11 +149,14 @@ public class MockServiceClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createAddResponseMethod(
-      VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
+      VariableExpr serviceImplVarExpr, TypeStore typeStore) {
     String methodName = "addResponse";
     VariableExpr responseArgExpr =
         VariableExpr.withVariable(
-            Variable.builder().setName("response").setType(types.get("AbstractMessage")).build());
+            Variable.builder()
+                .setName("response")
+                .setType(typeStore.get("AbstractMessage"))
+                .build());
 
     Expr methodInvocationExpr =
         MethodInvocationExpr.builder()
@@ -198,8 +199,8 @@ public class MockServiceClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createGetServiceDefinitionMethod(
-      VariableExpr serviceImplVarExpr, Map<String, TypeNode> types) {
-    TypeNode returnType = types.get("ServerServiceDefinition");
+      VariableExpr serviceImplVarExpr, TypeStore typeStore) {
+    TypeNode returnType = typeStore.get("ServerServiceDefinition");
     Expr methodInvocationExpr =
         MethodInvocationExpr.builder()
             .setMethodName("bindService")
@@ -232,45 +233,25 @@ public class MockServiceClassComposer implements ClassComposer {
         .build();
   }
 
-  private static Map<String, TypeNode> createTypes(Service service) {
+  private static TypeStore createTypes(Service service) {
     List<Class> concreteClazzes =
         Arrays.asList(
             AbstractMessage.class, BetaApi.class, Generated.class, ServerServiceDefinition.class);
-    Map<String, TypeNode> types =
-        concreteClazzes.stream()
-            .collect(
-                Collectors.toMap(
-                    c -> c.getSimpleName(),
-                    c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
+    TypeStore typeStore = new TypeStore(concreteClazzes);
 
-    // Vapor dependency types.
-    String mockGrpcServiceName = "MockGrpcService";
-    types.put(
-        mockGrpcServiceName,
-        TypeNode.withReference(
-            VaporReference.builder()
-                .setName(mockGrpcServiceName)
-                .setPakkage("com.google.api.gax.grpc.testing")
-                .build()));
-    // Vapor same-package deps.
-    String mockImplName = ClassNames.getMockServiceImplClassName(service);
-    types.put(
-        mockImplName,
-        TypeNode.withReference(
-            VaporReference.builder().setName(mockImplName).setPakkage(service.pakkage()).build()));
-
-    String className = ClassNames.getMockServiceClassName(service);
-    types.put(
-        className,
-        TypeNode.withReference(
-            VaporReference.builder().setName(className).setPakkage(service.pakkage()).build()));
-    return types;
+    typeStore.put("com.google.api.gax.grpc.testing", "MockGrpcService");
+    typeStore.putAll(
+        service.pakkage(),
+        Arrays.asList(
+            ClassNames.getMockServiceImplClassName(service),
+            ClassNames.getMockServiceClassName(service)));
+    return typeStore;
   }
 
-  private static Variable getServiceImplVariable(Service service, Map<String, TypeNode> types) {
+  private static Variable getServiceImplVariable(Service service, TypeStore typeStore) {
     return Variable.builder()
         .setName(SERVICE_IMPL_VAR_NAME)
-        .setType(types.get(ClassNames.getMockServiceImplClassName(service)))
+        .setType(typeStore.get(ClassNames.getMockServiceImplClassName(service)))
         .build();
   }
 }

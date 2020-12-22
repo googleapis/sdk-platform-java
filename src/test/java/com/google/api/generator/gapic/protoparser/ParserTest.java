@@ -101,7 +101,12 @@ public class ParserTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Method> methods =
         Parser.parseMethods(
-            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+            echoService,
+            ECHO_PACKAGE,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     assertEquals(9, methods.size());
 
@@ -153,7 +158,12 @@ public class ParserTest {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Method> methods =
         Parser.parseMethods(
-            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+            echoService,
+            ECHO_PACKAGE,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
 
     assertEquals(9, methods.size());
 
@@ -199,7 +209,12 @@ public class ParserTest {
 
     List<Method> methods =
         Parser.parseMethods(
-            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+            echoService,
+            ECHO_PACKAGE,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
     assertThat(
             MethodSignatureParser.parseMethodSignatures(
                 methodDescriptor,
@@ -223,7 +238,12 @@ public class ParserTest {
 
     List<Method> methods =
         Parser.parseMethods(
-            echoService, ECHO_PACKAGE, messageTypes, resourceNames, outputResourceNames);
+            echoService,
+            ECHO_PACKAGE,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
     List<List<MethodArgument>> methodArgs =
         MethodSignatureParser.parseMethodSignatures(
             methodDescriptor,
