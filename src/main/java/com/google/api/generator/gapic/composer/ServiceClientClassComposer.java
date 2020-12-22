@@ -1511,6 +1511,11 @@ public class ServiceClientClassComposer implements ClassComposer {
       String pakkage, Map<String, Message> messageTypes) {
     // Vapor message types.
     return messageTypes.entrySet().stream()
+        // Short-term hack for messages that have nested subtypes with colliding names. This
+        // should work as long as there isn't heavy usage of fully-qualified nested subtypes in
+        // general. A long-term fix would involve adding a custom type-store that handles
+        // fully-qualified types.
+        .filter(e -> e.getValue().outerNestedTypes().isEmpty())
         .collect(
             Collectors.toMap(
                 e -> e.getValue().name(),

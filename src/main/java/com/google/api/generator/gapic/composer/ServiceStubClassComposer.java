@@ -40,6 +40,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -230,8 +231,16 @@ public class ServiceStubClassComposer implements ClassComposer {
                     c -> TypeNode.withReference(ConcreteReference.withClazz(c))));
 
     // Vapor message types.
+    List<String> msgs = new ArrayList<String>(messageTypes.keySet());
+    Collections.sort(msgs);
+    // Preconditions.checkState(false, "DEL: mesgs: " + msgs);
     types.putAll(
         messageTypes.entrySet().stream()
+            // Short-term hack for messages that have nested subtypes with colliding names. This
+            // should work as long as there isn't heavy usage of fully-qualified nested subtypes in
+            // general. A long-term fix would involve adding a custom type-store that handles
+            // fully-qualified types.
+            .filter(e -> e.getValue().outerNestedTypes().isEmpty())
             .collect(
                 Collectors.toMap(
                     e -> e.getValue().name(),

@@ -361,13 +361,18 @@ public class Parser {
         if (isMapType(nestedMessage)) {
           continue;
         }
-        outerNestedTypes.add(messageName);
+        List<String> currentNestedTypes = new ArrayList<>(outerNestedTypes);
+        currentNestedTypes.add(messageName);
         messages.putAll(
-            parseMessages(nestedMessage, outputResourceReferencesSeen, outerNestedTypes));
+            parseMessages(nestedMessage, outputResourceReferencesSeen, currentNestedTypes));
       }
     }
+    String messageKey =
+        outerNestedTypes.isEmpty() || outerNestedTypes.get(0).equals(messageName)
+            ? messageName
+            : String.format("%s.%s", String.join(".", outerNestedTypes), messageName);
     messages.put(
-        messageName,
+        messageKey,
         Message.builder()
             .setType(TypeParser.parseType(messageDescriptor))
             .setName(messageName)
@@ -564,8 +569,9 @@ public class Parser {
     Preconditions.checkNotNull(
         metadataMessage,
         String.format(
-            "LRO metadata message %s not found in method %s",
-            metadataTypeName, methodDescriptor.getName()));
+            "LRO metadata message %s not found in method %s" + ", DEL: " + messageTypes.keySet(),
+            metadataTypeName,
+            methodDescriptor.getName()));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }
