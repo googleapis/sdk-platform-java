@@ -130,8 +130,11 @@ public class HttpRuleParser {
     Preconditions.checkState(
         inputMessage.fieldMap().containsKey(binding),
         String.format(
-            "Expected message %s to contain field %s but none found",
-            inputMessage.name(), binding));
+            "Expected message %s to contain field %s but none found"
+                + ", DEL: "
+                + inputMessage.fieldMap().keySet(),
+            inputMessage.name(),
+            binding));
     Field field = inputMessage.fieldMap().get(binding);
     boolean fieldCondition = !field.isRepeated();
     if (!isBody) {
