@@ -224,7 +224,6 @@ public class ServiceStubClassComposer implements ClassComposer {
     TypeStore typeStore = new TypeStore(concreteClazzes);
     typeStore.putMessageTypes(service.pakkage(), messageTypes);
 
-    // Vapor dependency typeStore.
     typeStore.put("com.google.longrunning.stub", "OperationsStub");
 
     // Pagination types.
