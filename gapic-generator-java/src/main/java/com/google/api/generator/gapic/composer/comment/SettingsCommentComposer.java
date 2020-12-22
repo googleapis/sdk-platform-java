@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.comment;
 
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-class SettingsCommentComposer {
+public class SettingsCommentComposer {
   private static final String COLON = ":";
 
   private static final String STUB_PATTERN = "%sStub";
@@ -54,29 +54,29 @@ class SettingsCommentComposer {
   private static final String CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION =
       "Retries are configured for idempotent methods but not for non-idempotent methods.";
 
-  static final CommentStatement DEFAULT_SCOPES_COMMENT =
+  public static final CommentStatement DEFAULT_SCOPES_COMMENT =
       toSimpleComment("The default scopes of the service.");
 
-  static final CommentStatement DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
-  static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
       toSimpleComment("Returns the default service endpoint.");
-  static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_SERVICE_SCOPES_METHOD_COMMENT =
       toSimpleComment("Returns the default service scopes.");
 
-  static final CommentStatement DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_CREDENTIALS_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default credentials for this service.");
 
-  static final CommentStatement DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement DEFAULT_GRPC_TRANSPORT_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default ChannelProvider for this service.");
 
-  static final CommentStatement NEW_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement NEW_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a new builder for this class.");
 
-  static final CommentStatement TO_BUILDER_METHOD_COMMENT =
+  public static final CommentStatement TO_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder containing all the values of this settings class.");
 
-  static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
+  public static final List<CommentStatement> APPLY_TO_ALL_UNARY_METHODS_METHOD_COMMENTS =
       Arrays.asList(
               LineComment.withComment("NEXT_MAJOR_VER: remove 'throws Exception'."),
               JavaDocComment.builder()
@@ -90,19 +90,19 @@ class SettingsCommentComposer {
           .map(c -> CommentStatement.withComment(c))
           .collect(Collectors.toList());
 
-  static CommentStatement createCallSettingsGetterComment(String javaMethodName) {
+  public static CommentStatement createCallSettingsGetterComment(String javaMethodName) {
     return toSimpleComment(String.format(CALL_SETTINGS_METHOD_DOC_PATTERN, javaMethodName));
   }
 
-  static CommentStatement createBuilderClassComment(String outerClassName) {
+  public static CommentStatement createBuilderClassComment(String outerClassName) {
     return toSimpleComment(String.format(BUILDER_CLASS_DOC_PATTERN, outerClassName));
   }
 
-  static CommentStatement createCallSettingsBuilderGetterComment(String javaMethodName) {
+  public static CommentStatement createCallSettingsBuilderGetterComment(String javaMethodName) {
     return toSimpleComment(String.format(CALL_SETTINGS_BUILDER_METHOD_DOC_PATTERN, javaMethodName));
   }
 
-  static List<CommentStatement> createClassHeaderComments(
+  public static List<CommentStatement> createClassHeaderComments(
       String configuredClassName,
       String defaultHost,
       Optional<String> methodNameOpt,
