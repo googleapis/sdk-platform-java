@@ -231,6 +231,22 @@ public class MetricsClient implements BackgroundResource {
    * Lists logs-based metrics.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   ListLogMetricsRequest request =
+   *       ListLogMetricsRequest.newBuilder()
+   *           .setParent(ProjectName.of("[PROJECT]").toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   ApiFuture<LogMetric> future = metricsClient.listLogMetricsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogMetric element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogMetricsRequest, ListLogMetricsPagedResponse>
       listLogMetricsPagedCallable() {

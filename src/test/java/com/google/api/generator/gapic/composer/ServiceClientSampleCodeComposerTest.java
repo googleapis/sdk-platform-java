@@ -1505,4 +1505,180 @@ public class ServiceClientSampleCodeComposerTest {
             "}");
     assertEquals(results, expected);
   }
+
+  // ================================Paged Callable Method Sample Code ====================//
+  @Test
+  public void validComposePagedCallableMethodHeaderSampleCode() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  PagedExpandRequest request =\n",
+            "      PagedExpandRequest.newBuilder()\n",
+            "          .setContent(\"content951530617\")\n",
+            "          .setPageSize(883849137)\n",
+            "          .setPageToken(\"pageToken873572522\")\n",
+            "          .build();\n",
+            "  ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);\n",
+            "  // Do something.\n",
+            "  for (EchoResponse element : future.get().iterateAll()) {\n",
+            "    // doThingsWith(element);\n",
+            "  }\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void invalidComposePagedCallableMethodHeaderSampleCode_inputTypeNotExistInMessage() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NotExistRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("PagedExpandResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
+
+  @Test
+  public void invalidComposePagedCallableMethodHeaderSampleCode_noExistMethodResponse() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NoExistResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
+
+  @Test
+  public void invalidComposePagedCallableMethodHeaderSampleCode_noRepeatedResponse() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NoRepeatedResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("PagedExpand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setIsPaged(true)
+            .build();
+    Field responseField = Field.builder().setName("response").setType(TypeNode.STRING).build();
+    Message noRepeatedResponseMessage =
+        Message.builder()
+            .setName("NoRepeatedResponse")
+            .setType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("NoRepeatedResponse")
+                        .setPakkage(SHOWCASE_PACKAGE_NAME)
+                        .build()))
+            .setFields(Arrays.asList(responseField))
+            .build();
+    messageTypes.put("NoRepeatedResponse", noRepeatedResponseMessage);
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
 }
