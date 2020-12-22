@@ -1,0 +1,22 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "comment_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "comment",
+    srcs = [
+        ":comment_files",
+    ],
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic/composer/utils",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/utils",
+        "@com_google_guava_guava//jar",
+    ],
+)
