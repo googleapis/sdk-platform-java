@@ -1458,6 +1458,7 @@ public class ServiceClientClassComposer implements ClassComposer {
           true,
           ClassNames.getServiceClientClassName(service));
     }
+
     // LRO Gapic-generated types.
     typeStore.put("com.google.longrunning", "OperationsClient");
     // Pagination types.
