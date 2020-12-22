@@ -477,7 +477,10 @@ public class ServiceClientClassComposer {
   }
 
   private static List<MethodDefinition> createServiceMethods(
-      Service service, Map<String, Message> messageTypes, Map<String, TypeNode> types) {
+      Service service,
+      Map<String, Message> messageTypes,
+      Map<String, TypeNode> types,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
