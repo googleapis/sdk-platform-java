@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
+import java.util.Objects;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -46,6 +47,37 @@ public abstract class Field {
 
   public boolean hasResourceReference() {
     return type().equals(TypeNode.STRING) && resourceReference() != null;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof Field)) {
+      return false;
+    }
+
+    Field other = (Field) o;
+    return name().equals(other.name())
+        && type().equals(other.type())
+        && isMessage() == other.isMessage()
+        && isEnum() == other.isEnum()
+        && isRepeated() == other.isRepeated()
+        && isMap() == other.isMap()
+        && isContainedInOneof() == other.isContainedInOneof()
+        && Objects.equals(resourceReference(), other.resourceReference())
+        && Objects.equals(description(), other.description());
+  }
+
+  @Override
+  public int hashCode() {
+    return 17 * name().hashCode()
+        + 19 * type().hashCode()
+        + (isMessage() ? 1 : 0) * 23
+        + (isEnum() ? 1 : 0) * 29
+        + (isRepeated() ? 1 : 0) * 31
+        + (isMap() ? 1 : 0) * 37
+        + (isContainedInOneof() ? 1 : 0) * 41
+        + (resourceReference() == null ? 0 : resourceReference().hashCode())
+        + (description() == null ? 0 : description().hashCode());
   }
 
   public abstract Builder toBuilder();
