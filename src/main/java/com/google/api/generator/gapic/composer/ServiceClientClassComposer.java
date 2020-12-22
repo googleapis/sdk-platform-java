@@ -34,6 +34,7 @@ import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -53,6 +54,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -118,11 +120,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createClassHeaderComments(
-                    service,
-                    typeStore.get(ClassNames.getServiceClientClassName(service)),
-                    typeStore.get(ClassNames.getServiceSettingsClassName(service))))
+            .setHeaderCommentStatements(createClassHeaderComments(service, typeStore))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(typeStore))
             .setScope(ScopeNode.PUBLIC)
@@ -146,6 +144,20 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static List<TypeNode> createClassImplements(TypeStore typeStore) {
     return Arrays.asList(typeStore.get("BackgroundResource"));
+  }
+
+  private static List<CommentStatement> createClassHeaderComments(
+      Service service, TypeStore typeStore) {
+    TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
+    TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
+    String credentialsSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientType, settingsType);
+    String endpointSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+            clientType, settingsType);
+    return ServiceClientCommentComposer.createClassHeaderComments(
+        service, credentialsSampleCode, endpointSampleCode);
   }
 
   private static List<MethodDefinition> createClassMethods(
