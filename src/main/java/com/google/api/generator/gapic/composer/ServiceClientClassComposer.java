@@ -97,6 +97,7 @@ public class ServiceClientClassComposer implements ClassComposer {
 
   private static final Reference LIST_REFERENCE = ConcreteReference.withClazz(List.class);
   private static final Reference MAP_REFERENCE = ConcreteReference.withClazz(Map.class);
+
   private static final TypeNode OBJECTS_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(Objects.class));
 
