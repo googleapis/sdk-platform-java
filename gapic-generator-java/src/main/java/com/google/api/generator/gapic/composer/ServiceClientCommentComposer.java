@@ -17,7 +17,6 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
@@ -109,7 +108,7 @@ class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeNode clientType, TypeNode settingsType) {
+      Service service, String credentialsSampleCode, String endpointSampleCode) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -140,13 +139,9 @@ class ServiceClientCommentComposer {
             SERVICE_DESCRIPTION_CUSTOMIZE_SUMMARY_PATTERN,
             ClassNames.getServiceSettingsClassName(service)));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_CREDENTIALS_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addSampleCode(
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
-            clientType, settingsType));
+    classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addSampleCode(
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
-            clientType, settingsType));
+    classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
 
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SAMPLE_REFERENCE_STRING);
 
