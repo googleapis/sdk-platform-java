@@ -507,7 +507,7 @@ public class ServiceClientClassComposer {
         javaMethods.add(
             createPagedCallableMethod(service, method, types, messageTypes, resourceNames));
       }
-      javaMethods.add(createCallableMethod(service, method, types));
+      javaMethods.add(createCallableMethod(service, method, types, messageTypes, resourceNames));
     }
     return javaMethods;
   }
@@ -692,17 +692,16 @@ public class ServiceClientClassComposer {
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service, Method method, Map<String, TypeNode> types) {
+      Service service,
+      Method method,
+      Map<String, TypeNode> types,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     // TODO(summerji): Implement sample code for callable methods which include stream methods and
     // unary methods,
     //  and pass in actual map of Messages and ResourceNames
     return createCallableMethod(
-        service,
-        method,
-        CallableMethodKind.REGULAR,
-        types,
-        Collections.emptyMap(),
-        Collections.emptyMap());
+        service, method, CallableMethodKind.REGULAR, types, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createPagedCallableMethod(
@@ -778,6 +777,17 @@ public class ServiceClientClassComposer {
       sampleCode =
           Optional.of(
               ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                  method,
+                  types.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
+    }
+    if (method.stream().equals(Stream.CLIENT)) {
+      // TODO (summerji): Implement sample code for other Stream Types and replace the conditions by
+      // ```if (!method.stream().equals(Stream.NONE))```
+      sampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
                   method,
                   types.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
