@@ -39,6 +39,7 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -224,7 +225,6 @@ public class ServiceStubClassComposer implements ClassComposer {
     TypeStore typeStore = new TypeStore(concreteClazzes);
     typeStore.putMessageTypes(service.pakkage(), messageTypes);
 
-    // Vapor dependency typeStore.
     typeStore.put("com.google.longrunning.stub", "OperationsStub");
 
     // Pagination types.
