@@ -736,6 +736,26 @@ public class AssetServiceClient implements BackgroundResource {
    * on the desired scope, otherwise the request will be rejected.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SearchAllResourcesRequest request =
+   *       SearchAllResourcesRequest.newBuilder()
+   *           .setScope("scope109264468")
+   *           .setQuery("query107944136")
+   *           .addAllAssetTypes(new ArrayList<String>())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .build();
+   *   ApiFuture<ResourceSearchResult> future =
+   *       assetServiceClient.searchAllResourcesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (ResourceSearchResult element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<SearchAllResourcesRequest, SearchAllResourcesPagedResponse>
       searchAllResourcesPagedCallable() {
@@ -857,6 +877,24 @@ public class AssetServiceClient implements BackgroundResource {
    * permission on the desired scope, otherwise the request will be rejected.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   SearchAllIamPoliciesRequest request =
+   *       SearchAllIamPoliciesRequest.newBuilder()
+   *           .setScope("scope109264468")
+   *           .setQuery("query107944136")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<IamPolicySearchResult> future =
+   *       assetServiceClient.searchAllIamPoliciesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (IamPolicySearchResult element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<SearchAllIamPoliciesRequest, SearchAllIamPoliciesPagedResponse>
       searchAllIamPoliciesPagedCallable() {

@@ -377,7 +377,25 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (EchoResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
       pagedExpandPagedCallable() {
     return stub.pagedExpandPagedCallable();
@@ -435,7 +453,26 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   PagedExpandRequest request =
+   *       PagedExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<EchoResponse> future =
+   *       echoClient.simplePagedExpandPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (EchoResponse element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, SimplePagedExpandPagedResponse>
       simplePagedExpandPagedCallable() {
     return stub.simplePagedExpandPagedCallable();

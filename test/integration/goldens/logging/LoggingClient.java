@@ -534,6 +534,24 @@ public class LoggingClient implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .addAllResourceNames(new ArrayList<String>())
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<LogEntry> future = loggingClient.listLogEntriesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogEntry element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesPagedResponse>
       listLogEntriesPagedCallable() {
@@ -586,6 +604,22 @@ public class LoggingClient implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<MonitoredResourceDescriptor> future =
+   *       loggingClient.listMonitoredResourceDescriptorsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (MonitoredResourceDescriptor element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsPagedResponse>
@@ -773,6 +807,22 @@ public class LoggingClient implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogsRequest request =
+   *       ListLogsRequest.newBuilder()
+   *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<String> future = loggingClient.listLogsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (String element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsPagedResponse> listLogsPagedCallable() {
     return stub.listLogsPagedCallable();

@@ -365,6 +365,24 @@ public class ConfigClient implements BackgroundResource {
    * Lists buckets (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListBucketsRequest request =
+   *       ListBucketsRequest.newBuilder()
+   *           .setParent(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   ApiFuture<LogBucket> future = configClient.listBucketsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogBucket element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBucketsRequest, ListBucketsPagedResponse>
       listBucketsPagedCallable() {
@@ -632,6 +650,22 @@ public class ConfigClient implements BackgroundResource {
    * Lists sinks.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListSinksRequest request =
+   *       ListSinksRequest.newBuilder()
+   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   ApiFuture<LogSink> future = configClient.listSinksPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogSink element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListSinksRequest, ListSinksPagedResponse> listSinksPagedCallable() {
     return stub.listSinksPagedCallable();
@@ -1423,6 +1457,24 @@ public class ConfigClient implements BackgroundResource {
    * Lists all the exclusions in a parent resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListExclusionsRequest request =
+   *       ListExclusionsRequest.newBuilder()
+   *           .setParent(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   ApiFuture<LogExclusion> future =
+   *       configClient.listExclusionsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogExclusion element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListExclusionsRequest, ListExclusionsPagedResponse>
       listExclusionsPagedCallable() {

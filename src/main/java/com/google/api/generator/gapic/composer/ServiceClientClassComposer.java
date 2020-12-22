@@ -529,7 +529,8 @@ public class ServiceClientClassComposer {
             createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames));
       }
       if (method.isPaged()) {
-        javaMethods.add(createPagedCallableMethod(service, method, typeStore));
+        javaMethods.add(
+            createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames));
       }
       javaMethods.add(createCallableMethod(service, method, typeStore));
     }
@@ -730,16 +731,13 @@ public class ServiceClientClassComposer {
   }
 
   private static MethodDefinition createPagedCallableMethod(
-      Service service, Method method, TypeStore typeStore) {
-    // TODO(summerji): Implement sample code for paged callable method and pass in actual map of
-    // Messages and ResourceNames
+      Service service,
+      Method method,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     return createCallableMethod(
-        service,
-        method,
-        CallableMethodKind.PAGED,
-        typeStore,
-        Collections.emptyMap(),
-        Collections.emptyMap());
+        service, method, CallableMethodKind.PAGED, typeStore, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createCallableMethod(
@@ -791,12 +789,20 @@ public class ServiceClientClassComposer {
             .build();
 
     Optional<String> sampleCode = Optional.empty();
-    // TODO (summerji): Implement sample code for CallableMethodKind.PAGED and
-    // CallableMethodKind.REGULAR
+    // TODO (summerji): Implement sample code for CallableMethodKind.REGULAR
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCode =
           Optional.of(
               ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  method,
+                  typeStore.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
+    }
+    if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
+      sampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
                   method,
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
