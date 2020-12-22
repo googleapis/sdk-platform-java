@@ -27,17 +27,12 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.Arrays;
-import java.util.function.BiFunction;
 
 public class ServiceClientSampleCodeComposer {
   // TODO(summerji): Add unit tests for ServiceClientSampleCodeComposer.
 
   public static String composeClassHeaderCredentialsSampleCode(
       TypeNode clientType, TypeNode settingsType) {
-    // Funcdtion instead of a helper for better config / locality reference.
-    BiFunction<String, TypeNode, VariableExpr> createVarExprFn =
-        (s, t) -> VariableExpr.withVariable(Variable.builder().setName(s).setType(t).build());
-
     // Initialize clientSettings with builder() method.
     // e.g. EchoSettings echoSettings =
     // EchoSettings.newBuilder().setCredentialsProvider(FixedCredentialsProvider.create("myCredentials")).build();
@@ -49,7 +44,9 @@ public class ServiceClientSampleCodeComposer {
                 .setName("myCredentials")
                 .setPakkage(clientType.reference().pakkage())
                 .build());
-    VariableExpr settingsVarExpr = createVarExprFn.apply(settingsName, settingsType);
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(settingsName).setType(settingsType).build());
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
@@ -60,7 +57,9 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr credentialArgExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(fixedCredentialProvideType)
-            .setArguments(createVarExprFn.apply("myCredentials", myCredentialsType))
+            .setArguments(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("myCredentials").setType(myCredentialsType).build()))
             .setMethodName("create")
             .build();
     MethodInvocationExpr credentialsMethodExpr =
@@ -83,7 +82,9 @@ public class ServiceClientSampleCodeComposer {
 
     // Initialized client with create() method.
     // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
-    VariableExpr clientVarExpr = createVarExprFn.apply(clientName, clientType);
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(clientName).setType(clientType).build());
     MethodInvocationExpr createMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(clientType)
@@ -104,10 +105,6 @@ public class ServiceClientSampleCodeComposer {
 
   public static String composeClassHeaderEndpointSampleCode(
       TypeNode clientType, TypeNode settingsType) {
-    // Funcdtion instead of a helper for better config / locality reference.
-    BiFunction<String, TypeNode, VariableExpr> createVarExprFn =
-        (s, t) -> VariableExpr.withVariable(Variable.builder().setName(s).setType(t).build());
-
     // Initialize client settings with builder() method.
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
@@ -118,7 +115,9 @@ public class ServiceClientSampleCodeComposer {
                 .setName("myEndpoint")
                 .setPakkage(clientType.reference().pakkage())
                 .build());
-    VariableExpr settingsVarExpr = createVarExprFn.apply(settingsName, settingsType);
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(settingsName).setType(settingsType).build());
     MethodInvocationExpr newBuilderMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(settingsType)
@@ -127,7 +126,9 @@ public class ServiceClientSampleCodeComposer {
     MethodInvocationExpr credentialsMethodExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(newBuilderMethodExpr)
-            .setArguments(createVarExprFn.apply("myEndpoint", myEndpointType))
+            .setArguments(
+                VariableExpr.withVariable(
+                    Variable.builder().setName("myEndpoint").setType(myEndpointType).build()))
             .setMethodName("setEndpoint")
             .build();
     MethodInvocationExpr buildMethodExpr =
@@ -145,7 +146,9 @@ public class ServiceClientSampleCodeComposer {
 
     // Initialize client with create() method.
     // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
-    VariableExpr clientVarExpr = createVarExprFn.apply(clientName, clientType);
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(clientName).setType(clientType).build());
     MethodInvocationExpr createMethodExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(clientType)
