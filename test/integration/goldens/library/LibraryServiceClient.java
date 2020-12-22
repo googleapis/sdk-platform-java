@@ -324,6 +324,21 @@ public class LibraryServiceClient implements BackgroundResource {
    * necessarily be added to the end of this list.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ListShelvesRequest request =
+   *       ListShelvesRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<Shelf> future = libraryServiceClient.listShelvesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (Shelf element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListShelvesRequest, ListShelvesPagedResponse>
       listShelvesPagedCallable() {
@@ -827,6 +842,22 @@ public class LibraryServiceClient implements BackgroundResource {
    * exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   ListBooksRequest request =
+   *       ListBooksRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<Book> future = libraryServiceClient.listBooksPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (Book element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBooksRequest, ListBooksPagedResponse> listBooksPagedCallable() {
     return stub.listBooksPagedCallable();
