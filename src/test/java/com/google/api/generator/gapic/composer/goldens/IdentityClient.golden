@@ -133,8 +133,7 @@ public class IdentityClient implements BackgroundResource {
     CreateUserRequest request =
         CreateUserRequest.newBuilder()
             .setParent(parent)
-            .setDisplayName(displayName)
-            .setEmail(email)
+            .setUser(User.newBuilder().setDisplayName(displayName).setEmail(email).build())
             .build();
     return createUser(request);
   }
@@ -161,12 +160,71 @@ public class IdentityClient implements BackgroundResource {
     CreateUserRequest request =
         CreateUserRequest.newBuilder()
             .setParent(parent)
-            .setDisplayName(displayName)
-            .setEmail(email)
-            .setAge(age)
-            .setNickname(nickname)
-            .setEnableNotifications(enableNotifications)
-            .setHeightFeet(heightFeet)
+            .setUser(
+                User.newBuilder()
+                    .setDisplayName(displayName)
+                    .setEmail(email)
+                    .setAge(age)
+                    .setNickname(nickname)
+                    .setEnableNotifications(enableNotifications)
+                    .setHeightFeet(heightFeet)
+                    .build())
+            .build();
+    return createUser(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * @param parent
+   * @param displayName
+   * @param email
+   * @param hobbyName
+   * @param songName
+   * @param weeklyFrequency
+   * @param companyName
+   * @param title
+   * @param subject
+   * @param artistName
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final User createUser(
+      String parent,
+      String displayName,
+      String email,
+      String hobbyName,
+      String songName,
+      int weeklyFrequency,
+      String companyName,
+      String title,
+      String subject,
+      String artistName) {
+    CreateUserRequest request =
+        CreateUserRequest.newBuilder()
+            .setParent(parent)
+            .setUser(
+                User.newBuilder()
+                    .setDisplayName(displayName)
+                    .setEmail(email)
+                    .setHobby(
+                        Hobby.newBuilder()
+                            .setHobbyName(hobbyName)
+                            .setWeeklyFrequency(weeklyFrequency)
+                            .setInstructionManual(
+                                Book.newBuilder().setTitle(title).setSubject(subject).build())
+                            .build())
+                    .setSong(
+                        Song.newBuilder()
+                            .setSongName(songName)
+                            .setSongArtist(
+                                Artist.newBuilder()
+                                    .setRecordingCompany(
+                                        RecordingCompany.newBuilder()
+                                            .setCompanyName(companyName)
+                                            .build())
+                                    .setArtistName(artistName)
+                                    .build())
+                            .build())
+                    .build())
             .build();
     return createUser(request);
   }
