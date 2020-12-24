@@ -68,6 +68,8 @@ import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
+import com.google.api.generator.util.TriFunction;
+import com.google.api.generator.util.Trie;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -84,6 +86,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
@@ -1336,23 +1339,68 @@ public class ServiceClientClassComposer implements ClassComposer {
   static Expr createRequestBuilderExpr(
       Method method, List<MethodArgument> signature, TypeStore typeStore) {
     TypeNode methodInputType = method.inputType();
-    MethodInvocationExpr newBuilderExpr =
+    Expr newBuilderExpr =
         MethodInvocationExpr.builder()
             .setMethodName("newBuilder")
             .setStaticReferenceType(methodInputType)
             .build();
-    for (MethodArgument argument : signature) {
-      newBuilderExpr = buildNestedSetterInvocationExpr(argument, newBuilderExpr);
+    // Maintain the args' order of appearance for better determinism.
+    List<Field> rootFields = new ArrayList<>();
+    Map<Field, Trie<Field>> rootFieldToTrie = new HashMap<>();
+    for (MethodArgument arg : signature) {
+      Field rootField = arg.nestedFields().isEmpty() ? arg.field() : arg.nestedFields().get(0);
+      if (!rootFields.contains(rootField)) {
+        rootFields.add(rootField);
+      }
+      Trie<Field> updatedTrie =
+          rootFieldToTrie.containsKey(rootField) ? rootFieldToTrie.get(rootField) : new Trie();
+      List<Field> nestedFieldsWithChild = new ArrayList<>(arg.nestedFields());
+      nestedFieldsWithChild.add(arg.field());
+      updatedTrie.insert(nestedFieldsWithChild);
+      rootFieldToTrie.put(rootField, updatedTrie);
     }
 
-    MethodInvocationExpr builderExpr =
-        MethodInvocationExpr.builder()
-            .setMethodName("build")
-            .setExprReferenceExpr(newBuilderExpr)
-            .setReturnType(methodInputType)
-            .build();
+    Function<Field, Expr> parentPreprocFn =
+        field ->
+            (Expr)
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(field.type())
+                    .setMethodName("newBuilder")
+                    .build();
+    TriFunction<Field, Expr, Expr, Expr> parentPostprocFn =
+        (field, baseRefExpr, leafProcessedExpr) -> {
+          boolean isRootNode = field == null;
+          return isRootNode
+              ? leafProcessedExpr
+              : MethodInvocationExpr.builder()
+                  .setExprReferenceExpr(baseRefExpr)
+                  .setMethodName(String.format("set%s", JavaStyle.toUpperCamelCase(field.name())))
+                  .setArguments(
+                      MethodInvocationExpr.builder()
+                          .setExprReferenceExpr(leafProcessedExpr)
+                          .setMethodName("build")
+                          .build())
+                  .build();
+        };
 
-    return builderExpr;
+    final Map<Field, MethodArgument> fieldToMethodArg =
+        signature.stream().collect(Collectors.toMap(a -> a.field(), a -> a));
+    BiFunction<Field, Expr, Expr> leafProcFn =
+        (field, parentBaseRefExpr) ->
+            (Expr) buildNestedSetterInvocationExpr(fieldToMethodArg.get(field), parentBaseRefExpr);
+
+    for (Field rootField : rootFields) {
+      newBuilderExpr =
+          rootFieldToTrie
+              .get(rootField)
+              .dfsTraverseAndReduce(parentPreprocFn, parentPostprocFn, leafProcFn, newBuilderExpr);
+    }
+
+    return MethodInvocationExpr.builder()
+        .setExprReferenceExpr(newBuilderExpr)
+        .setMethodName("build")
+        .setReturnType(methodInputType)
+        .build();
   }
 
   @VisibleForTesting
