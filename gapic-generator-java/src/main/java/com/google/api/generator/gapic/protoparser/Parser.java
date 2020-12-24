@@ -569,9 +569,8 @@ public class Parser {
     Preconditions.checkNotNull(
         metadataMessage,
         String.format(
-            "LRO metadata message %s not found in method %s" + ", DEL: " + messageTypes.keySet(),
-            metadataTypeName,
-            methodDescriptor.getName()));
+            "LRO metadata message %s not found in method %s",
+            metadataTypeName, methodDescriptor.getName()));
 
     return LongrunningOperation.withTypes(responseMessage.type(), metadataMessage.type());
   }
