@@ -46,6 +46,9 @@ service Identity {
         "parent,user.display_name,user.email";
     option (google.api.method_signature) =
         "parent,user.display_name,user.email,user.age,user.nickname,user.enable_notifications,user.height_feet";
+    // Test nested method arguments and ensure that order doesn't matter.
+    option (google.api.method_signature) =
+        "parent,user.display_name,user.email,user.hobby.hobby_name,user.song.song_name,user.hobby.weekly_frequency,user.song.song_artist.recording_company.company_name,user.hobby.instruction_manual.title,user.hobby.instruction_manual.subject,user.song.song_artist.artist_name";
   }
 
   // Retrieves the User with the given uri.
@@ -121,6 +124,55 @@ message User {
   // (-- aip.dev/not-precedent: The default for the feature is true.
   //     Ordinarily, the default for a `bool` field should be false. --)
   optional bool enable_notifications = 9;
+
+  // The user's favorite hobby.
+  optional Hobby hobby = 10;
+
+  // The user's song.
+  optional Song song = 11;
+}
+
+message Hobby {
+  // The name of the hobby.
+  string hobby_name = 1;
+
+  // Weekly frequency this hobby is performed.
+  int32 weekly_frequency = 2;
+
+  // The instruction manual for the hobby.
+  Book instruction_manual = 3;
+}
+
+message Book {
+  // The title of the instruction manual.
+  string title = 1;
+
+  // The subject of the instruction manual.
+  string subject = 2;
+}
+
+message Song {
+  // The name of the song.
+  string song_name = 1;
+
+  // The song's artist.
+  Artist song_artist = 2;
+}
+
+message Artist {
+  // The name of the artist.
+  string artist_name = 1;
+
+  // The artist's recording company.
+  RecordingCompany recording_company = 2;
+}
+
+message RecordingCompany {
+  // The recording company's name
+  string company_name = 1;
+
+  // The year the company was founded.
+  int32 founding_year = 2;
 }
 
 // The request message for the google.showcase.v1beta1.Identity\CreateUser
