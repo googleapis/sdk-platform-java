@@ -46,6 +46,28 @@ public abstract class MethodArgument implements Comparable<MethodArgument> {
     return compareVal;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (!(o instanceof MethodArgument)) {
+      return false;
+    }
+
+    MethodArgument other = (MethodArgument) o;
+    return name().equals(other.name())
+        && type().equals(other.type())
+        && field().equals(other.field()) & nestedFields().equals(other.nestedFields())
+        && isResourceNameHelper() == other.isResourceNameHelper();
+  }
+
+  @Override
+  public int hashCode() {
+    return 17 * name().hashCode()
+        + 19 * type().hashCode()
+        + 23 * field().hashCode()
+        + 29 * nestedFields().hashCode()
+        + (isResourceNameHelper() ? 1 : 0) * 31;
+  }
+
   public static Builder builder() {
     return new AutoValue_MethodArgument.Builder()
         .setNestedFields(ImmutableList.of())
