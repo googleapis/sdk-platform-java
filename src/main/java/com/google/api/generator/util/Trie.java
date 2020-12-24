@@ -14,9 +14,11 @@
 
 package com.google.api.generator.util;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * A common-prefix trie. T represents the type of each "char" in a word (which is a T-typed list).
@@ -24,7 +26,8 @@ import java.util.Map;
 public class Trie<T> {
   private class Node<T> {
     final T chr;
-    Map<T, Node> children = new HashMap<>();
+    // Maintain insertion order to enable deterministic test output.
+    Map<T, Node<T>> children = new LinkedHashMap<>();
     boolean isLeaf;
 
     Node() {
@@ -43,7 +46,7 @@ public class Trie<T> {
   }
 
   public void insert(List<T> word) {
-    Map<T, Node> children = root.children;
+    Map<T, Node<T>> children = root.children;
     for (int i = 0; i < word.size(); i++) {
       T chr = word.get(i);
       Node t;
@@ -71,8 +74,53 @@ public class Trie<T> {
     return searchNode(prefix) != null;
   }
 
+  /**
+   * Reduces the trie to a single value, via a DFS traversal.
+   *
+   * @param parentPreprocFn Transforms a parent node into an R-typed base value for consumption by
+   *     the child nodes. The rest of the children will compute their values using this as a base as
+   *     well, so it accumulates computational results as the traversal progresses. Does not handle
+   *     the root node (i.e. when {@code chr} is null).
+   * @param leafReduceFn Transforms a child node into an R-typed value using the value computed by
+   *     the parent nodes' preprocessing functions.
+   * @param parentPostprocFn Transforms the post-traversal result (from the child nodes) into
+   *     R-typed values, further building upon {@code baseValue}. Must handle the root node, i.e.
+   *     when {@code chr} is null.
+   * @param baseValue The base value upon which subsequent reductions will be performed. Ensure this
+   *     is a type that can accumulate values, such as StringBuilder. An immutable type such as
+   *     String will not work here.
+   */
+  public <R> R dfsTraverseAndReduce(
+      Function<T, R> parentPreprocFn,
+      TriFunction<T, R, R, R> parentPostprocFn,
+      BiFunction<T, R, R> leafReduceFn,
+      R baseValue) {
+    return dfsTraverseAndReduce(root, parentPreprocFn, parentPostprocFn, leafReduceFn, baseValue);
+  }
+
+  /** Traverses the trie DFS-style, reducing all values into a single one on {@code baseValue}. */
+  private <R> R dfsTraverseAndReduce(
+      Node<T> node,
+      Function<T, R> parentPreprocFn,
+      TriFunction<T, R, R, R> parentPostprocFn,
+      BiFunction<T, R, R> leafReduceFn,
+      R baseValue) {
+    if (node.isLeaf) {
+      return leafReduceFn.apply(node.chr, baseValue);
+    }
+
+    R leafReducedValue = node.chr == null ? baseValue : parentPreprocFn.apply(node.chr);
+    for (Map.Entry<T, Node<T>> e : node.children.entrySet()) {
+      // Thread the parent value through each of the children, and accumulate it.
+      leafReducedValue =
+          dfsTraverseAndReduce(
+              e.getValue(), parentPreprocFn, parentPostprocFn, leafReduceFn, leafReducedValue);
+    }
+    return parentPostprocFn.apply(node.chr, baseValue, leafReducedValue);
+  }
+
   private Node searchNode(List<T> word) {
-    Map<T, Node> children = root.children;
+    Map<T, Node<T>> children = root.children;
     Node t = null;
     for (int i = 0; i < word.size(); i++) {
       T chr = word.get(i);
