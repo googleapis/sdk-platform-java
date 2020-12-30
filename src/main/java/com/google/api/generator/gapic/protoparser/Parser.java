@@ -63,6 +63,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Parser {
   private static final String COMMA = ",";
@@ -547,17 +548,8 @@ public class Parser {
     OperationInfo lroInfo =
         methodDescriptor.getOptions().getExtension(OperationsProto.operationInfo);
 
-    String responseTypeName = lroInfo.getResponseType();
-    String responseTypePackage = "";
-    if (responseTypeName.contains(DOT)) {
-      responseTypeName = responseTypeName.substring(responseTypeName.lastIndexOf(DOT) + 1);
-    }
-
-    String metadataTypeName = lroInfo.getMetadataType();
-    if (metadataTypeName.contains(DOT)) {
-      metadataTypeName = metadataTypeName.substring(metadataTypeName.lastIndexOf(DOT) + 1);
-    }
-
+    String responseTypeName = parseNestedProtoTypeName(lroInfo.getResponseType());
+    String metadataTypeName = parseNestedProtoTypeName(lroInfo.getMetadataType());
     Message responseMessage = messageTypes.get(responseTypeName);
     Message metadataMessage = messageTypes.get(metadataTypeName);
     Preconditions.checkNotNull(
@@ -721,5 +713,25 @@ public class Parser {
     Preconditions.checkState(
         !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
     return finalJavaPackage;
+  }
+
+  /**
+   * Retrieves the nested type name from a fully-qualified protobuf type name. Example:
+   * google.ads.googleads.v3.resources.MutateJob.MutateJobMetadata > MutateJob.MutateJobMetadata.
+   */
+  @VisibleForTesting
+  static String parseNestedProtoTypeName(String fullyQualifiedName) {
+    if (!fullyQualifiedName.contains(DOT)) {
+      return fullyQualifiedName;
+    }
+    // Find the first component in CapitalCamelCase. Assumes that proto package
+    // components must be in all lowercase and type names are in CapitalCamelCase.
+    String[] components = fullyQualifiedName.split("\\.");
+    List<String> nestedTypeComponents =
+        IntStream.range(0, components.length)
+            .filter(i -> Character.isUpperCase(components[i].charAt(0)))
+            .mapToObj(i -> components[i])
+            .collect(Collectors.toList());
+    return String.join(".", nestedTypeComponents);
   }
 }
