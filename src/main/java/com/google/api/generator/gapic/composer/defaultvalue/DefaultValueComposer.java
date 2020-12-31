@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.defaultvalue;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
@@ -24,6 +24,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.resourcename.ResourceNameTokenizer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -49,7 +50,7 @@ public class DefaultValueComposer {
   private static TypeNode BYTESTRING_TYPE =
       TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 
-  static Expr createDefaultValue(
+  public static Expr createDefaultValue(
       MethodArgument methodArg, Map<String, ResourceName> resourceNames) {
     if (methodArg.isResourceNameHelper()) {
       Preconditions.checkState(
@@ -78,7 +79,7 @@ public class DefaultValueComposer {
         Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
   }
 
-  static Expr createDefaultValue(Field f) {
+  public static Expr createDefaultValue(Field f) {
     return createDefaultValue(f, false);
   }
 
@@ -154,7 +155,7 @@ public class DefaultValueComposer {
             "Default value for field %s with type %s not implemented yet.", f.name(), f.type()));
   }
 
-  static Expr createDefaultValue(
+  public static Expr createDefaultValue(
       ResourceName resourceName, List<ResourceName> resnames, String fieldOrMessageName) {
     boolean hasOnePattern = resourceName.patterns().size() == 1;
     if (resourceName.isOnlyWildcard()) {
@@ -224,7 +225,7 @@ public class DefaultValueComposer {
         .build();
   }
 
-  static Expr createSimpleMessageBuilderExpr(
+  public static Expr createSimpleMessageBuilderExpr(
       Message message, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
     MethodInvocationExpr builderExpr =
         MethodInvocationExpr.builder()
@@ -275,7 +276,7 @@ public class DefaultValueComposer {
         .build();
   }
 
-  static Expr createSimpleOperationBuilderExpr(String name, VariableExpr responseExpr) {
+  public static Expr createSimpleOperationBuilderExpr(String name, VariableExpr responseExpr) {
     Expr operationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(OPERATION_TYPE)
@@ -313,7 +314,7 @@ public class DefaultValueComposer {
         .build();
   }
 
-  static Expr createSimplePagedResponse(
+  public static Expr createSimplePagedResponse(
       TypeNode responseType, String repeatedFieldName, Expr responseElementVarExpr) {
     Expr pagedResponseExpr =
         MethodInvocationExpr.builder()
