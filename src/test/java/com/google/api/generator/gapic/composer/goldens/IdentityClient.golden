@@ -203,6 +203,35 @@ public class IdentityClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   String parent = UserName.of("[USER]").toString();
+   *   String displayName = "displayName1714148973";
+   *   String email = "email96619420";
+   *   String hobbyName = "hobbyName882586493";
+   *   String songName = "songName1535136064";
+   *   int weeklyFrequency = 1572999966;
+   *   String companyName = "companyName-508582744";
+   *   String title = "title110371416";
+   *   String subject = "subject-1867885268";
+   *   String artistName = "artistName629723762";
+   *   User response =
+   *       identityClient.createUser(
+   *           parent,
+   *           displayName,
+   *           email,
+   *           hobbyName,
+   *           songName,
+   *           weeklyFrequency,
+   *           companyName,
+   *           title,
+   *           subject,
+   *           artistName);
+   * }
+   * }</pre>
+   *
    * @param parent
    * @param displayName
    * @param email
