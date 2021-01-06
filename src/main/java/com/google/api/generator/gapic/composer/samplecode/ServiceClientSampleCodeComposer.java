@@ -691,6 +691,8 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
 
+    // Create ServerStream variable expression, and assign it with invoking server stream method.
+    // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request)
     TypeNode serverStreamType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -722,6 +724,10 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements =
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
 
+    // For-loop on server stream variable expresion.
+    // e.g. for (EchoResponse response : stream) {
+    //        // Do something when receive a response.
+    //      }
     VariableExpr responseVarExpr =
         VariableExpr.builder()
             .setVariable(
