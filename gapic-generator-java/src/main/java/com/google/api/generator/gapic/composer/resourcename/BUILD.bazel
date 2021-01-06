@@ -1,0 +1,25 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "resourcename_files",
+    srcs = glob(["*.java"]),
+)
+
+java_library(
+    name = "resourcename",
+    srcs = [
+        ":resourcename_files",
+    ],
+    deps = [
+        "//src/main/java/com/google/api/generator/engine/ast",
+        "//src/main/java/com/google/api/generator/gapic/composer/comment",
+        "//src/main/java/com/google/api/generator/gapic/composer/store",
+        "//src/main/java/com/google/api/generator/gapic/model",
+        "//src/main/java/com/google/api/generator/gapic/utils",
+        "@com_google_api_api_common",
+        "@com_google_guava_guava",
+        "@javax_annotation_javax_annotation_api",
+    ],
+)

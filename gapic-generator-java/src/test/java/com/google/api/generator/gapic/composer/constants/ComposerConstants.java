@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.constants;
 
 public class ComposerConstants {
   public static final String GOLDENFILES_DIRECTORY =

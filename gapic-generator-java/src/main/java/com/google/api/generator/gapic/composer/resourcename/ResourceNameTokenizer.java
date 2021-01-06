@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.resourcename;
 
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
@@ -32,7 +32,7 @@ public class ResourceNameTokenizer {
 
   private static final String NON_SLASH_SEP_REGEX = "\\}(_|\\-|\\.|~)\\{";
 
-  static List<List<String>> parseTokenHierarchy(List<String> patterns) {
+  public static List<List<String>> parseTokenHierarchy(List<String> patterns) {
     List<List<String>> tokenHierachies = new ArrayList<>();
     for (String pattern : patterns) {
       List<String> hierarchy = new ArrayList<>();
