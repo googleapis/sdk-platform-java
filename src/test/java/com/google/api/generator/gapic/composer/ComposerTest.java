@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.test.framework.Assert;

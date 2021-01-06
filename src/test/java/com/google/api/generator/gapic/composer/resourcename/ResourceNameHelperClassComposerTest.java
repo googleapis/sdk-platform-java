@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer;
+package com.google.api.generator.gapic.composer.resourcename;
 
 import static com.google.common.truth.Truth.assertThat;
 import static junit.framework.Assert.assertEquals;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
