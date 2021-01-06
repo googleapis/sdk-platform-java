@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer.samplecode;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.rpc.ServerStream;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -512,6 +513,44 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
+  public static String composeStreamCallableMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // Assign method's request variable with the default value.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(requestMessage);
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    AssignmentExpr requestAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build();
+
+    // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
+    List<Statement> bodyStatements =
+        composeStreamServerSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr);
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
   private static List<Statement> composeUnaryRpcMethodSampleCodeBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
@@ -645,6 +684,62 @@ public class ServiceClientSampleCodeComposer {
     }
 
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
+
+  private static List<Statement> composeStreamServerSampleCodeBodyStatements(
+      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+    List<Expr> bodyExprs = new ArrayList<>();
+    bodyExprs.add(requestAssignmentExpr);
+
+    TypeNode serverStreamType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ServerStream.class)
+                .setGenerics(method.outputType().reference())
+                .build());
+    VariableExpr serverStreamVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("stream").setType(serverStreamType).build());
+    MethodInvocationExpr clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
+            .setMethodName("call")
+            .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
+            .setReturnType(serverStreamType)
+            .build();
+    AssignmentExpr streamAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(serverStreamVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(clientStreamCallMethodInvocationExpr)
+            .build();
+    bodyExprs.add(streamAssignmentExpr);
+
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+
+    VariableExpr responseVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("response").setType(method.outputType()).build())
+            .setIsDecl(true)
+            .build();
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(responseVarExpr)
+            .setCollectionExpr(serverStreamVarExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("Do something when receive a response."))))
+            .build();
+    bodyStatements.add(forStatement);
+
+    return bodyStatements;
   }
 
   // ==================================Helpers===================================================//

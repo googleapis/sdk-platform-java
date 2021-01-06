@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
@@ -1682,4 +1683,89 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
                 method, clientType, resourceNames, messageTypes));
   }
+
+  // ==============================Server Stream Callable Method Sample Code ====================//
+  @Test
+  public void validComposeStreamCallableMethodHeaderSampleCode_serverStream() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("ExpandRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("Expand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setStream(Stream.SERVER)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  ExpandRequest request =\n",
+            "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
+            "  for (EchoResponse response : stream) {\n",
+            "    // Do something when receive a response.\n",
+            "  }\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void invalidComposeStreamCallableMethodHeaderSampleCode_serverStreamNotExistRequest() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NotExistRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("Expand")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setStream(Stream.SERVER)
+            .build();
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
 }
+

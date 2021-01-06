@@ -328,7 +328,20 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   ExpandRequest request =
+   *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+   *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
+   *   for (EchoResponse response : stream) {
+   *     // Do something when receive a response.
+   *   }
+   * }
+   * }</pre>
+   */
   public final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
     return stub.expandCallable();
   }
