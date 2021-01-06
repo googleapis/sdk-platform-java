@@ -1856,4 +1856,3 @@ public class ServiceClientSampleCodeComposerTest {
                 method, clientType, resourceNames, messageTypes));
   }
 }
-
