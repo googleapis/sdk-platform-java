@@ -1,0 +1,13 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "constants_files",
+    srcs = glob(["*.java"]),
+)
+
+java_binary(
+    name = "constants",
+    srcs = ["constants_files"],
+)

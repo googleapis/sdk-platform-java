@@ -447,6 +447,18 @@ public class ParserTest {
     assertEquals(String.format("%s:443", defaultHost), Parser.sanitizeDefaultHost(defaultHost));
   }
 
+  @Test
+  public void parseNestedProtoTypeName() {
+    assertEquals("MutateJobMetadata", Parser.parseNestedProtoTypeName("MutateJobMetadata"));
+    assertEquals(
+        "MutateJob.MutateJobMetadata",
+        Parser.parseNestedProtoTypeName("MutateJob.MutateJobMetadata"));
+    assertEquals(
+        "MutateJob.MutateJobMetadata",
+        Parser.parseNestedProtoTypeName(
+            "google.ads.googleads.v3.resources.MutateJob.MutateJobMetadata"));
+  }
+
   private void assertMethodArgumentEquals(
       String name, TypeNode type, List<TypeNode> nestedFields, MethodArgument argument) {
     assertEquals(name, argument.name());
