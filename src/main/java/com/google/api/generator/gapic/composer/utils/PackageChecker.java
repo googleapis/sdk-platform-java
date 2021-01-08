@@ -20,6 +20,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PackageChecker {
+
+  // Nothing to initialize.
   private PackageChecker() {}
 
   /**
