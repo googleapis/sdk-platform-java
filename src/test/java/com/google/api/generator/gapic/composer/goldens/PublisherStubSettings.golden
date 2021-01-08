@@ -91,7 +91,6 @@ import org.threeten.bp.Duration;
  * PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();
  * }</pre>
  */
-@BetaApi
 @Generated("by gapic-generator-java")
 public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   /** The default scopes of the service. */

@@ -24,6 +24,6 @@
  * <p>Sample for AssetServiceClient:
  */
 @Generated("by gapic-generator-java")
-package com.google.cloud.asset.v1;
+package com.google.cloud.asset.v1beta1;
 
 import javax.annotation.Generated;

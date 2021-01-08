@@ -1,0 +1,30 @@
+load("@rules_java//java:defs.bzl", "java_test")
+
+package(default_visibility = ["//visibility:public"])
+
+TESTS = [
+    "PackageCheckerTest",
+]
+
+TEST_DEPS = [
+    "//src/main/java/com/google/api/generator/gapic/composer/utils",
+    "@com_google_guava_guava",
+    "@com_google_protobuf//:protobuf_java",
+    "@com_google_truth_truth//jar",
+    "@junit_junit//jar",
+]
+
+filegroup(
+    name = "utils_files",
+    srcs = ["{0}.java".format(f) for f in TESTS],
+)
+
+[java_test(
+    name = test_name,
+    testonly = True,
+    srcs = [
+        "{0}.java".format(test_name),
+    ],
+    test_class = "com.google.api.generator.gapic.composer.utils.{0}".format(test_name),
+    deps = TEST_DEPS,
+) for test_name in TESTS]

@@ -14,10 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.asset.v1;
-
-import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllIamPoliciesPagedResponse;
-import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllResourcesPagedResponse;
+package com.google.cloud.asset.v1beta1;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -28,13 +25,11 @@ import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientSettings;
 import com.google.api.gax.rpc.OperationCallSettings;
-import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.cloud.asset.v1.stub.AssetServiceStubSettings;
+import com.google.cloud.asset.v1beta1.stub.AssetServiceStubSettings;
 import com.google.longrunning.Operation;
-import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
@@ -70,6 +65,7 @@ import javax.annotation.Generated;
  * AssetServiceSettings assetServiceSettings = assetServiceSettingsBuilder.build();
  * }</pre>
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
 
@@ -88,47 +84,6 @@ public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
   public UnaryCallSettings<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistorySettings() {
     return ((AssetServiceStubSettings) getStubSettings()).batchGetAssetsHistorySettings();
-  }
-
-  /** Returns the object with the settings used for calls to createFeed. */
-  public UnaryCallSettings<CreateFeedRequest, Feed> createFeedSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).createFeedSettings();
-  }
-
-  /** Returns the object with the settings used for calls to getFeed. */
-  public UnaryCallSettings<GetFeedRequest, Feed> getFeedSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).getFeedSettings();
-  }
-
-  /** Returns the object with the settings used for calls to listFeeds. */
-  public UnaryCallSettings<ListFeedsRequest, ListFeedsResponse> listFeedsSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).listFeedsSettings();
-  }
-
-  /** Returns the object with the settings used for calls to updateFeed. */
-  public UnaryCallSettings<UpdateFeedRequest, Feed> updateFeedSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).updateFeedSettings();
-  }
-
-  /** Returns the object with the settings used for calls to deleteFeed. */
-  public UnaryCallSettings<DeleteFeedRequest, Empty> deleteFeedSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).deleteFeedSettings();
-  }
-
-  /** Returns the object with the settings used for calls to searchAllResources. */
-  public PagedCallSettings<
-          SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
-      searchAllResourcesSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).searchAllResourcesSettings();
-  }
-
-  /** Returns the object with the settings used for calls to searchAllIamPolicies. */
-  public PagedCallSettings<
-          SearchAllIamPoliciesRequest,
-          SearchAllIamPoliciesResponse,
-          SearchAllIamPoliciesPagedResponse>
-      searchAllIamPoliciesSettings() {
-    return ((AssetServiceStubSettings) getStubSettings()).searchAllIamPoliciesSettings();
   }
 
   public static final AssetServiceSettings create(AssetServiceStubSettings stub)
@@ -245,47 +200,6 @@ public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
     public UnaryCallSettings.Builder<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
         batchGetAssetsHistorySettings() {
       return getStubSettingsBuilder().batchGetAssetsHistorySettings();
-    }
-
-    /** Returns the builder for the settings used for calls to createFeed. */
-    public UnaryCallSettings.Builder<CreateFeedRequest, Feed> createFeedSettings() {
-      return getStubSettingsBuilder().createFeedSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to getFeed. */
-    public UnaryCallSettings.Builder<GetFeedRequest, Feed> getFeedSettings() {
-      return getStubSettingsBuilder().getFeedSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to listFeeds. */
-    public UnaryCallSettings.Builder<ListFeedsRequest, ListFeedsResponse> listFeedsSettings() {
-      return getStubSettingsBuilder().listFeedsSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to updateFeed. */
-    public UnaryCallSettings.Builder<UpdateFeedRequest, Feed> updateFeedSettings() {
-      return getStubSettingsBuilder().updateFeedSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to deleteFeed. */
-    public UnaryCallSettings.Builder<DeleteFeedRequest, Empty> deleteFeedSettings() {
-      return getStubSettingsBuilder().deleteFeedSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to searchAllResources. */
-    public PagedCallSettings.Builder<
-            SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
-        searchAllResourcesSettings() {
-      return getStubSettingsBuilder().searchAllResourcesSettings();
-    }
-
-    /** Returns the builder for the settings used for calls to searchAllIamPolicies. */
-    public PagedCallSettings.Builder<
-            SearchAllIamPoliciesRequest,
-            SearchAllIamPoliciesResponse,
-            SearchAllIamPoliciesPagedResponse>
-        searchAllIamPoliciesSettings() {
-      return getStubSettingsBuilder().searchAllIamPoliciesSettings();
     }
 
     @Override

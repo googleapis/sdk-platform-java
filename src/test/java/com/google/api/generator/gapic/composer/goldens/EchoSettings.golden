@@ -55,6 +55,7 @@ import javax.annotation.Generated;
  * EchoSettings echoSettings = echoSettingsBuilder.build();
  * }</pre>
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class EchoSettings extends ClientSettings<EchoSettings> {
 

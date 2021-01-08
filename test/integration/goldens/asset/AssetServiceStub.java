@@ -14,32 +14,18 @@
  * limitations under the License.
  */
 
-package com.google.cloud.asset.v1.stub;
+package com.google.cloud.asset.v1beta1.stub;
 
-import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllIamPoliciesPagedResponse;
-import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllResourcesPagedResponse;
-
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
-import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
-import com.google.cloud.asset.v1.CreateFeedRequest;
-import com.google.cloud.asset.v1.DeleteFeedRequest;
-import com.google.cloud.asset.v1.ExportAssetsRequest;
-import com.google.cloud.asset.v1.ExportAssetsResponse;
-import com.google.cloud.asset.v1.Feed;
-import com.google.cloud.asset.v1.GetFeedRequest;
-import com.google.cloud.asset.v1.ListFeedsRequest;
-import com.google.cloud.asset.v1.ListFeedsResponse;
-import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
-import com.google.cloud.asset.v1.SearchAllIamPoliciesResponse;
-import com.google.cloud.asset.v1.SearchAllResourcesRequest;
-import com.google.cloud.asset.v1.SearchAllResourcesResponse;
-import com.google.cloud.asset.v1.UpdateFeedRequest;
+import com.google.cloud.asset.v1beta1.BatchGetAssetsHistoryRequest;
+import com.google.cloud.asset.v1beta1.BatchGetAssetsHistoryResponse;
+import com.google.cloud.asset.v1beta1.ExportAssetsRequest;
+import com.google.cloud.asset.v1beta1.ExportAssetsResponse;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
-import com.google.protobuf.Empty;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -48,7 +34,8 @@ import javax.annotation.Generated;
  *
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
-@Generated("by gapic-generator")
+@BetaApi
+@Generated("by gapic-generator-java")
 public abstract class AssetServiceStub implements BackgroundResource {
 
   public OperationsStub getOperationsStub() {
@@ -67,46 +54,6 @@ public abstract class AssetServiceStub implements BackgroundResource {
   public UnaryCallable<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistoryCallable() {
     throw new UnsupportedOperationException("Not implemented: batchGetAssetsHistoryCallable()");
-  }
-
-  public UnaryCallable<CreateFeedRequest, Feed> createFeedCallable() {
-    throw new UnsupportedOperationException("Not implemented: createFeedCallable()");
-  }
-
-  public UnaryCallable<GetFeedRequest, Feed> getFeedCallable() {
-    throw new UnsupportedOperationException("Not implemented: getFeedCallable()");
-  }
-
-  public UnaryCallable<ListFeedsRequest, ListFeedsResponse> listFeedsCallable() {
-    throw new UnsupportedOperationException("Not implemented: listFeedsCallable()");
-  }
-
-  public UnaryCallable<UpdateFeedRequest, Feed> updateFeedCallable() {
-    throw new UnsupportedOperationException("Not implemented: updateFeedCallable()");
-  }
-
-  public UnaryCallable<DeleteFeedRequest, Empty> deleteFeedCallable() {
-    throw new UnsupportedOperationException("Not implemented: deleteFeedCallable()");
-  }
-
-  public UnaryCallable<SearchAllResourcesRequest, SearchAllResourcesPagedResponse>
-      searchAllResourcesPagedCallable() {
-    throw new UnsupportedOperationException("Not implemented: searchAllResourcesPagedCallable()");
-  }
-
-  public UnaryCallable<SearchAllResourcesRequest, SearchAllResourcesResponse>
-      searchAllResourcesCallable() {
-    throw new UnsupportedOperationException("Not implemented: searchAllResourcesCallable()");
-  }
-
-  public UnaryCallable<SearchAllIamPoliciesRequest, SearchAllIamPoliciesPagedResponse>
-      searchAllIamPoliciesPagedCallable() {
-    throw new UnsupportedOperationException("Not implemented: searchAllIamPoliciesPagedCallable()");
-  }
-
-  public UnaryCallable<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse>
-      searchAllIamPoliciesCallable() {
-    throw new UnsupportedOperationException("Not implemented: searchAllIamPoliciesCallable()");
   }
 
   @Override
