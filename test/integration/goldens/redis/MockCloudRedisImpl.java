@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.cloud.redis.v1beta1;
 
 import com.google.api.core.BetaApi;
-import com.google.cloud.redis.v1.CloudRedisGrpc.CloudRedisImplBase;
+import com.google.cloud.redis.v1beta1.CloudRedisGrpc.CloudRedisImplBase;
 import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import io.grpc.stub.StreamObserver;

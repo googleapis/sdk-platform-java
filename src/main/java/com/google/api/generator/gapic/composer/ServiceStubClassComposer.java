@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientStreamingCallable;
@@ -32,6 +33,7 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -69,7 +71,7 @@ public class ServiceStubClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 StubCommentComposer.createServiceStubClassHeaderComments(service.name()))
-            .setAnnotations(createClassAnnotations(typeStore))
+            .setAnnotations(createClassAnnotations(service.pakkage(), typeStore))
             .setIsAbstract(true)
             .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
@@ -79,12 +81,17 @@ public class ServiceStubClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
-    return Arrays.asList(
+  private static List<AnnotationNode> createClassAnnotations(String pakkage, TypeStore typeStore) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (!PackageChecker.isGaApi(pakkage)) {
+      annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
+    }
+    annotations.add(
         AnnotationNode.builder()
             .setType(typeStore.get("Generated"))
-            .setDescription("by gapic-generator")
+            .setDescription("by gapic-generator-java")
             .build());
+    return annotations;
   }
 
   private static List<TypeNode> createClassImplements(TypeStore typeStore) {
@@ -215,6 +222,7 @@ public class ServiceStubClassComposer implements ClassComposer {
     List<Class> concreteClazzes =
         Arrays.asList(
             BackgroundResource.class,
+            BetaApi.class,
             BidiStreamingCallable.class,
             ClientStreamingCallable.class,
             Generated.class,

@@ -14,27 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1.stub;
+package com.google.cloud.redis.v1beta1.stub;
 
-import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.redis.v1.CreateInstanceRequest;
-import com.google.cloud.redis.v1.DeleteInstanceRequest;
-import com.google.cloud.redis.v1.ExportInstanceRequest;
-import com.google.cloud.redis.v1.FailoverInstanceRequest;
-import com.google.cloud.redis.v1.GetInstanceRequest;
-import com.google.cloud.redis.v1.ImportInstanceRequest;
-import com.google.cloud.redis.v1.Instance;
-import com.google.cloud.redis.v1.ListInstancesRequest;
-import com.google.cloud.redis.v1.ListInstancesResponse;
-import com.google.cloud.redis.v1.OperationMetadata;
-import com.google.cloud.redis.v1.UpdateInstanceRequest;
-import com.google.cloud.redis.v1.UpgradeInstanceRequest;
+import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+import com.google.cloud.redis.v1beta1.GetInstanceRequest;
+import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+import com.google.cloud.redis.v1beta1.Instance;
+import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+import com.google.cloud.redis.v1beta1.ListInstancesResponse;
+import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
+import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
+import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import javax.annotation.Generated;
 
@@ -44,7 +45,8 @@ import javax.annotation.Generated;
  *
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
-@Generated("by gapic-generator")
+@BetaApi
+@Generated("by gapic-generator-java")
 public abstract class CloudRedisStub implements BackgroundResource {
 
   public OperationsStub getOperationsStub() {
@@ -64,8 +66,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: getInstanceCallable()");
   }
 
-  public OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
-      createInstanceOperationCallable() {
+  public OperationCallable<CreateInstanceRequest, Instance, Any> createInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: createInstanceOperationCallable()");
   }
 
@@ -73,8 +74,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: createInstanceCallable()");
   }
 
-  public OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
-      updateInstanceOperationCallable() {
+  public OperationCallable<UpdateInstanceRequest, Instance, Any> updateInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: updateInstanceOperationCallable()");
   }
 
@@ -82,7 +82,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: updateInstanceCallable()");
   }
 
-  public OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
+  public OperationCallable<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: upgradeInstanceOperationCallable()");
   }
@@ -91,8 +91,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: upgradeInstanceCallable()");
   }
 
-  public OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
-      importInstanceOperationCallable() {
+  public OperationCallable<ImportInstanceRequest, Instance, Any> importInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: importInstanceOperationCallable()");
   }
 
@@ -100,8 +99,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: importInstanceCallable()");
   }
 
-  public OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
-      exportInstanceOperationCallable() {
+  public OperationCallable<ExportInstanceRequest, Instance, Any> exportInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: exportInstanceOperationCallable()");
   }
 
@@ -109,7 +107,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: exportInstanceCallable()");
   }
 
-  public OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
+  public OperationCallable<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: failoverInstanceOperationCallable()");
   }
@@ -118,8 +116,7 @@ public abstract class CloudRedisStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: failoverInstanceCallable()");
   }
 
-  public OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
-      deleteInstanceOperationCallable() {
+  public OperationCallable<DeleteInstanceRequest, Empty, Any> deleteInstanceOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: deleteInstanceOperationCallable()");
   }
 

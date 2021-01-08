@@ -98,7 +98,6 @@ import javax.annotation.Generated;
  * LibraryServiceStubSettings libraryServiceSettings = libraryServiceSettingsBuilder.build();
  * }</pre>
  */
-@BetaApi
 @Generated("by gapic-generator-java")
 public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubSettings> {
   /** The default scopes of the service. */

@@ -54,6 +54,7 @@ import com.google.api.generator.gapic.composer.comment.SettingsCommentComposer;
 import com.google.api.generator.gapic.composer.samplecode.SettingsSampleCodeComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -104,7 +105,7 @@ public class ServiceSettingsClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 createClassHeaderComments(service, typeStore.get(className)))
-            .setAnnotations(createClassAnnotations())
+            .setAnnotations(createClassAnnotations(service.pakkage()))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(
@@ -147,12 +148,17 @@ public class ServiceSettingsClassComposer implements ClassComposer {
         classType);
   }
 
-  private static List<AnnotationNode> createClassAnnotations() {
-    return Arrays.asList(
+  private static List<AnnotationNode> createClassAnnotations(String pakkage) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (!PackageChecker.isGaApi(pakkage)) {
+      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
+    }
+    annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
+    return annotations;
   }
 
   private static List<MethodDefinition> createClassMethods(Service service, TypeStore typeStore) {
