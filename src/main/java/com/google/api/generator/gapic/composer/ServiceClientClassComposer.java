@@ -782,12 +782,12 @@ public class ServiceClientClassComposer {
             .setReturnType(returnType)
             .build();
 
-    Optional<String> sampleCode = Optional.empty();
+    Optional<String> sampleCodeOpt = Optional.empty();
     // TODO (summerji): Refactor the condition logic order after complete the callable sample code
     // implementation.
     // TODO (summerji): Implement sample code for CallableMethodKind.REGULAR
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
-      sampleCode =
+      sampleCodeOpt =
           Optional.of(
               ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
                   method,
@@ -796,7 +796,7 @@ public class ServiceClientClassComposer {
                   messageTypes));
     }
     if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
-      sampleCode =
+      sampleCodeOpt =
           Optional.of(
               ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
                   method,
@@ -807,7 +807,7 @@ public class ServiceClientClassComposer {
     // TODO (summerji): Implement sample code for stream method.
     // Replace by if (method.stream()).
     if (method.stream().equals(Stream.SERVER)) {
-      sampleCode =
+      sampleCodeOpt =
           Optional.of(
               ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
                   method,
@@ -818,7 +818,8 @@ public class ServiceClientClassComposer {
 
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method, sampleCode))
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(
+                method, sampleCodeOpt))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)

@@ -1725,7 +1725,7 @@ public class ServiceClientSampleCodeComposerTest {
             "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
             "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
             "  for (EchoResponse response : stream) {\n",
-            "    // Do something when receive a response.\n",
+            "    // Do something when a response is received.\n",
             "  }\n",
             "}");
     assertEquals(results, expected);

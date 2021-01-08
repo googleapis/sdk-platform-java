@@ -254,7 +254,10 @@ public class ServiceClientSampleCodeComposer {
             Variable.builder().setName("request").setType(method.inputType()).build());
     List<VariableExpr> rpcMethodArgVarExprs = Arrays.asList(requestVarExpr);
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(requestMessage);
+    Preconditions.checkNotNull(
+        requestMessage,
+        "The request `%s` is not defined as message type.",
+        method.inputType().reference().simpleName());
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -306,7 +309,10 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(requestMessage);
+    Preconditions.checkNotNull(
+        requestMessage,
+        "The request `%s` is not defined as message type.",
+        method.inputType().reference().simpleName());
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -414,7 +420,10 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(requestMessage);
+    Preconditions.checkNotNull(
+        requestMessage,
+        "The request `%s` is not defined as message type.",
+        method.inputType().reference().simpleName());
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -529,7 +538,10 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(requestMessage);
+    Preconditions.checkNotNull(
+        requestMessage,
+        "The request `%s` is not defined as message type.",
+        method.inputType().reference().simpleName());
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -691,7 +703,8 @@ public class ServiceClientSampleCodeComposer {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
 
-    // Create ServerStream variable expression, and assign it with invoking server stream method.
+    // Create server stream variable expression, and assign it a value by invoking server stream
+    // method.
     // e.g. ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request)
     TypeNode serverStreamType =
         TypeNode.withReference(
@@ -726,7 +739,7 @@ public class ServiceClientSampleCodeComposer {
 
     // For-loop on server stream variable expresion.
     // e.g. for (EchoResponse response : stream) {
-    //        // Do something when receive a response.
+    //        // Do something when a response is received.
     //      }
     VariableExpr responseVarExpr =
         VariableExpr.builder()
@@ -741,7 +754,7 @@ public class ServiceClientSampleCodeComposer {
             .setBody(
                 Arrays.asList(
                     CommentStatement.withComment(
-                        LineComment.withComment("Do something when receive a response."))))
+                        LineComment.withComment("Do something when a response is received."))))
             .build();
     bodyStatements.add(forStatement);
 
