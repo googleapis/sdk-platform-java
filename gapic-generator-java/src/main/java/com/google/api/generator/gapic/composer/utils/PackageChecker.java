@@ -20,6 +20,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PackageChecker {
+
+  // Nothing to initialize.
   private PackageChecker() {}
 
   /**
@@ -30,13 +32,18 @@ public class PackageChecker {
     String[] packageComponents = pakkage.split("\\.");
     Preconditions.checkState(
         packageComponents.length > 0, "No subcomponents found in Java package %s", pakkage);
-    String versionComponent = packageComponents[packageComponents.length - 1];
-    Matcher matcher = Pattern.compile("^v[0-9]+").matcher(versionComponent);
-    Preconditions.checkState(
-        matcher.find(),
-        "No version component found in last subpackage %s of %s",
-        versionComponent,
-        pakkage);
+    String versionComponent = null;
+    Matcher matcher = null;
+    boolean isFound = false;
+    for (int i = packageComponents.length - 1; i >= 0; i--) {
+      versionComponent = packageComponents[i];
+      matcher = Pattern.compile("^v[0-9]+").matcher(versionComponent);
+      isFound = matcher.find();
+      if (isFound) {
+        break;
+      }
+    }
+    Preconditions.checkState(isFound, "No version component found in package %s", pakkage);
     String versionSubstr = versionComponent.replace(matcher.group(), "");
     return Strings.isNullOrEmpty(versionSubstr)
         || (!versionSubstr.contains("alpha") && !versionSubstr.contains("beta"));
