@@ -429,10 +429,7 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(
-        requestMessage,
-        String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+    Preconditions.checkNotNull(requestMessage);
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
