@@ -213,6 +213,16 @@ public class LibraryServiceClient implements BackgroundResource {
    * Creates a shelf, and returns the new Shelf.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   CreateShelfRequest request =
+   *       CreateShelfRequest.newBuilder().setShelf(Shelf.newBuilder().build()).build();
+   *   ApiFuture<Shelf> future = libraryServiceClient.createShelfCallable().futureCall(request);
+   *   // Do something.
+   *   Shelf response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateShelfRequest, Shelf> createShelfCallable() {
     return stub.createShelfCallable();
@@ -286,6 +296,15 @@ public class LibraryServiceClient implements BackgroundResource {
    * Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   GetShelfRequest request = GetShelfRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Shelf> future = libraryServiceClient.getShelfCallable().futureCall(request);
+   *   // Do something.
+   *   Shelf response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetShelfRequest, Shelf> getShelfCallable() {
     return stub.getShelfCallable();
@@ -424,6 +443,15 @@ public class LibraryServiceClient implements BackgroundResource {
    * Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   DeleteShelfRequest request = DeleteShelfRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Empty> future = libraryServiceClient.deleteShelfCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteShelfRequest, Empty> deleteShelfCallable() {
     return stub.deleteShelfCallable();
@@ -593,6 +621,19 @@ public class LibraryServiceClient implements BackgroundResource {
    * shelves are the same.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   MergeShelvesRequest request =
+   *       MergeShelvesRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .build();
+   *   ApiFuture<Shelf> future = libraryServiceClient.mergeShelvesCallable().futureCall(request);
+   *   // Do something.
+   *   Shelf response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<MergeShelvesRequest, Shelf> mergeShelvesCallable() {
     return stub.mergeShelvesCallable();
@@ -677,6 +718,19 @@ public class LibraryServiceClient implements BackgroundResource {
    * Creates a book, and returns the new Book.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   CreateBookRequest request =
+   *       CreateBookRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setBook(Book.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Book> future = libraryServiceClient.createBookCallable().futureCall(request);
+   *   // Do something.
+   *   Book response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateBookRequest, Book> createBookCallable() {
     return stub.createBookCallable();
@@ -750,6 +804,15 @@ public class LibraryServiceClient implements BackgroundResource {
    * Gets a book. Returns NOT_FOUND if the book does not exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   GetBookRequest request = GetBookRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Book> future = libraryServiceClient.getBookCallable().futureCall(request);
+   *   // Do something.
+   *   Book response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetBookRequest, Book> getBookCallable() {
     return stub.getBookCallable();
@@ -900,6 +963,15 @@ public class LibraryServiceClient implements BackgroundResource {
    * Deletes a book. Returns NOT_FOUND if the book does not exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   DeleteBookRequest request = DeleteBookRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Empty> future = libraryServiceClient.deleteBookCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteBookRequest, Empty> deleteBookCallable() {
     return stub.deleteBookCallable();
@@ -958,6 +1030,19 @@ public class LibraryServiceClient implements BackgroundResource {
    * equal the existing name.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   UpdateBookRequest request =
+   *       UpdateBookRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setBook(Book.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Book> future = libraryServiceClient.updateBookCallable().futureCall(request);
+   *   // Do something.
+   *   Book response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateBookRequest, Book> updateBookCallable() {
     return stub.updateBookCallable();
@@ -1103,6 +1188,19 @@ public class LibraryServiceClient implements BackgroundResource {
    * the same as the original book.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   MoveBookRequest request =
+   *       MoveBookRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setOtherShelfName("otherShelfName-1942963547")
+   *           .build();
+   *   ApiFuture<Book> future = libraryServiceClient.moveBookCallable().futureCall(request);
+   *   // Do something.
+   *   Book response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<MoveBookRequest, Book> moveBookCallable() {
     return stub.moveBookCallable();

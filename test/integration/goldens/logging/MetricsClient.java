@@ -340,6 +340,18 @@ public class MetricsClient implements BackgroundResource {
    * Gets a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   GetLogMetricRequest request =
+   *       GetLogMetricRequest.newBuilder()
+   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *           .build();
+   *   ApiFuture<LogMetric> future = metricsClient.getLogMetricCallable().futureCall(request);
+   *   // Do something.
+   *   LogMetric response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetLogMetricRequest, LogMetric> getLogMetricCallable() {
     return stub.getLogMetricCallable();
@@ -431,6 +443,19 @@ public class MetricsClient implements BackgroundResource {
    * Creates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   CreateLogMetricRequest request =
+   *       CreateLogMetricRequest.newBuilder()
+   *           .setParent(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *           .setMetric(LogMetric.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogMetric> future = metricsClient.createLogMetricCallable().futureCall(request);
+   *   // Do something.
+   *   LogMetric response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateLogMetricRequest, LogMetric> createLogMetricCallable() {
     return stub.createLogMetricCallable();
@@ -524,6 +549,19 @@ public class MetricsClient implements BackgroundResource {
    * Creates or updates a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   UpdateLogMetricRequest request =
+   *       UpdateLogMetricRequest.newBuilder()
+   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *           .setMetric(LogMetric.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogMetric> future = metricsClient.updateLogMetricCallable().futureCall(request);
+   *   // Do something.
+   *   LogMetric response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateLogMetricRequest, LogMetric> updateLogMetricCallable() {
     return stub.updateLogMetricCallable();
@@ -605,6 +643,18 @@ public class MetricsClient implements BackgroundResource {
    * Deletes a logs-based metric.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (MetricsClient metricsClient = MetricsClient.create()) {
+   *   DeleteLogMetricRequest request =
+   *       DeleteLogMetricRequest.newBuilder()
+   *           .setMetricName(LogMetricName.of("[PROJECT]", "[METRIC]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = metricsClient.deleteLogMetricCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteLogMetricRequest, Empty> deleteLogMetricCallable() {
     return stub.deleteLogMetricCallable();

@@ -322,7 +322,23 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+   *   // Do something.
+   *   EchoResponse response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return stub.echoCallable();
   }
@@ -665,7 +681,18 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   BlockRequest request = BlockRequest.newBuilder().build();
+   *   ApiFuture<BlockResponse> future = echoClient.blockCallable().futureCall(request);
+   *   // Do something.
+   *   BlockResponse response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return stub.blockCallable();
   }

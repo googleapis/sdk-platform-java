@@ -430,6 +430,20 @@ public class ConfigClient implements BackgroundResource {
    * Gets a bucket (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetBucketRequest request =
+   *       GetBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   ApiFuture<LogBucket> future = configClient.getBucketCallable().futureCall(request);
+   *   // Do something.
+   *   LogBucket response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetBucketRequest, LogBucket> getBucketCallable() {
     return stub.getBucketCallable();
@@ -485,6 +499,22 @@ public class ConfigClient implements BackgroundResource {
    * <p>A buckets region may not be modified after it is created. This method is in Beta.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateBucketRequest request =
+   *       UpdateBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setBucket(LogBucket.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogBucket> future = configClient.updateBucketCallable().futureCall(request);
+   *   // Do something.
+   *   LogBucket response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateBucketRequest, LogBucket> updateBucketCallable() {
     return stub.updateBucketCallable();
@@ -765,6 +795,18 @@ public class ConfigClient implements BackgroundResource {
    * Gets a sink.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetSinkRequest request =
+   *       GetSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .build();
+   *   ApiFuture<LogSink> future = configClient.getSinkCallable().futureCall(request);
+   *   // Do something.
+   *   LogSink response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetSinkRequest, LogSink> getSinkCallable() {
     return stub.getSinkCallable();
@@ -973,6 +1015,20 @@ public class ConfigClient implements BackgroundResource {
    * owning the sink.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateSinkRequest request =
+   *       CreateSinkRequest.newBuilder()
+   *           .setParent(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setSink(LogSink.newBuilder().build())
+   *           .setUniqueWriterIdentity(true)
+   *           .build();
+   *   ApiFuture<LogSink> future = configClient.createSinkCallable().futureCall(request);
+   *   // Do something.
+   *   LogSink response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateSinkRequest, LogSink> createSinkCallable() {
     return stub.createSinkCallable();
@@ -1188,6 +1244,21 @@ public class ConfigClient implements BackgroundResource {
    * field.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateSinkRequest request =
+   *       UpdateSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .setSink(LogSink.newBuilder().build())
+   *           .setUniqueWriterIdentity(true)
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogSink> future = configClient.updateSinkCallable().futureCall(request);
+   *   // Do something.
+   *   LogSink response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateSinkRequest, LogSink> updateSinkCallable() {
     return stub.updateSinkCallable();
@@ -1282,6 +1353,18 @@ public class ConfigClient implements BackgroundResource {
    * deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteSinkRequest request =
+   *       DeleteSinkRequest.newBuilder()
+   *           .setSinkName(LogSinkName.ofProjectSinkName("[PROJECT]", "[SINK]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = configClient.deleteSinkCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteSinkRequest, Empty> deleteSinkCallable() {
     return stub.deleteSinkCallable();
@@ -1575,6 +1658,19 @@ public class ConfigClient implements BackgroundResource {
    * Gets the description of an exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetExclusionRequest request =
+   *       GetExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .build();
+   *   ApiFuture<LogExclusion> future = configClient.getExclusionCallable().futureCall(request);
+   *   // Do something.
+   *   LogExclusion response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetExclusionRequest, LogExclusion> getExclusionCallable() {
     return stub.getExclusionCallable();
@@ -1770,6 +1866,20 @@ public class ConfigClient implements BackgroundResource {
    * resource can be excluded. You can have up to 10 exclusions in a resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateExclusionRequest request =
+   *       CreateExclusionRequest.newBuilder()
+   *           .setParent(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setExclusion(LogExclusion.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogExclusion> future = configClient.createExclusionCallable().futureCall(request);
+   *   // Do something.
+   *   LogExclusion response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateExclusionRequest, LogExclusion> createExclusionCallable() {
     return stub.createExclusionCallable();
@@ -1890,6 +2000,21 @@ public class ConfigClient implements BackgroundResource {
    * Changes one or more properties of an existing exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateExclusionRequest request =
+   *       UpdateExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .setExclusion(LogExclusion.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogExclusion> future = configClient.updateExclusionCallable().futureCall(request);
+   *   // Do something.
+   *   LogExclusion response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateExclusionRequest, LogExclusion> updateExclusionCallable() {
     return stub.updateExclusionCallable();
@@ -1977,6 +2102,19 @@ public class ConfigClient implements BackgroundResource {
    * Deletes an exclusion.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteExclusionRequest request =
+   *       DeleteExclusionRequest.newBuilder()
+   *           .setName(
+   *               LogExclusionName.ofProjectExclusionName("[PROJECT]", "[EXCLUSION]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = configClient.deleteExclusionCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteExclusionRequest, Empty> deleteExclusionCallable() {
     return stub.deleteExclusionCallable();
@@ -2022,6 +2160,18 @@ public class ConfigClient implements BackgroundResource {
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetCmekSettingsRequest request =
+   *       GetCmekSettingsRequest.newBuilder()
+   *           .setName(CmekSettingsName.ofProjectName("[PROJECT]").toString())
+   *           .build();
+   *   ApiFuture<CmekSettings> future = configClient.getCmekSettingsCallable().futureCall(request);
+   *   // Do something.
+   *   CmekSettings response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetCmekSettingsRequest, CmekSettings> getCmekSettingsCallable() {
     return stub.getCmekSettingsCallable();
@@ -2079,6 +2229,21 @@ public class ConfigClient implements BackgroundResource {
    * Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateCmekSettingsRequest request =
+   *       UpdateCmekSettingsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setCmekSettings(CmekSettings.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<CmekSettings> future =
+   *       configClient.updateCmekSettingsCallable().futureCall(request);
+   *   // Do something.
+   *   CmekSettings response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateCmekSettingsRequest, CmekSettings> updateCmekSettingsCallable() {
     return stub.updateCmekSettingsCallable();
