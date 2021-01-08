@@ -21,7 +21,7 @@
  *
  * <p>Service Description: Configures and manages Cloud Memorystore for Redis instances
  *
- * <p>Google Cloud Memorystore for Redis v1
+ * <p>Google Cloud Memorystore for Redis v1beta1
  *
  * <p>The `redis.googleapis.com` service implements the Google Cloud Memorystore for Redis API and
  * defines the following resource model for managing Redis instances:
@@ -34,7 +34,7 @@
  *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
  * </ul>
  *
- * <p>Note that location_id must be referring to a GCP `region`; for example:
+ * <p>Note that location_id must be refering to a GCP `region`; for example:
  *
  * <ul>
  *   <li>`projects/redpepper-1290/locations/us-central1/instances/my-redis`
@@ -43,6 +43,6 @@
  * <p>Sample for CloudRedisClient:
  */
 @Generated("by gapic-generator-java")
-package com.google.cloud.redis.v1;
+package com.google.cloud.redis.v1beta1;
 
 import javax.annotation.Generated;

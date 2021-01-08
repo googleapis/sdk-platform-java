@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1.stub;
+package com.google.cloud.redis.v1beta1.stub;
 
-import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -44,23 +44,23 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.redis.v1.CreateInstanceRequest;
-import com.google.cloud.redis.v1.DeleteInstanceRequest;
-import com.google.cloud.redis.v1.ExportInstanceRequest;
-import com.google.cloud.redis.v1.FailoverInstanceRequest;
-import com.google.cloud.redis.v1.GetInstanceRequest;
-import com.google.cloud.redis.v1.ImportInstanceRequest;
-import com.google.cloud.redis.v1.Instance;
-import com.google.cloud.redis.v1.ListInstancesRequest;
-import com.google.cloud.redis.v1.ListInstancesResponse;
-import com.google.cloud.redis.v1.OperationMetadata;
-import com.google.cloud.redis.v1.UpdateInstanceRequest;
-import com.google.cloud.redis.v1.UpgradeInstanceRequest;
+import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+import com.google.cloud.redis.v1beta1.GetInstanceRequest;
+import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+import com.google.cloud.redis.v1beta1.Instance;
+import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+import com.google.cloud.redis.v1beta1.ListInstancesResponse;
+import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
+import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
+import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -98,6 +98,7 @@ import org.threeten.bp.Duration;
  * CloudRedisStubSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
  * }</pre>
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings> {
   /** The default scopes of the service. */
@@ -109,25 +110,25 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       listInstancesSettings;
   private final UnaryCallSettings<GetInstanceRequest, Instance> getInstanceSettings;
   private final UnaryCallSettings<CreateInstanceRequest, Operation> createInstanceSettings;
-  private final OperationCallSettings<CreateInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<CreateInstanceRequest, Instance, Any>
       createInstanceOperationSettings;
   private final UnaryCallSettings<UpdateInstanceRequest, Operation> updateInstanceSettings;
-  private final OperationCallSettings<UpdateInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<UpdateInstanceRequest, Instance, Any>
       updateInstanceOperationSettings;
   private final UnaryCallSettings<UpgradeInstanceRequest, Operation> upgradeInstanceSettings;
-  private final OperationCallSettings<UpgradeInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationSettings;
   private final UnaryCallSettings<ImportInstanceRequest, Operation> importInstanceSettings;
-  private final OperationCallSettings<ImportInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<ImportInstanceRequest, Instance, Any>
       importInstanceOperationSettings;
   private final UnaryCallSettings<ExportInstanceRequest, Operation> exportInstanceSettings;
-  private final OperationCallSettings<ExportInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<ExportInstanceRequest, Instance, Any>
       exportInstanceOperationSettings;
   private final UnaryCallSettings<FailoverInstanceRequest, Operation> failoverInstanceSettings;
-  private final OperationCallSettings<FailoverInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallSettings<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationSettings;
   private final UnaryCallSettings<DeleteInstanceRequest, Operation> deleteInstanceSettings;
-  private final OperationCallSettings<DeleteInstanceRequest, Empty, OperationMetadata>
+  private final OperationCallSettings<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationSettings;
 
   private static final PagedListDescriptor<ListInstancesRequest, ListInstancesResponse, Instance>
@@ -200,7 +201,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to createInstance. */
-  public OperationCallSettings<CreateInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<CreateInstanceRequest, Instance, Any>
       createInstanceOperationSettings() {
     return createInstanceOperationSettings;
   }
@@ -211,7 +212,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to updateInstance. */
-  public OperationCallSettings<UpdateInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<UpdateInstanceRequest, Instance, Any>
       updateInstanceOperationSettings() {
     return updateInstanceOperationSettings;
   }
@@ -222,7 +223,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to upgradeInstance. */
-  public OperationCallSettings<UpgradeInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationSettings() {
     return upgradeInstanceOperationSettings;
   }
@@ -233,7 +234,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to importInstance. */
-  public OperationCallSettings<ImportInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<ImportInstanceRequest, Instance, Any>
       importInstanceOperationSettings() {
     return importInstanceOperationSettings;
   }
@@ -244,7 +245,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to exportInstance. */
-  public OperationCallSettings<ExportInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<ExportInstanceRequest, Instance, Any>
       exportInstanceOperationSettings() {
     return exportInstanceOperationSettings;
   }
@@ -255,7 +256,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to failoverInstance. */
-  public OperationCallSettings<FailoverInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationSettings() {
     return failoverInstanceOperationSettings;
   }
@@ -266,7 +267,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
   }
 
   /** Returns the object with the settings used for calls to deleteInstance. */
-  public OperationCallSettings<DeleteInstanceRequest, Empty, OperationMetadata>
+  public OperationCallSettings<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationSettings() {
     return deleteInstanceOperationSettings;
   }
@@ -367,32 +368,31 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     private final UnaryCallSettings.Builder<GetInstanceRequest, Instance> getInstanceSettings;
     private final UnaryCallSettings.Builder<CreateInstanceRequest, Operation>
         createInstanceSettings;
-    private final OperationCallSettings.Builder<CreateInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<CreateInstanceRequest, Instance, Any>
         createInstanceOperationSettings;
     private final UnaryCallSettings.Builder<UpdateInstanceRequest, Operation>
         updateInstanceSettings;
-    private final OperationCallSettings.Builder<UpdateInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<UpdateInstanceRequest, Instance, Any>
         updateInstanceOperationSettings;
     private final UnaryCallSettings.Builder<UpgradeInstanceRequest, Operation>
         upgradeInstanceSettings;
-    private final OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, Any>
         upgradeInstanceOperationSettings;
     private final UnaryCallSettings.Builder<ImportInstanceRequest, Operation>
         importInstanceSettings;
-    private final OperationCallSettings.Builder<ImportInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<ImportInstanceRequest, Instance, Any>
         importInstanceOperationSettings;
     private final UnaryCallSettings.Builder<ExportInstanceRequest, Operation>
         exportInstanceSettings;
-    private final OperationCallSettings.Builder<ExportInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<ExportInstanceRequest, Instance, Any>
         exportInstanceOperationSettings;
     private final UnaryCallSettings.Builder<FailoverInstanceRequest, Operation>
         failoverInstanceSettings;
-    private final OperationCallSettings.Builder<
-            FailoverInstanceRequest, Instance, OperationMetadata>
+    private final OperationCallSettings.Builder<FailoverInstanceRequest, Instance, Any>
         failoverInstanceOperationSettings;
     private final UnaryCallSettings.Builder<DeleteInstanceRequest, Operation>
         deleteInstanceSettings;
-    private final OperationCallSettings.Builder<DeleteInstanceRequest, Empty, OperationMetadata>
+    private final OperationCallSettings.Builder<DeleteInstanceRequest, Empty, Any>
         deleteInstanceOperationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
@@ -559,8 +559,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -570,7 +569,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                       .setInitialRpcTimeout(Duration.ZERO)
                       .setRpcTimeoutMultiplier(1.0)
                       .setMaxRpcTimeout(Duration.ZERO)
-                      .setTotalTimeout(Duration.ofMillis(7200000L))
+                      .setTotalTimeout(Duration.ofMillis(1200000L))
                       .build()));
 
       builder
@@ -583,8 +582,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -607,8 +605,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -631,8 +628,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -655,8 +651,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -679,8 +674,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Instance.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -703,8 +697,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
                   .build())
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Empty.class))
-          .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(OperationMetadata.class))
+          .setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create(Any.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -756,7 +749,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to createInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<CreateInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<CreateInstanceRequest, Instance, Any>
         createInstanceOperationSettings() {
       return createInstanceOperationSettings;
     }
@@ -769,7 +762,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to updateInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<UpdateInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<UpdateInstanceRequest, Instance, Any>
         updateInstanceOperationSettings() {
       return updateInstanceOperationSettings;
     }
@@ -782,7 +775,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to upgradeInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, Any>
         upgradeInstanceOperationSettings() {
       return upgradeInstanceOperationSettings;
     }
@@ -795,7 +788,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to importInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<ImportInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<ImportInstanceRequest, Instance, Any>
         importInstanceOperationSettings() {
       return importInstanceOperationSettings;
     }
@@ -808,7 +801,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to exportInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<ExportInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<ExportInstanceRequest, Instance, Any>
         exportInstanceOperationSettings() {
       return exportInstanceOperationSettings;
     }
@@ -822,7 +815,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to failoverInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<FailoverInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<FailoverInstanceRequest, Instance, Any>
         failoverInstanceOperationSettings() {
       return failoverInstanceOperationSettings;
     }
@@ -835,7 +828,7 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     /** Returns the builder for the settings used for calls to deleteInstance. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, OperationMetadata>
+    public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, Any>
         deleteInstanceOperationSettings() {
       return deleteInstanceOperationSettings;
     }

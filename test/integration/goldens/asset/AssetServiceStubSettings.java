@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.cloud.asset.v1beta1.stub;
+package com.google.cloud.asset.v1.stub;
+
+import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllIamPoliciesPagedResponse;
+import static com.google.cloud.asset.v1.AssetServiceClient.SearchAllResourcesPagedResponse;
 
 import com.google.api.core.ApiFunction;
+import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
@@ -28,22 +32,42 @@ import com.google.api.gax.grpc.ProtoOperationTransformers;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallSettings;
+import com.google.api.gax.rpc.PageContext;
+import com.google.api.gax.rpc.PagedCallSettings;
+import com.google.api.gax.rpc.PagedListDescriptor;
+import com.google.api.gax.rpc.PagedListResponseFactory;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.cloud.asset.v1beta1.BatchGetAssetsHistoryRequest;
-import com.google.cloud.asset.v1beta1.BatchGetAssetsHistoryResponse;
-import com.google.cloud.asset.v1beta1.ExportAssetsRequest;
-import com.google.cloud.asset.v1beta1.ExportAssetsResponse;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
+import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
+import com.google.cloud.asset.v1.CreateFeedRequest;
+import com.google.cloud.asset.v1.DeleteFeedRequest;
+import com.google.cloud.asset.v1.ExportAssetsRequest;
+import com.google.cloud.asset.v1.ExportAssetsResponse;
+import com.google.cloud.asset.v1.Feed;
+import com.google.cloud.asset.v1.GetFeedRequest;
+import com.google.cloud.asset.v1.IamPolicySearchResult;
+import com.google.cloud.asset.v1.ListFeedsRequest;
+import com.google.cloud.asset.v1.ListFeedsResponse;
+import com.google.cloud.asset.v1.ResourceSearchResult;
+import com.google.cloud.asset.v1.SearchAllIamPoliciesRequest;
+import com.google.cloud.asset.v1.SearchAllIamPoliciesResponse;
+import com.google.cloud.asset.v1.SearchAllResourcesRequest;
+import com.google.cloud.asset.v1.SearchAllResourcesResponse;
+import com.google.cloud.asset.v1.UpdateFeedRequest;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
+import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
 import javax.annotation.Generated;
@@ -81,7 +105,6 @@ import org.threeten.bp.Duration;
  * AssetServiceStubSettings assetServiceSettings = assetServiceSettingsBuilder.build();
  * }</pre>
  */
-@BetaApi
 @Generated("by gapic-generator-java")
 public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSettings> {
   /** The default scopes of the service. */
@@ -94,6 +117,149 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       exportAssetsOperationSettings;
   private final UnaryCallSettings<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistorySettings;
+  private final UnaryCallSettings<CreateFeedRequest, Feed> createFeedSettings;
+  private final UnaryCallSettings<GetFeedRequest, Feed> getFeedSettings;
+  private final UnaryCallSettings<ListFeedsRequest, ListFeedsResponse> listFeedsSettings;
+  private final UnaryCallSettings<UpdateFeedRequest, Feed> updateFeedSettings;
+  private final UnaryCallSettings<DeleteFeedRequest, Empty> deleteFeedSettings;
+  private final PagedCallSettings<
+          SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
+      searchAllResourcesSettings;
+  private final PagedCallSettings<
+          SearchAllIamPoliciesRequest,
+          SearchAllIamPoliciesResponse,
+          SearchAllIamPoliciesPagedResponse>
+      searchAllIamPoliciesSettings;
+
+  private static final PagedListDescriptor<
+          SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>
+      SEARCH_ALL_RESOURCES_PAGE_STR_DESC =
+          new PagedListDescriptor<
+              SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public SearchAllResourcesRequest injectToken(
+                SearchAllResourcesRequest payload, String token) {
+              return SearchAllResourcesRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public SearchAllResourcesRequest injectPageSize(
+                SearchAllResourcesRequest payload, int pageSize) {
+              return SearchAllResourcesRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(SearchAllResourcesRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(SearchAllResourcesResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<ResourceSearchResult> extractResources(
+                SearchAllResourcesResponse payload) {
+              return payload.getResultsList() == null
+                  ? ImmutableList.<ResourceSearchResult>of()
+                  : payload.getResultsList();
+            }
+          };
+
+  private static final PagedListDescriptor<
+          SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse, IamPolicySearchResult>
+      SEARCH_ALL_IAM_POLICIES_PAGE_STR_DESC =
+          new PagedListDescriptor<
+              SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse, IamPolicySearchResult>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public SearchAllIamPoliciesRequest injectToken(
+                SearchAllIamPoliciesRequest payload, String token) {
+              return SearchAllIamPoliciesRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public SearchAllIamPoliciesRequest injectPageSize(
+                SearchAllIamPoliciesRequest payload, int pageSize) {
+              return SearchAllIamPoliciesRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(SearchAllIamPoliciesRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(SearchAllIamPoliciesResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<IamPolicySearchResult> extractResources(
+                SearchAllIamPoliciesResponse payload) {
+              return payload.getResultsList() == null
+                  ? ImmutableList.<IamPolicySearchResult>of()
+                  : payload.getResultsList();
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
+      SEARCH_ALL_RESOURCES_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              SearchAllResourcesRequest,
+              SearchAllResourcesResponse,
+              SearchAllResourcesPagedResponse>() {
+            @Override
+            public ApiFuture<SearchAllResourcesPagedResponse> getFuturePagedResponse(
+                UnaryCallable<SearchAllResourcesRequest, SearchAllResourcesResponse> callable,
+                SearchAllResourcesRequest request,
+                ApiCallContext context,
+                ApiFuture<SearchAllResourcesResponse> futureResponse) {
+              PageContext<
+                      SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>
+                  pageContext =
+                      PageContext.create(
+                          callable, SEARCH_ALL_RESOURCES_PAGE_STR_DESC, request, context);
+              return SearchAllResourcesPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          SearchAllIamPoliciesRequest,
+          SearchAllIamPoliciesResponse,
+          SearchAllIamPoliciesPagedResponse>
+      SEARCH_ALL_IAM_POLICIES_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              SearchAllIamPoliciesRequest,
+              SearchAllIamPoliciesResponse,
+              SearchAllIamPoliciesPagedResponse>() {
+            @Override
+            public ApiFuture<SearchAllIamPoliciesPagedResponse> getFuturePagedResponse(
+                UnaryCallable<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse> callable,
+                SearchAllIamPoliciesRequest request,
+                ApiCallContext context,
+                ApiFuture<SearchAllIamPoliciesResponse> futureResponse) {
+              PageContext<
+                      SearchAllIamPoliciesRequest,
+                      SearchAllIamPoliciesResponse,
+                      IamPolicySearchResult>
+                  pageContext =
+                      PageContext.create(
+                          callable, SEARCH_ALL_IAM_POLICIES_PAGE_STR_DESC, request, context);
+              return SearchAllIamPoliciesPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
 
   /** Returns the object with the settings used for calls to exportAssets. */
   public UnaryCallSettings<ExportAssetsRequest, Operation> exportAssetsSettings() {
@@ -110,6 +276,47 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
   public UnaryCallSettings<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistorySettings() {
     return batchGetAssetsHistorySettings;
+  }
+
+  /** Returns the object with the settings used for calls to createFeed. */
+  public UnaryCallSettings<CreateFeedRequest, Feed> createFeedSettings() {
+    return createFeedSettings;
+  }
+
+  /** Returns the object with the settings used for calls to getFeed. */
+  public UnaryCallSettings<GetFeedRequest, Feed> getFeedSettings() {
+    return getFeedSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listFeeds. */
+  public UnaryCallSettings<ListFeedsRequest, ListFeedsResponse> listFeedsSettings() {
+    return listFeedsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to updateFeed. */
+  public UnaryCallSettings<UpdateFeedRequest, Feed> updateFeedSettings() {
+    return updateFeedSettings;
+  }
+
+  /** Returns the object with the settings used for calls to deleteFeed. */
+  public UnaryCallSettings<DeleteFeedRequest, Empty> deleteFeedSettings() {
+    return deleteFeedSettings;
+  }
+
+  /** Returns the object with the settings used for calls to searchAllResources. */
+  public PagedCallSettings<
+          SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
+      searchAllResourcesSettings() {
+    return searchAllResourcesSettings;
+  }
+
+  /** Returns the object with the settings used for calls to searchAllIamPolicies. */
+  public PagedCallSettings<
+          SearchAllIamPoliciesRequest,
+          SearchAllIamPoliciesResponse,
+          SearchAllIamPoliciesPagedResponse>
+      searchAllIamPoliciesSettings() {
+    return searchAllIamPoliciesSettings;
   }
 
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
@@ -184,6 +391,13 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     exportAssetsSettings = settingsBuilder.exportAssetsSettings().build();
     exportAssetsOperationSettings = settingsBuilder.exportAssetsOperationSettings().build();
     batchGetAssetsHistorySettings = settingsBuilder.batchGetAssetsHistorySettings().build();
+    createFeedSettings = settingsBuilder.createFeedSettings().build();
+    getFeedSettings = settingsBuilder.getFeedSettings().build();
+    listFeedsSettings = settingsBuilder.listFeedsSettings().build();
+    updateFeedSettings = settingsBuilder.updateFeedSettings().build();
+    deleteFeedSettings = settingsBuilder.deleteFeedSettings().build();
+    searchAllResourcesSettings = settingsBuilder.searchAllResourcesSettings().build();
+    searchAllIamPoliciesSettings = settingsBuilder.searchAllIamPoliciesSettings().build();
   }
 
   /** Builder for AssetServiceStubSettings. */
@@ -196,6 +410,19 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     private final UnaryCallSettings.Builder<
             BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
         batchGetAssetsHistorySettings;
+    private final UnaryCallSettings.Builder<CreateFeedRequest, Feed> createFeedSettings;
+    private final UnaryCallSettings.Builder<GetFeedRequest, Feed> getFeedSettings;
+    private final UnaryCallSettings.Builder<ListFeedsRequest, ListFeedsResponse> listFeedsSettings;
+    private final UnaryCallSettings.Builder<UpdateFeedRequest, Feed> updateFeedSettings;
+    private final UnaryCallSettings.Builder<DeleteFeedRequest, Empty> deleteFeedSettings;
+    private final PagedCallSettings.Builder<
+            SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
+        searchAllResourcesSettings;
+    private final PagedCallSettings.Builder<
+            SearchAllIamPoliciesRequest,
+            SearchAllIamPoliciesResponse,
+            SearchAllIamPoliciesPagedResponse>
+        searchAllIamPoliciesSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -206,6 +433,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           "no_retry_0_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
       definitions.put(
           "retry_policy_1_codes",
+          ImmutableSet.copyOf(
+              Lists.<StatusCode.Code>newArrayList(
+                  StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
+      definitions.put(
+          "retry_policy_2_codes",
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
                   StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
@@ -236,6 +468,17 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               .setTotalTimeout(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_1_params", settings);
+      settings =
+          RetrySettings.newBuilder()
+              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setRetryDelayMultiplier(1.3)
+              .setMaxRetryDelay(Duration.ofMillis(60000L))
+              .setInitialRpcTimeout(Duration.ofMillis(15000L))
+              .setRpcTimeoutMultiplier(1.0)
+              .setMaxRpcTimeout(Duration.ofMillis(15000L))
+              .setTotalTimeout(Duration.ofMillis(15000L))
+              .build();
+      definitions.put("retry_policy_2_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
     }
 
@@ -249,10 +492,26 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       exportAssetsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       exportAssetsOperationSettings = OperationCallSettings.newBuilder();
       batchGetAssetsHistorySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      createFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      getFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      listFeedsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      updateFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      deleteFeedSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      searchAllResourcesSettings = PagedCallSettings.newBuilder(SEARCH_ALL_RESOURCES_PAGE_STR_FACT);
+      searchAllIamPoliciesSettings =
+          PagedCallSettings.newBuilder(SEARCH_ALL_IAM_POLICIES_PAGE_STR_FACT);
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
-              exportAssetsSettings, batchGetAssetsHistorySettings);
+              exportAssetsSettings,
+              batchGetAssetsHistorySettings,
+              createFeedSettings,
+              getFeedSettings,
+              listFeedsSettings,
+              updateFeedSettings,
+              deleteFeedSettings,
+              searchAllResourcesSettings,
+              searchAllIamPoliciesSettings);
       initDefaults(this);
     }
 
@@ -262,10 +521,25 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       exportAssetsSettings = settings.exportAssetsSettings.toBuilder();
       exportAssetsOperationSettings = settings.exportAssetsOperationSettings.toBuilder();
       batchGetAssetsHistorySettings = settings.batchGetAssetsHistorySettings.toBuilder();
+      createFeedSettings = settings.createFeedSettings.toBuilder();
+      getFeedSettings = settings.getFeedSettings.toBuilder();
+      listFeedsSettings = settings.listFeedsSettings.toBuilder();
+      updateFeedSettings = settings.updateFeedSettings.toBuilder();
+      deleteFeedSettings = settings.deleteFeedSettings.toBuilder();
+      searchAllResourcesSettings = settings.searchAllResourcesSettings.toBuilder();
+      searchAllIamPoliciesSettings = settings.searchAllIamPoliciesSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
-              exportAssetsSettings, batchGetAssetsHistorySettings);
+              exportAssetsSettings,
+              batchGetAssetsHistorySettings,
+              createFeedSettings,
+              getFeedSettings,
+              listFeedsSettings,
+              updateFeedSettings,
+              deleteFeedSettings,
+              searchAllResourcesSettings,
+              searchAllIamPoliciesSettings);
     }
 
     private static Builder createDefault() {
@@ -289,6 +563,41 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           .batchGetAssetsHistorySettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .createFeedSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .getFeedSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .listFeedsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .updateFeedSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .deleteFeedSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .searchAllResourcesSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
+
+      builder
+          .searchAllIamPoliciesSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_2_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
 
       builder
           .exportAssetsOperationSettings()
@@ -351,6 +660,47 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     public UnaryCallSettings.Builder<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
         batchGetAssetsHistorySettings() {
       return batchGetAssetsHistorySettings;
+    }
+
+    /** Returns the builder for the settings used for calls to createFeed. */
+    public UnaryCallSettings.Builder<CreateFeedRequest, Feed> createFeedSettings() {
+      return createFeedSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to getFeed. */
+    public UnaryCallSettings.Builder<GetFeedRequest, Feed> getFeedSettings() {
+      return getFeedSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listFeeds. */
+    public UnaryCallSettings.Builder<ListFeedsRequest, ListFeedsResponse> listFeedsSettings() {
+      return listFeedsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to updateFeed. */
+    public UnaryCallSettings.Builder<UpdateFeedRequest, Feed> updateFeedSettings() {
+      return updateFeedSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to deleteFeed. */
+    public UnaryCallSettings.Builder<DeleteFeedRequest, Empty> deleteFeedSettings() {
+      return deleteFeedSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to searchAllResources. */
+    public PagedCallSettings.Builder<
+            SearchAllResourcesRequest, SearchAllResourcesResponse, SearchAllResourcesPagedResponse>
+        searchAllResourcesSettings() {
+      return searchAllResourcesSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to searchAllIamPolicies. */
+    public PagedCallSettings.Builder<
+            SearchAllIamPoliciesRequest,
+            SearchAllIamPoliciesResponse,
+            SearchAllIamPoliciesPagedResponse>
+        searchAllIamPoliciesSettings() {
+      return searchAllIamPoliciesSettings;
     }
 
     @Override

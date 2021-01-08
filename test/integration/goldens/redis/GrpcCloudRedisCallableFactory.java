@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1.stub;
+package com.google.cloud.redis.v1beta1.stub;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcCallableFactory;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
@@ -41,6 +42,7 @@ import javax.annotation.Generated;
  *
  * <p>This class is for advanced usage.
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class GrpcCloudRedisCallableFactory implements GrpcStubCallableFactory {
 

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.cloud.redis.v1beta1;
 
-import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GaxGrpcProperties;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.cloud.redis.v1beta1;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
@@ -28,11 +28,12 @@ import com.google.api.gax.paging.AbstractPagedListResponse;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.redis.v1.stub.CloudRedisStub;
-import com.google.cloud.redis.v1.stub.CloudRedisStubSettings;
+import com.google.cloud.redis.v1beta1.stub.CloudRedisStub;
+import com.google.cloud.redis.v1beta1.stub.CloudRedisStubSettings;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
 import com.google.longrunning.OperationsClient;
+import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
@@ -44,7 +45,7 @@ import javax.annotation.Generated;
 /**
  * Service Description: Configures and manages Cloud Memorystore for Redis instances
  *
- * <p>Google Cloud Memorystore for Redis v1
+ * <p>Google Cloud Memorystore for Redis v1beta1
  *
  * <p>The `redis.googleapis.com` service implements the Google Cloud Memorystore for Redis API and
  * defines the following resource model for managing Redis instances:
@@ -57,7 +58,7 @@ import javax.annotation.Generated;
  *       `/projects/{project_id}/locations/{location_id}/instances/{instance_id}`
  * </ul>
  *
- * <p>Note that location_id must be referring to a GCP `region`; for example:
+ * <p>Note that location_id must be refering to a GCP `region`; for example:
  *
  * <ul>
  *   <li>`projects/redpepper-1290/locations/us-central1/instances/my-redis`
@@ -112,6 +113,7 @@ import javax.annotation.Generated;
  *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class CloudRedisClient implements BackgroundResource {
   private final CloudRedisSettings settings;
@@ -365,7 +367,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param instance Required. A Redis [Instance] resource
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> createInstanceAsync(
+  public final OperationFuture<Instance, Any> createInstanceAsync(
       LocationName parent, String instanceId, Instance instance) {
     CreateInstanceRequest request =
         CreateInstanceRequest.newBuilder()
@@ -406,7 +408,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param instance Required. A Redis [Instance] resource
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> createInstanceAsync(
+  public final OperationFuture<Instance, Any> createInstanceAsync(
       String parent, String instanceId, Instance instance) {
     CreateInstanceRequest request =
         CreateInstanceRequest.newBuilder()
@@ -435,8 +437,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> createInstanceAsync(
-      CreateInstanceRequest request) {
+  public final OperationFuture<Instance, Any> createInstanceAsync(CreateInstanceRequest request) {
     return createInstanceOperationCallable().futureCall(request);
   }
 
@@ -457,7 +458,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<CreateInstanceRequest, Instance, Any>
       createInstanceOperationCallable() {
     return stub.createInstanceOperationCallable();
   }
@@ -493,12 +494,12 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * @param updateMask Required. Mask of fields to update. At least one path must be supplied in
    *     this field. The elements of the repeated paths field may only include these fields from
-   *     [Instance][google.cloud.redis.v1.Instance]:
+   *     [Instance][google.cloud.redis.v1beta1.Instance]:
    *     <p>&#42; `displayName` &#42; `labels` &#42; `memorySizeGb` &#42; `redisConfig`
    * @param instance Required. Update description. Only fields specified in update_mask are updated.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> updateInstanceAsync(
+  public final OperationFuture<Instance, Any> updateInstanceAsync(
       FieldMask updateMask, Instance instance) {
     UpdateInstanceRequest request =
         UpdateInstanceRequest.newBuilder().setUpdateMask(updateMask).setInstance(instance).build();
@@ -516,8 +517,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> updateInstanceAsync(
-      UpdateInstanceRequest request) {
+  public final OperationFuture<Instance, Any> updateInstanceAsync(UpdateInstanceRequest request) {
     return updateInstanceOperationCallable().futureCall(request);
   }
 
@@ -531,7 +531,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<UpdateInstanceRequest, Instance, Any>
       updateInstanceOperationCallable() {
     return stub.updateInstanceOperationCallable();
   }
@@ -560,7 +560,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param redisVersion Required. Specifies the target version of Redis software to upgrade to.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> upgradeInstanceAsync(
+  public final OperationFuture<Instance, Any> upgradeInstanceAsync(
       InstanceName name, String redisVersion) {
     UpgradeInstanceRequest request =
         UpgradeInstanceRequest.newBuilder()
@@ -580,7 +580,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param redisVersion Required. Specifies the target version of Redis software to upgrade to.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> upgradeInstanceAsync(
+  public final OperationFuture<Instance, Any> upgradeInstanceAsync(
       String name, String redisVersion) {
     UpgradeInstanceRequest request =
         UpgradeInstanceRequest.newBuilder().setName(name).setRedisVersion(redisVersion).build();
@@ -594,8 +594,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> upgradeInstanceAsync(
-      UpgradeInstanceRequest request) {
+  public final OperationFuture<Instance, Any> upgradeInstanceAsync(UpgradeInstanceRequest request) {
     return upgradeInstanceOperationCallable().futureCall(request);
   }
 
@@ -605,7 +604,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationCallable() {
     return stub.upgradeInstanceOperationCallable();
   }
@@ -636,7 +635,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param inputConfig Required. Specify data to be imported.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> importInstanceAsync(
+  public final OperationFuture<Instance, Any> importInstanceAsync(
       String name, InputConfig inputConfig) {
     ImportInstanceRequest request =
         ImportInstanceRequest.newBuilder().setName(name).setInputConfig(inputConfig).build();
@@ -656,8 +655,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> importInstanceAsync(
-      ImportInstanceRequest request) {
+  public final OperationFuture<Instance, Any> importInstanceAsync(ImportInstanceRequest request) {
     return importInstanceOperationCallable().futureCall(request);
   }
 
@@ -673,7 +671,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<ImportInstanceRequest, Instance, Any>
       importInstanceOperationCallable() {
     return stub.importInstanceOperationCallable();
   }
@@ -709,7 +707,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param outputConfig Required. Specify data to be exported.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> exportInstanceAsync(
+  public final OperationFuture<Instance, Any> exportInstanceAsync(
       String name, OutputConfig outputConfig) {
     ExportInstanceRequest request =
         ExportInstanceRequest.newBuilder().setName(name).setOutputConfig(outputConfig).build();
@@ -728,8 +726,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> exportInstanceAsync(
-      ExportInstanceRequest request) {
+  public final OperationFuture<Instance, Any> exportInstanceAsync(ExportInstanceRequest request) {
     return exportInstanceOperationCallable().futureCall(request);
   }
 
@@ -744,7 +741,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<ExportInstanceRequest, Instance, Any>
       exportInstanceOperationCallable() {
     return stub.exportInstanceOperationCallable();
   }
@@ -776,7 +773,7 @@ public class CloudRedisClient implements BackgroundResource {
    *     If it's unspecified, data protection mode will be LIMITED_DATA_LOSS by default.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> failoverInstanceAsync(
+  public final OperationFuture<Instance, Any> failoverInstanceAsync(
       InstanceName name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode) {
     FailoverInstanceRequest request =
         FailoverInstanceRequest.newBuilder()
@@ -798,7 +795,7 @@ public class CloudRedisClient implements BackgroundResource {
    *     If it's unspecified, data protection mode will be LIMITED_DATA_LOSS by default.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> failoverInstanceAsync(
+  public final OperationFuture<Instance, Any> failoverInstanceAsync(
       String name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode) {
     FailoverInstanceRequest request =
         FailoverInstanceRequest.newBuilder()
@@ -816,7 +813,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Instance, OperationMetadata> failoverInstanceAsync(
+  public final OperationFuture<Instance, Any> failoverInstanceAsync(
       FailoverInstanceRequest request) {
     return failoverInstanceOperationCallable().futureCall(request);
   }
@@ -828,7 +825,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
+  public final OperationCallable<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationCallable() {
     return stub.failoverInstanceOperationCallable();
   }
@@ -853,7 +850,7 @@ public class CloudRedisClient implements BackgroundResource {
    *     refers to a GCP region.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Empty, OperationMetadata> deleteInstanceAsync(InstanceName name) {
+  public final OperationFuture<Empty, Any> deleteInstanceAsync(InstanceName name) {
     DeleteInstanceRequest request =
         DeleteInstanceRequest.newBuilder().setName(name == null ? null : name.toString()).build();
     return deleteInstanceAsync(request);
@@ -868,7 +865,7 @@ public class CloudRedisClient implements BackgroundResource {
    *     refers to a GCP region.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Empty, OperationMetadata> deleteInstanceAsync(String name) {
+  public final OperationFuture<Empty, Any> deleteInstanceAsync(String name) {
     DeleteInstanceRequest request = DeleteInstanceRequest.newBuilder().setName(name).build();
     return deleteInstanceAsync(request);
   }
@@ -880,8 +877,7 @@ public class CloudRedisClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Empty, OperationMetadata> deleteInstanceAsync(
-      DeleteInstanceRequest request) {
+  public final OperationFuture<Empty, Any> deleteInstanceAsync(DeleteInstanceRequest request) {
     return deleteInstanceOperationCallable().futureCall(request);
   }
 
@@ -891,7 +887,7 @@ public class CloudRedisClient implements BackgroundResource {
    *
    * <p>Sample code:
    */
-  public final OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
+  public final OperationCallable<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationCallable() {
     return stub.deleteInstanceOperationCallable();
   }

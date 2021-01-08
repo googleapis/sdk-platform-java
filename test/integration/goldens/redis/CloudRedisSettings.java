@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1;
+package com.google.cloud.redis.v1beta1;
 
-import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -31,8 +31,9 @@ import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
-import com.google.cloud.redis.v1.stub.CloudRedisStubSettings;
+import com.google.cloud.redis.v1beta1.stub.CloudRedisStubSettings;
 import com.google.longrunning.Operation;
+import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
@@ -69,6 +70,7 @@ import javax.annotation.Generated;
  * CloudRedisSettings cloudRedisSettings = cloudRedisSettingsBuilder.build();
  * }</pre>
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
 
@@ -89,7 +91,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to createInstance. */
-  public OperationCallSettings<CreateInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<CreateInstanceRequest, Instance, Any>
       createInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).createInstanceOperationSettings();
   }
@@ -100,7 +102,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to updateInstance. */
-  public OperationCallSettings<UpdateInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<UpdateInstanceRequest, Instance, Any>
       updateInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).updateInstanceOperationSettings();
   }
@@ -111,7 +113,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to upgradeInstance. */
-  public OperationCallSettings<UpgradeInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).upgradeInstanceOperationSettings();
   }
@@ -122,7 +124,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to importInstance. */
-  public OperationCallSettings<ImportInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<ImportInstanceRequest, Instance, Any>
       importInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).importInstanceOperationSettings();
   }
@@ -133,7 +135,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to exportInstance. */
-  public OperationCallSettings<ExportInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<ExportInstanceRequest, Instance, Any>
       exportInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).exportInstanceOperationSettings();
   }
@@ -144,7 +146,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to failoverInstance. */
-  public OperationCallSettings<FailoverInstanceRequest, Instance, OperationMetadata>
+  public OperationCallSettings<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).failoverInstanceOperationSettings();
   }
@@ -155,7 +157,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns the object with the settings used for calls to deleteInstance. */
-  public OperationCallSettings<DeleteInstanceRequest, Empty, OperationMetadata>
+  public OperationCallSettings<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationSettings() {
     return ((CloudRedisStubSettings) getStubSettings()).deleteInstanceOperationSettings();
   }
@@ -275,7 +277,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to createInstance. */
-    public OperationCallSettings.Builder<CreateInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<CreateInstanceRequest, Instance, Any>
         createInstanceOperationSettings() {
       return getStubSettingsBuilder().createInstanceOperationSettings();
     }
@@ -286,7 +288,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to updateInstance. */
-    public OperationCallSettings.Builder<UpdateInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<UpdateInstanceRequest, Instance, Any>
         updateInstanceOperationSettings() {
       return getStubSettingsBuilder().updateInstanceOperationSettings();
     }
@@ -297,7 +299,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to upgradeInstance. */
-    public OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, Any>
         upgradeInstanceOperationSettings() {
       return getStubSettingsBuilder().upgradeInstanceOperationSettings();
     }
@@ -308,7 +310,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to importInstance. */
-    public OperationCallSettings.Builder<ImportInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<ImportInstanceRequest, Instance, Any>
         importInstanceOperationSettings() {
       return getStubSettingsBuilder().importInstanceOperationSettings();
     }
@@ -319,7 +321,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to exportInstance. */
-    public OperationCallSettings.Builder<ExportInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<ExportInstanceRequest, Instance, Any>
         exportInstanceOperationSettings() {
       return getStubSettingsBuilder().exportInstanceOperationSettings();
     }
@@ -331,7 +333,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to failoverInstance. */
-    public OperationCallSettings.Builder<FailoverInstanceRequest, Instance, OperationMetadata>
+    public OperationCallSettings.Builder<FailoverInstanceRequest, Instance, Any>
         failoverInstanceOperationSettings() {
       return getStubSettingsBuilder().failoverInstanceOperationSettings();
     }
@@ -342,7 +344,7 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     }
 
     /** Returns the builder for the settings used for calls to deleteInstance. */
-    public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, OperationMetadata>
+    public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, Any>
         deleteInstanceOperationSettings() {
       return getStubSettingsBuilder().deleteInstanceOperationSettings();
     }
