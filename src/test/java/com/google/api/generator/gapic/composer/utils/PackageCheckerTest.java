@@ -23,6 +23,8 @@ import org.junit.Test;
 public class PackageCheckerTest {
   @Test
   public void isGaApi_normalExpectedPackageStructure() {
+    assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v1.services"));
+    assertTrue(PackageChecker.isGaApi("com.google.cloud.v1.foobar.services"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v1"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v999"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v12345a"));
@@ -40,7 +42,7 @@ public class PackageCheckerTest {
   public void isGaApi_invalidPackageStructure() {
     assertThrows(
         IllegalStateException.class,
-        () -> PackageChecker.isGaApi("com.google.cloud.dataproc.v1.foobar"));
+        () -> PackageChecker.isGaApi("com.google.cloud.dataproc.foo.bar"));
     assertThrows(IllegalStateException.class, () -> PackageChecker.isGaApi(""));
   }
 }
