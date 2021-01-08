@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcCallableFactory;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
@@ -40,6 +41,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -77,7 +79,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
             .setHeaderCommentStatements(
                 StubCommentComposer.createGrpcServiceCallableFactoryClassHeaderComments(
                     service.name()))
-            .setAnnotations(createClassAnnotations(typeStore))
+            .setAnnotations(createClassAnnotations(service.pakkage(), typeStore))
             .setImplementsTypes(createClassImplements(typeStore))
             .setName(className)
             .setMethods(createClassMethods(typeStore))
@@ -86,12 +88,17 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
     return GapicClass.create(kind, classDef);
   }
 
-  private static List<AnnotationNode> createClassAnnotations(TypeStore typeStore) {
-    return Arrays.asList(
+  private static List<AnnotationNode> createClassAnnotations(String pakkage, TypeStore typeStore) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (!PackageChecker.isGaApi(pakkage)) {
+      annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
+    }
+    annotations.add(
         AnnotationNode.builder()
             .setType(typeStore.get("Generated"))
-            .setDescription("by gapic-generator")
+            .setDescription("by gapic-generator-java")
             .build());
+    return annotations;
   }
 
   private static List<TypeNode> createClassImplements(TypeStore typeStore) {
@@ -343,6 +350,7 @@ public class GrpcServiceCallableFactoryClassComposer implements ClassComposer {
         Arrays.asList(
             // Gax-java classes.
             BatchingCallSettings.class,
+            BetaApi.class,
             BidiStreamingCallable.class,
             ClientContext.class,
             ClientStreamingCallable.class,

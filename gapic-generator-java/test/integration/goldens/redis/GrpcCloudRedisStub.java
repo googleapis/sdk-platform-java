@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.cloud.redis.v1.stub;
+package com.google.cloud.redis.v1beta1.stub;
 
-import static com.google.cloud.redis.v1.CloudRedisClient.ListInstancesPagedResponse;
+import static com.google.cloud.redis.v1beta1.CloudRedisClient.ListInstancesPagedResponse;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
@@ -26,21 +27,21 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.cloud.redis.v1.CreateInstanceRequest;
-import com.google.cloud.redis.v1.DeleteInstanceRequest;
-import com.google.cloud.redis.v1.ExportInstanceRequest;
-import com.google.cloud.redis.v1.FailoverInstanceRequest;
-import com.google.cloud.redis.v1.GetInstanceRequest;
-import com.google.cloud.redis.v1.ImportInstanceRequest;
-import com.google.cloud.redis.v1.Instance;
-import com.google.cloud.redis.v1.ListInstancesRequest;
-import com.google.cloud.redis.v1.ListInstancesResponse;
-import com.google.cloud.redis.v1.OperationMetadata;
-import com.google.cloud.redis.v1.UpdateInstanceRequest;
-import com.google.cloud.redis.v1.UpgradeInstanceRequest;
+import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
+import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
+import com.google.cloud.redis.v1beta1.ExportInstanceRequest;
+import com.google.cloud.redis.v1beta1.FailoverInstanceRequest;
+import com.google.cloud.redis.v1beta1.GetInstanceRequest;
+import com.google.cloud.redis.v1beta1.ImportInstanceRequest;
+import com.google.cloud.redis.v1beta1.Instance;
+import com.google.cloud.redis.v1beta1.ListInstancesRequest;
+import com.google.cloud.redis.v1beta1.ListInstancesResponse;
+import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
+import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
+import com.google.protobuf.Any;
 import com.google.protobuf.Empty;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
@@ -55,13 +56,14 @@ import javax.annotation.Generated;
  *
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
+@BetaApi
 @Generated("by gapic-generator-java")
 public class GrpcCloudRedisStub extends CloudRedisStub {
   private static final MethodDescriptor<ListInstancesRequest, ListInstancesResponse>
       listInstancesMethodDescriptor =
           MethodDescriptor.<ListInstancesRequest, ListInstancesResponse>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/ListInstances")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/ListInstances")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ListInstancesRequest.getDefaultInstance()))
               .setResponseMarshaller(
@@ -71,7 +73,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
   private static final MethodDescriptor<GetInstanceRequest, Instance> getInstanceMethodDescriptor =
       MethodDescriptor.<GetInstanceRequest, Instance>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
-          .setFullMethodName("google.cloud.redis.v1.CloudRedis/GetInstance")
+          .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/GetInstance")
           .setRequestMarshaller(ProtoUtils.marshaller(GetInstanceRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(Instance.getDefaultInstance()))
           .build();
@@ -80,7 +82,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       createInstanceMethodDescriptor =
           MethodDescriptor.<CreateInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/CreateInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/CreateInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(CreateInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -90,7 +92,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       updateInstanceMethodDescriptor =
           MethodDescriptor.<UpdateInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/UpdateInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/UpdateInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpdateInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -100,7 +102,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       upgradeInstanceMethodDescriptor =
           MethodDescriptor.<UpgradeInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/UpgradeInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/UpgradeInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(UpgradeInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -110,7 +112,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       importInstanceMethodDescriptor =
           MethodDescriptor.<ImportInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/ImportInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/ImportInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ImportInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -120,7 +122,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       exportInstanceMethodDescriptor =
           MethodDescriptor.<ExportInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/ExportInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/ExportInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(ExportInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -130,7 +132,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       failoverInstanceMethodDescriptor =
           MethodDescriptor.<FailoverInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/FailoverInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/FailoverInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(FailoverInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -140,7 +142,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       deleteInstanceMethodDescriptor =
           MethodDescriptor.<DeleteInstanceRequest, Operation>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName("google.cloud.redis.v1.CloudRedis/DeleteInstance")
+              .setFullMethodName("google.cloud.redis.v1beta1.CloudRedis/DeleteInstance")
               .setRequestMarshaller(
                   ProtoUtils.marshaller(DeleteInstanceRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
@@ -151,25 +153,25 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
       listInstancesPagedCallable;
   private final UnaryCallable<GetInstanceRequest, Instance> getInstanceCallable;
   private final UnaryCallable<CreateInstanceRequest, Operation> createInstanceCallable;
-  private final OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<CreateInstanceRequest, Instance, Any>
       createInstanceOperationCallable;
   private final UnaryCallable<UpdateInstanceRequest, Operation> updateInstanceCallable;
-  private final OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<UpdateInstanceRequest, Instance, Any>
       updateInstanceOperationCallable;
   private final UnaryCallable<UpgradeInstanceRequest, Operation> upgradeInstanceCallable;
-  private final OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationCallable;
   private final UnaryCallable<ImportInstanceRequest, Operation> importInstanceCallable;
-  private final OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<ImportInstanceRequest, Instance, Any>
       importInstanceOperationCallable;
   private final UnaryCallable<ExportInstanceRequest, Operation> exportInstanceCallable;
-  private final OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<ExportInstanceRequest, Instance, Any>
       exportInstanceOperationCallable;
   private final UnaryCallable<FailoverInstanceRequest, Operation> failoverInstanceCallable;
-  private final OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
+  private final OperationCallable<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationCallable;
   private final UnaryCallable<DeleteInstanceRequest, Operation> deleteInstanceCallable;
-  private final OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
+  private final OperationCallable<DeleteInstanceRequest, Empty, Any>
       deleteInstanceOperationCallable;
 
   private final BackgroundResource backgroundResources;
@@ -430,8 +432,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return createInstanceCallable;
   }
 
-  public OperationCallable<CreateInstanceRequest, Instance, OperationMetadata>
-      createInstanceOperationCallable() {
+  public OperationCallable<CreateInstanceRequest, Instance, Any> createInstanceOperationCallable() {
     return createInstanceOperationCallable;
   }
 
@@ -439,8 +440,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return updateInstanceCallable;
   }
 
-  public OperationCallable<UpdateInstanceRequest, Instance, OperationMetadata>
-      updateInstanceOperationCallable() {
+  public OperationCallable<UpdateInstanceRequest, Instance, Any> updateInstanceOperationCallable() {
     return updateInstanceOperationCallable;
   }
 
@@ -448,7 +448,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return upgradeInstanceCallable;
   }
 
-  public OperationCallable<UpgradeInstanceRequest, Instance, OperationMetadata>
+  public OperationCallable<UpgradeInstanceRequest, Instance, Any>
       upgradeInstanceOperationCallable() {
     return upgradeInstanceOperationCallable;
   }
@@ -457,8 +457,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return importInstanceCallable;
   }
 
-  public OperationCallable<ImportInstanceRequest, Instance, OperationMetadata>
-      importInstanceOperationCallable() {
+  public OperationCallable<ImportInstanceRequest, Instance, Any> importInstanceOperationCallable() {
     return importInstanceOperationCallable;
   }
 
@@ -466,8 +465,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return exportInstanceCallable;
   }
 
-  public OperationCallable<ExportInstanceRequest, Instance, OperationMetadata>
-      exportInstanceOperationCallable() {
+  public OperationCallable<ExportInstanceRequest, Instance, Any> exportInstanceOperationCallable() {
     return exportInstanceOperationCallable;
   }
 
@@ -475,7 +473,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return failoverInstanceCallable;
   }
 
-  public OperationCallable<FailoverInstanceRequest, Instance, OperationMetadata>
+  public OperationCallable<FailoverInstanceRequest, Instance, Any>
       failoverInstanceOperationCallable() {
     return failoverInstanceOperationCallable;
   }
@@ -484,8 +482,7 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
     return deleteInstanceCallable;
   }
 
-  public OperationCallable<DeleteInstanceRequest, Empty, OperationMetadata>
-      deleteInstanceOperationCallable() {
+  public OperationCallable<DeleteInstanceRequest, Empty, Any> deleteInstanceOperationCallable() {
     return deleteInstanceOperationCallable;
   }
 

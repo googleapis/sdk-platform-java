@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
@@ -51,6 +52,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.ClassNames;
+import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.Message;
@@ -161,7 +163,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
             .setPackageString(pakkage)
             .setHeaderCommentStatements(
                 StubCommentComposer.createGrpcServiceStubClassHeaderComments(service.name()))
-            .setAnnotations(createClassAnnotations())
+            .setAnnotations(createClassAnnotations(service.pakkage()))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setExtendsType(typeStore.get(ClassNames.getServiceStubClassName(service)))
@@ -385,12 +387,17 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
     return callableClassMembers;
   }
 
-  private static List<AnnotationNode> createClassAnnotations() {
-    return Arrays.asList(
+  private static List<AnnotationNode> createClassAnnotations(String pakkage) {
+    List<AnnotationNode> annotations = new ArrayList<>();
+    if (!PackageChecker.isGaApi(pakkage)) {
+      annotations.add(AnnotationNode.withType(FIXED_TYPESTORE.get("BetaApi")));
+    }
+    annotations.add(
         AnnotationNode.builder()
             .setType(FIXED_TYPESTORE.get("Generated"))
             .setDescription("by gapic-generator-java")
             .build());
+    return annotations;
   }
 
   private static List<MethodDefinition> createClassMethods(
@@ -1024,6 +1031,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         Arrays.asList(
             BackgroundResource.class,
             BackgroundResourceAggregation.class,
+            BetaApi.class,
             BidiStreamingCallable.class,
             ClientContext.class,
             ClientStreamingCallable.class,
