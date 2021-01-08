@@ -556,11 +556,12 @@ public class ServiceClientSampleCodeComposer {
     // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Stream.SERVER)) {
-      bodyStatements =
-          composeStreamServerSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr);
+      bodyStatements.addAll(
+          composeStreamServerSampleCodeBodyStatements(
+              method, clientVarExpr, requestAssignmentExpr));
     } else if (method.stream().equals(Stream.BIDI)) {
-      bodyStatements =
-          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr);
+      bodyStatements.addAll(
+          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
@@ -835,7 +836,7 @@ public class ServiceClientSampleCodeComposer {
             .setBody(
                 Arrays.asList(
                     CommentStatement.withComment(
-                        LineComment.withComment("Do something when receive a response."))))
+                        LineComment.withComment("Do something when a response is received."))))
             .build();
     bodyStatements.add(forStatement);
 

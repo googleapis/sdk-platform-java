@@ -367,7 +367,7 @@ public class EchoClient implements BackgroundResource {
    *           .build();
    *   bidiStream.send(request);
    *   for (EchoResponse response : bidiStream) {
-   *     // Do something when receive a response.
+   *     // Do something when a response is received.
    *   }
    * }
    * }</pre>
@@ -391,7 +391,7 @@ public class EchoClient implements BackgroundResource {
    *           .build();
    *   bidiStream.send(request);
    *   for (EchoResponse response : bidiStream) {
-   *     // Do something when receive a response.
+   *     // Do something when a response is received.
    *   }
    * }
    * }</pre>

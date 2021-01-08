@@ -1813,7 +1813,7 @@ public class ServiceClientSampleCodeComposerTest {
             "          .build();\n",
             "  bidiStream.send(request);\n",
             "  for (EchoResponse response : bidiStream) {\n",
-            "    // Do something when receive a response.\n",
+            "    // Do something when a response is received.\n",
             "  }\n",
             "}");
     assertEquals(results, expected);
