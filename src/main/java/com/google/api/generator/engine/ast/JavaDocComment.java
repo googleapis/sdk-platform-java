@@ -92,7 +92,7 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(line);
+                componentsList.add(line.replace("@Override", "{@literal @}Override"));
               });
       componentsList.add("}</pre>");
       return this;

@@ -347,7 +347,40 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   ApiStreamObserver<EchoRequest> responseObserver =
+   *       new ApiStreamObserver<EchoRequest>() {
+   *         {@literal @}Override
+   *         public void onNext(EchoResponse response) {
+   *           // Do something when receive a response.
+   *         }
+   *
+   *         {@literal @}Override
+   *         public void onError(Throwable t) {
+   *           // Add error-handling
+   *         }
+   *
+   *         {@literal @}Override
+   *         public void onCompleted() {
+   *           // Do something when complete.
+   *         }
+   *       };
+   *   ApiStreamObserver<EchoRequest> requestObserver =
+   *       echoClient.collect().clientStreamingCall(responseObserver);
+   *   EchoRequest request =
+   *       EchoRequest.newBuilder()
+   *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setFoobar(Foobar.newBuilder().build())
+   *           .build();
+   *   requestObserver.onNext(request);
+   * }
+   * }</pre>
+   */
   public final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     return stub.collectCallable();
   }
