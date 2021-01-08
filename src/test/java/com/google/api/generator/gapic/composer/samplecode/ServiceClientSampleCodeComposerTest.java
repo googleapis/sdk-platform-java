@@ -26,7 +26,6 @@ import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
-import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;

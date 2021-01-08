@@ -46,6 +46,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -260,10 +261,7 @@ public class ServiceClientSampleCodeComposer {
             Variable.builder().setName("request").setType(method.inputType()).build());
     List<VariableExpr> rpcMethodArgVarExprs = Arrays.asList(requestVarExpr);
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(
-        requestMessage,
-        String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+    Preconditions.checkNotNull(requestMessage);
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -316,10 +314,7 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(
-        requestMessage,
-        String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+    Preconditions.checkNotNull(requestMessage);
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -428,10 +423,7 @@ public class ServiceClientSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder().setName("request").setType(method.inputType()).build());
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(
-        requestMessage,
-        String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+    Preconditions.checkNotNull(requestMessage);
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
