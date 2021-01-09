@@ -46,7 +46,6 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
-import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -675,10 +674,7 @@ public class ServiceClientSampleCodeComposer {
           TypeNode.withReference(
               ConcreteReference.builder()
                   .setClazz(ApiFuture.class)
-                  .setGenerics(
-                      method.hasLro()
-                          ? ConcreteReference.withClazz(Operation.class)
-                          : method.outputType().reference())
+                  .setGenerics(method.outputType().reference())
                   .build());
       VariableExpr apiFutureVarExpr =
           VariableExpr.withVariable(
