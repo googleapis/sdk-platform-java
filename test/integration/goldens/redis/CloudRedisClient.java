@@ -1385,7 +1385,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .build();
    *   ApiFuture<Operation> future = cloudRedisClient.deleteInstanceCallable().futureCall(request);
    *   // Do something.
-   *   Operation response = future.get();
+   *   future.get();
    * }
    * }</pre>
    */
