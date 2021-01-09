@@ -46,7 +46,6 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
-import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -658,9 +657,9 @@ public class ServiceClientSampleCodeComposer {
 
     List<Statement> bodyStatements = new ArrayList<>();
 
-    if (!method.isPaged() && !method.hasLro()) {
+    if (!method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryCallableSampleCodeBodyStatements(
+          composeNonPagedCallableSampleCodeBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
@@ -1069,7 +1068,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeUnaryCallableSampleCodeBodyStatements(
+  private static List<Statement> composeNonPagedCallableSampleCodeBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
@@ -1082,7 +1081,7 @@ public class ServiceClientSampleCodeComposer {
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(ApiFuture.class)
-                .setGenerics(method.outputType().reference())
+                .setGenerics(method.hasLro() ? method.lro().responseType().reference() : method.outputType().reference())
                 .build());
     VariableExpr apiFutureVarExpr =
         VariableExpr.withVariable(
@@ -1116,7 +1115,7 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.outputType())
             .build();
-    boolean returnVoid = isProtoEmptyType(method.outputType());
+    boolean returnVoid = isProtoEmptyType(method.hasLro() ? method.lro().responseType() : method.outputType());
     if (returnVoid) {
       bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
     } else {
