@@ -256,8 +256,9 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "The request `%s` is not defined as message type.",
+            method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -311,8 +312,9 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "The request `%s` is not defined as message type.",
+            method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -422,8 +424,9 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "The request `%s` is not defined as message type.",
+            method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -440,10 +443,10 @@ public class ServiceClientSampleCodeComposer {
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
     Preconditions.checkNotNull(
-        repeatedPagedResultsField,
+        requestMessage,
         String.format(
-            "No repeated field found on message %s for method %s",
-            methodOutputMessage.name(), method.name()));
+            "The request `%s` is not defined as message type.",
+            method.inputType().reference().simpleName()));
     TypeNode repeatedResponseType = repeatedPagedResultsField.type();
 
     // Create ApiFuture Variable Expression with assign value by invoking client paged callable
@@ -540,8 +543,9 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "The request `%s` is not defined as message type.",
+            method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
