@@ -820,7 +820,7 @@ public class ServiceClientClassComposer {
         && method.stream().equals(Stream.NONE)) {
       // TODO(summerji): Remove the following if condition after implement paged and lro in
       // composeRegularCallableMethodHeaderSampleCode
-      if (!method.isPaged() && !method.hasLro()) {
+      if (!method.isPaged()) {
         sampleCodeOpt =
             Optional.of(
                 ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
