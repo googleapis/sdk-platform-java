@@ -394,6 +394,23 @@ public class ConfigClient implements BackgroundResource {
    * Lists buckets (Beta).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   while (true) {
+   *     ListBucketsResponse response = configClient.listBucketsCallable().call(request);
+   *     for (LogBucket element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBucketsRequest, ListBucketsResponse> listBucketsCallable() {
     return stub.listBucketsCallable();
@@ -706,6 +723,23 @@ public class ConfigClient implements BackgroundResource {
    * Lists sinks.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   while (true) {
+   *     ListSinksResponse response = configClient.listSinksCallable().call(request);
+   *     for (LogSink element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListSinksRequest, ListSinksResponse> listSinksCallable() {
     return stub.listSinksCallable();
@@ -1569,6 +1603,23 @@ public class ConfigClient implements BackgroundResource {
    * Lists all the exclusions in a parent resource.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   while (true) {
+   *     ListExclusionsResponse response = configClient.listExclusionsCallable().call(request);
+   *     for (LogExclusion element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListExclusionsRequest, ListExclusionsResponse>
       listExclusionsCallable() {

@@ -369,6 +369,23 @@ public class LibraryServiceClient implements BackgroundResource {
    * necessarily be added to the end of this list.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   while (true) {
+   *     ListShelvesResponse response = libraryServiceClient.listShelvesCallable().call(request);
+   *     for (Shelf element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListShelvesRequest, ListShelvesResponse> listShelvesCallable() {
     return stub.listShelvesCallable();
@@ -932,6 +949,23 @@ public class LibraryServiceClient implements BackgroundResource {
    * exist.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+   *   while (true) {
+   *     ListBooksResponse response = libraryServiceClient.listBooksCallable().call(request);
+   *     for (Book element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListBooksRequest, ListBooksResponse> listBooksCallable() {
     return stub.listBooksCallable();
