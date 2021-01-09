@@ -443,10 +443,10 @@ public class ServiceClientSampleCodeComposer {
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
     Preconditions.checkNotNull(
-        requestMessage,
+        repeatedPagedResultsField,
         String.format(
-            "The request `%s` is not defined as message type.",
-            method.inputType().reference().simpleName()));
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
     TypeNode repeatedResponseType = repeatedPagedResultsField.type();
 
     // Create ApiFuture Variable Expression with assign value by invoking client paged callable
