@@ -160,7 +160,7 @@ public class ServiceClientCommentComposer {
   }
 
   public static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments, Optional<String> sampleCode) {
+      Method method, List<MethodArgument> methodArguments, Optional<String> sampleCodeOpt) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -168,9 +168,9 @@ public class ServiceClientCommentComposer {
           processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
-    if (sampleCode.isPresent()) {
+    if (sampleCodeOpt.isPresent()) {
       methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-      methodJavadocBuilder.addSampleCode(sampleCode.get());
+      methodJavadocBuilder.addSampleCode(sampleCodeOpt.get());
     }
 
     if (methodArguments.isEmpty()) {
@@ -196,8 +196,8 @@ public class ServiceClientCommentComposer {
   }
 
   public static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, Optional<String> sampleCode) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList(), sampleCode);
+      Method method, Optional<String> sampleCodeOpt) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), sampleCodeOpt);
   }
 
   public static CommentStatement createMethodNoArgComment(String serviceName) {
@@ -213,7 +213,7 @@ public class ServiceClientCommentComposer {
   }
 
   public static List<CommentStatement> createRpcCallableMethodHeaderComment(
-      Method method, Optional<String> sampleCode) {
+      Method method, Optional<String> sampleCodeOpt) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -222,8 +222,8 @@ public class ServiceClientCommentComposer {
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    if (sampleCode.isPresent()) {
-      methodJavadocBuilder.addSampleCode(sampleCode.get());
+    if (sampleCodeOpt.isPresent()) {
+      methodJavadocBuilder.addSampleCode(sampleCodeOpt.get());
     }
 
     return Arrays.asList(
