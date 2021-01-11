@@ -257,8 +257,7 @@ public class ServiceClientSampleCodeComposer {
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "The request `%s` is not defined as message type.",
-            method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -313,8 +312,7 @@ public class ServiceClientSampleCodeComposer {
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "The request `%s` is not defined as message type.",
-            method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -425,8 +423,7 @@ public class ServiceClientSampleCodeComposer {
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "The request `%s` is not defined as message type.",
-            method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -544,8 +541,7 @@ public class ServiceClientSampleCodeComposer {
     Preconditions.checkNotNull(
         requestMessage,
         String.format(
-            "The request `%s` is not defined as message type.",
-            method.inputType().reference().simpleName()));
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
