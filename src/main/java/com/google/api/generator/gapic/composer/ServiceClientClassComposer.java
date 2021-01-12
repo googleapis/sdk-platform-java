@@ -811,7 +811,7 @@ public class ServiceClientClassComposer {
     }
     // TODO (summerji): Implement sample code for stream method.
     // Replace by if (method.stream()).
-    if (method.stream().equals(Stream.SERVER)) {
+    if (method.stream().equals(Stream.SERVER) || method.stream().equals(Stream.BIDI)) {
       sampleCodeOpt =
           Optional.of(
               ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(

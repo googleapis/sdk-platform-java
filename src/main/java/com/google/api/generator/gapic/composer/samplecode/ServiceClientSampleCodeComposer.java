@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.composer.samplecode;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -36,6 +37,7 @@ import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
+import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
@@ -552,8 +554,15 @@ public class ServiceClientSampleCodeComposer {
             .build();
 
     // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
-    List<Statement> bodyStatements =
-        composeStreamServerSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr);
+    List<Statement> bodyStatements = new ArrayList<>();
+    if (method.stream().equals(Stream.SERVER)) {
+      bodyStatements.addAll(
+          composeStreamServerSampleCodeBodyStatements(
+              method, clientVarExpr, requestAssignmentExpr));
+    } else if (method.stream().equals(Stream.BIDI)) {
+      bodyStatements.addAll(
+          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+    }
 
     return SampleCodeWriter.write(
         TryCatchStatement.builder()
@@ -751,6 +760,79 @@ public class ServiceClientSampleCodeComposer {
         ForStatement.builder()
             .setLocalVariableExpr(responseVarExpr)
             .setCollectionExpr(serverStreamVarExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("Do something when a response is received."))))
+            .build();
+    bodyStatements.add(forStatement);
+
+    return bodyStatements;
+  }
+
+  private static List<Statement> composeStreamBidiSampleCodeBodyStatements(
+      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Create bidi stream variable expression and assign it with invoking client's bidi stream
+    // method.
+    // e.g. BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();
+    TypeNode bidiStreamType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(BidiStream.class)
+                .setGenerics(method.inputType().reference(), method.outputType().reference())
+                .build());
+    VariableExpr bidiStreamVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("bidiStream").setType(bidiStreamType).build());
+    MethodInvocationExpr clientBidiStreamCallMethodInvoationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    clientBidiStreamCallMethodInvoationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientBidiStreamCallMethodInvoationExpr)
+            .setMethodName("call")
+            .setReturnType(bidiStreamType)
+            .build();
+    AssignmentExpr bidiStreamAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(bidiStreamVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(clientBidiStreamCallMethodInvoationExpr)
+            .build();
+    bodyExprs.add(bidiStreamAssignmentExpr);
+
+    // Add request with default value expression.
+    bodyExprs.add(requestAssignmentExpr);
+
+    // Invoke send method with argument request.
+    // e.g. bidiStream.send(request);
+    MethodInvocationExpr sendMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(bidiStreamVarExpr)
+            .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
+            .setMethodName("send")
+            .build();
+    bodyExprs.add(sendMethodInvocationExpr);
+
+    List<Statement> bodyStatements =
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+
+    // For-loop on bidi stream variable.
+    // e.g. for (EchoResponse response : bidiStream) {
+    //        // Do something when reveive a response.
+    //      }
+    ForStatement forStatement =
+        ForStatement.builder()
+            .setLocalVariableExpr(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setType(method.outputType()).setName("response").build())
+                    .setIsDecl(true)
+                    .build())
+            .setCollectionExpr(bidiStreamVarExpr)
             .setBody(
                 Arrays.asList(
                     CommentStatement.withComment(

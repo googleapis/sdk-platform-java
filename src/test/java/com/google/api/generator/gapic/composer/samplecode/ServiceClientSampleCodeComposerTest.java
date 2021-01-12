@@ -1767,5 +1767,93 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
                 method, clientType, resourceNames, messageTypes));
   }
+
+  @Test
+  public void validComposeStreamCallableMethodHeaderSampleCode_bidiStream() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("chat")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setStream(Stream.BIDI)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  bidiStream.send(request);\n",
+            "  for (EchoResponse response : bidiStream) {\n",
+            "    // Do something when a response is received.\n",
+            "  }\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void invalidComposeStreamCallableMethodHeaderSampleCode_bidiStreamNotExistRequest() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NotExistRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("chat")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .setStream(Stream.BIDI)
+            .build();
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
 }
 
