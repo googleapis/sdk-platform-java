@@ -615,64 +615,9 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
 
     if (!method.isPaged() && !method.hasLro()) {
-      // Create api future variable expression, and assign it with a value by invoking callable
-      // method.
-      // e.g. ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
-      TypeNode apiFutureType =
-          TypeNode.withReference(
-              ConcreteReference.builder()
-                  .setClazz(ApiFuture.class)
-                  .setGenerics(method.outputType().reference())
-                  .build());
-      VariableExpr apiFutureVarExpr =
-          VariableExpr.withVariable(
-              Variable.builder().setName("future").setType(apiFutureType).build());
-      MethodInvocationExpr callableMethodInvocationExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(clientVarExpr)
-              .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
-              .build();
-      callableMethodInvocationExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(callableMethodInvocationExpr)
-              .setMethodName("futureCall")
-              .setArguments(requestVarExpr)
-              .setReturnType(apiFutureType)
-              .build();
-      AssignmentExpr futureAssignmentExpr =
-          AssignmentExpr.builder()
-              .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
-              .setValueExpr(callableMethodInvocationExpr)
-              .build();
-      bodyExprs.add(futureAssignmentExpr);
       bodyStatements.addAll(
-          bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
-      bodyExprs.clear();
-      bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
-
-      MethodInvocationExpr getMethodInvocationExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(apiFutureVarExpr)
-              .setMethodName("get")
-              .setReturnType(method.outputType())
-              .build();
-      boolean returnVoid = isProtoEmptyType(method.outputType());
-      if (returnVoid) {
-        bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
-      } else {
-        VariableExpr responseVarExpr =
-            VariableExpr.builder()
-                .setVariable(
-                    Variable.builder().setType(method.outputType()).setName("response").build())
-                .setIsDecl(true)
-                .build();
-        AssignmentExpr responseAssignmentExpr =
-            AssignmentExpr.builder()
-                .setVariableExpr(responseVarExpr)
-                .setValueExpr(getMethodInvocationExpr)
-                .build();
-        bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
-      }
+          composeUnaryCallableSampleCodeBodyStatements(
+              method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
     return SampleCodeWriter.write(
@@ -1079,6 +1024,74 @@ public class ServiceClientSampleCodeComposer {
 
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
+
+  private static List<Statement> composeUnaryCallableSampleCodeBodyStatements(
+      Method method,
+      VariableExpr clientVarExpr,
+      VariableExpr requestVarExpr,
+      List<Expr> bodyExprs) {
+    List<Statement> bodyStatements = new ArrayList<>();
+    // Create api future variable expression, and assign it with a value by invoking callable
+    // method.
+    // e.g. ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
+    TypeNode apiFutureType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiFuture.class)
+                .setGenerics(method.outputType().reference())
+                .build());
+    VariableExpr apiFutureVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("future").setType(apiFutureType).build());
+    MethodInvocationExpr callableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    callableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(callableMethodInvocationExpr)
+            .setMethodName("futureCall")
+            .setArguments(requestVarExpr)
+            .setReturnType(apiFutureType)
+            .build();
+    AssignmentExpr futureAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(apiFutureVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(callableMethodInvocationExpr)
+            .build();
+    bodyExprs.add(futureAssignmentExpr);
+    bodyStatements.addAll(
+        bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
+    bodyExprs.clear();
+    bodyStatements.add(CommentStatement.withComment(LineComment.withComment("Do something.")));
+
+    MethodInvocationExpr getMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(apiFutureVarExpr)
+            .setMethodName("get")
+            .setReturnType(method.outputType())
+            .build();
+    boolean returnVoid = isProtoEmptyType(method.outputType());
+    if (returnVoid) {
+      bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
+    } else {
+      VariableExpr responseVarExpr =
+          VariableExpr.builder()
+              .setVariable(
+                  Variable.builder().setType(method.outputType()).setName("response").build())
+              .setIsDecl(true)
+              .build();
+      AssignmentExpr responseAssignmentExpr =
+          AssignmentExpr.builder()
+              .setVariableExpr(responseVarExpr)
+              .setValueExpr(getMethodInvocationExpr)
+              .build();
+      bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
+    }
+    return bodyStatements;
+  }
+
   // ==================================Helpers===================================================//
 
   // Create a list of RPC method arguments' variable expressions.
