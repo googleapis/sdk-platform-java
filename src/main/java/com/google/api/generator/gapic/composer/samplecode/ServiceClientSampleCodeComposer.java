@@ -842,6 +842,7 @@ public class ServiceClientSampleCodeComposer {
 
     return bodyStatements;
   }
+
   // ==================================Helpers===================================================//
 
   // Create a list of RPC method arguments' variable expressions.
