@@ -258,8 +258,8 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -313,8 +313,8 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -424,8 +424,8 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -542,8 +542,8 @@ public class ServiceClientSampleCodeComposer {
     Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
     Preconditions.checkNotNull(
         requestMessage,
-        "The request `%s` is not defined as message type.",
-        method.inputType().reference().simpleName());
+        String.format(
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
     Expr requestBuilderExpr =
         DefaultValueComposer.createSimpleMessageBuilderExpr(
             requestMessage, resourceNames, messageTypes);
@@ -842,6 +842,7 @@ public class ServiceClientSampleCodeComposer {
 
     return bodyStatements;
   }
+  
   // ==================================Helpers===================================================//
 
   // Create a list of RPC method arguments' variable expressions.
