@@ -813,7 +813,7 @@ public class ServiceClientClassComposer {
 
     if (callableMethodKind.equals(CallableMethodKind.REGULAR)
         && method.stream().equals(Stream.NONE)) {
-      // TODO(summerji): Remove the following if condition after implement paged and lro in
+      // TODO(summerji): Remove the following if condition after implement paged in
       // composeRegularCallableMethodHeaderSampleCode
       if (!method.isPaged()) {
         sampleCodeOpt =
