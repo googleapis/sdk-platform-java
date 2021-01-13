@@ -381,8 +381,8 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnVoid = isProtoEmptyType(method.lro().responseType());
-    if (returnVoid) {
+    boolean returnsVoid = isProtoEmptyType(method.lro().responseType());
+    if (returnsVoid) {
       bodyExprs.add(futureGetMethodExpr);
     } else {
       VariableExpr responseVarExpr =
@@ -1079,9 +1079,9 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.outputType())
             .build();
-    boolean returnVoid =
-        isProtoEmptyType(method.hasLro() ? method.lro().responseType() : method.outputType());
-    if (returnVoid) {
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    boolean returnsVoid = isProtoEmptyType(methodOutputType);
+    if (returnsVoid) {
       bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
     } else {
       VariableExpr responseVarExpr =
