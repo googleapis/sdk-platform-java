@@ -881,7 +881,7 @@ public class ServiceClientSampleCodeComposer {
             .setBody(
                 Arrays.asList(
                     CommentStatement.withComment(
-                        LineComment.withComment("Do something when receive a response."))))
+                        LineComment.withComment("Do something when a response is received."))))
             .setReturnType(TypeNode.VOID)
             .build();
     MethodDefinition onErrorMethod =

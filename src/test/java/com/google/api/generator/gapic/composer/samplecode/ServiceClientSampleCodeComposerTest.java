@@ -1896,7 +1896,7 @@ public class ServiceClientSampleCodeComposerTest {
             "      new ApiStreamObserver<EchoRequest>() {\n",
             "        @Override\n",
             "        public void onNext(EchoResponse response) {\n",
-            "          // Do something when receive a response.\n",
+            "          // Do something when a response is received.\n",
             "        }\n",
             "\n",
             "        @Override\n",
