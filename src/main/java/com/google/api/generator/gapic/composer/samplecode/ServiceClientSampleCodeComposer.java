@@ -565,7 +565,7 @@ public class ServiceClientSampleCodeComposer {
     } else if (method.stream().equals(Stream.BIDI)) {
       bodyStatements.addAll(
           composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
-    } else {
+    } else if (method.stream().equals(Stream.CLIENT)) {
       bodyStatements.addAll(
           composeStreamClientSampleCodeBodyStatements(
               method, clientVarExpr, requestAssignmentExpr));
@@ -865,7 +865,8 @@ public class ServiceClientSampleCodeComposer {
     VariableExpr responseObserverVarExpr =
         VariableExpr.withVariable(
             Variable.builder().setName("responseObserver").setType(responseObserverType).build());
-    // Create Anonymous Class contains methods: onNext, onError, onCompleted.
+    // Create an anonymous class for ApiStreamObserver that contains the methods onNext, onError,
+    // and onCompleted.
     MethodDefinition onNextMethod =
         MethodDefinition.builder()
             .setIsOverride(true)
