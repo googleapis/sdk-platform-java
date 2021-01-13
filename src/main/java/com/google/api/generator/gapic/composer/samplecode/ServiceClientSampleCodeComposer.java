@@ -570,9 +570,13 @@ public class ServiceClientSampleCodeComposer {
 
     List<Statement> bodyStatements = new ArrayList<>();
 
-    if (!method.isPaged()) {
+    if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryOrLroCallableBodyStatements(
+          composePagedCallableSampleCodeBodyStatements(
+              method, clientVarExpr, requestVarExpr, messageTypes));
+    } else {
+      bodyStatements.addAll(
+          composeNonPagedCallableSampleCodeBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
@@ -1099,6 +1103,144 @@ public class ServiceClientSampleCodeComposer {
       bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
     }
     return bodyStatements;
+  }
+
+  private static List<Statement> composePagedCallableSampleCodeBodyStatements(
+      Method method,
+      VariableExpr clientVarExpr,
+      VariableExpr requestVarExpr,
+      Map<String, Message> messageTypes) {
+    List<Statement> whileBodyStatements = new ArrayList<>();
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Preconditions.checkNotNull(
+        repeatedPagedResultsField,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+
+    // Assign future variable by invoking paged callable method.
+    // e.g. ApiFuture<PagedExpandPagedResponse> future =
+    // echoClient.pagedExpandCallable().futureCall(request);
+    VariableExpr responseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("response").setType(method.outputType()).build());
+    MethodInvocationExpr pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
+            .setMethodName("call")
+            .setArguments(requestVarExpr)
+            .setReturnType(method.outputType())
+            .build();
+    AssignmentExpr responseAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(pagedCallableMethodInvocationExpr)
+            .build();
+    whileBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
+
+    // For-loop on repeated response elements.
+    // e.g. for (EchoResponse element : response.getResponsesList()) {
+    //        // doThingsWith(element);
+    //      }
+    VariableExpr repeatedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("element").setType(repeatedResponseType).build());
+    MethodInvocationExpr getResponseListMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getResponsesList")
+            .build();
+    ForStatement responseForStatements =
+        ForStatement.builder()
+            .setLocalVariableExpr(repeatedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(getResponseListMethodInvocationExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("doThingsWith(element);"))))
+            .build();
+    whileBodyStatements.add(responseForStatements);
+
+    // Create nextPageToken variable expression and assign it with a value by invoking
+    // getNextPageToken method.
+    // e.g. String nextPageToken = response.getNextPageToken();
+    VariableExpr nextPageTokenVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("nextPageToken").setType(TypeNode.STRING).build());
+    MethodInvocationExpr getNextPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getNextPageToken")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr nextPageTokenAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(nextPageTokenVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getNextPageTokenMethodInvocationExpr)
+            .build();
+    whileBodyStatements.add(ExprStatement.withExpr(nextPageTokenAssignmentExpr));
+
+    // If nextPageToken variable expression is not null or empty, assign request variable with a
+    // value by invoking setPageToken method.
+    // if (!Strings.isNullOrEmpty(nextPageToken)) {
+    //   request =  request.toBuilder().setPageToken(nextPageToken).build();
+    // } else {
+    //   break;
+    // }
+    Expr conditionExpr =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(TypeNode.STRING)
+                .setMethodName("isNullOrEmpty")
+                .setArguments(nextPageTokenVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
+    MethodInvocationExpr setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName("toBuilder")
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("setPageToken")
+            .setArguments(nextPageTokenVarExpr)
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("build")
+            .setReturnType(method.inputType())
+            .build();
+    AssignmentExpr requestReAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr)
+            .setValueExpr(setPageTokenMethodInvocationExpr)
+            .build();
+    IfStatement nextPageTokenIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(conditionExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(requestReAssignmentExpr)))
+            .setElseBody(Arrays.asList(BreakStatement.create()))
+            .build();
+    whileBodyStatements.add(nextPageTokenIfStatement);
+
+    WhileStatement pagedWhileStatement =
+        WhileStatement.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
+            .setBody(whileBodyStatements)
+            .build();
+    return Arrays.asList(pagedWhileStatement);
   }
 
   // ==================================Helpers===================================================//
