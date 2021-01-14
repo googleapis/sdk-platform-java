@@ -309,7 +309,22 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   CreateUserRequest request =
+   *       CreateUserRequest.newBuilder()
+   *           .setParent(UserName.of("[USER]").toString())
+   *           .setUser(User.newBuilder().build())
+   *           .build();
+   *   ApiFuture<User> future = identityClient.createUserCallable().futureCall(request);
+   *   // Do something.
+   *   User response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<CreateUserRequest, User> createUserCallable() {
     return stub.createUserCallable();
   }
@@ -373,7 +388,19 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   GetUserRequest request =
+   *       GetUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *   ApiFuture<User> future = identityClient.getUserCallable().futureCall(request);
+   *   // Do something.
+   *   User response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<GetUserRequest, User> getUserCallable() {
     return stub.getUserCallable();
   }
@@ -398,7 +425,19 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   UpdateUserRequest request =
+   *       UpdateUserRequest.newBuilder().setUser(User.newBuilder().build()).build();
+   *   ApiFuture<User> future = identityClient.updateUserCallable().futureCall(request);
+   *   // Do something.
+   *   User response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<UpdateUserRequest, User> updateUserCallable() {
     return stub.updateUserCallable();
   }
@@ -462,7 +501,19 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   DeleteUserRequest request =
+   *       DeleteUserRequest.newBuilder().setName(UserName.of("[USER]").toString()).build();
+   *   ApiFuture<Empty> future = identityClient.deleteUserCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<DeleteUserRequest, Empty> deleteUserCallable() {
     return stub.deleteUserCallable();
   }

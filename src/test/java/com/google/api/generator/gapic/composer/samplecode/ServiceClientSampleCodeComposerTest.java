@@ -1958,4 +1958,89 @@ public class ServiceClientSampleCodeComposerTest {
             ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
                 method, clientType, resourceNames, messageTypes));
   }
+
+  // ================================Regular Callable Method Sample Code ====================//
+  @Test
+  public void validComposeRegularCallableMethodHeaderSampleCode_unaryRpc() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    String results =
+        ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+    String expected =
+        LineFormatter.lines(
+            "try (EchoClient echoClient = EchoClient.create()) {\n",
+            "  EchoRequest request =\n",
+            "      EchoRequest.newBuilder()\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setFoobar(Foobar.newBuilder().build())\n",
+            "          .build();\n",
+            "  ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);\n",
+            "  // Do something.\n",
+            "  EchoResponse response = future.get();\n",
+            "}");
+    assertEquals(results, expected);
+  }
+
+  @Test
+  public void invalidComposeRegularCallableMethodHeaderSampleCode_noExistMethodRequest() {
+    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode inputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("NoExistRequest")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode outputType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    Method method =
+        Method.builder()
+            .setName("Echo")
+            .setInputType(inputType)
+            .setOutputType(outputType)
+            .build();
+    assertThrows(
+        NullPointerException.class,
+        () ->
+            ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                method, clientType, resourceNames, messageTypes));
+  }
 }

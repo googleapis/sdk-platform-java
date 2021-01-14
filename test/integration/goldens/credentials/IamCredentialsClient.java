@@ -271,6 +271,22 @@ public class IamCredentialsClient implements BackgroundResource {
    * Generates an OAuth 2.0 access token for a service account.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   GenerateAccessTokenRequest request =
+   *       GenerateAccessTokenRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .addAllScope(new ArrayList<String>())
+   *           .setLifetime(Duration.newBuilder().build())
+   *           .build();
+   *   ApiFuture<GenerateAccessTokenResponse> future =
+   *       iamCredentialsClient.generateAccessTokenCallable().futureCall(request);
+   *   // Do something.
+   *   GenerateAccessTokenResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GenerateAccessTokenRequest, GenerateAccessTokenResponse>
       generateAccessTokenCallable() {
@@ -402,6 +418,22 @@ public class IamCredentialsClient implements BackgroundResource {
    * Generates an OpenID Connect ID token for a service account.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   GenerateIdTokenRequest request =
+   *       GenerateIdTokenRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setAudience("audience975628804")
+   *           .setIncludeEmail(true)
+   *           .build();
+   *   ApiFuture<GenerateIdTokenResponse> future =
+   *       iamCredentialsClient.generateIdTokenCallable().futureCall(request);
+   *   // Do something.
+   *   GenerateIdTokenResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GenerateIdTokenRequest, GenerateIdTokenResponse>
       generateIdTokenCallable() {
@@ -519,6 +551,21 @@ public class IamCredentialsClient implements BackgroundResource {
    * Signs a blob using a service account's system-managed private key.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   SignBlobRequest request =
+   *       SignBlobRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setPayload(ByteString.EMPTY)
+   *           .build();
+   *   ApiFuture<SignBlobResponse> future =
+   *       iamCredentialsClient.signBlobCallable().futureCall(request);
+   *   // Do something.
+   *   SignBlobResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<SignBlobRequest, SignBlobResponse> signBlobCallable() {
     return stub.signBlobCallable();
@@ -635,6 +682,21 @@ public class IamCredentialsClient implements BackgroundResource {
    * Signs a JWT using a service account's system-managed private key.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+   *   SignJwtRequest request =
+   *       SignJwtRequest.newBuilder()
+   *           .setName(ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]").toString())
+   *           .addAllDelegates(new ArrayList<String>())
+   *           .setPayload("payload-786701938")
+   *           .build();
+   *   ApiFuture<SignJwtResponse> future =
+   *       iamCredentialsClient.signJwtCallable().futureCall(request);
+   *   // Do something.
+   *   SignJwtResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<SignJwtRequest, SignJwtResponse> signJwtCallable() {
     return stub.signJwtCallable();
