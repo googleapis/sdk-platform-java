@@ -613,15 +613,13 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Stream.SERVER)) {
       bodyStatements.addAll(
-          composeStreamServerSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
+          composeStreamServerBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     } else if (method.stream().equals(Stream.BIDI)) {
       bodyStatements.addAll(
-          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+          composeStreamBidiBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     } else if (method.stream().equals(Stream.CLIENT)) {
       bodyStatements.addAll(
-          composeStreamClientSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
+          composeStreamClientBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
