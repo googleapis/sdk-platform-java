@@ -17,8 +17,10 @@ package com.google.api.generator.gapic.composer.samplecode;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
+import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
@@ -26,7 +28,9 @@ import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
 import com.google.api.generator.engine.ast.LineComment;
+import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -553,7 +557,6 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(requestBuilderExpr)
             .build();
 
-    // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Stream.SERVER)) {
       bodyStatements.addAll(
@@ -562,6 +565,10 @@ public class ServiceClientSampleCodeComposer {
     } else if (method.stream().equals(Stream.BIDI)) {
       bodyStatements.addAll(
           composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+    } else if (method.stream().equals(Stream.CLIENT)) {
+      bodyStatements.addAll(
+          composeStreamClientSampleCodeBodyStatements(
+              method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
@@ -843,6 +850,131 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
+  private static List<Statement> composeStreamClientSampleCodeBodyStatements(
+      Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
+    List<Expr> bodyExprs = new ArrayList<>();
+
+    // Create responseObserver variable expression.
+    // e.g. ApiStream<EchoResponse> responseObserver
+    TypeNode responseObserverType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiStreamObserver.class)
+                .setGenerics(method.inputType().reference())
+                .build());
+    VariableExpr responseObserverVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("responseObserver").setType(responseObserverType).build());
+    // Create an anonymous class for ApiStreamObserver that contains the methods onNext, onError,
+    // and onCompleted.
+    MethodDefinition onNextMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onNext")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder().setName("response").setType(method.outputType()).build())
+                    .setIsDecl(true)
+                    .build())
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("Do something when a response is received."))))
+            .setReturnType(TypeNode.VOID)
+            .build();
+    MethodDefinition onErrorMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onError")
+            .setArguments(
+                VariableExpr.builder()
+                    .setVariable(
+                        Variable.builder()
+                            .setName("t")
+                            .setType(
+                                TypeNode.withReference(
+                                    ConcreteReference.withClazz(Throwable.class)))
+                            .build())
+                    .setIsDecl(true)
+                    .build())
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(LineComment.withComment("Add error-handling"))))
+            .setReturnType(TypeNode.VOID)
+            .build();
+    MethodDefinition onCompletedMethod =
+        MethodDefinition.builder()
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setName("onCompleted")
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("Do something when complete."))))
+            .setReturnType(TypeNode.VOID)
+            .build();
+    AnonymousClassExpr anonymousClassExpr =
+        AnonymousClassExpr.builder()
+            .setType(responseObserverType)
+            .setMethods(onNextMethod, onErrorMethod, onCompletedMethod)
+            .build();
+    AssignmentExpr responseObserverAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(responseObserverVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(anonymousClassExpr)
+            .build();
+    bodyExprs.add(responseObserverAssignmentExpr);
+
+    // Create an assignment expression for request observer variable expression when invoking the
+    // client's streaming call.
+    // e.g. ApiStreamObserver<EchoRequest> requestObserver =
+    //          echoClient.collectCallable().clientStreamingCall(responseObserver);
+    TypeNode requestObserverType =
+        TypeNode.withReference(
+            ConcreteReference.builder()
+                .setClazz(ApiStreamObserver.class)
+                .setGenerics(method.inputType().reference())
+                .build());
+    VariableExpr requestObserverVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("requestObserver").setType(responseObserverType).build());
+    MethodInvocationExpr clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(method.name()))
+            .build();
+    clientStreamCallMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientStreamCallMethodInvocationExpr)
+            .setArguments(responseObserverVarExpr)
+            .setMethodName("clientStreamingCall")
+            .setReturnType(requestObserverType)
+            .build();
+    AssignmentExpr requestObserverAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestObserverVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(clientStreamCallMethodInvocationExpr)
+            .build();
+    bodyExprs.add(requestObserverAssignmentExpr);
+
+    // Add assignment expression of request with its default value.
+    bodyExprs.add(requestAssignmentExpr);
+
+    // Invoke onNext method with argument of request variable.
+    // e.g. requestObserver.onNext(request)
+    MethodInvocationExpr onNextMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestObserverVarExpr)
+            .setMethodName("onNext")
+            .setArguments(requestAssignmentExpr.variableExpr().toBuilder().setIsDecl(false).build())
+            .build();
+    bodyExprs.add(onNextMethodExpr);
+
+    return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
+  }
   // ==================================Helpers===================================================//
 
   // Create a list of RPC method arguments' variable expressions.

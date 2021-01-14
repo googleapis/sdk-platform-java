@@ -92,7 +92,9 @@ public abstract class JavaDocComment implements Comment {
       Arrays.stream(sampleCode.split("\\r?\\n"))
           .forEach(
               line -> {
-                componentsList.add(line);
+                // TODO(summerji): Temporary solution to escape character @ in <pre>{@code...}
+                // markdown code block.
+                componentsList.add(line.replace("@Override", "{@literal @}Override"));
               });
       componentsList.add("}</pre>");
       return this;
