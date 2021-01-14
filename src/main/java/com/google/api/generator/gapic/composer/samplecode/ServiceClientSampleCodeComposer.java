@@ -609,7 +609,6 @@ public class ServiceClientSampleCodeComposer {
             .setValueExpr(requestBuilderExpr)
             .build();
 
-    // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Stream.SERVER)) {
       bodyStatements.addAll(
