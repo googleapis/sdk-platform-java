@@ -247,6 +247,18 @@ public class LoggingClient implements BackgroundResource {
    * delete operation with a timestamp before the operation will be deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   DeleteLogRequest request =
+   *       DeleteLogRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = loggingClient.deleteLogCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteLogRequest, Empty> deleteLogCallable() {
     return stub.deleteLogCallable();
@@ -441,6 +453,24 @@ public class LoggingClient implements BackgroundResource {
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setResource(MonitoredResource.newBuilder().build())
+   *           .putAllLabels(new HashMap<String, String>())
+   *           .addAllEntries(new ArrayList<LogEntry>())
+   *           .setPartialSuccess(true)
+   *           .setDryRun(true)
+   *           .build();
+   *   ApiFuture<WriteLogEntriesResponse> future =
+   *       loggingClient.writeLogEntriesCallable().futureCall(request);
+   *   // Do something.
+   *   WriteLogEntriesResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<WriteLogEntriesRequest, WriteLogEntriesResponse>
       writeLogEntriesCallable() {

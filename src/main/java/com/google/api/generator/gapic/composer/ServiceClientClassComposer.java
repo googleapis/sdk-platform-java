@@ -722,9 +722,6 @@ public class ServiceClientClassComposer {
       TypeStore typeStore,
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames) {
-    // TODO(summerji): Implement sample code for callable methods which include stream methods and
-    // unary methods,
-    //  and pass in actual map of Messages and ResourceNames
     return createCallableMethod(
         service, method, CallableMethodKind.REGULAR, typeStore, messageTypes, resourceNames);
   }
@@ -790,7 +787,6 @@ public class ServiceClientClassComposer {
     Optional<String> sampleCodeOpt = Optional.empty();
     // TODO (summerji): Refactor the condition logic order after complete the callable sample code
     // implementation.
-    // TODO (summerji): Implement sample code for CallableMethodKind.REGULAR
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCodeOpt =
           Optional.of(
@@ -818,6 +814,21 @@ public class ServiceClientClassComposer {
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
                   messageTypes));
+    }
+
+    if (callableMethodKind.equals(CallableMethodKind.REGULAR)
+        && method.stream().equals(Stream.NONE)) {
+      // TODO(summerji): Remove the following if condition after implement paged and lro in
+      // composeRegularCallableMethodHeaderSampleCode
+      if (!method.isPaged() && !method.hasLro()) {
+        sampleCodeOpt =
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                    method,
+                    typeStore.get(ClassNames.getServiceClientClassName(service)),
+                    resourceNames,
+                    messageTypes));
+      }
     }
 
     return MethodDefinition.builder()

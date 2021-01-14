@@ -279,6 +279,21 @@ public class AssetServiceClient implements BackgroundResource {
    * error.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   BatchGetAssetsHistoryRequest request =
+   *       BatchGetAssetsHistoryRequest.newBuilder()
+   *           .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .addAllAssetNames(new ArrayList<String>())
+   *           .setReadTimeWindow(TimeWindow.newBuilder().build())
+   *           .build();
+   *   ApiFuture<BatchGetAssetsHistoryResponse> future =
+   *       assetServiceClient.batchGetAssetsHistoryCallable().futureCall(request);
+   *   // Do something.
+   *   BatchGetAssetsHistoryResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
       batchGetAssetsHistoryCallable() {
@@ -339,6 +354,20 @@ public class AssetServiceClient implements BackgroundResource {
    * Creates a feed in a parent project/folder/organization to listen to its asset updates.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   CreateFeedRequest request =
+   *       CreateFeedRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setFeedId("feedId-1278410919")
+   *           .setFeed(Feed.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Feed> future = assetServiceClient.createFeedCallable().futureCall(request);
+   *   // Do something.
+   *   Feed response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<CreateFeedRequest, Feed> createFeedCallable() {
     return stub.createFeedCallable();
@@ -419,6 +448,18 @@ public class AssetServiceClient implements BackgroundResource {
    * Gets details about an asset feed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   GetFeedRequest request =
+   *       GetFeedRequest.newBuilder()
+   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .build();
+   *   ApiFuture<Feed> future = assetServiceClient.getFeedCallable().futureCall(request);
+   *   // Do something.
+   *   Feed response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetFeedRequest, Feed> getFeedCallable() {
     return stub.getFeedCallable();
@@ -473,6 +514,17 @@ public class AssetServiceClient implements BackgroundResource {
    * Lists all asset feeds in a parent project/folder/organization.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   ListFeedsRequest request =
+   *       ListFeedsRequest.newBuilder().setParent("parent-995424086").build();
+   *   ApiFuture<ListFeedsResponse> future =
+   *       assetServiceClient.listFeedsCallable().futureCall(request);
+   *   // Do something.
+   *   ListFeedsResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListFeedsRequest, ListFeedsResponse> listFeedsCallable() {
     return stub.listFeedsCallable();
@@ -530,6 +582,19 @@ public class AssetServiceClient implements BackgroundResource {
    * Updates an asset feed configuration.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   UpdateFeedRequest request =
+   *       UpdateFeedRequest.newBuilder()
+   *           .setFeed(Feed.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<Feed> future = assetServiceClient.updateFeedCallable().futureCall(request);
+   *   // Do something.
+   *   Feed response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<UpdateFeedRequest, Feed> updateFeedCallable() {
     return stub.updateFeedCallable();
@@ -610,6 +675,18 @@ public class AssetServiceClient implements BackgroundResource {
    * Deletes an asset feed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (AssetServiceClient assetServiceClient = AssetServiceClient.create()) {
+   *   DeleteFeedRequest request =
+   *       DeleteFeedRequest.newBuilder()
+   *           .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = assetServiceClient.deleteFeedCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteFeedRequest, Empty> deleteFeedCallable() {
     return stub.deleteFeedCallable();

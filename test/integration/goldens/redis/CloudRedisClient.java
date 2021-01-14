@@ -417,6 +417,18 @@ public class CloudRedisClient implements BackgroundResource {
    * Gets the details of a specific Redis instance.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (CloudRedisClient cloudRedisClient = CloudRedisClient.create()) {
+   *   GetInstanceRequest request =
+   *       GetInstanceRequest.newBuilder()
+   *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
+   *           .build();
+   *   ApiFuture<Instance> future = cloudRedisClient.getInstanceCallable().futureCall(request);
+   *   // Do something.
+   *   Instance response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<GetInstanceRequest, Instance> getInstanceCallable() {
     return stub.getInstanceCallable();
