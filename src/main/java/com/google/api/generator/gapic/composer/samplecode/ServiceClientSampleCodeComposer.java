@@ -223,15 +223,15 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+          composeUnaryPagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+          composeUnaryLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
-          composeUnaryRpcMethodSampleCodeBodyStatements(
+          composeUnaryRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
@@ -280,15 +280,15 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+          composeUnaryPagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+          composeUnaryLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
-          composeUnaryRpcMethodSampleCodeBodyStatements(
+          composeUnaryRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
@@ -569,7 +569,7 @@ public class ServiceClientSampleCodeComposer {
 
     if (!method.isPaged()) {
       bodyStatements.addAll(
-          composeNonPagedCallableSampleCodeBodyStatements(
+          composeUnaryOrLroCallableBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
@@ -632,7 +632,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
-  private static List<Statement> composeUnaryRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -666,7 +666,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryPagedRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -723,7 +723,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeUnaryLroRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryLroRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -767,7 +767,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeStreamServerSampleCodeBodyStatements(
+  private static List<Statement> composeStreamServerBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
@@ -830,7 +830,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeStreamBidiSampleCodeBodyStatements(
+  private static List<Statement> composeStreamBidiBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -903,7 +903,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeStreamClientSampleCodeBodyStatements(
+  private static List<Statement> composeStreamClientBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -1029,7 +1029,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeNonPagedCallableSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryOrLroCallableBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
