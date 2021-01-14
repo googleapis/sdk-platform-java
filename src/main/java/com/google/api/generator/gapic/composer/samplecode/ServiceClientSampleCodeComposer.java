@@ -299,6 +299,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
+  // Compose sample code for the method where it is CallableMethodKind.LRO.
   public static String composeLroCallableMethodHeaderSampleCode(
       Method method,
       TypeNode clientType,
@@ -410,6 +411,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
+  // Compose sample code for the method where it is CallableMethodKind.PAGED.
   public static String composePagedCallableMethodHeaderSampleCode(
       Method method,
       TypeNode clientType,
@@ -528,57 +530,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
-  public static String composeStreamCallableMethodHeaderSampleCode(
-      Method method,
-      TypeNode clientType,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
-    VariableExpr clientVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder()
-                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
-                .setType(clientType)
-                .build());
-    // Assign method's request variable with the default value.
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("request").setType(method.inputType()).build());
-    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
-    Preconditions.checkNotNull(
-        requestMessage,
-        String.format(
-            "Could not find the message type %s.", method.inputType().reference().simpleName()));
-    Expr requestBuilderExpr =
-        DefaultValueComposer.createSimpleMessageBuilderExpr(
-            requestMessage, resourceNames, messageTypes);
-    AssignmentExpr requestAssignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(requestBuilderExpr)
-            .build();
-
-    List<Statement> bodyStatements = new ArrayList<>();
-    if (method.stream().equals(Stream.SERVER)) {
-      bodyStatements.addAll(
-          composeStreamServerSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
-    } else if (method.stream().equals(Stream.BIDI)) {
-      bodyStatements.addAll(
-          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
-    } else if (method.stream().equals(Stream.CLIENT)) {
-      bodyStatements.addAll(
-          composeStreamClientSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
-    }
-
-    return SampleCodeWriter.write(
-        TryCatchStatement.builder()
-            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
-            .setTryBody(bodyStatements)
-            .setIsSampleCode(true)
-            .build());
-  }
-
+  // Compose sample code for the method where it is CallableMethodKind.REGULAR.
   public static String composeRegularCallableMethodHeaderSampleCode(
       Method method,
       TypeNode clientType,
@@ -618,6 +570,54 @@ public class ServiceClientSampleCodeComposer {
       bodyStatements.addAll(
           composeUnaryCallableSampleCodeBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
+    }
+
+    return SampleCodeWriter.write(
+        TryCatchStatement.builder()
+            .setTryResourceExpr(assignClientVariableWithCreateMethodExpr(clientVarExpr))
+            .setTryBody(bodyStatements)
+            .setIsSampleCode(true)
+            .build());
+  }
+
+  public static String composeStreamCallableMethodHeaderSampleCode(
+      Method method,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(clientType.reference().name()))
+                .setType(clientType)
+                .build());
+    // Assign method's request variable with the default value.
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("request").setType(method.inputType()).build());
+    Message requestMessage = messageTypes.get(method.inputType().reference().simpleName());
+    Preconditions.checkNotNull(
+        requestMessage,
+        String.format(
+            "Could not find the message type %s.", method.inputType().reference().simpleName()));
+    Expr requestBuilderExpr =
+        DefaultValueComposer.createSimpleMessageBuilderExpr(
+            requestMessage, resourceNames, messageTypes);
+    AssignmentExpr requestAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(requestBuilderExpr)
+            .build();
+
+    // TODO (summerji) : Implement Stream.Client and Stream.Bidi sample code body statements.
+    List<Statement> bodyStatements = new ArrayList<>();
+    if (method.stream().equals(Stream.SERVER)) {
+      bodyStatements.addAll(
+          composeStreamServerSampleCodeBodyStatements(
+              method, clientVarExpr, requestAssignmentExpr));
+    } else if (method.stream().equals(Stream.BIDI)) {
+      bodyStatements.addAll(
+          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
