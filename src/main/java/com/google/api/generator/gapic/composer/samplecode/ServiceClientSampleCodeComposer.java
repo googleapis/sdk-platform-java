@@ -32,8 +32,8 @@ import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.PrimitiveValue;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -1105,12 +1105,11 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composePagedCallableSampleCodeBodyStatements(
+  private static List<Statement> composePagedCallableBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
       Map<String, Message> messageTypes) {
-    List<Statement> whileBodyStatements = new ArrayList<>();
     // Find the repeated field.
     Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
     Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
@@ -1144,6 +1143,7 @@ public class ServiceClientSampleCodeComposer {
             .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
             .setValueExpr(pagedCallableMethodInvocationExpr)
             .build();
+    List<Statement> whileBodyStatements = new ArrayList<>();
     whileBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
 
     // For-loop on repeated response elements.
