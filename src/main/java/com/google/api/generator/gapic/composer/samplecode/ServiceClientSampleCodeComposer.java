@@ -618,6 +618,10 @@ public class ServiceClientSampleCodeComposer {
     } else if (method.stream().equals(Stream.BIDI)) {
       bodyStatements.addAll(
           composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+    } else if (method.stream().equals(Stream.CLIENT)) {
+      bodyStatements.addAll(
+          composeStreamClientSampleCodeBodyStatements(
+              method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
