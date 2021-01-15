@@ -223,11 +223,11 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodBodyStatements(
+          composePagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodBodyStatements(
+          composeLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
@@ -280,11 +280,11 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodBodyStatements(
+          composePagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodBodyStatements(
+          composeLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
@@ -664,7 +664,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeUnaryPagedRpcMethodBodyStatements(
+  private static List<Statement> composePagedRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -721,7 +721,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeUnaryLroRpcMethodBodyStatements(
+  private static List<Statement> composeLroRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
