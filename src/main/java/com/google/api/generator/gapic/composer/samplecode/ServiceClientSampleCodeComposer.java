@@ -57,7 +57,6 @@ import java.util.stream.IntStream;
 public class ServiceClientSampleCodeComposer {
 
   public static String composeClassHeaderCredentialsSampleCode(
-      // TODO(summerji): Add unit tests for composeClassHeaderCredentialsSampleCode.
       TypeNode clientType, TypeNode settingsType) {
     // Initialize clientSettings with builder() method.
     // e.g. EchoSettings echoSettings =
@@ -130,7 +129,6 @@ public class ServiceClientSampleCodeComposer {
   }
 
   public static String composeClassHeaderEndpointSampleCode(
-      // TODO(summerji): Add unit tests for composeClassHeaderEndpointSampleCode.
       TypeNode clientType, TypeNode settingsType) {
     // Initialize client settings with builder() method.
     // e.g. EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint("myEndpoint").build();
