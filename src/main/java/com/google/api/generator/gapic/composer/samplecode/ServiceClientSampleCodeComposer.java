@@ -572,11 +572,10 @@ public class ServiceClientSampleCodeComposer {
 
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composePagedCallableSampleCodeBodyStatements(
-              method, clientVarExpr, requestVarExpr, messageTypes));
+          composePagedCallableBodyStatements(method, clientVarExpr, requestVarExpr, messageTypes));
     } else {
       bodyStatements.addAll(
-          composeNonPagedCallableSampleCodeBodyStatements(
+          composeUnaryOrLroCallableBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
