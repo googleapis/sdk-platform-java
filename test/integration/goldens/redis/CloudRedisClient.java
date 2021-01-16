@@ -599,7 +599,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setInstanceId("instanceId902024336")
    *           .setInstance(Instance.newBuilder().build())
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.createInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -709,7 +709,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .setInstance(Instance.newBuilder().build())
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.updateInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -829,7 +829,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
    *           .setRedisVersion("redisVersion-1972584739")
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.upgradeInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -933,7 +933,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setName("name3373707")
    *           .setInputConfig(InputConfig.newBuilder().build())
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.importInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -1040,7 +1040,7 @@ public class CloudRedisClient implements BackgroundResource {
    *           .setName("name3373707")
    *           .setOutputConfig(OutputConfig.newBuilder().build())
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.exportInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -1171,7 +1171,7 @@ public class CloudRedisClient implements BackgroundResource {
    *       FailoverInstanceRequest.newBuilder()
    *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
    *           .build();
-   *   OperationFuture<Instance, OperationMetadata> future =
+   *   OperationFuture<Instance, Any> future =
    *       cloudRedisClient.failoverInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   Instance response = future.get();
@@ -1276,7 +1276,7 @@ public class CloudRedisClient implements BackgroundResource {
    *       DeleteInstanceRequest.newBuilder()
    *           .setName(InstanceName.of("[PROJECT]", "[LOCATION]", "[INSTANCE]").toString())
    *           .build();
-   *   OperationFuture<Empty, OperationMetadata> future =
+   *   OperationFuture<Empty, Any> future =
    *       cloudRedisClient.deleteInstanceOperationCallable().futureCall(request);
    *   // Do something.
    *   future.get();
