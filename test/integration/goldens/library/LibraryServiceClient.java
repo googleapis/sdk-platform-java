@@ -66,6 +66,13 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+ *   Shelf shelf = Shelf.newBuilder().build();
+ *   Shelf response = libraryServiceClient.createShelf(shelf);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the LibraryServiceClient object to clean up resources such
  * as threads. In the example above, try-with-resources is used, which automatically calls close().
  *

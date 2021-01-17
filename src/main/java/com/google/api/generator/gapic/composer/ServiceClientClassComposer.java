@@ -129,7 +129,8 @@ public class ServiceClientClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setHeaderCommentStatements(createClassHeaderComments(service, typeStore))
+            .setHeaderCommentStatements(
+                createClassHeaderComments(service, typeStore, resourceNames, messageTypes))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(pakkage, typeStore))
             .setScope(ScopeNode.PUBLIC)
@@ -161,9 +162,15 @@ public class ServiceClientClassComposer {
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeStore typeStore) {
+      Service service,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
     TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
+    String classMethodSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+            service, clientType, resourceNames, messageTypes);
     String credentialsSampleCode =
         ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
             clientType, settingsType);
@@ -171,7 +178,7 @@ public class ServiceClientClassComposer {
         ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
             clientType, settingsType);
     return ServiceClientCommentComposer.createClassHeaderComments(
-        service, credentialsSampleCode, endpointSampleCode);
+        service, classMethodSampleCode, credentialsSampleCode, endpointSampleCode);
   }
 
   private static List<MethodDefinition> createClassMethods(

@@ -44,6 +44,7 @@ import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
+import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
@@ -55,6 +56,30 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ServiceClientSampleCodeComposer {
+
+  public static String composeClassHeaderMethodSampleCode(
+      Service service,
+      TypeNode clientType,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
+    // Use the first pure unary RPC method's sample code as showcase, if no such method exists, use
+    // the first method in the service's methods list.
+    Method method =
+        service.methods().stream()
+            .filter(m -> m.stream() == Stream.NONE && !m.hasLro() && !m.isPaged())
+            .findFirst()
+            .orElse(service.methods().get(0));
+    if (method.stream() == Stream.NONE) {
+      if (method.methodSignatures().isEmpty()) {
+        return composeRpcDefaultMethodHeaderSampleCode(
+            method, clientType, resourceNames, messageTypes);
+      }
+      return composeRpcMethodHeaderSampleCode(
+          method, clientType, method.methodSignatures().get(0), resourceNames, messageTypes);
+    }
+    return composeStreamCallableMethodHeaderSampleCode(
+        method, clientType, resourceNames, messageTypes);
+  }
 
   public static String composeClassHeaderCredentialsSampleCode(
       TypeNode clientType, TypeNode settingsType) {

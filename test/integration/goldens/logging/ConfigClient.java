@@ -75,6 +75,18 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (ConfigClient configClient = ConfigClient.create()) {
+ *   GetBucketRequest request =
+ *       GetBucketRequest.newBuilder()
+ *           .setName(
+ *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+ *                   .toString())
+ *           .build();
+ *   LogBucket response = configClient.getBucket(request);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the ConfigClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *

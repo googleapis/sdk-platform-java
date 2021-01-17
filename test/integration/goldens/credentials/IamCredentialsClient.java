@@ -42,6 +42,17 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (IamCredentialsClient iamCredentialsClient = IamCredentialsClient.create()) {
+ *   ServiceAccountName name = ServiceAccountName.of("[PROJECT]", "[SERVICE_ACCOUNT]");
+ *   List<String> delegates = new ArrayList<>();
+ *   List<String> scope = new ArrayList<>();
+ *   Duration lifetime = Duration.newBuilder().build();
+ *   GenerateAccessTokenResponse response =
+ *       iamCredentialsClient.generateAccessToken(name, delegates, scope, lifetime);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the IamCredentialsClient object to clean up resources such
  * as threads. In the example above, try-with-resources is used, which automatically calls close().
  *
