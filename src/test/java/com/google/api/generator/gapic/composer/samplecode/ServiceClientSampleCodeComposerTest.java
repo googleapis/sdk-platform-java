@@ -2159,7 +2159,7 @@ public class ServiceClientSampleCodeComposerTest {
             "      // doThingsWith(element);\n",
             "    }\n",
             "    String nextPageToken = response.getNextPageToken();\n",
-            "    if (!String.isNullOrEmpty(nextPageToken)) {\n",
+            "    if (!Strings.isNullOrEmpty(nextPageToken)) {\n",
             "      request = request.toBuilder().setPageToken(nextPageToken).build();\n",
             "    } else {\n",
             "      break;\n",

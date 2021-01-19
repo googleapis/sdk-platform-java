@@ -52,6 +52,7 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1200,7 +1201,8 @@ public class ServiceClientSampleCodeComposer {
     Expr conditionExpr =
         UnaryOperationExpr.logicalNotWithExpr(
             MethodInvocationExpr.builder()
-                .setStaticReferenceType(TypeNode.STRING)
+                .setStaticReferenceType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
                 .setMethodName("isNullOrEmpty")
                 .setArguments(nextPageTokenVarExpr)
                 .setReturnType(TypeNode.BOOLEAN)

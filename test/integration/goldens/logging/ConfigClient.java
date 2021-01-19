@@ -403,7 +403,7 @@ public class ConfigClient implements BackgroundResource {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
-   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
    *       request = request.toBuilder().setPageToken(nextPageToken).build();
    *     } else {
    *       break;
@@ -732,7 +732,7 @@ public class ConfigClient implements BackgroundResource {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
-   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
    *       request = request.toBuilder().setPageToken(nextPageToken).build();
    *     } else {
    *       break;
@@ -1612,7 +1612,7 @@ public class ConfigClient implements BackgroundResource {
    *       // doThingsWith(element);
    *     }
    *     String nextPageToken = response.getNextPageToken();
-   *     if (!String.isNullOrEmpty(nextPageToken)) {
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
    *       request = request.toBuilder().setPageToken(nextPageToken).build();
    *     } else {
    *       break;
