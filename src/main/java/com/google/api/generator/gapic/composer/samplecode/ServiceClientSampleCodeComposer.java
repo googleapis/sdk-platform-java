@@ -22,21 +22,27 @@ import com.google.api.gax.rpc.BidiStream;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BreakStatement;
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.ForStatement;
+import com.google.api.generator.engine.ast.IfStatement;
 import com.google.api.generator.engine.ast.LineComment;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
+import com.google.api.generator.engine.ast.PrimitiveValue;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TryCatchStatement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.UnaryOperationExpr;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
@@ -46,6 +52,8 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -222,15 +230,15 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+          composeUnaryPagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+          composeUnaryLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
-          composeUnaryRpcMethodSampleCodeBodyStatements(
+          composeUnaryRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
@@ -279,15 +287,15 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+          composeUnaryPagedRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs, messageTypes));
     } else if (method.hasLro()) {
       bodyStatements.addAll(
-          composeUnaryLroRpcMethodSampleCodeBodyStatements(
+          composeUnaryLroRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     } else {
       bodyStatements.addAll(
-          composeUnaryRpcMethodSampleCodeBodyStatements(
+          composeUnaryRpcMethodBodyStatements(
               method, clientVarExpr, rpcMethodArgVarExprs, bodyExprs));
     }
 
@@ -380,8 +388,8 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.lro().responseType())
             .build();
-    boolean returnVoid = isProtoEmptyType(method.lro().responseType());
-    if (returnVoid) {
+    boolean returnsVoid = isProtoEmptyType(method.lro().responseType());
+    if (returnsVoid) {
       bodyExprs.add(futureGetMethodExpr);
     } else {
       VariableExpr responseVarExpr =
@@ -566,9 +574,12 @@ public class ServiceClientSampleCodeComposer {
 
     List<Statement> bodyStatements = new ArrayList<>();
 
-    if (!method.isPaged() && !method.hasLro()) {
+    if (method.isPaged()) {
       bodyStatements.addAll(
-          composeUnaryCallableSampleCodeBodyStatements(
+          composePagedCallableBodyStatements(method, clientVarExpr, requestVarExpr, messageTypes));
+    } else {
+      bodyStatements.addAll(
+          composeUnaryOrLroCallableBodyStatements(
               method, clientVarExpr, requestVarExpr, bodyExprs));
     }
 
@@ -612,15 +623,13 @@ public class ServiceClientSampleCodeComposer {
     List<Statement> bodyStatements = new ArrayList<>();
     if (method.stream().equals(Stream.SERVER)) {
       bodyStatements.addAll(
-          composeStreamServerSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
+          composeStreamServerBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     } else if (method.stream().equals(Stream.BIDI)) {
       bodyStatements.addAll(
-          composeStreamBidiSampleCodeBodyStatements(method, clientVarExpr, requestAssignmentExpr));
+          composeStreamBidiBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     } else if (method.stream().equals(Stream.CLIENT)) {
       bodyStatements.addAll(
-          composeStreamClientSampleCodeBodyStatements(
-              method, clientVarExpr, requestAssignmentExpr));
+          composeStreamClientBodyStatements(method, clientVarExpr, requestAssignmentExpr));
     }
 
     return SampleCodeWriter.write(
@@ -631,7 +640,7 @@ public class ServiceClientSampleCodeComposer {
             .build());
   }
 
-  private static List<Statement> composeUnaryRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -665,7 +674,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeUnaryPagedRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryPagedRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -722,7 +731,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeUnaryLroRpcMethodSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryLroRpcMethodBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       List<VariableExpr> rpcMethodArgVarExprs,
@@ -766,7 +775,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeStreamServerSampleCodeBodyStatements(
+  private static List<Statement> composeStreamServerBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
     bodyExprs.add(requestAssignmentExpr);
@@ -829,7 +838,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeStreamBidiSampleCodeBodyStatements(
+  private static List<Statement> composeStreamBidiBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -902,7 +911,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyStatements;
   }
 
-  private static List<Statement> composeStreamClientSampleCodeBodyStatements(
+  private static List<Statement> composeStreamClientBodyStatements(
       Method method, VariableExpr clientVarExpr, AssignmentExpr requestAssignmentExpr) {
     List<Expr> bodyExprs = new ArrayList<>();
 
@@ -1028,7 +1037,7 @@ public class ServiceClientSampleCodeComposer {
     return bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList());
   }
 
-  private static List<Statement> composeUnaryCallableSampleCodeBodyStatements(
+  private static List<Statement> composeUnaryOrLroCallableBodyStatements(
       Method method,
       VariableExpr clientVarExpr,
       VariableExpr requestVarExpr,
@@ -1041,7 +1050,10 @@ public class ServiceClientSampleCodeComposer {
         TypeNode.withReference(
             ConcreteReference.builder()
                 .setClazz(ApiFuture.class)
-                .setGenerics(method.outputType().reference())
+                .setGenerics(
+                    method.hasLro()
+                        ? ConcreteReference.withClazz(Operation.class)
+                        : method.outputType().reference())
                 .build());
     VariableExpr apiFutureVarExpr =
         VariableExpr.withVariable(
@@ -1075,8 +1087,9 @@ public class ServiceClientSampleCodeComposer {
             .setMethodName("get")
             .setReturnType(method.outputType())
             .build();
-    boolean returnVoid = isProtoEmptyType(method.outputType());
-    if (returnVoid) {
+    TypeNode methodOutputType = method.hasLro() ? method.lro().responseType() : method.outputType();
+    boolean returnsVoid = isProtoEmptyType(methodOutputType);
+    if (returnsVoid) {
       bodyStatements.add(ExprStatement.withExpr(getMethodInvocationExpr));
     } else {
       VariableExpr responseVarExpr =
@@ -1093,6 +1106,145 @@ public class ServiceClientSampleCodeComposer {
       bodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
     }
     return bodyStatements;
+  }
+
+  private static List<Statement> composePagedCallableBodyStatements(
+      Method method,
+      VariableExpr clientVarExpr,
+      VariableExpr requestVarExpr,
+      Map<String, Message> messageTypes) {
+    // Find the repeated field.
+    Message methodOutputMessage = messageTypes.get(method.outputType().reference().simpleName());
+    Field repeatedPagedResultsField = methodOutputMessage.findAndUnwrapFirstRepeatedField();
+    Preconditions.checkNotNull(
+        repeatedPagedResultsField,
+        String.format(
+            "No repeated field found on message %s for method %s",
+            methodOutputMessage.name(), method.name()));
+    TypeNode repeatedResponseType = repeatedPagedResultsField.type();
+
+    // Assign future variable by invoking paged callable method.
+    // e.g. ApiFuture<PagedExpandPagedResponse> future =
+    // echoClient.pagedExpandCallable().futureCall(request);
+    VariableExpr responseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("response").setType(method.outputType()).build());
+    MethodInvocationExpr pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(clientVarExpr)
+            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sCallable", method.name())))
+            .build();
+    pagedCallableMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(pagedCallableMethodInvocationExpr)
+            .setMethodName("call")
+            .setArguments(requestVarExpr)
+            .setReturnType(method.outputType())
+            .build();
+    AssignmentExpr responseAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(responseVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(pagedCallableMethodInvocationExpr)
+            .build();
+    List<Statement> whileBodyStatements = new ArrayList<>();
+    whileBodyStatements.add(ExprStatement.withExpr(responseAssignmentExpr));
+
+    // For-loop on repeated response elements.
+    // e.g. for (EchoResponse element : response.getResponsesList()) {
+    //        // doThingsWith(element);
+    //      }
+    VariableExpr repeatedResponseVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("element").setType(repeatedResponseType).build());
+    MethodInvocationExpr getResponseListMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getResponsesList")
+            .build();
+    ForStatement responseForStatements =
+        ForStatement.builder()
+            .setLocalVariableExpr(repeatedResponseVarExpr.toBuilder().setIsDecl(true).build())
+            .setCollectionExpr(getResponseListMethodInvocationExpr)
+            .setBody(
+                Arrays.asList(
+                    CommentStatement.withComment(
+                        LineComment.withComment("doThingsWith(element);"))))
+            .build();
+    whileBodyStatements.add(responseForStatements);
+
+    // Create nextPageToken variable expression and assign it with a value by invoking
+    // getNextPageToken method.
+    // e.g. String nextPageToken = response.getNextPageToken();
+    VariableExpr nextPageTokenVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("nextPageToken").setType(TypeNode.STRING).build());
+    MethodInvocationExpr getNextPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(responseVarExpr)
+            .setMethodName("getNextPageToken")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    AssignmentExpr nextPageTokenAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(nextPageTokenVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(getNextPageTokenMethodInvocationExpr)
+            .build();
+    whileBodyStatements.add(ExprStatement.withExpr(nextPageTokenAssignmentExpr));
+
+    // If nextPageToken variable expression is not null or empty, assign request variable with a
+    // value by invoking setPageToken method.
+    // if (!Strings.isNullOrEmpty(nextPageToken)) {
+    //   request =  request.toBuilder().setPageToken(nextPageToken).build();
+    // } else {
+    //   break;
+    // }
+    Expr conditionExpr =
+        UnaryOperationExpr.logicalNotWithExpr(
+            MethodInvocationExpr.builder()
+                .setStaticReferenceType(
+                    TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
+                .setMethodName("isNullOrEmpty")
+                .setArguments(nextPageTokenVarExpr)
+                .setReturnType(TypeNode.BOOLEAN)
+                .build());
+    MethodInvocationExpr setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName("toBuilder")
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("setPageToken")
+            .setArguments(nextPageTokenVarExpr)
+            .build();
+    setPageTokenMethodInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(setPageTokenMethodInvocationExpr)
+            .setMethodName("build")
+            .setReturnType(method.inputType())
+            .build();
+    AssignmentExpr requestReAssignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestVarExpr)
+            .setValueExpr(setPageTokenMethodInvocationExpr)
+            .build();
+    IfStatement nextPageTokenIfStatement =
+        IfStatement.builder()
+            .setConditionExpr(conditionExpr)
+            .setBody(Arrays.asList(ExprStatement.withExpr(requestReAssignmentExpr)))
+            .setElseBody(Arrays.asList(BreakStatement.create()))
+            .build();
+    whileBodyStatements.add(nextPageTokenIfStatement);
+
+    WhileStatement pagedWhileStatement =
+        WhileStatement.builder()
+            .setConditionExpr(
+                ValueExpr.withValue(
+                    PrimitiveValue.builder().setValue("true").setType(TypeNode.BOOLEAN).build()))
+            .setBody(whileBodyStatements)
+            .build();
+    return Arrays.asList(pagedWhileStatement);
   }
 
   // ==================================Helpers===================================================//

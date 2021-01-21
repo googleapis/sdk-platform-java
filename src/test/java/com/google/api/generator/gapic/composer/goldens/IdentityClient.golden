@@ -566,7 +566,26 @@ public class IdentityClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (IdentityClient identityClient = IdentityClient.create()) {
+   *   while (true) {
+   *     ListUsersResponse response = identityClient.listUsersCallable().call(request);
+   *     for (User element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<ListUsersRequest, ListUsersResponse> listUsersCallable() {
     return stub.listUsersCallable();
   }

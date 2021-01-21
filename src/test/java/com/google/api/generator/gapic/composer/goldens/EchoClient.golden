@@ -500,7 +500,26 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   while (true) {
+   *     PagedExpandResponse response = echoClient.pagedExpandCallable().call(request);
+   *     for (EchoResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
     return stub.pagedExpandCallable();
   }
@@ -577,7 +596,26 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   while (true) {
+   *     PagedExpandResponse response = echoClient.simplePagedExpandCallable().call(request);
+   *     for (EchoResponse element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<PagedExpandRequest, PagedExpandResponse> simplePagedExpandCallable() {
     return stub.simplePagedExpandCallable();
   }
@@ -657,7 +695,18 @@ public class EchoClient implements BackgroundResource {
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
-  /** Sample code: */
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   WaitRequest request = WaitRequest.newBuilder().build();
+   *   ApiFuture<Operation> future = echoClient.waitCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
+   * }
+   * }</pre>
+   */
   public final UnaryCallable<WaitRequest, Operation> waitCallable() {
     return stub.waitCallable();
   }
