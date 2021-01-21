@@ -825,17 +825,13 @@ public class ServiceClientClassComposer {
 
     if (callableMethodKind.equals(CallableMethodKind.REGULAR)
         && method.stream().equals(Stream.NONE)) {
-      // TODO(summerji): Remove the following if condition after implement paged and lro in
-      // composeRegularCallableMethodHeaderSampleCode
-      if (!method.isPaged() && !method.hasLro()) {
-        sampleCodeOpt =
-            Optional.of(
-                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-                    method,
-                    typeStore.get(ClassNames.getServiceClientClassName(service)),
-                    resourceNames,
-                    messageTypes));
-      }
+      sampleCodeOpt =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                  method,
+                  typeStore.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
     }
 
     return MethodDefinition.builder()

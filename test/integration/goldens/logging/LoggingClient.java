@@ -602,6 +602,23 @@ public class LoggingClient implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListLogEntriesResponse response = loggingClient.listLogEntriesCallable().call(request);
+   *     for (LogEntry element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesResponse>
       listLogEntriesCallable() {
@@ -669,6 +686,24 @@ public class LoggingClient implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListMonitoredResourceDescriptorsResponse response =
+   *         loggingClient.listMonitoredResourceDescriptorsCallable().call(request);
+   *     for (MonitoredResourceDescriptor element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsResponse>
@@ -871,6 +906,23 @@ public class LoggingClient implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListLogsResponse response = loggingClient.listLogsCallable().call(request);
+   *     for (String element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsResponse> listLogsCallable() {
     return stub.listLogsCallable();
