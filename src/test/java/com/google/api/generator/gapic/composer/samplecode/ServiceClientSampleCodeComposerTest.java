@@ -45,6 +45,56 @@ public class ServiceClientSampleCodeComposerTest {
   private static final String LRO_PACKAGE_NAME = "com.google.longrunning";
   private static final String PROTO_PACKAGE_NAME = "com.google.protobuf";
 
+  // =============================== Class Header Sample Code ===============================//
+  @Test
+  public void composeClassHeaderCredentialsSampleCode() {
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode settingsType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoSettings")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    String results =
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(clientType, settingsType);
+    String expected =
+        LineFormatter.lines(
+            "EchoSettings echoSettings =\n",
+            "    EchoSettings.newBuilder()\n",
+            "        .setCredentialsProvider(FixedCredentialsProvider.create(myCredentials))\n",
+            "        .build();\n",
+            "EchoClient echoClient = EchoClient.create(echoSettings);");
+    assertEquals(expected, results);
+  }
+
+  @Test
+  public void composeClassHeaderEndpointSampleCode() {
+    TypeNode clientType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoClient")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    TypeNode settingsType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("EchoSettings")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
+    String results =
+        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(clientType, settingsType);
+    String expected =
+        LineFormatter.lines(
+            "EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();\n",
+            "EchoClient echoClient = EchoClient.create(echoSettings);");
+    assertEquals(expected, results);
+  }
+
   // =======================================Unary RPC Method Sample Code=======================//
   @Test
   public void validComposeRpcMethodHeaderSampleCode_pureUnaryRpc() {
