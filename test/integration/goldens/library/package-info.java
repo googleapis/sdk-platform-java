@@ -29,6 +29,13 @@
  * `shelves/&#42;/books/&#42;`
  *
  * <p>Sample for LibraryServiceClient:
+ *
+ * <pre>{@code
+ * try (LibraryServiceClient libraryServiceClient = LibraryServiceClient.create()) {
+ *   Shelf shelf = Shelf.newBuilder().build();
+ *   Shelf response = libraryServiceClient.createShelf(shelf);
+ * }
+ * }</pre>
  */
 @Generated("by gapic-generator-java")
 package com.google.cloud.example.library.v1;
