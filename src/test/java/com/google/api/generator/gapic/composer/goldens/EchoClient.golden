@@ -34,6 +34,12 @@ import javax.annotation.Generated;
  * This class provides the ability to make remote calls to the backing service through method calls
  * that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (EchoClient echoClient = EchoClient.create()) {
+ *   EchoResponse response = echoClient.echo();
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the EchoClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *

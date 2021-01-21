@@ -110,7 +110,10 @@ public class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   public static List<CommentStatement> createClassHeaderComments(
-      Service service, String credentialsSampleCode, String endpointSampleCode) {
+      Service service,
+      String classMethodSampleCode,
+      String credentialsSampleCode,
+      String endpointSampleCode) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -122,7 +125,7 @@ public class ServiceClientCommentComposer {
 
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
-    // TODO(summerji): Add sample code here.
+    classHeaderJavadocBuilder.addSampleCode(classMethodSampleCode);
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
