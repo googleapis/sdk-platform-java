@@ -6,6 +6,7 @@ TESTS = [
     "SampleCodeJavaFormatterTest",
     "SampleCodeWriterTest",
     "ServiceClientSampleCodeComposerTest",
+    "SettingsSampleCodeComposerTest",
 ]
 
 filegroup(

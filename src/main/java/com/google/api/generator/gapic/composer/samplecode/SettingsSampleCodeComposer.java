@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer.samplecode;
 
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
-import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.PrimitiveValue;
@@ -26,8 +25,6 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import java.time.Duration;
 import java.util.Arrays;
@@ -36,21 +33,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public final class SettingsSampleCodeComposer {
-  // TODO(summerji): Add unit tests
 
-  private static final String BUILDER_NAME_PATTERN = "%sBuilder";
-  private static final String STUB = "Stub";
-  private static final String EMPTY_STRING = "";
-
-  public static Optional<String> composeSampleCode(Optional<Method> methodOpt, TypeNode classType) {
-    if (!methodOpt.isPresent()) {
+  public static Optional<String> composeSampleCode(
+      Optional<String> methodNameOpt, String settingsClassName, TypeNode classType) {
+    if (!methodNameOpt.isPresent()) {
       return Optional.empty();
     }
 
-    Method method = methodOpt.get();
     // Initialize services settingsBuilder with newBuilder()
     // e.g. FoobarSettings.Builder foobarSettingsBuilder = FoobarSettings.newBuilder();
-    String className = classType.reference().name();
     TypeNode builderType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -58,34 +49,44 @@ public final class SettingsSampleCodeComposer {
                 .setName("Builder")
                 .setPakkage(classType.reference().pakkage())
                 .build());
-    Variable builderVar =
-        Variable.builder()
-            .setName(getClassSettingsBuilderName(className))
-            .setType(builderType)
-            .build();
-    VariableExpr localSettingsVarExpr = VariableExpr.withVariable(builderVar);
-    Expr settingsBuilderExpr =
+    VariableExpr localSettingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setName(JavaStyle.toLowerCamelCase(String.format("%sBuilder", settingsClassName)))
+                .setType(builderType)
+                .build());
+    MethodInvocationExpr settingsBuilderMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(classType)
             .setMethodName("newBuilder")
             .setReturnType(builderType)
             .build();
-    Expr initLocalSettingsExpr =
+    AssignmentExpr initLocalSettingsExpr =
         AssignmentExpr.builder()
             .setVariableExpr(localSettingsVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(settingsBuilderExpr)
+            .setValueExpr(settingsBuilderMethodInvocationExpr)
             .build();
 
     // Builder with set value method
     // e.g foobarSettingBuilder.fooSetting().setRetrySettings(
     // echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder().setTotalTimeout(Duration.ofSeconds(30)).build());
-    MethodInvocationExpr retrySettingsMethodExpr =
+    MethodInvocationExpr settingBuilderMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(localSettingsVarExpr)
-            .setMethodName(JavaStyle.toLowerCamelCase(String.format("%sSettings", method.name())))
-            .setReturnType(method.outputType())
+            .setMethodName(
+                JavaStyle.toLowerCamelCase(String.format("%sSettings", methodNameOpt.get())))
             .build();
-    MethodInvocationExpr timeoutArExpr =
+    MethodInvocationExpr retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
+            .setMethodName("getRetrySettings")
+            .build();
+    retrySettingsArgExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(retrySettingsArgExpr)
+            .setMethodName("toBuilder")
+            .build();
+    MethodInvocationExpr ofSecondMethodInvocationExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(
                 TypeNode.withReference(ConcreteReference.withClazz(Duration.class)))
@@ -94,30 +95,22 @@ public final class SettingsSampleCodeComposer {
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.INT).setValue("30").build()))
             .build();
-    MethodInvocationExpr timeoutBuilderMethodExpr =
+    retrySettingsArgExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(
-                MethodInvocationExpr.builder()
-                    .setExprReferenceExpr(
-                        MethodInvocationExpr.builder()
-                            .setExprReferenceExpr(retrySettingsMethodExpr)
-                            .setMethodName("getRetrySettings")
-                            .build())
-                    .setMethodName("toBuilder")
-                    .build())
+            .setExprReferenceExpr(retrySettingsArgExpr)
             .setMethodName("setTotalTimeout")
-            .setArguments(Arrays.asList(timeoutArExpr))
+            .setArguments(ofSecondMethodInvocationExpr)
             .build();
-    MethodInvocationExpr retrySettingsArgExpr =
+    retrySettingsArgExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(timeoutBuilderMethodExpr)
+            .setExprReferenceExpr(retrySettingsArgExpr)
             .setMethodName("build")
             .build();
-    MethodInvocationExpr settingBuilderMethodExpr =
+    settingBuilderMethodInvocationExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(retrySettingsMethodExpr)
+            .setExprReferenceExpr(settingBuilderMethodInvocationExpr)
             .setMethodName("setRetrySettings")
-            .setArguments(Arrays.asList(retrySettingsArgExpr))
+            .setArguments(retrySettingsArgExpr)
             .build();
 
     // Initialize clientSetting with builder() method.
@@ -126,7 +119,7 @@ public final class SettingsSampleCodeComposer {
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(classType)
-                .setName(JavaStyle.toLowerCamelCase(className).replace("Stub", ""))
+                .setName(JavaStyle.toLowerCamelCase(settingsClassName))
                 .build());
     AssignmentExpr settingBuildAssignmentExpr =
         AssignmentExpr.builder()
@@ -140,25 +133,13 @@ public final class SettingsSampleCodeComposer {
             .build();
 
     List<Statement> statements =
-        Arrays.asList(initLocalSettingsExpr, settingBuilderMethodExpr, settingBuildAssignmentExpr)
+        Arrays.asList(
+                initLocalSettingsExpr,
+                settingBuilderMethodInvocationExpr,
+                settingBuildAssignmentExpr)
             .stream()
             .map(e -> ExprStatement.withExpr(e))
             .collect(Collectors.toList());
-    return Optional.of(SampleCodeJavaFormatter.format(writeStatements(statements)));
-  }
-
-  private static String getClassSettingsBuilderName(String className) {
-    return JavaStyle.toLowerCamelCase(
-            String.format(BUILDER_NAME_PATTERN, JavaStyle.toLowerCamelCase(className)))
-        .replace(STUB, EMPTY_STRING);
-  }
-
-  // TODO(summerji): Refactor to use writeSampleCode method after PR#499 merged.
-  private static String writeStatements(List<Statement> statements) {
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    for (Statement statement : statements) {
-      statement.accept(visitor);
-    }
-    return visitor.write();
+    return Optional.of(SampleCodeWriter.write(statements));
   }
 }
