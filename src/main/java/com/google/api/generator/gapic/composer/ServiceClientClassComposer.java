@@ -792,8 +792,6 @@ public class ServiceClientClassComposer {
             .build();
 
     Optional<String> sampleCodeOpt = Optional.empty();
-    // TODO (summerji): Refactor the condition logic order after complete the callable sample code
-    // implementation.
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       sampleCodeOpt =
           Optional.of(
@@ -802,8 +800,7 @@ public class ServiceClientClassComposer {
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
                   messageTypes));
-    }
-    if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
+    } else if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
       sampleCodeOpt =
           Optional.of(
               ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
@@ -811,27 +808,24 @@ public class ServiceClientClassComposer {
                   typeStore.get(ClassNames.getServiceClientClassName(service)),
                   resourceNames,
                   messageTypes));
-    }
-
-    if (!method.stream().equals(Stream.NONE)) {
-      sampleCodeOpt =
-          Optional.of(
-              ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
-                  method,
-                  typeStore.get(ClassNames.getServiceClientClassName(service)),
-                  resourceNames,
-                  messageTypes));
-    }
-
-    if (callableMethodKind.equals(CallableMethodKind.REGULAR)
-        && method.stream().equals(Stream.NONE)) {
-      sampleCodeOpt =
-          Optional.of(
-              ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
-                  method,
-                  typeStore.get(ClassNames.getServiceClientClassName(service)),
-                  resourceNames,
-                  messageTypes));
+    } else if (callableMethodKind.equals(CallableMethodKind.REGULAR)) {
+      if (method.stream().equals(Stream.NONE)) {
+        sampleCodeOpt =
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                    method,
+                    typeStore.get(ClassNames.getServiceClientClassName(service)),
+                    resourceNames,
+                    messageTypes));
+      } else {
+        sampleCodeOpt =
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                    method,
+                    typeStore.get(ClassNames.getServiceClientClassName(service)),
+                    resourceNames,
+                    messageTypes));
+      }
     }
 
     return MethodDefinition.builder()
