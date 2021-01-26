@@ -218,7 +218,8 @@ public class ServiceStubSettingsClassComposer {
     Optional<String> methodNameOpt =
         methodOpt.isPresent() ? Optional.of(methodOpt.get().name()) : Optional.empty();
     Optional<String> sampleCodeOpt =
-        SettingsSampleCodeComposer.composeSampleCode(methodOpt, classType);
+        SettingsSampleCodeComposer.composeSampleCode(
+            methodNameOpt, ClassNames.getServiceSettingsClassName(service), classType);
 
     return SettingsCommentComposer.createClassHeaderComments(
         ClassNames.getServiceStubClassName(service),
