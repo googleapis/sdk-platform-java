@@ -14,5 +14,6 @@ java_library(
     ],
     deps = [
         "//src/main/java/com/google/api/generator/gapic/model",
+        "@com_google_guava_guava//jar",
     ],
 )

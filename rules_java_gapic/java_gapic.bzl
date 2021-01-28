@@ -121,7 +121,6 @@ def _append_dep_without_duplicates(dest_deps, new_deps):
 def java_gapic_library(
         name,
         srcs,
-        package = None,
         grpc_service_config = None,
         gapic_yaml = None,
         deps = [],
