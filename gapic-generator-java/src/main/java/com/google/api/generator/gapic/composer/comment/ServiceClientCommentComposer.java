@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -109,7 +110,10 @@ public class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   public static List<CommentStatement> createClassHeaderComments(
-      Service service, String credentialsSampleCode, String endpointSampleCode) {
+      Service service,
+      String classMethodSampleCode,
+      String credentialsSampleCode,
+      String endpointSampleCode) {
     JavaDocComment.Builder classHeaderJavadocBuilder = JavaDocComment.builder();
     if (service.hasDescription()) {
       classHeaderJavadocBuilder =
@@ -121,7 +125,7 @@ public class ServiceClientCommentComposer {
 
     // Service introduction.
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_INTRO_STRING);
-    // TODO(summerji): Add sample code here.
+    classHeaderJavadocBuilder.addSampleCode(classMethodSampleCode);
 
     // API surface description.
     classHeaderJavadocBuilder.addParagraph(
@@ -159,7 +163,7 @@ public class ServiceClientCommentComposer {
   }
 
   public static List<CommentStatement> createRpcMethodHeaderComment(
-      Method method, List<MethodArgument> methodArguments) {
+      Method method, List<MethodArgument> methodArguments, Optional<String> sampleCodeOpt) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -167,8 +171,10 @@ public class ServiceClientCommentComposer {
           processProtobufComment(method.description(), methodJavadocBuilder, null);
     }
 
-    // methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here and uncomment the above.
+    if (sampleCodeOpt.isPresent()) {
+      methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
+      methodJavadocBuilder.addSampleCode(sampleCodeOpt.get());
+    }
 
     if (methodArguments.isEmpty()) {
       methodJavadocBuilder.addParam(
@@ -192,8 +198,9 @@ public class ServiceClientCommentComposer {
     return comments;
   }
 
-  public static List<CommentStatement> createRpcMethodHeaderComment(Method method) {
-    return createRpcMethodHeaderComment(method, Collections.emptyList());
+  public static List<CommentStatement> createRpcMethodHeaderComment(
+      Method method, Optional<String> sampleCodeOpt) {
+    return createRpcMethodHeaderComment(method, Collections.emptyList(), sampleCodeOpt);
   }
 
   public static CommentStatement createMethodNoArgComment(String serviceName) {
@@ -208,7 +215,8 @@ public class ServiceClientCommentComposer {
     return toSimpleComment(String.format(CREATE_METHOD_SETTINGS_ARG_PATTERN, serviceName));
   }
 
-  public static List<CommentStatement> createRpcCallableMethodHeaderComment(Method method) {
+  public static List<CommentStatement> createRpcCallableMethodHeaderComment(
+      Method method, Optional<String> sampleCodeOpt) {
     JavaDocComment.Builder methodJavadocBuilder = JavaDocComment.builder();
 
     if (method.hasDescription()) {
@@ -217,7 +225,9 @@ public class ServiceClientCommentComposer {
     }
 
     methodJavadocBuilder.addParagraph(METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING);
-    // TODO(summerji): Add sample code here.
+    if (sampleCodeOpt.isPresent()) {
+      methodJavadocBuilder.addSampleCode(sampleCodeOpt.get());
+    }
 
     return Arrays.asList(
         CommentComposer.AUTO_GENERATED_METHOD_COMMENT,

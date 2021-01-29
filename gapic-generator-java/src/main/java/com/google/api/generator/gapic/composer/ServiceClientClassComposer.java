@@ -67,6 +67,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.Method.Stream;
 import com.google.api.generator.gapic.model.MethodArgument;
+import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.generator.util.TriFunction;
@@ -86,13 +87,14 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
-public class ServiceClientClassComposer implements ClassComposer {
+public class ServiceClientClassComposer {
   private static final ServiceClientClassComposer INSTANCE = new ServiceClientClassComposer();
   private static final String PAGED_RESPONSE_TYPE_NAME_PATTERN = "%sPagedResponse";
   private static final String CALLABLE_NAME_PATTERN = "%sCallable";
@@ -117,8 +119,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     return INSTANCE;
   }
 
-  @Override
-  public GapicClass generate(Service service, Map<String, Message> messageTypes) {
+  public GapicClass generate(
+      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
     TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
@@ -127,14 +129,16 @@ public class ServiceClientClassComposer implements ClassComposer {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setHeaderCommentStatements(createClassHeaderComments(service, typeStore))
+            .setHeaderCommentStatements(
+                createClassHeaderComments(service, typeStore, resourceNames, messageTypes))
             .setPackageString(pakkage)
             .setAnnotations(createClassAnnotations(pakkage, typeStore))
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
             .setImplementsTypes(createClassImplements(typeStore))
             .setStatements(createFieldDeclarations(service, typeStore, hasLroClient))
-            .setMethods(createClassMethods(service, messageTypes, typeStore, hasLroClient))
+            .setMethods(
+                createClassMethods(service, messageTypes, typeStore, resourceNames, hasLroClient))
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, typeStore))
             .build();
     return GapicClass.create(kind, classDef);
@@ -158,9 +162,15 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<CommentStatement> createClassHeaderComments(
-      Service service, TypeStore typeStore) {
+      Service service,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames,
+      Map<String, Message> messageTypes) {
     TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
     TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
+    String classMethodSampleCode =
+        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+            service, clientType, resourceNames, messageTypes);
     String credentialsSampleCode =
         ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
             clientType, settingsType);
@@ -168,19 +178,20 @@ public class ServiceClientClassComposer implements ClassComposer {
         ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
             clientType, settingsType);
     return ServiceClientCommentComposer.createClassHeaderComments(
-        service, credentialsSampleCode, endpointSampleCode);
+        service, classMethodSampleCode, credentialsSampleCode, endpointSampleCode);
   }
 
   private static List<MethodDefinition> createClassMethods(
       Service service,
       Map<String, Message> messageTypes,
       TypeStore typeStore,
+      Map<String, ResourceName> resourceNames,
       boolean hasLroClient) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, typeStore));
     methods.addAll(createConstructorMethods(service, typeStore, hasLroClient));
     methods.addAll(createGetterMethods(service, typeStore, hasLroClient));
-    methods.addAll(createServiceMethods(service, messageTypes, typeStore));
+    methods.addAll(createServiceMethods(service, messageTypes, typeStore, resourceNames));
     methods.addAll(createBackgroundResourceMethods(service, typeStore));
     return methods;
   }
@@ -497,26 +508,48 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static List<MethodDefinition> createServiceMethods(
-      Service service, Map<String, Message> messageTypes, TypeStore typeStore) {
+      Service service,
+      Map<String, Message> messageTypes,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(createMethodVariants(method, messageTypes, typeStore));
-        javaMethods.add(createMethodDefaultMethod(method, typeStore));
+        javaMethods.addAll(
+            createMethodVariants(
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                typeStore,
+                resourceNames));
+        javaMethods.add(
+            createMethodDefaultMethod(
+                method,
+                ClassNames.getServiceClientClassName(service),
+                messageTypes,
+                typeStore,
+                resourceNames));
       }
       if (method.hasLro()) {
-        javaMethods.add(createLroCallableMethod(service, method, typeStore));
+        javaMethods.add(
+            createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames));
       }
       if (method.isPaged()) {
-        javaMethods.add(createPagedCallableMethod(service, method, typeStore));
+        javaMethods.add(
+            createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames));
       }
-      javaMethods.add(createCallableMethod(service, method, typeStore));
+      javaMethods.add(
+          createCallableMethod(service, method, typeStore, messageTypes, resourceNames));
     }
     return javaMethods;
   }
 
   private static List<MethodDefinition> createMethodVariants(
-      Method method, Map<String, Message> messageTypes, TypeStore typeStore) {
+      Method method,
+      String clientName,
+      Map<String, Message> messageTypes,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
@@ -578,10 +611,15 @@ public class ServiceClientClassComposer implements ClassComposer {
               .setReturnType(methodOutputType)
               .build();
 
+      Optional<String> methodSampleCode =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeRpcMethodHeaderSampleCode(
+                  method, typeStore.get(clientName), signature, resourceNames, messageTypes));
       MethodDefinition.Builder methodVariantBuilder =
           MethodDefinition.builder()
               .setHeaderCommentStatements(
-                  ServiceClientCommentComposer.createRpcMethodHeaderComment(method, signature))
+                  ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                      method, signature, methodSampleCode))
               .setScope(ScopeNode.PUBLIC)
               .setIsFinal(true)
               .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
@@ -601,7 +639,12 @@ public class ServiceClientClassComposer implements ClassComposer {
     return javaMethods;
   }
 
-  private static MethodDefinition createMethodDefaultMethod(Method method, TypeStore typeStore) {
+  private static MethodDefinition createMethodDefaultMethod(
+      Method method,
+      String clientName,
+      Map<String, Message> messageTypes,
+      TypeStore typeStore,
+      Map<String, ResourceName> resourceNames) {
     String methodName = JavaStyle.toLowerCamelCase(method.name());
     TypeNode methodInputType = method.inputType();
     TypeNode methodOutputType =
@@ -634,6 +677,11 @@ public class ServiceClientClassComposer implements ClassComposer {
       callableMethodName = String.format(OPERATION_CALLABLE_NAME_PATTERN, methodName);
     }
 
+    Optional<String> defaultMethodSampleCode =
+        Optional.of(
+            ServiceClientSampleCodeComposer.composeRpcDefaultMethodHeaderSampleCode(
+                method, typeStore.get(clientName), resourceNames, messageTypes));
+
     MethodInvocationExpr callableMethodExpr =
         MethodInvocationExpr.builder().setMethodName(callableMethodName).build();
     callableMethodExpr =
@@ -646,7 +694,8 @@ public class ServiceClientClassComposer implements ClassComposer {
     MethodDefinition.Builder methodBuilder =
         MethodDefinition.builder()
             .setHeaderCommentStatements(
-                ServiceClientCommentComposer.createRpcMethodHeaderComment(method))
+                ServiceClientCommentComposer.createRpcMethodHeaderComment(
+                    method, defaultMethodSampleCode))
             .setScope(ScopeNode.PUBLIC)
             .setIsFinal(true)
             .setName(String.format(method.hasLro() ? "%sAsync" : "%s", methodName))
@@ -665,22 +714,42 @@ public class ServiceClientClassComposer implements ClassComposer {
   }
 
   private static MethodDefinition createLroCallableMethod(
-      Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.LRO);
+      Service service,
+      Method method,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
+    return createCallableMethod(
+        service, method, CallableMethodKind.LRO, typeStore, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.REGULAR);
+      Service service,
+      Method method,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
+    return createCallableMethod(
+        service, method, CallableMethodKind.REGULAR, typeStore, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createPagedCallableMethod(
-      Service service, Method method, TypeStore typeStore) {
-    return createCallableMethod(service, method, typeStore, CallableMethodKind.PAGED);
+      Service service,
+      Method method,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
+    return createCallableMethod(
+        service, method, CallableMethodKind.PAGED, typeStore, messageTypes, resourceNames);
   }
 
   private static MethodDefinition createCallableMethod(
-      Service service, Method method, TypeStore typeStore, CallableMethodKind callableMethodKind) {
+      Service service,
+      Method method,
+      CallableMethodKind callableMethodKind,
+      TypeStore typeStore,
+      Map<String, Message> messageTypes,
+      Map<String, ResourceName> resourceNames) {
     TypeNode rawCallableReturnType = null;
     if (callableMethodKind.equals(CallableMethodKind.LRO)) {
       rawCallableReturnType = typeStore.get("OperationCallable");
@@ -722,9 +791,47 @@ public class ServiceClientClassComposer implements ClassComposer {
             .setReturnType(returnType)
             .build();
 
+    Optional<String> sampleCodeOpt = Optional.empty();
+    if (callableMethodKind.equals(CallableMethodKind.LRO)) {
+      sampleCodeOpt =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composeLroCallableMethodHeaderSampleCode(
+                  method,
+                  typeStore.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
+    } else if (callableMethodKind.equals(CallableMethodKind.PAGED)) {
+      sampleCodeOpt =
+          Optional.of(
+              ServiceClientSampleCodeComposer.composePagedCallableMethodHeaderSampleCode(
+                  method,
+                  typeStore.get(ClassNames.getServiceClientClassName(service)),
+                  resourceNames,
+                  messageTypes));
+    } else if (callableMethodKind.equals(CallableMethodKind.REGULAR)) {
+      if (method.stream().equals(Stream.NONE)) {
+        sampleCodeOpt =
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
+                    method,
+                    typeStore.get(ClassNames.getServiceClientClassName(service)),
+                    resourceNames,
+                    messageTypes));
+      } else {
+        sampleCodeOpt =
+            Optional.of(
+                ServiceClientSampleCodeComposer.composeStreamCallableMethodHeaderSampleCode(
+                    method,
+                    typeStore.get(ClassNames.getServiceClientClassName(service)),
+                    resourceNames,
+                    messageTypes));
+      }
+    }
+
     return MethodDefinition.builder()
         .setHeaderCommentStatements(
-            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(method))
+            ServiceClientCommentComposer.createRpcCallableMethodHeaderComment(
+                method, sampleCodeOpt))
         .setScope(ScopeNode.PUBLIC)
         .setIsFinal(true)
         .setName(methodName)

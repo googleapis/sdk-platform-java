@@ -60,6 +60,13 @@ import javax.annotation.Generated;
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
  *
+ * <pre>{@code
+ * try (LoggingClient loggingClient = LoggingClient.create()) {
+ *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+ *   loggingClient.deleteLog(logName);
+ * }
+ * }</pre>
+ *
  * <p>Note: close() needs to be called on the LoggingClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *
@@ -162,6 +169,15 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   loggingClient.deleteLog(logName);
+   * }
+   * }</pre>
+   *
    * @param logName Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -184,6 +200,15 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *   loggingClient.deleteLog(logName);
+   * }
+   * }</pre>
+   *
    * @param logName Required. The resource name of the log to delete:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]" "folders/[FOLDER_ID]/logs/[LOG_ID]"
@@ -203,6 +228,18 @@ public class LoggingClient implements BackgroundResource {
    * written shortly before the delete operation might not be deleted. Entries received after the
    * delete operation with a timestamp before the operation will be deleted.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   DeleteLogRequest request =
+   *       DeleteLogRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .build();
+   *   loggingClient.deleteLog(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -217,6 +254,18 @@ public class LoggingClient implements BackgroundResource {
    * delete operation with a timestamp before the operation will be deleted.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   DeleteLogRequest request =
+   *       DeleteLogRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .build();
+   *   ApiFuture<Empty> future = loggingClient.deleteLogCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<DeleteLogRequest, Empty> deleteLogCallable() {
     return stub.deleteLogCallable();
@@ -228,6 +277,19 @@ public class LoggingClient implements BackgroundResource {
    * This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   LogName logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]");
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesResponse response =
+   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * }
+   * }</pre>
    *
    * @param logName Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
@@ -291,6 +353,19 @@ public class LoggingClient implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String logName = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *   MonitoredResource resource = MonitoredResource.newBuilder().build();
+   *   Map<String, String> labels = new HashMap<>();
+   *   List<LogEntry> entries = new ArrayList<>();
+   *   WriteLogEntriesResponse response =
+   *       loggingClient.writeLogEntries(logName, resource, labels, entries);
+   * }
+   * }</pre>
+   *
    * @param logName Optional. A default log resource name that is assigned to all log entries in
    *     `entries` that do not specify a value for `log_name`:
    *     <p>"projects/[PROJECT_ID]/logs/[LOG_ID]" "organizations/[ORGANIZATION_ID]/logs/[LOG_ID]"
@@ -353,6 +428,23 @@ public class LoggingClient implements BackgroundResource {
    * libraries configured to use Logging. A single request may contain log entries for a maximum of
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setResource(MonitoredResource.newBuilder().build())
+   *           .putAllLabels(new HashMap<String, String>())
+   *           .addAllEntries(new ArrayList<LogEntry>())
+   *           .setPartialSuccess(true)
+   *           .setDryRun(true)
+   *           .build();
+   *   WriteLogEntriesResponse response = loggingClient.writeLogEntries(request);
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -368,6 +460,24 @@ public class LoggingClient implements BackgroundResource {
    * 1000 different resources (projects, organizations, billing accounts or folders)
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   WriteLogEntriesRequest request =
+   *       WriteLogEntriesRequest.newBuilder()
+   *           .setLogName(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setResource(MonitoredResource.newBuilder().build())
+   *           .putAllLabels(new HashMap<String, String>())
+   *           .addAllEntries(new ArrayList<LogEntry>())
+   *           .setPartialSuccess(true)
+   *           .setDryRun(true)
+   *           .build();
+   *   ApiFuture<WriteLogEntriesResponse> future =
+   *       loggingClient.writeLogEntriesCallable().futureCall(request);
+   *   // Do something.
+   *   WriteLogEntriesResponse response = future.get();
+   * }
+   * }</pre>
    */
   public final UnaryCallable<WriteLogEntriesRequest, WriteLogEntriesResponse>
       writeLogEntriesCallable() {
@@ -379,6 +489,20 @@ public class LoggingClient implements BackgroundResource {
    * Lists log entries. Use this method to retrieve log entries that originated from a
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   List<String> resourceNames = new ArrayList<>();
+   *   String filter = "filter-1274492040";
+   *   String orderBy = "orderBy-1207110587";
+   *   for (LogEntry element :
+   *       loggingClient.listLogEntries(resourceNames, filter, orderBy).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param resourceNames Required. Names of one or more parent resources from which to retrieve log
    *     entries:
@@ -415,6 +539,24 @@ public class LoggingClient implements BackgroundResource {
    * project/folder/organization/billing account. For ways to export log entries, see [Exporting
    * Logs](https://cloud.google.com/logging/docs/export).
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .addAllResourceNames(new ArrayList<String>())
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (LogEntry element : loggingClient.listLogEntries(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -429,6 +571,24 @@ public class LoggingClient implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogEntriesRequest request =
+   *       ListLogEntriesRequest.newBuilder()
+   *           .addAllResourceNames(new ArrayList<String>())
+   *           .setFilter("filter-1274492040")
+   *           .setOrderBy("orderBy-1207110587")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<LogEntry> future = loggingClient.listLogEntriesPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogEntry element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesPagedResponse>
       listLogEntriesPagedCallable() {
@@ -442,6 +602,23 @@ public class LoggingClient implements BackgroundResource {
    * Logs](https://cloud.google.com/logging/docs/export).
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListLogEntriesResponse response = loggingClient.listLogEntriesCallable().call(request);
+   *     for (LogEntry element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogEntriesRequest, ListLogEntriesResponse>
       listLogEntriesCallable() {
@@ -451,6 +628,22 @@ public class LoggingClient implements BackgroundResource {
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
    * Lists the descriptors for monitored resource types used by Logging.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (MonitoredResourceDescriptor element :
+   *       loggingClient.listMonitoredResourceDescriptors(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
@@ -465,6 +658,22 @@ public class LoggingClient implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListMonitoredResourceDescriptorsRequest request =
+   *       ListMonitoredResourceDescriptorsRequest.newBuilder()
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<MonitoredResourceDescriptor> future =
+   *       loggingClient.listMonitoredResourceDescriptorsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (MonitoredResourceDescriptor element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsPagedResponse>
@@ -477,6 +686,24 @@ public class LoggingClient implements BackgroundResource {
    * Lists the descriptors for monitored resource types used by Logging.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListMonitoredResourceDescriptorsResponse response =
+   *         loggingClient.listMonitoredResourceDescriptorsCallable().call(request);
+   *     for (MonitoredResourceDescriptor element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<
           ListMonitoredResourceDescriptorsRequest, ListMonitoredResourceDescriptorsResponse>
@@ -488,6 +715,17 @@ public class LoggingClient implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   BillingAccountName parent = BillingAccountName.of("[BILLING_ACCOUNT]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -505,6 +743,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   FolderName parent = FolderName.of("[FOLDER]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -520,6 +769,17 @@ public class LoggingClient implements BackgroundResource {
   /**
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   OrganizationName parent = OrganizationName.of("[ORGANIZATION]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
@@ -537,6 +797,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ProjectName parent = ProjectName.of("[PROJECT]");
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -553,6 +824,17 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   String parent = LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString();
+   *   for (String element : loggingClient.listLogs(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param parent Required. The resource name that owns the logs:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
@@ -568,6 +850,22 @@ public class LoggingClient implements BackgroundResource {
    * Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have
    * entries are listed.
    *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogsRequest request =
+   *       ListLogsRequest.newBuilder()
+   *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (String element : loggingClient.listLogs(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
@@ -581,6 +879,22 @@ public class LoggingClient implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   ListLogsRequest request =
+   *       ListLogsRequest.newBuilder()
+   *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<String> future = loggingClient.listLogsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (String element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsPagedResponse> listLogsPagedCallable() {
     return stub.listLogsPagedCallable();
@@ -592,6 +906,23 @@ public class LoggingClient implements BackgroundResource {
    * entries are listed.
    *
    * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   while (true) {
+   *     ListLogsResponse response = loggingClient.listLogsCallable().call(request);
+   *     for (String element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
    */
   public final UnaryCallable<ListLogsRequest, ListLogsResponse> listLogsCallable() {
     return stub.listLogsCallable();
