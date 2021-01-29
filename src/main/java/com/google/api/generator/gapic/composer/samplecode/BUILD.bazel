@@ -15,9 +15,12 @@ java_library(
     deps = [
         "//src/main/java/com/google/api/generator/engine/ast",
         "//src/main/java/com/google/api/generator/engine/writer",
+        "//src/main/java/com/google/api/generator/gapic/composer/defaultvalue",
         "//src/main/java/com/google/api/generator/gapic/model",
         "//src/main/java/com/google/api/generator/gapic/utils",
+        "@com_google_api_api_common",
         "@com_google_api_gax_java//gax",
+        "@com_google_api_grpc_proto_google_common_protos",
         "@google_java_format_all_deps//jar",
     ],
 )
