@@ -16,19 +16,25 @@ package com.google.api.generator.gapic.composer.utils;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 
 public class PackageCheckerTest {
   @Test
-  public void isGaApi_normalExpectedPackageStructure() {
+  public void isGaApi_gaVersionPresent() {
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v1.services"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.v1.foobar.services"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v1"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v999"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v12345a"));
     assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v999asdf"));
+    assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc.v1main"));
+    assertTrue(PackageChecker.isGaApi("com.google.cloud.dataproc"));
+    assertTrue(PackageChecker.isGaApi("com.google.longrunning"));
+  }
+
+  @Test
+  public void isGaApi_alphaBetaVersionPresent() {
     assertFalse(PackageChecker.isGaApi("com.google.cloud.dataproc.v1beta1"));
     assertFalse(PackageChecker.isGaApi("com.google.cloud.dataproc.v1alpha1"));
     assertFalse(PackageChecker.isGaApi("com.google.cloud.dataproc.v1beta"));
@@ -36,13 +42,5 @@ public class PackageCheckerTest {
     assertFalse(PackageChecker.isGaApi("com.google.cloud.dataproc.v1p2alpha1"));
     assertFalse(PackageChecker.isGaApi("com.google.cloud.dataproc.v1p4beta"));
     assertFalse(PackageChecker.isGaApi("com.google.cloud.asset.v1beta1"));
-  }
-
-  @Test
-  public void isGaApi_invalidPackageStructure() {
-    assertThrows(
-        IllegalStateException.class,
-        () -> PackageChecker.isGaApi("com.google.cloud.dataproc.foo.bar"));
-    assertThrows(IllegalStateException.class, () -> PackageChecker.isGaApi(""));
   }
 }

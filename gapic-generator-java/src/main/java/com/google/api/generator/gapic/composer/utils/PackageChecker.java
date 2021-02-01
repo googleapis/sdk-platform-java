@@ -43,7 +43,10 @@ public class PackageChecker {
         break;
       }
     }
-    Preconditions.checkState(isFound, "No version component found in package %s", pakkage);
+    if (!isFound) {
+      // No version component is present (applies to APIs like LRO), so treat this as a GA version.
+      return true;
+    }
     String versionSubstr = versionComponent.replace(matcher.group(), "");
     return Strings.isNullOrEmpty(versionSubstr)
         || (!versionSubstr.contains("alpha") && !versionSubstr.contains("beta"));
