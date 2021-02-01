@@ -324,46 +324,57 @@ public class GrpcTestingStub extends TestingStub {
     return operationsStub;
   }
 
+  @Override
   public UnaryCallable<CreateSessionRequest, Session> createSessionCallable() {
     return createSessionCallable;
   }
 
+  @Override
   public UnaryCallable<GetSessionRequest, Session> getSessionCallable() {
     return getSessionCallable;
   }
 
+  @Override
   public UnaryCallable<ListSessionsRequest, ListSessionsResponse> listSessionsCallable() {
     return listSessionsCallable;
   }
 
+  @Override
   public UnaryCallable<ListSessionsRequest, ListSessionsPagedResponse> listSessionsPagedCallable() {
     return listSessionsPagedCallable;
   }
 
+  @Override
   public UnaryCallable<DeleteSessionRequest, Empty> deleteSessionCallable() {
     return deleteSessionCallable;
   }
 
+  @Override
   public UnaryCallable<ReportSessionRequest, ReportSessionResponse> reportSessionCallable() {
     return reportSessionCallable;
   }
 
+  @Override
   public UnaryCallable<GetTestRequest, Test> getTestCallable() {
     return getTestCallable;
   }
 
+  @Override
   public UnaryCallable<ListTestsRequest, ListTestsResponse> listTestsCallable() {
     return listTestsCallable;
   }
 
+  @Override
   public UnaryCallable<ListTestsRequest, ListTestsPagedResponse> listTestsPagedCallable() {
     return listTestsPagedCallable;
   }
 
+  @Override
   public UnaryCallable<DeleteTestRequest, Empty> deleteTestCallable() {
     return deleteTestCallable;
   }
 
+  @Override
   public UnaryCallable<VerifyTestRequest, VerifyTestResponse> verifyTestCallable() {
     return verifyTestCallable;
   }

@@ -363,54 +363,66 @@ public class GrpcPublisherStub extends PublisherStub {
     return operationsStub;
   }
 
+  @Override
   public UnaryCallable<Topic, Topic> createTopicCallable() {
     return createTopicCallable;
   }
 
+  @Override
   public UnaryCallable<UpdateTopicRequest, Topic> updateTopicCallable() {
     return updateTopicCallable;
   }
 
+  @Override
   public UnaryCallable<PublishRequest, PublishResponse> publishCallable() {
     return publishCallable;
   }
 
+  @Override
   public UnaryCallable<GetTopicRequest, Topic> getTopicCallable() {
     return getTopicCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicsRequest, ListTopicsResponse> listTopicsCallable() {
     return listTopicsCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicsRequest, ListTopicsPagedResponse> listTopicsPagedCallable() {
     return listTopicsPagedCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicSubscriptionsRequest, ListTopicSubscriptionsResponse>
       listTopicSubscriptionsCallable() {
     return listTopicSubscriptionsCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicSubscriptionsRequest, ListTopicSubscriptionsPagedResponse>
       listTopicSubscriptionsPagedCallable() {
     return listTopicSubscriptionsPagedCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicSnapshotsRequest, ListTopicSnapshotsResponse>
       listTopicSnapshotsCallable() {
     return listTopicSnapshotsCallable;
   }
 
+  @Override
   public UnaryCallable<ListTopicSnapshotsRequest, ListTopicSnapshotsPagedResponse>
       listTopicSnapshotsPagedCallable() {
     return listTopicSnapshotsPagedCallable;
   }
 
+  @Override
   public UnaryCallable<DeleteTopicRequest, Empty> deleteTopicCallable() {
     return deleteTopicCallable;
   }
 
+  @Override
   public UnaryCallable<DetachSubscriptionRequest, DetachSubscriptionResponse>
       detachSubscriptionCallable() {
     return detachSubscriptionCallable;

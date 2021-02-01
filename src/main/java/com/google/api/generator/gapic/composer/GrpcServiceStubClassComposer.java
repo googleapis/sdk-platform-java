@@ -934,6 +934,7 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
         .map(
             e ->
                 MethodDefinition.builder()
+                    .setIsOverride(true)
                     .setScope(ScopeNode.PUBLIC)
                     .setReturnType(e.getValue().type())
                     .setName(e.getKey())
