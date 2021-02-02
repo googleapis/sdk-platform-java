@@ -383,54 +383,67 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
     return operationsStub;
   }
 
+  @Override
   public UnaryCallable<CreateShelfRequest, Shelf> createShelfCallable() {
     return createShelfCallable;
   }
 
+  @Override
   public UnaryCallable<GetShelfRequest, Shelf> getShelfCallable() {
     return getShelfCallable;
   }
 
+  @Override
   public UnaryCallable<ListShelvesRequest, ListShelvesResponse> listShelvesCallable() {
     return listShelvesCallable;
   }
 
+  @Override
   public UnaryCallable<ListShelvesRequest, ListShelvesPagedResponse> listShelvesPagedCallable() {
     return listShelvesPagedCallable;
   }
 
+  @Override
   public UnaryCallable<DeleteShelfRequest, Empty> deleteShelfCallable() {
     return deleteShelfCallable;
   }
 
+  @Override
   public UnaryCallable<MergeShelvesRequest, Shelf> mergeShelvesCallable() {
     return mergeShelvesCallable;
   }
 
+  @Override
   public UnaryCallable<CreateBookRequest, Book> createBookCallable() {
     return createBookCallable;
   }
 
+  @Override
   public UnaryCallable<GetBookRequest, Book> getBookCallable() {
     return getBookCallable;
   }
 
+  @Override
   public UnaryCallable<ListBooksRequest, ListBooksResponse> listBooksCallable() {
     return listBooksCallable;
   }
 
+  @Override
   public UnaryCallable<ListBooksRequest, ListBooksPagedResponse> listBooksPagedCallable() {
     return listBooksPagedCallable;
   }
 
+  @Override
   public UnaryCallable<DeleteBookRequest, Empty> deleteBookCallable() {
     return deleteBookCallable;
   }
 
+  @Override
   public UnaryCallable<UpdateBookRequest, Book> updateBookCallable() {
     return updateBookCallable;
   }
 
+  @Override
   public UnaryCallable<MoveBookRequest, Book> moveBookCallable() {
     return moveBookCallable;
   }

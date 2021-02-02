@@ -256,51 +256,63 @@ public class GrpcEchoStub extends EchoStub {
     return operationsStub;
   }
 
+  @Override
   public UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return echoCallable;
   }
 
+  @Override
   public ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
     return expandCallable;
   }
 
+  @Override
   public ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable() {
     return collectCallable;
   }
 
+  @Override
   public BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable() {
     return chatCallable;
   }
 
+  @Override
   public BidiStreamingCallable<EchoRequest, EchoResponse> chatAgainCallable() {
     return chatAgainCallable;
   }
 
+  @Override
   public UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable() {
     return pagedExpandCallable;
   }
 
+  @Override
   public UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse> pagedExpandPagedCallable() {
     return pagedExpandPagedCallable;
   }
 
+  @Override
   public UnaryCallable<PagedExpandRequest, PagedExpandResponse> simplePagedExpandCallable() {
     return simplePagedExpandCallable;
   }
 
+  @Override
   public UnaryCallable<PagedExpandRequest, SimplePagedExpandPagedResponse>
       simplePagedExpandPagedCallable() {
     return simplePagedExpandPagedCallable;
   }
 
+  @Override
   public UnaryCallable<WaitRequest, Operation> waitCallable() {
     return waitCallable;
   }
 
+  @Override
   public OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable() {
     return waitOperationCallable;
   }
 
+  @Override
   public UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return blockCallable;
   }
