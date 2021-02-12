@@ -56,6 +56,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 
@@ -484,13 +485,55 @@ public class MockServiceImplClassComposer implements ClassComposer {
     }
 
     TypeNode exceptionType = TypeNode.withReference(ConcreteReference.withClazz(Exception.class));
+    Expr actualResponseTypeString =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(
+                MethodInvocationExpr.builder()
+                    .setExprReferenceExpr(localResponseVarExpr)
+                    .setMethodName("getClass")
+                    .build())
+            .setMethodName("getName")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    Function<TypeNode, Expr> typeToStrFn =
+        t ->
+            MethodInvocationExpr.builder()
+                .setExprReferenceExpr(
+                    VariableExpr.builder()
+                        .setStaticReferenceType(t)
+                        .setVariable(
+                            Variable.builder()
+                                .setType(TypeNode.CLASS_OBJECT)
+                                .setName("class")
+                                .build())
+                        .build())
+                .setMethodName("getName")
+                .setReturnType(TypeNode.STRING)
+                .build();
+    Expr expectedResponseTypeOneString = typeToStrFn.apply(protoMethod.outputType());
+    Expr expectedResponseTypeTwoString = typeToStrFn.apply(exceptionType);
+
     Expr newExceptionExpr =
         NewObjectExpr.builder()
             .setType(
                 TypeNode.withReference(ConcreteReference.withClazz(IllegalArgumentException.class)))
             .setArguments(
-                Arrays.asList(
-                    ValueExpr.withValue(StringObjectValue.withValue("Unrecognized response type"))))
+                // Generates something like:
+                // String.format("Unrecognized response type %s, expected %s or %s",
+                //     Operation.class.getName(), Exception.class.getName());
+                MethodInvocationExpr.builder()
+                    .setStaticReferenceType(TypeNode.STRING)
+                    .setMethodName("format")
+                    .setArguments(
+                        ValueExpr.withValue(
+                            StringObjectValue.withValue(
+                                "Unrecognized response type %s for method "
+                                    + protoMethod.name()
+                                    + ", expected %s or %s")),
+                        actualResponseTypeString,
+                        expectedResponseTypeOneString,
+                        expectedResponseTypeTwoString)
+                    .build())
             .build();
 
     return IfStatement.builder()

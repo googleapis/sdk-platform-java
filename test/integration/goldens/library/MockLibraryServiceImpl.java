@@ -84,7 +84,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateShelf, expected %s or %s",
+                  response.getClass().getName(),
+                  Shelf.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -98,7 +104,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetShelf, expected %s or %s",
+                  response.getClass().getName(),
+                  Shelf.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -113,7 +125,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListShelves, expected %s or %s",
+                  response.getClass().getName(),
+                  ListShelvesResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -127,7 +145,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteShelf, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -141,7 +165,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method MergeShelves, expected %s or %s",
+                  response.getClass().getName(),
+                  Shelf.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -155,7 +185,11 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateBook, expected %s or %s",
+                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
     }
   }
 
@@ -169,7 +203,11 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetBook, expected %s or %s",
+                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
     }
   }
 
@@ -184,7 +222,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListBooks, expected %s or %s",
+                  response.getClass().getName(),
+                  ListBooksResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -198,7 +242,13 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteBook, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -212,7 +262,11 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateBook, expected %s or %s",
+                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
     }
   }
 
@@ -226,7 +280,11 @@ public class MockLibraryServiceImpl extends LibraryServiceImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method MoveBook, expected %s or %s",
+                  response.getClass().getName(), Book.class.getName(), Exception.class.getName())));
     }
   }
 }
