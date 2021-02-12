@@ -45,6 +45,8 @@ import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.DescriptorProtos.ServiceOptions;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.DescriptorValidationException;
+import com.google.protobuf.Descriptors.EnumDescriptor;
+import com.google.protobuf.Descriptors.EnumValueDescriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
@@ -121,6 +123,7 @@ public class Parser {
     // While this takes an extra pass through the protobufs, the extra time is relatively trivial
     // and is worth the larger reduced maintenance cost.
     Map<String, Message> messages = parseMessages(request, outputResourceReferencesSeen);
+
     Map<String, ResourceName> resourceNames = parseResourceNames(request);
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
@@ -342,6 +345,20 @@ public class Parser {
     Map<String, Message> messages = new HashMap<>();
     for (Descriptor messageDescriptor : fileDescriptor.getMessageTypes()) {
       messages.putAll(parseMessages(messageDescriptor, outputResourceReferencesSeen));
+    }
+    // We treat enums as messages since we primarily care only about the type representation.
+    for (EnumDescriptor enumDescriptor : fileDescriptor.getEnumTypes()) {
+      String name = enumDescriptor.getName();
+      List<EnumValueDescriptor> valueDescriptors = enumDescriptor.getValues();
+      messages.put(
+          name,
+          Message.builder()
+              .setType(TypeParser.parseType(enumDescriptor))
+              .setName(name)
+              .setEnumValues(
+                  valueDescriptors.stream().map(v -> v.getName()).collect(Collectors.toList()),
+                  valueDescriptors.stream().map(v -> v.getNumber()).collect(Collectors.toList()))
+              .build());
     }
     return messages;
   }
