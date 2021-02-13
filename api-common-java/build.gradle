@@ -47,7 +47,7 @@ ext {
       error_prone_annotations: 'com.google.errorprone:error_prone_annotations:2.5.1',
 
       // Testing
-      junit: 'junit:junit:4.13.1',
+      junit: 'junit:junit:4.13.2',
       truth: 'com.google.truth:truth:1.1.2',
   ]
 }
