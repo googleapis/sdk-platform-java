@@ -241,4 +241,46 @@ public class MockAssetServiceImpl extends AssetServiceImplBase {
                   Exception.class.getName())));
     }
   }
+
+  @Override
+  public void analyzeIamPolicy(
+      AnalyzeIamPolicyRequest request, StreamObserver<AnalyzeIamPolicyResponse> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof AnalyzeIamPolicyResponse) {
+      requests.add(request);
+      responseObserver.onNext(((AnalyzeIamPolicyResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method AnalyzeIamPolicy, expected %s or %s",
+                  response.getClass().getName(),
+                  AnalyzeIamPolicyResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void analyzeIamPolicyLongrunning(
+      AnalyzeIamPolicyLongrunningRequest request, StreamObserver<Operation> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof Operation) {
+      requests.add(request);
+      responseObserver.onNext(((Operation) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method AnalyzeIamPolicyLongrunning, expected %s or %s",
+                  response.getClass().getName(),
+                  Operation.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
 }

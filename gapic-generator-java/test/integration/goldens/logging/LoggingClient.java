@@ -26,6 +26,7 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.paging.AbstractFixedSizeCollection;
 import com.google.api.gax.paging.AbstractPage;
 import com.google.api.gax.paging.AbstractPagedListResponse;
+import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.PageContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.logging.v2.stub.LoggingServiceV2Stub;
@@ -44,6 +45,8 @@ import com.google.logging.v2.LogEntry;
 import com.google.logging.v2.LogName;
 import com.google.logging.v2.OrganizationName;
 import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.TailLogEntriesRequest;
+import com.google.logging.v2.TailLogEntriesResponse;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
@@ -508,6 +511,11 @@ public class LoggingClient implements BackgroundResource {
    *     entries:
    *     <p>"projects/[PROJECT_ID]" "organizations/[ORGANIZATION_ID]"
    *     "billingAccounts/[BILLING_ACCOUNT_ID]" "folders/[FOLDER_ID]"
+   *     <p>May alternatively be one or more views
+   *     projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+   *     organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+   *     billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+   *     folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
    *     <p>Projects listed in the `project_ids` field are added to this list.
    * @param filter Optional. A filter that chooses which log entries to return. See [Advanced Logs
    *     Queries](https://cloud.google.com/logging/docs/view/advanced-queries). Only log entries
@@ -859,6 +867,7 @@ public class LoggingClient implements BackgroundResource {
    *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
+   *           .addAllResourceNames(new ArrayList<String>())
    *           .build();
    *   for (String element : loggingClient.listLogs(request).iterateAll()) {
    *     // doThingsWith(element);
@@ -887,6 +896,7 @@ public class LoggingClient implements BackgroundResource {
    *           .setParent(LogName.ofProjectLogName("[PROJECT]", "[LOG]").toString())
    *           .setPageSize(883849137)
    *           .setPageToken("pageToken873572522")
+   *           .addAllResourceNames(new ArrayList<String>())
    *           .build();
    *   ApiFuture<String> future = loggingClient.listLogsPagedCallable().futureCall(request);
    *   // Do something.
@@ -926,6 +936,35 @@ public class LoggingClient implements BackgroundResource {
    */
   public final UnaryCallable<ListLogsRequest, ListLogsResponse> listLogsCallable() {
     return stub.listLogsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Streaming read of log entries as they are ingested. Until the stream is terminated, it will
+   * continue reading logs.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (LoggingClient loggingClient = LoggingClient.create()) {
+   *   BidiStream<TailLogEntriesRequest, TailLogEntriesResponse> bidiStream =
+   *       loggingClient.tailLogEntriesCallable().call();
+   *   TailLogEntriesRequest request =
+   *       TailLogEntriesRequest.newBuilder()
+   *           .addAllResourceNames(new ArrayList<String>())
+   *           .setFilter("filter-1274492040")
+   *           .setBufferWindow(Duration.newBuilder().build())
+   *           .build();
+   *   bidiStream.send(request);
+   *   for (TailLogEntriesResponse response : bidiStream) {
+   *     // Do something when a response is received.
+   *   }
+   * }
+   * }</pre>
+   */
+  public final BidiStreamingCallable<TailLogEntriesRequest, TailLogEntriesResponse>
+      tailLogEntriesCallable() {
+    return stub.tailLogEntriesCallable();
   }
 
   @Override

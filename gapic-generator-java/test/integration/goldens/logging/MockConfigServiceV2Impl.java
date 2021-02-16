@@ -19,27 +19,37 @@ package com.google.cloud.logging.v2;
 import com.google.api.core.BetaApi;
 import com.google.logging.v2.CmekSettings;
 import com.google.logging.v2.ConfigServiceV2Grpc.ConfigServiceV2ImplBase;
+import com.google.logging.v2.CreateBucketRequest;
 import com.google.logging.v2.CreateExclusionRequest;
 import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.CreateViewRequest;
+import com.google.logging.v2.DeleteBucketRequest;
 import com.google.logging.v2.DeleteExclusionRequest;
 import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.DeleteViewRequest;
 import com.google.logging.v2.GetBucketRequest;
 import com.google.logging.v2.GetCmekSettingsRequest;
 import com.google.logging.v2.GetExclusionRequest;
 import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.GetViewRequest;
 import com.google.logging.v2.ListBucketsRequest;
 import com.google.logging.v2.ListBucketsResponse;
 import com.google.logging.v2.ListExclusionsRequest;
 import com.google.logging.v2.ListExclusionsResponse;
 import com.google.logging.v2.ListSinksRequest;
 import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.ListViewsRequest;
+import com.google.logging.v2.ListViewsResponse;
 import com.google.logging.v2.LogBucket;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.LogSink;
+import com.google.logging.v2.LogView;
+import com.google.logging.v2.UndeleteBucketRequest;
 import com.google.logging.v2.UpdateBucketRequest;
 import com.google.logging.v2.UpdateCmekSettingsRequest;
 import com.google.logging.v2.UpdateExclusionRequest;
 import com.google.logging.v2.UpdateSinkRequest;
+import com.google.logging.v2.UpdateViewRequest;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
@@ -123,6 +133,27 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
   }
 
   @Override
+  public void createBucket(
+      CreateBucketRequest request, StreamObserver<LogBucket> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof LogBucket) {
+      requests.add(request);
+      responseObserver.onNext(((LogBucket) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateBucket, expected %s or %s",
+                  response.getClass().getName(),
+                  LogBucket.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
   public void updateBucket(
       UpdateBucketRequest request, StreamObserver<LogBucket> responseObserver) {
     Object response = responses.remove();
@@ -139,6 +170,148 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
                   "Unrecognized response type %s for method UpdateBucket, expected %s or %s",
                   response.getClass().getName(),
                   LogBucket.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void deleteBucket(DeleteBucketRequest request, StreamObserver<Empty> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof Empty) {
+      requests.add(request);
+      responseObserver.onNext(((Empty) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteBucket, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void undeleteBucket(
+      UndeleteBucketRequest request, StreamObserver<Empty> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof Empty) {
+      requests.add(request);
+      responseObserver.onNext(((Empty) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UndeleteBucket, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void listViews(
+      ListViewsRequest request, StreamObserver<ListViewsResponse> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof ListViewsResponse) {
+      requests.add(request);
+      responseObserver.onNext(((ListViewsResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListViews, expected %s or %s",
+                  response.getClass().getName(),
+                  ListViewsResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void getView(GetViewRequest request, StreamObserver<LogView> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof LogView) {
+      requests.add(request);
+      responseObserver.onNext(((LogView) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetView, expected %s or %s",
+                  response.getClass().getName(),
+                  LogView.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void createView(CreateViewRequest request, StreamObserver<LogView> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof LogView) {
+      requests.add(request);
+      responseObserver.onNext(((LogView) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateView, expected %s or %s",
+                  response.getClass().getName(),
+                  LogView.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void updateView(UpdateViewRequest request, StreamObserver<LogView> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof LogView) {
+      requests.add(request);
+      responseObserver.onNext(((LogView) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateView, expected %s or %s",
+                  response.getClass().getName(),
+                  LogView.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void deleteView(DeleteViewRequest request, StreamObserver<Empty> responseObserver) {
+    Object response = responses.remove();
+    if (response instanceof Empty) {
+      requests.add(request);
+      responseObserver.onNext(((Empty) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteView, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
                   Exception.class.getName())));
     }
   }

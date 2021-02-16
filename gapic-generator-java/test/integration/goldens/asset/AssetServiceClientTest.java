@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
+import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Timestamp;
 import com.google.type.Expr;
@@ -579,6 +580,111 @@ public class AssetServiceClientTest {
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
+    }
+  }
+
+  @Test
+  public void analyzeIamPolicyTest() throws Exception {
+    AnalyzeIamPolicyResponse expectedResponse =
+        AnalyzeIamPolicyResponse.newBuilder()
+            .setMainAnalysis(AnalyzeIamPolicyResponse.IamPolicyAnalysis.newBuilder().build())
+            .addAllServiceAccountImpersonationAnalysis(
+                new ArrayList<AnalyzeIamPolicyResponse.IamPolicyAnalysis>())
+            .setFullyExplored(true)
+            .build();
+    mockAssetService.addResponse(expectedResponse);
+
+    AnalyzeIamPolicyRequest request =
+        AnalyzeIamPolicyRequest.newBuilder()
+            .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+            .setExecutionTimeout(Duration.newBuilder().build())
+            .build();
+
+    AnalyzeIamPolicyResponse actualResponse = client.analyzeIamPolicy(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    AnalyzeIamPolicyRequest actualRequest = ((AnalyzeIamPolicyRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getAnalysisQuery(), actualRequest.getAnalysisQuery());
+    Assert.assertEquals(request.getExecutionTimeout(), actualRequest.getExecutionTimeout());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void analyzeIamPolicyExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockAssetService.addException(exception);
+
+    try {
+      AnalyzeIamPolicyRequest request =
+          AnalyzeIamPolicyRequest.newBuilder()
+              .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setExecutionTimeout(Duration.newBuilder().build())
+              .build();
+      client.analyzeIamPolicy(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void analyzeIamPolicyLongrunningTest() throws Exception {
+    AnalyzeIamPolicyLongrunningResponse expectedResponse =
+        AnalyzeIamPolicyLongrunningResponse.newBuilder().build();
+    Operation resultOperation =
+        Operation.newBuilder()
+            .setName("analyzeIamPolicyLongrunningTest")
+            .setDone(true)
+            .setResponse(Any.pack(expectedResponse))
+            .build();
+    mockAssetService.addResponse(resultOperation);
+
+    AnalyzeIamPolicyLongrunningRequest request =
+        AnalyzeIamPolicyLongrunningRequest.newBuilder()
+            .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+            .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
+            .build();
+
+    AnalyzeIamPolicyLongrunningResponse actualResponse =
+        client.analyzeIamPolicyLongrunningAsync(request).get();
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockAssetService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    AnalyzeIamPolicyLongrunningRequest actualRequest =
+        ((AnalyzeIamPolicyLongrunningRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getAnalysisQuery(), actualRequest.getAnalysisQuery());
+    Assert.assertEquals(request.getOutputConfig(), actualRequest.getOutputConfig());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void analyzeIamPolicyLongrunningExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockAssetService.addException(exception);
+
+    try {
+      AnalyzeIamPolicyLongrunningRequest request =
+          AnalyzeIamPolicyLongrunningRequest.newBuilder()
+              .setAnalysisQuery(IamPolicyAnalysisQuery.newBuilder().build())
+              .setOutputConfig(IamPolicyAnalysisOutputConfig.newBuilder().build())
+              .build();
+      client.analyzeIamPolicyLongrunningAsync(request).get();
+      Assert.fail("No exception raised");
+    } catch (ExecutionException e) {
+      Assert.assertEquals(InvalidArgumentException.class, e.getCause().getClass());
+      InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
+      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 }
