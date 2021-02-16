@@ -1561,11 +1561,7 @@ public class ServiceClientTestClassComposer {
 
     Expr testExpectedValueExpr =
         VariableExpr.builder()
-            .setVariable(
-                Variable.builder()
-                    .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
-                    .setName("class")
-                    .build())
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
             .setStaticReferenceType(FIXED_TYPESTORE.get("InvalidArgumentException"))
             .build();
     Expr getCauseExpr =
