@@ -21,7 +21,6 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
-import com.google.api.generator.gapic.composer.samplecode.ServiceClientSampleCodeComposer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
@@ -68,7 +67,9 @@ public class ServiceClientSampleCodeComposerTest {
                 .setName("EchoClient")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    String results = ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(echoProtoService, clientType, resourceNames, messageTypes);
+    String results =
+        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+            echoProtoService, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
@@ -127,16 +128,17 @@ public class ServiceClientSampleCodeComposerTest {
             .setLro(lro)
             .setMethodSignatures(Arrays.asList(Arrays.asList(ttl)))
             .build();
-    Service service = Service.builder()
-        .setName("Echo")
-        .setDefaultHost("localhost:7469")
-        .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
-        .setPakkage(SHOWCASE_PACKAGE_NAME)
-        .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
-        .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
-        .setOverriddenName("Echo")
-        .setMethods(Arrays.asList(method))
-        .build();
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -168,7 +170,10 @@ public class ServiceClientSampleCodeComposerTest {
                 .build());
     TypeNode outputType =
         TypeNode.withReference(
-            VaporReference.builder().setName("EchoResponse").setPakkage(SHOWCASE_PACKAGE_NAME).build());
+            VaporReference.builder()
+                .setName("EchoResponse")
+                .setPakkage(SHOWCASE_PACKAGE_NAME)
+                .build());
     Method method =
         Method.builder()
             .setName("Echo")
@@ -176,16 +181,17 @@ public class ServiceClientSampleCodeComposerTest {
             .setOutputType(outputType)
             .setMethodSignatures(Collections.emptyList())
             .build();
-    Service service = Service.builder()
-        .setName("Echo")
-        .setDefaultHost("localhost:7469")
-        .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
-        .setPakkage(SHOWCASE_PACKAGE_NAME)
-        .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
-        .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
-        .setOverriddenName("Echo")
-        .setMethods(Arrays.asList(method))
-        .build();
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -200,8 +206,11 @@ public class ServiceClientSampleCodeComposerTest {
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  EchoResponse response = echoClient.echo(request);\n",
@@ -233,28 +242,32 @@ public class ServiceClientSampleCodeComposerTest {
             .setOutputType(outputType)
             .setStream(Stream.SERVER)
             .build();
-    Service service = Service.builder()
-        .setName("Echo")
-        .setDefaultHost("localhost:7469")
-        .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
-        .setPakkage(SHOWCASE_PACKAGE_NAME)
-        .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
-        .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
-        .setOverriddenName("Echo")
-        .setMethods(Arrays.asList(method))
-        .build();
+    Service service =
+        Service.builder()
+            .setName("Echo")
+            .setDefaultHost("localhost:7469")
+            .setOauthScopes(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"))
+            .setPakkage(SHOWCASE_PACKAGE_NAME)
+            .setProtoPakkage(SHOWCASE_PACKAGE_NAME)
+            .setOriginalJavaPackage(SHOWCASE_PACKAGE_NAME)
+            .setOverriddenName("Echo")
+            .setMethods(Arrays.asList(method))
+            .build();
     TypeNode clientType =
         TypeNode.withReference(
             VaporReference.builder()
                 .setName("EchoClient")
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
-    String results = ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(service, clientType, resourceNames, messageTypes);
+    String results =
+        ServiceClientSampleCodeComposer.composeClassHeaderMethodSampleCode(
+            service, clientType, resourceNames, messageTypes);
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  ExpandRequest request =\n",
-            "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "     "
+                + " ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
             "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
             "  for (EchoResponse response : stream) {\n",
             "    // Do something when a response is received.\n",
@@ -278,7 +291,8 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(clientType, settingsType);
+        ServiceClientSampleCodeComposer.composeClassHeaderCredentialsSampleCode(
+            clientType, settingsType);
     String expected =
         LineFormatter.lines(
             "EchoSettings echoSettings =\n",
@@ -304,10 +318,12 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     String results =
-        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(clientType, settingsType);
+        ServiceClientSampleCodeComposer.composeClassHeaderEndpointSampleCode(
+            clientType, settingsType);
     String expected =
         LineFormatter.lines(
-            "EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(myEndpoint).build();\n",
+            "EchoSettings echoSettings ="
+                + " EchoSettings.newBuilder().setEndpoint(myEndpoint).build();\n",
             "EchoClient echoClient = EchoClient.create(echoSettings);");
     assertEquals(expected, results);
   }
@@ -408,7 +424,8 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\");\n",
+            "  ResourceName parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\");\n",
             "  EchoResponse response = echoClient.echo(parent);\n",
             "}");
     assertEquals(expected, results);
@@ -529,7 +546,8 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  String name = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  String name = FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString();\n",
             "  EchoResponse response = echoClient.echo(name);\n",
             "}");
     assertEquals(expected, results);
@@ -586,7 +604,8 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  String parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  String parent = FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString();\n",
             "  EchoResponse response = echoClient.echo(parent);\n",
             "}");
     assertEquals(expected, results);
@@ -719,7 +738,8 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString();\n",
+            "  String displayName = FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString();\n",
             "  String otherName = \"otherName-1946065477\";\n",
             "  EchoResponse response = echoClient.echo(displayName, otherName);\n",
             "}");
@@ -1018,7 +1038,8 @@ public class ServiceClientSampleCodeComposerTest {
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  List<String> resourceName = new ArrayList<>();\n",
             "  String filter = \"filter-1274492040\";\n",
-            "  for (Content element : echoClient.listContent(resourceName, filter).iterateAll()) {\n",
+            "  for (Content element : echoClient.listContent(resourceName, filter).iterateAll())"
+                + " {\n",
             "    // doThingsWith(element);\n",
             "  }\n",
             "}");
@@ -1611,8 +1632,11 @@ public class ServiceClientSampleCodeComposerTest {
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  echoClient.echo(request);\n",
@@ -1658,8 +1682,11 @@ public class ServiceClientSampleCodeComposerTest {
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  EchoResponse response = echoClient.echo(request);\n",
@@ -1818,7 +1845,8 @@ public class ServiceClientSampleCodeComposerTest {
             "          .setPageSize(883849137)\n",
             "          .setPageToken(\"pageToken873572522\")\n",
             "          .build();\n",
-            "  ApiFuture<EchoResponse> future = echoClient.pagedExpandPagedCallable().futureCall(request);\n",
+            "  ApiFuture<EchoResponse> future ="
+                + " echoClient.pagedExpandPagedCallable().futureCall(request);\n",
             "  // Do something.\n",
             "  for (EchoResponse element : future.get().iterateAll()) {\n",
             "    // doThingsWith(element);\n",
@@ -1989,7 +2017,8 @@ public class ServiceClientSampleCodeComposerTest {
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  ExpandRequest request =\n",
-            "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
+            "     "
+                + " ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
             "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
             "  for (EchoResponse response : stream) {\n",
             "    // Do something when a response is received.\n",
@@ -2071,11 +2100,15 @@ public class ServiceClientSampleCodeComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  BidiStream<EchoRequest, EchoResponse> bidiStream = echoClient.chatCallable().call();\n",
+            "  BidiStream<EchoRequest, EchoResponse> bidiStream ="
+                + " echoClient.chatCallable().call();\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  bidiStream.send(request);\n",
@@ -2180,8 +2213,11 @@ public class ServiceClientSampleCodeComposerTest {
             "      echoClient.collect().clientStreamingCall(responseObserver);\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  requestObserver.onNext(request);\n",
@@ -2251,11 +2287,7 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     Method method =
-        Method.builder()
-            .setName("Echo")
-            .setInputType(inputType)
-            .setOutputType(outputType)
-            .build();
+        Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
     String results =
         ServiceClientSampleCodeComposer.composeRegularCallableMethodHeaderSampleCode(
             method, clientType, resourceNames, messageTypes);
@@ -2264,8 +2296,11 @@ public class ServiceClientSampleCodeComposerTest {
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  EchoRequest request =\n",
             "      EchoRequest.newBuilder()\n",
-            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
-            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())\n",
+            "          .setName(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
+                + " \"[FOOBAR]\").toString())\n",
+            "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
             "  ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);\n",
@@ -2351,10 +2386,7 @@ public class ServiceClientSampleCodeComposerTest {
             VaporReference.builder().setName("Operation").setPakkage(LRO_PACKAGE_NAME).build());
     TypeNode responseType =
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName("Empty")
-                .setPakkage(PROTO_PACKAGE_NAME)
-                .build());
+            VaporReference.builder().setName("Empty").setPakkage(PROTO_PACKAGE_NAME).build());
     TypeNode metadataType =
         TypeNode.withReference(
             VaporReference.builder()
@@ -2460,11 +2492,7 @@ public class ServiceClientSampleCodeComposerTest {
                 .setPakkage(SHOWCASE_PACKAGE_NAME)
                 .build());
     Method method =
-        Method.builder()
-            .setName("Echo")
-            .setInputType(inputType)
-            .setOutputType(outputType)
-            .build();
+        Method.builder().setName("Echo").setInputType(inputType).setOutputType(outputType).build();
     assertThrows(
         NullPointerException.class,
         () ->

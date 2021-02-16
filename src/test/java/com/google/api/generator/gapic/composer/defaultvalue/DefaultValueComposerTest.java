@@ -20,7 +20,6 @@ import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.defaultvalue.DefaultValueComposer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -273,6 +272,7 @@ public class DefaultValueComposerTest {
         "EchoRequest.newBuilder().setName("
             + "FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
             + ".setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
+            + ".setSeverity(Severity.forNumber(0))"
             + ".setFoobar(Foobar.newBuilder().build()).build()",
         writerVisitor.write());
   }
