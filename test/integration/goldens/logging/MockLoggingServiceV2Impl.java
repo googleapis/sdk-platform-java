@@ -78,7 +78,13 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteLog, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -93,7 +99,13 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method WriteLogEntries, expected %s or %s",
+                  response.getClass().getName(),
+                  WriteLogEntriesResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -108,7 +120,13 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListLogEntries, expected %s or %s",
+                  response.getClass().getName(),
+                  ListLogEntriesResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -124,7 +142,13 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListMonitoredResourceDescriptors, expected %s or %s",
+                  response.getClass().getName(),
+                  ListMonitoredResourceDescriptorsResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -138,7 +162,13 @@ public class MockLoggingServiceV2Impl extends LoggingServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListLogs, expected %s or %s",
+                  response.getClass().getName(),
+                  ListLogsResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 }

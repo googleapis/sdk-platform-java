@@ -53,7 +53,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method Echo, expected %s or %s",
+                  response.getClass().getName(),
+                  EchoResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -67,7 +73,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method Expand, expected %s or %s",
+                  response.getClass().getName(),
+                  EchoResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -84,7 +96,13 @@ public class MockEchoImpl extends EchoImplBase {
             } else if (response instanceof Exception) {
               responseObserver.onError(((Exception) response));
             } else {
-              responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+              responseObserver.onError(
+                  new IllegalArgumentException(
+                      String.format(
+                          "Unrecognized response type %s for method Collect, expected %s or %s",
+                          response.getClass().getName(),
+                          EchoResponse.class.getName(),
+                          Exception.class.getName())));
             }
           }
 
@@ -114,7 +132,13 @@ public class MockEchoImpl extends EchoImplBase {
             } else if (response instanceof Exception) {
               responseObserver.onError(((Exception) response));
             } else {
-              responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+              responseObserver.onError(
+                  new IllegalArgumentException(
+                      String.format(
+                          "Unrecognized response type %s for method Chat, expected %s or %s",
+                          response.getClass().getName(),
+                          EchoResponse.class.getName(),
+                          Exception.class.getName())));
             }
           }
 
@@ -145,7 +169,13 @@ public class MockEchoImpl extends EchoImplBase {
             } else if (response instanceof Exception) {
               responseObserver.onError(((Exception) response));
             } else {
-              responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+              responseObserver.onError(
+                  new IllegalArgumentException(
+                      String.format(
+                          "Unrecognized response type %s for method ChatAgain, expected %s or %s",
+                          response.getClass().getName(),
+                          EchoResponse.class.getName(),
+                          Exception.class.getName())));
             }
           }
 
@@ -173,7 +203,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method PagedExpand, expected %s or %s",
+                  response.getClass().getName(),
+                  PagedExpandResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -188,7 +224,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method SimplePagedExpand, expected %s or %s",
+                  response.getClass().getName(),
+                  PagedExpandResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -202,7 +244,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method Wait, expected %s or %s",
+                  response.getClass().getName(),
+                  Operation.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -216,7 +264,13 @@ public class MockEchoImpl extends EchoImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method Block, expected %s or %s",
+                  response.getClass().getName(),
+                  BlockResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 }

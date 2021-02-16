@@ -92,7 +92,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListBuckets, expected %s or %s",
+                  response.getClass().getName(),
+                  ListBucketsResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -106,7 +112,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetBucket, expected %s or %s",
+                  response.getClass().getName(),
+                  LogBucket.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -121,7 +133,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateBucket, expected %s or %s",
+                  response.getClass().getName(),
+                  LogBucket.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -136,7 +154,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListSinks, expected %s or %s",
+                  response.getClass().getName(),
+                  ListSinksResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -150,7 +174,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetSink, expected %s or %s",
+                  response.getClass().getName(),
+                  LogSink.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -164,7 +194,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateSink, expected %s or %s",
+                  response.getClass().getName(),
+                  LogSink.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -178,7 +214,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateSink, expected %s or %s",
+                  response.getClass().getName(),
+                  LogSink.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -192,7 +234,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteSink, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -207,7 +255,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method ListExclusions, expected %s or %s",
+                  response.getClass().getName(),
+                  ListExclusionsResponse.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -222,7 +276,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetExclusion, expected %s or %s",
+                  response.getClass().getName(),
+                  LogExclusion.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -237,7 +297,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateExclusion, expected %s or %s",
+                  response.getClass().getName(),
+                  LogExclusion.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -252,7 +318,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateExclusion, expected %s or %s",
+                  response.getClass().getName(),
+                  LogExclusion.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -267,7 +339,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method DeleteExclusion, expected %s or %s",
+                  response.getClass().getName(),
+                  Empty.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -282,7 +360,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetCmekSettings, expected %s or %s",
+                  response.getClass().getName(),
+                  CmekSettings.class.getName(),
+                  Exception.class.getName())));
     }
   }
 
@@ -297,7 +381,13 @@ public class MockConfigServiceV2Impl extends ConfigServiceV2ImplBase {
     } else if (response instanceof Exception) {
       responseObserver.onError(((Exception) response));
     } else {
-      responseObserver.onError(new IllegalArgumentException("Unrecognized response type"));
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method UpdateCmekSettings, expected %s or %s",
+                  response.getClass().getName(),
+                  CmekSettings.class.getName(),
+                  Exception.class.getName())));
     }
   }
 }
