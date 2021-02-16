@@ -32,35 +32,45 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.logging.v2.BillingAccountLocationName;
 import com.google.logging.v2.BillingAccountName;
 import com.google.logging.v2.CmekSettings;
+import com.google.logging.v2.CreateBucketRequest;
 import com.google.logging.v2.CreateExclusionRequest;
 import com.google.logging.v2.CreateSinkRequest;
+import com.google.logging.v2.CreateViewRequest;
+import com.google.logging.v2.DeleteBucketRequest;
 import com.google.logging.v2.DeleteExclusionRequest;
 import com.google.logging.v2.DeleteSinkRequest;
+import com.google.logging.v2.DeleteViewRequest;
 import com.google.logging.v2.FolderLocationName;
 import com.google.logging.v2.FolderName;
 import com.google.logging.v2.GetBucketRequest;
 import com.google.logging.v2.GetCmekSettingsRequest;
 import com.google.logging.v2.GetExclusionRequest;
 import com.google.logging.v2.GetSinkRequest;
+import com.google.logging.v2.GetViewRequest;
 import com.google.logging.v2.ListBucketsRequest;
 import com.google.logging.v2.ListBucketsResponse;
 import com.google.logging.v2.ListExclusionsRequest;
 import com.google.logging.v2.ListExclusionsResponse;
 import com.google.logging.v2.ListSinksRequest;
 import com.google.logging.v2.ListSinksResponse;
+import com.google.logging.v2.ListViewsRequest;
+import com.google.logging.v2.ListViewsResponse;
 import com.google.logging.v2.LocationName;
 import com.google.logging.v2.LogBucket;
 import com.google.logging.v2.LogExclusion;
 import com.google.logging.v2.LogExclusionName;
 import com.google.logging.v2.LogSink;
 import com.google.logging.v2.LogSinkName;
+import com.google.logging.v2.LogView;
 import com.google.logging.v2.OrganizationLocationName;
 import com.google.logging.v2.OrganizationName;
 import com.google.logging.v2.ProjectName;
+import com.google.logging.v2.UndeleteBucketRequest;
 import com.google.logging.v2.UpdateBucketRequest;
 import com.google.logging.v2.UpdateCmekSettingsRequest;
 import com.google.logging.v2.UpdateExclusionRequest;
 import com.google.logging.v2.UpdateSinkRequest;
+import com.google.logging.v2.UpdateViewRequest;
 import com.google.protobuf.Empty;
 import com.google.protobuf.FieldMask;
 import java.io.IOException;
@@ -185,7 +195,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -218,7 +228,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -250,7 +260,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -282,7 +292,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -314,7 +324,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -345,7 +355,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -374,7 +384,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -403,7 +413,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists buckets (Beta).
+   * Lists buckets.
    *
    * <p>Sample code:
    *
@@ -430,7 +440,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a bucket (Beta).
+   * Gets a bucket.
    *
    * <p>Sample code:
    *
@@ -455,7 +465,7 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets a bucket (Beta).
+   * Gets a bucket.
    *
    * <p>Sample code:
    *
@@ -479,6 +489,61 @@ public class ConfigClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Creates a bucket that can be used to store log entries. Once a bucket has been created, the
+   * region cannot be changed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateBucketRequest request =
+   *       CreateBucketRequest.newBuilder()
+   *           .setParent(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setBucketId("bucketId-1603305307")
+   *           .setBucket(LogBucket.newBuilder().build())
+   *           .build();
+   *   LogBucket response = configClient.createBucket(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final LogBucket createBucket(CreateBucketRequest request) {
+    return createBucketCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a bucket that can be used to store log entries. Once a bucket has been created, the
+   * region cannot be changed.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateBucketRequest request =
+   *       CreateBucketRequest.newBuilder()
+   *           .setParent(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .setBucketId("bucketId-1603305307")
+   *           .setBucket(LogBucket.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogBucket> future = configClient.createBucketCallable().futureCall(request);
+   *   // Do something.
+   *   LogBucket response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CreateBucketRequest, LogBucket> createBucketCallable() {
+    return stub.createBucketCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
    * Updates a bucket. This method replaces the following fields in the existing bucket with values
    * from the new bucket: `retention_period`
    *
@@ -488,7 +553,7 @@ public class ConfigClient implements BackgroundResource {
    * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
    * returned.
    *
-   * <p>A buckets region may not be modified after it is created. This method is in Beta.
+   * <p>A buckets region may not be modified after it is created.
    *
    * <p>Sample code:
    *
@@ -524,7 +589,7 @@ public class ConfigClient implements BackgroundResource {
    * <p>If the bucket has a LifecycleState of DELETE_REQUESTED, FAILED_PRECONDITION will be
    * returned.
    *
-   * <p>A buckets region may not be modified after it is created. This method is in Beta.
+   * <p>A buckets region may not be modified after it is created.
    *
    * <p>Sample code:
    *
@@ -546,6 +611,414 @@ public class ConfigClient implements BackgroundResource {
    */
   public final UnaryCallable<UpdateBucketRequest, LogBucket> updateBucketCallable() {
     return stub.updateBucketCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a bucket. Moves the bucket to the DELETE_REQUESTED state. After 7 days, the bucket will
+   * be purged and all logs in the bucket will be permanently deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteBucketRequest request =
+   *       DeleteBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   configClient.deleteBucket(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteBucket(DeleteBucketRequest request) {
+    deleteBucketCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a bucket. Moves the bucket to the DELETE_REQUESTED state. After 7 days, the bucket will
+   * be purged and all logs in the bucket will be permanently deleted.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteBucketRequest request =
+   *       DeleteBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   ApiFuture<Empty> future = configClient.deleteBucketCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<DeleteBucketRequest, Empty> deleteBucketCallable() {
+    return stub.deleteBucketCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Undeletes a bucket. A bucket that has been deleted may be undeleted within the grace period of
+   * 7 days.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UndeleteBucketRequest request =
+   *       UndeleteBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   configClient.undeleteBucket(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void undeleteBucket(UndeleteBucketRequest request) {
+    undeleteBucketCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Undeletes a bucket. A bucket that has been deleted may be undeleted within the grace period of
+   * 7 days.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UndeleteBucketRequest request =
+   *       UndeleteBucketRequest.newBuilder()
+   *           .setName(
+   *               LogBucketName.ofProjectLocationBucketName("[PROJECT]", "[LOCATION]", "[BUCKET]")
+   *                   .toString())
+   *           .build();
+   *   ApiFuture<Empty> future = configClient.undeleteBucketCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<UndeleteBucketRequest, Empty> undeleteBucketCallable() {
+    return stub.undeleteBucketCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists views on a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   String parent = "parent-995424086";
+   *   for (LogView element : configClient.listViews(parent).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param parent Required. The bucket whose views are to be listed:
+   *     <p>"projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListViewsPagedResponse listViews(String parent) {
+    ListViewsRequest request = ListViewsRequest.newBuilder().setParent(parent).build();
+    return listViews(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists views on a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListViewsRequest request =
+   *       ListViewsRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   for (LogView element : configClient.listViews(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListViewsPagedResponse listViews(ListViewsRequest request) {
+    return listViewsPagedCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists views on a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   ListViewsRequest request =
+   *       ListViewsRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setPageToken("pageToken873572522")
+   *           .setPageSize(883849137)
+   *           .build();
+   *   ApiFuture<LogView> future = configClient.listViewsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (LogView element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListViewsRequest, ListViewsPagedResponse> listViewsPagedCallable() {
+    return stub.listViewsPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists views on a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   while (true) {
+   *     ListViewsResponse response = configClient.listViewsCallable().call(request);
+   *     for (LogView element : response.getResponsesList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListViewsRequest, ListViewsResponse> listViewsCallable() {
+    return stub.listViewsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets a view.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetViewRequest request =
+   *       GetViewRequest.newBuilder()
+   *           .setName(
+   *               LogViewName.ofProjectLocationBucketViewName(
+   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                   .toString())
+   *           .build();
+   *   LogView response = configClient.getView(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final LogView getView(GetViewRequest request) {
+    return getViewCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets a view.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   GetViewRequest request =
+   *       GetViewRequest.newBuilder()
+   *           .setName(
+   *               LogViewName.ofProjectLocationBucketViewName(
+   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                   .toString())
+   *           .build();
+   *   ApiFuture<LogView> future = configClient.getViewCallable().futureCall(request);
+   *   // Do something.
+   *   LogView response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetViewRequest, LogView> getViewCallable() {
+    return stub.getViewCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateViewRequest request =
+   *       CreateViewRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setViewId("viewId-816632160")
+   *           .setView(LogView.newBuilder().build())
+   *           .build();
+   *   LogView response = configClient.createView(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final LogView createView(CreateViewRequest request) {
+    return createViewCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Creates a view over logs in a bucket. A bucket may contain a maximum of 50 views.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   CreateViewRequest request =
+   *       CreateViewRequest.newBuilder()
+   *           .setParent("parent-995424086")
+   *           .setViewId("viewId-816632160")
+   *           .setView(LogView.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogView> future = configClient.createViewCallable().futureCall(request);
+   *   // Do something.
+   *   LogView response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CreateViewRequest, LogView> createViewCallable() {
+    return stub.createViewCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates a view. This method replaces the following fields in the existing view with values from
+   * the new view: `filter`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateViewRequest request =
+   *       UpdateViewRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setView(LogView.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   LogView response = configClient.updateView(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final LogView updateView(UpdateViewRequest request) {
+    return updateViewCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Updates a view. This method replaces the following fields in the existing view with values from
+   * the new view: `filter`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   UpdateViewRequest request =
+   *       UpdateViewRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setView(LogView.newBuilder().build())
+   *           .setUpdateMask(FieldMask.newBuilder().build())
+   *           .build();
+   *   ApiFuture<LogView> future = configClient.updateViewCallable().futureCall(request);
+   *   // Do something.
+   *   LogView response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<UpdateViewRequest, LogView> updateViewCallable() {
+    return stub.updateViewCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a view from a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteViewRequest request =
+   *       DeleteViewRequest.newBuilder()
+   *           .setName(
+   *               LogViewName.ofProjectLocationBucketViewName(
+   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                   .toString())
+   *           .build();
+   *   configClient.deleteView(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteView(DeleteViewRequest request) {
+    deleteViewCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a view from a bucket.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * try (ConfigClient configClient = ConfigClient.create()) {
+   *   DeleteViewRequest request =
+   *       DeleteViewRequest.newBuilder()
+   *           .setName(
+   *               LogViewName.ofProjectLocationBucketViewName(
+   *                       "[PROJECT]", "[LOCATION]", "[BUCKET]", "[VIEW]")
+   *                   .toString())
+   *           .build();
+   *   ApiFuture<Empty> future = configClient.deleteViewCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<DeleteViewRequest, Empty> deleteViewCallable() {
+    return stub.deleteViewCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
@@ -2418,6 +2891,86 @@ public class ConfigClient implements BackgroundResource {
     protected ListBucketsFixedSizeCollection createCollection(
         List<ListBucketsPage> pages, int collectionSize) {
       return new ListBucketsFixedSizeCollection(pages, collectionSize);
+    }
+  }
+
+  public static class ListViewsPagedResponse
+      extends AbstractPagedListResponse<
+          ListViewsRequest,
+          ListViewsResponse,
+          LogView,
+          ListViewsPage,
+          ListViewsFixedSizeCollection> {
+
+    public static ApiFuture<ListViewsPagedResponse> createAsync(
+        PageContext<ListViewsRequest, ListViewsResponse, LogView> context,
+        ApiFuture<ListViewsResponse> futureResponse) {
+      ApiFuture<ListViewsPage> futurePage =
+          ListViewsPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          new ApiFunction<ListViewsPage, ListViewsPagedResponse>() {
+            @Override
+            public ListViewsPagedResponse apply(ListViewsPage input) {
+              return new ListViewsPagedResponse(input);
+            }
+          },
+          MoreExecutors.directExecutor());
+    }
+
+    private ListViewsPagedResponse(ListViewsPage page) {
+      super(page, ListViewsFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListViewsPage
+      extends AbstractPage<ListViewsRequest, ListViewsResponse, LogView, ListViewsPage> {
+
+    private ListViewsPage(
+        PageContext<ListViewsRequest, ListViewsResponse, LogView> context,
+        ListViewsResponse response) {
+      super(context, response);
+    }
+
+    private static ListViewsPage createEmptyPage() {
+      return new ListViewsPage(null, null);
+    }
+
+    @Override
+    protected ListViewsPage createPage(
+        PageContext<ListViewsRequest, ListViewsResponse, LogView> context,
+        ListViewsResponse response) {
+      return new ListViewsPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListViewsPage> createPageAsync(
+        PageContext<ListViewsRequest, ListViewsResponse, LogView> context,
+        ApiFuture<ListViewsResponse> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListViewsFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListViewsRequest,
+          ListViewsResponse,
+          LogView,
+          ListViewsPage,
+          ListViewsFixedSizeCollection> {
+
+    private ListViewsFixedSizeCollection(List<ListViewsPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListViewsFixedSizeCollection createEmptyCollection() {
+      return new ListViewsFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListViewsFixedSizeCollection createCollection(
+        List<ListViewsPage> pages, int collectionSize) {
+      return new ListViewsFixedSizeCollection(pages, collectionSize);
     }
   }
 
