@@ -45,6 +45,10 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
+import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningResponse;
+import com.google.cloud.asset.v1.AnalyzeIamPolicyRequest;
+import com.google.cloud.asset.v1.AnalyzeIamPolicyResponse;
 import com.google.cloud.asset.v1.BatchGetAssetsHistoryRequest;
 import com.google.cloud.asset.v1.BatchGetAssetsHistoryResponse;
 import com.google.cloud.asset.v1.CreateFeedRequest;
@@ -130,6 +134,15 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           SearchAllIamPoliciesResponse,
           SearchAllIamPoliciesPagedResponse>
       searchAllIamPoliciesSettings;
+  private final UnaryCallSettings<AnalyzeIamPolicyRequest, AnalyzeIamPolicyResponse>
+      analyzeIamPolicySettings;
+  private final UnaryCallSettings<AnalyzeIamPolicyLongrunningRequest, Operation>
+      analyzeIamPolicyLongrunningSettings;
+  private final OperationCallSettings<
+          AnalyzeIamPolicyLongrunningRequest,
+          AnalyzeIamPolicyLongrunningResponse,
+          AnalyzeIamPolicyLongrunningRequest>
+      analyzeIamPolicyLongrunningOperationSettings;
 
   private static final PagedListDescriptor<
           SearchAllResourcesRequest, SearchAllResourcesResponse, ResourceSearchResult>
@@ -319,6 +332,27 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     return searchAllIamPoliciesSettings;
   }
 
+  /** Returns the object with the settings used for calls to analyzeIamPolicy. */
+  public UnaryCallSettings<AnalyzeIamPolicyRequest, AnalyzeIamPolicyResponse>
+      analyzeIamPolicySettings() {
+    return analyzeIamPolicySettings;
+  }
+
+  /** Returns the object with the settings used for calls to analyzeIamPolicyLongrunning. */
+  public UnaryCallSettings<AnalyzeIamPolicyLongrunningRequest, Operation>
+      analyzeIamPolicyLongrunningSettings() {
+    return analyzeIamPolicyLongrunningSettings;
+  }
+
+  /** Returns the object with the settings used for calls to analyzeIamPolicyLongrunning. */
+  public OperationCallSettings<
+          AnalyzeIamPolicyLongrunningRequest,
+          AnalyzeIamPolicyLongrunningResponse,
+          AnalyzeIamPolicyLongrunningRequest>
+      analyzeIamPolicyLongrunningOperationSettings() {
+    return analyzeIamPolicyLongrunningOperationSettings;
+  }
+
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public AssetServiceStub createStub() throws IOException {
     if (getTransportChannelProvider()
@@ -398,6 +432,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     deleteFeedSettings = settingsBuilder.deleteFeedSettings().build();
     searchAllResourcesSettings = settingsBuilder.searchAllResourcesSettings().build();
     searchAllIamPoliciesSettings = settingsBuilder.searchAllIamPoliciesSettings().build();
+    analyzeIamPolicySettings = settingsBuilder.analyzeIamPolicySettings().build();
+    analyzeIamPolicyLongrunningSettings =
+        settingsBuilder.analyzeIamPolicyLongrunningSettings().build();
+    analyzeIamPolicyLongrunningOperationSettings =
+        settingsBuilder.analyzeIamPolicyLongrunningOperationSettings().build();
   }
 
   /** Builder for AssetServiceStubSettings. */
@@ -423,6 +462,15 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             SearchAllIamPoliciesResponse,
             SearchAllIamPoliciesPagedResponse>
         searchAllIamPoliciesSettings;
+    private final UnaryCallSettings.Builder<AnalyzeIamPolicyRequest, AnalyzeIamPolicyResponse>
+        analyzeIamPolicySettings;
+    private final UnaryCallSettings.Builder<AnalyzeIamPolicyLongrunningRequest, Operation>
+        analyzeIamPolicyLongrunningSettings;
+    private final OperationCallSettings.Builder<
+            AnalyzeIamPolicyLongrunningRequest,
+            AnalyzeIamPolicyLongrunningResponse,
+            AnalyzeIamPolicyLongrunningRequest>
+        analyzeIamPolicyLongrunningOperationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -441,6 +489,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
                   StatusCode.Code.DEADLINE_EXCEEDED, StatusCode.Code.UNAVAILABLE)));
+      definitions.put(
+          "retry_policy_3_codes",
+          ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList(StatusCode.Code.UNAVAILABLE)));
       RETRYABLE_CODE_DEFINITIONS = definitions.build();
     }
 
@@ -479,6 +530,17 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               .setTotalTimeout(Duration.ofMillis(15000L))
               .build();
       definitions.put("retry_policy_2_params", settings);
+      settings =
+          RetrySettings.newBuilder()
+              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setRetryDelayMultiplier(1.3)
+              .setMaxRetryDelay(Duration.ofMillis(60000L))
+              .setInitialRpcTimeout(Duration.ofMillis(300000L))
+              .setRpcTimeoutMultiplier(1.0)
+              .setMaxRpcTimeout(Duration.ofMillis(300000L))
+              .setTotalTimeout(Duration.ofMillis(300000L))
+              .build();
+      definitions.put("retry_policy_3_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
     }
 
@@ -500,6 +562,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       searchAllResourcesSettings = PagedCallSettings.newBuilder(SEARCH_ALL_RESOURCES_PAGE_STR_FACT);
       searchAllIamPoliciesSettings =
           PagedCallSettings.newBuilder(SEARCH_ALL_IAM_POLICIES_PAGE_STR_FACT);
+      analyzeIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      analyzeIamPolicyLongrunningSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      analyzeIamPolicyLongrunningOperationSettings = OperationCallSettings.newBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -511,7 +576,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               updateFeedSettings,
               deleteFeedSettings,
               searchAllResourcesSettings,
-              searchAllIamPoliciesSettings);
+              searchAllIamPoliciesSettings,
+              analyzeIamPolicySettings,
+              analyzeIamPolicyLongrunningSettings);
       initDefaults(this);
     }
 
@@ -528,6 +595,11 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       deleteFeedSettings = settings.deleteFeedSettings.toBuilder();
       searchAllResourcesSettings = settings.searchAllResourcesSettings.toBuilder();
       searchAllIamPoliciesSettings = settings.searchAllIamPoliciesSettings.toBuilder();
+      analyzeIamPolicySettings = settings.analyzeIamPolicySettings.toBuilder();
+      analyzeIamPolicyLongrunningSettings =
+          settings.analyzeIamPolicyLongrunningSettings.toBuilder();
+      analyzeIamPolicyLongrunningOperationSettings =
+          settings.analyzeIamPolicyLongrunningOperationSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -539,7 +611,9 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               updateFeedSettings,
               deleteFeedSettings,
               searchAllResourcesSettings,
-              searchAllIamPoliciesSettings);
+              searchAllIamPoliciesSettings,
+              analyzeIamPolicySettings,
+              analyzeIamPolicyLongrunningSettings);
     }
 
     private static Builder createDefault() {
@@ -600,6 +674,16 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_2_params"));
 
       builder
+          .analyzeIamPolicySettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_3_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_3_params"));
+
+      builder
+          .analyzeIamPolicyLongrunningSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
           .exportAssetsOperationSettings()
           .setInitialCallSettings(
               UnaryCallSettings
@@ -611,6 +695,33 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
               ProtoOperationTransformers.ResponseTransformer.create(ExportAssetsResponse.class))
           .setMetadataTransformer(
               ProtoOperationTransformers.MetadataTransformer.create(ExportAssetsRequest.class))
+          .setPollingAlgorithm(
+              OperationTimedPollAlgorithm.create(
+                  RetrySettings.newBuilder()
+                      .setInitialRetryDelay(Duration.ofMillis(5000L))
+                      .setRetryDelayMultiplier(1.5)
+                      .setMaxRetryDelay(Duration.ofMillis(45000L))
+                      .setInitialRpcTimeout(Duration.ZERO)
+                      .setRpcTimeoutMultiplier(1.0)
+                      .setMaxRpcTimeout(Duration.ZERO)
+                      .setTotalTimeout(Duration.ofMillis(300000L))
+                      .build()));
+
+      builder
+          .analyzeIamPolicyLongrunningOperationSettings()
+          .setInitialCallSettings(
+              UnaryCallSettings
+                  .<AnalyzeIamPolicyLongrunningRequest, OperationSnapshot>
+                      newUnaryCallSettingsBuilder()
+                  .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+                  .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"))
+                  .build())
+          .setResponseTransformer(
+              ProtoOperationTransformers.ResponseTransformer.create(
+                  AnalyzeIamPolicyLongrunningResponse.class))
+          .setMetadataTransformer(
+              ProtoOperationTransformers.MetadataTransformer.create(
+                  AnalyzeIamPolicyLongrunningRequest.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -701,6 +812,29 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             SearchAllIamPoliciesPagedResponse>
         searchAllIamPoliciesSettings() {
       return searchAllIamPoliciesSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to analyzeIamPolicy. */
+    public UnaryCallSettings.Builder<AnalyzeIamPolicyRequest, AnalyzeIamPolicyResponse>
+        analyzeIamPolicySettings() {
+      return analyzeIamPolicySettings;
+    }
+
+    /** Returns the builder for the settings used for calls to analyzeIamPolicyLongrunning. */
+    public UnaryCallSettings.Builder<AnalyzeIamPolicyLongrunningRequest, Operation>
+        analyzeIamPolicyLongrunningSettings() {
+      return analyzeIamPolicyLongrunningSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to analyzeIamPolicyLongrunning. */
+    @BetaApi(
+        "The surface for use by generated code is not stable yet and may change in the future.")
+    public OperationCallSettings.Builder<
+            AnalyzeIamPolicyLongrunningRequest,
+            AnalyzeIamPolicyLongrunningResponse,
+            AnalyzeIamPolicyLongrunningRequest>
+        analyzeIamPolicyLongrunningOperationSettings() {
+      return analyzeIamPolicyLongrunningOperationSettings;
     }
 
     @Override

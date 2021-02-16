@@ -47,6 +47,7 @@ import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.PagedListDescriptor;
 import com.google.api.gax.rpc.PagedListResponseFactory;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
@@ -63,6 +64,8 @@ import com.google.logging.v2.ListLogsResponse;
 import com.google.logging.v2.ListMonitoredResourceDescriptorsRequest;
 import com.google.logging.v2.ListMonitoredResourceDescriptorsResponse;
 import com.google.logging.v2.LogEntry;
+import com.google.logging.v2.TailLogEntriesRequest;
+import com.google.logging.v2.TailLogEntriesResponse;
 import com.google.logging.v2.WriteLogEntriesRequest;
 import com.google.logging.v2.WriteLogEntriesResponse;
 import com.google.protobuf.Empty;
@@ -129,6 +132,8 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       listMonitoredResourceDescriptorsSettings;
   private final PagedCallSettings<ListLogsRequest, ListLogsResponse, ListLogsPagedResponse>
       listLogsSettings;
+  private final StreamingCallSettings<TailLogEntriesRequest, TailLogEntriesResponse>
+      tailLogEntriesSettings;
 
   private static final PagedListDescriptor<ListLogEntriesRequest, ListLogEntriesResponse, LogEntry>
       LIST_LOG_ENTRIES_PAGE_STR_DESC =
@@ -411,6 +416,12 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
     return listLogsSettings;
   }
 
+  /** Returns the object with the settings used for calls to tailLogEntries. */
+  public StreamingCallSettings<TailLogEntriesRequest, TailLogEntriesResponse>
+      tailLogEntriesSettings() {
+    return tailLogEntriesSettings;
+  }
+
   @BetaApi("A restructuring of stub classes is planned, so this may break in the future")
   public LoggingServiceV2Stub createStub() throws IOException {
     if (getTransportChannelProvider()
@@ -486,6 +497,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
     listMonitoredResourceDescriptorsSettings =
         settingsBuilder.listMonitoredResourceDescriptorsSettings().build();
     listLogsSettings = settingsBuilder.listLogsSettings().build();
+    tailLogEntriesSettings = settingsBuilder.tailLogEntriesSettings().build();
   }
 
   /** Builder for LoggingServiceV2StubSettings. */
@@ -505,6 +517,8 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
     private final PagedCallSettings.Builder<
             ListLogsRequest, ListLogsResponse, ListLogsPagedResponse>
         listLogsSettings;
+    private final StreamingCallSettings.Builder<TailLogEntriesRequest, TailLogEntriesResponse>
+        tailLogEntriesSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -513,6 +527,13 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
           ImmutableMap.builder();
       definitions.put(
           "retry_policy_1_codes",
+          ImmutableSet.copyOf(
+              Lists.<StatusCode.Code>newArrayList(
+                  StatusCode.Code.DEADLINE_EXCEEDED,
+                  StatusCode.Code.INTERNAL,
+                  StatusCode.Code.UNAVAILABLE)));
+      definitions.put(
+          "retry_policy_2_codes",
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
                   StatusCode.Code.DEADLINE_EXCEEDED,
@@ -537,6 +558,17 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
               .setTotalTimeout(Duration.ofMillis(60000L))
               .build();
       definitions.put("retry_policy_1_params", settings);
+      settings =
+          RetrySettings.newBuilder()
+              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setRetryDelayMultiplier(1.3)
+              .setMaxRetryDelay(Duration.ofMillis(60000L))
+              .setInitialRpcTimeout(Duration.ofMillis(3600000L))
+              .setRpcTimeoutMultiplier(1.0)
+              .setMaxRpcTimeout(Duration.ofMillis(3600000L))
+              .setTotalTimeout(Duration.ofMillis(3600000L))
+              .build();
+      definitions.put("retry_policy_2_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
     }
 
@@ -555,6 +587,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       listMonitoredResourceDescriptorsSettings =
           PagedCallSettings.newBuilder(LIST_MONITORED_RESOURCE_DESCRIPTORS_PAGE_STR_FACT);
       listLogsSettings = PagedCallSettings.newBuilder(LIST_LOGS_PAGE_STR_FACT);
+      tailLogEntriesSettings = StreamingCallSettings.newBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -575,6 +608,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       listMonitoredResourceDescriptorsSettings =
           settings.listMonitoredResourceDescriptorsSettings.toBuilder();
       listLogsSettings = settings.listLogsSettings.toBuilder();
+      tailLogEntriesSettings = settings.tailLogEntriesSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -688,6 +722,12 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
     public PagedCallSettings.Builder<ListLogsRequest, ListLogsResponse, ListLogsPagedResponse>
         listLogsSettings() {
       return listLogsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to tailLogEntries. */
+    public StreamingCallSettings.Builder<TailLogEntriesRequest, TailLogEntriesResponse>
+        tailLogEntriesSettings() {
+      return tailLogEntriesSettings;
     }
 
     @Override
