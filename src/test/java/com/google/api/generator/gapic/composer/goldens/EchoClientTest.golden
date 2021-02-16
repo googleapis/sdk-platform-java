@@ -79,7 +79,10 @@ public class EchoClientTest {
   @Test
   public void echoTest() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     EchoResponse actualResponse = client.echo();
@@ -105,6 +108,7 @@ public class EchoClientTest {
           EchoRequest.newBuilder()
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+              .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();
       client.echo(request);
@@ -117,7 +121,10 @@ public class EchoClientTest {
   @Test
   public void echoTest2() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     ResourceName parent = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
@@ -153,7 +160,10 @@ public class EchoClientTest {
   @Test
   public void echoTest3() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     Status error = Status.newBuilder().build();
@@ -189,7 +199,10 @@ public class EchoClientTest {
   @Test
   public void echoTest4() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     FoobarName name = FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]");
@@ -225,7 +238,10 @@ public class EchoClientTest {
   @Test
   public void echoTest5() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     String content = "content951530617";
@@ -261,7 +277,10 @@ public class EchoClientTest {
   @Test
   public void echoTest6() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     String name = "name3373707";
@@ -297,7 +316,10 @@ public class EchoClientTest {
   @Test
   public void echoTest7() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     String parent = "parent-995424086";
@@ -333,7 +355,10 @@ public class EchoClientTest {
   @Test
   public void echoTest8() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
 
     String content = "content951530617";
@@ -372,7 +397,10 @@ public class EchoClientTest {
   @Test
   public void expandTest() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
     ExpandRequest request =
         ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
@@ -412,12 +440,16 @@ public class EchoClientTest {
   @Test
   public void collectTest() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
     EchoRequest request =
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 
@@ -442,6 +474,7 @@ public class EchoClientTest {
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 
@@ -465,12 +498,16 @@ public class EchoClientTest {
   @Test
   public void chatTest() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
     EchoRequest request =
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 
@@ -495,6 +532,7 @@ public class EchoClientTest {
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 
@@ -518,12 +556,16 @@ public class EchoClientTest {
   @Test
   public void chatAgainTest() throws Exception {
     EchoResponse expectedResponse =
-        EchoResponse.newBuilder().setContent("content951530617").build();
+        EchoResponse.newBuilder()
+            .setContent("content951530617")
+            .setSeverity(Severity.forNumber(0))
+            .build();
     mockEcho.addResponse(expectedResponse);
     EchoRequest request =
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 
@@ -548,6 +590,7 @@ public class EchoClientTest {
         EchoRequest.newBuilder()
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+            .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
 

@@ -108,6 +108,7 @@ public class AssetServiceClientTest {
             .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .setReadTime(Timestamp.newBuilder().build())
             .addAllAssetTypes(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setOutputConfig(OutputConfig.newBuilder().build())
             .build();
 
@@ -140,6 +141,7 @@ public class AssetServiceClientTest {
               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .setReadTime(Timestamp.newBuilder().build())
               .addAllAssetTypes(new ArrayList<String>())
+              .setContentType(ContentType.forNumber(0))
               .setOutputConfig(OutputConfig.newBuilder().build())
               .build();
       client.exportAssetsAsync(request).get();
@@ -163,6 +165,7 @@ public class AssetServiceClientTest {
         BatchGetAssetsHistoryRequest.newBuilder()
             .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setReadTimeWindow(TimeWindow.newBuilder().build())
             .build();
 
@@ -194,6 +197,7 @@ public class AssetServiceClientTest {
           BatchGetAssetsHistoryRequest.newBuilder()
               .setParent(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
               .addAllAssetNames(new ArrayList<String>())
+              .setContentType(ContentType.forNumber(0))
               .setReadTimeWindow(TimeWindow.newBuilder().build())
               .build();
       client.batchGetAssetsHistory(request);
@@ -210,6 +214,7 @@ public class AssetServiceClientTest {
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
             .build();
@@ -252,6 +257,7 @@ public class AssetServiceClientTest {
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
             .build();
@@ -294,6 +300,7 @@ public class AssetServiceClientTest {
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
             .build();
@@ -372,6 +379,7 @@ public class AssetServiceClientTest {
             .setName(FeedName.ofProjectFeedName("[PROJECT]", "[FEED]").toString())
             .addAllAssetNames(new ArrayList<String>())
             .addAllAssetTypes(new ArrayList<String>())
+            .setContentType(ContentType.forNumber(0))
             .setFeedOutputConfig(FeedOutputConfig.newBuilder().build())
             .setCondition(Expr.newBuilder().build())
             .build();
