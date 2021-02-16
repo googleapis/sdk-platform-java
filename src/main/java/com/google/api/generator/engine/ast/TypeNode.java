@@ -65,6 +65,9 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
   public static final TypeNode SHORT_OBJECT =
       withReference(ConcreteReference.withClazz(Short.class));
 
+  public static final TypeNode CLASS_OBJECT =
+      withReference(ConcreteReference.withClazz(Class.class));
+
   public static final TypeNode BYTESTRING =
       TypeNode.withReference(ConcreteReference.withClazz(ByteString.class));
 

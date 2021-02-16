@@ -316,10 +316,7 @@ public class RetrySettingsComposer {
         t ->
             VariableExpr.builder()
                 .setVariable(
-                    Variable.builder()
-                        .setType(TypeNode.withReference(ConcreteReference.withClazz(Class.class)))
-                        .setName("class")
-                        .build())
+                    Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
                 .setStaticReferenceType(t)
                 .build();
     builderSettingsExpr =
