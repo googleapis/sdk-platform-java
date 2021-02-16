@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -32,6 +33,12 @@ public abstract class Message {
   // TODO(unsupported): oneof fields are parsed as separate ones because field flattening refers to
   // a specific field.
   public abstract ImmutableList<Field> fields();
+
+  // String :: number value map for enums.
+  // TODO(unsupported): Consider making enums a separate POJO. However, that would require
+  // passing in a map of Message and another map of Enum types, which is not needed for
+  // 99.99% of protobuf generation.
+  public abstract ImmutableMap<String, Integer> enumValues();
 
   public abstract TypeNode type();
 
@@ -48,6 +55,10 @@ public abstract class Message {
   public abstract ImmutableList<String> outerNestedTypes();
 
   public abstract Builder toBuilder();
+
+  public boolean isEnum() {
+    return !enumValues().isEmpty();
+  }
 
   public boolean hasResource() {
     return resource() != null;
@@ -66,7 +77,11 @@ public abstract class Message {
   }
 
   public static Builder builder() {
-    return new AutoValue_Message.Builder().setOuterNestedTypes(Collections.emptyList());
+    return new AutoValue_Message.Builder()
+        .setOuterNestedTypes(Collections.emptyList())
+        .setFields(Collections.emptyList())
+        .setFieldMap(Collections.emptyMap())
+        .setEnumValues(Collections.emptyMap());
   }
 
   @AutoValue.Builder
@@ -74,6 +89,15 @@ public abstract class Message {
     public abstract Builder setName(String name);
 
     public abstract Builder setFields(List<Field> fields);
+
+    public Builder setEnumValues(List<String> names, List<Integer> numbers) {
+      return setEnumValues(
+          IntStream.range(0, names.size())
+              .boxed()
+              .collect(Collectors.toMap(i -> names.get(i), i -> numbers.get(i))));
+    }
+
+    public abstract Builder setEnumValues(Map<String, Integer> enumValues);
 
     public abstract Builder setType(TypeNode type);
 
@@ -85,11 +109,20 @@ public abstract class Message {
 
     abstract ImmutableList<Field> fields();
 
+    abstract ImmutableMap<String, Integer> enumValues();
+
     abstract Message autoBuild();
 
     public Message build() {
-      setFieldMap(fields().stream().collect(Collectors.toMap(f -> f.name(), f -> f)));
-      return autoBuild();
+      Message message = autoBuild();
+      if (!message.fields().isEmpty()) {
+        message =
+            message
+                .toBuilder()
+                .setFieldMap(fields().stream().collect(Collectors.toMap(f -> f.name(), f -> f)))
+                .autoBuild();
+      }
+      return message;
     }
   }
 }

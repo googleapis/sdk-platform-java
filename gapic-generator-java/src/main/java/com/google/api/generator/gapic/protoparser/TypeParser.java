@@ -89,6 +89,10 @@ public class TypeParser {
     return TypeNode.withReference(parseMessageReference(messageDescriptor));
   }
 
+  public static TypeNode parseType(@Nonnull EnumDescriptor enumDescriptor) {
+    return TypeNode.withReference(parseEnumReference(enumDescriptor));
+  }
+
   public static String getPackage(FileDescriptor fileDescriptor) {
     String pakkage = fileDescriptor.getOptions().getJavaPackage();
     if (Strings.isNullOrEmpty(pakkage)) {
@@ -177,8 +181,29 @@ public class TypeParser {
   static Reference parseEnumReference(@Nonnull EnumDescriptor enumDescriptor) {
     // This is similar to parseMessageReference, but we make it a separate method because
     // EnumDescriptor and Descriptor are sibling types.
+    FileOptions fileOptions = enumDescriptor.getFile().getOptions();
+    String javaOuterClassname =
+        fileOptions.hasJavaOuterClassname() ? fileOptions.getJavaOuterClassname() : null;
+
+    // Some older protos don't have java_multiple_files option set, and don't have the outer
+    // classname option set either.
+    if (!fileOptions.getJavaMultipleFiles() && !fileOptions.hasJavaOuterClassname()) {
+      String fullFilePath = JavaStyle.toUpperCamelCase(enumDescriptor.getFile().getName());
+      javaOuterClassname =
+          JavaStyle.toUpperCamelCase(
+              fullFilePath.substring(
+                  fullFilePath.lastIndexOf("/") + 1, fullFilePath.lastIndexOf(".")));
+    }
+
+    boolean hasJavaOuterClass =
+        !Strings.isNullOrEmpty(javaOuterClassname) && !fileOptions.getJavaMultipleFiles();
     List<String> outerNestedTypeNames = new ArrayList<>();
+    if (hasJavaOuterClass) {
+      outerNestedTypeNames.add(javaOuterClassname);
+    }
+
     Descriptor containingType = enumDescriptor.getContainingType();
+
     // Handles nesting.
     while (containingType != null) {
       // Outermost type in the nested type hierarchy lies at index 0.
@@ -194,11 +219,18 @@ public class TypeParser {
             .setEnclosingClassNames(outerNestedTypeNames)
             .build();
     String protoPackage = enumDescriptor.getFile().getPackage();
+    String enumFullName = enumDescriptor.getFullName();
+    if (hasJavaOuterClass) {
+      enumFullName =
+          String.format(
+              "%s.%s.%s",
+              enumFullName.substring(0, enumFullName.lastIndexOf(DOT)),
+              javaOuterClassname,
+              enumFullName.substring(enumFullName.lastIndexOf(DOT) + 1));
+    }
+
     Preconditions.checkState(
-        enumReference
-            .fullName()
-            .replace(pakkage, protoPackage)
-            .equals(enumDescriptor.getFullName()),
+        enumReference.fullName().replace(pakkage, protoPackage).equals(enumFullName),
         String.format(
             "Parsed enum name %s does not match actual name %s",
             enumReference.fullName().replace(pakkage, ""),
