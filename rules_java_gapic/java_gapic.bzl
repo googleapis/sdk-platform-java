@@ -141,7 +141,7 @@ def java_gapic_library(
         file_args_dict[gapic_yaml] = "gapic-config"
 
     # Check the allow-list.
-    # Open this up after mixins are published, and gate on
+    # TODO: Open this up after mixins are published, and gate on
     # the allowlisted "mixed-in" APIs present in Java.
     if service_yaml:
         service_yaml_in_allowlist = False
