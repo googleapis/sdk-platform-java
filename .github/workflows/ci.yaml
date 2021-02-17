@@ -62,7 +62,8 @@ jobs:
 
       - name: Tests Coverage
         uses: actions/codecov-action@v1
-
+        with:
+          name: actions ${{ matrix.java }}
 
   license-header:
     runs-on: ubuntu-latest
