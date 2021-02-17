@@ -18,6 +18,7 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.google.gapic.metadata.GapicMetadata;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,10 @@ import javax.annotation.Nullable;
 
 @AutoValue
 public abstract class GapicContext {
+  // Keep a non-AutoValue reference to GapicMetadata, since we need to update
+  // it iteratively as we generate client methods.
+  private GapicMetadata gapicMetadata = defaultGapicMetadata();
+
   // Maps the message name (as it appears in the protobuf) to Messages.
   public abstract ImmutableMap<String, Message> messages();
 
@@ -35,6 +40,10 @@ public abstract class GapicContext {
 
   public abstract ImmutableSet<ResourceName> helperResourceNames();
 
+  public GapicMetadata gapicMetadata() {
+    return gapicMetadata;
+  }
+
   @Nullable
   public abstract GapicServiceConfig serviceConfig();
 
@@ -44,6 +53,21 @@ public abstract class GapicContext {
   public boolean hasServiceYamlProto() {
     return serviceYamlProto() != null;
   }
+
+  public void updateGapicMetadata(GapicMetadata newMetadata) {
+    gapicMetadata = newMetadata;
+  }
+
+  static GapicMetadata defaultGapicMetadata() {
+    return GapicMetadata.newBuilder()
+        .setSchema("1.0")
+        .setComment(
+            "This file maps proto services/RPCs to the corresponding library clients/methods")
+        .setLanguage("java")
+        .build();
+  }
+
+  public abstract Builder toBuilder();
 
   public static Builder builder() {
     return new AutoValue_GapicContext.Builder();

@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
@@ -44,9 +43,7 @@ public class Composer {
       availableResourceNames.put(resourceName.resourceTypeString(), resourceName);
     }
     for (Service service : context.services()) {
-      clazzes.addAll(
-          generateServiceClasses(
-              service, context.serviceConfig(), availableResourceNames, context.messages()));
+      clazzes.addAll(generateServiceClasses(service, context, availableResourceNames));
     }
     clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
     return addApacheLicense(clazzes);
@@ -58,13 +55,13 @@ public class Composer {
 
   public static List<GapicClass> generateServiceClasses(
       @Nonnull Service service,
-      @Nullable GapicServiceConfig serviceConfig,
-      @Nonnull Map<String, ResourceName> resourceNames,
-      @Nonnull Map<String, Message> messageTypes) {
+      GapicContext context,
+      @Nonnull Map<String, ResourceName> resourceNames) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(generateStubClasses(service, serviceConfig, messageTypes, resourceNames));
-    clazzes.addAll(generateClientSettingsClasses(service, messageTypes, resourceNames));
-    clazzes.addAll(generateMocksAndTestClasses(service, resourceNames, messageTypes));
+    clazzes.addAll(
+        generateStubClasses(service, context.serviceConfig(), context.messages(), resourceNames));
+    clazzes.addAll(generateClientSettingsClasses(service, context, resourceNames));
+    clazzes.addAll(generateMocksAndTestClasses(service, resourceNames, context.messages()));
     // TODO(miraleung): Generate test classes.
     return clazzes;
   }
@@ -92,11 +89,10 @@ public class Composer {
   }
 
   public static List<GapicClass> generateClientSettingsClasses(
-      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
+      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(
-        ServiceClientClassComposer.instance().generate(service, messageTypes, resourceNames));
-    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, messageTypes));
+    clazzes.add(ServiceClientClassComposer.instance().generate(service, context, resourceNames));
+    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, context.messages()));
     return clazzes;
   }
 

@@ -30,6 +30,7 @@ java_library(
         "@com_google_api_gax_java//gax",
         "@com_google_api_gax_java//gax-grpc:gax_grpc",
         "@com_google_code_findbugs_jsr305//jar",
+        "@com_google_googleapis//gapic/metadata:metadata_java_proto",
         "@com_google_googleapis//google/api:api_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_googleapis//google/rpc:rpc_java_proto",

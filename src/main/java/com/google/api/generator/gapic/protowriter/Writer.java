@@ -19,8 +19,10 @@ import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.gapic.metadata.GapicMetadata;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
+import com.google.protobuf.util.JsonFormat;
 import java.io.IOException;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -33,8 +35,11 @@ public class Writer {
     }
   }
 
-  public static CodeGeneratorResponse writeCode(
-      List<GapicClass> clazzes, GapicPackageInfo gapicPackageInfo, String outputFilePath) {
+  public static CodeGeneratorResponse write(
+      List<GapicClass> clazzes,
+      GapicPackageInfo gapicPackageInfo,
+      GapicMetadata gapicMetadata,
+      String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
     JarOutputStream jos = null;
@@ -78,6 +83,15 @@ public class Writer {
       jos.write(code.getBytes());
     } catch (IOException e) {
       throw new GapicWriterException("Could not write code for package-info.java");
+    }
+
+    // Write the mdatadata file.
+    jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
+    try {
+      jos.putNextEntry(jarEntry);
+      jos.write(JsonFormat.printer().print(gapicMetadata).getBytes());
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write gapic_metadata.json");
     }
 
     try {
