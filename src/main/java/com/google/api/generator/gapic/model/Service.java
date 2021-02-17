@@ -47,6 +47,8 @@ public abstract class Service {
     return !Strings.isNullOrEmpty(description());
   }
 
+  public abstract Builder toBuilder();
+
   public static Builder builder() {
     return new AutoValue_Service.Builder().setMethods(ImmutableList.of());
   }

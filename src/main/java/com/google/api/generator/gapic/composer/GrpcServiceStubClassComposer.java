@@ -1127,6 +1127,10 @@ public class GrpcServiceStubClassComposer implements ClassComposer {
   }
 
   private static String getProtoRpcFullMethodName(Service protoService, Method protoMethod) {
+    if (protoMethod.isMixin()) {
+      return String.format("%s/%s", protoMethod.mixedInApiName(), protoMethod.name());
+    }
+
     if (!REROUTE_TO_GRPC_INTERFACE_SERVICE_ALLOWLIST.contains(protoService.protoPakkage())
         || !REROUTE_TO_GRPC_INTERFACE_IAM_METHOD_ALLOWLIST.contains(protoMethod.name())) {
       return String.format(
