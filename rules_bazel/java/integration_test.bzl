@@ -19,7 +19,7 @@ def _diff_integration_goldens_impl(ctx):
     unzip -j {input_test} -d codegen_tmp
     cd codegen_tmp
     # Remove unneeded non-Java files, like MANIFEST
-    rm -rf $(find . -type f ! -name "*.java")
+    rm -rf $(find ./ -type f ! -name '*.java' -a ! -name '*gapic_metadata.json')
     cd ..
     diff codegen_tmp test/integration/goldens/{api_name}/ > {diff_output}
     # Bash `diff` command will return exit code 1 when there are differences between the two
@@ -119,7 +119,7 @@ def _overwrite_golden_impl(ctx):
     unzip -j {input_test} -d codegen_tmp
     cd codegen_tmp
     # Remove unneeded non-Java files, like MANIFEST
-    rm -rf $(find . -type f ! -name "*.java")
+    rm -rf $(find ./ -type f ! -name '*.java' -a ! -name '*gapic_metadata.json')
     zip -r ../{goldens_output_zip} .
     """.format(
         goldens_output_zip = goldens_output_zip.path,
@@ -142,6 +142,7 @@ def _overwrite_golden_impl(ctx):
     golden_update_script_content = """
     cd ${{BUILD_WORKSPACE_DIRECTORY}}
     rm -r test/integration/goldens/{api_name}/*.java
+    rm -r test/integration/goldens/{api_name}/gapic_metadata.json
     unzip -ao {goldens_output_zip} -d test/integration/goldens/{api_name}
     """.format(
         goldens_output_zip = goldens_output_zip.path,
