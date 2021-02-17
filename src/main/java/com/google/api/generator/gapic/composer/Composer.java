@@ -63,7 +63,7 @@ public class Composer {
     List<GapicClass> clazzes = new ArrayList<>();
     clazzes.addAll(
         generateStubClasses(service, context.serviceConfig(), context.messages(), resourceNames));
-    clazzes.addAll(generateClientSettingsClasses(service, context.messages(), resourceNames));
+    clazzes.addAll(generateClientSettingsClasses(service, context, resourceNames));
     clazzes.addAll(generateMockClasses(service, resourceNames, context.messages()));
     clazzes.addAll(generateTestClasses(service, context, resourceNames));
     // TODO(miraleung): Generate test classes.

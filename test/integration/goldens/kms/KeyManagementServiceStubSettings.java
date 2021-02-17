@@ -718,9 +718,7 @@ public class KeyManagementServiceStubSettings
           "retry_policy_1_codes",
           ImmutableSet.copyOf(
               Lists.<StatusCode.Code>newArrayList(
-                  StatusCode.Code.INTERNAL,
-                  StatusCode.Code.UNAVAILABLE,
-                  StatusCode.Code.DEADLINE_EXCEEDED)));
+                  StatusCode.Code.UNAVAILABLE, StatusCode.Code.DEADLINE_EXCEEDED)));
       definitions.put(
           "no_retry_0_codes", ImmutableSet.copyOf(Lists.<StatusCode.Code>newArrayList()));
       RETRYABLE_CODE_DEFINITIONS = definitions.build();
