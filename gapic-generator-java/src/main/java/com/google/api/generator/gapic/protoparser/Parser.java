@@ -35,6 +35,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
@@ -77,8 +78,12 @@ public class Parser {
   private static final ResourceName WILDCARD_RESOURCE_NAME =
       ResourceName.createWildcard("*", "com.google.api.wildcard.placeholder");
 
-  private static final Set<String> DUPE_SERVICE_CODEGEN_BLOCKLIST =
-      new HashSet<>(Arrays.asList("google.longrunning", "google.iam.v1"));
+  // Mirrors the sanitizer allowlist.
+  private static final Set<String> MIXIN_ALLOWLIST =
+      ImmutableSet.of(
+          "google.iam.v1.IAMPolicy",
+          "google.longrunning.Operations",
+          "google.cloud.location.Locations");
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -128,6 +133,7 @@ public class Parser {
     messages = updateResourceNamesInMessages(messages, resourceNames.values());
 
     Set<ResourceName> outputArgResourceNames = new HashSet<>();
+    List<Service> mixinServices = new ArrayList<>();
     List<Service> services =
         parseServices(
             request,
@@ -135,7 +141,8 @@ public class Parser {
             resourceNames,
             outputArgResourceNames,
             serviceYamlProtoOpt,
-            serviceConfigOpt);
+            serviceConfigOpt,
+            mixinServices);
 
     Preconditions.checkState(!services.isEmpty(), "No services found to generate");
     Function<ResourceName, String> typeNameFn =
@@ -167,6 +174,7 @@ public class Parser {
 
     return GapicContext.builder()
         .setServices(services)
+        .setMixinServices(mixinServices)
         .setMessages(messages)
         .setResourceNames(resourceNames)
         .setHelperResourceNames(outputArgResourceNames)
@@ -181,7 +189,8 @@ public class Parser {
       Map<String, ResourceName> resourceNames,
       Set<ResourceName> outputArgResourceNames,
       Optional<com.google.api.Service> serviceYamlProtoOpt,
-      Optional<GapicServiceConfig> serviceConfigOpt) {
+      Optional<GapicServiceConfig> serviceConfigOpt,
+      List<Service> outputMixinServices) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
 
     List<Service> services = new ArrayList<>();
@@ -202,26 +211,58 @@ public class Parser {
               outputArgResourceNames));
     }
 
-    // Prevent codegen for IAM or LRO if there are other services present, since that is an
-    // indicator that we are not generating a GAPIC client for IAM or LRO.
-    Set<String> serviceProtoPackages =
-        services.stream().map(s -> s.protoPakkage()).collect(Collectors.toSet());
-    boolean servicesContainBlocklistedApi = false;
-    for (String blocklistedPackage : DUPE_SERVICE_CODEGEN_BLOCKLIST) {
-      // It's very unlikely the blocklisted APIs will contain the other, or any other service.
-      if (serviceProtoPackages.contains(blocklistedPackage) && serviceProtoPackages.size() > 1) {
-        servicesContainBlocklistedApi = true;
-        break;
+    // Prevent codegen for mixed-in services if there are other services present, since that is an
+    // indicator that we are not generating a GAPIC client for the mixed-in service on its own.
+    Function<Service, String> serviceFullNameFn =
+        s -> String.format("%s.%s", s.protoPakkage(), s.name());
+    Set<Service> blockedCodegenMixinApis =
+        services.stream()
+            .filter(s -> MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s)))
+            .map(s -> s)
+            .collect(Collectors.toSet());
+    // It's very unlikely the blocklisted APIs will contain the other, or any other service.
+    boolean servicesContainBlocklistedApi = !blockedCodegenMixinApis.isEmpty();
+    Set<String> mixedInApis =
+        !serviceYamlProtoOpt.isPresent()
+            ? Collections.emptySet()
+            : serviceYamlProtoOpt.get().getApisList().stream()
+                .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
+                .map(a -> a.getName())
+                .collect(Collectors.toSet());
+    // Mix-in APIs only if the protos are present and they're defined in the service.yaml file.
+    Set<Service> outputMixinServiceSet = new HashSet<>();
+    if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
+      for (int i = 0; i < services.size(); i++) {
+        Service originalService = services.get(i);
+        List<Method> updatedMethods = new ArrayList<>(originalService.methods());
+        // If mixin APIs are present, add the methods to all other services.
+        for (Service mixinService : blockedCodegenMixinApis) {
+          if (!mixedInApis.contains(
+              String.format("%s.%s", mixinService.protoPakkage(), mixinService.name()))) {
+            continue;
+          }
+          List<Method> mixinMethods = new ArrayList<>(mixinService.methods());
+          mixinMethods.forEach(
+              m ->
+                  updatedMethods.add(
+                      m.toBuilder()
+                          .setMixedInApiName(serviceFullNameFn.apply(mixinService))
+                          .build()));
+          outputMixinServiceSet.add(mixinService);
+        }
+        services.set(i, originalService.toBuilder().setMethods(updatedMethods).build());
       }
     }
 
     if (servicesContainBlocklistedApi) {
       services =
           services.stream()
-              .filter(s -> !DUPE_SERVICE_CODEGEN_BLOCKLIST.contains(s.protoPakkage()))
+              .filter(s -> !MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s)))
               .collect(Collectors.toList());
     }
 
+    // Use a list to ensure ordering for deterministic tests.
+    outputMixinServices.addAll(outputMixinServiceSet);
     return services;
   }
 
