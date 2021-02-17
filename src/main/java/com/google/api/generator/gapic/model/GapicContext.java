@@ -19,6 +19,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.gapic.metadata.GapicMetadata;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,6 +38,9 @@ public abstract class GapicContext {
   public abstract ImmutableMap<String, ResourceName> resourceNames();
 
   public abstract ImmutableList<Service> services();
+
+  // Ensures ordering for deterministic tests.
+  public abstract ImmutableList<Service> mixinServices();
 
   public abstract ImmutableSet<ResourceName> helperResourceNames();
 
@@ -70,7 +74,7 @@ public abstract class GapicContext {
   public abstract Builder toBuilder();
 
   public static Builder builder() {
-    return new AutoValue_GapicContext.Builder();
+    return new AutoValue_GapicContext.Builder().setMixinServices(Collections.emptyList());
   }
 
   @AutoValue.Builder
@@ -80,6 +84,8 @@ public abstract class GapicContext {
     public abstract Builder setResourceNames(Map<String, ResourceName> resourceNames);
 
     public abstract Builder setServices(List<Service> services);
+
+    public abstract Builder setMixinServices(List<Service> mixinServices);
 
     public abstract Builder setHelperResourceNames(Set<ResourceName> helperResourceNames);
 
