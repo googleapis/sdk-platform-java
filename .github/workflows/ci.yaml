@@ -60,6 +60,10 @@ jobs:
           name: artifacts
           path: ~/artifacts
 
+      - name: Tests Coverage
+        uses: actions/codecov-action@v1
+
+
   license-header:
     runs-on: ubuntu-latest
     steps:
