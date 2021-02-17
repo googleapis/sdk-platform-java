@@ -142,7 +142,7 @@ def java_gapic_library(
 
     # Check the allow-list.
     # Open this up after mixins are published, and gate on
-    # the allowlisted "mised-in" APIs present in Java.
+    # the allowlisted "mixed-in" APIs present in Java.
     if service_yaml:
         service_yaml_in_allowlist = False
         for keyword in SERVICE_YAML_ALLOWLIST:
