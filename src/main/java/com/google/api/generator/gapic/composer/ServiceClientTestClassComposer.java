@@ -63,6 +63,7 @@ import com.google.api.generator.gapic.composer.utils.ClassNames;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -82,6 +83,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiFunction;
@@ -134,13 +136,20 @@ public class ServiceClientTestClassComposer {
   }
 
   public GapicClass generate(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
+    Map<String, Message> messageTypes = context.messages();
     String pakkage = service.pakkage();
-    TypeStore typeStore = createDynamicTypes(service);
+    TypeStore typeStore = new TypeStore();
+    addDynamicTypes(service, typeStore);
+    for (Service mixinService : context.mixinServices()) {
+      addDynamicTypes(mixinService, typeStore);
+    }
+
     String className = ClassNames.getServiceClientTestClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
 
-    Map<String, VariableExpr> classMemberVarExprs = createClassMemberVarExprs(service, typeStore);
+    Map<String, VariableExpr> classMemberVarExprs =
+        createClassMemberVarExprs(service, context, typeStore);
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -150,8 +159,7 @@ public class ServiceClientTestClassComposer {
             .setName(className)
             .setStatements(createClassMemberFieldDecls(classMemberVarExprs))
             .setMethods(
-                createClassMethods(
-                    service, classMemberVarExprs, typeStore, resourceNames, messageTypes))
+                createClassMethods(service, context, classMemberVarExprs, typeStore, resourceNames))
             .build();
     return GapicClass.create(kind, classDef);
   }
@@ -165,13 +173,18 @@ public class ServiceClientTestClassComposer {
   }
 
   private static Map<String, VariableExpr> createClassMemberVarExprs(
-      Service service, TypeStore typeStore) {
+      Service service, GapicContext context, TypeStore typeStore) {
     BiFunction<String, TypeNode, VariableExpr> varExprFn =
         (name, type) ->
             VariableExpr.withVariable(Variable.builder().setName(name).setType(type).build());
     Map<String, TypeNode> fields = new LinkedHashMap<>();
     fields.put(
         getMockServiceVarName(service), typeStore.get(ClassNames.getMockServiceClassName(service)));
+    for (Service mixinService : context.mixinServices()) {
+      fields.put(
+          getMockServiceVarName(mixinService),
+          typeStore.get(ClassNames.getMockServiceClassName(mixinService)));
+    }
     fields.put(SERVICE_HELPER_VAR_NAME, FIXED_TYPESTORE.get("MockServiceHelper"));
     fields.put(CLIENT_VAR_NAME, typeStore.get(ClassNames.getServiceClientClassName(service)));
     fields.put(CHANNEL_PROVIDER_VAR_NAME, FIXED_TYPESTORE.get("LocalChannelProvider"));
@@ -195,21 +208,23 @@ public class ServiceClientTestClassComposer {
 
   private static List<MethodDefinition> createClassMethods(
       Service service,
+      GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
       TypeStore typeStore,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, ResourceName> resourceNames) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.addAll(createTestAdminMethods(service, classMemberVarExprs, typeStore));
-    javaMethods.addAll(
-        createTestMethods(service, classMemberVarExprs, resourceNames, messageTypes));
+    javaMethods.addAll(createTestAdminMethods(service, context, classMemberVarExprs, typeStore));
+    javaMethods.addAll(createTestMethods(service, context, classMemberVarExprs, resourceNames));
     return javaMethods;
   }
 
   private static List<MethodDefinition> createTestAdminMethods(
-      Service service, Map<String, VariableExpr> classMemberVarExprs, TypeStore typeStore) {
+      Service service,
+      GapicContext context,
+      Map<String, VariableExpr> classMemberVarExprs,
+      TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
-    javaMethods.add(createStartStaticServerMethod(service, classMemberVarExprs));
+    javaMethods.add(createStartStaticServerMethod(service, context, classMemberVarExprs));
     javaMethods.add(createStopServerMethod(service, classMemberVarExprs));
     javaMethods.add(createSetUpMethod(service, classMemberVarExprs, typeStore));
     javaMethods.add(createTearDownMethod(service, classMemberVarExprs));
@@ -217,14 +232,26 @@ public class ServiceClientTestClassComposer {
   }
 
   private static MethodDefinition createStartStaticServerMethod(
-      Service service, Map<String, VariableExpr> classMemberVarExprs) {
-    VariableExpr mockServiceVarExpr = classMemberVarExprs.get(getMockServiceVarName(service));
+      Service service, GapicContext context, Map<String, VariableExpr> classMemberVarExprs) {
     VariableExpr serviceHelperVarExpr = classMemberVarExprs.get(SERVICE_HELPER_VAR_NAME);
-    Expr initMockServiceExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(mockServiceVarExpr)
-            .setValueExpr(NewObjectExpr.builder().setType(mockServiceVarExpr.type()).build())
-            .build();
+    Function<Service, VariableExpr> serviceToVarExprFn =
+        s -> classMemberVarExprs.get(getMockServiceVarName(s));
+    Function<Service, Expr> serviceToVarInitExprFn =
+        s -> {
+          VariableExpr mockServiceVarExpr = serviceToVarExprFn.apply(s);
+          return AssignmentExpr.builder()
+              .setVariableExpr(mockServiceVarExpr)
+              .setValueExpr(NewObjectExpr.builder().setType(mockServiceVarExpr.type()).build())
+              .build();
+        };
+    List<Expr> varInitExprs = new ArrayList<>();
+    List<Expr> mockServiceVarExprs = new ArrayList<>();
+    varInitExprs.add(serviceToVarInitExprFn.apply(service));
+    mockServiceVarExprs.add(serviceToVarExprFn.apply(service));
+    for (Service mixinService : context.mixinServices()) {
+      varInitExprs.add(serviceToVarInitExprFn.apply(mixinService));
+      mockServiceVarExprs.add(serviceToVarExprFn.apply(mixinService));
+    }
 
     MethodInvocationExpr firstArg =
         MethodInvocationExpr.builder()
@@ -242,7 +269,7 @@ public class ServiceClientTestClassComposer {
             .setStaticReferenceType(FIXED_TYPESTORE.get("Arrays"))
             .setGenerics(Arrays.asList(FIXED_TYPESTORE.get("MockGrpcService").reference()))
             .setMethodName("asList")
-            .setArguments(Arrays.asList(mockServiceVarExpr))
+            .setArguments(mockServiceVarExprs)
             .build();
 
     Expr initServiceHelperExpr =
@@ -260,6 +287,8 @@ public class ServiceClientTestClassComposer {
             .setExprReferenceExpr(serviceHelperVarExpr)
             .setMethodName("start")
             .build();
+    varInitExprs.add(initServiceHelperExpr);
+    varInitExprs.add(startServiceHelperExpr);
 
     return MethodDefinition.builder()
         .setAnnotations(Arrays.asList(AnnotationNode.withType(FIXED_TYPESTORE.get("BeforeClass"))))
@@ -268,10 +297,7 @@ public class ServiceClientTestClassComposer {
         .setReturnType(TypeNode.VOID)
         .setName("startStaticServer")
         .setBody(
-            Arrays.asList(initMockServiceExpr, initServiceHelperExpr, startServiceHelperExpr)
-                .stream()
-                .map(e -> ExprStatement.withExpr(e))
-                .collect(Collectors.toList()))
+            varInitExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()))
         .build();
   }
 
@@ -412,17 +438,35 @@ public class ServiceClientTestClassComposer {
 
   private static List<MethodDefinition> createTestMethods(
       Service service,
+      GapicContext context,
       Map<String, VariableExpr> classMemberVarExprs,
-      Map<String, ResourceName> resourceNames,
-      Map<String, Message> messageTypes) {
+      Map<String, ResourceName> resourceNames) {
+    Map<String, Message> messageTypes = context.messages();
     List<MethodDefinition> javaMethods = new ArrayList<>();
     for (Method method : service.methods()) {
+      Service matchingService = service;
+      if (method.isMixin()) {
+        int dotIndex = method.mixedInApiName().lastIndexOf(".");
+        String mixinServiceName = method.mixedInApiName().substring(dotIndex + 1);
+        String mixinServiceProtoPackage = method.mixedInApiName().substring(0, dotIndex);
+        Optional<Service> mixinServiceOpt =
+            context.mixinServices().stream()
+                .filter(
+                    s ->
+                        s.name().equals(mixinServiceName)
+                            && s.protoPakkage().equals(mixinServiceProtoPackage))
+                .findFirst();
+        if (mixinServiceOpt.isPresent()) {
+          matchingService = mixinServiceOpt.get();
+        }
+      }
+
       // Ignore variants for streaming methods as well.
       if (method.methodSignatures().isEmpty() || !method.stream().equals(Method.Stream.NONE)) {
         javaMethods.add(
             createRpcTestMethod(
                 method,
-                service,
+                matchingService,
                 Collections.emptyList(),
                 0,
                 true,
@@ -432,7 +476,7 @@ public class ServiceClientTestClassComposer {
         javaMethods.add(
             createRpcExceptionTestMethod(
                 method,
-                service,
+                matchingService,
                 Collections.emptyList(),
                 0,
                 classMemberVarExprs,
@@ -443,7 +487,7 @@ public class ServiceClientTestClassComposer {
           javaMethods.add(
               createRpcTestMethod(
                   method,
-                  service,
+                  matchingService,
                   method.methodSignatures().get(i),
                   i,
                   false,
@@ -453,7 +497,7 @@ public class ServiceClientTestClassComposer {
           javaMethods.add(
               createRpcExceptionTestMethod(
                   method,
-                  service,
+                  matchingService,
                   method.methodSignatures().get(i),
                   i,
                   classMemberVarExprs,
@@ -1715,15 +1759,13 @@ public class ServiceClientTestClassComposer {
     return javaMethodNameToReturnType;
   }
 
-  private static TypeStore createDynamicTypes(Service service) {
-    TypeStore typeStore = new TypeStore();
+  private static void addDynamicTypes(Service service, TypeStore typeStore) {
     typeStore.putAll(
         service.pakkage(),
         Arrays.asList(
             ClassNames.getMockServiceClassName(service),
             ClassNames.getServiceClientClassName(service),
             ClassNames.getServiceSettingsClassName(service)));
-
     // Pagination types.
     typeStore.putAll(
         service.pakkage(),
@@ -1733,7 +1775,6 @@ public class ServiceClientTestClassComposer {
             .collect(Collectors.toList()),
         true,
         ClassNames.getServiceClientClassName(service));
-    return typeStore;
   }
 
   private static TypeNode getOperationCallSettingsType(Method protoMethod) {

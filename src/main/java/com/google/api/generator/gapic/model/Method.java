@@ -47,6 +47,10 @@ public abstract class Method {
   @Nullable
   public abstract String description();
 
+  // Example: google.iam.v1.IAMPolicy.
+  @Nullable
+  public abstract String mixedInApiName();
+
   // TODO(miraleung): May need to change this to MethodArgument, Field, or some new struct
   // HttpBinding pending dotted reference support.
   public abstract List<String> httpBindings();
@@ -66,6 +70,12 @@ public abstract class Method {
   public boolean hasHttpBindings() {
     return !httpBindings().isEmpty();
   }
+
+  public boolean isMixin() {
+    return mixedInApiName() != null;
+  }
+
+  public abstract Builder toBuilder();
 
   public static Builder builder() {
     return new AutoValue_Method.Builder()
@@ -102,6 +112,8 @@ public abstract class Method {
     public abstract Builder setLro(LongrunningOperation lro);
 
     public abstract Builder setDescription(String description);
+
+    public abstract Builder setMixedInApiName(String mixedInApiName);
 
     public abstract Builder setHttpBindings(List<String> httpBindings);
 

@@ -258,6 +258,7 @@ public class MockServiceImplClassComposer implements ClassComposer {
 
   private static List<MethodDefinition> createProtoMethodOverrides(Service service) {
     return service.methods().stream()
+        .filter(m -> !m.isMixin()) // Mixin APIs will get their own generated mocks.
         .map(m -> createGenericProtoMethodOverride(m))
         .collect(Collectors.toList());
   }
