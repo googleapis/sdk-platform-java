@@ -62,6 +62,7 @@ import com.google.api.generator.gapic.composer.utils.PackageChecker;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
@@ -76,6 +77,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.util.concurrent.MoreExecutors;
+import com.google.gapic.metadata.GapicMetadata;
 import com.google.longrunning.Operation;
 import com.google.rpc.Status;
 import java.io.IOException;
@@ -120,12 +122,15 @@ public class ServiceClientClassComposer {
   }
 
   public GapicClass generate(
-      Service service, Map<String, Message> messageTypes, Map<String, ResourceName> resourceNames) {
+      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
+    Map<String, Message> messageTypes = context.messages();
     TypeStore typeStore = createTypes(service, messageTypes);
     String className = ClassNames.getServiceClientClassName(service);
     GapicClass.Kind kind = Kind.MAIN;
     String pakkage = service.pakkage();
     boolean hasLroClient = hasLroMethods(service);
+
+    Map<String, List<String>> grpcRpcsToJavaMethodNames = new HashMap<>();
 
     ClassDefinition classDef =
         ClassDefinition.builder()
@@ -138,9 +143,17 @@ public class ServiceClientClassComposer {
             .setImplementsTypes(createClassImplements(typeStore))
             .setStatements(createFieldDeclarations(service, typeStore, hasLroClient))
             .setMethods(
-                createClassMethods(service, messageTypes, typeStore, resourceNames, hasLroClient))
+                createClassMethods(
+                    service,
+                    messageTypes,
+                    typeStore,
+                    resourceNames,
+                    hasLroClient,
+                    grpcRpcsToJavaMethodNames))
             .setNestedClasses(createNestedPagingClasses(service, messageTypes, typeStore))
             .build();
+
+    updateGapicMetadata(context, service, className, grpcRpcsToJavaMethodNames);
     return GapicClass.create(kind, classDef);
   }
 
@@ -186,12 +199,15 @@ public class ServiceClientClassComposer {
       Map<String, Message> messageTypes,
       TypeStore typeStore,
       Map<String, ResourceName> resourceNames,
-      boolean hasLroClient) {
+      boolean hasLroClient,
+      Map<String, List<String>> grpcRpcToJavaMethodMetadata) {
     List<MethodDefinition> methods = new ArrayList<>();
     methods.addAll(createStaticCreatorMethods(service, typeStore));
     methods.addAll(createConstructorMethods(service, typeStore, hasLroClient));
     methods.addAll(createGetterMethods(service, typeStore, hasLroClient));
-    methods.addAll(createServiceMethods(service, messageTypes, typeStore, resourceNames));
+    methods.addAll(
+        createServiceMethods(
+            service, messageTypes, typeStore, resourceNames, grpcRpcToJavaMethodMetadata));
     methods.addAll(createBackgroundResourceMethods(service, typeStore));
     return methods;
   }
@@ -511,35 +527,56 @@ public class ServiceClientClassComposer {
       Service service,
       Map<String, Message> messageTypes,
       TypeStore typeStore,
-      Map<String, ResourceName> resourceNames) {
+      Map<String, ResourceName> resourceNames,
+      Map<String, List<String>> grpcRpcToJavaMethodMetadata) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    Function<MethodDefinition, String> javaMethodNameFn = m -> m.methodIdentifier().name();
     for (Method method : service.methods()) {
+      if (!grpcRpcToJavaMethodMetadata.containsKey(method.name())) {
+        grpcRpcToJavaMethodMetadata.put(method.name(), new ArrayList<>());
+      }
       if (method.stream().equals(Stream.NONE)) {
-        javaMethods.addAll(
+        List<MethodDefinition> generatedMethods =
             createMethodVariants(
                 method,
                 ClassNames.getServiceClientClassName(service),
                 messageTypes,
                 typeStore,
-                resourceNames));
-        javaMethods.add(
+                resourceNames);
+        grpcRpcToJavaMethodMetadata
+            .get(method.name())
+            .addAll(
+                generatedMethods.stream()
+                    .map(m -> javaMethodNameFn.apply(m))
+                    .collect(Collectors.toList()));
+        javaMethods.addAll(generatedMethods);
+
+        MethodDefinition generatedMethod =
             createMethodDefaultMethod(
                 method,
                 ClassNames.getServiceClientClassName(service),
                 messageTypes,
                 typeStore,
-                resourceNames));
+                resourceNames);
+        grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
+        javaMethods.add(generatedMethod);
       }
       if (method.hasLro()) {
-        javaMethods.add(
-            createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames));
+        MethodDefinition generatedMethod =
+            createLroCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+        grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
+        javaMethods.add(generatedMethod);
       }
       if (method.isPaged()) {
-        javaMethods.add(
-            createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames));
+        MethodDefinition generatedMethod =
+            createPagedCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+        grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
+        javaMethods.add(generatedMethod);
       }
-      javaMethods.add(
-          createCallableMethod(service, method, typeStore, messageTypes, resourceNames));
+      MethodDefinition generatedMethod =
+          createCallableMethod(service, method, typeStore, messageTypes, resourceNames);
+      grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
+      javaMethods.add(generatedMethod);
     }
     return javaMethods;
   }
@@ -1666,5 +1703,50 @@ public class ServiceClientClassComposer {
   private static boolean isProtoEmptyType(TypeNode type) {
     return type.reference().pakkage().equals("com.google.protobuf")
         && type.reference().name().equals("Empty");
+  }
+
+  private static void updateGapicMetadata(
+      GapicContext context, String protoPackage, String javaPackage) {
+    context.updateGapicMetadata(
+        context
+            .gapicMetadata()
+            .toBuilder()
+            .setProtoPackage(protoPackage)
+            .setLibraryPackage(javaPackage)
+            .build());
+  }
+
+  private static void updateGapicMetadata(
+      GapicContext context,
+      Service service,
+      String clientClassName,
+      Map<String, List<String>> grpcRpcToJavaMethodNames) {
+    GapicMetadata.Builder metadataBuilder = context.gapicMetadata().toBuilder();
+    metadataBuilder =
+        metadataBuilder
+            .setProtoPackage(service.protoPakkage())
+            .setLibraryPackage(service.pakkage());
+
+    GapicMetadata.ServiceAsClient.Builder serviceClientProtoBuilder =
+        GapicMetadata.ServiceAsClient.newBuilder().setLibraryClient(clientClassName);
+
+    // Sort for deterministic tests.
+    List<String> sortedRpcNames = new ArrayList<>(grpcRpcToJavaMethodNames.keySet());
+    Collections.sort(sortedRpcNames);
+    for (String rpcName : sortedRpcNames) {
+      GapicMetadata.MethodList methodList =
+          GapicMetadata.MethodList.newBuilder()
+              .addAllMethods(grpcRpcToJavaMethodNames.get(rpcName))
+              .build();
+      serviceClientProtoBuilder.putRpcs(rpcName, methodList);
+    }
+
+    metadataBuilder =
+        metadataBuilder.putServices(
+            service.name(),
+            GapicMetadata.ServiceForTransport.newBuilder()
+                .putClients("grpc", serviceClientProtoBuilder.build())
+                .build());
+    context.updateGapicMetadata(metadataBuilder.build());
   }
 }
