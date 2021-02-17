@@ -61,7 +61,7 @@ jobs:
           path: ~/artifacts
 
       - name: Tests Coverage
-        uses: actions/codecov-action@v1
+        uses: codecov/codecov-action@v1
         with:
           name: actions ${{ matrix.java }}
 
