@@ -22,33 +22,24 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.GapicServiceConfig;
-import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
 import com.google.common.annotations.VisibleForTesting;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
 
 public class Composer {
   public static List<GapicClass> composeServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    Map<String, ResourceName> availableResourceNames = new HashMap<>();
-    for (ResourceName resourceName : context.helperResourceNames()) {
-      availableResourceNames.put(resourceName.resourceTypeString(), resourceName);
-    }
-    for (Service service : context.services()) {
-      clazzes.addAll(generateServiceClasses(service, context, availableResourceNames));
-    }
-    for (Service mixinService : context.mixinServices()) {
-      clazzes.addAll(generateMockClasses(mixinService, availableResourceNames, context.messages()));
-    }
-    clazzes.addAll(generateResourceNameHelperClasses(context.helperResourceNames()));
+    clazzes.addAll(generateServiceClasses(context));
+    clazzes.addAll(generateMockClasses(context, context.mixinServices()));
+    clazzes.addAll(
+        generateResourceNameHelperClasses(
+            context.helperResourceNames().values().stream()
+                .map(r -> r)
+                .collect(Collectors.toSet())));
     return addApacheLicense(clazzes);
   }
 
@@ -56,17 +47,12 @@ public class Composer {
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 
-  public static List<GapicClass> generateServiceClasses(
-      @Nonnull Service service,
-      GapicContext context,
-      @Nonnull Map<String, ResourceName> resourceNames) {
+  public static List<GapicClass> generateServiceClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.addAll(
-        generateStubClasses(service, context.serviceConfig(), context.messages(), resourceNames));
-    clazzes.addAll(generateClientSettingsClasses(service, context, resourceNames));
-    clazzes.addAll(generateMockClasses(service, resourceNames, context.messages()));
-    clazzes.addAll(generateTestClasses(service, context, resourceNames));
-    // TODO(miraleung): Generate test classes.
+    clazzes.addAll(generateStubClasses(context));
+    clazzes.addAll(generateClientSettingsClasses(context));
+    clazzes.addAll(generateMockClasses(context, context.services()));
+    clazzes.addAll(generateTestClasses(context));
     return clazzes;
   }
 
@@ -78,42 +64,46 @@ public class Composer {
         .collect(Collectors.toList());
   }
 
-  public static List<GapicClass> generateStubClasses(
-      Service service,
-      GapicServiceConfig serviceConfig,
-      Map<String, Message> messageTypes,
-      Map<String, ResourceName> resourceNames) {
+  public static List<GapicClass> generateStubClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(ServiceStubClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(
-        ServiceStubSettingsClassComposer.instance().generate(service, serviceConfig, messageTypes));
-    clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(GrpcServiceStubClassComposer.instance().generate(service, messageTypes));
+    context
+        .services()
+        .forEach(
+            s -> {
+              clazzes.add(ServiceStubClassComposer.instance().generate(context, s));
+              clazzes.add(ServiceStubSettingsClassComposer.instance().generate(context, s));
+              clazzes.add(GrpcServiceCallableFactoryClassComposer.instance().generate(context, s));
+              clazzes.add(GrpcServiceStubClassComposer.instance().generate(context, s));
+            });
     return clazzes;
   }
 
-  public static List<GapicClass> generateClientSettingsClasses(
-      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
+  public static List<GapicClass> generateClientSettingsClasses(GapicContext context) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(ServiceClientClassComposer.instance().generate(service, context, resourceNames));
-    clazzes.add(ServiceSettingsClassComposer.instance().generate(service, context.messages()));
+    context
+        .services()
+        .forEach(
+            s -> {
+              clazzes.add(ServiceClientClassComposer.instance().generate(context, s));
+              clazzes.add(ServiceSettingsClassComposer.instance().generate(context, s));
+            });
     return clazzes;
   }
 
-  public static List<GapicClass> generateMockClasses(
-      Service service, Map<String, ResourceName> resourceNames, Map<String, Message> messageTypes) {
+  public static List<GapicClass> generateMockClasses(GapicContext context, List<Service> services) {
     List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(MockServiceClassComposer.instance().generate(service, messageTypes));
-    clazzes.add(MockServiceImplClassComposer.instance().generate(service, messageTypes));
+    services.forEach(
+        s -> {
+          clazzes.add(MockServiceClassComposer.instance().generate(context, s));
+          clazzes.add(MockServiceImplClassComposer.instance().generate(context, s));
+        });
     return clazzes;
   }
 
-  public static List<GapicClass> generateTestClasses(
-      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
-    List<GapicClass> clazzes = new ArrayList<>();
-    clazzes.add(
-        ServiceClientTestClassComposer.instance().generate(service, context, resourceNames));
-    return clazzes;
+  public static List<GapicClass> generateTestClasses(GapicContext context) {
+    return context.services().stream()
+        .map(s -> ServiceClientTestClassComposer.instance().generate(context, s))
+        .collect(Collectors.toList());
   }
 
   /** ====================== HELPERS ==================== */

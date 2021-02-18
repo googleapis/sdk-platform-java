@@ -19,6 +19,7 @@ import static junit.framework.Assert.assertEquals;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Service;
@@ -58,9 +59,17 @@ public class GrpcServiceCallableFactoryClassComposerTest {
         Parser.parseService(
             echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
 
+    GapicContext context =
+        GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setHelperResourceNames(outputResourceNames)
+            .build();
+
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        GrpcServiceCallableFactoryClassComposer.instance().generate(echoProtoService, messageTypes);
+        GrpcServiceCallableFactoryClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);

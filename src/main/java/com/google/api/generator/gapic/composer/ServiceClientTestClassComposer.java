@@ -97,8 +97,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-// TODO(miraleung): Refactor classComposer.
-public class ServiceClientTestClassComposer {
+public class ServiceClientTestClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
 
   private static final String CHANNEL_PROVIDER_VAR_NAME = "channelProvider";
@@ -135,8 +134,9 @@ public class ServiceClientTestClassComposer {
     return INSTANCE;
   }
 
-  public GapicClass generate(
-      Service service, GapicContext context, Map<String, ResourceName> resourceNames) {
+  @Override
+  public GapicClass generate(GapicContext context, Service service) {
+    Map<String, ResourceName> resourceNames = context.helperResourceNames();
     Map<String, Message> messageTypes = context.messages();
     String pakkage = service.pakkage();
     TypeStore typeStore = new TypeStore();

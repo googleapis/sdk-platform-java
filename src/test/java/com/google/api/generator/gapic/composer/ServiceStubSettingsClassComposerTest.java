@@ -21,6 +21,7 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.constants.ComposerConstants;
 import com.google.api.generator.gapic.model.GapicBatchingSettings;
 import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
@@ -49,6 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.Test;
 
 public class ServiceStubSettingsClassComposerTest {
@@ -89,9 +91,18 @@ public class ServiceStubSettingsClassComposerTest {
     GapicServiceConfig config = configOpt.get();
     config.setBatchingSettings(batchingSettingsOpt);
 
+    GapicContext context =
+        GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setServiceConfig(config)
+            .setHelperResourceNames(
+                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
+            .build();
+
     Service protoService = services.get(0);
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(protoService, config, messageTypes);
+    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -132,10 +143,19 @@ public class ServiceStubSettingsClassComposerTest {
     GapicServiceConfig config = configOpt.get();
     config.setBatchingSettings(batchingSettingsOpt);
 
+    GapicContext context =
+        GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setServiceConfig(config)
+            .setHelperResourceNames(
+                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
+            .build();
+
     Service protoService = services.get(0);
     assertEquals("Publisher", protoService.name());
-    GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance().generate(protoService, config, messageTypes);
+    GapicClass clazz = ServiceStubSettingsClassComposer.instance().generate(context, protoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
@@ -162,10 +182,19 @@ public class ServiceStubSettingsClassComposerTest {
     assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
+    GapicContext context =
+        GapicContext.builder()
+            .setMessages(messageTypes)
+            .setResourceNames(resourceNames)
+            .setServices(services)
+            .setServiceConfig(config)
+            .setHelperResourceNames(
+                resourceNames.values().stream().map(r -> r).collect(Collectors.toSet()))
+            .build();
+
     Service echoProtoService = services.get(0);
     GapicClass clazz =
-        ServiceStubSettingsClassComposer.instance()
-            .generate(echoProtoService, config, messageTypes);
+        ServiceStubSettingsClassComposer.instance().generate(context, echoProtoService);
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
