@@ -61,6 +61,7 @@ jobs:
           path: ~/artifacts
 
       - name: Code Coverage
+        run: bazel coverage //src/test/... --combined_report=lcov
         uses: codecov/codecov-action@v1
         with:
           name: actions ${{ matrix.java }}
