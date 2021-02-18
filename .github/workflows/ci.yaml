@@ -67,7 +67,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           name: actions ${{ matrix.java }}
-          files: ./bazel-out/_coverage_report.dat
+          files: ./bazel-out/_coverage/_coverage_report.dat
 
   license-header:
     runs-on: ubuntu-latest
